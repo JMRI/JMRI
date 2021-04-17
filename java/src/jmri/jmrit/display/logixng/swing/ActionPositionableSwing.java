@@ -12,19 +12,19 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.display.logixng.ActionEnableDisable;
-import jmri.jmrit.display.logixng.ActionEnableDisable.IsControlling;
+import jmri.jmrit.display.logixng.ActionPositionable;
+import jmri.jmrit.display.logixng.ActionPositionable.Operation;
 import jmri.jmrit.logixng.actions.swing.AbstractDigitalActionSwing;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Configures an ActionEnableDisable object with a Swing JPanel.
+ * Configures an ActionPositionable object with a Swing JPanel.
  * 
  * @author Daniel Bergqvist Copyright (C) 2021
  */
-public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
+public class ActionPositionableSwing extends AbstractDigitalActionSwing {
 
     private String _selectedEditor;
     
@@ -40,7 +40,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     private JTextField _positionableFormulaTextField;
     
     private JTabbedPane _tabbedPanePositionableState;
-    private JComboBox<IsControlling> _isControllingComboBox;
+    private JComboBox<Operation> _isControllingComboBox;
     private JPanel _panelPositionableStateDirect;
     private JPanel _panelPositionableStateReference;
     private JPanel _panelPositionableStateLocalVariable;
@@ -52,7 +52,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        ActionEnableDisable action = (ActionEnableDisable)object;
+        ActionPositionable action = (ActionPositionable)object;
         
         panel = new JPanel();
         
@@ -106,7 +106,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
         _tabbedPanePositionableState.addTab(NamedBeanAddressing.Formula.toString(), _panelPositionableStateFormula);
         
         _isControllingComboBox = new JComboBox<>();
-        for (IsControlling e : IsControlling.values()) {
+        for (Operation e : Operation.values()) {
             _isControllingComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_isControllingComboBox);
@@ -148,7 +148,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPanePositionableState.setSelectedComponent(_panelPositionableStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
-            _isControllingComboBox.setSelectedItem(action.getIsControlling());
+            _isControllingComboBox.setSelectedItem(action.getOperation());
             _positionableStateReferenceTextField.setText(action.getStateReference());
             _positionableStateLocalVariableTextField.setText(action.getStateLocalVariable());
             _positionableStateFormulaTextField.setText(action.getStateFormula());
@@ -160,7 +160,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
             _tabbedPanePositionableState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionEnableDisable_Components"), components);
+                Bundle.getMessage("ActionPositionable_Components"), components);
         
         for (JComponent c : componentList) panel.add(c);
     }
@@ -186,7 +186,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        ActionEnableDisable action = new ActionEnableDisable("IQDA1", null);
+        ActionPositionable action = new ActionPositionable("IQDA1", null);
         
         try {
             if (_tabbedPanePositionable.getSelectedComponent() == _panelPositionableReference) {
@@ -228,7 +228,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ActionEnableDisable action = new ActionEnableDisable(systemName, userName);
+        ActionPositionable action = new ActionPositionable(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -236,10 +236,10 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ActionEnableDisable)) {
-            throw new IllegalArgumentException("object must be an ActionEnableDisable but is a: "+object.getClass().getName());
+        if (! (object instanceof ActionPositionable)) {
+            throw new IllegalArgumentException("object must be an ActionPositionable but is a: "+object.getClass().getName());
         }
-        ActionEnableDisable action = (ActionEnableDisable)object;
+        ActionPositionable action = (ActionPositionable)object;
         if (_editorComboBox.getSelectedIndex() != -1) {
             action.setEditor(_editorComboBox.getItemAt(_editorComboBox.getSelectedIndex())._editor.getName());
         }
@@ -264,7 +264,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
             
             if (_tabbedPanePositionableState.getSelectedComponent() == _panelPositionableStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setIsControlling(_isControllingComboBox.getItemAt(_isControllingComboBox.getSelectedIndex()));
+                action.setOperation(_isControllingComboBox.getItemAt(_isControllingComboBox.getSelectedIndex()));
             } else if (_tabbedPanePositionableState.getSelectedComponent() == _panelPositionableStateReference) {
                 action.setStateAddressing(NamedBeanAddressing.Reference);
                 action.setStateReference(_positionableStateReferenceTextField.getText());
@@ -285,7 +285,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("ActionEnableDisable_Short");
+        return Bundle.getMessage("ActionPositionable_Short");
     }
     
     @Override
@@ -309,6 +309,6 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEnableDisableSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionableSwing.class);
     
 }

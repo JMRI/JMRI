@@ -21,11 +21,11 @@ import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
- * This action enables/disables a Positionable on a panel.
+ * This action controls various things of a Positionable on a panel.
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionEnableDisable extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionPositionable extends AbstractDigitalAction implements VetoableChangeListener {
 
     private String _editorName;
     private Editor _editor;
@@ -38,13 +38,13 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
-    private IsControlling _isControlling = IsControlling.Enabled;
+    private Operation _operation = Operation.Enable;
     private String _stateReference = "";
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
     
-    public ActionEnableDisable(String sys, String user)
+    public ActionPositionable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -55,11 +55,11 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionEnableDisable copy = new ActionEnableDisable(sysName, userName);
+        ActionPositionable copy = new ActionPositionable(sysName, userName);
         copy.setComment(getComment());
         copy.setEditor(_editorName);
         copy.setPositionable(_positionableName);
-        copy.setIsControlling(_isControlling);
+        copy.setOperation(_operation);
         copy.setAddressing(_addressing);
         copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
@@ -158,12 +158,12 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
         return _stateAddressing;
     }
     
-    public void setIsControlling(IsControlling isControlling) {
-        _isControlling = isControlling;
+    public void setOperation(Operation isControlling) {
+        _operation = isControlling;
     }
     
-    public IsControlling getIsControlling() {
-        return _isControlling;
+    public Operation getOperation() {
+        return _operation;
     }
     
     public void setStateReference(@Nonnull String reference) {
@@ -266,7 +266,7 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
     public void execute() throws JmriException {
         Positionable positionable;
         
-//        System.out.format("ActionEnableDisable.execute: %s%n", getLongDescription());
+//        System.out.format("ActionPositionable.execute: %s%n", getLongDescription());
         
         switch (_addressing) {
             case Direct:
@@ -297,7 +297,7 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ActionEnableDisable.execute: positionable: %s%n", positionable);
+//        System.out.format("ActionPositionable.execute: positionable: %s%n", positionable);
         
         if (positionable == null) {
             log.error("positionable is null");
@@ -307,15 +307,30 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
                 ? getNewState() : null;
         
-        IsControlling state;
+        Operation operation;
         if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-            state = _isControlling;
+            operation = _operation;
         } else {
-            state = IsControlling.valueOf(name);
+            operation = Operation.valueOf(name);
         }
         
         ThreadingUtil.runOnLayout(() -> {
-            positionable.setControlling(state.getIsControlling());
+            switch (operation) {
+                case Disable:
+                    positionable.setHidden(true);
+                    break;
+                case Enable:
+                    positionable.setHidden(false);
+                    break;
+                case Hide:
+                    positionable.setControlling(false);
+                    break;
+                case Show:
+                    positionable.setControlling(true);
+                    break;
+                default:
+                    throw new RuntimeException("operation has invalid value: "+operation.name());
+            }
         });
     }
 
@@ -331,7 +346,7 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionEnableDisable_Short");
+        return Bundle.getMessage(locale, "ActionPositionable_Short");
     }
 
     @Override
@@ -369,7 +384,7 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
         
         switch (_stateAddressing) {
             case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _isControlling._text);
+                state = Bundle.getMessage(locale, "AddressByDirect", _operation._text);
                 break;
                 
             case Reference:
@@ -388,7 +403,7 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
         }
         
-        return Bundle.getMessage(locale, "ActionEnableDisable_Long", editorName, positonableName, state);
+        return Bundle.getMessage(locale, "ActionPositionable_Long", editorName, positonableName, state);
     }
     
     /** {@inheritDoc} */
@@ -421,20 +436,16 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
     }
 
     
-    public enum IsControlling {
-        Disabled(false, Bundle.getMessage("ActionEnableDisable_Disabled")),
-        Enabled(true, Bundle.getMessage("ActionEnableDisable_Enabled"));
+    public enum Operation {
+        Disable(Bundle.getMessage("ActionPositionable_Disable")),
+        Enable(Bundle.getMessage("ActionPositionable_Enable")),
+        Hide(Bundle.getMessage("ActionPositionable_Hide")),
+        Show(Bundle.getMessage("ActionPositionable_Show"));
         
-        private final boolean _isControlling;
         private final String _text;
         
-        private IsControlling(boolean isControlling, String text) {
-            this._isControlling = isControlling;
+        private Operation(String text) {
             this._text = text;
-        }
-        
-        public boolean getIsControlling() {
-            return _isControlling;
         }
         
         @Override
@@ -444,6 +455,6 @@ public class ActionEnableDisable extends AbstractDigitalAction implements Vetoab
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEnableDisable.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionable.class);
     
 }

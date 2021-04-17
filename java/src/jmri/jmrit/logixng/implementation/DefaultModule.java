@@ -306,7 +306,7 @@ public class DefaultModule extends AbstractBase
             if (_socketSystemName != null) {
                 try {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
+                            _rootSocketType.getManager()
                                     .getBySystemName(_socketSystemName);
                     if (maleSocket != null) {
                         _femaleRootSocket.connect(maleSocket);

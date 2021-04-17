@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import jmri.*;
-import jmri.jmrit.display.logixng.ActionEnableDisable;
+import jmri.jmrit.display.logixng.ActionPositionable;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.And;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
@@ -84,9 +84,9 @@ public class StoreAndLoadTest {
         maleSocket = digitalExpressionManager.registerExpression(expressionSlotUsage);
         and.getChild(2).connect(maleSocket);
 */        
-        ActionEnableDisable actionEnableDisable = new ActionEnableDisable(digitalActionManager.getAutoSystemName(), null);
-        actionEnableDisable.setComment("A comment");
-        maleSocket = digitalActionManager.registerAction(actionEnableDisable);
+        ActionPositionable actionPositionable = new ActionPositionable(digitalActionManager.getAutoSystemName(), null);
+        actionPositionable.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionPositionable);
         ifThenElse.getChild(1).connect(maleSocket);
         
 //        ActionClearSlots actionClearSlots = new ActionClearSlots(digitalActionManager.getAutoSystemName(), null, null);
