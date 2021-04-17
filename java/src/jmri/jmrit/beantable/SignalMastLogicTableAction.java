@@ -607,7 +607,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                             m.fireTableDataChanged();
                             if (genSect.isSelected()) {
                                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                                ((jmri.SectionManager) InstanceManager.getDefault(jmri.SectionManager.class)).generateBlockSections();                              
+                                (InstanceManager.getDefault(jmri.SectionManager.class)).generateBlockSections();                              
                             }
                         });
                     } catch (java.lang.reflect.InvocationTargetException ex) {

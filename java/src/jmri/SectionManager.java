@@ -315,7 +315,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
             
     private List <jmri.EntryPoint> getBlockEntryPointsList(Block b, List <jmri.EntryPoint> entryPointList) {
-        List <jmri.EntryPoint> list = new java.util.ArrayList();
+        List <jmri.EntryPoint> list = new java.util.ArrayList<jmri.EntryPoint>();
         for (int i=0; i<entryPointList.size(); i++) {
             jmri.EntryPoint ep = entryPointList.get(i);
             if (ep.getBlock().equals(b)) {
