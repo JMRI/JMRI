@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.*;
@@ -2763,7 +2764,7 @@ public class StoreAndLoadTest {
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
-            logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
+            logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
             final String originalTree = stringWriter.toString();
 
             boolean results = cm.storeUser(firstFile);
@@ -2862,7 +2863,7 @@ public class StoreAndLoadTest {
 
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
-                logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
+                logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
 
                 if (!originalTree.equals(stringWriter.toString())) {
                     log.error("--------------------------------------------");

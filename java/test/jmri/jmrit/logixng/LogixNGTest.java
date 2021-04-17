@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -399,7 +400,7 @@ public class LogixNGTest {
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         setupInitialConditionalNGTree(conditionalNG);
-        logixNG.printTree(new PrintWriter(writer), "...");
+        logixNG.printTree(new PrintWriter(writer), "...", new MutableInt(0));
         String resultStr = writer.toString();
 /*        
         System.err.format("=======================================%n");

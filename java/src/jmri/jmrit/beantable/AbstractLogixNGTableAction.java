@@ -75,6 +75,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
 
     // Browser Options
+    static final String PRINT_LINE_NUMBERS_OPTION = "jmri.jmrit.logixng.PrintLineNumbers";
     static final String PRINT_ERROR_HANDLING_OPTION = "jmri.jmrit.logixng.ErrorHandling";
     static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
     static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
@@ -1154,6 +1155,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     void getPrintTreeSettings() {
         // Set options
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            _printTreeSettings._printLineNumbers = prefMgr.getSimplePreferenceState(PRINT_LINE_NUMBERS_OPTION);
             _printTreeSettings._printErrorHandling = prefMgr.getSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION);
             _printTreeSettings._printNotConnectedSockets = prefMgr.getSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION);
             _printTreeSettings._printLocalVariables = prefMgr.getSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION);
@@ -1284,6 +1286,19 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected JPanel getSettingsPanel() {
         JPanel checkBoxPanel = new JPanel();
+
+        JCheckBox printLineNumbers = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLineNumbers"));
+        printLineNumbers.setSelected(_printTreeSettings._printLineNumbers);
+        printLineNumbers.addChangeListener((event) -> {
+            if (_printTreeSettings._printLineNumbers != printLineNumbers.isSelected()) {
+                _printTreeSettings._printLineNumbers = printLineNumbers.isSelected();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_LINE_NUMBERS_OPTION, printLineNumbers.isSelected());
+                });
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printLineNumbers);
 
         JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
         printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
