@@ -483,9 +483,14 @@
     href="../../../apps/TabbedPreferences.shtml#RailroadName">Railroad Name</a>. You can also
    configure JMRI to automatically open any of the operation windows on <a
     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a> by adding a "Perform action".
-   Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
-   information about the window you're using. 
-   
+
+   <p>
+    Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
+    information about the window you're using. Detailed step by step <a
+     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
+    available on the JMRI.org site.
+   </p>
+
    <a name="MultipleLayouts" id="MultipleLayouts"></a>
 
    <h3>Multiple Layout Support</h3>
@@ -704,10 +709,15 @@
    <p>
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
-    this document that covers that window's capabilities. Help is also available at the <a
-     href="https://groups.io/g/jmriusers">JMRI users</a> which is part of the Groups.io. 
-     Another good source for help is a series of articles written by David Haynes <a
-     href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
+    this document that covers that window's capabilities. Detailed step by step <a
+     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
+    also available on the JMRI.org site.
+   </p>
+
+   <p>
+    Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which is
+    part of the Groups.io. Another good source for help is a series of articles written by David
+    Haynes <a href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
      http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
     "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
     contents of the window.
@@ -4279,9 +4289,12 @@
 
    <p>
     You can also require a <a href="#CabooseFredHazardous">caboose or car with FRED (Flashing
-     Rear End Device)</a> as the last car in the train, and you can optionally specify the road for the
-    caboose or car with FRED. If you leave the road blank, the program will try and find a caboose
-    with the same road as the locomotive.
+     Rear End Device)</a> as the last car in the train when it departs. You can also optionally specify
+    the road for the caboose or car with FRED. If you leave the road blank, the program will try and
+    find a caboose with the same road as the locomotive. Normally the caboose or car with FRED stays
+    with the train until the last location in the train's route. You can add or remove a caboose
+    anywhere in the train's route, see <a href="#OptionalTrainRequirements">Optional Train
+     Requirements</a> under <a href="#TrainBuildOptions">Train Build Options</a> for more info.
    </p>
 
    <a name="TrainReset" id="TrainReset"></a>
@@ -4452,6 +4465,7 @@
    specify a period, select the "Range" radio button and enter the after and before years you want
    the train to service.
 
+   <a name="OptionalTrainRequirements" id="OptionalTrainRequirements"></a>
    <h3>Optional Train Requirements</h3>
    You can have up to two locomotive changes while the train is en route. Select "Locomotive change"
    where you want the change to happen in your route, and how many new locomotives should be
