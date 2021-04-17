@@ -269,7 +269,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         for (Section section : getNamedBeanSet()){
             if (section.getNumBlocks() == 1 
                     && section.getSectionType() != Section.SIGNALMASTLOGIC 
-                    && section.getEntryBlock() == layoutBlock.getBlock()){
+                    && layoutBlock.getBlock().equals(section.getEntryBlock())){
                 return true;
             }
         }
@@ -279,7 +279,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     private void createBlockSection(LayoutBlock layoutBlock){
         Section section = createNewSection(layoutBlock.getUserName()); 
         section.addBlock(layoutBlock.getBlock());
-        java.util.ArrayList<jmri.EntryPoint> entryPointList = new java.util.ArrayList<jmri.EntryPoint>();
+        java.util.ArrayList<jmri.EntryPoint> entryPointList = new ArrayList<>();
         Block sb = layoutBlock.getBlock();
         List <Path> paths = sb.getPaths();
         for (int j=0; j<paths.size(); j++){
@@ -315,7 +315,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
             
     private List <jmri.EntryPoint> getBlockEntryPointsList(Block b, List <jmri.EntryPoint> entryPointList) {
-        List <jmri.EntryPoint> list = new java.util.ArrayList<jmri.EntryPoint>();
+        List <jmri.EntryPoint> list = new ArrayList<>();
         for (int i=0; i<entryPointList.size(); i++) {
             jmri.EntryPoint ep = entryPointList.get(i);
             if (ep.getBlock().equals(b)) {
