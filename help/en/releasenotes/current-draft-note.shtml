@@ -472,7 +472,10 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Ian Price contributed the new
+                <a href="http://jmri.org/jython/LocoTracker.py">LocoTracker</a>
+                script.
+            </li>
         </ul>
 
     <h3>Signals</h3>
