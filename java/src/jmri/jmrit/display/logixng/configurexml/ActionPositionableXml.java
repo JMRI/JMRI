@@ -30,7 +30,7 @@ public class ActionPositionableXml extends jmri.managers.configurexml.AbstractNa
     public Element store(Object o) {
         ActionPositionable p = (ActionPositionable) o;
 
-        Element element = new Element("DisplayPositionableActionPositionable");
+        Element element = new Element("DisplayActionPositionable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

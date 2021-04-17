@@ -25,7 +25,7 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_DisplayPositionableActionEnableDisableType">
+    <xs:complexType name="LogixNG_DigitalAction_DisplayActionPositionableType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of a ActionTurnout class.
@@ -50,11 +50,13 @@
 
               <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="isControlling" minOccurs="0" maxOccurs="1">
+              <xs:element name="operation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="Disabled"/>
-                    <xs:enumeration value="Enabled"/>
+                    <xs:enumeration value="Disable"/>
+                    <xs:enumeration value="Enable"/>
+                    <xs:enumeration value="Hide"/>
+                    <xs:enumeration value="Show"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

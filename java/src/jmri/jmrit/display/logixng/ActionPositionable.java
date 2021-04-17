@@ -317,16 +317,16 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
         ThreadingUtil.runOnLayout(() -> {
             switch (operation) {
                 case Disable:
-                    positionable.setHidden(true);
-                    break;
-                case Enable:
-                    positionable.setHidden(false);
-                    break;
-                case Hide:
                     positionable.setControlling(false);
                     break;
-                case Show:
+                case Enable:
                     positionable.setControlling(true);
+                    break;
+                case Hide:
+                    positionable.setHidden(true);
+                    break;
+                case Show:
+                    positionable.setHidden(false);
                     break;
                 default:
                     throw new RuntimeException("operation has invalid value: "+operation.name());
