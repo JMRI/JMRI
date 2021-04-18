@@ -588,7 +588,8 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
     /**
      * we're registering as a listener for Consist events, so we need to
-     * implement the interface
+     * implement the interface.
+     * {@inheritDoc}
      */
     @Override
     public void consistReply(LocoAddress locoaddress, int status) {
