@@ -941,7 +941,7 @@ public class SignallingPanel extends JmriPanel {
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
         
         //required to set up transits using Layout Panel
-        this.setAssociatedSection(destMast);
+        //this.setAssociatedSection(destMast);
         
         sml.initialise(destMast);
         if (smlPairAdded) {
