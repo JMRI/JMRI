@@ -305,13 +305,22 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             FemaleSocket socket = (FemaleSocket)value;
             
             JPanel mainPanel = new JPanel();
+            
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.setOpaque(false);
+            
+            JLabel commentLabel = new JLabel();
+            commentLabel.setForeground(Color.GRAY);
+            Font font2 = commentLabel.getFont();
+            commentLabel.setFont(font2.deriveFont(Font.ITALIC));
+            JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            commentPanel.setOpaque(false);
+            commentPanel.add(commentLabel);
+            mainPanel.add(commentPanel);
             
             JPanel panel = new JPanel();
             mainPanel.add(panel);
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-//            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
             panel.setOpaque(false);
             
             JLabel socketLabel = new JLabel(socket.getShortDescription());
@@ -333,6 +342,12 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
                 MaleSocket connectedSocket = socket.getConnectedSocket();
+                
+                String comment = connectedSocket.getComment();
+                if (comment != null) {
+                    commentLabel.setText("<html><pre>"+comment+"</pre></html>");
+                }
+                
                 String label = connectedSocket.getLongDescription();
                 if (connectedSocket.getUserName() != null) {
                     label += " ::: " + connectedSocket.getUserName();
@@ -341,9 +356,8 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                     label = "<html><strike>" + label + "</strike></html>";
                 }
                 connectedItemLabel.setText(label);
-                if (connectedSocket.getComment() != null) {
-                    mainPanel.setToolTipText(connectedSocket.getComment());
-                }
+                
+                mainPanel.setToolTipText(connectedSocket.getShortDescription());
                 
                 for (VariableData variableData : connectedSocket.getLocalVariables()) {
                     JLabel variableLabel = new JLabel(Bundle.getMessage(
