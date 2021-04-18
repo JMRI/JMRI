@@ -79,8 +79,54 @@
       <h1><a id="GeneralInfo" name="GeneralInfo">
       General information: Connecting to a Digitrax DCS52</a></h1>
 
-      <p>JMRI may be connected to the Digitrax DCS52 in any
-      of a wide variety of ways.  Since the DCS52 has a built-in USB interface,
+      <p>JMRI may work with a DCS52 command station in either of two primary modes.
+      One mode, called "Standalone Progamming Mode", enables JMRI to perform the following operations:
+        <ul>
+            <li>programming decoders via the DCS52's programming track 
+            connections</li>
+            <li>for some decoders, some limited exercising of mobile decoder 
+            features when the decoder is connected to the DCS52 programming 
+            track</li>
+        </ul>
+        <p>The other, more general, mode enables JMRI to use almost the full range
+            of DCS52 features, including:
+          <ul>
+              <li>reading from (where possible) and writing to decoders on the
+                  programming track (but operation of mobile decoders on the 
+                  programming track <em>is not possible</em> in this mode)</li>
+              <li>writing to decoders on, or connected to, the main DCC track</li>
+              <li>controlling locomotives</li>
+              <li>controlling switches and accessories</li>
+              <li>monitoring and, where possible, configuring and/or controlling 
+                  LocoNet devices</li>
+          </ul>
+
+      <p>There are also two different ways to connect the computer to the DCS52:
+      <ul><li>via the DCS52's integrated USB connection, or</li>
+          <li>via a separate computer-to-LocoNet interface device, such as:
+              <ul>
+                  <li>Digitrax PR3 or PR4;</li>
+                  <li>RR-CirKits LocoBuffer or LocoBuffer-USB; or</li>
+                  <li>some other computer-to-LocoNet interface device.</li>
+              </ul>
+          </li></ul>
+
+      <p>These two sets of options combine to give four different ways to connect 
+          and configure JMRI.  These are summarized in this table:</p>
+      
+      <p>When using JMRI only for the purpose of programming decoders via the 
+      DCS52 programming track, the computer-to-DCS52 connection may be made via
+      a simple USB cable, connected to the computer on one end and the DCS52's 
+      integrated USB connector on the other end.  program decoders via the DCS52 "programming track" 
+      connectionsJsing a DCS52 with JMRI can be done in a variety of ways.  The type of
+      work you intend to do with JMRI and the DCS52 influences one key aspect of
+      how to configure JMRIJMRI may be connected to the Digitrax DCS52 in any
+      of a wide variety of ways.  How the computer communicates with the DCS52, 
+      plus And JMRI may communicate with the DCS52 for
+      two different purpuses.  Decisions on these two points determine exactly 
+      how to connect and configure JMRI for use with the DCS52.
+      
+      Since the DCS52 has a built-in USB interface,
       it is possible to simply plug a USB cable into the computer and the DCS52,
       and configure JMRI to suit this connection.  It is also possible to use
       another LocoNet interface device, such as a LocoBuffer-USB, Digitrax PR3,
