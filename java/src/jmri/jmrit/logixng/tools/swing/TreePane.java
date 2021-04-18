@@ -316,7 +316,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             
             JLabel socketLabel = new JLabel(socket.getShortDescription());
             Font font = socketLabel.getFont();
-            socketLabel.setFont(font.deriveFont((float)(font.getSize2D()*1.5)));
+            socketLabel.setFont(font.deriveFont((float)(font.getSize2D()*1.4)));
             socketLabel.setForeground(FEMALE_SOCKET_COLORS.get(socket.getClass().getName()));
 //            socketLabel.setForeground(Color.red);
             panel.add(socketLabel);
