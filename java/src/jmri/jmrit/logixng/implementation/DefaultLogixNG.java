@@ -20,6 +20,8 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * The default implementation of LogixNG.
  *
@@ -374,7 +376,16 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
 
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
@@ -382,23 +393,41 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
-        printTree(settings, locale, writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         for (int i=0; i < this.getNumConditionalNGs(); i++) {
-            getConditionalNG(i).printTree(settings, locale, writer, indent, currentIndent+indent);
+            getConditionalNG(i).printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
 //            writer.println();
         }
     }

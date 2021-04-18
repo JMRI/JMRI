@@ -9,6 +9,8 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
 
 /**
  * Basic Implementation of a SectionManager.
@@ -236,6 +238,91 @@ public class SectionManager extends AbstractManager<Section> implements Instance
                 log.error("Exception when initializing blocking Sensors for Section {}", s.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
             }
         }
+    }
+        
+    /**
+     * Generate Block Sections in stubs/sidings. Called after generating signal logic.
+     */
+    
+    
+    public void generateBlockSections() {
+        //find blocks with no paths through i.e. stub (siding)
+        LayoutBlockManager LayoutBlockManager = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        //print "Layout Block"
+        for (LayoutBlock layoutBlock : LayoutBlockManager.getNamedBeanSet()){
+            if (layoutBlock.getNumberOfThroughPaths() == 0){
+                if (!blockSectionExists(layoutBlock)){
+                    //create block section"
+                    createBlockSection(layoutBlock);
+                }
+            }
+        }
+    }
+                               
+    /**
+     * Check if Block Section already exists
+     * @param layoutBlock
+     * @return true or false
+     */
+    private boolean blockSectionExists(LayoutBlock layoutBlock){
+        
+        for (Section section : getNamedBeanSet()){
+            if (section.getNumBlocks() == 1 
+                    && section.getSectionType() != Section.SIGNALMASTLOGIC 
+                    && layoutBlock.getBlock().equals(section.getEntryBlock())){
+                return true;
+            }
+        }
+        return false;
+    } 
+      
+    private void createBlockSection(LayoutBlock layoutBlock){
+        Section section = createNewSection(layoutBlock.getUserName()); 
+        section.addBlock(layoutBlock.getBlock());
+        ArrayList<jmri.EntryPoint> entryPointList = new ArrayList<>();
+        Block sb = layoutBlock.getBlock();
+        List <Path> paths = sb.getPaths();
+        for (int j=0; j<paths.size(); j++){
+            Path p = paths.get(j);
+            if (p.getBlock() != sb){
+                //this is path to an outside block, so need an Entry Point
+                String pbDir = Path.decodeDirection(p.getFromBlockDirection());
+                jmri.EntryPoint ep = new jmri.EntryPoint(sb, p.getBlock(), pbDir);
+                entryPointList.add(ep);
+            }
+        }
+                
+        Block beginBlock = sb;
+        // Set directions where possible
+        List <jmri.EntryPoint> epList = getBlockEntryPointsList(beginBlock,entryPointList);
+        if (epList.size() == 1) {
+            (epList.get(0)).setTypeForward();
+        }  
+        Block endBlock = sb;
+        epList = getBlockEntryPointsList(endBlock, entryPointList);
+        if (epList.size() == 1) {
+            (epList.get(0)).setTypeReverse();          
+        }
+            
+        for (int j=0; j<entryPointList.size(); j++){
+            jmri.EntryPoint ep = entryPointList.get(j);
+            if (ep.isForwardType()){
+                section.addToForwardList(ep);
+            }else if (ep.isReverseType()){
+                section.addToReverseList(ep);
+            }
+        }
+    }
+            
+    private List <jmri.EntryPoint> getBlockEntryPointsList(Block b, List <jmri.EntryPoint> entryPointList) {
+        List <jmri.EntryPoint> list = new ArrayList<>();
+        for (int i=0; i<entryPointList.size(); i++) {
+            jmri.EntryPoint ep = entryPointList.get(i);
+            if (ep.getBlock().equals(b)) {
+                list.add(ep);
+            }
+        }
+        return list;
     }
 
     @Override
