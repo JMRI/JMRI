@@ -10,6 +10,8 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.beans.PropertyChangeProvider;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * The base interface for LogixNG expressions and actions.
  * Used to simplify the user interface.
@@ -425,9 +427,13 @@ public interface Base extends PropertyChangeProvider {
      *
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public default void printTree(PrintWriter writer, String indent) {
-        printTree(new PrintTreeSettings(), writer, indent);
+    public default void printTree(
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        printTree(new PrintTreeSettings(), writer, indent, lineNumber);
     }
 
     /**
@@ -436,11 +442,13 @@ public interface Base extends PropertyChangeProvider {
      * @param settings settings for what to print
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
     public void printTree(
             PrintTreeSettings settings,
             PrintWriter writer,
-            String indent);
+            String indent,
+            MutableInt lineNumber);
 
     /**
      * Print the tree to a stream.
@@ -448,12 +456,14 @@ public interface Base extends PropertyChangeProvider {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
     public default void printTree(
             Locale locale,
             PrintWriter writer,
-            String indent) {
-        printTree(new PrintTreeSettings(), locale, writer, indent);
+            String indent,
+            MutableInt lineNumber) {
+        printTree(new PrintTreeSettings(), locale, writer, indent, lineNumber);
     }
 
     /**
@@ -463,12 +473,14 @@ public interface Base extends PropertyChangeProvider {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
     public void printTree(
             PrintTreeSettings settings,
             Locale locale,
             PrintWriter writer,
-            String indent);
+            String indent,
+            MutableInt lineNumber);
 
     /**
      * Print the tree to a stream.
@@ -478,13 +490,15 @@ public interface Base extends PropertyChangeProvider {
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      * @param currentIndent the current indentation
+     * @param lineNumber the line number
      */
     public void printTree(
             PrintTreeSettings settings,
             Locale locale,
             PrintWriter writer,
             String indent,
-            String currentIndent);
+            String currentIndent,
+            MutableInt lineNumber);
 
     /**
      * Navigate the LogixNG tree.
@@ -608,7 +622,12 @@ public interface Base extends PropertyChangeProvider {
     }
 
 
+
+    public final String PRINT_LINE_NUMBERS_FORMAT = "%8d:  ";
+
+
     public static class PrintTreeSettings {
+        public boolean _printLineNumbers = false;
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;

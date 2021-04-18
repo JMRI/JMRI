@@ -20,6 +20,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
         Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> expressionClasses = new HashSet<>();
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, And.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Antecedent.class));
+        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionBlock.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionClock.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionConditional.class));

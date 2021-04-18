@@ -293,6 +293,9 @@ public class DefaultFemaleGenericExpressionSocket
             Map<Category, List<Class<? extends Base>>> sourceClasses) {
         
         for (Category category : Category.values()) {
+            // Some categories might not have any expression.
+            if (sourceClasses.get(category) == null) continue;
+            
             for (Class<? extends Base> clazz : sourceClasses.get(category)) {
                 destinationClasses.get(category).add(clazz);
             }
