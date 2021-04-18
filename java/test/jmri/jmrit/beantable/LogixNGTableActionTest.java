@@ -398,7 +398,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).isConnected();});
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
-        Assert.assertEquals("Action is correct", "If Then Else. Trigger action",
+        Assert.assertEquals("Action is correct", "If Then Else. Execute on change",
                 conditionalNG.getChild(0).getConnectedSocket().getLongDescription());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
         
