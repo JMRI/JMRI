@@ -586,7 +586,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         }
     }
 
-    /*
+    /**
      * we're registering as a listener for Consist events, so we need to
      * implement the interface
      */
@@ -641,7 +641,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         initializeConsistBox();
     }
 
-    /*
+    /**
      * private method to scan the roster for consists
      */
     private void scanRoster(){
