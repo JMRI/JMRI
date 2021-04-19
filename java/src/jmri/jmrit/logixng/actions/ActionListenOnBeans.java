@@ -4,37 +4,25 @@ import java.beans.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.Manager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.DuplicateKeyMap;
 
 /**
  * This action listens on some beans and runs the ConditionalNG on property change.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public class ActionListenOnBeans extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private final Map<String, NamedBeanReference> _namedBeanReferences = new DuplicateKeyMap<>();
-    
+
     public ActionListenOnBeans(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -48,7 +36,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
         return manager.registerAction(copy);
     }
-    
+
     /**
      * Register a bean
      * The bean must be on the form "beantype:name" where beantype is for
@@ -64,7 +52,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                     "Parameter 'beanAndType' must be on the format type:name"
                     + " where type is turnout, sensor, memory, ...");
         }
-        
+
         try {
             NamedBeanType type = NamedBeanType.valueOf(parts[0]);
             NamedBeanReference reference = new NamedBeanReference(parts[1], type);
@@ -78,28 +66,28 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                     "Parameter 'beanAndType' has wrong type. Valid types are: " + types);
         }
     }
-    
+
     public void addReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "addReference");
         _namedBeanReferences.put(reference._name, reference);
     }
-    
+
     public void removeReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "removeReference");
         _namedBeanReferences.remove(reference._name);
     }
-    
+
     public Collection<NamedBeanReference> getReferences() {
         return _namedBeanReferences.values();
     }
-    
+
     public void clearReferences() {
         _namedBeanReferences.clear();
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*        
+/*
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
@@ -113,9 +101,9 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 }
             }
         }
-*/        
+*/
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -127,7 +115,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public boolean isExternal() {
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() {
@@ -156,18 +144,18 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "ActionListenOnBeans_Long");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
         if (_listenersAreRegistered) return;
-        
+
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
                 namedBeanReference._handle.getBean()
@@ -176,12 +164,12 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
         _listenersAreRegistered = true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         if (!_listenersAreRegistered) return;
-        
+
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
                 namedBeanReference._handle.getBean()
@@ -190,31 +178,31 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
         _listenersAreRegistered = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         getConditionalNG().execute();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
+
+
     public enum NamedBeanType {
         Light(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", () -> { return InstanceManager.getDefault(LightManager.class); }),
         Memory(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", () -> { return InstanceManager.getDefault(MemoryManager.class); }),
         Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> { return InstanceManager.getDefault(SensorManager.class); }),
         Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> { return InstanceManager.getDefault(TurnoutManager.class); });
-        
+
         private final String _name;
         private final Class<? extends NamedBean> _clazz;
         private final String _propertyName;
         private final GetManager _getManager;
         private Manager<? extends NamedBean> _manager;
-        
+
         NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, GetManager getManager) {
             _name = name;
             _clazz = clazz;
@@ -222,14 +210,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _getManager = getManager;
             _manager = _getManager.getManager();
         }
-        
+
         @Override
         public String toString() { return _name; }
-        
+
         public Class<? extends NamedBean> getClazz() { return _clazz; }
-        
+
         public Manager<? extends NamedBean> getManager() { return _manager; }
-        
+
         // This method is used by test classes to reset this enum.
         // Each test resets the InstanceManager so we need to reset the
         // managers in this enum.
@@ -238,50 +226,50 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 type._manager = type._getManager.getManager();
             }
         }
-        
+
         private interface GetManager {
             Manager<? extends NamedBean> getManager();
         }
     }
-    
-    
+
+
     public static class NamedBeanReference {
-        
+
         private String _name;
         private NamedBeanType _type;
         private NamedBeanHandle<? extends NamedBean> _handle;
-        
+
         public NamedBeanReference(String name, NamedBeanType type) {
             _name = name;
             _type = type;
-            
+
             NamedBean bean = _type._manager.getNamedBean(name);
             if (bean != null) {
                 _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
             }
         }
-        
+
         public String getName() {
             return _name;
         }
-        
+
         public void setName(String name) {
             _name = name;
         }
-        
+
         public NamedBeanType getType() {
             return _type;
         }
-        
+
         public void setType(NamedBeanType type) {
             if (type == null) throw new NullPointerException("type is null");
             _type = type;
         }
-        
+
         public NamedBeanHandle<? extends NamedBean> getHandle() {
             return _handle;
         }
-        
+
         public void updateHandle() {
             if (!_name.isEmpty()) {
                 NamedBean bean = _type._manager.getNamedBean(_name);
@@ -296,8 +284,20 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             }
         }
     }
-    
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
+        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
+            if (namedBeanReference._handle != null) {
+                if (bean.equals(namedBeanReference._handle.getBean())) {
+                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+                }
+            }
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeans.class);
-    
+
 }
