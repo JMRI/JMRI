@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.23.5-SNAPSHOT</version>
+    <version>4.23.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -803,7 +803,7 @@
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
-                        </goals>      
+                        </goals>
                         <configuration>
                             <skip>${skipTests}</skip>
                         </configuration>
@@ -1636,7 +1636,7 @@
             <groupId>com.github.sarxos</groupId>
             <artifactId>webcam-capture</artifactId>
             <version>0.3.12</version>
-        </dependency>        
+        </dependency>
     </dependencies>
 
     <repositories>
