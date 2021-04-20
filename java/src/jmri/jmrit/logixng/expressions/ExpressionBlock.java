@@ -337,15 +337,14 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     /**
      * A block is considered to be allocated if the related layout block has use extra color enabled.
+     * @param block The block whose allocation state is requested.
      * @return true if the layout block is using the extra color.
      */
-    public boolean isBlockAllocated() {
+    public boolean isBlockAllocated(Block block) {
         boolean result = false;
-        if (getBlock() != null) {
-            LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(getBlock().getBean());
-            if (layoutBlock != null) {
-                result = layoutBlock.getUseExtraColor();
-            }
+        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
+        if (layoutBlock != null) {
+            result = layoutBlock.getUseExtraColor();
         }
         return result;
     }
@@ -400,7 +399,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
             checkBlockState = BlockState.valueOf(getNewState());
         }
 
-        int currentState = getBlock().getBean().getState();
+        int currentState = block.getState();
         Object currentValue = null;
 
         switch (checkBlockState) {
@@ -413,19 +412,19 @@ public class ExpressionBlock extends AbstractDigitalExpression
                 break;
 
             case Allocated:
-                boolean cuurrentAllocation = isBlockAllocated();
+                boolean cuurrentAllocation = isBlockAllocated(block);
                 currentState = cuurrentAllocation ? BlockState.Allocated.getID() : 0;
                 break;
 
             case ValueMatches:
-                currentValue = getBlock().getBean().getValue();
+                currentValue = block.getValue();
                 currentState = _blockConstant.equals(currentValue) ? BlockState.ValueMatches.getID() : 0;
                 break;
 
             case MemoryMatches:
                 currentState = 0;
                 if (_blockMemoryHandle != null) {
-                    currentValue = getBlock().getBean().getValue();
+                    currentValue = block.getValue();
                     Object memoryObject = _blockMemoryHandle.getBean().getValue();
                     if (memoryObject != null && memoryObject.equals(currentValue)) {
                         currentState = BlockState.MemoryMatches.getID();
