@@ -143,6 +143,7 @@ public final class LnConstants {
     public final static int OPC_MULTI_SENSE_MSG = 0x60; // byte 1
     public final static int OPC_MULTI_SENSE_PRESENT = 0x20; // MSG field: transponder seen
     public final static int OPC_MULTI_SENSE_ABSENT = 0x00; // MSG field: transponder lost
+    public final static int OPC_MULTI_SENSE_RAILCOM_AD = 0x40; // MSG field: RailCom App Dyn
     public final static int OPC_MULTI_SENSE_POWER = 0x60; // MSG field: Power message
 
     public final static int STAT1_SL_SPURGE = 0x80;  /* internal use only, not seen on net */

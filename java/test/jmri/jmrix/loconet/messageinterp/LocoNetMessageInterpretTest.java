@@ -392,6 +392,32 @@ public class LocoNetMessageInterpretTest {
     }
 
     @Test
+    public void testMultiSenseStandardRailCom() {
+        LocoNetMessage l;
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x00, 0x00, 0x03, 0x62});
+        Assert.assertEquals("MSS App Dyn index 7 value 0",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 7 (QoS) with a value of 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x0E, 0x00, 0x03, 0x6C});
+        Assert.assertEquals("MSS App Dyn index 7 value 14",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 7 (QoS) with a value of 14.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x40, 0x6A, 0x4F, 0x7F, 0x35});
+        Assert.assertEquals("MSS App Dyn index 0 value 106",
+                "Transponder address 10239 reporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x40, 0x04, 0x00, 0x03, 0x68});
+        Assert.assertEquals("MSS App Dyn index 0 value 4",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 0 (Speed) with a value of 4.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
+
+    @Test
     public void testMultiSenseLong() {
         LocoNetMessage l;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
@@ -426,14 +452,21 @@ public class LocoNetMessageInterpretTest {
                 "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
                  LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
-        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x4F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
-        Assert.assertEquals("MSL with RailCom App:Dyn",
-                "Transponder address 10 (short) facing West present at LR2048 ().\n",
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x0B, 0x7D, 0x03, 0x0E, 0x0E, 0x23});
+        Assert.assertEquals("MSL App Dyn index 7 value 14",
+                "Transponder address 3 (short) (or long address 16003) facing East present at LR12 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 7 (QoS) with a value of 14.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x1F, 0x4F, 0x7F, 0x40, 0x6A, 0x53});
+        Assert.assertEquals("MSL App Dyn index 0 value 106",
+                "Transponder address 10239 facing West present at LR32 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x6F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
         Assert.assertEquals("MSL with RailCom Reserved",
-                "Transponder address 10 (short) facing West present at LR2048 ().\n",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
