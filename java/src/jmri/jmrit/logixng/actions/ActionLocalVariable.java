@@ -6,19 +6,14 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Memory;
-import jmri.MemoryManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 
 /**
  * This action sets the value of a local variable.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionLocalVariable extends AbstractDigitalAction
@@ -33,12 +28,12 @@ public class ActionLocalVariable extends AbstractDigitalAction
     private ExpressionNode _expressionNode;
     private boolean _listenToMemory = true;
 //    private boolean _listenToMemory = false;
-    
+
     public ActionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -56,16 +51,16 @@ public class ActionLocalVariable extends AbstractDigitalAction
         copy.setListenToMemory(_listenToMemory);
         return manager.registerAction(copy);
     }
-    
+
     public void setLocalVariable(String variableName) {
         assertListenersAreNotRegistered(log, "setLocalVariable");   // No I18N
         _localVariable = variableName;
     }
-    
+
     public String getLocalVariable() {
         return _localVariable;
     }
-    
+
     public void setMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setMemory");  // No I18N
         MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
@@ -77,7 +72,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
             log.warn("memory \"{}\" is not found", memoryName);
         }
     }
-    
+
     public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         assertListenersAreNotRegistered(log, "setMemory");  // No I18N
         _memoryHandle = handle;
@@ -87,7 +82,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
-    
+
     public void setMemory(@CheckForNull Memory memory) {
         assertListenersAreNotRegistered(log, "setMemory");  // No I18N
         if (memory != null) {
@@ -99,7 +94,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
-    
+
     public void removeMemory() {
         assertListenersAreNotRegistered(log, "removeMemory");   // No I18N
         if (_memoryHandle != null) {
@@ -107,16 +102,16 @@ public class ActionLocalVariable extends AbstractDigitalAction
             _memoryHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
-    
+
     public void setVariableOperation(VariableOperation variableOperation) throws ParserException {
         _variableOperation = variableOperation;
         parseFormula();
     }
-    
+
     public VariableOperation getVariableOperation() {
         return _variableOperation;
     }
@@ -125,47 +120,47 @@ public class ActionLocalVariable extends AbstractDigitalAction
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
         _otherLocalVariable = localVariable;
     }
-    
+
     public String getOtherLocalVariable() {
         return _otherLocalVariable;
     }
-    
+
     public void setConstantValue(String constantValue) {
         _constantValue = constantValue;
     }
-    
+
     public String getConstantValue() {
         return _constantValue;
     }
-    
+
     public void setFormula(String formula) throws ParserException {
         _formula = formula;
         parseFormula();
     }
-    
+
     public String getFormula() {
         return _formula;
     }
-    
+
     public void setListenToMemory(boolean listenToMemory) {
         this._listenToMemory = listenToMemory;
     }
-    
+
     public boolean getListenToMemory() {
         return _listenToMemory;
     }
-    
+
     private void parseFormula() throws ParserException {
         if (_variableOperation == VariableOperation.CalculateFormula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _expressionNode = parser.parseExpression(_formula);
         } else {
             _expressionNode = null;
         }
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -183,7 +178,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -195,14 +190,14 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public boolean isExternal() {
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         if (_localVariable == null) return;
-        
+
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-        
+
         switch (_variableOperation) {
             case SetToNull:
                 symbolTable.setValue(_localVariable, null);
@@ -232,7 +227,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     symbolTable.setValue(_localVariable, null);
                 } else {
                     if (_expressionNode == null) return;
-                    
+
                     symbolTable.setValue(_localVariable,
                             _expressionNode.calculate(
                                     getConditionalNG().getSymbolTable()));
@@ -268,7 +263,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         } else {
             copyToMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        
+
         switch (_variableOperation) {
             case SetToNull:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Null", _localVariable);
@@ -284,13 +279,13 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _variableOperation.name());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -301,7 +296,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
             _listenersAreRegistered = true;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -312,40 +307,48 @@ public class ActionLocalVariable extends AbstractDigitalAction
             _listenersAreRegistered = false;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         getConditionalNG().execute();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
+
+
     public enum VariableOperation {
         SetToNull(Bundle.getMessage("ActionLocalVariable_VariableOperation_SetToNull")),
         SetToString(Bundle.getMessage("ActionLocalVariable_VariableOperation_SetToString")),
         CopyVariableToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyVariableToVariable")),
         CopyMemoryToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyMemoryToVariable")),
         CalculateFormula(Bundle.getMessage("ActionLocalVariable_VariableOperation_CalculateFormula"));
-        
+
         private final String _text;
-        
+
         private VariableOperation(String text) {
             this._text = text;
         }
-        
+
         @Override
         public String toString() {
             return _text;
         }
-        
+
     }
-    
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionLocalVariable: bean = {}, report = {}", cdl, report);
+        if (getMemory() != null && bean.equals(getMemory().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariable.class);
-    
+
 }
