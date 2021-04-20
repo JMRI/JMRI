@@ -317,16 +317,18 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
             commentPanel.setOpaque(false);
             commentPanel.add(commentLabel);
+            commentPanel.setAlignmentX(LEFT_ALIGNMENT);
             mainPanel.add(commentPanel);
             
             JPanel panel = new JPanel();
+            panel.setAlignmentX(LEFT_ALIGNMENT);
             mainPanel.add(panel);
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             panel.setOpaque(false);
             
             JLabel socketLabel = new JLabel(socket.getShortDescription());
             Font font = socketLabel.getFont();
-            socketLabel.setFont(font.deriveFont((float)(font.getSize2D()*1.4)));
+            socketLabel.setFont(font.deriveFont((float)(font.getSize2D()*1.7)));
             socketLabel.setForeground(FEMALE_SOCKET_COLORS.get(socket.getClass().getName()));
 //            socketLabel.setForeground(Color.red);
             panel.add(socketLabel);
@@ -366,6 +368,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                             variableData._name,
                             variableData._initalValueType,
                             variableData._initialValueData));
+                    variableLabel.setAlignmentX(LEFT_ALIGNMENT);
                     mainPanel.add(variableLabel);
                 }
             }
