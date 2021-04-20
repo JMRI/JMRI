@@ -24,7 +24,7 @@ import jmri.util.TypeConversionUtil;
  * This action has the Operation enum, similar to EnableLogix and other actions,
  * despite that's not needed since this action only has one option. But it's
  * here in case someone wants to add more options later.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionEntryExit extends AbstractDigitalAction implements VetoableChangeListener {
@@ -41,12 +41,12 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
     private ExpressionNode _operationExpressionNode;
-    
+
     public ActionEntryExit(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -67,7 +67,7 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
         copy.setOperationReference(_operationReference);
         return manager.registerAction(copy);
     }
-    
+
     public void setDestinationPoints(@Nonnull String entryExitName) {
         assertListenersAreNotRegistered(log, "setDestinationPoints");
         DestinationPoints entryExit = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(entryExitName);
@@ -78,19 +78,19 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
             log.error("DestinationPoints \"{}\" is not found", entryExitName);
         }
     }
-    
+
     public void setDestinationPoints(@Nonnull NamedBeanHandle<DestinationPoints> handle) {
         assertListenersAreNotRegistered(log, "setDestinationPoints");
         _destinationPointsHandle = handle;
         InstanceManager.getDefault(LogixManager.class).addVetoableChangeListener(this);
     }
-    
+
     public void setDestinationPoints(@Nonnull DestinationPoints entryExit) {
         assertListenersAreNotRegistered(log, "setDestinationPoints");
         ActionEntryExit.this.setDestinationPoints(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(entryExit.getDisplayName(), entryExit));
     }
-    
+
     public void removeDestinationPoints() {
         assertListenersAreNotRegistered(log, "removeEntryExit");
         if (_destinationPointsHandle != null) {
@@ -98,115 +98,115 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
             _destinationPointsHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<DestinationPoints> getDestinationPoints() {
         return _destinationPointsHandle;
     }
-    
+
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
         _addressing = addressing;
         parseFormula();
     }
-    
+
     public NamedBeanAddressing getAddressing() {
         return _addressing;
     }
-    
+
     public void setReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _reference = reference;
     }
-    
+
     public String getReference() {
         return _reference;
     }
-    
+
     public void setLocalVariable(@Nonnull String localVariable) {
         _localVariable = localVariable;
     }
-    
+
     public String getLocalVariable() {
         return _localVariable;
     }
-    
+
     public void setFormula(@Nonnull String formula) throws ParserException {
         _formula = formula;
         parseFormula();
     }
-    
+
     public String getFormula() {
         return _formula;
     }
-    
+
     private void parseFormula() throws ParserException {
         if (_addressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _expressionNode = parser.parseExpression(_formula);
         } else {
             _expressionNode = null;
         }
     }
-    
+
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
         parseLockFormula();
     }
-    
+
     public NamedBeanAddressing getOperationAddressing() {
         return _operationAddressing;
     }
-    
+
     public void setOperationDirect(Operation state) {
         _operationDirect = state;
     }
-    
+
     public Operation getOperationDirect() {
         return _operationDirect;
     }
-    
+
     public void setOperationReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _operationReference = reference;
     }
-    
+
     public String getOperationReference() {
         return _operationReference;
     }
-    
+
     public void setOperationLocalVariable(@Nonnull String localVariable) {
         _operationLocalVariable = localVariable;
     }
-    
+
     public String getOperationLocalVariable() {
         return _operationLocalVariable;
     }
-    
+
     public void setOperationFormula(@Nonnull String formula) throws ParserException {
         _operationFormula = formula;
         parseLockFormula();
     }
-    
+
     public String getLockFormula() {
         return _operationFormula;
     }
-    
+
     private void parseLockFormula() throws ParserException {
         if (_operationAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _operationExpressionNode = parser.parseExpression(_operationFormula);
         } else {
             _operationExpressionNode = null;
         }
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -224,7 +224,7 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -236,57 +236,57 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
     public boolean isExternal() {
         return true;
     }
-    
+
     private String getNewLock() throws JmriException {
-        
+
         switch (_operationAddressing) {
             case Reference:
                 return ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _operationReference);
-                
+
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-                
+
             case Formula:
                 return _operationExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _operationExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : null;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         DestinationPoints entryExit;
-        
+
 //        System.out.format("ActionEnableLogix.execute: %s%n", getLongDescription());
-        
+
         switch (_addressing) {
             case Direct:
                 entryExit = _destinationPointsHandle != null ? _destinationPointsHandle.getBean() : null;
                 break;
-                
+
             case Reference:
                 String ref = ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _reference);
                 entryExit = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
                         .getNamedBean(ref);
                 break;
-                
+
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 entryExit = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
                 break;
-                
+
             case Formula:
                 entryExit = _expressionNode != null ?
                         InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
@@ -295,21 +295,21 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
                                                 getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        
+
 //        System.out.format("ActionEnableLogix.execute: entryExit: %s%n", entryExit);
-        
+
         if (entryExit == null) {
 //            log.error("entryExit is null");
             return;
         }
-        
+
         String name = (_operationAddressing != NamedBeanAddressing.Direct)
                 ? getNewLock() : null;
-        
+
         Operation oper;
         if ((_operationAddressing == NamedBeanAddressing.Direct)) {
             oper = _operationDirect;
@@ -319,7 +319,7 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
 
         // Variables used in lambda must be effectively final
         Operation theOper = oper;
-        
+
         ThreadingUtil.runOnLayout(() -> {
             switch (theOper) {
                 case SetNXPairEnabled:
@@ -357,7 +357,7 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
     public String getLongDescription(Locale locale) {
         String namedBean;
         String state;
-        
+
         switch (_addressing) {
             case Direct:
                 String entryExitName;
@@ -368,87 +368,96 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
                 }
                 namedBean = Bundle.getMessage(locale, "AddressByDirect", entryExitName);
                 break;
-                
+
             case Reference:
                 namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
                 break;
-                
+
             case LocalVariable:
                 namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
-                
+
             case Formula:
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        
+
         switch (_operationAddressing) {
             case Direct:
                 state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
                 break;
-                
+
             case Reference:
                 state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
                 break;
-                
+
             case LocalVariable:
                 state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
                 break;
-                
+
             case Formula:
                 state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
         }
-        
+
         return Bundle.getMessage(locale, "ActionEntryExit_Long", namedBean, state);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
 
-    
+
     public enum Operation {
         SetNXPairEnabled(Bundle.getMessage("ActionEntryExit_SetNXPairEnabled")),
         SetNXPairDisabled(Bundle.getMessage("ActionEntryExit_SetNXPairDisabled")),
         SetNXPairSegment(Bundle.getMessage("ActionEntryExit_SetNXPairSegment"));
-        
+
         private final String _text;
-        
+
         private Operation(String text) {
             this._text = text;
         }
-        
+
         @Override
         public String toString() {
             return _text;
         }
-        
+
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionEntryExit: bean = {}, report = {}", cdl, report);
+        if (getDestinationPoints() != null && bean.equals(getDestinationPoints().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExit.class);
-    
+
 }
