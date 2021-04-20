@@ -1585,8 +1585,8 @@
     </decoder>
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/Piko/PanePiko2.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/Piko/PaneId2Advanced.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PaneId2Advanced.xml"/>
     <!-- IntelliDrive2, overrides some CVs set above -->
     <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>-->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
