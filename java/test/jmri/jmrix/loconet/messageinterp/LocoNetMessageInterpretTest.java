@@ -394,7 +394,6 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testMultiSenseStandardRailCom() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
 
         l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x00, 0x00, 0x03, 0x62});
         Assert.assertEquals("MSS App Dyn index 7 value 0",
