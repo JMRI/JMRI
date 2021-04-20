@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.3ish+jake+20210331T2324Z+R0ffcd740ab on Wed Mar 31 19:25:07 EDT 2021-->
-  <decoderIndex version="1048">
+  <!--Written by JMRI version 4.23.4ish+jake+20210419T1419Z+R9c5c5a57a2 on Mon Apr 19 10:20:41 EDT 2021-->
+  <decoderIndex version="1050">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -205,6 +205,272 @@
           <output name="4" label="Violet" connection="wire" />
           <output name="5" label="Brown" connection="wire" />
           <size length="1.0" width="0.8" height="0.2" units="inches" />
+        </model>
+      </family>
+      <family name="LocoCruiser 1.0" mfg="ANE Model Co, Ltd" lowVersionID="1" highVersionID="1" comment="ANE Model LocoCruiser Version 1" file="ANE_Model_LocoCruiser_V1.xml">
+        <model model="LC101" numOuts="5" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" comment="For HO Scale Locomotives, with NEM 652 / NMRA 8 Pin Medium Plug">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <size length="23.5" width="15" height="5" units="mm" />
+        </model>
+        <model model="LC102" numOuts="5" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="Wires/NEM652" comment="For HO Scale Locomotives, with Wires">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <size length="23.5" width="15" height="5" units="mm" />
+        </model>
+      </family>
+      <family name="LocoCruiser 2.0" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" comment="ANE Model LocoCruiser Version 2.01" file="ANE_Model_LocoCruiser_V201.xml">
+        <model model="LC201" replacementModel="LC201" replacementFamily="LocoCruiser" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" productID="LC201" comment="For HO Scale Locomotives, with 9 Pin Plug and NEM 652 / NMRA 8 Pin Medium Plug">
+          <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA" />
+          <size length="28" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LC202" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="Wires/NEM652" productID="LC202" comment="For HO Scale Locomotives, with 9 Pin Plug and Wires">
+          <output name="1" label="F0f|(White)" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA" />
+          <size length="28" width="15" height="5" units="mm" />
+        </model>
+        <model model="LC203" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="21MTC" productID="LC203" comment="For HO Scale Locomotives, with 21MTC Plug">
+          <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="plug" maxcurrent="100 mA" />
+          <size length="28" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LC204" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="other" productID="LC204" comment="For Atlas and Athearn HO Scale Diesel Locomotives, Board replacement, requires soldering">
+          <output name="1" label="F0f|(White)" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA" />
+          <size length="72" width="17" height="3" units="mm" />
+        </model>
+        <model model="LC205" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="21MTC" numOuts="5" productID="LC205" comment="For HO Scale Locomotives, with 21MTC Plug">
+          <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <size length="28" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LC206" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" numOuts="5" productID="LC206" comment="For HO Scale Locomotives, with 9 Pin Plug and NEM 652 / NMRA 8 Pin Medium Plug">
+          <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <size length="28" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LC301" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" numOuts="3" productID="LC301" connector="NEM651" comment="For N Scale Locomotives, with NEM 651 / NMRA 6 Pin Small Plug">
+          <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <!-- ToDo: size length="x" width="x" height="x" units="mm"/ -->
+        </model>
+        <model model="LC302" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" productID="LC302" connector="DropIn" comment="For Kato N Scale Diesel Locomotives, Board replacement">
+          <output name="1" label="F0f|(White)" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA" />
+          <size length="55" width="14" height="2" units="mm" />
+        </model>
+        <model model="LC303" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" connector="other" productID="LC303" comment="For N Scale Passenger Motor Cars, Board replacement, requires soldering">
+          <output name="1" label="F0f|(White)" connection="LED" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="LED" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="LED" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA" />
+          <size length="115" width="15" height="4" units="mm" />
+        </model>
+        <model model="DL-28" maxInputVolts="20V" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="HO" connector="other" productID="DL-28" comment="For H0e Scale Alishan Forest Railway DL-28 Diesel Locomotives, Board replacement, with Plugs">
+          <output name="1" label="F0f|(White)" connection="LED" maxcurrent="100 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="Motor|braking">
+            <!-- Virtual Output -->
+            <label xml:lang="de">Motor|Bremse</label>
+            <label xml:lang="nl">Motor|Remme</label>
+          </output>
+          <output name="4" label="F1/AUX1|Green" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F1/AUX1|Grün</label>
+            <label xml:lang="nl">F1/AUX1|Groen</label>
+          </output>
+          <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+            <label xml:lang="de">F2/AUX2|Braun</label>
+            <label xml:lang="nl">F2/AUX2|Bruin</label>
+          </output>
+          <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA" />
+          <size length="58" width="17" height="4" units="mm" />
         </model>
       </family>
       <family name="ARNOLD Digital" mfg="Arnold - Rivarossi" file="Arnold.xml">
@@ -472,7 +738,27 @@
         </model>
       </family>
       <family name="E-Z Command decoders" mfg="Bachmann Trains" file="Bachmann_EZDCC.xml">
-        <model model="2 function decoder (36-552)" numOuts="2" numFns="0" maxMotorCurrent="1A" formFactor="HO" connector="NMRAmedium" lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04">
+        <model model="N Scale EMD F7A" numOuts="1" maxMotorCurrent="1A" formFactor="N" connector="DropIn" lowVersionID="46">
+          <output name="1" label="White" connection="LED">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="Dim" />
+          <size length="80" width="10" height="5" units="mm" />
+        </model>
+        <model model="N Scale EMD F7B" numOuts="0" maxMotorCurrent="1A" formFactor="N" connector="DropIn" lowVersionID="46">
+          <size length="80" width="10" height="5" units="mm" />
+        </model>
+        <model model="2 function decoder (36-552)" numOuts="2" maxMotorCurrent="1A" formFactor="HO" connector="NMRAmedium" lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04">
+          <output name="1" label="White" connection="LED">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow" connection="LED">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="Dim" />
           <size length="25" width="16" height="5" units="mm" />
         </model>
       </family>
@@ -7806,7 +8092,7 @@
         </model>
       </family>
       <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sd_SD18A.xml">
-        <model model="SD18A (firmware 1.00+)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.00" comment="SD18A with original firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <model model="SD18A (firmware 1.00+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.00" comment="SD18A with original firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7823,25 +8109,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="SD18A (firmware 1.01+)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.01" comment="SD18A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
-          <output name="1" label="Front|Light" maxcurrent="150mA" />
-          <output name="2" label="Rear|Light" maxcurrent="150mA" />
-          <output name="3" label="AUX|1" maxcurrent="300mA" />
-          <output name="4" label="AUX|2" maxcurrent="300mA" />
-          <output name="5" label="|" />
-          <!-- not available for this decoder -->
-          <output name="6" label="|" />
-          <!-- not available for this decoder -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <size length="25.0" width="9.5" height="2.8" units="mm" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD18A (firmware 1.02+)" lowVersionID="74" highVersionID="74" numOuts="4" numFns="16" productID="SD18A_1.02" comment="SD18A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <model model="SD18A (firmware 1.01+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.01" comment="SD18A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7859,7 +8127,25 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SD18A (firmware 1.03+)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD18A_1.03" comment="SD18A with October 2014 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <model model="SD18A (firmware 1.02+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="4" numFns="16" productID="SD18A_1.02" comment="SD18A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+          <output name="1" label="Front|Light" maxcurrent="150mA" />
+          <output name="2" label="Rear|Light" maxcurrent="150mA" />
+          <output name="3" label="AUX|1" maxcurrent="300mA" />
+          <output name="4" label="AUX|2" maxcurrent="300mA" />
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <size length="25.0" width="9.5" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD18A (firmware 1.03+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD18A_1.03" comment="SD18A with October 2014 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7877,7 +8163,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SD18A (firmware 1.04+)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD18A_1.04" comment="SD18A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <model model="SD18A (firmware 1.04+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD18A_1.04" comment="SD18A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7897,7 +8183,7 @@
         </model>
       </family>
       <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sd_SD21A.xml">
-        <model model="SD21A (firmware 1.01+)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+        <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7913,7 +8199,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SD21A (firmware 1.02+)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+        <model model="SD21A (firmware 1.02+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7929,7 +8215,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SD21A (firmware 1.03+)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD21A_1.03" comment="SD21A with October 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+        <model model="SD21A (firmware 1.03+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD21A_1.03" comment="SD21A with October 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -7945,7 +8231,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SD21A (firmware 1.04+)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+        <model model="SD21A (firmware 1.04+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
           <output name="2" label="Rear|Light" maxcurrent="150mA" />
           <output name="3" label="AUX|1" maxcurrent="300mA" />
@@ -37405,6 +37691,170 @@
           <output name="2" label="Yellow" />
           <output name="1" label="Green" />
           <output name="2" label="Violet" />
+        </model>
+      </family>
+      <family name="Zimo Early model (1996-97)" mfg="Zimo" file="Zimo_MX40.xml">
+        <model model="Zimo MX40/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="3" label="Output 2">
+            <label xml:lang="de">Ausgang 2</label>
+            <label xml:lang="nl">Uitgang 2</label>
+          </output>
+          <output name="4" label="Output 3">
+            <label xml:lang="de">Ausgang 3</label>
+            <label xml:lang="nl">Uitgang 3</label>
+          </output>
+          <output name="5" label="Output 4">
+            <label xml:lang="de">Ausgang 4</label>
+            <label xml:lang="nl">Uitgang 4</label>
+          </output>
+          <output name="6" label="Output 5">
+            <label xml:lang="de">Ausgang 5</label>
+            <label xml:lang="nl">Uitgang 5</label>
+          </output>
+          <size length="21" width="12" height="5.5" units="mm" />
+        </model>
+        <model model="Zimo MX40L/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="3" label="Output 2">
+            <label xml:lang="de">Ausgang 2</label>
+            <label xml:lang="nl">Uitgang 2</label>
+          </output>
+          <output name="4" label="Output 3">
+            <label xml:lang="de">Ausgang 3</label>
+            <label xml:lang="nl">Uitgang 3</label>
+          </output>
+          <output name="5" label="Output 4">
+            <label xml:lang="de">Ausgang 4</label>
+            <label xml:lang="nl">Uitgang 4</label>
+          </output>
+          <output name="6" label="Output 5">
+            <label xml:lang="de">Ausgang 5</label>
+            <label xml:lang="nl">Uitgang 5</label>
+          </output>
+          <size length="26" width="12" height="5.5" units="mm" />
+        </model>
+        <model model="Zimo MX40R/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="NEM652">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="3" label="Output 2">
+            <label xml:lang="de">Ausgang 2</label>
+            <label xml:lang="nl">Uitgang 2</label>
+          </output>
+          <output name="4" label="Output 3">
+            <label xml:lang="de">Ausgang 3</label>
+            <label xml:lang="nl">Uitgang 3</label>
+          </output>
+          <output name="5" label="Output 4">
+            <label xml:lang="de">Ausgang 4</label>
+            <label xml:lang="nl">Uitgang 4</label>
+          </output>
+          <output name="6" label="Output 5">
+            <label xml:lang="de">Ausgang 5</label>
+            <label xml:lang="nl">Uitgang 5</label>
+          </output>
+          <size length="21" width="12" height="5.5" units="mm" />
+        </model>
+        <model model="Zimo MX41/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="3" label="Output 2">
+            <label xml:lang="de">Ausgang 2</label>
+            <label xml:lang="nl">Uitgang 2</label>
+          </output>
+          <output name="4" label="Output 3">
+            <label xml:lang="de">Ausgang 3</label>
+            <label xml:lang="nl">Uitgang 3</label>
+          </output>
+          <output name="5" label="Output 4">
+            <label xml:lang="de">Ausgang 4</label>
+            <label xml:lang="nl">Uitgang 4</label>
+          </output>
+          <output name="6" label="Output 5">
+            <label xml:lang="de">Ausgang 5</label>
+            <label xml:lang="nl">Uitgang 5</label>
+          </output>
+          <size length="21" width="12" height="5.5" units="mm" />
+        </model>
+        <model model="Zimo MX41L/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="3" label="Output 2">
+            <label xml:lang="de">Ausgang 2</label>
+            <label xml:lang="nl">Uitgang 2</label>
+          </output>
+          <output name="4" label="Output 3">
+            <label xml:lang="de">Ausgang 3</label>
+            <label xml:lang="nl">Uitgang 3</label>
+          </output>
+          <output name="5" label="Output 4">
+            <label xml:lang="de">Ausgang 4</label>
+            <label xml:lang="nl">Uitgang 4</label>
+          </output>
+          <output name="6" label="Output 5">
+            <label xml:lang="de">Ausgang 5</label>
+            <label xml:lang="nl">Uitgang 5</label>
+          </output>
+          <size length="26" width="12" height="5.5" units="mm" />
+        </model>
+        <model model="Zimo MX41R/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="NEM652">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiss</label>
+            <label xml:lang="nl">Wit</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+            <label xml:lang="nl">Geel</label>
+          </output>
+          <output name="3" label="Output 2">
+            <label xml:lang="de">Ausgang 2</label>
+            <label xml:lang="nl">Uitgang 2</label>
+          </output>
+          <output name="4" label="Output 3">
+            <label xml:lang="de">Ausgang 3</label>
+            <label xml:lang="nl">Uitgang 3</label>
+          </output>
+          <output name="5" label="Output 4">
+            <label xml:lang="de">Ausgang 4</label>
+            <label xml:lang="nl">Uitgang 4</label>
+          </output>
+          <output name="6" label="Output 5">
+            <label xml:lang="de">Ausgang 5</label>
+            <label xml:lang="nl">Uitgang 5</label>
+          </output>
+          <size length="21" width="12" height="5.5" units="mm" />
         </model>
       </family>
       <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" file="Zimo_MX61_1.xml">
