@@ -11,6 +11,8 @@ import jmri.jmrit.logixng.Module;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 
 /**
  * Class providing the basic logic of the LogixNG_Manager interface.
@@ -140,15 +142,26 @@ public class DefaultModuleManager extends AbstractManager<Module>
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, Locale.getDefault(), writer, indent, lineNumber);
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         for (Module module : getNamedBeanSet()) {
-            module.printTree(settings, locale, writer, indent, "");
+            module.printTree(settings, locale, writer, indent, "", lineNumber);
             writer.println();
         }
         InstanceManager.getDefault(ModuleManager.class);

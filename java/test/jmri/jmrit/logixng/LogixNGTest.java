@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -384,7 +385,7 @@ public class LogixNGTest {
                 .append("......! A").append(newLine)
                 .append(".........Many ::: Log error").append(newLine)
                 .append("............! A1").append(newLine)
-                .append("...............If Then Else. Trigger action ::: Log error").append(newLine)
+                .append("...............If Then Else. Execute on change ::: Log error").append(newLine)
                 .append("..................? If").append(newLine)
                 .append(".....................Socket not connected").append(newLine)
                 .append("..................! Then").append(newLine)
@@ -399,7 +400,7 @@ public class LogixNGTest {
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         setupInitialConditionalNGTree(conditionalNG);
-        logixNG.printTree(new PrintWriter(writer), "...");
+        logixNG.printTree(new PrintWriter(writer), "...", new MutableInt(0));
         String resultStr = writer.toString();
 /*        
         System.err.format("=======================================%n");
@@ -473,7 +474,7 @@ public class LogixNGTest {
         Assert.assertTrue("description is correct", "Many".equals(many.getLongDescription()));
         MaleSocket ifThen = many.getChild(0).getConnectedSocket();
 //        System.err.format("aa: %s%n", ifThen.getLongDescription());
-        Assert.assertTrue("description is correct", "If Then Else. Trigger action".equals(ifThen.getLongDescription()));
+        Assert.assertTrue("description is correct", "If Then Else. Execute on change".equals(ifThen.getLongDescription()));
         systemName = InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName();
         DigitalExpressionBean expression = new ExpressionTurnout(systemName, "An expression for test");  // NOI18N
         MaleSocket digitalExpressionBean = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);

@@ -57,7 +57,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Continuous action ::: Log error%n" +
+                "         If Then Else. Always execute ::: Log error%n" +
                 "            ? If%n" +
                 "               Local variable myVar is equal to \"\" ::: Log error%n" +
                 "                  ::: Local variable \"myVar\", init to String \"\"%n" +
@@ -467,7 +467,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         logixNG.addConditionalNG(conditionalNG);
         
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.ContinuousAction);
+        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);

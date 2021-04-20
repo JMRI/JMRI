@@ -2,6 +2,9 @@ package jmri.jmrit.logixng;
 
 import java.util.Map;
 
+import jmri.Manager;
+import jmri.NamedBean;
+
 /**
  * Manager for FemaleSockets
  * 
@@ -14,6 +17,8 @@ public interface FemaleSocketManager {
         public String getName();
         
         public String getDescr();
+        
+        public BaseManager<? extends MaleSocket> getManager();
         
         public FemaleSocket createSocket(Base parent, FemaleSocketListener listener, String name);
         
