@@ -18,7 +18,7 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * This action sets the state of a light.
- *
+ * 
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ActionLight extends AbstractDigitalAction implements VetoableChangeListener {
@@ -35,12 +35,12 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
-
+    
     public ActionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-
+    
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -61,7 +61,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         copy.setStateReference(_stateReference);
         return manager.registerAction(copy);
     }
-
+    
     public void setLight(@Nonnull String lightName) {
         assertListenersAreNotRegistered(log, "setLight");
         Light light = InstanceManager.getDefault(LightManager.class).getLight(lightName);
@@ -72,19 +72,19 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             log.warn("light \"{}\" is not found", lightName);
         }
     }
-
+    
     public void setLight(@Nonnull NamedBeanHandle<Light> handle) {
         assertListenersAreNotRegistered(log, "setLight");
         _lightHandle = handle;
         InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
     }
-
+    
     public void setLight(@Nonnull Light light) {
         assertListenersAreNotRegistered(log, "setLight");
         setLight(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(light.getDisplayName(), light));
     }
-
+    
     public void removeLight() {
         assertListenersAreNotRegistered(log, "setLight");
         if (_lightHandle != null) {
@@ -92,115 +92,115 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             _lightHandle = null;
         }
     }
-
+    
     public NamedBeanHandle<Light> getLight() {
         return _lightHandle;
     }
-
+    
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
         _addressing = addressing;
         parseFormula();
     }
-
+    
     public NamedBeanAddressing getAddressing() {
         return _addressing;
     }
-
+    
     public void setReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _reference = reference;
     }
-
+    
     public String getReference() {
         return _reference;
     }
-
+    
     public void setLocalVariable(@Nonnull String localVariable) {
         _localVariable = localVariable;
     }
-
+    
     public String getLocalVariable() {
         return _localVariable;
     }
-
+    
     public void setFormula(@Nonnull String formula) throws ParserException {
         _formula = formula;
         parseFormula();
     }
-
+    
     public String getFormula() {
         return _formula;
     }
-
+    
     private void parseFormula() throws ParserException {
         if (_addressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-
+            
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _expressionNode = parser.parseExpression(_formula);
         } else {
             _expressionNode = null;
         }
     }
-
+    
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
         parseStateFormula();
     }
-
+    
     public NamedBeanAddressing getStateAddressing() {
         return _stateAddressing;
     }
-
+    
     public void setBeanState(LightState state) {
         _lightState = state;
     }
-
+    
     public LightState getBeanState() {
         return _lightState;
     }
-
+    
     public void setStateReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _stateReference = reference;
     }
-
+    
     public String getStateReference() {
         return _stateReference;
     }
-
+    
     public void setStateLocalVariable(@Nonnull String localVariable) {
         _stateLocalVariable = localVariable;
     }
-
+    
     public String getStateLocalVariable() {
         return _stateLocalVariable;
     }
-
+    
     public void setStateFormula(@Nonnull String formula) throws ParserException {
         _stateFormula = formula;
         parseStateFormula();
     }
-
+    
     public String getStateFormula() {
         return _stateFormula;
     }
-
+    
     private void parseStateFormula() throws ParserException {
         if (_stateAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-
+            
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _stateExpressionNode = parser.parseExpression(_stateFormula);
         } else {
             _stateExpressionNode = null;
         }
     }
-
+    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -218,7 +218,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             }
         }
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -230,57 +230,57 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     public boolean isExternal() {
         return true;
     }
-
+    
     private String getNewState() throws JmriException {
-
+        
         switch (_stateAddressing) {
             case Reference:
                 return ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _stateReference);
-
+                
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-
+                
             case Formula:
                 return _stateExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _stateExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : null;
-
+                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         Light light;
-
+        
 //        System.out.format("ActionLight.execute: %s%n", getLongDescription());
-
+        
         switch (_addressing) {
             case Direct:
                 light = _lightHandle != null ? _lightHandle.getBean() : null;
                 break;
-
+                
             case Reference:
                 String ref = ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _reference);
                 light = InstanceManager.getDefault(LightManager.class)
                         .getNamedBean(ref);
                 break;
-
+                
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 light = InstanceManager.getDefault(LightManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
                 break;
-
+                
             case Formula:
                 light = _expressionNode != null ?
                         InstanceManager.getDefault(LightManager.class)
@@ -289,28 +289,28 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                                                 getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
-
+                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-
+        
 //        System.out.format("ActionLight.execute: light: %s%n", light);
-
+        
         if (light == null) {
 //            log.warn("light is null");
             return;
         }
-
+        
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
                 ? getNewState() : null;
-
+        
         LightState state;
         if ((_stateAddressing == NamedBeanAddressing.Direct)) {
             state = _lightState;
         } else {
             state = LightState.valueOf(name);
         }
-
+        
         ThreadingUtil.runOnLayout(() -> {
             if (state == LightState.Toggle) {
                 if (light.getCommandedState() == Turnout.CLOSED) {
@@ -343,7 +343,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     public String getLongDescription(Locale locale) {
         String namedBean;
         String state;
-
+        
         switch (_addressing) {
             case Direct:
                 String lightName;
@@ -354,123 +354,114 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                 }
                 namedBean = Bundle.getMessage(locale, "AddressByDirect", lightName);
                 break;
-
+                
             case Reference:
                 namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
                 break;
-
+                
             case LocalVariable:
                 namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
-
+                
             case Formula:
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
-
+                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-
+        
         switch (_stateAddressing) {
             case Direct:
                 state = Bundle.getMessage(locale, "AddressByDirect", _lightState._text);
                 break;
-
+                
             case Reference:
                 state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
                 break;
-
+                
             case LocalVariable:
                 state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
                 break;
-
+                
             case Formula:
                 state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
                 break;
-
+                
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
         }
-
+        
         return Bundle.getMessage(locale, "Light_Long", namedBean, state);
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
 
-
+    
     // This constant is only used internally in LightState but must be outside
     // the enum.
     private static final int TOGGLE_ID = -1;
-
-
+    
+    
     public enum LightState {
         Off(Light.OFF, Bundle.getMessage("StateOff")),
         On(Light.ON, Bundle.getMessage("StateOn")),
         Toggle(TOGGLE_ID, Bundle.getMessage("LightToggleStatus"));
-
+        
         private final int _id;
         private final String _text;
-
+        
         private LightState(int id, String text) {
             this._id = id;
             this._text = text;
         }
-
+        
         static public LightState get(int id) {
             switch (id) {
                 case Light.OFF:
                     return Off;
-
+                    
                 case Light.ON:
                     return On;
-
+                    
                 case TOGGLE_ID:
                     return Toggle;
-
+                    
                 default:
                     throw new IllegalArgumentException("invalid light state");
             }
         }
-
+        
         public int getID() {
             return _id;
         }
-
+        
         @Override
         public String toString() {
             return _text;
         }
-
+        
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionLight: bean = {}, report = {}", cdl, report);
-        if (getLight() != null && bean.equals(getLight().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-    }
-
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLight.class);
-
+    
 }
