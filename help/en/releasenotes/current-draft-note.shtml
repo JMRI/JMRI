@@ -266,7 +266,7 @@
 
         <h4>PIKO</h4>
             <ul>
-                <li>Added support for Piko SmartDecoder 4.1 Next 18 Series used in N and TT engines.</li>
+                <li>Added support for Piko SmartDecoder 4.1 Next 18 Series used in N and TT scale engines.</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
