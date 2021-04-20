@@ -7,11 +7,25 @@
 # - Display sample text for releaselist file
 # - Display sample text for JMRI release note
 
-# Download a test release from Jenkins and unpack
-curl -o release.zip "https://builds.jmri.org/jenkins/job/testreleases/job/$1/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+# The script can't know the full name of the individual files, as they contain the
+# Git SHA of the commit.
 
-rm release/JMRI*
-unzip -j -d release release.zip
+# if files present, then use them
+macfile=release/JMRI.${1}+*.dmg
+linfile=release/JMRI.${1}+*.tgz
+winfile=release/JMRI.${1}+*.exe
+
+if [ -r $macfile ] && [ -r $linfile ] && [ -r $winfile ]; then
+    echo "found files, skipping curl"
+else
+    # Download release from Jenkins and unpack
+    if ! curl -o release.zip "https://builds.jmri.org/jenkins/job/testreleases/job/$1/lastSuccessfulBuild/artifact/*zip*/archive.zip"; then
+        exit
+    fi
+    rm -f release/JMRI.${1}*
+    unzip -j -d release release.zip
+fi
+
 cd release
 
 # Decide command to create checksums
@@ -38,7 +52,7 @@ echo '--------------------------------------------------------------------------
 echo "  ${1}:"
 echo "   tgz: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"
 echo "   dmg: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\"
-echo "   exe: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\" 
+echo "   exe: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\"
 echo '----------------------------------------------------------------------------------'
 
 echo
