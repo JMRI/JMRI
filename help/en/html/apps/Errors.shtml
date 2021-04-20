@@ -21,8 +21,8 @@
       <!-- Page Body -->
 
       <h1>JMRI Applications: Error Messages and Codes</h1>
-      <!-- THIS WILL BE THE MASTER COPY: In process of removing copies from help/en/manual/DecoderPro3/Error.shtml and help/en/html/tools/programmer/ 
-      and help/en/html/setup/Errors.shtml   @jerryg2003 08/07/2020 -->
+ 
+ <!-- THIS FILE SHOULD BE CONSIDERED THE MASTER COPY OF ERROR MESSAGE HELP: One almost-copy remains in help/en/manual/DecoderPro3/Error.shtml   @jerryg2003 2021/01/05 -->
 
       <p>Various things can go wrong when JMRI tries to work with
       your DCC command station to program a DCC decoder. This page

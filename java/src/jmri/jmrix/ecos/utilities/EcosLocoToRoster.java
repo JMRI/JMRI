@@ -657,14 +657,14 @@ public class EcosLocoToRoster implements EcosListener {
                 familyElement = null;
             }
             String famComment = decoders.get(i).getFamilyComment();
-            String verString = decoders.get(i).getVersionsAsString();
+            String verString = decoders.get(i).getVersionsAsString(); // not null
             String hoverText = "";
-            if (famComment == null || famComment.equals("")) {
-                if (verString != null && !verString.equals("")) {
+            if (famComment == null || famComment.isEmpty()) {
+                if (!verString.isEmpty()) {
                     hoverText = "CV7=" + verString;
                 }
             } else {
-                if (verString == null || verString.equals("")) {
+                if (verString.isEmpty()) {
                     hoverText = famComment;
                 } else {
                     hoverText = famComment + "  CV7=" + verString;
@@ -794,7 +794,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(mfgID);
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromID(mfgID);
             int intMfgID = Integer.parseInt(mfgID);
             int intModelID = Integer.parseInt(modelID);
             if (mfg == null) {

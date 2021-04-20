@@ -44,11 +44,7 @@ public class SerialAddressTest {
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
-        jmri.LightManager lgt = new SerialLightManager(memo) {
-            @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.LightManager lgt = new SerialLightManager(memo);
         jmri.InstanceManager.setLightManager(lgt);
 
         jmri.SensorManager s = new SerialSensorManager(memo);

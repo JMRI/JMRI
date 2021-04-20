@@ -72,9 +72,9 @@ abstract public class Siglet {
         }
 
         defineIO(); // user method that will load inputs
-        if (inputs == null || inputs.length <= 0) {
+        if (inputs == null || inputs.length < 1 || (inputs.length == 1 && inputs[0] == null)) {
             log.error("Siglet start invoked {}, but no inputs provided", ((name!=null && !name.isEmpty()) ? "for \""+name+"\"" : "(without a name)") );
-            return;
+            throw new IllegalArgumentException("No defineIO inputs");
         }
 
         pq = new PropertyChangeEventQueue(inputs);

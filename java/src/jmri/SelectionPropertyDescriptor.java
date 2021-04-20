@@ -2,6 +2,8 @@ package jmri;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 
 /**
@@ -21,7 +23,11 @@ public abstract class SelectionPropertyDescriptor extends NamedBeanPropertyDescr
      * @param optionTips Tool-tips for options of the property in String array.
      * @param defVal Default property value.
      */
-    public SelectionPropertyDescriptor(String key, String[] options, String[] optionTips, String defVal ) {
+    public SelectionPropertyDescriptor(
+            @Nonnull String key,
+            @Nonnull String[] options,
+            @Nonnull String[] optionTips,
+            @Nonnull String defVal ) {
         super(key, defVal );
         values = options;
         valueToolTips = optionTips;

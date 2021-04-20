@@ -2,6 +2,7 @@ package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * Find Reporter references.
@@ -19,7 +20,7 @@ public class ReporterWhereUsed {
     static public JTextArea getWhereUsed(NamedBean reporter) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameReporter"));  // NOI18N
-        textArea.append(Bundle.getMessage("ReferenceTitle", label, reporter.getDisplayName()));  // NOI18N
+        textArea.append(Bundle.getMessage("ReferenceTitle", label, reporter.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", reporter.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkBlocks(reporter));

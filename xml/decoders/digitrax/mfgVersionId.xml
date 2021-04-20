@@ -44,7 +44,7 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="7" readOnly="yes" item="Decoder Version">
+  <variable CV="7" item="Decoder Version" readOnly="yes">
     <decVal/>
     <label>Version ID</label>
     <label xml:lang="it">ID Versione</label>

@@ -20,11 +20,11 @@ import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests for the Warrant creation
+ * Tests for Warrant creation.
  *
  * @author Pete Cressman 2015
  *
- * todo - test error conditions
+ * TODO - test error conditions
  */
 public class WarrantTest {
 
@@ -73,7 +73,7 @@ public class WarrantTest {
             sEast.setState(Sensor.ACTIVE);
             sNorth.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.ACTIVE);
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         bWest.allocate(warrant);
         bEast.allocate(warrant);
@@ -83,7 +83,7 @@ public class WarrantTest {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         bWest.deAllocate(warrant);
         bEast.deAllocate(warrant);
@@ -97,7 +97,7 @@ public class WarrantTest {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
@@ -125,7 +125,7 @@ public class WarrantTest {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
@@ -221,7 +221,7 @@ public class WarrantTest {
 
     }
 
-    class WarrantListener implements PropertyChangeListener {
+    static class WarrantListener implements PropertyChangeListener {
 
         Warrant warrant;
 
@@ -335,7 +335,7 @@ public class WarrantTest {
         sNorth = null;
         sSouth = null;
         warrant = null;
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+
         JUnitUtil.tearDown();
     }
 

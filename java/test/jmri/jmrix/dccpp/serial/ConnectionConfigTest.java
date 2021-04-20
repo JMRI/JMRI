@@ -17,7 +17,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
-        cc = new ConnectionConfig();
+        cc = new ConnectionConfig(new DCCppAdapter()); // adapter assumed in test
    }
 
    @AfterEach

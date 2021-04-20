@@ -43,6 +43,7 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

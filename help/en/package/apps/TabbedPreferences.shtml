@@ -59,7 +59,7 @@
       this section: The <strong>Save</strong> button!</p>
 
       <p><img src="images/PrefsRestart.png" height="112" width=
-      "390" align="right">Be sure to click "Save" when leaving
+      "390" align="right" alt="Restart">Be sure to click "Save" when leaving
       this window. Your changes to the Preferences don't take
       effect until the program is stopped and restarted, so the
       program will prompt you to do that after saving the
@@ -105,16 +105,16 @@
       </a>
       <p>If you are using multiple connections, e.g. a LocoNet Connection and a
           MERG Connection, the Defaults pane lets you select which connection
-          you want to use for a particular purpose. For example, you 
+          you want to use for a particular purpose. For example, you
           can select one connection (LocoNet in the figure) for train throttles
           and consists, while using a different one (SPROG in the figure) for the
           service mode programming track.</p>
       <p>For most Layout objects there is no default connection.
-          Every time you create a Turnout, Signal or Sensor, 
+          Every time you create a Turnout, Signal or Sensor,
           you can choose which system ( eg. LocoNet or MERG ) it belongs to.</p>
-      <p>The Internal connection can be selected as a default. 
+      <p>The Internal connection can be selected as a default.
           To avoid a common mis-configuration, JMRI applications will notify you if the
-          Internal connection is selected across all the columns. 
+          Internal connection is selected across all the columns.
           If you choose to use an all-Internal set of defaults and want to silence this
           notification, edit the profile properties, setting the property
           <code>jmri-managers.allInternalDefaults</code> to <em>true</em>.</p>
@@ -184,7 +184,7 @@
 
         <dt>Open file</dt>
 
-        <dd>Automatically load a Panel file or Configuration file
+        <dd>Automatically load a PanelPro xml data file or Configuration file
         when the program starts up. You can load as many files
         as you'd like; each will be completely loaded before
         the next is started.</dd>
@@ -208,9 +208,9 @@
       <a name="Display" id="Display"></a>
       <h2>Display</h2>
 
-      <a href="images/PrefsGui4_15.png"><img src=
-      "images/PrefsGui4_15.png" height="194" width="478" align=
-      "right" alt="JMRI v4.15 GUI Prefs tab"></a>
+      <a href="images/PrefsGui4_23.png"><img src=
+      "images/PrefsGui4_23.png" height="217" width="432" align=
+      "right" alt="JMRI v4.23 GUI Prefs tab"></a>
 
       <dl>
         <dt>GUI<a name="Gui" id="Gui"></a></dt>
@@ -248,6 +248,8 @@
           <li>Whether you want to use the values saved in a panel xml file
           instead of the standard location and size process for JMRI windows.
           <span class="since">since 4.15.6</span></li>
+          <li>Limit the size of combo box lists.  This can be useful for large screens.
+          <span class="since">since 4.23.1</span></li>
           <li>How long tooltips (where available) should be shown.</li>
           </ul>
         </dd>
@@ -623,7 +625,7 @@
       The Throttle Factor set here is a global default.</p>
 
       <p>For more information on Warrant speed parameters, see
-      <a href="../jmri/jmrit/logix/speedChanges.shtml">Modifying
+      <a href="../jmri/jmrit/logix/SpeedChanges.shtml">Modifying
       Warrant Speeds</a> and follow its links.</p>
 
       <h2>Merging Speed Profiles</h2>

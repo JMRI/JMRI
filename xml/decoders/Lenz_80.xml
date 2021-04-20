@@ -58,7 +58,7 @@
         <label xml:lang="de">Decel</label>
         <comment xml:lang="de">Range 1-31</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="60">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="60">
         <decVal/>
         <label>Decoder Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

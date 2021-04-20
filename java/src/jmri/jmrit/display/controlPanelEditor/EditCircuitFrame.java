@@ -133,7 +133,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         contentPane.add(_pickTable.getButtonPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.BLOCK_LENGTH);
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.BLOCK_LENGTH, "TooltipPathLength");
         _lengthPanel.changeUnits();
         _lengthPanel.setLength(_homeBlock.getLengthMm());
         contentPane.add(_lengthPanel);

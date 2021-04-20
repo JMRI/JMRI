@@ -99,7 +99,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 36 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
-      <variable CV="7" readOnly="yes" default="36">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="36">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

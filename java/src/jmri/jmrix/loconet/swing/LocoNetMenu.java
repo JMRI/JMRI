@@ -88,6 +88,7 @@ public class LocoNetMenu extends JMenu {
         null,
         new Item("MenuItemThrottleMessages", "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel", true), // NOI18N
         new Item("MenuItemSendPacket", "jmri.jmrix.loconet.locogen.LocoGenPanel", false), // NOI18N
+        new Item("MenuItemLncvProg", "jmri.jmrix.loconet.swing.lncvprog.LncvProgPane", true), // NOI18N
         new Item("MenuItemPr3ModeSelect", "jmri.jmrix.loconet.pr3.swing.Pr3SelectPane", false), // NOI18N
         null,
         new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane", false), // NOI18N

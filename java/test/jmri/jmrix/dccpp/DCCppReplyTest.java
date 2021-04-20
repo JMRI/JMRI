@@ -123,6 +123,55 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(l.getPowerBool());
     }
 
+    // Test Meter replies
+    @Test
+    public void testMeterReply() {
+        DCCppReply r = DCCppReply.parseDCCppReply("c MAINCurrent 1.7 C NoPrefix 0.0 100.0 0.1 80");
+        Assert.assertTrue(r.isMeterReply());
+        Assert.assertFalse(r.isCurrentReply());
+        Assert.assertFalse(r.isNamedCurrentReply());
+        Assert.assertEquals("MAINCurrent", r.getMeterName());
+        Assert.assertEquals(1.7,   r.getMeterValue(), 0.00001);
+        Assert.assertEquals(jmri.Meter.Unit.NoPrefix, r.getMeterUnit());
+        Assert.assertEquals(0.0,   r.getMeterMinValue(),   0.00001);
+        Assert.assertEquals(100.0, r.getMeterMaxValue(),   0.00001);
+        Assert.assertEquals(0.1,   r.getMeterResolution(), 0.00001);
+        Assert.assertEquals(80.0,  r.getMeterWarnValue(),  0.00001);
+        Assert.assertFalse(r.isMeterTypeVolt());
+        Assert.assertTrue(r.isMeterTypeCurrent());
+
+        r = DCCppReply.parseDCCppReply("c PROGVolts 18.2 V Milli 9.0 24.0 0.1 22.0");
+        Assert.assertEquals("PROGVolts", r.getMeterName());
+        Assert.assertEquals(18.2,  r.getMeterValue(), 0.00001);
+        Assert.assertEquals(jmri.Meter.Unit.Milli, r.getMeterUnit());
+        Assert.assertEquals(9.0,   r.getMeterMinValue(),   0.00001);
+        Assert.assertEquals(24.0,  r.getMeterMaxValue(),   0.00001);
+        Assert.assertEquals(0.1,   r.getMeterResolution(), 0.00001);
+        Assert.assertEquals(22.0,  r.getMeterWarnValue(),  0.00001);
+        Assert.assertTrue(r.isMeterTypeVolt());
+        Assert.assertFalse(r.isMeterTypeCurrent());
+        
+        r = DCCppReply.parseDCCppReply("c testmeter99.99 12.34 C NoPrefix 0 99.99 0.01 77.77");
+        Assert.assertTrue(r.isMeterReply());
+        Assert.assertEquals("testmeter99.99", r.getMeterName());
+        Assert.assertEquals(12.34,  r.getMeterValue(), 0.00001);
+        Assert.assertEquals(jmri.Meter.Unit.NoPrefix, r.getMeterUnit());
+        Assert.assertEquals(0.0,   r.getMeterMinValue(),   0.00001);
+        Assert.assertEquals(99.99, r.getMeterMaxValue(),   0.00001);
+        Assert.assertEquals(0.01,  r.getMeterResolution(), 0.00001);
+        Assert.assertEquals(77.77, r.getMeterWarnValue(),  0.00001);
+        Assert.assertFalse(r.isMeterTypeVolt());
+        Assert.assertTrue(r.isMeterTypeCurrent());
+
+        r = DCCppReply.parseDCCppReply("c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0"); //bad meter type 'X' passed
+        Assert.assertTrue( r.isMeterReply());
+        Assert.assertFalse(r.isMeterTypeCurrent());
+        Assert.assertFalse(r.isMeterTypeVolt());
+        Assert.assertEquals("", r.getMeterType()); //invalid meter types returned as empty string
+        Assert.assertEquals(jmri.Meter.Unit.NoPrefix, r.getMeterUnit());
+
+    }
+
     // Test named and unnamed current replies
     @Test
     public void testNamedCurrentReply() {
@@ -233,6 +282,12 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = DCCppReply.parseDCCppReply("# 50");
         Assert.assertTrue(r.isMaxNumSlotsReply());
 
+        //DIAG message
+        r = DCCppReply.parseDCCppReply("* this is a test diagnostic message 12345 *");
+        Assert.assertTrue(r.isDiagReply());
+        r = DCCppReply.parseDCCppReply("* this is not, missing trailing asterisk ");
+        Assert.assertFalse(r.isDiagReply());
+
         //Sensor replies
         r = DCCppReply.parseDCCppReply("Q 22 33 0");
         Assert.assertTrue(r.isSensorReply());
@@ -276,31 +331,53 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         l = DCCppReply.parseDCCppReply("a 41");
         Assert.assertEquals("Current Monitor string", "Current: 41 / 1024", l.toMonitorString());
     }
+    
+    @Test
+    public void testMonitorStringMeterReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("c PROGVolts 18.2 V Percent 9.0 24.0 0.1 19");
+        Assert.assertEquals("Meter reply: name PROGVolts, value 18.20, type V, unit Percent, min 9.00, max 24.00, resolution 0.10, warn 19.00", 
+                l.toMonitorString());
+        Assert.assertTrue( l.isMeterReply());
+        Assert.assertTrue( l.isMeterTypeVolt());
+        Assert.assertFalse(l.isMeterTypeCurrent());
+        l = DCCppReply.parseDCCppReply("c MAINCurrent 0.3 C Kilo 0.0 5.0 0.01 4");
+        Assert.assertEquals("Meter reply: name MAINCurrent, value 0.30, type C, unit Kilo, min 0.00, max 5.00, resolution 0.01, warn 4.00", 
+                l.toMonitorString());
+        Assert.assertTrue( l.isMeterReply());
+        Assert.assertTrue( l.isMeterTypeCurrent());
+        Assert.assertFalse(l.isMeterTypeVolt());
+    }
 
     @Test
-    public void testMonitorStringThrottleSpeedReply() {
-        DCCppReply l = DCCppReply.parseDCCppReply("T 123 59 1");
-        Assert.assertEquals("Monitor string", "Throttle Reply: Register: 123, Speed: 59, Direction: Forward", l.toMonitorString());
+    public void testMonitorStringDiagReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("* This is a test *");
+        Assert.assertEquals("Monitor string", "DIAG: This is a test", l.toMonitorString());
+    }
+
+    @Test
+    public void testMaxNumSlotsReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("# 47");
+        Assert.assertEquals("Monitor string", "Number of slots reply: 47", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringTurnoutReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 1234 0");
-        Assert.assertEquals("Monitor string", "Turnout Reply: T/O Number: 1234, Direction: CLOSED", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Reply: Number: 1234, Direction: CLOSED", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringOutputPinReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("Y 1234 0");
-        Assert.assertEquals("Monitor string", "Output Command Reply: Output Number: 1234, OutputState: LOW", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Command Reply: Number: 1234, State: LOW", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringSensorStatusReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("Q 1234");
-        Assert.assertEquals("Monitor string", "Sensor Reply (Active): Sensor Number: 1234, State: ACTIVE", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Sensor Reply (Active): Number: 1234, State: ACTIVE", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("q 1234");
-        Assert.assertEquals("Monitor string", "Sensor Reply (Inactive): Sensor Number: 1234, State: INACTIVE", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Sensor Reply (Inactive): Number: 1234, State: INACTIVE", l.toMonitorString());
     }
 
     @Test

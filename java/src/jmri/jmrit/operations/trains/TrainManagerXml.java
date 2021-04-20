@@ -41,8 +41,8 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     static final String BUILD_STATUS = "buildstatus"; // NOI18N
     static final String MANIFESTS = "manifests"; // NOI18N
     static final String SWITCH_LISTS = "switchLists"; // NOI18N
-    static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
-    static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
+    public static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
+    public static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
     static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
     static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
     static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
@@ -334,7 +334,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
      * @return CSV switch list File.
      */
     public File createCsvSwitchListFile(String name) {
-        return createFile(getDefaultCsvSwitchListFileName(name), false); // don't backup
+        return createFile(getDefaultCsvSwitchListFileName(name), true); // create backup
     }
 
     public File getCsvSwitchListFile(String name) {

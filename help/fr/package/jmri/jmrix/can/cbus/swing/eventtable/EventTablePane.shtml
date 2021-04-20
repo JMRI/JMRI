@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="keywords" content="JMRI CBUS help support event table tool">
+  <title>JMRI: CBUS&reg; Event Table</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>JMRI : Tableau des &#233;v&#233;nements CBUS</h1>
+      
+        <ul class="snav">
+        <li><a href="#stats">Colonnes</a></li>
+        <li><a href="#importexport">Importation et exportation de tableaux</a></li>
+        <li><a href="#opc">OPCs</a></li>
+        </ul>
+      
+      <img src="../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
+      width="630" height="210" alt="CBUS Event Table Screen" align="right">
+
+      <p>Le Tableau des &#201;v&#233;nements de CBUS affiche les informations relatives aux &#233;v&#233;nements sur votre connexion <a href=.
+      "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>.</p>
+      
+      <p>Les messages entrants vers JMRI et les messages sortants sont enregistr&#233;s dans le tableau.</p>
+
+      <p>Pendant que la fen&#234;tre est ouverte, elle maintient une liste d'&#233;v&#233;nements courts on / off, 
+      des &#233;v&#233;nements longs on / off, des &#233;v&#233;nements OPC &#233;tendus on / off, des &#233;v&#233;nements on / off de r&#233;ponse d'accessoires.</p> <p>.
+
+      
+      </p> <p>Chaque combinaison d'&#233;v&#233;nement et de n&#339;ud est unique, le nombre maximum d'&#233;v&#233;nements est de 65 535.</p> <p>.
+      <p>Le nombre maximum de n&#339;uds est &#233;galement de 65 535.</p>
+      
+      <p>Le tableau commencera toujours sans aucune entr&#233;e, les donn&#233;es ne sont pas maintenues entre les sessions.</p> <p>.
+      
+      </p> <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant &#224; votre liste d'actions de d&#233;marrage JMRI.
+      <br>PanelPro > Modifier les pr&#233;f&#233;rences > D&#233;marrage > Ajouter > Effectuer une action > Ouvrir le Tableau des &#201;v&#233;nements CBUS.
+      </p>
+
+      <p>Les codes d'&#233;v&#233;nements courts seront d&#233;pouill&#233;s de tout num&#233;ro de n&#339;ud contenu dans le message CAN de l'&#233;v&#233;nement.</p>
+      <p>Toutes les valeurs num&#233;riques sont d&#233;cimales.</p>
+
+      
+      </p> <p>Le filtre mettra en &#233;vidence tout texte saisi, vous pouvez utiliser et des espaces dans le champ de recherche.
+      <br>Le tableau ne montrera alors que les &#233;v&#233;nements qui contiennent l'expression recherch&#233;e.
+      <br>Le texte dans le panneau d'information au bas du tableau d'&#233;v&#233;nements sera &#233;galement mis en &#233;vidence.</p>
+       <p>Les nouveaux &#233;v&#233;nements ajout&#233;s au tableau d'&#233;v&#233;nements ne seront pas mis en &#233;vidence.
+      
+      <br>Nouveaux &#233;v&#233;nements ajout&#233;s au tableau cr&#233;&#233; manuellement avec la fen&#234;tre de cr&#233;ation d'&#233;v&#233;nements &#224; 
+      droite de la fen&#234;tre de filtrage ont par d&#233;faut un statut inconnu et n'envoient pas de message d'&#233;v&#233;nement lors de leur cr&#233;ation.</p>
+      
+            <img src="../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-filter-611x271.png"
+      width="611" height="271" alt="CBUS Event Table Filter" align="right">
+
+    <h2><a name="stats" id="stats">Colonnes</a></h2>
+
+      <p>Les colonnes peuvent &#234;tre s&#233;lectionn&#233;es pour &#234;tre affich&#233;es via la barre de menu sup&#233;rieure,
+      elles sont r&#233;parties en 4 cat&#233;gories.</p>
+      
+        <ul>
+        <li>Colonnes d'&#201;v&#233;nements</li>
+        <li>Colonnes de Statistiques</li>
+        <li>Colonnes de R&#233;trosignalisation</li>
+        <li>Colonnes JMRI</li>
+        </ul>
+      
+        <p>L'ordre des colonnes peut &#234;tre r&#233;organis&#233; en faisant glisser l'en-t&#234;te de la colonne. </p>
+        <p>Changer l'ordre de tri des colonnes en cliquant avec le bouton gauche de la souris sur l'en-t&#234;te de colonne.</p>
+      
+    <h3>Colonnes d'&#233;v&#233;nements</h3>
+    
+        <ul>
+        <li>Ev&#233;nement : Num&#233;ro de l'&#233;v&#233;nement ( ou du dispositif ) signal&#233; dans un message CAN d'&#233;v&#233;nement.</li>
+        <li>N&#339;ud : Num&#233;ro de n&#339;ud rapport&#233; par un message CAN d'&#233;v&#233;nement.</li>
+        <li>Nom de l'&#233;v&#233;nement : Nom de l'&#233;v&#233;nement modifiable ( fourni par FCU File Import ).</li>  
+        <li>Nom N&#339;ud  : Nom de n&#339;ud modifiable ( Fourni par FCU File Import ).</li>
+        <li>Commentaire de l'&#233;v&#233;nement : Editable</li> 
+        <li>On ou Off : &#201;tat actuel de l'&#233;v&#233;nement, vide pour inconnu.</li>
+        <li>Basculer : Si l'&#233;tat du dernier &#233;v&#233;nement signal&#233; est actuellement activ&#233;, envoie un &#233;v&#233;nement d&#233;sactiv&#233; et vice versa.</li>
+        <li>Envoie On : Envoie un &#233;v&#233;nement On, si l'&#233;v&#233;nement a un num&#233;ro de n&#339;ud, ce sera un &#233;v&#233;nement long sinon court.</li>
+        <li>Envoie Off : Envoie un &#233;v&#233;nement Off, Si l'&#233;v&#233;nement a un num&#233;ro de n&#339;ud, ce sera un &#233;v&#233;nement long sinon court.</li>
+        <li>CAN ID : Le dernier ID CAN  entendu par l'&#233;v&#233;nement.</li>
+        <li>Supprimer : ( L'&#233;v&#233;nement sera ajout&#233; &#224; nouveau &#224; la table s'il est d&#233;tect&#233; sur le r&#233;seau. )</li>
+        </ul>
+        
+    <h3>Colonnes Statistiques</h3>  
+
+      <img src="../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-stats-804x244.png"
+      width="802" height="244" alt="CBUS Event Table Statistics" >
+      
+        <ul>
+        <li>Last Heard : horodatage de la derni&#232;re fois que l'&#233;v&#233;nement a &#233;t&#233; d&#233;tect&#233;.</li>
+        <li>Total Session : Total courant</li>
+        <li>On Session : Total courant sur les &#233;v&#233;nements.</li>
+        <li>Off Session : Ex&#233;cution du total des &#233;v&#233;nements off.</li>
+        <li>In Session : Ex&#233;cution du total des &#233;v&#233;nements re&#231;us en entr&#233;e par JMRI.</li>
+        <li>Out Session : Ex&#233;cution du total des &#233;v&#233;nements envoy&#233;s par le JMRI.</li>    
+        </ul>
+    
+    <h3>Colonnes de liens JMRI</h3>
+      
+      <ul>
+      <li>Les liens JMRI sur &#233;v&#233;nement</li>
+      <li>Liens JMRI hors &#233;v&#233;nement</li>
+      </ul>
+      
+        <p>La table d'&#233;v&#233;nements peut boucler sur le Tableau des Capteurs, des Aiguillages et des Lumi&#232;res. 
+        pour toute adresse mat&#233;rielle CBUS ( pas les &#233;l&#233;ments internes ).
+        <br>Tous les nouveaux &#233;v&#233;nements trouv&#233;s qui ne sont pas d&#233;j&#224; sur le tableau seront ajout&#233;s.</p> <p>.
+      
+        <p>Cliquer sur les colonnes JMRI, puis Rafra&#238;chir les colonnes pour alimenter les colonnes &#201;v&#233;nement JMRI activ&#233; et &#201;v&#233;nement JMRI d&#233;sactiv&#233;.</p>
+      
+
+        <p>L'adresse nom d'utilisateur est affichée, si elle n'est pas présente alors l'adresse matérielle sera affichée.</p>
+    
+        <p>Il pourrait bien y avoir plusieurs éléments liés à un événement d'activation ou de désactivation, 
+        ceux-ci sont tous affichés bien que vous puissiez avoir besoin d'élargir la colonne.
+        <br>( Cela ne fonctionnera pas avec les adresses configurées pour surveiller une gamme d'événements bien que ceux-ci ne semblent pas si courants )</p>
+      
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/event-table-jmri-links-1096x279.png"
+        width="1096" height="279" alt="CBUS Event Table JMRI Links" >
+      
+    
+
+      
+    <h3><a name="importexport" id="importexport">Imprimer et exporter / importer &#224; partir du MERG FCU</a></h3>
+    
+        <p>Dans le menu Fichier, choisissez Exporter pour ouvrir la bo&#238;te de dialogue d'enregistrement du fichier et enregistrer 
+        le contenu du tableau dans un fichier texte CSV (valeurs s&#233;par&#233;es par des virgules).</p><p>
+        
+        <p>Choisissez le menu Imprimer (aper&#231;u) pour cr&#233;er une
+        copie papier du tableau d'&#233;v&#233;nements.</p> 
+        <p>Cliquez sur le menu Imprimer (Aper&#231;u) pour cr&#233;er une copie papier du Tableau d'&#201;v&#233;nements.
+
+        </p> <p>Les &#233;v&#233;nements ne sont pas actuellement maintenus entre les sessions.</p> <p>.
+      
+        <p>Il n'est actuellement pas possible de charger les donn&#233;es des sessions pr&#233;c&#233;dentes dans le tableau &#224; partir d'un fichier.</p> 
+
+        </p> <p>Vous pouvez importer les noms d'&#233;v&#233;nements et les noms de n&#339;uds &#224; partir d'un fichier de configuration du MERG FCU.
+        On y acc&#232;de &#224; partir du <a href="../nodeconfig/NodeConfigToolPane.shtml#fcuimport">Gestionnaire des n&#339;uds CBUS du MERG</a>,
+        o&#249; le fichier FCU peut &#234;tre pr&#233;visualis&#233; avant l'importation.</p>
+      
+      
+    <h3><a name="opc" id="opc">Codes d'Op&#233;ration Pris en cCharge</a></h3>.
+      
+        <ul>
+        <li>ASON - Envoy&#233; lorsque l'utilisateur clique sur le bouton envoyer sur / basculer, num&#233;ro de n&#339;ud 0 </li>.
+        <li>ASOF - Envoy&#233; lorsque l'utilisateur clique sur le bouton send off / toggle, n&#339;ud num&#233;ro 0</li>.
+        <li>ACON - Envoy&#233; lorsque l'utilisateur clique sur le bouton envoyer on / toggle, num&#233;ro de n&#339;ud > 0</li>.
+        <li>ACOF - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'envoi d&#233;sactiv&#233; / &#224; bascule, num&#233;ro de n&#339;ud > 0</li>.
+        <li>ASRQ - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'&#233;tat, num&#233;ro de n&#339;ud 0</li>.      
+        <li>AREQ - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'&#233;tat, num&#233;ro de n&#339;ud > 0</li>.
+        </ul>
+      
+        <p>Les OPC re&#231;us peuvent provenir d'autres composants JMRI,
+        ou d'une connexion externe CBUS.</p> <p>
+        
+        <p>Tous les opscodes d&#233;finis comme un &#233;v&#233;nement accessoire ( &#224; l'exception de Fast Clock ) 
+        sont des Surveillants constants, c'est-&#224;-dire </p> <p>.
+        
+        <ul>
+        <li>ASRQ / AREQ - D&#233;marre automatiquement le minuteur de rétrosignalisationr pour l'&#233;v&#233;nement associ&#233;.</li>
+        <li>ACON / ACOF</li>
+        <li>ARON / AROF</li>
+        <li>ASON / ASOF</li>
+        <li>ARSON / ARSOF</li>
+        <li>ACON1 / ACOF1</li>
+        <li>ARON1 / AROF1</li>
+        <li>ASON1 / ASOF1</li>
+        <li>ARSON1 / ARSOF1</li>
+        <li>ACON2 / ACOF2</li>
+        <li>ARON2 / AROF2</li>
+        <li>ASON2 / ASOF2</li>
+        <li>ARSON2 / ARSOF2</li>
+        <li>ACON3 / ACOF3</li>
+        <li>ARON3 / AROF3</li>
+        <li>ASON3 / ASOF3</li>
+        <li>ARSON3 / ARSOF3</li>
+        </ul>
+      
+
+      <h4>Diff&#233;rence par rapport au guide du d&#233;veloppeur CBUS 6b</h4>
+        <p>Dans ce mod&#232;le de donn&#233;es, il est suppos&#233; que les combinaisons 
+        d'&#233;v&#233;nements et de n&#339;uds constituent le facteur unique.</p>      
+        </p> <p>Tout &#233;v&#233;nement OPC envoy&#233; avec des octets de donn&#233;es 
+        suppl&#233;mentaires sera enregistr&#233; en fonction de sa combinaison principale d'&#233;v&#233;nement et de n&#339;ud, 
+        sans tenir compte des octets de donn&#233;es suppl&#233;mentaires.</p>
+         <p>Les donn&#233;es suppl&#233;mentaires ne sont pas enregistr&#233;es.
+        <p>Les donn&#233;es suppl&#233;mentaires ne sont pas actuellement affich&#233;es dans le tableau, 
+        bien qu'il soit probable qu'elles soient ajout&#233;es en tant que colonne &#224; un moment donn&#233;.</p> 
+         
+       
+      
+    <h3>Aide JMRI</h3>
+      
+        <p>Vous pouvez afficher cette page d'aide au sein de JMRI en s&#233;lectionnant 
+        Aide > Aide de la fen&#234;tre dans la barre sup&#233;rieure de la fen&#234;tre du tableau d'&#233;v&#233;nements du MERG.</p>
+        
+        <p>La <a href="../console/CbusConsoleFrame.shtml">Console CBUS
+        </a> peut vous aider &#224; comprendre quels &#233;v&#233;nements se produisent
+        sur votre r&#233;seau.</p>
+      
+      
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI CBUS</a>.</p>
+        
+        <h2></h2>
+        <p>CBUS&reg; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
+        <p></p>
+
+		<p>Traduction 2021-03-19</p>
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

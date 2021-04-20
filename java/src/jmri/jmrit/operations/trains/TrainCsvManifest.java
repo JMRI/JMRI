@@ -96,7 +96,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                             printLocationComment(fileOut, comment);
                         }
                     }
-                    if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled()) {
+                    if (Setup.isPrintTruncateManifestEnabled() && location.isSwitchListEnabled()) {
                         fileOut.printRecord("TRUN", Bundle.getMessage("csvTruncate"));
                     }
                 }

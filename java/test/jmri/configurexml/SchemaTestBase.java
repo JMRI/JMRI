@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.Arguments;
 public class SchemaTestBase {
 
     private XmlFile.Validate validate;
-    
+
     /**
      * Configure for handling I/O checks:
      * <ul>
@@ -135,6 +135,7 @@ public class SchemaTestBase {
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

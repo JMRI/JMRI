@@ -1,0 +1,44 @@
+# Configuration for Stale (https://github.com/apps/stale)
+
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 45
+
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 15
+
+# Issues with these labels will never be considered stale. Set to `[]` to disable
+exemptLabels: []
+
+# exemptLabels:
+#  - "status: accepted"
+#  - "status: blocked"
+#  - "status: needs milestone"
+
+# Label to use when marking an issue as stale
+staleLabel: "Pending closure"
+
+# Comment to post when marking an issue as stale. Set to `false` to disable
+markComment: >
+  This issue has been automatically marked as stale because it has not had
+  recent activity. It will be closed if no further activity occurs. JMRI
+  is governed by a small group of maintainers which means not all opened
+  issues may receive direct feedback.
+
+# Comment to post when closing a stale issue. Set to `false` to disable
+closeComment: >
+  This issue has been automatically closed due to lack of activity. In an
+  effort to reduce noise, please do not comment any further. Note that the
+  maintainers may elect to reopen this issue at a later date if deemed
+  necessary.
+
+Optionally, specify configuration settings that are specific to just 'issues' or 'pulls':
+pulls:
+  daysUntilStale: 60
+  daysUntilClose: 30
+  markComment: >
+    This PR has been automatically marked as stale because it has not had
+    recent activity. It will be closed if no further activity occurs. Feel
+    free to open it again if you want to continue working on it.
+  closeComment: >
+    This PR has been automatically closed due to lack of activity. Feel
+    free to open it again if you want to continue working on it.

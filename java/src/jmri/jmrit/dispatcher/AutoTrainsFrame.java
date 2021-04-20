@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -17,8 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
+import jmri.DccThrottle;
 import jmri.Throttle;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -52,14 +51,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     }
 
     // instance variables
-    private DispatcherFrame _dispatcher = null;
-    private ArrayList<AutoActiveTrain> _autoTrainsList = new ArrayList<AutoActiveTrain>();
-    private ArrayList<java.beans.PropertyChangeListener> _listeners
-            = new ArrayList<java.beans.PropertyChangeListener>();
+    private final DispatcherFrame _dispatcher;
+    private final ArrayList<AutoActiveTrain> _autoTrainsList = new ArrayList<>();
+    private final ArrayList<java.beans.PropertyChangeListener> _listeners = new ArrayList<>();
     //Keep track of throttle and listeners to update frame with their current state.
-    private ArrayList<jmri.Throttle> _throttles = new ArrayList<jmri.Throttle>();
-    private ArrayList<java.beans.PropertyChangeListener> _throttleListeners
-            = new ArrayList<java.beans.PropertyChangeListener>();
+    private final ArrayList<jmri.Throttle> _throttles = new ArrayList<>();
+    private final ArrayList<java.beans.PropertyChangeListener> _throttleListeners = new ArrayList<>();
 
     // accessor functions
     public ArrayList<AutoActiveTrain> getAutoTrainsList() {
@@ -69,12 +66,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     public void addAutoActiveTrain(AutoActiveTrain aat) {
         if (aat != null) {
             _autoTrainsList.add(aat);
-            java.beans.PropertyChangeListener throttleListener = new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    handleThrottleChange(e);
-                }
-            };
+            java.beans.PropertyChangeListener throttleListener = this::handleThrottleChange;
             _throttleListeners.add(throttleListener);
 
             _throttles.add(null); //adds a place holder
@@ -82,13 +74,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             setupThrottle(aat);
 
             ActiveTrain at = aat.getActiveTrain();
-            java.beans.PropertyChangeListener listener = null;
-            at.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    handleActiveTrainChange(e);
-                }
-            });
+            java.beans.PropertyChangeListener listener;
+            at.addPropertyChangeListener(listener = this::handleActiveTrainChange);
             _listeners.add(listener);
 
             displayAutoTrains();
@@ -131,8 +118,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
         for (AutoActiveTrain aat : _autoTrainsList) {
             if (aat.getActiveTrain() == e.getSource()) {
-                int newValue = ((Integer) e.getNewValue()).intValue();
-                int oldValue = ((Integer) e.getOldValue()).intValue();
+                int newValue = (Integer) e.getNewValue();
+                int oldValue = (Integer) e.getOldValue();
                 if (newValue == ActiveTrain.DISPATCHED) {
                     removeThrottleListener(aat);
                 } else if (oldValue == ActiveTrain.DISPATCHED) {
@@ -159,7 +146,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
             return; //ignore if not speed or direction
         }
-        int index = _throttles.indexOf(e.getSource());
+        DccThrottle thr = (DccThrottle) e.getSource();
+        int index = _throttles.indexOf(thr);
         if (index == -1) {
             jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
             int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
@@ -190,10 +178,10 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
     private void updateStatusLabel(JLabel status, Object speed, Object forward) {
         StringBuilder sb = new StringBuilder();
-        int spd = Math.round(((Float) speed).floatValue() * 100);
+        int spd = Math.round((Float) speed * 100);
         sb.append("" + spd);
         sb.append("% ");
-        if (((Boolean) forward).booleanValue()) {
+        if ((Boolean) forward) {
             sb.append("(fwd)");
         } else {
             sb.append("(rev)");
@@ -230,17 +218,17 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private Container contentPane = null;
     //This would be better refactored this all into a sub-class, rather than multiple arraylists.
     // note: the following array lists are synchronized with _autoTrainsList
-    private ArrayList<JPanel> _JPanels = new ArrayList<JPanel>();
-    private ArrayList<JLabel> _throttleStatus = new ArrayList<JLabel>();
-    private ArrayList<JLabel> _trainLabels = new ArrayList<JLabel>();
-    private ArrayList<JButton> _stopButtons = new ArrayList<JButton>();
-    private ArrayList<JButton> _manualButtons = new ArrayList<JButton>();
-    private ArrayList<JButton> _resumeAutoRunningButtons = new ArrayList<JButton>();
-    private ArrayList<JRadioButton> _forwardButtons = new ArrayList<JRadioButton>();
-    private ArrayList<JRadioButton> _reverseButtons = new ArrayList<JRadioButton>();
-    private ArrayList<JSlider> _speedSliders = new ArrayList<JSlider>();
+    private final ArrayList<JPanel> _JPanels = new ArrayList<>();
+    private final ArrayList<JLabel> _throttleStatus = new ArrayList<>();
+    private final ArrayList<JLabel> _trainLabels = new ArrayList<>();
+    private final ArrayList<JButton> _stopButtons = new ArrayList<>();
+    private final ArrayList<JButton> _manualButtons = new ArrayList<>();
+    private final ArrayList<JButton> _resumeAutoRunningButtons = new ArrayList<>();
+    private final ArrayList<JRadioButton> _forwardButtons = new ArrayList<>();
+    private final ArrayList<JRadioButton> _reverseButtons = new ArrayList<>();
+    private final ArrayList<JSlider> _speedSliders = new ArrayList<>();
 
-    private ArrayList<JSeparator> _separators = new ArrayList<JSeparator>();
+    private final ArrayList<JSeparator> _separators = new ArrayList<>();
 
     private void initializeAutoTrainsWindow() {
         autoTrainsFrame = this;
@@ -263,12 +251,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         pB.setLayout(new FlowLayout());
         JButton stopAllButton = new JButton(Bundle.getMessage("StopAll"));
         pB.add(stopAllButton);
-        stopAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopAllPressed(e);
-            }
-        });
+        stopAllButton.addActionListener(this::stopAllPressed);
         stopAllButton.setToolTipText(Bundle.getMessage("StopAllButtonHint"));
         contentPane.add(pB);
         autoTrainsFrame.pack();
@@ -297,65 +280,38 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         JButton tStop = new JButton(Bundle.getMessage("ResumeButton"));
         px.add(tStop);
         _stopButtons.add(tStop);
-        tStop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopResume(s);
-            }
-        });
+        tStop.addActionListener(e -> stopResume(s));
         JButton tManual = new JButton(Bundle.getMessage("ToManualButton"));
         px.add(tManual);
         _manualButtons.add(tManual);
-        tManual.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manualAuto(s);
-            }
-        });
+        tManual.addActionListener(e -> manualAuto(s));
         JButton tResumeAuto = new JButton(Bundle.getMessage("ResumeAutoButton"));
         px.add(tResumeAuto);
         _resumeAutoRunningButtons.add(tResumeAuto);
-        tResumeAuto.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resumeAutoOperation(s);
-            }
-        });
+        tResumeAuto.addActionListener(e -> resumeAutoOperation(s));
         tResumeAuto.setVisible(false);
         tResumeAuto.setToolTipText(Bundle.getMessage("ResumeAutoButtonHint"));
         ButtonGroup directionGroup = new ButtonGroup();
         JRadioButton fBut = new JRadioButton(Bundle.getMessage("ForwardRadio"));
         px.add(fBut);
         _forwardButtons.add(fBut);
-        fBut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                directionButton(s);
-            }
-        });
+        fBut.addActionListener(e -> directionButton(s));
         directionGroup.add(fBut);
         JRadioButton rBut = new JRadioButton(Bundle.getMessage("ReverseRadio"));
         px.add(rBut);
         _reverseButtons.add(rBut);
-        rBut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                directionButton(s);
-            }
-        });
+        rBut.addActionListener(e -> directionButton(s));
         directionGroup.add(rBut);
         JSlider sSlider = new JSlider(0, 100, 0);
         px.add(sSlider);
         _speedSliders.add(sSlider);
-        sSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int val = ((JSlider) (e.getSource())).getValue();
-                sliderChanged(s, val);
-            }
+        sSlider.addChangeListener(e -> {
+            int val = ((JSlider) (e.getSource())).getValue();
+            sliderChanged(s, val);
         });
 
         JLabel _throttle = new JLabel();
+        _throttle.setPreferredSize(new Dimension(100,20)); // prevent JFrame to resize on each % change
         _throttle.setText("Speed Unknown");
         _throttleStatus.add(_throttle);
         px.add(_throttle);
@@ -511,8 +467,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     }
 
     public void stopAllPressed(ActionEvent e) {
-        for (int i = 0; i < _autoTrainsList.size(); i++) {
-            AutoActiveTrain aat = _autoTrainsList.get(i);
+        for (AutoActiveTrain aat : _autoTrainsList) {
             ActiveTrain at = aat.getActiveTrain();
             if ((at.getStatus() != ActiveTrain.STOPPED) && (aat.getAutoEngineer() != null)) {
                 aat.getAutoEngineer().setHalt(true);

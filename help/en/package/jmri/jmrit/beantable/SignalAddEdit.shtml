@@ -192,19 +192,18 @@
           either from the drop down list of already-defined
           turnouts or by creating a new turnout for a particular
           connection. They need not be consecutive or in any
-          particular order.</p>
-        </dd>
-
-        <dt>Double Output Head</dt>
-
-        <dd>A Signal Head connection that uses just two output
-        lines to indicate 4 signal Aspects.<br>
-        Usually these Aspects will be Clear, Approach, Stop, and
-        Dark. The output coding is such that one turnout Thrown
-        (On) controls the Stop and the other Thrown (On) controls
-        the Clear. Both outputs Thrown (On) controls the Approach,
-        and both Closed (Off) is Dark. Each aspect change requires
-        that two turnout commands be sent.</dd>
+          particular order.<br>
+          A Signal Head connection that uses just two output
+          lines can indicate 4 or more signal Aspects.<br>
+          Usually these Aspects will be Clear, Approach, Stop, and
+          Dark. Flashing each adds more aspects.
+          Use this head to create a Signal Head Controlled Mast
+          as a next step.<br>
+          The output coding is such that one turnout Thrown
+          (On) controls the Stop and the other Thrown (On) controls
+          the Clear. Both outputs Thrown (On) controls the Approach,
+          and both Closed (Off) is Dark. Each full aspect change requires
+          that two turnout commands be sent.</dd>
 
         <dt>Triple Output</dt>
 

@@ -383,12 +383,12 @@ To push the current branch and set the remote as upstream, use
     
     Once the changes in your PR has been merged onto the 
     master branch, it will be included in the 
-    <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">next development release</a>
+    <a href="https://builds.jmri.org/jenkins/job/Development/job/Packages/">next development release</a>
     built by 
     <a href="ContinuousIntegration.shtml">our CI system</a>.
     These packages can be downloaded and run to check that 
     everything is working. You can also refer users to 
-    <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">the built installers</a>
+    <a href="https://builds.jmri.org/jenkins/job/Development/job/Packages/">the built installers</a>
     so they can test your changes.
     
     <p>

@@ -2,8 +2,8 @@ package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +19,8 @@ public class OBlockEditActionTest {
 
     @Test
     public void testCTor() {
-        OBlockEditAction obea = new OBlockEditAction(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,null));
-        Assert.assertNotNull("exists", obea);
+        OBlockEditAction obea = new OBlockEditAction(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+        Assertions.assertNotNull(obea, "exists");
     }
 
     // test OBlockEditor via OBlockTableActionTest

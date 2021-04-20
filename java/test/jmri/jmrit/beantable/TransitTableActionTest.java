@@ -127,6 +127,7 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

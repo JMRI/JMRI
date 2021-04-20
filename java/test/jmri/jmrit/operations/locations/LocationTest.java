@@ -3,7 +3,8 @@ package jmri.jmrit.operations.locations;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -47,8 +48,8 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Location id", "Test id", l.getId());
         Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-        Assert.assertEquals("Location Constant NORMAL", 1, Location.NORMAL);
-        Assert.assertEquals("Location Constant STAGING", 2, Location.STAGING);
+        Assert.assertEquals("Location Constant NORMAL", "1", Location.NORMAL);
+        Assert.assertEquals("Location Constant STAGING", "2", Location.STAGING);
 
         Assert.assertEquals("Location Constant EAST", 1, Location.EAST);
         Assert.assertEquals("Location Constant WEST", 2, Location.WEST);
@@ -85,22 +86,6 @@ public class LocationTest extends OperationsTestCase {
 
         l.setUsedLength(200);
         Assert.assertEquals("Location Used Length", 200, l.getUsedLength());
-    }
-
-    // test operation attributes
-    @Test
-    public void testOperationAttributes() {
-        Location l = new Location("Test id", "Test Name");
-        Assert.assertEquals("Location id", "Test id", l.getId());
-        Assert.assertEquals("Location Name", "Test Name", l.getName());
-
-        l.setLocationOps(Location.STAGING);
-        Assert.assertEquals("Location Ops Staging", Location.STAGING, l.getLocationOps());
-
-        l.setLocationOps(Location.NORMAL);
-        Assert.assertEquals("Location Ops Normal", Location.NORMAL, l.getLocationOps());
-
-        Assert.assertFalse("Location isn't staging", l.isStaging());
     }
 
     // test direction attributes

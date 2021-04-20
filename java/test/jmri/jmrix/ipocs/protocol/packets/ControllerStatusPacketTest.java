@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqControllerState;
 
 public class ControllerStatusPacketTest {
-  private byte[] testPacket = { RqControllerState.Restarting.value };
+  private final byte[] testPacket = { RqControllerState.Restarting.value };
 
   @Test
   public void getIdTest() {

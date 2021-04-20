@@ -172,11 +172,11 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case ID_COLUMN:
             case NAME_COLUMN:
             case TRACK_COLUMN:
             case REPORTER_COLUMN:
                 return String.class;
+            case ID_COLUMN:
             case NUMBER_COLUMN:
             case LENGTH_COLUMN:
             case USED_LENGTH_COLUMN:
@@ -214,7 +214,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
         switch (col) {
             case ID_COLUMN:
-                return location.getId();
+                return Integer.parseInt(location.getId());
             case NAME_COLUMN:
                 return location.getName();
             case TRACK_COLUMN:

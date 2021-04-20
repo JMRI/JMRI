@@ -40,7 +40,7 @@
         <tooltip xml:lang="cs">Adresa dekodéru příslušenství. CV1 - LSB. CV9 - MSB.</tooltip>
       </variable>
 
-      <variable item="Decoder Version" CV="7" readOnly="yes" >
+      <variable CV="7" item="Decoder Version" readOnly="yes" >
         <decVal/>
         <label>Decoder Version:</label>
         <label xml:lang="cs">Verze software:</label>

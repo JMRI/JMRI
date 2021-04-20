@@ -157,12 +157,12 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         if (PortalIcon.TO_ARROW.equals(e.getActionCommand())) {
             _icon.setIcon(PortalIcon.TO_ARROW,_iconMap.get(PortalIcon.TO_ARROW));
             _icon.setIcon(PortalIcon.FROM_ARROW, _iconMap.get(PortalIcon.FROM_ARROW));
-            _icon.setArrowOrientatuon(true);
+            _icon.setArrowOrientation(true);
             _icon.setHideArrows(false);
         } else if (PortalIcon.FROM_ARROW.equals(e.getActionCommand())) {
             _icon.setIcon(PortalIcon.TO_ARROW, _iconMap.get(PortalIcon.FROM_ARROW));
             _icon.setIcon(PortalIcon.FROM_ARROW, _iconMap.get(PortalIcon.TO_ARROW));
-            _icon.setArrowOrientatuon(false);
+            _icon.setArrowOrientation(false);
             _icon.setHideArrows(false);
         } else if (PortalIcon.HIDDEN.equals(e.getActionCommand())) {
             _icon.setHideArrows(true);

@@ -8,10 +8,10 @@ import java.text.NumberFormat;
 
 import javax.swing.JOptionPane;
 
-import jmri.IdTagManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -485,7 +485,7 @@ public class ImportCars extends ImportRollingStock {
                         track = location.getTrackByName(carTrackName, null);
                         if (track == null) {
                             if (autoCreateTracks) {
-                                if (location.getLocationOps() == Location.NORMAL) {
+                                if (!location.isStaging()) {
                                     log.debug("Create 1000 foot yard track ({})", carTrackName);
                                     track = location.addTrack(carTrackName, Track.YARD);
                                 } else {
@@ -505,7 +505,7 @@ public class ImportCars extends ImportRollingStock {
                                         new Object[]{carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.YES_NO_OPTION);
                                 if (results == JOptionPane.YES_OPTION) {
-                                    if (location.getLocationOps() == Location.NORMAL) {
+                                    if (!location.isStaging()) {
                                         log.debug("Create 1000 foot yard track ({})", carTrackName);
                                         track = location.addTrack(carTrackName, Track.YARD);
                                     } else {

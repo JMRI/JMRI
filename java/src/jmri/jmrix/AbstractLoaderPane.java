@@ -90,7 +90,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
         {
             /* Create panels for displaying a filename and for providing a file 
-             * seleciton pushbutton
+             * selection pushbutton
              */
             inputFileNamePanel = new JPanel();
             inputFileNamePanel.setLayout(new FlowLayout());
@@ -148,7 +148,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
+            loadButton = new JButton(Bundle.getMessage("ButtonDownload"));
             loadButton.setEnabled(false);
             loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);

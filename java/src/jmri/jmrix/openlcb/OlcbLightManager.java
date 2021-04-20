@@ -73,7 +73,8 @@ public class OlcbLightManager extends AbstractLightManager {
      * @return never null
      */
     @Override
-    protected Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbLight l = new OlcbLight(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         l.setUserName(userName);

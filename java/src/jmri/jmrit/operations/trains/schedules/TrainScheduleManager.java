@@ -5,7 +5,14 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -13,15 +20,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.TrainSwitchLists;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Manages train schedules. The default is the days of the week, but can be
@@ -255,14 +254,16 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
 
     public void buildSwitchLists() {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+        TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
         String locationName = ""; // only create switch lists once for locations with similar names
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
             if (location.isSwitchListEnabled() && !locationName.equals(TrainCommon.splitString(location.getName()))) {
+                trainCsvSwitchLists.buildSwitchList(location);
                 trainSwitchLists.buildSwitchList(location);
+                locationName = TrainCommon.splitString(location.getName());
                 // print switch lists for locations that have changes
-                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.MODIFIED)) {
+                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.UPDATED)) {
                     trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
-                    locationName = TrainCommon.splitString(location.getName());
                 }
             }
         }

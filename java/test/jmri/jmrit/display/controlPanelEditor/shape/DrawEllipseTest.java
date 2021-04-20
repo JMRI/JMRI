@@ -55,6 +55,7 @@ public class DrawEllipseTest {
         editor = null;
         jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

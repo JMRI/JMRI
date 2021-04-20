@@ -20,11 +20,11 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @Override
-    public void checkOnMsgSent() {
+    public void checkActiveMsgSent() {
     }
 
     @Override
-    public void checkOffMsgSent() {
+    public void checkInactiveMsgSent() {
     }
 
     @Override

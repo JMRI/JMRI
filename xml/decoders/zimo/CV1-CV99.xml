@@ -7,11 +7,32 @@
 <!-- version 1.3 18 Jan 2015 Mark Waters -  additional include for CV14 for newer decoder -->
 <!-- version 1.4 14 Dec 2016 Ronald Kuhn -  excludes for Function decoder -->
 <!-- version 1.5 19 Apr 2019 Ronald Kuhn -  some german translations, sorts and default values -->
+<!-- version 1.6 10 Mar 2021  Nigel Cliffe -  minor changes to menus called for CV23,24, to improve appearance in panes -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+  <!--  need to copy mfgVersionId here in order to exclude importing CV7 in SwissMapping allowing overriding its default value-->
+  <!--  <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>-->
+  <variable CV="7" item="Decoder Version" readOnly="yes" exclude="222">
+    <decVal/>
+    <label>Manufacturer Version No: </label>
+    <label xml:lang="cs">Verze dekodéru: </label>
+    <label xml:lang="it">Versione Decoder: </label>
+    <label xml:lang="fr">Version décodeur: </label>
+    <label xml:lang="de">Decoderversion: </label>
+    <label xml:lang="nl">Decoderversie: </label>
+  </variable>
+  <variable CV="8" readOnly="yes" item="Manufacturer">
+    <decVal/>
+    <label>Manufacturer ID: </label>
+    <label xml:lang="cs">ID výrobce: </label>
+    <label xml:lang="it">ID Costruttore: </label>
+    <label xml:lang="fr">ID constructeur: </label>
+    <label xml:lang="de">Hersteller ID: </label>
+    <label xml:lang="nl">Fabrikant ID: </label>
+  </variable>
+
   <variable item="Motor Frequency and EMF sample Rate" CV="9" default="0" exclude="228,226,232,235,247,MX689_v30">
     <decVal/>
     <label>Motor Frequency and EMF sample Rate</label>
@@ -290,7 +311,7 @@
     <tooltip xml:lang="de">Beschleunigungszeit, die zum Wert in CV #3 addiert oder davon abgezogen werden soll.</tooltip>
   </variable>
   <variable item="Acceleration Trim Sign" CV="23" mask="VXXXXXXX">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-AddSubtract.xml"/>
     <label>Acceleration Trim Sign</label>
     <label xml:lang="it">Segno Regolazione fine Accellerazione</label>
     <label xml:lang="cs">Znaménko korekce zrychlení</label>
@@ -305,7 +326,7 @@
     <tooltip xml:lang="de">Bremszeit, die zum Wert in CV #4 addiert oder davon abgezogen werden soll.</tooltip>
   </variable>
   <variable item="Deceleration Trim Sign" CV="24" mask="VXXXXXXX">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-AddSubtract2.xml"/>
     <label>Deceleration Trim Sign</label>
     <label xml:lang="it">Segno Regolazione fine Decellarazione</label>
     <label xml:lang="cs">Znaménko korekce zpomalení</label>

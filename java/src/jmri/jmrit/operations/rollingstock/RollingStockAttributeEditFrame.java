@@ -44,12 +44,10 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
     public JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
     // ROAD and OWNER are the only two attributes shared between Cars and Engines
-    public static final String ROAD = Bundle.getMessage("Road");
-    public static final String OWNER = Bundle.getMessage("Owner");
-    // only here for name checking
-    public static final String TYPE = Bundle.getMessage("Type");
-    // here for length check
-    public static final String LENGTH = Bundle.getMessage("Length");
+    public static final String ROAD = "Road";
+    public static final String OWNER = "Owner";
+    public static final String TYPE = "Type"; // cars and engines have different types
+    public static final String LENGTH = "Length"; // cars and engines have different lengths
 
     protected static boolean showDialogBox = true;
     public boolean showQuanity = false;
@@ -291,16 +289,13 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
-                    e.getNewValue());
-        }
         if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBox);
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarOwners.class).updateComboBox(comboBox);
         }
+        comboBox.setSelectedItem(addTextBox.getText().trim()); // has to be the last line for propertyChange
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockAttributeEditFrame.class);

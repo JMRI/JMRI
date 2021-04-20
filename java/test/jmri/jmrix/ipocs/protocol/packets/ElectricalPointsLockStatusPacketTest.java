@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqPointsLockState;
 
 public class ElectricalPointsLockStatusPacketTest {
-  private byte[] testPacket = { RqPointsLockState.LockedRight.value };
+  private final byte[] testPacket = { RqPointsLockState.LockedRight.value };
 
   @Test
   public void getIdTest() {

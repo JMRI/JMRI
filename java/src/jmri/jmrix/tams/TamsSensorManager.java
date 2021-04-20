@@ -68,7 +68,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         TamsTrafficController tc = getMemo().getTrafficController();
         TamsSensor s = new TamsSensor(systemName, userName);
         log.debug("Creating new TamsSensor: {}", systemName);
@@ -290,7 +290,11 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sb.append(sensorprefix);
                     //Little work around to pad single digit address out.
                     padPortNumber(j, sb);
-                    ms = (TamsSensor) provideSensor(sb.toString());
+                    try {
+                        ms = (TamsSensor) provideSensor(sb.toString());
+                    } catch (Exception e){
+                        log.warn("Could not provide Sensor {}: {}",sb.toString(),e.getLocalizedMessage());
+                    }
                 }
                 if (ms != null) {
                     log.debug("ms = exists and is not null");

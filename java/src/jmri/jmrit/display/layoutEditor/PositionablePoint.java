@@ -124,8 +124,8 @@ public class PositionablePoint extends LayoutTrack {
                     break;
                 }
             }
-                
-            log.info("temporary - repaint was removed here, needs to be rescoped");
+
+            log.debug("temporary - repaint was removed here, needs to be rescoped");
             // models.repaint();
 
         }
@@ -201,7 +201,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setConnect1(TrackSegment trk) { connect1 = trk; }
-    
+
     /**
      * Provide the destination TrackSegment of the 2nd connection.
      * When this is an EDGE CONNECTOR, it looks through the linked point (if any)
@@ -223,7 +223,7 @@ public class PositionablePoint extends LayoutTrack {
     public TrackSegment getConnect2Actual() {
         return connect2;
     }
-    
+
     public void setConnect2Actual(TrackSegment trk) { connect2 = trk; }
 
 
@@ -261,7 +261,7 @@ public class PositionablePoint extends LayoutTrack {
                 TrackSegment ts = oldLinkedPoint.getConnect1();
                 oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // oldLinkedPoint.getLayoutEditor().repaint();
 
@@ -269,7 +269,7 @@ public class PositionablePoint extends LayoutTrack {
             if (getConnect1() != null) {
                 models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // models.repaint();
             }
@@ -280,7 +280,7 @@ public class PositionablePoint extends LayoutTrack {
             if (getConnect1() != null) {
                 models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // models.repaint();
             }
@@ -760,7 +760,7 @@ public class PositionablePoint extends LayoutTrack {
             result = false;
         }
         return result;
-    } 
+    }
 
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -843,7 +843,7 @@ public class PositionablePoint extends LayoutTrack {
                 LayoutEditor oldLinkedEditor = getLinkedEditor();
                 TrackSegment ts = getConnect2();
                 getLinkedPoint().setLinkedPoint(null);
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // oldLinkedEditor.repaint();
 
@@ -1029,7 +1029,7 @@ public class PositionablePoint extends LayoutTrack {
                             ts1.getConnect1() == this ? ts1.getType2()      : ts1.getType1(),
 
                             ts2.getConnect1() == this ? ts2.getConnect2() : ts2.getConnect1(),
-                            ts2.getConnect1() == this ? ts2.getType2() : ts2.getType1() 
+                            ts2.getConnect1() == this ? ts2.getType2() : ts2.getType1()
                         )
                     );
 
@@ -1053,7 +1053,7 @@ public class PositionablePoint extends LayoutTrack {
 
                     // determine direction from block 1 to block 2
                     int result;
-                    
+
                     if (ts1.getConnect1() == this) {
                         result = models.computeDirectionToCenter(ts1.getConnect2(), ts1.getType2(), this);
                     } else {

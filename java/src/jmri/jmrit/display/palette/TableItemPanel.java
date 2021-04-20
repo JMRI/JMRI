@@ -102,22 +102,26 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     }
 
     private AbstractTableAction<?> getTableAction(String type) {
-        if (type.equals("Turnout") || type.equals("IndicatorTO")) {
-            return new TurnoutTableAction(Bundle.getMessage("CreateNewItem"));
-        } else if (type.equals("Sensor") || type.equals("MultiSensor")) {
-            return new SensorTableAction(Bundle.getMessage("CreateNewItem"));
-        } else if (type.equals("SignalHead")) {
-            return new SignalHeadTableAction(Bundle.getMessage("CreateNewItem"));
-        } else if (type.equals("SignalMast")) {
-            return new SignalMastTableAction(Bundle.getMessage("CreateNewItem"));
-        } else if (type.equals("Memory")) {
-            return new MemoryTableAction(Bundle.getMessage("CreateNewItem"));
-        } else if (type.equals("Light")) {
-            return new LightTableAction(Bundle.getMessage("CreateNewItem"));
-        } else if (type.equals("Reporter")) {
-            return new ReporterTableAction(Bundle.getMessage("CreateNewItem"));
+        switch (type) {
+            case "Turnout":
+            case "IndicatorTO":
+                return new TurnoutTableAction(Bundle.getMessage("CreateNewItem"));
+            case "Sensor":
+            case "MultiSensor":
+                return new SensorTableAction(Bundle.getMessage("CreateNewItem"));
+            case "SignalHead":
+                return new SignalHeadTableAction(Bundle.getMessage("CreateNewItem"));
+            case "SignalMast":
+                return new SignalMastTableAction(Bundle.getMessage("CreateNewItem"));
+            case "Memory":
+                return new MemoryTableAction(Bundle.getMessage("CreateNewItem"));
+            case "Light":
+                return new LightTableAction(Bundle.getMessage("CreateNewItem"));
+            case "Reporter":
+                return new ReporterTableAction(Bundle.getMessage("CreateNewItem"));
+            default:
+                return null;
         }
-        return null;
     }
     /*
      * Top Panel.
@@ -341,54 +345,53 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
             if (bean == null) {
                 return null;
             }
-//            jmri.NamedBeanHandle<E> bh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(bean.getDisplayName(), bean);
+            // jmri.NamedBeanHandle<E> bh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(bean.getDisplayName(), bean);
 
             Editor editor = _frame.getEditor();
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                if (_itemType.equals("Turnout")) {
-                    TurnoutIcon t = new TurnoutIcon(editor);
-                    t.setTurnout(bean.getDisplayName());
-                    for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
-                        t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
-                    }
-                    t.setFamily(_family);
-                    t.setLevel(Editor.TURNOUTS);
-                    return t;
-                } else if (_itemType.equals("Sensor")) {
-                    SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
-                    for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
-                        s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
-                    }
-                    s.setSensor(bean.getDisplayName());
-                    s.setFamily(_family);
-                    s.setLevel(Editor.SENSORS);
-                    return s;
-                } else if (_itemType.equals("SignalMast")) {
-                    SignalMastIcon sm = new SignalMastIcon(_frame.getEditor());
-                    sm.setSignalMast(bean.getDisplayName());
-                    sm.setLevel(Editor.SIGNALS);
-                    return sm;
-                } else if (_itemType.equals("Light")) {
-                    LightIcon l = new LightIcon(editor);
-                    l.setOffIcon(iMap.get("StateOff"));
-                    l.setOnIcon(iMap.get("StateOn"));
-                    l.setInconsistentIcon(iMap.get("BeanStateInconsistent"));
-                    l.setUnknownIcon(iMap.get("BeanStateUnknown"));
-                    l.setLight((jmri.Light) bean);
-                    l.setLevel(Editor.LIGHTS);
-                    return l;
+                switch (_itemType) {
+                    case "Turnout":
+                        TurnoutIcon t = new TurnoutIcon(editor);
+                        t.setTurnout(bean.getDisplayName());
+                        for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
+                            t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                        }
+                        t.setFamily(_family);
+                        t.setLevel(Editor.TURNOUTS);
+                        return t;
+                    case "Sensor":
+                        SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
+                        for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
+                            s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                        }
+                        s.setSensor(bean.getDisplayName());
+                        s.setFamily(_family);
+                        s.setLevel(Editor.SENSORS);
+                        return s;
+                    case "SignalMast":
+                        SignalMastIcon sm = new SignalMastIcon(_frame.getEditor());
+                        sm.setSignalMast(bean.getDisplayName());
+                        sm.setLevel(Editor.SIGNALS);
+                        return sm;
+                    case "Light":
+                        LightIcon l = new LightIcon(editor);
+                        l.setOffIcon(iMap.get("StateOff"));
+                        l.setOnIcon(iMap.get("StateOn"));
+                        l.setInconsistentIcon(iMap.get("BeanStateInconsistent"));
+                        l.setUnknownIcon(iMap.get("BeanStateUnknown"));
+                        l.setLight((jmri.Light) bean);
+                        l.setLevel(Editor.LIGHTS);
+                        return l;
+                    default:
+                        return null;
                 }
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icons for \"");
-                sb.append(bean.getDisplayName());
-                sb.append("\"");
-                return  sb.toString();
+                return _itemType + " icons for \"" + bean.getDisplayName() + "\"";
             }
             return null;
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class);
+
 }

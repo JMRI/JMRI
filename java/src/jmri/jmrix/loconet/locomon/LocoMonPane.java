@@ -11,12 +11,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages on a given TrafficController.
- * TODO display messages sent while using the hexfile Simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
-    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class);
 
     private String systemConnectionPrefix;
     LocoNetSystemConnectionMemo memo;
@@ -87,6 +85,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     public synchronized void message(LocoNetMessage l) { // receive a LocoNet message and log it
         // send the raw data, to display if requested
         String raw = l.toString();
+        log.debug("message received");
         // format the message text, expect it to provide consistent \n after each line
         String formatted = l.toMonitorString(systemConnectionPrefix);
 
@@ -128,5 +127,6 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class);
 
 }

@@ -55,17 +55,17 @@ public class DecoderPro3Test {
 
         };
         assertThat(a).isNotNull();
-        
+
         jmri.util.JUnitUtil.waitFor(() -> {
             return JmriJFrame.getFrame("DecoderPro Wizard") != null;
         }, "wait for frame to appear");
-        
+
         // remove a frame opened by DecoderPro3
         JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
         // shutdown the application
         // the following line terminates the Junit testing early
 //        AppsBase.handleQuit();
-        
+
     }
 
     @BeforeEach
@@ -88,6 +88,7 @@ public class DecoderPro3Test {
     public void tearDown() {
         // eventually want to test ShutDownTasks?
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

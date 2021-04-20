@@ -3,30 +3,20 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.annotation.Nonnull;
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
+import jmri.jmrit.beantable.sensor.SensorTableDataModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TriStateJCheckBox;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +40,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         // disable ourself if there is no primary sensor manager available
         if (sensorManager == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 
@@ -66,6 +56,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     @Override
     public void setManager(@Nonnull Manager<Sensor> s) {
         if (s instanceof SensorManager) {
+            log.debug("setting manager of ST Action{} to {}",this,s.getClass());
             sensorManager = (SensorManager) s;
             if (m != null) {
                 m.setManager(sensorManager);
@@ -136,12 +127,23 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
-            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            
+            log.debug("add frame hwAddValidator is {} prefix box is {}",hardwareAddressValidator, prefixBox.getSelectedItem());
+            if (hardwareAddressValidator==null){
+                hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            } else {
+                hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
+            }
+
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameField, prefixBox,
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
+            
+            addFrame.setEscapeKeyClosesWindow(true);
+            addFrame.getRootPane().setDefaultButton(addButton);
+            
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N
@@ -196,8 +198,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
-        String errorMessage = null;
         for (int x = 0; x < numberOfSensors; x++) {
+            log.debug("b4 next valid addr for prefix {} conn choice mgr {}",sensorPrefix,connectionChoice);
             try {
                 curAddress = InstanceManager.getDefault(SensorManager.class).getNextValidAddress(curAddress, sensorPrefix, false);
             } catch (jmri.JmriException ex) {
@@ -215,11 +217,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 s = InstanceManager.getDefault(SensorManager.class).provideSensor(sName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(sName);
-                // Show error message in statusBarLabel
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.gray);
+                handleCreateException(ex, sName);
                 return;   // return without creating
             }
 
@@ -288,11 +286,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String hwAddress) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorSensorAddFailed", hwAddress) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String hwAddress) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(SensorManager.class).getBeanTypeHandled(),hwAddress);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {
@@ -393,8 +392,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
         boolean menuAbsent = true;
-        for (int m = 0; m < menuBar.getMenuCount(); ++m) {
-            String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
+        for (int i = 0; i < menuBar.getMenuCount(); ++i) {
+            String name = menuBar.getMenu(i).getAccessibleContext().getAccessibleName();
             if (name.equals(Bundle.getMessage("MenuDefaults"))) {
                 // using first menu for check, should be identical to next JMenu Bundle
                 menuAbsent = false;
@@ -405,19 +404,13 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
             optionsMenu.add(item);
-            item.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setDefaultDebounce(finalF);
-                }
+            item.addActionListener((ActionEvent e) -> {
+                setDefaultDebounce(finalF);
             });
             item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
             optionsMenu.add(item);
-            item.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setDefaultState(finalF);
-                }
+            item.addActionListener((ActionEvent e) -> {
+                setDefaultState(finalF);
             });
             int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
             int offset = 1;
@@ -432,25 +425,18 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             menuBar.add(optionsMenu, pos + offset);
         }
     }
-
-    void showDebounceChanged() {
-        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
-        a.showDebounce(showDebounceBox.isSelected());
+    
+    @Override
+    protected void configureTable(JTable table){
+        super.configureTable(table);
+        showDebounceBox.addActionListener((ActionEvent e) -> { ((SensorTableDataModel)m).showDebounce(showDebounceBox.isSelected(), table); });
+        showPullUpBox.addActionListener((ActionEvent e) -> { ((SensorTableDataModel)m).showPullUp(showPullUpBox.isSelected(), table); });
+        showStateForgetAndQueryBox.addActionListener((ActionEvent e) -> { ((SensorTableDataModel)m).showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected(), table); });
     }
 
-    void showPullUpChanged() {
-        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
-        a.showPullUp(showPullUpBox.isSelected());
-    }
-
-    void showStateForgetAndQueryChanged() {
-        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
-        a.showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected());
-    }
-
-    JCheckBox showDebounceBox = new JCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
-    JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
-    JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
+    private final TriStateJCheckBox showDebounceBox = new TriStateJCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
+    private final TriStateJCheckBox showPullUpBox = new TriStateJCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
+    private final TriStateJCheckBox showStateForgetAndQueryBox = new TriStateJCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
     /**
      * {@inheritDoc}
@@ -459,30 +445,28 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     public void addToFrame(BeanTableFrame<Sensor> f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
         showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
-        showDebounceBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showDebounceChanged();
-            }
-        });
         f.addToBottomBox(showPullUpBox, this.getClass().getName());
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
-        showPullUpBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showPullUpChanged();
-            }
-        });
-        showPullUpBox.setVisible(true);
         f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
-        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                showStateForgetAndQueryChanged();
-            }
-        });
-        showStateForgetAndQueryChanged();
+    }
+    
+    /**
+     * Override to update showDebounceBox, showPullUpBox, showStateForgetAndQueryBox.
+     * {@inheritDoc}
+     */
+    @Override
+    protected void columnsVisibleUpdated(boolean[] colsVisible){
+        log.debug("columns updated {}",colsVisible);
+        showDebounceBox.setState(new boolean[]{
+            colsVisible[SensorTableDataModel.ACTIVEDELAY],
+            colsVisible[SensorTableDataModel.INACTIVEDELAY],
+            colsVisible[SensorTableDataModel.USEGLOBALDELAY] });
+        showPullUpBox.setState(new boolean[]{
+            colsVisible[SensorTableDataModel.PULLUPCOL]});
+        showStateForgetAndQueryBox.setState(new boolean[]{
+            colsVisible[SensorTableDataModel.FORGETCOL],
+            colsVisible[SensorTableDataModel.QUERYCOL] });
     }
 
     /**
@@ -497,29 +481,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         f.addToBottomBox(showDebounceBox, connectionName);
         showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
-        showDebounceBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showDebounceChanged();
-            }
-        });
         f.addToBottomBox(showPullUpBox, connectionName);
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
-        showPullUpBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showPullUpChanged();
-            }
-        });
         f.addToBottomBox(showStateForgetAndQueryBox, connectionName);
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
-        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                showStateForgetAndQueryChanged();
-            }
-        });
-        showStateForgetAndQueryChanged();
     }
 
     /**

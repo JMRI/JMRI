@@ -56,12 +56,13 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     }
     
     /**
-     * Create an new sensor object
-     *
-     * @return new null
+     * Create an new sensor object.
+     * {@inheritDoc}
+     * @return never null
      */
+    @Nonnull
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    protected Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
         MqttSensor s;
         String suffix = systemName.substring(getSystemPrefix().length() + 1);
 

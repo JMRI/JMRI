@@ -41,7 +41,7 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="62">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="62">
         <decVal/>
         <label>Manufacturer Version No</label>
         <label xml:lang="it">Versione Decoder: </label>

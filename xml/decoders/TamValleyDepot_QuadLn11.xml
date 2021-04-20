@@ -67,7 +67,7 @@
         <decVal/>
         <label>Hardware Rev</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Quad-LN Product ID" default="47">
+      <variable CV="7" item="Quad-LN Product ID" readOnly="yes" default="47">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

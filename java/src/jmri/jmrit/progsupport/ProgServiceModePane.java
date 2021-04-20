@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a JPanel to configure the service mode programmer.
+ * Provide a JPanel to configure the service mode (Global) programmer.
  * <p>
  * The using code should get a configured programmer with getProgrammer. Since
  * there's only one service mode programmer, maybe this isn't critical, but it's

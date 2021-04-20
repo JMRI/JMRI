@@ -1,29 +1,29 @@
 package jmri.jmrit.throttle;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.ToggleOrPressButtonModel;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A JButton to activate functions on the decoder. FunctionButtons have a
- * right-click popup menu with several configuration options:
- * <ul>
+ right-click popupMenu menu with several configuration options:
+ <ul>
  * <li> Set the text
  * <li> Set the locking state
  * <li> Set visibility
@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2008
+ * @author Lionel Jeanson 2021
  */
 public class FunctionButton extends JToggleButton {
 
@@ -42,23 +43,21 @@ public class FunctionButton extends JToggleButton {
     private boolean dirty = false;
     private boolean isImageOK = false;
     private boolean isSelectedImageOK = false;
-    private int actionKey;
     private String buttonLabel;
-    private final JPopupMenu popup;
+    private JPopupMenu popupMenu;
+    private FunctionButtonPropertyEditor editor ;
     private String iconPath;
     private String selectedIconPath;
     private ToggleOrPressButtonModel _model;
     private Throttle _throttle;
+    private int img_size = DEFAULT_IMG_SIZE;
 
-    final static int BUT_HGHT;
-    final static int BUT_WDTH;
-    final static int BUT_IMG_SIZE = 45;
-
-    static {
-        JButton sample = new JButton(" Light ");
-        BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, 30);
-        BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, 56);
-    }
+    private final static int BUT_HGHT = 24;    
+    private final static int BUT_MAX_WDTH = 256;
+    private final static int BUT_MIN_WDTH = 100;
+    
+    public final static int DEFAULT_FONT_SIZE = 12;
+    public final static int DEFAULT_IMG_SIZE = 48;
 
     /**
      * Get Button Height.
@@ -73,35 +72,40 @@ public class FunctionButton extends JToggleButton {
      * @return width.
      */
     public static int getButtonWidth() {
-        return BUT_WDTH;
+        return BUT_MIN_WDTH;
+    }
+    
+    /**
+     * Get the Image Button Width.
+     * @return width.
+     */
+    public int getButtonImageSize() {
+        return img_size;
     }
 
+    /**
+     * Set the Image Button Hieght and Width.
+     * @param is the image size (sqaure image size = width = height)
+     */
+    public void setButtonImageSize(int is) {
+        img_size = is;
+    }
+    
     /**
      * Construct the FunctionButton.
      */
     public FunctionButton() {
         super();
-        popup = new JPopupMenu();
         listeners = new ArrayList<>();
-        init();
+        initGUI();
     }
     
-    final void init(){
-        
+    private void initGUI(){      
         _model = new ToggleOrPressButtonModel(this, true);
-        setModel(_model);
-        
-        JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
-        propertiesItem.addActionListener((ActionEvent e) -> {
-            FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
-            editor.setFunctionButton(this);
-            editor.setLocation(this.getLocationOnScreen());
-            editor.setVisible(true);
-          });
-        popup.add(propertiesItem);
-        //Add listener to components that can bring up popup menus.
+        setModel(_model);       
+        //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
-        setFont(new Font("Monospaced", Font.PLAIN, 12));
+        setFont(new Font("Monospaced", Font.PLAIN, DEFAULT_FONT_SIZE));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
         updateLnF();
@@ -123,29 +127,6 @@ public class FunctionButton extends JToggleButton {
      */
     public int getIdentity() {
         return identity;
-    }
-
-    /**
-     * Set the keycode that this button should respond to.
-     * <p>
-     * Later, when a key is being processed, checkKeyCode will determine if
-     * there's a match between the key that was pressed and the key for this
-     * button
-     * @param key KeyCode value.
-     */
-    public void setKeyCode(int key) {
-        actionKey = key;
-    }
-
-    /**
-     * Check to see whether a particular KeyCode corresponds to this function
-     * button.
-     *
-     * @param keycode keycode to check against.
-     * @return true if the button should respond to this key
-     */
-    public boolean checkKeyCode(int keycode) {
-        return keycode == actionKey;
     }
 
     /**
@@ -283,16 +264,23 @@ public class FunctionButton extends JToggleButton {
     public void updateLnF() {
         setBorderPainted(!isImageOK());
         setContentAreaFilled(!isImageOK());
-        setText( isImageOK() ? null : getButtonLabel() );
         if (isImageOK()) { // adjust button for image
-            setPreferredSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+            setText(null);
+            setMinimumSize(new Dimension(img_size, img_size));
+            setMaximumSize(new Dimension(img_size, img_size));
+            setPreferredSize(new Dimension(img_size, img_size));
         }
         else { // adjust button for text
+            setText(getButtonLabel());
+            setMinimumSize(new Dimension(FunctionButton.BUT_MIN_WDTH, FunctionButton.BUT_HGHT));
+            setMaximumSize(new Dimension(FunctionButton.BUT_MAX_WDTH, FunctionButton.BUT_HGHT));
             if (getButtonLabel() != null) {
-                int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel()) + 20; // pad out the width a bit
-                setPreferredSize(new Dimension( Math.max(butWidth, FunctionButton.BUT_WDTH), FunctionButton.BUT_HGHT));
+                int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel()) + 64; // pad out the width a bit
+                butWidth = Math.min(butWidth, FunctionButton.BUT_MAX_WDTH );
+                butWidth = Math.max(butWidth, FunctionButton.BUT_MIN_WDTH );                
+                setPreferredSize(new Dimension( butWidth, FunctionButton.BUT_HGHT));
             } else {
-                setPreferredSize(new Dimension(BUT_WDTH, BUT_HGHT));
+                setPreferredSize(new Dimension(BUT_MIN_WDTH, BUT_HGHT));
             }
         }
     }    
@@ -358,20 +346,17 @@ public class FunctionButton extends JToggleButton {
      * @param l The FunctionListener to be removed
      */
     public void removeFunctionListener(FunctionListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        listeners.remove(l);
     }
 
     /**
      * A PopupListener to handle mouse clicks and releases.
-     * Handles the popup menu.
+     * Handles the popupMenu menu.
      */
     private class PopupListener extends MouseAdapter {
 
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu.
+         * If the event is the popupMenu trigger, which is dependent on the platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
@@ -380,8 +365,7 @@ public class FunctionButton extends JToggleButton {
         }
         
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu.
+         * If the event is the popupMenu trigger, which is dependent on the platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
@@ -390,8 +374,7 @@ public class FunctionButton extends JToggleButton {
         }
 
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu.
+         * If the event is the popupMenu trigger, which is dependent on the  platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
@@ -400,12 +383,29 @@ public class FunctionButton extends JToggleButton {
         }
         
         private void checkTrigger( MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(), e.getX(), e.getY());
+            if (e.isPopupTrigger() && e.getComponent().isEnabled() ) {
+                initPopupMenu();
+                popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
-
+        
+    private void initPopupMenu() {
+        if (popupMenu == null) {
+            JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
+            propertiesItem.addActionListener((ActionEvent e) -> {
+                if (editor == null) {
+                    editor = new FunctionButtonPropertyEditor(this);            
+                }
+                editor.resetProperties();
+                editor.setLocation(MouseInfo.getPointerInfo().getLocation());
+                editor.setVisible(true);
+            });
+            popupMenu = new JPopupMenu();
+            popupMenu.add(propertiesItem);
+        }
+    }
+    
     /**
      * Collect the prefs of this object into XML Element.
      * <ul>
@@ -423,6 +423,7 @@ public class FunctionButton extends JToggleButton {
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        me.setAttribute("buttonImageSize", String.valueOf(this.getButtonImageSize()));
         if (this.getIconPath().startsWith(FileUtil.getUserResourcePath())) {
             me.setAttribute("iconPath", this.getIconPath().substring(FileUtil.getUserResourcePath().length()));
         } else {
@@ -463,12 +464,8 @@ public class FunctionButton extends JToggleButton {
             this.setIsLockable(e.getAttribute("isLockable").getBooleanValue());
             boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
             this.setDisplay(isVisible);
-            if (this.getIdentity() < FunctionPanel.NUM_FUNC_BUTTONS_INIT) {
-                this.setVisible(isVisible);
-            } else {
-                this.setVisible(false);
-            }
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            this.setButtonImageSize( (e.getAttribute("buttonImageSize")!=null)?e.getAttribute("buttonImageSize").getIntValue():DEFAULT_IMG_SIZE);
             if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue())) {
                     this.setIconPath(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue());
@@ -500,7 +497,7 @@ public class FunctionButton extends JToggleButton {
         ResizableImagePanel fnImage = new ResizableImagePanel();
         fnImage.setBackground(new Color(0, 0, 0, 0));
         fnImage.setRespectAspectRatio(true);
-        fnImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+        fnImage.setSize(new Dimension(img_size,img_size));
         fnImage.setImagePath(fnImg);
         if (fnImage.getScaledImage() != null) {
             setIcon(new ImageIcon(fnImage.getScaledImage()));
@@ -534,7 +531,7 @@ public class FunctionButton extends JToggleButton {
         ResizableImagePanel fnSelectedImage = new ResizableImagePanel();
         fnSelectedImage.setBackground(new Color(0, 0, 0, 0));
         fnSelectedImage.setRespectAspectRatio(true);
-        fnSelectedImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+        fnSelectedImage.setSize(new Dimension(img_size, img_size));
         fnSelectedImage.setImagePath(fnImg);
         if (fnSelectedImage.getScaledImage() != null) {
             ImageIcon icon = new ImageIcon(fnSelectedImage.getScaledImage());

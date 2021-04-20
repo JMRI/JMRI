@@ -757,7 +757,7 @@ public class CarManagerTest extends OperationsTestCase {
         r.addLocation(l3);
 
         // make last staging
-        l3.setLocationOps(Location.STAGING);
+        l3.changeTrackType(Track.STAGING);
 
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
@@ -1072,6 +1072,7 @@ public class CarManagerTest extends OperationsTestCase {
         c2.setTypeName("boxcar"); // don't change this car's load
 
         c4.setReturnWhenEmptyLoadName("Tools");
+        c6.setReturnWhenLoadedLoadName("Tools");
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         manager.replaceLoad("Boxcar", "Tools", "Nuts");
@@ -1084,6 +1085,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Nails", c6.getLoadName());
 
         Assert.assertEquals("Nuts", c4.getReturnWhenEmptyLoadName());
+        Assert.assertEquals("Nuts", c6.getReturnWhenLoadedLoadName());
 
         // now change load to default empty
         manager.replaceLoad("Boxcar", "Nuts", null);
@@ -1096,6 +1098,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Nails", c6.getLoadName());
 
         Assert.assertEquals("E", c4.getReturnWhenEmptyLoadName());
+        Assert.assertEquals("L", c6.getReturnWhenLoadedLoadName());
     }
 
     @Test

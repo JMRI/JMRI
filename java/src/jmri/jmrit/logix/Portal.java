@@ -12,6 +12,7 @@ import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
@@ -265,7 +266,7 @@ public class Portal {
      * Set a signal to protect an OBlock. Warrants look ahead for speed changes
      * and change the train speed accordingly.
      * 
-     * @param signal either a SignalMast or a SignalHead
+     * @param signal either a SignalMast or a SignalHead. Set to null to remove (previous) signal from Portal
      * @param length offset length in millimeters. This is additional
      *               entrance space for the block. This distance added to or subtracted
      *               from the calculation of the ramp distance when a warrant must slow
@@ -273,7 +274,7 @@ public class Portal {
      * @param protectedBlock OBlock the signal protects
      * @return true if signal is set
      */
-    public boolean setProtectSignal(NamedBean signal, float length, OBlock protectedBlock) {
+    public boolean setProtectSignal(@Nullable NamedBean signal, float length, OBlock protectedBlock) {
         if (protectedBlock == null) {
             return false;
         }
@@ -281,13 +282,15 @@ public class Portal {
         if ((_fromBlock != null) && _fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalOffset = length;
-            log.debug("OPortal FromBlock Offset set to {} on signal {}", _toSignalOffset, _toSignal.getDisplayName());
+            log.debug("OPortal FromBlock Offset set to {} on signal {}", _toSignalOffset,
+                    (_toSignal != null ? _toSignal.getDisplayName() : "<removed>"));
             ret = true;
         }
         if ((_toBlock != null) && _toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalOffset = length;
-            log.debug("OPortal ToBlock Offset set to {} on signal {}", _fromSignalOffset, _fromSignal.getDisplayName());
+            log.debug("OPortal ToBlock Offset set to {} on signal {}", _fromSignalOffset,
+                    (_fromSignal != null ? _fromSignal.getDisplayName() : "<removed>"));
             ret = true;
         }
         if (ret) {
@@ -315,7 +318,7 @@ public class Portal {
     }
 
     /**
-     * Get the block protected by a signal.
+     * Get the OBlock protected by a signal.
      *
      * @param signal is the signal, either a SignalMast or a SignalHead
      * @return Protected OBlock, if it is protected, otherwise null.
@@ -383,7 +386,7 @@ public class Portal {
     }
 
     /**
-     * Get the paths to the portal within the connected Block i.e. the paths in
+     * Get the paths to the portal within the connected OBlock i.e. the paths in
      * this (the param) block through the Portal.
      *
      * @param block OBlock
@@ -402,10 +405,10 @@ public class Portal {
     }
 
     /**
-     * Get the block on the other side of the portal from the block
-     * block.
+     * Get the OBlock on the other side of the Portal from the given
+     * OBlock.
      *
-     * @param block OBlock
+     * @param block starting OBlock
      * @return the opposite block
      */
     public OBlock getOpposingBlock(@Nonnull OBlock block) {
@@ -418,7 +421,7 @@ public class Portal {
     }
 
     /**
-     * Get the paths from the portal in the next connected Block i.e. paths in
+     * Get the paths from the portal in the next connected OBlock i.e. paths in
      * the block on the other side of the portal from this (the param) block.
      *
      * @param block OBlock

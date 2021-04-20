@@ -23,14 +23,14 @@ public class ConditionalCopyFrameTest {
 
         ConditionalListEdit listedit = new ConditionalListEdit("IX102");
         Assert.assertNotNull(listedit);
-        
+
         Conditional cond = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName("IX102C1");  // NOI18N
         Assert.assertNotNull(cond);
 
         ConditionalCopyFrame f = new ConditionalCopyFrame("Test ConditionalCopyFrameTest", cond, listedit);  // NOI18N
         Assert.assertNotNull(f);
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,6 +44,7 @@ public class ConditionalCopyFrameTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

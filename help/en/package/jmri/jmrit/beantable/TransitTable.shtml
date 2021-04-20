@@ -146,12 +146,8 @@
       <h2>Saving Transits to Disk</h2>
 
       <p>Use the Store item in the File menu to save Transit
-      information to disk. This information is saved with the
-      configuration in an XML file, along with control panel setup
-      and similar items. To store your panels in the same file
-      (recommended), select <strong>File</strong> -&gt; <strong>Store &gt; Store
-      Configuration and Panels To File...</strong> or select <strong>Panels
-      &gt; Store panels...</strong> in the main JMRI window.</p>
+      information to disk. See <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <p>Back to
       <a href="../../../../html/tools/Transits.shtml">Transits Documentation</a>.</p>

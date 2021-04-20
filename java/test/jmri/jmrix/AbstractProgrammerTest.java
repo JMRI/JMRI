@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
+import javax.annotation.Nonnull;
+
 /**
  * JUnit tests for the AbstractProgrammer class
  * <p>
@@ -70,6 +72,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
 
         programmer = new AbstractProgrammer() {
 
+            @Nonnull
             @Override
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();

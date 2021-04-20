@@ -117,7 +117,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         }
 
         // display the decoded data
-        // we use Llnmon to format, expect it to provide consistent \n after each line
+        // we use Mx1Message to format
         nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw.toString());
     }
 

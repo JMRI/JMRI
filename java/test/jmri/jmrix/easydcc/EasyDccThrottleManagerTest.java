@@ -31,9 +31,13 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tm.dispose();
+        tm = null;
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
-
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleManagerTest.class);

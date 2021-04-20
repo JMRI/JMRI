@@ -162,7 +162,7 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(event -> InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex());
@@ -183,6 +183,7 @@ public class PanelEditor extends Editor implements ItemListener {
         fileMenu.add(deleteItem);
         deleteItem.addActionListener(event -> {
             if (deletePanel()) {
+                getTargetFrame().dispose();
                 dispose();
             }
         });
@@ -553,7 +554,7 @@ public class PanelEditor extends Editor implements ItemListener {
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        targetWindowClosing(true);
+        targetWindowClosing();
     }
 
     /**
@@ -599,6 +600,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
+                setEditIdMenu(p, popup);
                 popup.addSeparator();
             }
 
@@ -1039,7 +1041,7 @@ public class PanelEditor extends Editor implements ItemListener {
     protected boolean addItemViaMouseClick = false;
 
     @Override
-    public void putItem(Positionable l) {
+    public void putItem(Positionable l) throws Positionable.DuplicateIdException {
         super.putItem(l);
         /*This allows us to catch any new items that are being pasted into the panel
          and add them to the selection group, so that the user can instantly move them around*/

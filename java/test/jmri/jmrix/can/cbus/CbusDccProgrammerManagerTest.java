@@ -14,12 +14,19 @@ import org.junit.jupiter.api.io.TempDir;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusDccProgrammerManagerTest {
 
     @Test
     public void testCTor() {
         CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCTor2() {
+        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(memo),memo);
         Assert.assertNotNull("exists",t);
     }
     

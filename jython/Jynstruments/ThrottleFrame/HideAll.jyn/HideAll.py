@@ -17,7 +17,7 @@ class HideAll(Jynstrument, MouseListener):
     def getExpectedContextClassName(self):
         return "jmri.jmrit.throttle.ThrottleFrame"
 
-    def init(self):    		
+    def init(self):         
         self.setLayout( GridBagLayout() )
         self.icon = ResizableImagePanel(self.getFolder() + "/HideAll.png",32,32 ) 
         self.setPreferredSize(java.awt.Dimension(32,32))
@@ -36,8 +36,8 @@ class HideAll(Jynstrument, MouseListener):
         # look for an hide toolbar
         for comp in self.getContext().getThrottleWindow().getContentPane().getComponents() :
             if (comp.getClass().getSimpleName() == 'JToolBar'):
-          	    comp.setVisible(not self.isActive)
-        # siwtch edit mode, will hide all inner windows decorations
+                comp.setVisible(not self.isActive)
+        # switch edit mode, will hide all inner windows decorations
         self.getContext().getThrottleWindow().setEditMode(not self.isActive)    
         
 #MouseListener part: to listen for mouse events

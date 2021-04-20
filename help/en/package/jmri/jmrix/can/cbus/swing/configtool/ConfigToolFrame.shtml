@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <meta name="keywords" content="JMRI help CBUS event capture">
-  <title>JMRI: CBUS&trade; Event Capture Tool</title>
+  <title>JMRI: CBUS&reg; Event Capture Tool</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
@@ -15,7 +15,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-     <h1>JMRI: CBUS&trade; Event Capture Tool</h1>
+     <h1>JMRI: CBUS Event Capture Tool</h1>
       
       <ul class="nav">
       <li><a href="#examinemultipleevents">Examine Multiple Events</a></li>
@@ -130,7 +130,7 @@
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
 
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       

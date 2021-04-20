@@ -56,8 +56,7 @@ public abstract class QualifierAdder {
 
         // Add the AND logic - listen for change and ensure result correct
         if (lq.size() > 1) {
-            QualifierCombiner qc = new QualifierCombiner(lq);
-            addListener(qc);
+            new QualifierCombiner(lq);
         }
     }
 
@@ -68,8 +67,20 @@ public abstract class QualifierAdder {
     }
 
     void processElement(Element q, ArrayList<Qualifier> lq, VariableTableModel model) {
+        if (q.getChild("variableref") == null) {
+            log.error("Pane qualifier element 'variableref' is NULL");
+            return;
+        }
         String variableRef = q.getChild("variableref").getText();
+        if (q.getChild("relation") == null) {
+            log.error("Pane qualifier element 'relation' is NULL");
+            return;
+        }
         String relation = q.getChild("relation").getText();
+        if (q.getChild("value") == null) {
+            log.error("Pane qualifier element 'value' is NULL");
+            return;
+        }
         String value = q.getChild("value").getText();
 
         // find the variable

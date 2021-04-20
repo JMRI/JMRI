@@ -118,7 +118,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         pathPanel.add(panel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.PATH_LENGTH);
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.PATH_LENGTH, "TooltipPathLength");
         pathPanel.add(_lengthPanel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 

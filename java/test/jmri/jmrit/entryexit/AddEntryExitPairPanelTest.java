@@ -65,8 +65,8 @@ public class AddEntryExitPairPanelTest {
         java.util.List<AddEntryExitPairFrame>  frames = jmri.util.JmriJFrame.getFrameList(AddEntryExitPairFrame.class);
         Assert.assertEquals("Should be only one frame", 1, frames.size());
         frames.get(0).nxPanel.optionWindow(null);
-        
-        
+
+
         // Close the options window
         JFrameOperator optionFrame = new JFrameOperator(Bundle.getMessage("OptionsTitle"));  // NOI18N
         Assert.assertNotNull("optionFrame", optionFrame);  // NOI18N
@@ -76,8 +76,8 @@ public class AddEntryExitPairPanelTest {
         nxFrame.dispose();
     }
 
-    @BeforeAll
-    public static void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitUtil.resetProfileManager();
@@ -86,11 +86,14 @@ public class AddEntryExitPairPanelTest {
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
     }
 
-    @AfterAll
-    public static void tearDown() {
-        panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+    @AfterEach
+    public void tearDown() {
+        if (panels != null) {
+            panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        }
         panels = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

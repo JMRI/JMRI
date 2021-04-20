@@ -51,7 +51,7 @@ public class LearnSpeedPanel extends JInternalFrame implements java.beans.Proper
         } else {
             name = _warrant.getDisplayName();
         }
-        _scaleSpeed = new JLabel(Bundle.getMessage("TrainReady", name));
+        _scaleSpeed = new JLabel(Bundle.getMessage("TrainReady", _warrant.getTrainName(), name));
         panel.add(_scaleSpeed);
 
         mainPanel.add(panel, BorderLayout.CENTER);

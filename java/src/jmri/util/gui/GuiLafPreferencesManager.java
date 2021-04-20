@@ -45,6 +45,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public static final String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     public static final String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
+    public static final String MAX_COMBO_ROWS = "maxComboRows";
     /**
      * Smallest font size a user can set the font size to other than zero
      * ({@value}). A font size of 0 indicates that the system default font size
@@ -75,6 +76,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private boolean editorUseOldLocSize = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
+    private int maxComboRows = 0;
     private boolean dirty = false;
     private boolean restartRequired = false;
 
@@ -117,6 +119,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.setGraphicTableState(preferences.getBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState()));
             this.setOblockEditTabbed(preferences.getBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed()));
             this.setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize()));
+            this.setMaxComboRows(preferences.getInt(MAX_COMBO_ROWS, this.getMaxComboRows()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
             log.debug("About to setDefault Locale");
@@ -178,6 +181,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         preferences.putBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState());
         preferences.putBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed());
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize());
+        preferences.putInt(MAX_COMBO_ROWS, this.getMaxComboRows());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -298,7 +302,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Get the default font size for the current Look and Feel.
-     * 
+     *
      * @return the default font size
      */
     public int getDefaultFontSize() {
@@ -366,7 +370,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Get the time a tooltip is displayed before being dismissed.
-     * 
+     *
      * @return the delay in seconds
      */
     public int getToolTipDismissDelay() {
@@ -419,6 +423,21 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         boolean oldOblockTabbed = this.oblockEditTabbed;
         this.oblockEditTabbed = tabbed;
         firePropertyChange(OBLOCK_EDIT_TABBED, oldOblockTabbed, tabbed);
+    }
+
+    /**
+     * @return the number of combo box rows to be displayed.
+     */
+    public int getMaxComboRows() {
+        return maxComboRows;
+    }
+
+    /**
+     * Set a new value for the number of combo box rows to be displayed.
+     * @param maxRows The new value, zero for no limit
+     */
+    public void setMaxComboRows(int maxRows) {
+        maxComboRows = maxRows;
     }
 
     /**

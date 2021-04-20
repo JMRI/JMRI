@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -14,7 +15,6 @@ import jmri.Throttle;
 import jmri.ThrottleManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.WarrantPreferences;
-import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
@@ -37,9 +37,13 @@ import java.nio.file.StandardCopyOption;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LoadAtStartUpTest {
 
+    // Only one aat at a time
+    private AutoActiveTrain aat = null;
+
     @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
     public void testShowAndClose() throws Exception {
+        // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -52,8 +56,6 @@ public class LoadAtStartUpTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
         
-        // we need a throttle manager
-        ThrottleManager m = InstanceManager.getDefault(ThrottleManager.class);
         // signal mast manager
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
 
@@ -66,16 +68,23 @@ public class LoadAtStartUpTest {
         }
         // place train on layout
         sm.getSensor("Occ South Platform").setState(Sensor.ACTIVE);
-
+        JUnitUtil.waitFor(100);
+        sm.getSensor("Occ West Platform Switch").setState(Sensor.ACTIVE); // set blocker
+        
         // and load. only one of 2 trains will load
         d.loadAtStartup();
-
         assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+        
+        sm.getSensor("Occ West Platform Switch").setState(Sensor.INACTIVE); // release blocker
 
         // trains loads and runs, 4 allocated sections, the one we are in and 3 ahead.
+        JUnitUtil.waitFor(() -> {
+            return d.getAllocatedSectionsList().size() == 4;
+        }, "Allocate Sections ahead");
         assertThat(d.getAllocatedSectionsList()).withFailMessage("Allocated sections 4").hasSize(4);
-        // set up loco address
-        DccLocoAddress addr = new DccLocoAddress(1000, true);
+        // get autoactivetrain object
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("West End Div").getAspect().equals("Clear");
         }, "Signal West End Div now green");
@@ -84,7 +93,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("1 West To South  Green").isEqualTo("Clear");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("1 South To East Signal Green").isEqualTo("Approach");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("1 East End Throat Signal Green").isEqualTo("Stop");
-        float speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        float speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
@@ -96,7 +105,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("2 West To South  Green").isEqualTo("Clear");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("2 South To East Signal Green").isEqualTo("Approach");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("2 East End Throat Signal Green").isEqualTo("Stop");
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ West Block").setState(Sensor.ACTIVE);
@@ -108,7 +117,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("3 West To South  Green").isEqualTo("Clear");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("3 South To East Signal Green").isEqualTo("Clear");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("3 East End Throat Signal Approach").isEqualTo("Approach");
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ South Block").setState(Sensor.ACTIVE);
@@ -121,7 +130,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("4 East End Throat Signal Green").isEqualTo("Approach");
         String strSigSpeed  = (String) smm.getSignalMast("South To East").getSignalSystem().getProperty(smm.getSignalMast("South To East").getAspect(), "speed");
         assertThat(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSigSpeed)/100).isEqualTo(speedNormal);
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(0.6f); //The signal head indicates 1.0f but train is limited to a max of 0.6f
 
         sm.getSensor("Occ West Block").setState(Sensor.INACTIVE);
@@ -134,7 +143,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("5 West To South  Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("5 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("5 East End Throat Signal yellow").isEqualTo("Approach");
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ South Block").setState(Sensor.INACTIVE);
@@ -146,7 +155,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("6 West To South  Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("6 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("6 East End Throat Signal Red").isEqualTo("Stop");
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
@@ -155,7 +164,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("7 West To South  Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("7 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ South Platform").setState(Sensor.ACTIVE);
@@ -164,7 +173,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("8 West To South  Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("8 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
-        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+        speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.getSensor("Occ East Block").setState(Sensor.INACTIVE);
@@ -177,12 +186,14 @@ public class LoadAtStartUpTest {
 
         // train slows to stop
         JUnitUtil.waitFor(() -> {
-            return (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING) == 0.0;
+            return aat.getThrottle().getSpeedSetting() == 0.0;
         }, "Signal Just passed east end throat now stop");
 
         // cancel (terminate) the train.
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
         bo.push();
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(200);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
 

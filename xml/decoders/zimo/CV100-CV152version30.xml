@@ -14,6 +14,7 @@
 <!-- version 1.7 15 Apr 2019 Ronald Kuhn -  added some german translation -->
 <!-- version 1.8 06 May 2019 Ronald Kuhn -  added CV144 Bit4 & Bit5 -->
 <!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
+<!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -576,8 +577,8 @@
     <label xml:lang="it">Frequenza PWM</label>
     <label xml:lang="cs">Frekvence PWM</label>
     <label xml:lang="de">Motoransteuerungsfrequenz</label>
-    <tooltip>Active if CV9=0</tooltip>
-    <tooltip xml:lang="de">Aktiv wenn CV9=0</tooltip>
+    <tooltip>See CV9=0</tooltip>
+    <tooltip xml:lang="de">See CV9=0</tooltip>
    </variable>
   <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="228,226,232,235,247,MX689_v30">
     <enumVal>
@@ -1494,7 +1495,7 @@
    </variable>
   <variable CV="147" default="0" item="Total PWM Period" exclude="228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
-    <label>EMK measure timeout</label>
+    <label>EMF Extended Sample Time</label>
     <label xml:lang="it">Misura timeout EMK</label>
     <label xml:lang="cs">Měřící pauza EMK</label>
     <label xml:lang="de">EMK – Messlücke</label>

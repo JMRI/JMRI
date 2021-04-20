@@ -35,4 +35,5 @@ public class LearnSpeedPanelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

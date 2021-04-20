@@ -50,7 +50,7 @@ public class JUnitOperationsUtil {
 
     /**
      * Setup the operations test file names and test locations.
-     * 
+     *
      */
     public static void setupOperationsTests() {
 
@@ -269,7 +269,6 @@ public class JUnitOperationsUtil {
 
         Location locationNorthEnd = new Location("1", "North End Staging");
 
-        locationNorthEnd.setLocationOps(Location.STAGING);
         Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
 
         locationNorthEnd.setComment("Test comment for location North End");
@@ -295,7 +294,6 @@ public class JUnitOperationsUtil {
         locationNorthEnd.register(l1staging2);
 
         Location locationSouthEnd = new Location("3", "South End Staging");
-        locationSouthEnd.setLocationOps(Location.STAGING);
         lmanager.register(locationSouthEnd);
 
         Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
@@ -321,7 +319,6 @@ public class JUnitOperationsUtil {
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         Location locationWestEnd = new Location("5", "West End Staging");
-        locationWestEnd.setLocationOps(Location.STAGING);
         lmanager.register(locationWestEnd);
 
         Track l5s1 = new Track("5s1", "West End 1", Track.STAGING, locationWestEnd);
@@ -334,7 +331,6 @@ public class JUnitOperationsUtil {
         locationWestEnd.register(l5s2);
 
         Location locationEastEnd = new Location("7", "East End Staging");
-        locationEastEnd.setLocationOps(Location.STAGING);
         lmanager.register(locationEastEnd);
 
         Track l7s1 = new Track("7s1", "East End 1", Track.STAGING, locationEastEnd);
@@ -370,7 +366,7 @@ public class JUnitOperationsUtil {
     /**
      * Creates a three location route that is also a turn. Train departs North
      * bound and returns South bound.
-     * 
+     *
      * @return Route
      */
     public static Route createThreeLocationTurnRoute() {
@@ -422,7 +418,7 @@ public class JUnitOperationsUtil {
 
     /**
      * Creates a location with 2 spurs, 2 interchanges, and 2 yards
-     * 
+     *
      * @param name the name of the location and the tracks there.
      * @return the location created
      */
@@ -607,7 +603,7 @@ public class JUnitOperationsUtil {
         spur1.setScheduleMode(Track.MATCH); // set schedule into match mode
         spur1.setAlternateTrack(alternate);
         spur1.setReservationFactor(60);
-        
+
         spur2.setSchedule(schedule);
         spur2.setScheduleMode(Track.SEQUENTIAL);
         return schedule;
@@ -665,14 +661,14 @@ public class JUnitOperationsUtil {
         Assert.assertNotNull(in);
         return in;
     }
-    
+
     public static void checkOperationsShutDownTask() {
         // remove the operations shut down tasks
         Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        // only one operations shut down task, the other can be NCE shutdown
-        Assert.assertTrue("Two shut down tasks max", list.size() < 3);
+        // only one operations shut down task, the others can be NCE shutdown and EditorManager shutdown.
+        Assert.assertTrue("Two shut down tasks max", list.size() < 4);
         ShutDownTask operationShutdownTask = null;
         for (ShutDownTask task : list) {
             if (task.getName().equals("Operations Train Window Check")
@@ -682,6 +678,7 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
+        jmri.util.JUnitUtil.deregisterEditorManagerShutdownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);

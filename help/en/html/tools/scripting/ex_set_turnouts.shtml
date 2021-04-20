@@ -81,6 +81,7 @@
       <div class="section">
         <h2>The Script</h2>
         <pre>
+import jmri
 class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
    def init(self):
      return

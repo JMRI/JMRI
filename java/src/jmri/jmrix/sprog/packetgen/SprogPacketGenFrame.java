@@ -64,7 +64,9 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SprogMessage m = new SprogMessage(packetTextField.getText());
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        SprogMessage m = new SprogMessage(input);
         _memo.getSprogTrafficController().sendSprogMessage(m);
     }
 

@@ -110,7 +110,7 @@
         <decVal min="0" max="255"/>
         <label>D Output (x10) Millisecs</label>
       </variable>
-      <variable item="Decoder Version" CV="7" readOnly="yes">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal min="0" max="255"/>
         <label>Decoder Version</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -292,35 +292,45 @@
         <label>Lenz Toggle Mode_</label>
       </variable>
       <constant item="PICV" default="33" comment="CV used for Primary Index"/>
-      <variable label="Address Range 1" CV="513.0" mask="XXVVVVVV" default="1">
+      <variable item="Address Range 1" CV="513.0" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.0" upperMask="XXXXXVVV"/>
+        <label>Address Range 1</label>
       </variable>
-      <variable label="Address Range 2" CV="513.128" mask="XXVVVVVV" default="1">
+      <variable item="Address Range 2" CV="513.128" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.128" upperMask="XXXXXVVV"/>
+        <label>Address Range 2</label>
       </variable>
-      <variable label="Turnout Address 1st output (1-2041)" CV="513.0" mask="XXVVVVVV" default="1">
+      <variable item="Turnout Address 1st output (1-2041)" CV="513.0" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.0" factor="4" offset="-3" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 1st output (1-2041)</label>
       </variable>
-      <variable label="Turnout Address 2nd output" CV="513.0" mask="XXVVVVVV" default="1">
+      <variable item="Turnout Address 2nd output" CV="513.0" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.0" factor="4" offset="-2" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 2nd output</label>
       </variable>
-      <variable label="Turnout Address 3rd output" CV="513.0" mask="XXVVVVVV" default="1">
+      <variable item="Turnout Address 3rd output" CV="513.0" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.0" factor="4" offset="-1" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 3rd output</label>
       </variable>
-      <variable label="Turnout Address 4th output" CV="513.0" mask="XXVVVVVV" default="1">
+      <variable item="Turnout Address 4th output" CV="513.0" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.0" factor="4" offset="-0" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 4th output</label>
       </variable>
-      <variable label="Turnout Address 5th output (1-2041)" CV="513.128" mask="XXVVVVVV" default="1">
+      <variable item="Turnout Address 5th output (1-2041)" CV="513.128" mask="XXVVVVVV" default="1">
         <splitVal highCV="521.128" factor="4" offset="-3" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 5th output (1-2041)</label>
       </variable>
-      <variable label="Turnout Address 6th output" CV="513.128" mask="XXVVVVVV" default="2">
+      <variable item="Turnout Address 6th output" CV="513.128" mask="XXVVVVVV" default="2">
         <splitVal highCV="521.128" factor="4" offset="-2" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 6th output</label>
       </variable>
-      <variable label="Turnout Address 7th output" CV="513.128" mask="XXVVVVVV" default="2">
+      <variable item="Turnout Address 7th output" CV="513.128" mask="XXVVVVVV" default="2">
         <splitVal highCV="521.128" factor="4" offset="-1" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 7th output</label>
       </variable>
-      <variable label="Turnout Address 8th output" CV="513.128" mask="XXVVVVVV" default="2">
+      <variable item="Turnout Address 8th output" CV="513.128" mask="XXVVVVVV" default="2">
         <splitVal highCV="521.128" factor="4" offset="-0" upperMask="XXXXXVVV"/>
+        <label>Turnout Address 8th output</label>
       </variable>
     </variables>
   </decoder>

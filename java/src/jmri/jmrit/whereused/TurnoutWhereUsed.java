@@ -2,6 +2,7 @@ package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * Find turnout references.
@@ -19,7 +20,7 @@ public class TurnoutWhereUsed {
     static public JTextArea getWhereUsed(NamedBean turnout) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"));  // NOI18N
-        textArea.append(Bundle.getMessage("ReferenceTitle", label, turnout.getDisplayName()));  // NOI18N
+        textArea.append(Bundle.getMessage("ReferenceTitle", label, turnout.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", turnout.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkLights(turnout));
@@ -30,6 +31,7 @@ public class TurnoutWhereUsed {
         textArea.append(WhereUsedCollectors.checkSignalGroups(turnout));
         textArea.append(WhereUsedCollectors.checkOBlocks(turnout));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(turnout));
+        textArea.append(WhereUsedCollectors.checkLogixNGConditionals(turnout));
         textArea.append(WhereUsedCollectors.checkPanels(turnout));
         textArea.append(WhereUsedCollectors.checkCTC(turnout));
         return textArea;

@@ -245,7 +245,7 @@
       <p><a href="../../../../html/hardware/XPressNet/XNetAddressing.shtml">More
       on XPressNet sensor naming</a>.</p>
 
-      <h3>CBUS&trade; to JMRI Sensor Mapping</h3>
+      <h3>CBUS&reg; to JMRI Sensor Mapping</h3>
       <p>Short event 18 on and off : "+18".</p>
       <p>Short event 18 on, short event 21 off : "+18;-21".</p> 
       <p>Long event Node 2 Event 18 on and off : "+N2E18".</p>
@@ -350,7 +350,7 @@
       page</a>.</p>
 
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       <!--#include virtual="/Footer.shtml" -->

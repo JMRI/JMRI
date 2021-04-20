@@ -215,7 +215,7 @@ chaque ajout pour actualiser les versions web.
 <a name="site" id="site"></a><h2> Mise &#224; jour du site JMRI.org </h2>
 Des changements pour les pages d'aide qui sont v&#233;rifi&#233;es devrait appara&#238;tre automatiquement sur le site JMRI.org
 apr&#232;s un court moment.Il y a une
-<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
+<a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
 qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
 
 <!--#include virtual="/Footer.shtml" -->

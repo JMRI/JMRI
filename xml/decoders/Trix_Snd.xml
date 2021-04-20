@@ -61,7 +61,7 @@
         <label xml:lang="fr">Vmax</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="7">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="7">
         <decVal/>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>

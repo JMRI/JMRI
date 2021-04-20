@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>PKP PLK - 2020</name>
+  <date>2020</date>
+  <reference>Zgodne z Instrukcją sygnalizacji E1 obowiązującą od 05.06.2020</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Damian</firstname><surname>Dąbrowa</surname></personname>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2021-03-03</date>
+        <authorinitials>DD</authorinitials>
+        <revremark>Initial Release</revremark>
+    </revision>
+
+  </revhistory>
+
+  <aspects>
+    <aspect>
+      <name>Sygnał S1</name>
+      <indication>Jedno czerwone światło ciągłe na semaforze</indication>
+      <description>Stój</description>
+      <reference></reference>
+      <comment>Sygnał S1 nakazuje zatrzymanie pociągu oraz manewrów przed semaforem</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S1a</name>
+      <indication>Jedno czerwone światło ciągłe na semaforze, drugie czerwone migające</indication>
+      <description>Stój - absolutny zakaz wjazdu do tunelu</description>
+      <reference></reference>
+      <comment>Sygnał S1a nakazuje zatrzymanie pociągu i zakazuje wjazdu do tunelu</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S1z</name>
+      <indication>Jedno czerwone światło ciągłe na semaforze, drugie białe migające</indication>
+      <description>Można przejechać obok semafora wskazującego sygnał "Stój"</description>
+      <reference></reference>
+      <comment>Sygnał S1z pozwala przejechać obok semafora wyświetlającego sygnał "Stój"</comment>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S2</name>
+      <indication>Jedno zielone światło ciągłe na semaforze</indication>
+      <description>Jazda z największą dozwoloną prędkością</description>
+      <reference></reference>
+      <comment>Sygnał S2 zezwala na jazdę z największą prędkością dozwoloną dla danego pociągu na danym odcinku linii kolejowej(szlaku, odstępie, drodze przebiegu) i informuje, że na następnym semaforze, jeżeli semafor nadający sygnał S2 jest z nim uzależniony, nadawany jest sygnał zezwalający na jazdę z największą dozwoloną prędkością</comment>
+      <speed>Maximum</speed>
+      <speed2>Maximum</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S3</name>
+      <indication>Jedno zielone światło migające na semaforze</indication>
+      <description>Jazda z największą dozwoloną prędkością, przy następnym semaforze z prędkością nie przekraczającą 100km/h</description>
+      <reference></reference>
+      <comment>Jazda z największą dozwoloną prędkością w przodzie są dwa odstępy blokowe wolne albo przy następnym semaforzez prędkością nie większą niż 100 km/h</comment>
+      <speed>Maximum</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S4</name>
+      <indication>Jedno pomarańczowe światło migające na semaforze</indication>
+      <description>Następny semafor wskazuje sygnał zezwalający na jazdę z prędkością zmniejszoną do 40 lub 60 km/h</description>
+      <reference></reference>
+      <comment>Sygnał S4 zezwala na jazdę z największą prędkością dozwoloną dla danego pociągu na danym odcinku linii kolejowej (szlaku, odstępie, drodze przebiegu), wskazaną w wewnętrznym rozkładzie jazdy pociągów i informuje, że następny semafor nadaje sygnał zezwalający na jazdę z prędkością nieprzekraczającą 40 lub 60 km/h</comment>
+      <speed>Maximum</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S5</name>
+      <indication>Jedno światło pomarańczowe ciągłe na semaforze</indication>
+      <description>Następny semafor nadaje sygnał Stój</description>
+      <reference></reference>
+      <comment>Sygnał S5 informuje, że następny semafor nadaje sygnał „Stój”, maszynista powinien tak regulować prędkość jazdy, aby mógł zatrzymać pociąg przed następnym semaforem wskazującym sygnał „Stój”</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S10</name>
+      <indication>Dwa światła na semaforze w jednym pionie: dolne światło pomarańczowe ciągłe, a górne - zielone ciągłe</indication>
+      <description>Jazda z prędkością nieprzekraczającą 40 km/h, a potem z największą dozwoloną prędkością</description>
+      <reference></reference>
+      <comment>Sygnał S10 zezwala na jazdę z prędkością nie większą niż 40km/h i informuje, że na następnym semaforze, jeżeli semafor nadający sygnał S10 jest z nim uzależniony, nadawany jest sygnał zezwalający na jazdę z największą dozwoloną prędkością</comment>
+      <speed>Slow</speed>
+      <speed2>Maximum</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S11</name>
+      <indication>Dwa światła na semaforze w pionie - dolne światło pomarańczowe ciągłe, górne zielone migające</indication>
+      <description>Jazda z prędkością nieprzekraczającą 40 km/h, a przy następnym semaforze - z prędkością nie przekraczającą 100 km/h</description>
+      <reference></reference>
+      <comment>Sygnał S11 zezwala na jazdę z prędkością nie większą niż 40 km/h i informuje, że następny semafor nadaje sygnał zezwalający na jazdę z prędkością nie większą niż 100 km/h</comment>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S12</name>
+      <indication>Dwa światła na semaforze w jednym pionie - dolne światło pomarańczowe ciągłe, górne światło pomarańczowe migające</indication>
+      <description>Jazda z prędkością nieprzekraczającą 40 km/h, a przy następnym semaforze – z prędkością nie przekraczającą 40 lub 60 km/h</description>
+      <reference></reference>
+      <comment>Sygnał S12 zezwala na jazdę z prędkością nie większą niż 40 km/h i informuje,że następny semafor nadaje sygnał zezwalający na jazdę z prędkością nie większą niż 40 lub 60 km/h</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał S13</name>
+      <indication>Dwa światła pomarańczowe ciągłe na semaforze w jednym pionie</indication>
+      <description>Jazda z prędkością nieprzekraczającą 40 km/h, a przy następnym semaforze – Stój</description>
+      <reference></reference>
+      <comment>Sygnał S13 zezwala na jazdę z prędkością nie większą niż 40 km/h i informuje, że następny semafor nadaje sygnał „Stój”</comment>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał Sz</name>
+      <indication>Jedno światło matowobiałe migające na semaforze lub maszcie semafora, albo na maszcie semafora nieoświetlonego, albo umiesz-czone na osobnej podstawie</indication>
+      <description>Można przejechać obok semafora wskazującego sygnał Sr 1 lub S 1 „Stój”albo sygnał wątpliwy, albo też semafora nieoświetlonego lub przejechać obok sygnalizatora sygnału zastępczego, mającego wyłącznie latarnię ze światłem białym - bez rozkazu pisemnego</description>
+      <reference></reference>
+      <comment>jazdę, która może odbywać się z prędkością nie większą niż 40 km/h i nie wymaga zatrzymania się przed nim; maszynistapowi-nien jednak tak regulować prędkość jazdy, aby mógł w każdej chwili zatrzymać pociąg w razie nagłego zauważenia przeszkody; przy wyjeździe na szlak bez blokady samoczynnej jazda z prędkością do 40 km/h obowiązuje w granicach posterunku ruchu</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał Ms 1</name>
+      <indication>Pojedynczy ciągły sygnał niebieski</indication>
+      <description>Jazda manewrowa zabroniona</description>
+      <reference></reference>
+      <comment></comment>
+      <speed></speed>
+      <speed2></speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sygnał Ms 2</name>
+      <indication>Pojedynczy ciągły sygnał biały</indication>
+      <description>Jazda manewrowa dozwolona</description>
+      <reference></reference>
+      <comment></comment>
+      <speed>Shunting</speed>
+      <speed2>Shunting</speed2>
+    </aspect>
+  </aspects>
+
+  <imagetypes>
+    <imagetype type="large"/>
+    <imagetype type="default"/>
+    <imagetype type="small"/>
+  </imagetypes>
+  
+  <appearancefiles>
+    <appearancefile href="appearance-sbl2.xml"/>
+    <appearancefile href="appearance-sbl3.xml"/>
+    <appearancefile href="appearance-sbl4.xml"/>
+    <appearancefile href="appearance-spa4.xml"/>
+    <appearancefile href="appearance-spa5.xml"/>
+    <appearancefile href="appearance-shounting.xml"/>
+  </appearancefiles>
+
+  <aspectSpeeds>
+    <Cab>200</Cab>
+    <Maximum>160</Maximum>
+    <Normal>100</Normal>
+    <Medium>60</Medium>
+    <Slow>40</Slow>
+    <Shunting>25</Shunting>
+    <Restricted>20</Restricted>
+    <Stop>0</Stop>
+  </aspectSpeeds>
+
+  <appearanceSpeeds>
+    <SignalHeadStateRed>Stop</SignalHeadStateRed>
+    <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
+    <SignalHeadStateGreen>Maximum</SignalHeadStateGreen>
+    <SignalHeadStateFlashingGreen>Normal</SignalHeadStateFlashingGreen>
+    <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
+    <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
+    <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
+    <SignalHeadStateFlashingLunar>Slow</SignalHeadStateFlashingLunar>
+    <SignalHeadStateBlue>Shunting</SignalHeadStateBlue>
+  </appearanceSpeeds>
+
+</aspecttable>

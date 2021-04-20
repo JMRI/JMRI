@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.networkdriver;
 
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -7,25 +8,29 @@ import org.junit.jupiter.api.*;
 /**
  * Tests for ConnectionConfig class.
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016, 2021
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @BeforeEach
-   @Override
-   public void setUp() {
+    private EcosSystemConnectionMemo memo;
+
+    @BeforeEach
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
-
         JUnitUtil.initDefaultUserMessagePreferences();
-        cc = new ConnectionConfig();
-   }
 
-   @AfterEach
-   @Override
-   public void tearDown(){
+        memo = new EcosSystemConnectionMemo(); // takes care of cleaning up the EcosPreferenceManager
+        cc = new ConnectionConfig();
+        ((ConnectionConfig)cc).setInstance(); // create an adapter assumed to exist in tests
+    }
+
+    @AfterEach
+    @Override
+    public void tearDown(){
         cc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
         JUnitUtil.tearDown();
-   }
+    }
 
 }

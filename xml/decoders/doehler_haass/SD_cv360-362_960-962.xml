@@ -38,6 +38,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>4</revnumber>
+      <date>2021-03-15</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fixes for exclude conditions for SUSI sound modules new family</revremark>
+    </revision>
+    <revision>
       <revnumber>3</revnumber>
       <date>2020-12-12</date>
       <authorinitials>WK</authorinitials>
@@ -68,46 +74,46 @@
       <revremark>Creation</revremark>
     </revision>
    </revhistory>
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-  <variable label="Flash-ROM protection" CV="360" tooltip="CV360" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="SUSI sound modules">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label xml:lang="fr">Protection mémoire flash</label>
-	<label xml:lang="de">Schreibschutz Flash-ROM</label>
-	<label xml:lang="ca">Protecció de la memòria flash</label>
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Flash-ROM protection" CV="360" tooltip="CV360" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="SUSI sound modules,SUSI sound modules (2020)">
+  <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+  <label xml:lang="fr">Protection mémoire flash</label>
+  <label xml:lang="de">Schreibschutz Flash-ROM</label>
+  <label xml:lang="ca">Protecció de la memòria flash</label>
   </variable>
   <variable label="Flash-ROM protection" CV="960" tooltip="CV960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label xml:lang="fr">Protection mémoire flash</label>
-	<label xml:lang="de">Schreibschutz Flash-ROM</label>
-	<label xml:lang="ca">Protecció de la memòria flash</label>
+  <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+  <label xml:lang="fr">Protection mémoire flash</label>
+  <label xml:lang="de">Schreibschutz Flash-ROM</label>
+  <label xml:lang="ca">Protecció de la memòria flash</label>
   </variable>
-  <!-- END SIMILAR CV --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21" exclude="SUSI sound modules">
-	<decVal min="0" max="14"/>
-	<label xml:lang="fr">Seuil ZVS</label>
-	<label xml:lang="de">Schwellenwert ZVS</label>
-	<label xml:lang="ca">Límit ZVS</label>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21" exclude="SUSI sound modules,SUSI sound modules (2020)">
+  <decVal min="0" max="14"/>
+  <label xml:lang="fr">Seuil ZVS</label>
+  <label xml:lang="de">Schwellenwert ZVS</label>
+  <label xml:lang="ca">Límit ZVS</label>
    </variable>
   <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00">
-	<decVal min="0" max="14"/>
-	<label xml:lang="fr">Seuil ZVS</label>
-	<label xml:lang="de">Schwellenwert ZVS</label>
-	<label xml:lang="ca">Límit ZVS</label>
+  <decVal min="0" max="14"/>
+  <label xml:lang="fr">Seuil ZVS</label>
+  <label xml:lang="de">Schwellenwert ZVS</label>
+  <label xml:lang="ca">Límit ZVS</label>
    </variable>
-  <!-- END SIMILAR CV --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-   <variable label="Smoke puffs at speed 127" CV="362" tooltip="CV362 (0-255)" default="0" item="Sound Option 22" exclude="SUSI sound modules">
-	<decVal min="0" max="255"/>
-	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
-	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
-	<label xml:lang="ca">Sortida de fum al pas 127</label>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+   <variable label="Smoke puffs at speed 127" CV="362" tooltip="CV362 (0-255)" default="0" item="Sound Option 22" exclude="SUSI sound modules,SUSI sound modules (2020)">
+  <decVal min="0" max="255"/>
+  <label xml:lang="fr">Poussée de fumée en vitesse 127</label>
+  <label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+  <label xml:lang="ca">Sortida de fum al pas 127</label>
    </variable>
    <variable label="Smoke puffs at speed 127" CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00">
-	<decVal min="0" max="255"/>
-	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
-	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
-	<label xml:lang="ca">Sortida de fum al pas 127</label>
+  <decVal min="0" max="255"/>
+  <label xml:lang="fr">Poussée de fumée en vitesse 127</label>
+  <label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+  <label xml:lang="ca">Sortida de fum al pas 127</label>
    </variable>
-   <!-- END SIMILAR CV --> 
+   <!-- END SIMILAR CV -->
 </variables>

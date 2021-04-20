@@ -94,12 +94,12 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             }
 
             @Override
-            public IdTag getBySystemName(String name) {
+            public IdTag getBySystemName(@Nonnull String name) {
                 return tagManager.getBySystemName(name);
             }
 
             @Override
-            public IdTag getByUserName(String name) {
+            public IdTag getByUserName(@Nonnull String name) {
                 return tagManager.getByUserName(name);
             }
 
@@ -272,6 +272,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             ActionListener cancelListener = (ActionEvent ev) -> {
                 cancelPressed(ev);
             };
+            addFrame.setEscapeKeyClosesWindow(true);
             addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener));
         }
         addFrame.pack();
@@ -312,7 +313,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
     }
 
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<IdTag> f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
         isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {

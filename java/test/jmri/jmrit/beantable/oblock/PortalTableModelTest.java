@@ -7,8 +7,6 @@ import jmri.util.JUnitUtil;
 
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -18,10 +16,10 @@ public class PortalTableModelTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         TableFrames tf = new TableFrames();
         PortalTableModel ptm = new PortalTableModel(tf);
-        Assert.assertNotNull("exists", ptm);
+        Assertions.assertNotNull(ptm, "exists");
     }
 
     @BeforeEach

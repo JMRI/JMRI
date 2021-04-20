@@ -15,8 +15,8 @@ public class LocoGenPanelTest extends jmri.util.swing.JmriPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         panel = new LocoGenPanel();
-        helpTarget="package.jmri.jmrix.loconet.locogen.LocoGenFrame";
-        title=Bundle.getMessage("MenuItemSendPacket");
+        helpTarget = "package.jmri.jmrix.loconet.locogen.LocoGenFrame";
+        title = Bundle.getMessage("MenuItemSendPacket");
     }
 
     @Override

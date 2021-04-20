@@ -26,7 +26,7 @@ public class PositionablePropertiesUtilTest {
     }
 
     @Test
-    public void testNoChangesApplyLabel() {
+    public void testNoChangesApplyLabel() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor ef = new EditorScaffold();
         PositionableLabel label = new PositionableLabel("one", ef);
@@ -58,6 +58,7 @@ public class PositionablePropertiesUtilTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

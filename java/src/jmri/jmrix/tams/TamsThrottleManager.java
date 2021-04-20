@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen 
  *
  * @author Kevin Dickerson
- * 
  */
 public class TamsThrottleManager extends AbstractThrottleManager implements TamsListener {
 

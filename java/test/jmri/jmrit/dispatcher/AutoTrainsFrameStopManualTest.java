@@ -1,5 +1,7 @@
 package jmri.jmrit.dispatcher;
 
+import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -13,6 +15,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
@@ -42,11 +45,20 @@ import java.nio.file.StandardCopyOption;
         // Only one aat at a time
         private AutoActiveTrain aat = null;
 
+        @Test
+        public void testTaskAllocateRelease() {
+            TaskAllocateRelease t = new TaskAllocateRelease(TaskAction.SCAN_REQUESTS);
+            Assert.assertNotNull(t);
+            Assert.assertEquals(TaskAction.SCAN_REQUESTS, t.getAction());
+        }
+
         @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
         @Test
         public void testToManual() throws Exception {
              jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
             };
+            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
             WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
             // load layout file
@@ -81,7 +93,9 @@ import java.nio.file.StandardCopyOption;
             JFrameOperator atw = new JFrameOperator(Bundle.getMessage("TitleAutoTrains"));
 
             // trains loads and runs, 2 allocated sections, the one we are in and 1 ahead.
-            assertThat(d.getAllocatedSectionsList()).withFailMessage("Section South 1").hasSize(2);
+            JUnitUtil.waitFor(() -> {
+                return(d.getAllocatedSectionsList().size()==2);
+            },"Allocated sections should be 2");
 
             JUnitUtil.waitFor(() -> {
                 return smm.getSignalMast("South To West").getAspect().equals("Approach");
@@ -252,6 +266,8 @@ import java.nio.file.StandardCopyOption;
 
             JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
             bo.push();
+            // wait for cleanup to finish
+            JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
             JFrameOperator aw = new JFrameOperator("AutoTrains");

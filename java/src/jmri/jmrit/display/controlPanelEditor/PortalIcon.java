@@ -2,14 +2,12 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.catalog.NamedIcon;
@@ -54,6 +52,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     static public HashMap<String, NamedIcon> getPaletteMap() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps("Portal");
         if (families.keySet().isEmpty()) {
+            log.debug("Adding missing PortalIconMap");
             ItemPalette.loadMissingItemType("Portal");
             families = ItemPalette.getFamilyMaps("Portal");
         }
@@ -64,7 +63,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
                 break;
             }
         }
-        // Don't return ItemPalette's map!
+        // return a copy, not ItemPalette's map!
         return cloneMap(iconMap, null);
     }
     
@@ -82,11 +81,21 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setIcon(_iconMap.get(HIDDEN));
     }
 
+    /**
+     * PortalIcon family is managed by editor, ignoring per icon setting if any.
+     * @return the family name as set in editor.
+     */
+    @Override
+    public String getFamily() {
+        return ((ControlPanelEditor)_editor).getPortalIconFamily();
+    }
+
     protected void setMap(HashMap<String, NamedIcon> map) {
         _iconMap = map;
     }
 
     @Override
+    @Nonnull
     public Positionable deepClone() {
         PortalIcon pos = new PortalIcon(_editor, getPortal());
         return finishClone(pos);
@@ -109,9 +118,23 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         _iconMap.put(name, icon);
     }
 
+    /**
+     * Renamed in 4.21.5
+     * @param set true for regular, false for opposite (flipped in edit frame)
+     * @deprecated since 4.21.5 use setArrowOrientation(set)
+     */
+    @Deprecated
     public void setArrowOrientatuon(boolean set) {
+        setArrowOrientation(set);
+    }
+
+    /**
+     * Set direction of portal icon, renamed in 4.21.5
+     * @param set true for regular, false for opposite (flipped in edit frame)
+     */
+    public void setArrowOrientation(boolean set) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon {} setArrowOrientatuon regular={} from {}", getPortal().getName(), set, _regular);
+            log.debug("Icon {} setArrowOrientation regular={} from {}", getPortal().getName(), set, _regular);
         }
         _regular = set;
     }
@@ -229,6 +252,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     @Override
+    @Nonnull
     public String getNameString() {
         Portal p = getPortal();
         if (p == null) return "No Portal Defined";
@@ -282,19 +306,20 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     @Override
-    public boolean setRotateMenu(JPopupMenu popup) {
+    public boolean setRotateMenu(@Nonnull JPopupMenu popup) {
         return false;
     }
 
     @Override
-    public boolean setScaleMenu(JPopupMenu popup) {
+    public boolean setScaleMenu(@Nonnull JPopupMenu popup) {
         return false;
     }
 
     @Override
-    public boolean setEditItemMenu(JPopupMenu popup) {
+    public boolean setEditItemMenu(@Nonnull JPopupMenu popup) {
         return false;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalIcon.class);
+
 }

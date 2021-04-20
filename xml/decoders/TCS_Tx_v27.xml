@@ -30,7 +30,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
-      <!-- <variable CV="7" readOnly="yes" item="Decoder Version" default="27">-->
+      <!-- <variable CV="7" item="Decoder Version" readOnly="yes" default="27">-->
       <!--<variable CV="8" readOnly="yes" item="Manufacturer" default="153">-->
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <!-- CV=19 -->

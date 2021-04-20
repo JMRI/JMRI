@@ -8,8 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 import java.util.EventObject;
 import java.util.Locale;
 
@@ -17,22 +16,18 @@ import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
+import jmri.jmrit.logixng.LogixNGPreferences;
+
 import jmri.*;
 
-import apps.jmrit.DebugMenu;
-
-import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.decoderdefn.PrintDecoderListAction;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.jython.*;
-import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.jmrit.roster.swing.RosterMenu;
 import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.*;
+
 import apps.plaf.macosx.Application;
+
 import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.*;
@@ -40,8 +35,6 @@ import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
-import jmri.util.usb.RailDriverMenuItem;
-import jmri.web.server.WebServerAction;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
 import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
@@ -364,6 +357,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // do final activation
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        
+        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
+                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+        logixNG_Manager.setupAllLogixNGs();
+        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+            logixNG_Manager.activateAllLogixNGs();
+        }
 
         log.debug("End constructor");
     }
@@ -406,9 +406,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
         _jynstrumentSpace.setLayout(new FlowLayout());
-        new URIDrop(_jynstrumentSpace, (java.net.URI[] uris) -> {
-            for (java.net.URI uri : uris) {
-                ynstrument(uri.getPath());
+        new URIDrop(_jynstrumentSpace, (URI[] uris) -> {
+            for (URI uri : uris ) {
+                ynstrument(new File(uri).getPath());
             }
         });
     }
@@ -434,54 +434,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * @param wi      WindowInterface where this menu bar will appear
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
-        // the debugging statements in the following are
-        // for testing startup time
-        log.debug("start building menus");
-
         if (SystemType.isMacOSX()) {
             Application.getApplication().setQuitHandler((EventObject eo) -> handleQuit());
         }
 
-        fileMenu(menuBar, wi);
-        editMenu(menuBar, wi);
-        toolsMenu(menuBar, wi);
-        rosterMenu(menuBar, wi);
-        panelMenu(menuBar, wi);
-        // check to see if operations in main menu
-        if (jmri.jmrit.operations.setup.Setup.isMainMenuEnabled()) {
-            operationsMenu(menuBar, wi);
-        }
-        systemsMenu(menuBar, wi);
-        debugMenu(menuBar, wi);
-        menuBar.add(new WindowMenu(wi));
-        helpMenu(menuBar, wi);
-        log.debug("end building menus");
-    }
-
-    /**
-     * Create default File menu
-     *
-     * @param menuBar Menu bar to be populated
-     * @param wi      WindowInterface where this menu will appear as part of the
-     *                menu bar
-     */
-    protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
-        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        menuBar.add(fileMenu);
-
-        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
-        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
-
-        // Use Mac OS X native Quit if using Aqua look and feel
-        if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
-            fileMenu.add(new JSeparator());
-            fileMenu.add(new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleQuit();
-                }
-            });
-        }
+        AppsMainMenu.createMenus(menuBar, wi, this, mainWindowHelpID());
     }
 
     /**
@@ -504,144 +461,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     protected void setPrefsFrameHelp(JmriJFrame frame, String location) {
         frame.addHelpMenu(location, true);
-    }
-
-    protected void editMenu(JMenuBar menuBar, WindowInterface wi) {
-
-        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        menuBar.add(editMenu);
-
-        // cut, copy, paste
-        AbstractAction a;
-        a = new DefaultEditorKit.CutAction();
-        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCut"));
-        editMenu.add(a);
-        a = new DefaultEditorKit.CopyAction();
-        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCopy"));
-        editMenu.add(a);
-        a = new DefaultEditorKit.PasteAction();
-        a.putValue(Action.NAME, Bundle.getMessage("MenuItemPaste"));
-        editMenu.add(a);
-
-        // Put prefs in Apple's prefered area on Mac OS X
-        if (SystemType.isMacOSX()) {
-            Application.getApplication().setPreferencesHandler((EventObject eo) -> {
-                doPreferences();
-            });
-        }
-        // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
-        if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
-            editMenu.addSeparator();
-            if (prefsAction == null) {
-                prefsAction = new TabbedPreferencesAction();
-            }
-            editMenu.add(prefsAction);
-        }
-
-    }
-
-    protected void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));
-    }
-
-    protected void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new OperationsMenu());
-    }
-
-    protected void rosterMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new RosterMenu(Bundle.getMessage("MenuRoster"), RosterMenu.MAINMENU, this));
-    }
-
-    protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new PanelMenu());
-    }
-
-    /**
-     * Show only active systems in the menu bar.
-     *
-     * @param menuBar the menu bar to add systems to
-     * @param wi      the containing WindowInterface
-     */
-    protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
-        ActiveSystemsMenu.addItems(menuBar);
-    }
-
-    protected void debugMenu(JMenuBar menuBar, WindowInterface wi) {
-        JMenu d = new DebugMenu(this);
-
-        // also add some tentative items from jmrix
-        d.add(new JSeparator());
-        d.add(new jmri.jmrix.pricom.PricomMenu());
-        d.add(new JSeparator());
-
-        d.add(new jmri.jmrix.jinput.treecontrol.TreeAction());
-        d.add(new jmri.jmrix.libusb.UsbViewAction());
-
-        d.add(new JSeparator());
-
-        d.add(new RailDriverMenuItem());
-
-        try {
-            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
-        } catch (URISyntaxException | NullPointerException ex) {
-            log.error("Unable to load RailDriver Throttle", ex);
-            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));
-            i.setEnabled(false);
-            d.add(i);
-        }
-
-        // also add some tentative items from webserver
-        d.add(new JSeparator());
-        d.add(new WebServerAction());
-
-        d.add(new JSeparator());
-        d.add(new WiThrottleCreationAction());
-
-        d.add(new JSeparator());
-        d.add(new apps.TrainCrew.InstallFromURL());
-
-        // add final to menu bar
-        menuBar.add(d);
-
-    }
-
-    /**
-     * Add a script menu to a window menu bar.
-     *
-     * @param menuBar the menu bar to add the script menu to
-     * @param wi      the window interface containing menuBar
-     * @deprecated since 4.17.5 without direct replacement; appears to have been
-     * empty method since 1.2.3
-     */
-    @Deprecated
-    protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
-        // temporarily remove Scripts menu; note that "Run Script"
-        // has been added to the Panels menu
-        // JMenu menu = new JMenu("Scripts");
-        // menuBar.add(menu);
-    }
-
-    protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
-        JMenu devMenu = new JMenu("Development");
-        menuBar.add(devMenu);
-        devMenu.add(new jmri.jmrit.symbolicprog.autospeed.AutoSpeedAction("Auto-speed tool"));
-        devMenu.add(new JSeparator());
-        devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction("Sample automaton 1"));
-        devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));
-        devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
-        //devMenu.add(new JSeparator());
-        //devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
-    }
-
-    protected void helpMenu(JMenuBar menuBar, WindowInterface wi) {
-        // create menu and standard items
-        JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
-
-        // tell help to use default browser for external types
-        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-        // use as main help menu
-        menuBar.add(helpMenu);
     }
 
     /**

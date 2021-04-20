@@ -1,7 +1,10 @@
 package jmri.jmrit.operations.automation.actions;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -13,8 +16,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RunSwitchListChangesAction extends Action {
 
@@ -37,17 +38,14 @@ public class RunSwitchListChangesAction extends Action {
     }
 
     /**
-     * Creates a custom switch list for each location that is selected and
-     * there's new work for that location.
+     * Creates a custom switch list for each location that is selected and there's
+     * new work for that location.
      * <p>
      * common code see RunSwitchListAction.java
      *
-     * @param isChanged if set true only locations with changes will get a
-     *                  custom switch list.
+     * @param isChanged if set true only locations with changes will get a custom
+     *                  switch list.
      */
-    @SuppressFBWarnings(
-            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
-            justification = "isChanged = false when called from RunSwitchListAction")
     protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
@@ -57,15 +55,17 @@ public class RunSwitchListChangesAction extends Action {
             }
             // we do need one of these!
             if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", InstanceManager.getDefault(TrainCustomSwitchList.class)
-                        .getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
+                        InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+                        InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
                 finishAction(false);
                 return;
             }
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-            // check that both the Excel custom manifest and custom switch lists aren't busy with other work
+            // check that both the Excel custom manifest and custom switch lists aren't busy
+            // with other work
             // We've found that on some OS only one copy of Excel can be running at a time
             // this can wait thread
             if (!InstanceManager.getDefault(TrainCustomManifest.class).checkProcessReady()) {
@@ -83,26 +83,28 @@ public class RunSwitchListChangesAction extends Action {
                 log.warn("Switch List CSV common file exists!");
             }
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                if (location.isSwitchListEnabled()
-                        && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
-                    // also build the regular switch lists so they can be used
-                    if (!Setup.isSwitchListRealTime()) {
-                        trainSwitchLists.buildSwitchList(location);
-                    }
+                if (location.isSwitchListEnabled() &&
+                        (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
                     File csvFile = trainCsvSwitchLists.buildSwitchList(location);
+                    // also build the regular switch lists so they can be used
+                    trainSwitchLists.buildSwitchList(location);
                     if (csvFile == null || !csvFile.exists()) {
                         log.error("CSV switch list file was not created for location {}", location.getName());
                         finishAction(false);
                         return;
                     }
-                    InstanceManager.getDefault(TrainCustomSwitchList.class).addCVSFile(csvFile);
+                    location.setStatus(Location.PRINTED);
+                    location.setSwitchListState(Location.SW_PRINTED);
+                    InstanceManager.getDefault(TrainCustomSwitchList.class).addCsvFile(csvFile);
+                    log.info("Queued switch list CSV file location ({}) for custom processing", location.getName());
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
             boolean status = InstanceManager.getDefault(TrainCustomSwitchList.class).process();
             if (status) {
                 try {
-                    status = InstanceManager.getDefault(TrainCustomSwitchList.class).waitForProcessToComplete(); // wait up to 60 seconds per file
+                 // wait up to 60 seconds per file
+                    status = InstanceManager.getDefault(TrainCustomSwitchList.class).waitForProcessToComplete(); 
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     log.error("Thread interrupeted while waiting", e);

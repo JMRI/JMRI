@@ -1,6 +1,5 @@
 package jmri.jmrit.display.switchboardEditor.configurexml;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class SwitchboardEditorClassMigrationTest {
     @Test
     public void testCTor() {
         SwitchboardEditorClassMigration t = new SwitchboardEditorClassMigration();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

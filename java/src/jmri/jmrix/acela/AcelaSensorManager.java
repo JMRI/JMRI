@@ -47,7 +47,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.INVALID) {
             log.error("Invalid Sensor system Name format: {}", systemName);
@@ -55,7 +55,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
         Sensor s;
         String sName = systemName;
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
             throw new IllegalArgumentException("Invalid Acela Sensor system name - " +  // NOI18N
                     systemName);

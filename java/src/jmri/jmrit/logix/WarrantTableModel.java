@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -61,7 +62,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         _frame = frame;
         _manager = InstanceManager
                 .getDefault(jmri.jmrit.logix.WarrantManager.class);
-        // _manager.addPropertyChangeListener(this); // for adds and deletes
+        _manager.addPropertyChangeListener(this); // for adds and deletes
         _warList = new ArrayList<>();
         _warNX = new ArrayList<>();
     }
@@ -77,7 +78,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     @Override
-    public Warrant getBySystemName(String name) {
+    public Warrant getBySystemName(@Nonnull String name) {
         return _manager.getBySystemName(name);
     }
 
@@ -91,7 +92,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     @Override
-    public Warrant getByUserName(String name) {
+    public Warrant getByUserName(@Nonnull String name) {
         return _manager.getByUserName(name);
     }
 

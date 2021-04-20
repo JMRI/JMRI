@@ -32,11 +32,6 @@ public class SensorEditAction extends BeanEditAction<Sensor> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameSensor");
-    }
-
-    @Override
     public Sensor getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }

@@ -275,6 +275,7 @@
 
        <ul>
         <li><a href="#ReturnWhenEmpty">Return When Empty</a></li>
+        <li><a href="#ReturnWhenLoaded">Return When Loaded</a></li>
        </ul></li>
 
       <li><a href="#CarsTools">Cars Tools</a>
@@ -348,7 +349,7 @@
 
         <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
-        <li><a href="#TrainScripts">Scripts</a></li>
+        <li><a href="#EditTrainScripts">Scripts</a></li>
         
         <li><a href="#CopyTrain">Copy Train</a></li>
         
@@ -381,7 +382,7 @@
         
         <li><a href="#TrainsCopyTrain">Copy Train</a></li>
         
-        <li><a href="#TrainsScripts">Scripts</a></li>
+        <li><a href="#TrainScripts">Train Scripts</a></li>
         
         <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
 
@@ -482,9 +483,14 @@
     href="../../../apps/TabbedPreferences.shtml#RailroadName">Railroad Name</a>. You can also
    configure JMRI to automatically open any of the operation windows on <a
     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a> by adding a "Perform action".
-   Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
-   information about the window you're using. 
-   
+
+   <p>
+    Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
+    information about the window you're using. Detailed step by step <a
+     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
+    available on the JMRI.org site.
+   </p>
+
    <a name="MultipleLayouts" id="MultipleLayouts"></a>
 
    <h3>Multiple Layout Support</h3>
@@ -578,11 +584,14 @@
 
    <p>
     So let's begin with the <a href="#Settings">Settings</a> window. Enter a name for your railroad,
-    the scale that you're modeling, and decide of you're are going to use descriptive names or AAR
-    codes for your rolling stock. You can also optionally select which directions your railroad
-    travels. Leave the rest of the fields in the <a href="#Settings">Settings</a> window alone for
-    now, you can always come back and change them later. Now press the "Save" button in the lower
-    right corner and close the window by pressing the "X" in the upper right corner.
+    the scale that you're modeling, and decide of you're are going to use <a href="#CarTypes">descriptive
+     names</a> or AAR codes for your rolling stock. You can also optionally select which <a
+     href="#LocationServiceDirection">directions</a> your railroad travels. You also have the option
+    to add the OperationsPro&trade; menu to the main window. Select "Add Operations Menu to Main
+    Menu" if you want this option. The next time you start PanelPro the OperationsPro&trade; menu
+    will appear. Leave the rest of the fields in the <a href="#Settings">Settings</a> window alone
+    for now, you can always come back and change them later. Now press the "Save" button in the
+    lower right corner and close the window by pressing the "X" in the upper right corner.
    </p>
 
    <p>
@@ -642,7 +651,7 @@
     for now. Save the train, close the window, and return to the Trains window. Press the
     <a href="#BuildingTrains">Build</a> button for the train. It should build. Now pressing the
     "Print" or "Preview" button will produce a Manifest for your train depending on the state of "Preview"
-    checkbox at the bottom of the "Trains" window. Review the Manifest and you should see that the
+    checkbox at the bottom of the <a href="#Trains">Trains</a> window. Review the Manifest and you should see that the
     train serviced all car types. If you examine the
     <a href="#Cars">Cars</a> window you can see that cars are now assigned to your train.
    </p>
@@ -700,10 +709,15 @@
    <p>
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
-    this document that covers that window's capabilities. Help is also available at the <a
-     href="https://groups.io/g/jmriusers">JMRI users</a> which is part of the Groups.io. 
-     Another good source for help is a series of articles written by David Haynes <a
-     href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
+    this document that covers that window's capabilities. Detailed step by step <a
+     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
+    also available on the JMRI.org site.
+   </p>
+
+   <p>
+    Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which is
+    part of the Groups.io. Another good source for help is a series of articles written by David
+    Haynes <a href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
      http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
     "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
     contents of the window.
@@ -894,8 +908,8 @@
    </p>
 
    <p>
-    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your panel using tools in
-    the Routes and <a href="#EditRoute">Edit Route</a> windows.
+    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your
+    panel using tools in the Routes and <a href="#EditRoute">Edit Route</a> windows.
    </p>
 
    <p>
@@ -905,7 +919,7 @@
    <p>The train icon menu allows you to "Move" a train to the next location in the train's
     route. You can also quickly move a train to any location in the train's route by selecting
     "Route" followed by any location in the route. The text for the move action becomes "Terminate"
-    when the train arrives at the last location in the train's route. You would "Terminate" the
+    when the train arrives at the last location in the train's route. You would <a href="#TerminateTrain">Terminate</a> the
     train when all of the cars have been spotted to their specified tracks.</p>
 
    <h3>Save</h3>
@@ -1054,7 +1068,7 @@
    mode will not fill every track to capacity which is more prototypical. However, normal mode won't
    swap a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
-   the order you build and run your trains or by using the Train Reset function.
+   the order you build and run your trains or by using the <a href="#TrainReset">Train Reset</a> function.
 
    <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -1202,7 +1216,7 @@
    car's final destination fields. The car routing algorithm will search for the most efficient
    route for the car to travel. The router will attempt to use classification/interchange tracks and
    then yards to move cars. If you don't want the router to use yards, you can deselect the "Enable
-   Car Routing via Yards" checkbox. The program will try and find a route using a maximum of five
+   Car Routing via Yards" checkbox. The program will try and find a route using a maximum of six
    trains to complete the car move. Note that the program never gives up trying to route a car. If a
    car has been assigned a <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">Custom
     Load</a> the program will try and route the car during every train build that has access to the car.
@@ -1675,15 +1689,15 @@
 
    <a name="SaveTrainManifests" id="SaveTrainManifests"></a>
    <h4>Save Train Manifests</h4>
-   When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
-   Manifest before creating a new one. The program will store the old Manifests in a directory
+   When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current
+   train Manifest before creating a new one. The program will store the old Manifests in a directory
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
    <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the <a href="#Trains">Trains</a>
    or <a href="#TrainEdit">Edit Train</a> windows.
    <p>The program will also store a copy of each train's build report in a directory called
     "buildStatusBackups" also located in the "operations" directory.</p>
-    
+
    <p>This option also makes backup copies of any switch list that you create. They are stored
     in a directory called "switchListBackups" located in the "operations" directory. A separate
     directory is created for each location's switch list that you create.</p>
@@ -2095,15 +2109,19 @@
 
    <a name="CopyTrack" id="CopyTrack"></a>
    <h4>Copy Track</h4>
-   The copy track tool allows you to select an existing track and create a new track with the same attributes as the
-   original. You can also transfer all of the rolling stock from the original track to the new track, and if you
-   wish, delete the copied track. Select the operations you want and then press the "Copy" button to create a new
-   track, move cars and locos, and delete the original track. If you're pleased with the results, press the "Save"
-   button to make your copy permanent.
+   The copy track tool allows you to select an existing track and create a new track with the same
+   attributes as the original. You can also transfer all of the rolling stock from the original
+   track to the new track, and if you wish, delete the copied track. Select the operations you want
+   and then press the "Copy" button to create a new track, move cars and locos, and delete the
+   original track. If you're pleased with the results, press the "Save" button to make your copy
+   permanent.
 
-   <p>When using the copy track feature, it is recommended that you reset or terminate any built
-    trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
-    up or set out from a built train. This restriction also applies to deleting the original track.</p>
+   <p>
+    When using the copy track feature, it is recommended that you <a href="#TrainReset">reset</a> or
+    <a href="#TerminateTrain">terminate</a> any built trains as the copy track will not transfer
+    rolling stock from a track that has a scheduled pick up or set out from a built train. This
+    restriction also applies to deleting the original track.
+   </p>
 
    <a name="ChangeTrackTypeLocation" id="ChangeTrackTypeLocation"></a>
    <h4>Change Track Type</h4>
@@ -2867,9 +2885,7 @@
    group. This blocking feature doesn't consider where in the train the cars are, as some crew
    members when picking up cars, will add the cars to any part of the train. So the first stop in
    the departure train's route may not have the cars at the head of the train, but they should be in
-   a group, somewhere in the train. The first time you depart staging with this feature on, the cars
-   will not be blocked for you, you need to first terminate a new train into staging, those cars
-   will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
+   a group, somewhere in the train. To enable this feature, see Edit Staging Track,
    "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
    option will not block cars correctly. See the train's <a href="#BuildReports">build report</a> for more details.
 
@@ -3602,6 +3618,38 @@
    <p>Use the "Load" menu to change the car's load, or create new ones by using the "Edit"
     button located to the right of the load menu.</p>
 
+   <a name="ReturnWhenEmpty" id="ReturnWhenEmpty"></a>
+   <h4>Return When Empty</h4>
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes empty. You can also replace the car's default empty "E" load with one
+   from the return when empty (RWE) load menu. Only custom loads that are type <a href="#LoadType">Empty</a>
+   are shown in the combo box. When you specify a custom RWE load for a car, the program will use
+   the RWE load instead of the default empty "E" load in all cases where the "E" load would normally
+   occur. Note that the RWE load also overrides the generation of custom loads out of staging since
+   the "E" load isn't used by the program for this car. However, if a car does arrive into staging
+   with the RWE load name, the program will set the load name to the default "E", and not use the
+   RWE addresses.
+
+   <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
+    destination to become active, only when the car is set out by the program will the RWE
+    destination and RWE load become active.</p>
+
+   <a name="ReturnWhenLoaded" id="ReturnWhenLoaded"></a>
+   <h4>Return When Loaded</h4>
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes loaded. You can also replace the car's default load "L" with one from
+   the return when loaded (RWL) load menu. Only custom loads that are type
+   <a href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load for a
+   car, the program will use the RWL load instead of the default "L" load in all cases where the "L"
+   load would normally occur. When a car arrives into staging and has the "E" load and the option to
+   swap load names is enabled, the program will activate the RWL load and addresses. Also when a car
+   arrives into staging and has a custom load type of empty and the option to remove custom load
+   names is enabled, the program will activate the RWL load and addresses.
+
+   <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
+    destination to become active, only when the car is set out by the program will the RWL
+    destination and RWL load name become active.</p>
+
    <h4>Kernel</h4>
 
    <p>
@@ -3609,20 +3657,6 @@
     moved as a single unit. Select the kernel you want the car to be in using the "Kernel" menu, and
     use the "Edit" button to create new ones.
    </p>
-
-   <a name="ReturnWhenEmpty" id="ReturnWhenEmpty"></a>
-   <h4>Return When Empty</h4>
-   You can also optionally enter the location and track that you want the car to return to when the
-   car's load status becomes empty. You can also replace the car's default empty load "E" with one
-   from the return when empty (RWE) load menu. Only custom loads that are type <a href="#LoadType">Empty</a>
-   are shown in the combo box. When you specify a custom RWE load for a car, the program will use
-   the RWE load instead of the default empty "E" in all cases where the "E" load would normally
-   occur. Note that the RWE load also overrides the generation of custom loads out of staging since
-   the "E" load isn't used by the program for this car.
-
-   <p>Note that manually changing the load status to empty "E" will not cause the Return When
-    Empty (RWE) destination to become active, only when the car is set out by the program will the
-    RWE destination and RWE load become active.</p>
 
    <h4>Optional -- Normally Set by Program</h4>
    The next three set of fields are normally set by the program when building trains. We'll explain how they work in
@@ -3891,13 +3925,15 @@
     <img src="images/Routes.png">
    </p>
 
-   <p>The "Routes" window shows for every route created the id, name, comment, shortest route
-    length, longest route length, and status of the route. If there's a problem with the route, the
-    status will be reported as "Error". If the route hasn't been assigned to a train, the status for
-    the route is reported as "Orphan". If a route has been assigned to a train or trains, and one of
-    the trains is built, the status becomes "Train Built". You can not modify a route that is
-    assigned to a built train. Reset or terminate a built train if you want to modify the route. Use
-    the "Edit" button to modify a route.</p>
+   <p>
+    The "Routes" window shows for every route created the id, name, comment, shortest route length,
+    longest route length, and status of the route. If there's a problem with the route, the status
+    will be reported as "Error". If the route hasn't been assigned to a train, the status for the
+    route is reported as "Orphan". If a route has been assigned to a train or trains, and one of the
+    trains is built, the status becomes "Train Built". You can not modify a route that is assigned
+    to a built train. <a href="#TrainReset">Reset</a> or <a href="#TerminateTrain">terminate</a> a
+    built train if you want to modify the route. Use the "Edit" button to modify a route.
+   </p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -4112,11 +4148,14 @@
 
    <a name="SetTrainIconCoordinates" id="SetTrainIconCoordinates"></a>
    <h4>Set Train Icon Coordinates</h4>
-   <p>Use this tool to set the default X and Y coordinates of your train icons for each
-    location. The tool allows you to specify the icon coordinates based on the train's direction.
-    You can also update all of your existing routes and locations with these new coordinates. As an
-    alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
-    create coordinates unique to a specific route.</p>
+   <p>
+    Use this tool to set the default X and Y coordinates of your train icons for each location. The
+    tool allows you to specify the icon coordinates based on the train's direction. You can also
+    update all of your existing routes and locations with these new coordinates. As an alternative,
+    you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to create
+    coordinates unique to a specific route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a>
+    you wish to use in the Settings window.
+   </p>
 
    <a name="Trains" id="Trains"></a>
    <h2>Trains</h2>
@@ -4127,17 +4166,19 @@
     <img src="images/Trains.png">
    </p>
 
-   <p>The "Trains" window shows all of your trains. For each train, there's a checkbox in
-    the "Build" column used to select which trains to build, print, and terminate. The buttons on
-    the bottom of the page will build, print or terminate the trains selected. You can also modify
-    an existing train using the "Edit" button for that train. For each train there's also an action
-    button. You can select one of four actions for your train. The 'Move" action causes a built
-    train to depart its current location and move to the next location in the train's route. The
-    "Conductor" action opens a window that provides the train's Manifest for each location in the
-    train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves a
-    built train to the last location in the train's route, and completes the work assigned to the
-    train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
-    that hasn't moved.</p>
+   <p>
+    The Trains window shows all of your trains. For each train, there's a checkbox in the "Build"
+    column used to select which trains to build, print, and terminate. The buttons on the bottom of
+    the page will build, print or terminate the trains selected. You can also modify an existing
+    train using the "Edit" button for that train. For each train there's also an action button. You
+    can select one of four actions for your train. The 'Move" action causes a built train to depart
+    its current location and move to the next location in the train's route. The "Conductor" action
+    opens a window that provides the train's Manifest for each location in the train's route. The
+    last two actions are <a href="#TerminateTrain">Terminate</a> and "Reset", pressing "Terminate"
+    moves a built train to the last location in the train's route, and completes the work assigned
+    to the train. <a href="#TrainReset">Reset</a> is used to release all cars assigned to a built
+    train. You can only reset a train that hasn't moved.
+   </p>
 
    <p>
     There are several checkboxes along the bottom of the Trains window. The "Show All" when selected
@@ -4248,17 +4289,20 @@
 
    <p>
     You can also require a <a href="#CabooseFredHazardous">caboose or car with FRED (Flashing
-     Rear End Device)</a> as the last car in the train, and you can optionally specify the road for the
-    caboose or car with FRED. If you leave the road blank, the program will try and find a caboose
-    with the same road as the locomotive.
+     Rear End Device)</a> as the last car in the train when it departs. You can also optionally specify
+    the road for the caboose or car with FRED. If you leave the road blank, the program will try and
+    find a caboose with the same road as the locomotive. Normally the caboose or car with FRED stays
+    with the train until the last location in the train's route. You can add or remove a caboose
+    anywhere in the train's route, see <a href="#OptionalTrainRequirements">Optional Train
+     Requirements</a> under <a href="#TrainBuildOptions">Train Build Options</a> for more info.
    </p>
 
    <a name="TrainReset" id="TrainReset"></a>
    <h3>Reset Train</h3>
    The "Reset Train" button allows you to remove locomotives and cars that have been assigned to a
    train. Useful when you want to try various build options and don't what to physically move
-   locomotives and cars on the railroad. Note that you can only reset a train that hasn't been
-   moved.
+   locomotives and cars on the railroad. Note that you can only reset a built train that hasn't been
+   moved. You can also reset a train from the <a href="#Trains">Trains</a> window.
 
    <p>
     There are many counters used when building a train and they are NOT restored when using the
@@ -4421,6 +4465,7 @@
    specify a period, select the "Range" radio button and enter the after and before years you want
    the train to service.
 
+   <a name="OptionalTrainRequirements" id="OptionalTrainRequirements"></a>
    <h3>Optional Train Requirements</h3>
    You can have up to two locomotive changes while the train is en route. Select "Locomotive change"
    where you want the change to happen in your route, and how many new locomotives should be
@@ -4480,7 +4525,7 @@
    <p>Use this tool to make a copy of an existing train. You will need to enter a name for the
     new train.</p>
 
-   <a name="TrainScripts" id="TrainScripts"></a>
+   <a name="EditTrainScripts" id="EditTrainScripts"></a>
    <h3>Scripts</h3>
    If you want to run a <a href="../../../../html/tools/scripting/index.shtml">script</a> when a
    train is built, moves or terminates, select under the "Edit Train-&gt;Tools-&gt;Scripts". This
@@ -4814,13 +4859,15 @@
 
    <a name="TrainsTableColors" id="TrainsTableColors"></a>
    <h4>Train Row Color</h4>
-   <p>OperationsPro&trade; gives you two options for color coding the rows in the "Trains"
-    window. You can manually color code your trains, or you can have the program automatically set a
-    train's row color based on the status of the train. For example you could tell the program you
-    want the row colored red if a train fails to build. You can also when using the "Auto" option
-    define a unique color for each train when they are reset. Before switching to "Auto", select the
-    reset row colors for your various trains. You can find this feature under "Tools" in the
-    "Trains" window.</p>
+   <p>
+    OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You
+    can manually color code your trains, or you can have the program automatically set a train's row
+    color based on the status of the train. For example you could tell the program you want the row
+    colored red if a train fails to build. You can also when using the "Auto" option define a unique
+    color for each train when they are <a href="#TrainReset">reset</a>. Before switching to "Auto",
+    select the reset row colors for your various trains. You can find this feature under "Tools" in
+    the "Trains" window.
+   </p>
 
    <a name="TrainSchedules" id="TrainSchedules"></a>
    <h4>Train Schedules</h4>
@@ -5093,8 +5140,8 @@
    This tool allows you to copy an existing train. Enter a new name for the train you wish to copy,
    then select the train you want to copy, then press the "Copy" button.
    
-   <a name="TrainsScripts" id="TrainScripts"></a>
-   <h4>Scripts</h4>
+   <a name="TrainScripts" id="TrainScripts"></a>
+   <h4>Train Scripts</h4>
    You can run a script when starting and / or shutting down OperationsPro. Use the "Add Script" buttons to
    select the scripts you want to run. 
    
@@ -5339,7 +5386,7 @@
     The routing method also uses the car's move count to determine which cars to look at first. A
     car needs to be routed when it has a <a href="#FinalDestination">final destination</a> (think
     ship to address). The program will try and route the car to its final destination using up to
-    five trains. If the car has a custom load and no final destination, the program will search for
+    six trains. If the car has a custom load and no final destination, the program will search for
     a spur with a schedule that is demanding that car's load, and then will then give the car a
     final destination that is the spur, and then route the car to that spur.
    </p>
@@ -5429,7 +5476,7 @@
    <p>
     If a car has a custom load without a destination, the program will search for a spur with a
     schedule demanding that car type and load, the program will then "route" the car to that
-    destination. The program will use up to five trains to route a car to a destination. The program
+    destination. The program will use up to six trains to route a car to a destination. The program
     when determining how many cars an industry can serve considers the length of the spur serving
     the industry, and the length of the alternate track if one is specified. If the car is departing
     staging with a custom load, the "Percentage of custom loads generated by staging" is used to
@@ -5615,19 +5662,20 @@
    <h3>Custom Switch Lists</h3>
    You can if you wish create custom switch lists using an Excel program. You can configure where to
    find the Excel program for custom switch lists from the "Switch Lists by Location" window "Tools"
-   menu. Or go to <a href="#SettingsOptions">Options</a> and select the "Generate CSV Switch List"
-   to enable this feature. For more information see <a href="#SetupExcelProgram">Setup Excel
-    Program (Manifest Creator)</a>.
+   menu. Or go to
+   <a href="#SettingsOptions">Options</a> and select the "Generate CSV Switch List" to enable this
+   feature. For more information see
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a>.
 
-   <p>Four new buttons will appear at the bottom of the "Switch Lists by Location" window,
-    "Generate CSV Switch Lists", "Generate CSV Switch Lists Changes", "Run", and "Run Changes". The
-    "Generate CSV Switch Lists" will create a comma separated values file for each of the selected locations. And the
-    "Generate CSV Switch Lists Changes" will only create new CSV files for locations that have have
-    been modified by a new train build. You can find the CSV files in the csvSwitchList directory.
-    The "Run" button is used to create custom switch lists for all of the selected locations by
-    executing an Excel program. The "Run" button will create the CSV files needed before asking the
-    Excel program to create and print a custom switch list. The "Run Changes" will only create new
-    switch lists for locations that have new work.</p>
+   <p>When the feature to generate CSV Switch Lists is enabled, the program will create a comma
+    separated values file for each of the selected locations. You can find the CSV files in the
+    csvSwitchList directory.</p>
+
+   <p>Two new buttons will appear at the bottom of the "Switch Lists by Location" window, "Run",
+    and "Run Changes". The "Run" button is used to create custom switch lists for all of the
+    selected locations by executing an Excel program. The "Run" button will if needed, create the
+    CSV files needed before asking the Excel program to create and print a custom switch list. The
+    "Run Changes" will only create new switch lists for locations that have new work.</p>
 
    <a name="TrainMove" id="TrainMove"></a>
    <h3>Moving Trains</h3>
@@ -5673,13 +5721,16 @@
    trains, print all trains, and then use the "Save Builds" button and shut down the program. Later
    you can restart the program and terminate the trains that completed their runs.
 
-   <p>The correct time to terminate a train is when the train actually arrives at its
-    destination. Terminating a train before it completes it run means that the operation program
-    incorrectly believes that the locomotives and cars have been delivered. It is better to build
-    and print twelve trains and then later find out that only nine trains completed their runs. You
-    would then terminate nine trains, and leave the other three for next time. Or if you wish you
-    could reset any trains that didn't depart from their terminal. Reseting trains really isn't
-    necessary, the trains that didn't run during this session could run the during the next session.</p>
+   <p>
+    The correct time to <a href="#TerminateTrain">terminate</a> a train is when the train actually
+    arrives at its destination. Terminating a train before it completes it run means that the
+    operation program incorrectly believes that the locomotives and cars have been delivered. It is
+    better to build and print twelve trains and then later find out that only nine trains completed
+    their runs. You would then terminate nine trains, and leave the other three for next time. Or if
+    you wish you could <a href="#TrainReset">reset</a> any trains that didn't depart from their
+    terminal. Reseting trains really isn't necessary, the trains that didn't run during this session
+    could run the during the next session.
+   </p>
 
    <p>An alternate method is to build, print, and use the "Move" button for each train to track
     the actual movement of the trains during your session. As long as the trains on your layout

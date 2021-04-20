@@ -842,7 +842,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(result.isArray()).isTrue();
         assertEquals(4, result.size());
         assertEquals(JsonOperations.CAR_TYPE, result.path(0).path(JSON.TYPE).asText());
-        assertEquals("test1", result.path(0).path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("Boxcar", result.path(0).path(JSON.DATA).path(JSON.NAME).asText());
         assertThat(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
         assertThat(result.path(0).path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray()).isTrue();
         // rename the added car type

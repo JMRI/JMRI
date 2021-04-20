@@ -38,7 +38,7 @@
       
       <h2><a name="sprog3plus" id="sprog3plus">SPROG 3 Plus and Pi-SPROG Plus</a></h2>
       
-      <p>DCC command stations and programmers with integrated CBUS&trade; adapters (no 
+      <p>DCC command stations and programmers with integrated CBUS&reg; adapters (no 
           need for a separate USB - CAN adapter) and dual track outputs.</p>
       
       <p>Features</p>
@@ -70,15 +70,15 @@
       
       <p>Create a new profile. The example shown is for Pi-PSROG 3 hardware.
           Enter the name and click OK.<br><br></p>
-      <img src="images/setup/NewProfile1.png" alt="JMRI new profile 1">
+      <img src="images/Setup/NewProfile1.png" alt="JMRI new profile 1">
       <p></p>
 
       <p>Select the New Profile and click OK<br><br></p>
-      <img src="images/setup/NewProfile2.png" alt="JMRI new profile 2">
+      <img src="images/Setup/NewProfile2.png" alt="JMRI new profile 2">
       <p></p>
       
       <p>Click Next when the Wizard appears.<br><br></p>      
-      <img src="images/setup/NewProfile3.png" alt="JMRI new profile 3">
+      <img src="images/Setup/NewProfile3.png" alt="JMRI new profile 3">
       <p></p>
 
       Make the following selections:
@@ -88,7 +88,7 @@
           <li>Serial Port: Selection will depend on host computer and operating system</li>
       </ul>
       <br>
-      <img src="images/setup/NewProfile4.png" alt="JMRI new profile 41">
+      <img src="images/Setup/NewProfile4.png" alt="JMRI new profile 41">
       <p></p>
       
       <p>Click Next to complete the setup.</p>

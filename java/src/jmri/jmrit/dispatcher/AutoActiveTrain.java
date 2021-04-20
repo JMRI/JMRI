@@ -3,7 +3,6 @@ package jmri.jmrit.dispatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;
@@ -16,6 +15,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.Timebase;
+import jmri.Turnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
@@ -142,7 +142,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public synchronized void setTargetSpeed(float speed) {
         _targetSpeed = speed;
         if (speed > 0.002) {
-            _autoEngineer.slowToStop(false);
+            cancelStopInCurrentSection();
         }
     }
 
@@ -256,7 +256,6 @@ public class AutoActiveTrain implements ThrottleListener {
         //clear all flags
         _pausingActive = false;
         _stoppingBySensor = false;
-        _stoppingForStopSignal = false;
         _stoppingByBlockOccupancy = false;
         _stoppingUsingSpeedProfile = false;
 
@@ -337,7 +336,11 @@ public class AutoActiveTrain implements ThrottleListener {
                 setSpeedBySignal();
             } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
                 // starting for the first time with automatic allocation of Sections
-                setSpeedBySignal();
+                // the last of 2 threads must call setSpeedBySignal
+                // if the other thread is incomplete _currentAllocated Section will be null
+                if (_currentAllocatedSection != null ) {
+                    setSpeedBySignal();
+                }
             }
         }
     }
@@ -361,17 +364,15 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     // more operational variables
-    private final ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<>();
+    // private final ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<>();
     private jmri.jmrit.display.layoutEditor.LayoutBlockManager _lbManager = null;
     private AllocatedSection _lastAllocatedSection = null;
 
     protected Section getLastAllocatedSection() {
-        AllocatedSection as = _allocatedSectionList.get(_allocatedSectionList.size() - 1);
-        if (as != null) {
-            return as.getSection();
-        }
-        return null;
+      Section as = _activeTrain.getLastAllocatedSection();
+       return as;
     }
+
     private boolean _initialized = false;
     private Section _nextSection = null;                      // train has not reached this Section yet
     private volatile AllocatedSection _currentAllocatedSection = null;    // head of the train is in this Section
@@ -387,13 +388,13 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _stoppingBySensor = false;
     private Sensor _stopSensor = null;
     private PropertyChangeListener _stopSensorListener = null;
-    private boolean _stoppingForStopSignal = false;    // if true, stopping because of signal appearance
+    private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
-
+    private boolean waitingOnAllocation = false; //if true the train was stopped due to next section not allocated
     // keeps track of and restores previous speed
     private float _savedSpeed = 0.0f;
     private boolean _savedForward = true;
@@ -428,7 +429,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * @param as the allocated that changed
      */
     protected void handleSectionStateChange(AllocatedSection as) {
-        if (!isInAllocatedList(as)) {
+        if (!_activeTrain.isInAllocatedList(as)) {
             addAllocatedSection(as);
         }
     }
@@ -439,7 +440,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * @param as the section that changed
      */
     protected void handleSectionOccupancyChange(AllocatedSection as) {
-        if (!isInAllocatedList(as)) {
+        if (!_activeTrain.isInAllocatedList(as)) {
             log.debug("Unexpected occupancy change notification - Section {}", as.getSection().getDisplayName(USERSYS));
             return;
         }
@@ -470,7 +471,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 // defer setting the next/previous blocks until we know if its required and in what fashion
                 // for stopping blocks that action happens after the train has stopped.
                 // first check for entering the end point
-                if (_currentBlock == _activeTrain.getEndBlock() && as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()) {
+                if (!_activeTrain.isTransitReversed() && as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()) {
                     // are we going to reverse at end
                     if ( _activeTrain.getReverseAtEnd() ) {
                         removeCurrentSignal();
@@ -484,9 +485,9 @@ public class AutoActiveTrain implements ThrottleListener {
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                         setEngineDirection();
-                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
+                        if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
                             // we need to get a next section
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                             // and then set the signal
                         }
                         // can be mid block
@@ -507,7 +508,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                 }
                 // are we entering the start point
-                else if (_currentBlock == _activeTrain.getStartBlock() && as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber()) {
+                else if (_activeTrain.isTransitReversed() && as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber()) {
                      // are we coming back from a reverse and running continiuosly
                     if ( _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() ) {
                         removeCurrentSignal();
@@ -538,7 +539,8 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                 }
             } else if (b != _currentBlock) {
-                log.trace("{}: block going occupied {} is not _nextBlock or _currentBlock - ignored.", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
+                log.trace("{}: block going occupied {} is not _nextBlock or _currentBlock - ignored.",
+                        _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 return;
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
@@ -583,7 +585,6 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private void addAllocatedSection(AllocatedSection as) {
-        _allocatedSectionList.add(as);
         if (!_initialized) {
             // this is first allocated section, get things started
             _initialized = true;
@@ -613,6 +614,13 @@ public class AutoActiveTrain implements ThrottleListener {
                 && isStopping() && (_activeTrain.getStatus() == ActiveTrain.RUNNING)) {
             _needSetSpeed = true;
         }
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SECTIONSALLOCATED
+                || waitingOnAllocation ) {
+            log.debug("{}:ClearStop",_activeTrain.getActiveTrainName());
+            waitingOnAllocation = false;
+            setSpeedBySignal();
+        }
+        
         // request next allocation if appropriate--Dispatcher must decide whether to allocate it and when
         if ((!InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) && ((_lastAllocatedSection == null)
                 || (_lastAllocatedSection.getNextSection() == as.getSection()))) {
@@ -627,41 +635,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    protected void removeAllocatedSection(AllocatedSection as) {
-        int index = -1;
-        for (int i = _allocatedSectionList.size(); i > 0; i--) {
-            if (_allocatedSectionList.get(i - 1) == as) {
-                index = i - 1;
-            }
-        }
-        if (index >= 0) {
-            _allocatedSectionList.remove(index);
-        } else {
-            log.warn("unexpected call to removeAllocatedSection - Section {}", as.getSection().getDisplayName(USERSYS));
-        }
-    }
-
     private boolean isStopping() {
         // here add indicator for new stopping methods, if any are added
         return (_stoppingBySensor || _stoppingByBlockOccupancy || _stoppingUsingSpeedProfile);
-    }
-
-    private boolean isInAllocatedList(AllocatedSection as) {
-        for (int i = 0; i < _allocatedSectionList.size(); i++) {
-            if (_allocatedSectionList.get(i) == as) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isSectionInAllocatedList(Section s) {
-        for (int i = 0; i < _allocatedSectionList.size(); i++) {
-            if ((_allocatedSectionList.get(i)).getSection() == s) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void removeCurrentSignal() {
@@ -679,7 +655,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Checks for a controlling signal
+     * checks for a controlling signal
      * @return true if there is one
      */
     protected boolean isCurrentSignal() {
@@ -717,10 +693,6 @@ public class AutoActiveTrain implements ThrottleListener {
                     if (e.getPropertyName().equals("Appearance")) {
                         // controlling signal has changed appearance
                         setSpeedBySignal();
-                        if (_stoppingForStopSignal && (_targetSpeed > 0.0)) {
-                            cancelStopInCurrentSection();
-                            _stoppingForStopSignal = false;
-                        }
                     }
                 });
                 log.debug("new current signal = {}", sh.getDisplayName(USERSYS));
@@ -729,7 +701,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 // Note: null signal head will result when exiting throat-to-throat blocks.
                 log.debug("new current signal is null - sometimes OK");
             }
-        } else {
+        } else if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
             //SignalMast
             SignalMast sm = null;
             Block cB = _currentBlock;
@@ -761,10 +733,6 @@ public class AutoActiveTrain implements ThrottleListener {
                         // controlling signal has changed appearance or a hold has been released
                         // even if its a hold we still have to use target speed etc else we override pauses and other stop events.
                         setSpeedBySignal();
-                        if (_stoppingForStopSignal && (_targetSpeed > 0.0)) {
-                            cancelStopInCurrentSection();
-                            _stoppingForStopSignal = false;
-                        }
                     }
                 });
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(USERSYS),
@@ -775,8 +743,10 @@ public class AutoActiveTrain implements ThrottleListener {
             } // Note: null signal head will result when exiting throat-to-throat blocks.
             else {
                 log.debug("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
-                        as.getSection().getDisplayName(USERSYS));
+                        as == null ? "Null" : as.getSection().getDisplayName(USERSYS));
             }
+        } else {
+            setSpeedBySignal();
         }
     }
 
@@ -830,19 +800,21 @@ public class AutoActiveTrain implements ThrottleListener {
                     _activeTrain.getStartBlockSectionSequenceNumber() == _currentAllocatedSection.getSequence()) {
                 nextSectionExpected = false;
             }
+            log.debug("{}:Next Section Expected[{}]",_activeTrain.getActiveTrainName(),  nextSectionExpected);
+            // NOw handled in SetSpeedBySignal()
             // check if new next Section exists but is not allocated to this train excepting above circumstances
-            if ( nextSectionExpected &&_nextSection != null && !isSectionInAllocatedList(_nextSection)) {
-                // next section is not allocated to this train, must not enter it, even if signal is OK.
-                log.warn("Stopping train [{}] in section [{}], as next section [{}] is not allocated",
-                        _activeTrain.getActiveTrainName(),_currentAllocatedSection.getSection().getDisplayName(USERSYS),_nextSection.getDisplayName(USERSYS));
-                stopInCurrentSection(NO_TASK);
-                _needSetSpeed = false;
-            }
+            //if ( nextSectionExpected &&_nextSection != null && !_activeTrain.isInAllocatedList(_nextSection)) {
+            //    // next section is not allocated to this train, must not enter it, even if signal is OK.
+            //    log.warn("Stopping train [{}] in section [{}], as next section [{}] is not allocated",
+            //            _activeTrain.getActiveTrainName(),_currentAllocatedSection.getSection().getDisplayName(USERSYS),_nextSection.getDisplayName(USERSYS));
+            //    stopInCurrentSection(NO_TASK);
+            //    _needSetSpeed = false;
+            //}
             // see if we need to rescan as entering safe section.
             if (ts != null &&
                     ts.isSafe() &&
                     _activeTrain.getAllocateMethod() == ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS) {
-                InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
             }
 
         }
@@ -853,254 +825,348 @@ public class AutoActiveTrain implements ThrottleListener {
         log.trace("Set Speed by Signal");
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
                 && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null)
-                && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD)
+                && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) 
                 || (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null
                 || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
                 || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
             // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal,
             //   don't set speed based on controlling signal
+            log.trace("Skip Set Speed By Signal");
             return;
         }
-        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
-            // a held signal always stop
-            if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
-                // Held - Stop
-                stopInCurrentSection(NO_TASK);
-                _stoppingForStopSignal = true;
-                return;
-            }
-
-            if (useSpeedProfile) {
-                // find speed from signal.
-                // find speed from block
-                // use least
-                String blockSpeedName = _conSignalProtectedBlock.getBlockSpeed();
-                if (blockSpeedName.contains("Global")) {
-                    blockSpeedName = InstanceManager.getDefault(BlockManager.class).getDefaultSpeed();
-                }
-                float blockSpeed = -1.0f;
-                if (!blockSpeedName.isEmpty()) {
-                    try {
-                        blockSpeed = Float.valueOf(blockSpeedName);
-                    } catch (NumberFormatException nx) {
-                        try {
-                            blockSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
-                            log.debug("{}: Signal {} speed from map for {} is {}",
-                                    _activeTrain.getTrainName(), _controllingSignal.getDisplayName(USERSYS), blockSpeedName,
-                                    blockSpeed);
-                        } catch (Throwable ex) { // if _anything_ goes wrong, contain it
-                            //Considered Normal if the speed does not appear in the map
-                            log.warn("{}: Block {} Speed {} not found in SignalSpeedMap",
-                                    _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName(USERSYS), blockSpeed);
-                        }
-                    }
-                }
-
-                float signalSpeed = -1.0f;
-                String signalSpeedName = "";
-                String displayedAspect = _controllingSignal.getAppearanceName();
-                try {
-                    signalSpeedName =
-                            jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(displayedAspect);
-                    signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(signalSpeedName);
-                } catch (Throwable ex) { // if _anything_ goes wrong, contain it
-                    signalSpeed = -1.0f;
-                    log.warn("{}: Block {} AppearanceSpeed {} not found in SignalSpeedMap",
-                            _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName(USERSYS), displayedAspect);
-                }
-                float useSpeed = 1.0f;
-                if (blockSpeed < signalSpeed) {
-                    useSpeed = blockSpeed;
-                } else {
-                    useSpeed = signalSpeed;
-                }
-
-                log.trace("BlockSpeed[{}] SignalSpeed[{}]", blockSpeed, signalSpeed);
-                if (useSpeed < 0.01f) {
-                    // check to to see if its allocated to us!!!
-                    //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
-                    if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                            ( _nextSection != null &&  isSectionInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                            && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
-                        // Train has just passed this signal - ignore this signal
-                        log.debug("{}:Ignoring red signal [{}]",_activeTrain.getTrainName(),_controllingSignal.getDisplayName(USERSYS));
-                    } else {
-                        stopInCurrentSection(NO_TASK);
-                        _stoppingForStopSignal = true;
-                    }
-                } else {
-                    setTargetSpeedByProfile(useSpeed);
-                }
+        // only bother to check signal if the next allocation is ours.
+        if (checkAllocationsAhead()) {
+            if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+                setSpeedBySignalHead();
+            } else if (InstanceManager.getDefault(DispatcherFrame.class)
+                    .getSignalType() == DispatcherFrame.SIGNALMAST) {
+                setSpeedBySignalMast();
             } else {
-                switch (_controllingSignal.getAppearance()) {
-                    case SignalHead.DARK:
-                    case SignalHead.RED:
-                    case SignalHead.FLASHRED:
-                        // May get here from signal changing before Block knows it is occupied, so must
-                        //      check Block occupancy sensor, which must change before signal.
-                        // check to to see if its allocated to us!!!
-                        //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
-                        if ((_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                                (_nextSection != null && isSectionInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                                && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
-                            // Train has just passed this signal - ignore this signal
-                            log.debug("{}:Ignoring red signal [{}]", _activeTrain.getTrainName(),
-                                    _controllingSignal.getDisplayName(USERSYS));
-                        } else {
-                            stopInCurrentSection(NO_TASK);
-                            _stoppingForStopSignal = true;
-                        }
-                        break;
-                    case SignalHead.YELLOW:
-                    case SignalHead.FLASHYELLOW:
-                        setTargetSpeedState(SLOW_SPEED);
-                        _activeTrain.setStatus(ActiveTrain.RUNNING);
-                        break;
-                    case SignalHead.GREEN:
-                    case SignalHead.FLASHGREEN:
-                        setTargetSpeedState(NORMAL_SPEED);
-                        _activeTrain.setStatus(ActiveTrain.RUNNING);
-                        break;
-                    case SignalHead.LUNAR:
-                    case SignalHead.FLASHLUNAR:
-                        setTargetSpeedState(RESTRICTED_SPEED);
-                        _activeTrain.setStatus(ActiveTrain.RUNNING);
-                        break;
-                    default:
-                        log.warn("Signal Head[{}] has invalid Appearence - using stop",_controllingSignal.getAppearance());
-                        stopInCurrentSection(NO_TASK);
-                        _stoppingForStopSignal = true;
-                }
-
+                log.trace("{}:Set Speed by BlocksAllocated",_activeTrain.getActiveTrainName());
+                setSpeedBySectionsAllocated();
             }
         } else {
-            //Set speed using SignalMasts;
-            String displayedAspect = _controllingSignalMast.getAspect();
-            if (log.isTraceEnabled()) {
-                log.trace("{}: Controlling mast {} ({})", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), displayedAspect);
-                if (_conSignalProtectedBlock == null) {
-                    log.trace("{}: Protected block is null", _activeTrain.getTrainName());
-                } else {
-                    log.trace("{}: Protected block: {} state: {} speed: {}", _activeTrain.getTrainName(),
-                            _conSignalProtectedBlock.getSensor().getDisplayName(USERSYS),
-                            (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED ? "OCCUPIED" : "NOT OCCUPIED"),
-                            _conSignalProtectedBlock.getBlockSpeed());
-                }
-            }
-            if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
-                    || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
-                if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                        ( _nextSection != null &&  isSectionInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                        && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
-                    // Train has just passed this signal - ignore this signal
-                    log.debug("{}: _conSignalProtectedBlock is the block just past so ignore {}", _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName(USERSYS));
-                } else {
-                    log.debug("{}: Signal {} at Held or Danger so Stop", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS));
-                    stopInCurrentSection(NO_TASK);
-                    _stoppingForStopSignal = true;
-                }
-            } else if (_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE) != null
-                    && _controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE).equals(displayedAspect)) {
-                setTargetSpeedState(RESTRICTED_SPEED);
-                _activeTrain.setStatus(ActiveTrain.RUNNING);
-            } else {
+            // This will stop it.
+             stopInCurrentSection(NO_TASK);
+             log.debug("{}:Set Stop",_activeTrain.getActiveTrainName());
+             waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
+        }
+    }
 
-                //if using signalmasts, set speed to lesser of aspect speed and signalmastlogic speed
-                //  (minimum speed on the path to next signal, using turnout and block speeds)
-                String aspectSpeedStr = (String) _controllingSignalMast.getSignalSystem().getProperty(displayedAspect, "speed");
-                log.trace("{}: Signal {} speed {} for aspect {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), aspectSpeedStr, displayedAspect);
-                float speed = -1.0f;
-                if (aspectSpeedStr != null) {
-                    try {
-                        speed = Float.valueOf(aspectSpeedStr);
-                    } catch (NumberFormatException nx) {
-                        try {
-                            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(aspectSpeedStr);
-                            log.trace("{}: Signal {} speed from map for {} is {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), aspectSpeedStr, speed);
-                        } catch (IllegalArgumentException ex) {
-                            //Considered Normal if the speed does not appear in the map
-                            log.trace("{}: Speed not found {}", _activeTrain.getTrainName(), aspectSpeedStr);
-                        }
-                    }
-                }
-                int aspectSpeed = (int) speed; //save for debug message
-
-                //get maximum speed for the route between current and next signalmasts
-                float smLogicSpeed = -1.0f;
-                String smDestinationName = "unknown";
-                jmri.SignalMastLogic smLogic = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
-                if (smLogic != null) {
-                    SignalMast smDestination = smLogic.getActiveDestination();
-                    if (smDestination != null) {
-                        smDestinationName = smDestination.getDisplayName(USERSYS);
-                        smLogicSpeed = (int) smLogic.getMaximumSpeed(smDestination);
-                    }
-                }
-
-                //use the smaller of aspect speed or route speed
-                if (smLogicSpeed > -1.0f && smLogicSpeed < speed) {
-                    speed = smLogicSpeed;
-                }
-
-                log.debug("{}: {}({}) {}({}), Dest: {}, path max: {}",
-                        _activeTrain.getTrainName(),
-                        _controllingSignalMast.getDisplayName(USERSYS), displayedAspect, aspectSpeedStr, aspectSpeed,
-                        smDestinationName, (int) smLogicSpeed);
-
-                if (speed > -1.0f) {
-//                    float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
-//                    float increment = mls / 7f;
-//                    log.trace("{}: MaximumLineSpeed is {}, speed is {}", _activeTrain.getTrainName(), mls, speed);
-//                    int speedState = (int) Math.ceil(speed / increment);
-//                    if (speedState <= 1) {
-//                        speedState = 2;
-//                    }
-//                    log.trace("{}: SpeedState is {}", _activeTrain.getTrainName(), speedState);
-                    /* We should work on the basis that the speed required in the current block/section is governed by the signalmast
-                     that we have passed and not the one we are approaching when we are accelerating.
-                     However when we are decelerating we should be aiming to meet the speed required by the approaching signalmast
-                     whether that is to slow down or come to a complete stand still.
-                     */
-                    if (prevSpeed == -1 || speed < prevSpeed) {
-                        log.debug("{}: Signal {} setting speed to {} for next", _activeTrain.getTrainName(),
-                                _controllingSignalMast.getDisplayName(USERSYS), speed);
-                        setTargetSpeedValue(speed);
-                    } else {
-                        log.debug("{}: Signal {} setting speed to {} for previous", _activeTrain.getTrainName(),
-                                _controllingSignalMast.getDisplayName(USERSYS), speed);
-                        setTargetSpeedValue(prevSpeed);
-                    }
-                    prevSpeed = speed;
-                    _activeTrain.setStatus(ActiveTrain.RUNNING);
-
-                } else {
-                    log.warn("{}: No specific speeds found so will use the default", _activeTrain.getTrainName());
-                    setTargetSpeedState(NORMAL_SPEED);
-                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+    /*
+     * Check at least the next section is allocated
+     */
+    private boolean checkAllocationsAhead() {
+        if (_nextSection != null) {
+            // Check that next section is allocated...
+            for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
+                if (allocatedSection.getSection() == _nextSection) {
+                    return true;
                 }
             }
         }
+        return false;
+    }
+
+    private void setSpeedBySectionsAllocated() {
+        int sectionsAhead = 0;
+        AllocatedSection as = null;
+        for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
+            if (allocatedSection.getSection() == _nextSection) {
+                as = allocatedSection;
+            }
+            if (!allocatedSection.getEntered()) {
+                sectionsAhead++;
+            }
+        }
+        float newSpeed = 0.0f;
+        log.debug("[{}:SectionsAhead[{}]",_activeTrain.getActiveTrainName() ,sectionsAhead);
+        if (checkTurn(as)) {
+            switch (sectionsAhead) {
+                case 0:
+                    newSpeed = 0.0f;
+                    break;
+                case 1:
+                    newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                            .getSpeed("Medium");
+                    // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    break;
+                default:
+                    newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                            .getSpeed("Normal");
+                    // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+            }
+            // If the train has no _currentAllocatedSection it is in a first block outside transit.
+            if (_currentAllocatedSection != null ) {
+                for (Block block : _currentAllocatedSection.getSection().getBlockList()) {
+                    float speed = getSpeedFromBlock(block);
+                    if (speed > 0 && speed < newSpeed) {
+                        newSpeed = speed;
+                    }
+                }
+            }
+        }
+        if (newSpeed > 0 ) {
+            log.trace("setSpeedBySectionsAllocated isStopping[{}]",isStopping());
+            cancelStopInCurrentSection();
+            setTargetSpeed(getThrottleSettingFromSpeed(newSpeed));
+        } else {
+            stopInCurrentSection(NO_TASK);
+        }
+    }
+
+    /**
+     * Check that all turnouts in a section have finished setting
+     * for passage. If not listens on first bad turnout
+     * and rechecks when set.
+     * @param as Allocated section whose turnouts need to be checked.
+     * @return true if no errors else false
+     */
+    private boolean checkTurn(AllocatedSection as) {
+        if (as != null && as.getAutoTurnoutsResponse() != null) {
+            Turnout to = InstanceManager.getDefault(DispatcherFrame.class).getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
+            if (to != null) {
+                // at least one turnout isnt correctly set
+                to.addPropertyChangeListener(_turnoutStateListener = (PropertyChangeEvent e) -> {
+                    if (e.getPropertyName().equals("KnownState")) {
+                        ((Turnout) e.getSource()).removePropertyChangeListener(_turnoutStateListener);
+                        setSpeedBySignal();
+                    }
+                });
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void setSpeedBySignalMast() {
+        //Set speed using SignalMasts;
+        String displayedAspect = _controllingSignalMast.getAspect();
+        if (log.isTraceEnabled()) {
+            log.trace("{}: Controlling mast {} ({})", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), displayedAspect);
+            if (_conSignalProtectedBlock == null) {
+                log.trace("{}: Protected block is null", _activeTrain.getTrainName());
+            } else {
+                log.trace("{}: Protected block: {} state: {} speed: {}", _activeTrain.getTrainName(),
+                        _conSignalProtectedBlock.getSensor().getDisplayName(USERSYS),
+                        (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED ? "OCCUPIED" : "NOT OCCUPIED"),
+                        _conSignalProtectedBlock.getBlockSpeed());
+            }
+        }
+
+        if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
+                || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
+            checkForSignalPassedOrStop(_controllingSignalMast.getDisplayName(USERSYS));
+        } else if (_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE) != null
+                && _controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE).equals(displayedAspect)) {
+            setTargetSpeedState(RESTRICTED_SPEED);
+            _activeTrain.setStatus(ActiveTrain.RUNNING);
+        } else {
+
+            //if using signalmasts, set speed to lesser of aspect speed and signalmastlogic speed
+            //  (minimum speed on the path to next signal, using turnout and block speeds)
+            String aspectSpeedStr = (String) _controllingSignalMast.getSignalSystem().getProperty(displayedAspect, "speed");
+            log.trace("{}: Signal {} speed {} for aspect {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), aspectSpeedStr, displayedAspect);
+            float speed = -1.0f;
+            if (aspectSpeedStr != null) {
+                try {
+                    speed = Float.parseFloat(aspectSpeedStr);
+                } catch (NumberFormatException nx) {
+                    try {
+                        speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(aspectSpeedStr);
+                        log.trace("{}: Signal {} speed from map for {} is {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), aspectSpeedStr, speed);
+                    } catch (IllegalArgumentException ex) {
+                        //Considered Normal if the speed does not appear in the map
+                        log.trace("{}: Speed not found {}", _activeTrain.getTrainName(), aspectSpeedStr);
+                    }
+                }
+            }
+            int aspectSpeed = (int) speed; //save for debug message
+
+            //get maximum speed for the route between current and next signalmasts
+            float smLogicSpeed = -1.0f;
+            String smDestinationName = "unknown";
+            jmri.SignalMastLogic smLogic = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
+            if (smLogic != null) {
+                SignalMast smDestination = smLogic.getActiveDestination();
+                if (smDestination != null) {
+                    smDestinationName = smDestination.getDisplayName(USERSYS);
+                    smLogicSpeed = (int) smLogic.getMaximumSpeed(smDestination);
+                }
+            }
+
+            //use the smaller of aspect speed or route speed
+            if (smLogicSpeed > -1.0f && smLogicSpeed < speed) {
+                speed = smLogicSpeed;
+            }
+
+            log.debug("{}: {}({}) {}({}), Dest: {}, path max: {}",
+                    _activeTrain.getTrainName(),
+                    _controllingSignalMast.getDisplayName(USERSYS), displayedAspect, aspectSpeedStr, aspectSpeed,
+                    smDestinationName, (int) smLogicSpeed);
+
+            if (speed > -1.0f) {
+                /* We should work on the basis that the speed required in the current block/section is governed by the signalmast
+                 that we have passed and not the one we are approaching when we are accelerating.
+                 However when we are decelerating we should be aiming to meet the speed required by the approaching signalmast
+                 whether that is to slow down or come to a complete stand still.
+                 */
+                if (prevSpeed == -1 || speed < prevSpeed) {
+                    log.debug("{}: Signal {} setting speed to {} for next", _activeTrain.getTrainName(),
+                            _controllingSignalMast.getDisplayName(USERSYS), speed);
+                    setTargetSpeedValue(speed);
+                } else {
+                    log.debug("{}: Signal {} setting speed to {} for previous", _activeTrain.getTrainName(),
+                            _controllingSignalMast.getDisplayName(USERSYS), speed);
+                    setTargetSpeedValue(prevSpeed);
+                }
+                prevSpeed = speed;
+                _activeTrain.setStatus(ActiveTrain.RUNNING);
+
+            } else {
+                log.warn("{}: No specific speeds found so will use the default", _activeTrain.getTrainName());
+                setTargetSpeedState(NORMAL_SPEED);
+                _activeTrain.setStatus(ActiveTrain.RUNNING);
+            }
+        }
+    }
+
+    private void setSpeedBySignalHead() {
+        // a held signal always stop
+        if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
+            // Held - Stop
+            stopInCurrentSection(NO_TASK);
+            return;
+        }
+
+        if (useSpeedProfile) {
+            // find speed from signal.
+            // find speed from block
+            // use least
+            float blockSpeed = getSpeedFromBlock(_conSignalProtectedBlock);
+
+            float signalSpeed = -1.0f;
+            String signalSpeedName = "";
+            String displayedAspect = _controllingSignal.getAppearanceName();
+            try {
+                signalSpeedName =
+                        jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(displayedAspect);
+                signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(signalSpeedName);
+            } catch (Throwable ex) { // if _anything_ goes wrong, contain it
+                signalSpeed = -1.0f;
+                log.warn("{}: Block {} AppearanceSpeed {} not found in SignalSpeedMap",
+                        _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName(USERSYS), displayedAspect);
+            }
+            float useSpeed = 1.0f;
+            if (blockSpeed < signalSpeed) {
+                useSpeed = blockSpeed;
+            } else {
+                useSpeed = signalSpeed;
+            }
+
+            log.trace("BlockSpeed[{}] SignalSpeed[{}]", blockSpeed, signalSpeed);
+            if (useSpeed < 0.01f) {
+                checkForSignalPassedOrStop(_controllingSignal.getDisplayName(USERSYS));
+            } else {
+                setTargetSpeedByProfile(useSpeed);
+            }
+        } else {
+            switch (_controllingSignal.getAppearance()) {
+                case SignalHead.DARK:
+                case SignalHead.RED:
+                case SignalHead.FLASHRED:
+                    // May get here from signal changing before Block knows it is occupied, so must
+                    //      check Block occupancy sensor, which must change before signal.
+                    // check to to see if its allocated to us!!!
+                    //      check Block occupancy sensor if it is in an allocated block, which must change before signal
+                    // If the train has no _currentAllocatedSection it is in a first block outside transit.
+                    checkForSignalPassedOrStop(_controllingSignal.getDisplayName(USERSYS));
+                    break;
+                case SignalHead.YELLOW:
+                case SignalHead.FLASHYELLOW:
+                    setTargetSpeedState(SLOW_SPEED);
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    break;
+                case SignalHead.GREEN:
+                case SignalHead.FLASHGREEN:
+                    setTargetSpeedState(NORMAL_SPEED);
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    break;
+                case SignalHead.LUNAR:
+                case SignalHead.FLASHLUNAR:
+                    setTargetSpeedState(RESTRICTED_SPEED);
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    break;
+                default:
+                    log.warn("Signal Head[{}] has invalid Appearence - using stop",_controllingSignal.getAppearance());
+                    stopInCurrentSection(NO_TASK);
+            }
+
+        }
+    }
+
+    /**
+     * Check to see if a stop is really required, or if this is the
+     * signal head that was just passed, in which case ignore as the signal goes red before a
+     * new signal exists.
+     *
+     * @param displayName name of signal for debug messages.
+     */
+    private void checkForSignalPassedOrStop(String displayName) {
+        // if current section is null we are in a pre transit block.
+        if (_currentAllocatedSection != null) {
+            if ((_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
+                    (_nextSection != null && _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
+                    && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
+                // Train has just passed this signal - ignore this signal
+                log.debug("{}: _conSignalProtectedBlock [{}] for signal [{}] is the block just past so ignore.", _activeTrain.getTrainName(),
+                        _conSignalProtectedBlock.getDisplayName(USERSYS), displayName);
+            } else {
+                log.debug("{}: stopping for signal [{}] ", _activeTrain.getTrainName(),
+                         displayName);
+                stopInCurrentSection(NO_TASK);
+            }
+        }
+    }
+
+    protected float getSpeedFromBlock(Block block) {
+        String blockSpeedName = block.getBlockSpeed();
+        if (blockSpeedName.contains("Global")) {
+            blockSpeedName = InstanceManager.getDefault(BlockManager.class).getDefaultSpeed();
+        }
+        float blockSpeed = -1.0f;
+        if (!blockSpeedName.isEmpty()) {
+            try {
+                blockSpeed = Float.parseFloat(blockSpeedName);
+            } catch (NumberFormatException nx) {
+                try {
+                    blockSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
+                    log.debug("{}: block speed from map for {} is {}",
+                            _activeTrain.getTrainName(), block.getDisplayName(USERSYS), blockSpeedName,
+                            blockSpeed);
+                } catch (Throwable ex) { // if _anything_ goes wrong, contain it
+                    //Considered Normal if the speed does not appear in the map
+                    log.warn("{}: Block {} Speed {} not found in SignalSpeedMap",
+                            _activeTrain.getTrainName(), block.getDisplayName(USERSYS), blockSpeed);
+                }
+            }
+        }
+        return blockSpeed;
     }
 
     float prevSpeed = -1.0f;
 
     // called to cancel a stopping action that is in progress
     private synchronized void cancelStopInCurrentSection() {
-        if (isStopping()) {
-            if (_stoppingBySensor) {
-                // cancel stopping by stop sensor
-                cancelStoppingBySensor();
-            } else if (_stoppingByBlockOccupancy) {
-                // cancel stopping by block occupancy
-                _stoppingByBlockOccupancy = false;
-                _stoppingBlock = null;
-            } else if (_stoppingUsingSpeedProfile) {
-                _stoppingUsingSpeedProfile = false;
-                _stoppingBlock = null;
-                _autoEngineer.slowToStop(false);
-            }
-            // here add other stopping methods if any are added
-        }
+        log.trace("[{}]:Cancel Stopping", _activeTrain.getTrainName());
+        cancelStoppingBySensor();
+        _stoppingByBlockOccupancy = false;
+        _stoppingBlock = null;
+        _stoppingUsingSpeedProfile = false;
+        _stoppingBlock = null;
+        _autoEngineer.slowToStop(false);
     }
 
     private synchronized void stopInCurrentSection(int task) {
@@ -1267,8 +1333,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 _previousBlock = null;
                 _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                 if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
-                    if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                        InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                    if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
+                        InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         break;
                     }
                     // a reversal can happen in mid section
@@ -1289,8 +1355,8 @@ public class AutoActiveTrain implements ThrottleListener {
                         _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         setEngineDirection();
                         _activeTrain.setRestart();
-                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                        if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         }
                         // can be mid block
                         setupNewCurrentSignal(null, true);
@@ -1441,13 +1507,16 @@ public class AutoActiveTrain implements ThrottleListener {
         log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
         if (speedState > STOP_SPEED) {
+            cancelStopInCurrentSection();
             _targetSpeed = applyMaxThrottleAndFactor(_speedRatio[speedState]);
         } else if (useSpeedProfile && _stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
             _autoEngineer.slowToStop(true);
+            _targetSpeed = 0.0f;
         } else {
             _autoEngineer.setHalt(true);
+            _targetSpeed = 0.0f;
         }
     }
 
@@ -1457,10 +1526,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, _forward);
                 log.debug("{}: setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
                 if (throttleSetting > 0.009) {
-                    _autoEngineer.setHalt(false);
-                    _autoEngineer.slowToStop(false);
-                    //TODO is this next bit correct do we need to apply max speed?
-                    _targetSpeed = throttleSetting * _speedFactor;  // only apply speed factor not max
+                    cancelStopInCurrentSection();
+                    _targetSpeed = applyMaxThrottleAndFactor(throttleSetting); // apply speed factor and max
                  } else if (useSpeedProfile && _stopBySpeedProfile) {
                     _targetSpeed = 0.0f;
                     _stoppingUsingSpeedProfile = true;
@@ -1497,6 +1564,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         float decSpeed = (speed / mls);
         if (decSpeed > 0.0f) {
+            cancelStopInCurrentSection();
             _targetSpeed = applyMaxThrottleAndFactor(decSpeed);
         } else {
             _targetSpeed = 0.0f;
@@ -1796,13 +1864,13 @@ public class AutoActiveTrain implements ThrottleListener {
                     _halted = true;
                 } else if (_slowToStop) {
                     // this only sets to speed zero, stop
-                    if (useSpeedProfile) {
+                    if (useSpeedProfile && !_speedProfileStoppingIsRunning) {
                         re.getSpeedProfile().setExtraInitialDelay(1500f);
-                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, 0,
+                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentAllocatedSection.getSection(), 0,
                                 _stopBySpeedProfileAdjust);
                         _speedProfileStoppingIsRunning = true;
                         _targetSpeed = 0.0f;
-                    } else {
+                    } else if (!_speedProfileStoppingIsRunning) {
                         _throttle.setSpeedSetting(0.0f);
                         _currentSpeed = 0.0f;
                         _targetSpeed = 0.0f;

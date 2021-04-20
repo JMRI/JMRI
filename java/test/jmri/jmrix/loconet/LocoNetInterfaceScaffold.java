@@ -61,7 +61,6 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         // forward a test message to LocoNetListeners
         log.debug("sendTestMessage    [{}]", m);
         notify(m);
-        return;
     }
 
     /**

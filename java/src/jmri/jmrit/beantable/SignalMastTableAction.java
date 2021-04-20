@@ -1,10 +1,10 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
 import jmri.SignalMast;
 import jmri.jmrit.beantable.signalmast.SignalMastTableDataModel;
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<SignalMast> f) {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
@@ -93,12 +93,9 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
         menuBar.add(pathMenu, pos + offset);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame frame = new jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame();
-                frame.setVisible(true);
-            }
+        item.addActionListener(e -> {
+            jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame frame = new jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame();
+            frame.setVisible(true);
         });
     }
 

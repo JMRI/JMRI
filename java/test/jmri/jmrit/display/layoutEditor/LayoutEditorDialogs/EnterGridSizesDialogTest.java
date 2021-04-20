@@ -57,6 +57,7 @@ public class EnterGridSizesDialogTest {
             enterGridSizesDialog = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

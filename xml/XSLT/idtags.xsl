@@ -25,7 +25,7 @@
      In batch work via running Ant, this is defined
      via the build.xml file
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details

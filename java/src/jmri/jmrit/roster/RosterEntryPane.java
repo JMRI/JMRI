@@ -55,8 +55,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextArea decoderComment = new JTextArea(3, 50);
     JScrollPane decoderCommentScroller = new JScrollPane(decoderComment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-    Component pane = null;
-    RosterEntry re = null;
+    Component pane;
+    RosterEntry re;
 
     final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
@@ -93,8 +93,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
             // This goes through to find common protocols between the command station and the decoder
             // and will set the selection box list to match those that are common.
             jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
-            List<LocoAddress.Protocol> protocoltypes = new ArrayList<>();
-            protocoltypes.addAll(Arrays.asList(tm.getAddressProtocolTypes()));
+            List<LocoAddress.Protocol> protocoltypes = new ArrayList<>(Arrays.asList(tm.getAddressProtocolTypes()));
 
             if (!protocoltypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocoltypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
@@ -341,19 +340,13 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
         DccLocoAddress a = addrSel.getAddress();
         if (a == null) {
-            if (!r.getDccAddress().equals("")) {
-                return true;
-            }
+            return !r.getDccAddress().equals("");
         } else {
-
             if (r.getProtocol() != a.getProtocol()) {
                 return true;
             }
-            if (!r.getDccAddress().equals("" + a.getNumber())) {
-                return true;
-            }
+            return !r.getDccAddress().equals("" + a.getNumber());
         }
-        return false;
     }
 
     /**
@@ -365,9 +358,10 @@ public class RosterEntryPane extends javax.swing.JPanel {
         // check it's not a duplicate
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id.getText());
         boolean oops = false;
-        for (int i = 0; i < l.size(); i++) {
-            if (re != l.get(i)) {
+        for (RosterEntry rosterEntry : l) {
+            if (re != rosterEntry) {
                 oops = true;
+                break;
             }
         }
         return oops;

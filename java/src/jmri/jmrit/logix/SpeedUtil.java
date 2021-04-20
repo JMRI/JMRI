@@ -187,7 +187,7 @@ public class SpeedUtil {
                     String.valueOf(number), null, null, null, null);
             if (!l.isEmpty()) {
                 _rosterEntry = l.get(0);
-                _rosterId = _rosterEntry.getId();
+                setRosterId(_rosterEntry.getId());
                 if (l.size() != 1) {
                     log.info("{} entries for address {}, {}", l.size(), number, type);
                 }
@@ -196,6 +196,8 @@ public class SpeedUtil {
                 _rosterId = "$"+_dccAddress.toString()+"$";
                 _rosterEntry = new RosterEntry();
                 _rosterEntry.setId(_rosterId);
+                _mergeProfile = null;
+                _sessionProfile = null;
             }
             return true;
         }

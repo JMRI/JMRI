@@ -32,8 +32,8 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
   private IpocsSocketAcceptor socketAcceptor;
   private ZeroConfService zeroConfService = null;
   private final List<IpocsClientListener> clientListeners = new ArrayList<IpocsClientListener>();
-  private Map<String, IpocsClientHandler> clients = new HashMap<>();
-  private Map<String, Message> lastMessage = new HashMap<>();
+  private final Map<String, IpocsClientHandler> clients = new HashMap<>();
+  private final Map<String, Message> lastMessage = new HashMap<>();
 
   public IpocsPortController(IpocsSystemConnectionMemo memo) {
     super(memo);

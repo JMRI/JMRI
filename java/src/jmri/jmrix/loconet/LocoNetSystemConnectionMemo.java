@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
-
     /**
      * Must manually register() after construction is complete.
      * @param lt Traffic controller to be used
@@ -40,7 +39,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
         // self-registration is deferred until the command station type is set below
-                
+
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
@@ -76,6 +75,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
+    private LncvDevicesManager lncvdm = null;
     private LnMessageManager lnm = null;
 
     /**
@@ -121,6 +121,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
         store(p,DefaultProgrammerManager.class);
+    }
+
+    public void setLncvDevicesManager(LncvDevicesManager lncvdm) {
+        this.lncvdm = lncvdm;
     }
 
     protected boolean mTurnoutNoRetry = false;
@@ -204,10 +208,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         }
 
         InstanceManager.setReporterManager(getReporterManager());
-        
+
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));
+
+        setLncvDevicesManager(new jmri.jmrix.loconet.LncvDevicesManager(this));
 
         ClockControl cc = getClockControl();
 
@@ -277,7 +283,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(LnSensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new LnSensorManager(this));
     }
 
     public LnLightManager getLightManager() {
@@ -285,6 +291,17 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
+    }
+
+    public LncvDevicesManager getLncvDevicesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (lncvdm == null) {
+            setLncvDevicesManager(new LncvDevicesManager(this));
+            log.debug("Auto create of LncvDevicesManager for initial configuration");
+        }
+        return lncvdm;
     }
 
     protected LnPredefinedMeters predefinedMeters;

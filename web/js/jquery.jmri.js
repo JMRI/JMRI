@@ -509,9 +509,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("power", {});
                 } else {
-                    $.getJSON(jmri.url + "power", function (json) {
-                        jmri.power(json.data.state);
-                    });
+                	$.getJSON(jmri.url + "power", function (json) {
+                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
+                		jmri.power(json.data.state);
+                	});
                 }
             };
             jmri.setPower = function (state) {
@@ -685,9 +686,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("time", {});
                 } else {
-                    $.getJSON(jmri.url + "time", function (json) {
-                        jmri.time(json.data.time, json.data);
-                    });
+                	$.getJSON(jmri.url + "time", function (json) {
+                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
+                		jmri.time(json.data.time, json.data);
+                	});
                 }
             };
             jmri.getTrain = function (name) {
@@ -996,7 +998,7 @@
                                 } else if (!o.type) {
                                     log.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
-                                    jmri.log("Ignoring JSON type ", o.type);
+                                    jmri.log("Ignoring JSON type '" + o.type + "'");
                                 }
                             })
                         } else {
@@ -1006,7 +1008,7 @@
                             } else if (!m.type) {
                                 log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
-                                jmri.log("Ignoring JSON type ", m.type);
+                                    jmri.log("Ignoring JSON type '" + m.type + "'");
                             }
                         }
                     }
