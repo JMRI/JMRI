@@ -64,6 +64,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         
         // Create a JTree and tell it to display our model
         _tree = new JTree();
+        _tree.setRowHeight(0);
         ToolTipManager.sharedInstance().registerComponent(_tree);
         _tree.setModel(femaleSocketTreeModel);
         _tree.setCellRenderer(new FemaleSocketTreeRenderer(decorator));
