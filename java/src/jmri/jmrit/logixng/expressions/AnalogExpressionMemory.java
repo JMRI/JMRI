@@ -4,8 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -14,20 +13,20 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Reads a Memory.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class AnalogExpressionMemory extends AbstractAnalogExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Memory> _memoryHandle;
-    
+
     public AnalogExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        
+
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         AnalogExpressionManager manager = InstanceManager.getDefault(AnalogExpressionManager.class);
@@ -39,7 +38,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
@@ -58,19 +57,19 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isExternal() {
         return true;
     }
-    
+
     public void setMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setMemory");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
@@ -81,19 +80,19 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
-    
+
     public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
-    
+
     public void setMemory(@Nonnull Memory memory) {
         assertListenersAreNotRegistered(log, "setMemory");
         setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(memory.getDisplayName(), memory));
     }
-    
+
     public void removeMemory() {
         assertListenersAreNotRegistered(log, "setMemory");
         if (_memoryHandle != null) {
@@ -101,11 +100,11 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             _memoryHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public double evaluate() {
@@ -115,7 +114,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             return 0.0;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index)
@@ -150,7 +149,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -159,7 +158,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             _listenersAreRegistered = true;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -168,7 +167,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             _listenersAreRegistered = false;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -176,13 +175,21 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             getConditionalNG().execute();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: AnalogExpressionMemory: bean = {}, report = {}", cdl, report);
+        if (getMemory() != null && bean.equals(getMemory().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemory.class);
-    
+
 }
