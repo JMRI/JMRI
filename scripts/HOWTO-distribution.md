@@ -464,9 +464,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.23.4+R63094d48b.dmg](https://github.com/JMRI/JMRI/releases/download/v4.23.4/JMRI.4.23.4+R63094d48b.dmg) | 20c2000b00ca9b6c403bb17a187a2e9670b4c27e4a64a12ca3d592b888ca1a3a
-[JMRI.4.23.4+R63094d48b.exe](https://github.com/JMRI/JMRI/releases/download/v4.23.4/JMRI.4.23.4+R63094d48b.exe) | b4ed4c1cd7c61becbd10f964cba7e85579e3b7101f7b3e858f28272fb7e86a6d
-[JMRI.4.23.4+R63094d48b.tgz](https://github.com/JMRI/JMRI/releases/download/v4.23.4/JMRI.4.23.4+R63094d48b.tgz) | 057fa69849f5383def665dd9e7e84335ada9e39a5d8b60c5f1c39227f9ba40ae
+[JMRI.4.23.4+R203912efd.dmg](https://github.com/JMRI/JMRI/releases/download/v4.23.4/JMRI.4.23.4+R203912efd.dmg) | 8669ddb9761f4d515d913005b2d7c2b0a7c292f2b714e2c887cc1578958f93b3
+[JMRI.4.23.4+R203912efd.exe](https://github.com/JMRI/JMRI/releases/download/v4.23.4/JMRI.4.23.4+R203912efd.exe) | bda1d8e23dcd2a7082d5249f6b63bc590c3fe528c8ceca5ee95d0c7a24830258
+[JMRI.4.23.4+R203912efd.tgz](https://github.com/JMRI/JMRI/releases/download/v4.23.4/JMRI.4.23.4+R203912efd.tgz) | 283e831035acb708efc17c25c09d9039d39d2bcb63db205b5c91ef73c2277973
 
 ```
 
@@ -525,7 +525,7 @@ If there are any changes in other files, do both of:
 ```
 This is the next release in the 4.24 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
-Add the 4.23.5 milestone to the issue.
+- Add the 4.23.5 milestone to the issue.
 
 - Confirm that the tag for the current release (v4.23.4 for release 4.23.4) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.23.4) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
