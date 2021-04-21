@@ -12,14 +12,25 @@ import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.nio.file.Files;
+
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+import org.apache.batik.transcoder.*;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.util.XMLResourceDescriptor;
+
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
 
 /**
  * A class extending JPanels to have a image display in a panel, supports<ul>
@@ -38,7 +49,8 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     private String _imagePath;
     protected JLabel bgImg = null;
-    private BufferedImage image = null;
+    private BufferedImage image = null; // a place to store the original image if it is a pixel image
+    private Document svgImage = null;   // a place to store the original document if is a vector image (svg file)
     private BufferedImage scaledImage = null;
     private boolean _resizeContainer = false;
     private boolean _respectAspectRatio = true;
@@ -136,7 +148,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     }
 
     /**
-     * Read image and handle exif information if it exists in the file.
+     * Read pixel image and handle exif information if it exists in the file.
      * 
      * @param file the image file
      * @return the image
@@ -149,7 +161,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         
         FileImageSource fileImageSource = new FileImageSource(file);
         fileImageSource.setThumbnailParameter(param);
-        
+
         BufferedImage img = fileImageSource.read();
         
         // Perform the image filters
@@ -158,6 +170,20 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
         
         return img;
+    }
+
+  /**
+   * Read vector image
+   * Use the SAXSVGDocumentFactory to parse the given URI into a DOM.
+   * 
+   * @param uri The path to the SVG file to read.
+   * @return A Document instance that represents the SVG file.
+   * @throws Exception The file could not be read.
+   */
+    private Document createSVGDocument( String uri ) throws IOException {
+      String parser = XMLResourceDescriptor.getXMLParserClassName();
+      SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory( parser );
+      return factory.createDocument( uri );
     }
 
     /**
@@ -174,14 +200,24 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
             _imagePath = null;
             image = null;
             scaledImage = null;
+            svgImage = null;
         }
         log.debug("Image path is now : {}", _imagePath);
         if (_imagePath != null) {
             try {
-                image = readImage(new File(_imagePath));
+                File imf = new File(_imagePath);
+                log.debug( "Mime type is : {}", Files.probeContentType(imf.toPath()) );
+                if (Files.probeContentType(imf.toPath()).contains("image/svg")) {
+                    svgImage = createSVGDocument(imf.toURI().toString());
+                    image = null;
+                } else {
+                    svgImage = null;
+                    image = readImage(imf);
+                }
             } catch (IOException ex) {
                 log.error("{} is not a valid image file, exception: ", _imagePath, ex);
                 image = null;
+                svgImage = null;
                 scaledImage = null;
             }
         }
@@ -315,6 +351,34 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
             } else {
                 scaledImage = image;
             }
+        } else if (svgImage != null) {
+            MyTranscoder transcoder = new MyTranscoder();
+            TranscodingHints hints = new TranscodingHints();
+            hints.put(ImageTranscoder.KEY_WIDTH, new Float(getSize().getWidth()) );
+            hints.put(ImageTranscoder.KEY_HEIGHT, new Float(getSize().getHeight()) );
+            transcoder.setTranscodingHints(hints);
+            try {
+                transcoder.transcode(new TranscoderInput(svgImage), null);
+            } catch (TranscoderException ex) {
+                log.debug("Exception while transposing sbg : {}", ex.getMessage());
+            }
+            scaledImage = transcoder.getImage();
+        }
+    }
+    
+    private class MyTranscoder extends ImageTranscoder {
+        private BufferedImage image = null;
+        @Override
+        public BufferedImage createImage(int w, int h) {
+            image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            return image;
+        }
+        public BufferedImage getImage() {
+            return image;
+        }
+        @Override
+        public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 

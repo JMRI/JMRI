@@ -14,6 +14,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.FileUtil;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
@@ -213,8 +214,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 : Throttle.getFunctionString(i) );
             functionButtons[i].setDisplay(true);
             if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");                
+                functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
             } else {
                 functionButtons[i].setIconPath(null);
                 functionButtons[i].setSelectedIconPath(null);
@@ -247,7 +248,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 functionButtons[i].setThrottle(mThrottle);
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
                 functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
+                functionButtons[i].setDropFolder(FileUtil.getUserResourcePath());
                 if (rosterEntry != null) { // from here, update button text with roster data
+                    functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
                     boolean needUpdate = false;
                     String imgButtonSize = rosterEntry.getAttribute("function"+i+"_ThrottleImageButtonSize");
                     if (imgButtonSize != null) {
