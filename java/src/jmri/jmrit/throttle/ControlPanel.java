@@ -611,8 +611,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
 
-	forwardButton = new JRadioButton();
-	reverseButton = new JRadioButton();
+        forwardButton = new JRadioButton();
+        reverseButton = new JRadioButton();
         try {
             forwardButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOff.svg").toString());
             forwardSelectedButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOn.svg").toString());
@@ -1190,7 +1190,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         Roster.getDefault().writeRoster();
     }
 
-   private class MyTranscoder extends ImageTranscoder {
+   private static class MyTranscoder extends ImageTranscoder {
         private BufferedImage image = null;
         @Override
         public BufferedImage createImage(int w, int h) {

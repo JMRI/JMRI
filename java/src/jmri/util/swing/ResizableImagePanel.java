@@ -206,8 +206,9 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         if (_imagePath != null) {
             try {
                 File imf = new File(_imagePath);
-                log.debug( "Mime type is : {}", Files.probeContentType(imf.toPath()) );
-                if (Files.probeContentType(imf.toPath()).contains("image/svg")) {
+                String mt = Files.probeContentType(imf.toPath());
+                log.debug( "Mime type is : {}", mt );
+                if ( (mt != null) && (mt.contains("image/svg")) ) {
                     svgImage = createSVGDocument(imf.toURI().toString());
                     image = null;
                 } else {
@@ -366,7 +367,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
     
-    private class MyTranscoder extends ImageTranscoder {
+    private static class MyTranscoder extends ImageTranscoder {
         private BufferedImage image = null;
         @Override
         public BufferedImage createImage(int w, int h) {
