@@ -2359,13 +2359,14 @@ public class LocoNetMessageInterpret {
 
         String indexString = "";
         switch (indexValue) {
-            case 0:
-                indexString = "(Speed) ";
+            case 0: //Speed
+                indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_0");
                 break;
-            case 7:
-                indexString = "(QoS) ";
+            case 7: //QoS
+                indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_7");
                 break;
             default:
+                indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_UNKNOWN");
                 break;
         }
 
@@ -2475,8 +2476,8 @@ public class LocoNetMessageInterpret {
                         : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT");
 
                 String direction = ((l.getElement(6) & 0x40) == 0)
-                        ? Bundle.getMessage("LN_MSG_DIRECTION_EAST")
-                        : Bundle.getMessage("LN_MSG_DIRECTION_WEST");
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_EAST")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_WEST");
 
                 if (type == LnConstants.OPC_MULTI_SENSE_RAILCOM_AD) {
                     int indexValue = (l.getElement(6) & 0x3E)/2; //bits 5-1

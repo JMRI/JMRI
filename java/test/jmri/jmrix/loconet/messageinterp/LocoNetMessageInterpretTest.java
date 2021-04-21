@@ -414,6 +414,11 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("MSS App Dyn index 0 value 4",
                 "Transponder address 3 (short) reporting RailCom App:Dyn Index 0 (Speed) with a value of 4.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x5F, 0x7F, 0x4F, 0x7F, 0x3F});
+        Assert.assertEquals("MSS App Dyn index 15 value 255 - Unknown index and max value",
+                "Transponder address 10239 reporting RailCom App:Dyn Index 15 (Unknown) with a value of 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test
@@ -463,8 +468,14 @@ public class LocoNetMessageInterpretTest {
                         "\tReporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x1F, 0x4F, 0x7F, 0x5F, 0x7F, 0x59});
+        Assert.assertEquals("MSL App Dyn index 15 value 255 - Unknown index and max value",
+                "Transponder address 10239 facing West present at LR32 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 15 (Unknown) with a value of 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
         l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x6F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
-        Assert.assertEquals("MSL with RailCom Reserved",
+        Assert.assertEquals("MSL with unknown 0x60 type",
                 "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
