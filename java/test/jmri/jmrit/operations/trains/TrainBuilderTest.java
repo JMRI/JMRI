@@ -13068,6 +13068,143 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * The program allows up to two caboose changes in a train's route. Route Acton
+     * to Westford has caboose changes at Boston and Harvard. Test adding caboose
+     * later in train's route. Should add caboose with road name that matches engine.
+     */
+    @Test
+    public void testCabooseChangesWithEngine() {
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        // test confirms the order cabooses are assigned to the train
+        Setup.setBuildAggressive(true);
+
+        // create 5 locations with tracks
+        Location acton = lmanager.newLocation("Acton");
+        Track actonYard = acton.addTrack("Acton Yard", Track.YARD);
+        actonYard.setLength(200);
+
+        Location boston = lmanager.newLocation("Boston");
+        Track bostonYard = boston.addTrack("Boston Yard 1", Track.YARD);
+        bostonYard.setLength(200);
+
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track chelmsfordYard1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        chelmsfordYard1.setLength(200);
+
+        Location harvard = lmanager.newLocation("Harvard");
+        Track harvardYard1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
+        harvardYard1.setLength(200);
+
+        Location westford = lmanager.newLocation("Westford");
+        Track westfordYard = westford.addTrack("Westford Yard", Track.YARD);
+        westfordYard.setLength(200);
+        
+        // place engine at start of route
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30-200");
+        e1.setTypeName("Diesel");
+        e1.setHp("200");
+        e1.setLength("50");
+        e1.setWeightTons("100");
+        e1.setMoves(20);
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard));
+
+        // create and place cabooses
+        Car c1 = cmanager.newRS("ABC", "1");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
+        c1.setLength("32");
+        c1.setCaboose(true);
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(acton, actonYard));
+
+        // car with FRED at departure
+        Car f1 = cmanager.newRS("CBA", "1");
+        f1.setTypeName(carTypes[1]);
+        f1.setLength("32");
+        f1.setFred(true);
+        Assert.assertEquals("Place f1", Track.OKAY, f1.setLocation(acton, actonYard));
+
+        Car c2 = cmanager.newRS("ABC", "2");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
+        c2.setLength("32");
+        c2.setCaboose(true);
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(boston, bostonYard));
+
+        Car c3 = cmanager.newRS("UP", "3");
+        c3.setTypeName(Bundle.getMessage("Caboose"));
+        c3.setLength("32");
+        c3.setCaboose(true);
+        c3.setMoves(10);
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(boston, bostonYard));
+
+        Car c4 = cmanager.newRS("ABC", "4");
+        c4.setTypeName(Bundle.getMessage("Caboose"));
+        c4.setLength("32");
+        c4.setCaboose(true);
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(harvard, harvardYard1));
+
+        Car c5 = cmanager.newRS("STU", "5");
+        c5.setTypeName(Bundle.getMessage("Caboose"));
+        c5.setLength("32");
+        c5.setCaboose(true);
+        c5.setMoves(10);
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(harvard, harvardYard1));
+        
+        Car c6 = cmanager.newRS("UP", "6");
+        c6.setTypeName(Bundle.getMessage("Caboose"));
+        c6.setLength("32");
+        c6.setCaboose(true);
+        c6.setMoves(11);
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(harvard, harvardYard1));
+
+        Route rte1 = rmanager.newRoute("Route Acton-Boston-Chelmsford-Harvard-Westford");
+        rte1.addLocation(acton);
+        RouteLocation rlBoston = rte1.addLocation(boston);
+        rte1.addLocation(chelmsford);
+        RouteLocation rlHarvard = rte1.addLocation(harvard);
+        rte1.addLocation(westford);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestCabooseChangesWithEngine");
+        train1.setRoute(rte1);
+
+        // depart without caboose and without engine
+        // add caboose at Boston
+        train1.setSecondLegOptions(Train.ADD_CABOOSE);
+        train1.setSecondLegStartRouteLocation(rlBoston);
+        //swap caboose at Harvard
+        train1.setThirdLegOptions(Train.ADD_CABOOSE);
+        train1.setThirdLegStartRouteLocation(rlHarvard);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations
+        Assert.assertEquals("Caboose is not part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is part of train", harvard, c2.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c3.getDestination());
+        Assert.assertEquals("Caboose is part of train", westford, c4.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c6.getDestination());
+
+        train1.reset();
+        // now require engine road UP
+        train1.setNumberEngines("1");
+        
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations, should use caboose with road UP
+        Assert.assertEquals("Caboose is not part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c2.getDestination());
+        Assert.assertEquals("Caboose is part of train", harvard, c3.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
+        Assert.assertEquals("Caboose is part of train", westford, c6.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     /**
      * Test the automatic assignment of engines to a train based on HP requirements.

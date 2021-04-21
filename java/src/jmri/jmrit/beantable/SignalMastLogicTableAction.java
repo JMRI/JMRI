@@ -102,6 +102,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
+                InstanceManager.getDefault(jmri.SectionManager.class).generateBlockSections();
                 JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
@@ -606,6 +607,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                             m.fireTableDataChanged();
                             if (genSect.isSelected()) {
                                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
+                                InstanceManager.getDefault(jmri.SectionManager.class).generateBlockSections();                              
                             }
                         });
                     } catch (java.lang.reflect.InvocationTargetException ex) {

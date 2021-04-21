@@ -24,7 +24,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 public class IfThenElse extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private Type _type = Type.TriggerAction;
+    private Type _type = Type.ExecuteOnChange;
     private TriState _lastExpressionResult = TriState.Unknown;
     private String _ifExpressionSocketSystemName;
     private String _thenActionSocketSystemName;
@@ -74,7 +74,7 @@ public class IfThenElse extends AbstractDigitalAction
         TriState _expressionResult = TriState.getValue(result);
         
         // _lastExpressionResult may be Unknown
-        if ((_type == Type.ContinuousAction) || (_expressionResult != _lastExpressionResult)) {
+        if ((_type == Type.AlwaysExecute) || (_expressionResult != _lastExpressionResult)) {
             if (result) {
                 _thenActionSocket.execute();
             } else {
@@ -294,26 +294,20 @@ public class IfThenElse extends AbstractDigitalAction
      */
     public enum Type {
         /**
-         * Action is triggered when the expression is True. The action may
-         * continue even if the expression becomes False.
-         * 
-         * If the expression is False and then True again before the action
-         * is finished, action.executeAgain() is called instead of action.execute().
-         * 
-         * Note that in a tree of actions, some actions may have been finished
-         * and some actions still running. In this case, the actions that are
-         * still running will be called with executeAgain() but those actions
-         * that are finished will be called with execute(). Actions that have
-         * child actions need to deal with this.
+         * The "then" or "else" action is executed when the expression changes
+         * its result. If the expression has returned "false", but now returns
+         * "true", the "then" action is executed. If the expression has
+         * returned "true", but now returns "false", the "else" action is executed.
          */
-        TriggerAction(Bundle.getMessage("IfThenElse_TriggerAction")),
+        ExecuteOnChange(Bundle.getMessage("IfThenElse_ExecuteOnChange")),
         
         /**
-         * Action is executed when the expression is True but only as long as
-         * the expression stays True. If the expression becomes False, the
-         * action is aborted.
+         * The "then" or "else" action is always executed when this action is
+         * executed. If the expression returns "true", the "then" action is
+         * executed. If the expression returns "false", the "else" action is
+         * executed.
          */
-        ContinuousAction(Bundle.getMessage("IfThenElse_ContinuousAction"));
+        AlwaysExecute(Bundle.getMessage("IfThenElse_AlwaysExecute"));
         
         private final String _text;
         

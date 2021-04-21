@@ -12,6 +12,7 @@ import jmri.Manager.NameValidity;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -261,6 +262,26 @@ public abstract class FemaleSocketTestBase {
         Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
     }
 
+    @Test
+    public void testValidateName() {
+        // Valid names
+        Assert.assertTrue(_femaleSocket.validateName("Abc"));
+        Assert.assertTrue(_femaleSocket.validateName("abc"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc123"));
+        Assert.assertTrue(_femaleSocket.validateName("A123bc"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc___"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc___fsdffs"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc3123__2341fsdf"));
+        
+        // Invalid names
+        Assert.assertFalse(_femaleSocket.validateName("12Abc"));  // Starts with a digit
+        Assert.assertFalse(_femaleSocket.validateName("_Abc"));   // Starts with an underscore
+        Assert.assertFalse(_femaleSocket.validateName(" Abc"));   // Starts with a non letter
+        Assert.assertFalse(_femaleSocket.validateName("A bc"));   // Has a character that's not letter, digit or underscore
+        Assert.assertFalse(_femaleSocket.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
+        Assert.assertFalse(_femaleSocket.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
+    }
+    
     private boolean setName_verifyException(String newName, String expectedExceptionMessage) {
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         try {
@@ -286,6 +307,10 @@ public abstract class FemaleSocketTestBase {
         // character is a letter
         _femaleSocket.setName("X1b2c3Y");
         Assert.assertTrue("name matches", "X1b2c3Y".equals(_femaleSocket.getName()));
+
+        // Underscore is also a valid letter
+        _femaleSocket.setName("X1b2___c3Y");
+        Assert.assertTrue("name matches", "X1b2___c3Y".equals(_femaleSocket.getName()));
 
         // The name must start with a letter, not a digit
         Assert.assertTrue("exception is thrown", setName_verifyException("123", "the name is not valid: 123"));
@@ -360,7 +385,7 @@ public abstract class FemaleSocketTestBase {
     public void testMethodsThatAreNotSupported() {
         errorFlag.set(false);
         try {
-            _femaleSocket.printTree((PrintWriter)null, "");
+            _femaleSocket.printTree((PrintWriter)null, "", new MutableInt(0));
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -368,7 +393,7 @@ public abstract class FemaleSocketTestBase {
 
         errorFlag.set(false);
         try {
-            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "");
+            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "", new MutableInt(0));
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -620,17 +645,17 @@ public abstract class FemaleSocketTestBase {
         }
 */
         @Override
-        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

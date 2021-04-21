@@ -4,33 +4,33 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
-import jmri.jmrit.display.logixng.ActionEnableDisable;
+import jmri.jmrit.display.logixng.ActionPositionable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionEnableDisable objects.
+ * Handle XML configuration for ActionPositionable objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2021
  */
-public class ActionEnableDisableXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ActionPositionableXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public ActionEnableDisableXml() {
+    public ActionPositionableXml() {
     }
     
     /**
-     * Default implementation for storing the contents of a ActionEnableDisable
+     * Default implementation for storing the contents of a ActionPositionable
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        ActionEnableDisable p = (ActionEnableDisable) o;
+        ActionPositionable p = (ActionPositionable) o;
 
-        Element element = new Element("DisplayPositionableActionEnableDisable");
+        Element element = new Element("DisplayActionPositionable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
@@ -52,7 +52,7 @@ public class ActionEnableDisableXml extends jmri.managers.configurexml.AbstractN
         element.addContent(new Element("formula").addContent(p.getFormula()));
         
         element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("isControlling").addContent(p.getIsControlling().name()));
+        element.addContent(new Element("operation").addContent(p.getOperation().name()));
         element.addContent(new Element("stateReference").addContent(p.getStateReference()));
         element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
         element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
@@ -64,7 +64,7 @@ public class ActionEnableDisableXml extends jmri.managers.configurexml.AbstractN
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ActionEnableDisable h = new ActionEnableDisable(sys, uname);
+        ActionPositionable h = new ActionPositionable(sys, uname);
         
         loadCommon(h, shared);
         
@@ -99,9 +99,9 @@ public class ActionEnableDisableXml extends jmri.managers.configurexml.AbstractN
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
             
-            Element isControlling = shared.getChild("isControlling");
+            Element isControlling = shared.getChild("operation");
             if (isControlling != null) {
-                h.setIsControlling(ActionEnableDisable.IsControlling.valueOf(isControlling.getTextTrim()));
+                h.setOperation(ActionPositionable.Operation.valueOf(isControlling.getTextTrim()));
             }
             
             elem = shared.getChild("stateReference");
@@ -121,5 +121,5 @@ public class ActionEnableDisableXml extends jmri.managers.configurexml.AbstractN
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEnableDisableXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionableXml.class);
 }
