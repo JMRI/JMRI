@@ -178,7 +178,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
    * 
    * @param uri The path to the SVG file to read.
    * @return A Document instance that represents the SVG file.
-   * @throws Exception The file could not be read.
+   * @throws IOException The file could not be read.
    */
     private Document createSVGDocument( String uri ) throws IOException {
       String parser = XMLResourceDescriptor.getXMLParserClassName();
