@@ -7,7 +7,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
@@ -153,18 +152,74 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         _clipboard.setup();
     }
 
+    /**
+     * Set whenether execute() should run on the LogixNG thread at once or
+     * should dispatch the call until later, for all the ConditionalNGs.
+     * 
+     * @param value true if execute() should run on LogixNG thread delayed,
+     *              false otherwise.
+     */
+    private void setRunDelayed(boolean value) {
+        Set<ConditionalNG> conditionalNGs =
+                InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet();
+        for (ConditionalNG conditionalNG : conditionalNGs) {
+            conditionalNG.setRunDelayed(value);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void activateAllLogixNGs() {
+        activateAllLogixNGs(true, true);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread) {
+        
+        setRunDelayed(false);
+        
         _isActive = true;
-        for (LogixNG logixNG : _tsys.values()) {
-            if (logixNG.isActive()) {
-                logixNG.registerListeners();
-                logixNG.execute();
-            } else {
-                logixNG.unregisterListeners();
+        
+        // This may take a long time so it must not be done on the GUI thread.
+        // Therefore we create a new thread for this task.
+        Runnable runnable = () -> {
+            Set<LogixNG> activeLogixNGs = new HashSet<>();
+            
+            // Activate and execute the initialization LogixNGs first.
+            List<LogixNG> initLogixNGs =
+                    InstanceManager.getDefault(LogixNG_InitializationManager.class)
+                            .getList();
+            
+            for (LogixNG logixNG : initLogixNGs) {
+                if (logixNG.isActive()) {
+                    logixNG.registerListeners();
+                    logixNG.execute();
+                    activeLogixNGs.add(logixNG);
+                } else {
+                    logixNG.unregisterListeners();
+                }
             }
-        }
+            
+            // Activate and execute all the rest of the LogixNGs.
+            _tsys.values().stream()
+                    .sorted()
+                    .filter((logixNG) -> !(activeLogixNGs.contains(logixNG)))
+                    .forEachOrdered((logixNG) -> {
+                
+                if (logixNG.isActive()) {
+                    logixNG.registerListeners();
+                    logixNG.execute();
+                } else {
+                    logixNG.unregisterListeners();
+                }
+            });
+            
+            setRunDelayed(runDelayed);
+        };
+        
+        if (runOnSeparateThread) new Thread(runnable).start();
+        else runnable.run();
     }
 
     /** {@inheritDoc} */

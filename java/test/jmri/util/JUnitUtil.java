@@ -894,6 +894,10 @@ public class JUnitUtil {
     }
 
     public static void initLogixNGManager() {
+        initLogixNGManager(true);
+    }
+
+    public static void initLogixNGManager(boolean activate) {
         LogixNG_Manager m1 = new DefaultLogixNGManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m1, jmri.Manager.LOGIXNGS);
@@ -947,7 +951,8 @@ public class JUnitUtil {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
-        m1.activateAllLogixNGs();
+        
+        if (activate) m1.activateAllLogixNGs(false, false);
     }
 
     public static void initInternalSensorManagerThrowException() {
