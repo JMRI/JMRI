@@ -562,41 +562,53 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
 - Wait a day or so to ensure propagation.
 
 ====================================================================================
+
+[jmriusers@groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%204.23.4%20files%20available)
+
+
 ## Announcement and Post-release Steps
 
-- Mail announcement to jmriusers@groups.io
+- Mail announcement to [jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%204.23.4%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%204.23.4%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20early%20Summer%202021.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.9.6%20or%20earlier,%20we%20strongly%20recommend%20that%20you%20first%20update%20to%20JMRI%204.12%20and%20make%20sure%20that's%20running%20OK%20before%20updating%20to%20this%20test%20release.%20There%20have%20been%20a%20number%20of%20changes%20in%20serial%20port%20support,%20panel%20file%20format%20and%20configuration%20options%20since%20those%20earlier%20releases,%20and%20moving%20to%20the%20stable%20JMRI%204.12%20release%20is%20a%20good%20way%20to%20work%20through%20any%20possible%20problems.%0A<https://www.jmri.org/releasenotes/jmri4.12.shtml>%0A%0AIf%20you%20use%20JMRI%20on%20Linux%20or%20Mac%20and%20are%20updating%20from%20JMRI%204.7.3%20or%20earlier,%20there's%20a%20necessary%20migration%20step.%20(Not%20needed%20on%20Windows)%20Please%20see%20the%20JMRI%204.12%20release%20note%20for%20details:%20<https://www.jmri.org/releasenotes/jmri4.12.shtml#migration>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%204.23.4%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri4.23.4.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri4.23.4.shtml>%0A)
 
-    Subject is "Test version 4.23.4 of JMRI/DecoderPro is available for download" or "JMRI 4.22 is available for download"
+Subject:
 
-    Content:
+   <ul> <li style="list-style-type: none;">
+   "Test version 4.23.4 of JMRI/DecoderPro is available for download"
+   <br>or<br>
+   "JMRI 4.22 is available for download"
+   </li></ul>
 
-Test version 4.23.4 of JMRI/DecoderPro is available for download.
+Content:
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2021. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
+    Test version 4.23.4 of JMRI/DecoderPro is available for download.
 
-- Alt: There have been a lot of updates in this version, so it should be considered experimental.
-- Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
+    This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2021. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
-If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you first update to JMRI 4.12 and make sure that's running OK before updating to this test release. There have been a number of changes in serial port support, panel file format and configuration options since those earlier releases, and moving to the stable JMRI 4.12 release is a good way to work through any possible problems.
-<https://www.jmri.org/releasenotes/jmri4.12.shtml>
+    If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you first update to JMRI 4.12 and make sure that's running OK before updating to this test release. There have been a number of changes in serial port support, panel file format and configuration options since those earlier releases, and moving to the stable JMRI 4.12 release is a good way to work through any possible problems.
+    <https://www.jmri.org/releasenotes/jmri4.12.shtml>
 
-If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there's a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <https://www.jmri.org/releasenotes/jmri4.12.shtml#migration>
+    If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there's a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <https://www.jmri.org/releasenotes/jmri4.12.shtml#migration>
 
-For more information on the issues, new features and bug fixes in 4.23.4 please see the release note:
-<https://www.jmri.org/releasenotes/jmri4.23.4.shtml>
+    For more information on the issues, new features and bug fixes in 4.23.4 please see the release note:
+    <https://www.jmri.org/releasenotes/jmri4.23.4.shtml>
 
-Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
-<https://www.jmri.org/Copyright.html>
+    Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
+    <https://www.jmri.org/Copyright.html>
 
-The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
-<https://www.jmri.org/releasenotes/jmri4.23.4.shtml>
+    The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
+    <https://www.jmri.org/releasenotes/jmri4.23.4.shtml>
 
-- Close the [4.23.5 release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
+You might want to edit it, i.e. to add
+
+    - Alt: There have been a lot of updates in this version, so it should be considered experimental.
+    - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
+
+
+- Close the [4.23.4 release GitHub Issue](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+%22Create+Test+Release+4.23.4%22) with a note saying that
 ```
-JMRI 4.23.4 has been released. Files are available in the GitHub release section.
+    JMRI 4.23.4 has been released. Files are available in the GitHub release section.
 
 ```
-
 - Wait a day for complaints
 
 - If production release, mail announcement to jmri-announce@lists.sourceforge.net
@@ -604,21 +616,6 @@ JMRI 4.23.4 has been released. Files are available in the GitHub release section
 - For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
-
-- Decide if worth announcing elsewhere (production release only, generally we don't do this):
-```
-        RailRoadSoftware&yahoogroups.com
-        MAC_DCC@yahoogroups.com
-        loconet_hackers@yahoogroups.com
-        digitrax@yahoogroups.com
-        NCE-DCC@yahoogroups.com
-        NCE-SYS1@yahoogroups.com
-        easydcc@yahoogroups.com
-        Model_TRAINS_DCC_Software@yahoogroups.com
-        DigitalPlusbyLenz@yahoogroups.com
-        linux-dcc@yahoogroups.com
-        rrsoftware@yahoogroups.com
-```
 
 - Commit back any changes made to this doc
 
