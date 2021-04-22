@@ -2454,47 +2454,48 @@ public class LocoNetMessageInterpret {
             //0x40 = present with App Dyn
             //0x60 = unknown
 
-            if (type == 0x60) { //uknown at this point
+            if (type == 0x60) { //unknown at this point
                 return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
+            }
 
-            } else {  //Process 0x00, 0x20, and 0x40
-                String reporterSystemName = reporterPrefix + ((l.getElement(2) & 0x1F) * 128 + l.getElement(3) + 1);
+            // Now Process 0x00, 0x20, and 0x40
+            String reporterSystemName = reporterPrefix + ((l.getElement(2) & 0x1F) * 128 + l.getElement(3) + 1);
 
-                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
-                String reporterUserName = "";
-                if (reporter != null) {
-                    String uname = reporter.getUserName();
-                    if ((uname != null) && (!uname.isEmpty())) {
-                        reporterUserName = uname;
-                    }
-                }
-
-                String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
-
-                String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_ABSENT)
-                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT")
-                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT");
-
-                String direction = ((l.getElement(6) & 0x40) == 0)
-                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_EAST")
-                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_WEST");
-
-                if (type == LnConstants.OPC_MULTI_SENSE_RAILCOM_AD) {
-                    int indexValue = (l.getElement(6) & 0x3E)/2; //bits 5-1
-                    int dynamicValue = l.getElement(7) + (l.getElement(6) & 0x01) * 128;
-
-                    String railcomAdString = convertRailComAD(indexValue, dynamicValue);
-                    String multiSenseLongString = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
-                            locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
-
-                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_RAILCOM_REPORT",
-                            multiSenseLongString, railcomAdString);
-
-                } else {
-                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
-                            locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
+            String reporterUserName = "";
+            if (reporter != null) {
+                String uname = reporter.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    reporterUserName = uname;
                 }
             }
+
+            String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
+
+            String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_ABSENT)
+                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT")
+                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT");
+
+            String direction = ((l.getElement(6) & 0x40) == 0)
+                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_EAST")
+                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_WEST");
+
+            if (type == LnConstants.OPC_MULTI_SENSE_RAILCOM_AD) {
+                int indexValue = (l.getElement(6) & 0x3E)/2; //bits 5-1
+                int dynamicValue = l.getElement(7) + (l.getElement(6) & 0x01) * 128;
+
+                String railcomAdString = convertRailComAD(indexValue, dynamicValue);
+                String multiSenseLongString = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                        locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
+
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_RAILCOM_REPORT",
+                        multiSenseLongString, railcomAdString);
+
+            } else {
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                        locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
+            }
+
         } else {
             return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
         }
