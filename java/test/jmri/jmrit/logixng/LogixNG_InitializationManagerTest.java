@@ -25,7 +25,7 @@ import org.junit.Test;
  */
 public class LogixNG_InitializationManagerTest {
 
-    List<AtomicBoolean> abList = new ArrayList();
+    List<AtomicBoolean> abList = new ArrayList<>();
     
     private AtomicBoolean getAB() {
         AtomicBoolean ab = new AtomicBoolean();
