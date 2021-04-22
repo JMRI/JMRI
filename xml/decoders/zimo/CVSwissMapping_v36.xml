@@ -16,7 +16,20 @@
 <!-- version 1.2 - Alain Carasso, new file CVSwissMapping_v36 adding groups 14 to 17 , 28 August 2017-->
 <!-- version 1.3 - Ronald Kuhn, disable groups 14 to 17 for non Sounddecoder, 25 April 2019-->
 <!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
+<!-- version 1.5 - Wouter Kok, Added CV399, 18 April 2021 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="Speed Dependant Headlights" CV="399" default="0">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <decVal/>
+    <label>Speed Dependant Headlights</label>
+    <label xml:lang="cs">Mez zapnutí dálkových světel</label>
+    <label xml:lang="de">Fernlicht-Schwelle</label>
+    <label xml:lang="nl">Snelheid Afhankelijke Koplampen</label>
+  </variable>
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
