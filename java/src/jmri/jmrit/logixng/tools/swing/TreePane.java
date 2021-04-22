@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.Color;
 import java.awt.*;
+import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
+import javax.swing.border.EmptyBorder;
 import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.*;
@@ -310,14 +312,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.setOpaque(false);
             
-            JLabel commentLabel = new JLabel();
-            commentLabel.setForeground(Color.GRAY);
-            Font font2 = commentLabel.getFont();
-            commentLabel.setFont(font2.deriveFont(Font.ITALIC));
-            JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-            commentPanel.setOpaque(false);
-            commentPanel.add(commentLabel);
-            commentPanel.setAlignmentX(LEFT_ALIGNMENT);
+            JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             mainPanel.add(commentPanel);
             
             JPanel panel = new JPanel();
@@ -348,7 +343,15 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                 
                 String comment = connectedSocket.getComment();
                 if (comment != null) {
+                    JLabel commentLabel = new JLabel();
                     commentLabel.setText("<html><pre>"+comment+"</pre></html>");
+                    commentLabel.setForeground(Color.GRAY);
+                    Font font2 = commentLabel.getFont();
+                    commentLabel.setFont(font2.deriveFont(Font.ITALIC));
+                    commentPanel.setOpaque(false);
+                    commentPanel.add(commentLabel);
+                    commentPanel.setAlignmentX(LEFT_ALIGNMENT);
+                    commentPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
                 }
                 
                 String label = connectedSocket.getLongDescription();
