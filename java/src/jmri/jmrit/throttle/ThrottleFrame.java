@@ -785,19 +785,19 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         Element functionPanelElement = e.getChild("FunctionPanel");
         functionPanel.setXml(functionPanelElement);
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) functionPanel.getUI()).getNorthPane() != null) {
             ((javax.swing.plaf.basic.BasicInternalFrameUI) functionPanel.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
         }
         Element addressPanelElement = e.getChild("AddressPanel");
         addressPanel.setXml(addressPanelElement);
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane() != null) {
             ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
         }
         Element speedPanelElement = e.getChild("SpeedPanel");
         if (speedPanelElement != null) { // older throttle configs may not have this element
             speedPanel.setXml(speedPanelElement);
-            if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
+            if (((javax.swing.plaf.basic.BasicInternalFrameUI) speedPanel.getUI()).getNorthPane() != null) {
+                ((javax.swing.plaf.basic.BasicInternalFrameUI) speedPanel.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
             }
         }
 
