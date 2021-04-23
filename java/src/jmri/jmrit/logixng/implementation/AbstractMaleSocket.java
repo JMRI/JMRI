@@ -360,6 +360,19 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             MutableInt lineNumber) {
         
         if (!(getObject() instanceof AbstractMaleSocket)) {
+            if (getComment() != null) {
+                String comment = getComment().replaceAll("\\r\\n", "\\n");
+                comment = comment.replaceAll("\\r", "\\n");
+                for (String s : comment.split("\\n", 0)) {
+                    if (settings._printLineNumbers) {
+                        writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+                    }
+                    writer.append(currentIndent);
+                    writer.append("// ");
+                    writer.append(s);
+                    writer.println();
+                }
+            }
             if (settings._printLineNumbers) {
                 writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
             }
@@ -371,10 +384,10 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(" ");
                 writer.append(getUserName());
             }
-            if (getComment() != null) {
-                writer.append(" ::: ");
-                writer.append(getComment());
-            }
+//            if (getComment() != null) {
+//                writer.append(" ::: ");
+//                writer.append(getComment());
+//            }
 
             if (settings._printErrorHandling) {
                 writer.append(" ::: ");
