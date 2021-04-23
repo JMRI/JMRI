@@ -360,8 +360,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             MutableInt lineNumber) {
         
         if (!(getObject() instanceof AbstractMaleSocket)) {
-            if (getComment() != null) {
-                String comment = getComment().replaceAll("\\r\\n", "\\n");
+            String comment = getComment();
+            if (comment != null) {
+                comment = comment.replaceAll("\\r\\n", "\\n");
                 comment = comment.replaceAll("\\r", "\\n");
                 for (String s : comment.split("\\n", 0)) {
                     if (settings._printLineNumbers) {
