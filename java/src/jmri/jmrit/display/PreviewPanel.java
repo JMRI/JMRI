@@ -29,6 +29,10 @@ public class PreviewPanel extends JPanel {
     public PreviewPanel(DisplayFrame parent, ImagePanel panel1, ImagePanel panel2, boolean hasComboBox) {
         super();
         _parent = parent;
+        init(panel1, panel2, hasComboBox);
+    }
+    
+    private void init(ImagePanel panel1, ImagePanel panel2, boolean hasComboBox) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.black, 1),

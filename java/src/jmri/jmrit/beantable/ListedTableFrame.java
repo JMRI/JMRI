@@ -117,8 +117,17 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         }
     }
 
+    /**
+     * Initialise Frame Components.
+     * Should be called after initTables()
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents() {
+        if (tabbedTableItemListArrayArray.isEmpty()) {
+            log.error("No tables loaded: {}",this);
+            return;
+        }
         actionList = new ActionJList(this);
 
         detailPanel = new JPanel();
