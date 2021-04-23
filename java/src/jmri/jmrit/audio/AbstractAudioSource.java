@@ -2,7 +2,7 @@ package jmri.jmrit.audio;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
@@ -446,8 +446,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     protected void calculateLoops() {
         if (this.minLoops != this.maxLoops) {
-            Random r = new Random();
-            this.numLoops = this.minLoops + r.nextInt(this.maxLoops - this.minLoops);
+            this.numLoops = this.minLoops + ThreadLocalRandom.current().nextInt(this.maxLoops - this.minLoops);
         } else {
             this.numLoops = this.minLoops;
         }
