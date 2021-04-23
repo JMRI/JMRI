@@ -385,10 +385,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(" ");
                 writer.append(getUserName());
             }
-//            if (getComment() != null) {
-//                writer.append(" ::: ");
-//                writer.append(getComment());
-//            }
 
             if (settings._printErrorHandling) {
                 writer.append(" ::: ");

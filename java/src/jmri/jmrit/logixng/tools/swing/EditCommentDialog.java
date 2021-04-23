@@ -20,8 +20,6 @@ public class EditCommentDialog {
     private String _comment;
     private JDialog _editCommentDialog = null;
     private final JLabel _commentLabel = new JLabel("Comment" + ":");   // NOI18N
-//    private final JLabel _functionLabel = new JLabel(Bundle.getMessage("FunctionsHelpDialog_Function") + ":");   // NOI18N
-//    private final JEditorPane _documentationEditorPane = new JEditorPane();
     private final JTextArea _commentTextArea = new JTextArea();
     
     
@@ -36,8 +34,7 @@ public class EditCommentDialog {
         
         _editCommentDialog  = new JDialog(
                 (JDialog)null,
-                "AA",
-//                Bundle.getMessage("FunctionsHelpDialogTitle"),
+                Bundle.getMessage("EditCommentDialogTitle"),
                 true);
         
         
@@ -51,12 +48,8 @@ public class EditCommentDialog {
         
         JScrollPane commentScroller = new JScrollPane(_commentTextArea);
         commentScroller.setPreferredSize(new Dimension(panelWidth, panelHeight));
-//        commentScroller.setAlignmentX(LEFT_ALIGNMENT);
-//        commentScroller.setAlignmentY(TOP_ALIGNMENT);
         p.add(commentScroller);
         
-//        _categoryComboBox.setToolTipText(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("CategoryNamesHint"));    // NOI18N
-//        _swingConfiguratorComboBox.setToolTipText(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("TypeNamesHint"));   // NOI18N
         contentPanel.add(p);
         // set up message
         JPanel panel3 = new JPanel();
