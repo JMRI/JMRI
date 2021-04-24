@@ -257,6 +257,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     private void minuteTimer() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
+            @Override
             public void run() {
                 if (timerRunning) {
                     propertyChange(null);
