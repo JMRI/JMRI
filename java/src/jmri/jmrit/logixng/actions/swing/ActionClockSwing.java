@@ -84,19 +84,14 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        log.debug("Validate time: {}", _timeTextField.getText());
-
         if (_stateComboBox.getSelectedItem() == ClockState.SetClock) {
             LocalTime newHHMM;
-
             try {
                 newHHMM = LocalTime.parse(_timeTextField.getText().trim(), DateTimeFormatter.ofPattern("H:mm"));
-                log.debug("time: hh = {}, mm = {}", newHHMM.getHour(), newHHMM.getMinute());
                 _minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
                 if (_minutes < 0 || _minutes > 1439) {
                     errorMessages.add(Bundle.getMessage("ActionClock_RangeError"));
                 }
-                log.debug("new time: {}", _minutes);
             } catch (java.time.format.DateTimeParseException ex) {
                 errorMessages.add(Bundle.getMessage("ActionClock_ParseError", ex.getParsedString()));
             }
@@ -145,6 +140,6 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
     }
 
 
-   private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClockSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClockSwing.class);
 
 }

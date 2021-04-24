@@ -89,7 +89,7 @@ public class ActionClock extends AbstractDigitalAction {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(InstanceManager.getDefault(jmri.Timebase.class).getTime());
                     cal.set(Calendar.HOUR_OF_DAY, _clockTime / 60);
-                    cal.set(Calendar.MINUTE, _clockTime - ((_clockTime / 60) * 60));
+                    cal.set(Calendar.MINUTE, _clockTime % 60);
                     cal.set(Calendar.SECOND, 0);
                     InstanceManager.getDefault(jmri.Timebase.class).userSetTime(cal.getTime());
                     break;
@@ -167,6 +167,6 @@ public class ActionClock extends AbstractDigitalAction {
 
     }
 
-   private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPower.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPower.class);
 
 }
