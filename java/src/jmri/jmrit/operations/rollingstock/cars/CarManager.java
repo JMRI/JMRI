@@ -246,6 +246,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public List<Car> getByRwlList() {
         return getByList(getByLocationList(), BY_RWL);
     }
+    
+    public List<Car> getByDivisionList() {
+        return getByList(getByLocationList(), BY_DIVISION);
+    }
 
     public List<Car> getByFinalDestinationList() {
         return getByList(getByDestinationList(), BY_FINAL_DEST);
@@ -273,6 +277,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     private static final int BY_PICKUP = 19;
     private static final int BY_HAZARD = 21;
     private static final int BY_RWL = 22; // Return When loaded
+    private static final int BY_DIVISION = 23;
 
     // add car options to sort comparator
     @Override
@@ -291,6 +296,9 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
             case BY_FINAL_DEST:
                 return (c1, c2) -> (c1.getFinalDestinationName()
                         .compareToIgnoreCase(c2.getFinalDestinationName()));
+            case BY_DIVISION:
+                return (c1, c2) -> (c1.getDivisionName()
+                        .compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
                 return (c1, c2) -> (c1.getWait() - c2.getWait());
             case BY_PICKUP:
