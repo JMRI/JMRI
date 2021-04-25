@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalExpression_ExpressionClockType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionClockType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ExpressionClock class.
+          Define the XML stucture for storing the contents of a ActionClock class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionClockXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionClockXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -41,23 +41,22 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
-
-              <xs:element name="type" minOccurs="0" maxOccurs="1">
+              <xs:element name="clockState" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="FastClock"/>
-                    <xs:enumeration value="SystemClock"/>
+                    <xs:enumeration value="SetClock"/>
+                    <xs:enumeration value="StartClock"/>
+                    <xs:enumeration value="StopClock"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="beginTime" type="xs:int" />
-              <xs:element name="endTime" type="xs:int" />
+              <xs:element name="setTime" type="xs:integer" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
+
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>
