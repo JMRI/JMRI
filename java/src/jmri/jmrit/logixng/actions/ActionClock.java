@@ -8,7 +8,7 @@ import jmri.jmrit.logixng.*;
 import jmri.util.ThreadingUtil;
 
 /**
- * This action turns power on or off.
+ * This action provides the ability to set the fast clock time and start and stop the fast clock.
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021

@@ -7,6 +7,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.util.TimerUtil;
 
 /**
  * This expression is a clock.
@@ -22,9 +23,8 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     private int _beginTime = 0;
     private int _endTime = 0;
 
+    TimerTask timerTask = null;
     private int milisInAMinute = 60000;
-    private boolean timerDefined = false;
-    private boolean timerRunning = false;
 
 
     public ExpressionClock(String sys, String user) {
@@ -196,13 +196,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
         if (!_listenersAreRegistered) {
             switch (_type) {
                 case SystemClock:
-                    if (timerDefined) {
-                        timerRunning = true;
-                    } else {
-                        minuteTimer();
-                        timerDefined = true;
-                        timerRunning = true;
-                    }
+                    scheduleTimer();
                     break;
 
                 case FastClock:
@@ -226,7 +220,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
         if (_listenersAreRegistered) {
             switch (_type) {
                 case SystemClock:
-                    timerRunning = false;
+                    if (timerTask != null) timerTask.cancel();
                     break;
 
                 case FastClock:
@@ -241,6 +235,16 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
         }
     }
 
+    private void scheduleTimer() {
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                propertyChange(null);
+            }
+        };
+        TimerUtil.schedule(timerTask, System.currentTimeMillis() % milisInAMinute, milisInAMinute);
+    }
+
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -252,18 +256,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-    }
-
-    private void minuteTimer() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (timerRunning) {
-                    propertyChange(null);
-                }
-            }
-        }, System.currentTimeMillis() % milisInAMinute, milisInAMinute);
+        if (timerTask != null) timerTask.cancel();
     }
 
     public enum Type {
