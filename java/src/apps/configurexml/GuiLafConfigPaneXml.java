@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
  * @see apps.GuiLafConfigPane
  * @since 2.9.5
+ * @deprecated since 4.19.6 without replacement; this class supports reading
+ * preferences from JMRI version earlier than 4.1.4; from which a direct update
+ * is not supported
  */
+@Deprecated
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public GuiLafConfigPaneXml() {
@@ -59,6 +63,8 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
                 (g.mouseEvent.isSelected() ? "yes" : "no"));
         e.setAttribute("graphicTableState",
                 (g.graphicStateDisplay.isSelected() ? "yes" : "no"));
+        e.setAttribute("tabbedOblockEditor",
+                (g.tabbedOblockEditor.isSelected() ? "yes" : "no"));
         return e;
     }
 
@@ -104,13 +110,17 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
             boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
-            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         Attribute graphicAttr = shared.getAttribute("graphicTableState");
         if (graphicAttr != null) {
             boolean graphicTableState = graphicAttr.getValue().equals("yes");
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicTableState);
+        }
+        Attribute oBlockTable = shared.getAttribute("tabbedOblockEditor");
+        if (oBlockTable != null) {
+            boolean tabbedOblockEditor = oBlockTable.getValue().equals("yes");
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(tabbedOblockEditor);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -153,16 +163,6 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         }
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class);
 

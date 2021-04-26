@@ -3,10 +3,9 @@ package jmri.jmrix.cmri.serial;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the serial address functions in memo1.
@@ -14,7 +13,7 @@ import org.junit.Test;
  * These used to be in a separate SerialAddress class, with its own test class.
  * This structure is a vestige of that.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2017
  */
 public class SerialAddressTwoSystemTest {
@@ -31,7 +30,7 @@ public class SerialAddressTwoSystemTest {
     SerialNode k10;
     SerialNode k20;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -43,17 +42,9 @@ public class SerialAddressTwoSystemTest {
         c10 = new SerialNode(10, SerialNode.SMINI, stcs1);
         c18 = new SerialNode(18, SerialNode.SMINI, stcs1);
         // create and register the 1st manager objects
-        jmri.TurnoutManager l1 = new SerialTurnoutManager(memo1) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.TurnoutManager l1 = new SerialTurnoutManager(memo1);
         jmri.InstanceManager.setTurnoutManager(l1);
-        jmri.LightManager lgt1 = new SerialLightManager(memo1) {
-            @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.LightManager lgt1 = new SerialLightManager(memo1);
         jmri.InstanceManager.setLightManager(lgt1);
         jmri.SensorManager s1 = new SerialSensorManager(memo1);
         jmri.InstanceManager.setSensorManager(s1);
@@ -72,18 +63,14 @@ public class SerialAddressTwoSystemTest {
             }
         };
         jmri.InstanceManager.setTurnoutManager(l2);
-        jmri.LightManager lgt2 = new SerialLightManager(memo2) {
-            @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.LightManager lgt2 = new SerialLightManager(memo2);
         jmri.InstanceManager.setLightManager(lgt2);
         jmri.SensorManager s2 = new SerialSensorManager(memo2);
         jmri.InstanceManager.setSensorManager(s2);
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         if (stcs1 != null) stcs1.terminateThreads();
         stcs1 = null;
@@ -92,7 +79,7 @@ public class SerialAddressTwoSystemTest {
         stcs2 = null;
         memo2 = null;
 
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

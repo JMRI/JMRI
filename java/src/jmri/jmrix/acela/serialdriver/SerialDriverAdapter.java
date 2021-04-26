@@ -54,7 +54,7 @@ public class SerialDriverAdapter extends AcelaPortController {
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -63,8 +63,7 @@ public class SerialDriverAdapter extends AcelaPortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -74,14 +73,7 @@ public class SerialDriverAdapter extends AcelaPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -129,7 +121,7 @@ public class SerialDriverAdapter extends AcelaPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }
@@ -144,7 +136,7 @@ public class SerialDriverAdapter extends AcelaPortController {
      */
     @Override
     public String[] validBaudRates() {
-    // Really just want 9600 Baud for Acela
+        // Really just want 9600 Baud for Acela
         return new String[]{Bundle.getMessage("Baud9600")};
     }
 
@@ -157,25 +149,14 @@ public class SerialDriverAdapter extends AcelaPortController {
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

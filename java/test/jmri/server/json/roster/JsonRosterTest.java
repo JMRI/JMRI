@@ -2,11 +2,11 @@ package jmri.server.json.roster;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,12 +14,12 @@ import org.junit.Test;
  */
 public class JsonRosterTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -2,12 +2,14 @@ package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
 import jmri.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for TrackCircuitSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TrackCircuitSectionTest {
 
@@ -85,8 +87,7 @@ public class TrackCircuitSectionTest {
     Turnout indicator;
     Sensor sensor;
     
-    // The minimal setup for log4J
-    @org.junit.Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -109,7 +110,7 @@ public class TrackCircuitSectionTest {
         };
     }
 
-    @org.junit.After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

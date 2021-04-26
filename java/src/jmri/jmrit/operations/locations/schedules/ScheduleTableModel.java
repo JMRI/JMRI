@@ -145,8 +145,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         _table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
 
         _frame.loadTableDetails(_table);
-        // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(HIT_COLUMN), false);
+        // setup columns
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(HIT_COLUMN), _matchMode);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(COUNT_COLUMN), !_matchMode);
 
         // does not use a table sorter
         _table.setRowSorter(null);
@@ -374,7 +375,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     private String getType(ScheduleItem si) {
-        if (_track.acceptsTypeName(si.getTypeName())) {
+        if (_track.isTypeNameAccepted(si.getTypeName())) {
             return si.getTypeName();
         } else {
             return MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getTypeName()});
@@ -386,7 +387,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         JComboBox<String> cb = new JComboBox<>();
         cb.addItem(ScheduleItem.NONE);
         for (String roadName : InstanceManager.getDefault(CarRoads.class).getNames()) {
-            if (_track.acceptsRoadName(roadName)) {
+            if (_track.isRoadNameAccepted(roadName)) {
                 Car car = InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(), roadName);
                 if (car != null) {
                     cb.addItem(roadName);
@@ -671,12 +672,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     // remove destination tracks that don't service the car's type, road, or load
     private void filterTracks(Location loc, JComboBox<Track> cb, String carType, String carRoad, String carLoad) {
-        List<Track> tracks = loc.getTrackList();
+        List<Track> tracks = loc.getTracksList();
         for (Track track : tracks) {
-            if (!track.acceptsTypeName(carType) ||
+            if (!track.isTypeNameAccepted(carType) ||
                     track.isStaging() ||
-                    (!carRoad.equals(ScheduleItem.NONE) && !track.acceptsRoadName(carRoad)) ||
-                    (!carLoad.equals(ScheduleItem.NONE) && !track.acceptsLoad(carLoad, carType))) {
+                    (!carRoad.equals(ScheduleItem.NONE) && !track.isRoadNameAccepted(carRoad)) ||
+                    (!carLoad.equals(ScheduleItem.NONE) && !track.isLoadNameAndCarTypeAccepted(carLoad, carType))) {
                 cb.removeItem(track);
             }
         }
@@ -686,7 +687,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private void filterLoads(ScheduleItem si, JComboBox<String> cb) {
         for (int i = cb.getItemCount() - 1; i > 0; i--) {
             String loadName = cb.getItemAt(i);
-            if (!loadName.equals(CarLoads.NONE) && !_track.acceptsLoad(loadName, si.getTypeName())) {
+            if (!loadName.equals(CarLoads.NONE) && !_track.isLoadNameAndCarTypeAccepted(loadName, si.getTypeName())) {
                 cb.removeItem(loadName);
             }
         }

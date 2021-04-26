@@ -1,8 +1,16 @@
 package jmri.jmris.srcp;
 
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,29 +24,23 @@ public class JmriSRCPProgrammerServerTest{
 
     @Test
     public void testCtor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                });
+        OutputStream output = new ByteArrayOutputStream();
+        GlobalProgrammerManager programmerManager = Mockito.mock(GlobalProgrammerManager.class);
+        InstanceManager.setDefault(GlobalProgrammerManager.class,programmerManager);
+        Programmer programmer = Mockito.mock(Programmer.class);
+        Mockito.when(programmerManager.getGlobalProgrammer()).thenReturn(programmer);
         JmriSRCPProgrammerServer a = new JmriSRCPProgrammerServer(output);
         assertThat(a).isNotNull();
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        JUnitUtil.setUpLoggingAndCommonProperties();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

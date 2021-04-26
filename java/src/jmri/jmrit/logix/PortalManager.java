@@ -124,6 +124,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         pcs.removePropertyChangeListener(l);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (!(e.getSource() instanceof Portal)) {
             return;

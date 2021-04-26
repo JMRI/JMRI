@@ -86,10 +86,11 @@
       "images/Main_Help_02.png" alt="console" height="382" width=
       "800"></p>
 
-      <p><strong>Upload Debugging Info...</strong></p>
+      <p><strong>Report Issue...</strong></p>
 
-      <p style="margin-left: 40px;">Opens the <strong>Upload
-      Debugging Info</strong> Window</p>
+      <p style="margin-left: 40px;">Opens the <strong>Report 
+      Issue...</strong> Window you so that can 
+      submit a bug report or feature request.</p>
 
       <p style="margin-left: 40px; text-align: center;"><img src=
       "images/Main_Help_04.png" alt="help" height="311" width=

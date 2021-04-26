@@ -90,7 +90,7 @@
         <label xml:lang="it">Volt Massimi (0-255):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -759,7 +759,7 @@
       <variable label="Motor" CV="52.10" default="11" comment="QSI" item="CV52.10">
         <decVal max="15"/>
       </variable>
-      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14">
+      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14" exclude="112">
         <decVal max="15"/>
       </variable>
       <variable label="Air Pump" CV="52.16" default="11" comment="QSI" item="CV52.16">
@@ -3295,7 +3295,7 @@
       <variable label="Ditch Light Hold Time (seconds)" CV="55.110.5" mask="XXXVVVVV" default="5" item="CV55.110.5" tooltip="0 to 31 seconds" include="103,126,131,132">
         <decVal max="31"/>
       </variable>
-      <variable label="Speed Step to Scale MPH Scale Factor" CV="56.10" default="64" comment="QSI" item="CV56.10">
+      <variable label="Speed Step to Scale MPH Scale Factor" CV="56.10" default="64" comment="QSI" item="CV56.10" exclude="112">
         <decVal max="128"/>
       </variable>
       <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->

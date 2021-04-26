@@ -47,7 +47,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.INVALID) {
             log.error("Invalid Sensor system Name format: {}", systemName);
@@ -55,7 +55,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
         Sensor s;
         String sName = systemName;
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
             throw new IllegalArgumentException("Invalid Acela Sensor system name - " +  // NOI18N
                     systemName);
@@ -224,29 +224,23 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Register any orphan Sensors when a new Acela Node is created.
+     * @param node which node to search for sensors.
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
         log.info("Trying to register sensor from Manager 2: {}Sxx", getSystemPrefix()); // multichar prefix
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
         // Iterate through the sensors
-        AcelaNode tNode = null;
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System Name null during register Sensor");
-            } else {
-                log.debug("system Name is {}", sName);
-                if (sName.startsWith(getSystemPrefix() + "S")) { // multichar prefix
-                    // This is an Acela Sensor
-                    tNode = AcelaAddress.getNodeFromSystemName(sName, getMemo());
-                    if (tNode == node) {
-                        // This sensor is for this new Acela Node - register it
-                        node.registerSensor(getBySystemName(sName),
-                                AcelaAddress.getBitFromSystemName(sName, getSystemPrefix()));
-                    }
+        AcelaNode tNode;
+        for (Sensor s : getNamedBeanSet()) {
+            String sName = s.getSystemName();
+            log.debug("system Name is {}", sName);
+            if (sName.startsWith(getSystemNamePrefix())) { // multichar prefix
+                // This is an Acela Sensor
+                tNode = AcelaAddress.getNodeFromSystemName(sName, getMemo());
+                if (tNode == node) {
+                    // This sensor is for this new Acela Node - register it
+                    node.registerSensor(s,
+                            AcelaAddress.getBitFromSystemName(sName, getSystemPrefix()));
                 }
             }
         }

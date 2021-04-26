@@ -7,7 +7,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +68,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Special handling for numeric argument, which is treated as the suffix of a new system name
     */
     @Override
@@ -80,7 +80,10 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return _tsys.get(key);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Create a New Sensor.
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
@@ -90,13 +93,17 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Sensor s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+        if (userName != null) {
+            s = getByUserName(userName);
+            if (s != null) {
+                if (getBySystemName(systemName) != s) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+                }
+                return s;
             }
-            return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        s = getBySystemName(systemName);
+        if (s != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
@@ -129,16 +136,21 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     }
 
     /**
-     * Internal method to invoke the factory and create a new Sensor based on the system
-     * name and optional user name, after all the logic for returning an existing Sensor
+     * Internal method to invoke the factory and create a new Sensor.
+     * 
+     * Called after all the logic for returning an existing Sensor
      * has been invoked.
-     *
+     * An existing SystemName is not found, existing UserName not found.
+     * 
+     * Implementing classes should base Sensor on the system name, then add user name.
+     * 
      * @param systemName the system name to use for the new Sensor
      * @param userName   the optional user name to use for the new Sensor
-     * @return a new Sensor
+     * @return the new Sensor
+     * @throws IllegalArgumentException if unsuccessful with reason for fail.
      */
     @Nonnull
-    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName);
+    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * {@inheritDoc}
@@ -156,68 +168,16 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return false;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Default Sensor ensures a numeric only system name.
+     * {@inheritDoc} 
+     */
     @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        try {
-            Integer.parseInt(curAddress);
-        } catch (java.lang.NumberFormatException ex) {
-            log.warn("Hardware Address passed should be a number, was {}", curAddress);
-            throw new JmriException("Hardware Address passed should be a number");
-        }
-        return prefix + typeLetter() + curAddress;
-    }
-
-    /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        String tmpSName;
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
-            return null;
-        }
-        Sensor s = getBySystemName(tmpSName);
-        if (s == null) {
-            return curAddress;
-        }
-
-        // This bit deals with handling the curAddress, and how to get the next address.
-        int iName;
-        try {
-            iName = Integer.parseInt(curAddress);
-        } catch (NumberFormatException ex) {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
-
-        // Check to determine if the systemName is in use, return null if it is,
-        // otherwise return the next valid address.
-        s = getBySystemName(prefix + typeLetter() + iName);
-        if (s != null) {
-            for (int x = 1; x < 10; x++) {
-                iName++;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            // feedback when next address is also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new Sensors added", curAddress);
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        return prefix + typeLetter() + checkNumeric(curAddress);
     }
-
+    
     protected long sensorDebounceGoingActive = 0L;
     protected long sensorDebounceGoingInActive = 0L;
 
@@ -279,7 +239,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);

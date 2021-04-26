@@ -26,18 +26,19 @@
 <link rel="stylesheet" href="/css/panel.css">
 <link rel="stylesheet" href="/css/user.css">
 <link rel="stylesheet" href="/css/tables.css">
-<script src="/js/jquery-1.11.2.min.js"></script>
+<script src="/js/jquery-2.2.4.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 <script src="/js/json2.js"></script>
 <script src="/js/jquery.websocket.js"></script>
+<script src="/js/logger.js"></script>
 <script src="/js/jquery.jmri.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/user.js"></script>
 <script src="/js/tables.js"></script>
 <script src="/js/sorttable.js"></script>
 </head>
-<body>
+<body id="tables">
     <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
@@ -45,7 +46,7 @@
         <!-- Navigation Bar %2$s -->
         <div class="jumbotron">
 			<div class="container">
-				<h1 class="title text-capitalize">%1$s</h1>
+				<h1 class="title text-capitalize">%1$s: <span id="table-type"></span></h1>
 			</div>
 		</div>
 		<div class="container">

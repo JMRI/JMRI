@@ -1,51 +1,56 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorSystemConnectionMemoTest.java
+ * <p>
+ * Test for the ConcentratorSystemConnectionMemo class
  *
- * Description:	tests for the ConcentratorSystemConnectionMemo class
- *
- * @author	Paul Bender Copyright(C) 2016
+ * @author Paul Bender Copyright(C) 2016
+ * @deprecated since 4.21.1 test of deprecated {@link ConcentratorSystemConnectionMemo}
  */
-public class ConcentratorSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+@Deprecated
+public class ConcentratorSystemConnectionMemoTest extends SystemConnectionMemoTestBase<ConcentratorSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        ConcentratorSystemConnectionMemo memo = new ConcentratorSystemConnectionMemo();
-        ConcentratorTrafficController tc = new ConcentratorTrafficController(memo,"A-H"){
-           @Override
-           public void sendInitString(){
-           }
-           @Override
-           public void transmitLoop(){
-           }
-           @Override
-           public void receiveLoop(){
-           }
+        scm = new ConcentratorSystemConnectionMemo();
+        ConcentratorTrafficController tc = new ConcentratorTrafficController(scm, "A-H") {
+            @Override
+            public void sendInitString() {
+            }
+
+            @Override
+            public void transmitLoop() {
+            }
+
+            @Override
+            public void receiveLoop() {
+            }
         };
-        memo.setRfidTrafficController(tc);
-        memo.configureManagers(null,null);
-        scm = memo;
+        scm.setRfidTrafficController(tc);
+        scm.setSystemPrefix("F");
+        scm.configureManagers(new ConcentratorSensorManager(scm),new ConcentratorReporterManager(scm));
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
 
     }

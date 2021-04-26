@@ -1,17 +1,24 @@
 package jmri.web.servlet.frameimage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Invokes complete set of tests for the jmri.web.servlet.frameimage.JmriJFrameServlet class
  *
- * @author	Bob Jacobsen Copyright 2013
+ * @author Bob Jacobsen Copyright 2013
  */
 public class JmriJFrameServletTest {
 
@@ -56,6 +63,50 @@ public class JmriJFrameServletTest {
 
     }
 
+    @Test
+    public void testExceptionHandling() {
+        Throwable thrown;
+        
+        // create testable object that runs clean
+        JmriJFrameServlet_ut out1 = new JmriJFrameServlet_ut() {
+            protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) 
+                    throws ServletException, IOException {
+            }
+        };
+        // should not throw, so just invoke
+        try {
+            out1.test_doGet();
+        } catch (Exception ex) {
+            Assert.fail(ex.toString());
+        }
+        
+        // create testable object that throws IOException
+        JmriJFrameServlet_ut out2 = new JmriJFrameServlet_ut() {
+            protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) 
+                    throws ServletException, IOException {
+                throw new IOException("on purpose");
+            }
+        };
+        // invoke and check
+        thrown = catchThrowable(() -> { out2.test_doGet(); });
+        assertThat(thrown).isInstanceOf(IOException.class)
+                            .hasNoCause();
+
+        
+        // create testable object that throws ServletException
+        JmriJFrameServlet_ut out3 = new JmriJFrameServlet_ut() {
+            protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) 
+                    throws ServletException, IOException {
+                throw new ServletException("on purpose");
+            }
+        };
+        // invoke and check
+        thrown = catchThrowable(() -> { out3.test_doGet(); });
+        assertThat(thrown).isInstanceOf(ServletException.class)
+                            .hasNoCause();
+    }
+    
+    
     // local variant class to make access to private members
     private class JmriJFrameServlet_ut extends JmriJFrameServlet {
 
@@ -63,14 +114,18 @@ public class JmriJFrameServletTest {
         public Map<String, String[]> populateParameterMap(Map<String, String[]> map) {
             return super.populateParameterMap(map);
         }
+
+        public void test_doGet() throws ServletException, IOException {
+            doGet(null, null);
+        }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

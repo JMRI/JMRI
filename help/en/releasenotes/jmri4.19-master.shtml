@@ -365,7 +365,7 @@
             <li></li>
         </ul>
 
-   <h3>Panel Editors</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -376,6 +376,22 @@
                 <li></li>
             </ul>
 
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+   
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -393,7 +409,13 @@
         <ul>
             <li></li>
         </ul>
-
+        
+    <h3>Routes</h3>    
+        <a id="Routes" name="Routes"></a>
+       <ul>
+            <li></li>
+       </ul>
+       
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -448,6 +470,12 @@
 
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
         <ul>
             <li></li>
         </ul>

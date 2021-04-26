@@ -12,7 +12,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Transit Special Actions">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,96 +24,96 @@
 
       <h2>What are Actions?</h2>
 
-      <p>Transit <b>Actions</b> are tasks that can be initiated
+      <p>Transit <strong>Actions</strong> are tasks that can be initiated
       automatically as a Train, running in automatic mode,
-      traverses the layout following a <b><a href=
-      "TransitTable.shtml">Transit</a></b>. One or more
-      <b>Actions</b> may be requested for each <b><a href=
-      "SectionTable.shtml">Section</a></b> in a Transit. If a
+      traverses the layout following a <strong><a href=
+      "../../../../html/tools/Transits.shtml">Transit</a></strong>. One or more
+      <strong>Actions</strong> may be requested for each <strong><a href=
+      "../../../../html/tools/Sections.shtml">Section</a></strong> in a Transit. If a
       Section is in a Transit multiple times, different
-      <b>Actions</b> may be specified for each occurrence of the
+      <strong>Actions</strong> may be specified for each occurrence of the
       Section.<br>
-      <b>Actions</b> only apply to trains run automatically under
-      <b><a href=
-      "../dispatcher/Dispatcher.shtml">Dispatcher</a></b> by a
-      <i>virtual engineer</i>. If running Trains in automatic mode
+      <strong>Actions</strong> only apply to trains run automatically under
+      <strong><a href=
+      "../dispatcher/Dispatcher.shtml">Dispatcher</a></strong> by a
+      <em>virtual engineer</em>. If running Trains in automatic mode
       is of interest, please read on. If your trains will only be run
-      manually with a human engineer, <b>Actions</b> aren't
+      manually with a human engineer, <strong>Actions</strong> aren't
       used.</p>
 
-      <p><b>Actions</b> are set in addition to the <i>standard
-      actions</i> that happen automatically when a Train runs in
+      <p><strong>Actions</strong> are set in addition to the <em>standard
+      actions</em> that happen automatically when a Train runs in
       automatic mode. Standard actions are things like following
       signals and using stop sensors that are specified with each
-      Section. <i>Standard actions</i> occur automatically whenever
-      a Section is traversed in automatic mode. Other <i>standard
-      actions</i> include automatically requesting allocation of
+      Section. <em>Standard actions</em> occur automatically whenever
+      a Section is traversed in automatic mode. Other <em>standard
+      actions</em> include automatically requesting allocation of
       Sections, and automatically changing locomotive speed
       according to signal restrictions.</p>
 
-      <p>Special <b>Actions</b> are tied to Sections, but are specified at
+      <p>Special <strong>Actions</strong> are tied to Sections, but are specified at
       the Transit level to provide maximum user flexibility. A
       Section is a piece of physical track that may, for example,
       be used by passenger trains, through freight trains, or
-      locals. Each of these uses may need different <b>Actions</b>
+      locals. Each of these uses may need different <strong>Actions</strong>
       in a specific Section. For example, a passenger train may
       make a station stop in a particular Section, whereas a
       through freight train may go straight through. Adding
-      special <b>Actions</b> to Transits allows Active Trains
+      special <strong>Actions</strong> to Transits allows Active Trains
       traveling the same path through the layout to have different
-      <b>Actions</b>.</p>
+      <strong>Actions</strong>.</p>
 
       <h2>Requesting an Action</h2>
 
-      <p>An Action is requested by specifying <b><i>when</i></b> an
-      action is to be performed and <b><i>what</i></b> action to be
-      performed. Any <b><i>When</i></b> event may be combined
-      with any <b><i>What</i></b> action. This flexibility provides
+      <p>An Action is requested by specifying <strong><em>when</em></strong> an
+      action is to be performed and <strong><em>what</em></strong> action to be
+      performed. Any <strong><em>When</em></strong> event may be combined
+      with any <strong><em>What</em></strong> action. This flexibility provides
       for a wide variety of Special Actions.
       An Action is initiated when the Train enters the Section with
-      the Action request. To decide <i>when</i> to perform the
+      the Action request. To decide <em>when</em> to perform the
       Action after the Section is entered, the program looks at the
-      <b><i>When</i></b> event.</p>
+      <strong><em>When</em></strong> event.</p>
 
-      <img src="images/AddEditAction.png" width="322" height="247">
+      <img src="images/AddEditAction.png" width="322" height="247" alt="Add action">
 
       <a id="when" name="when"></a>
       <h3>When to take action?</h3>
 
-      <p>Available <b><i><a href=
-      "AddEditAction.shtml#when">When</a></i></b> event choices are:</p>
+      <p>Available <strong><em><a href=
+      "AddEditAction.shtml#when">When</a></em></strong> event choices are:</p>
       <ul>
-        <li><b>On Section Entry</b></li>
-        <li><b>On Section Exit</b></li>
-        <li><b>On Block Entry</b></li>
-        <li><b>On Block Exit</b></li>
-        <li><b>On Train Stop</b></li>
-        <li><b>On Train Start</b></li>
-        <li><b>On Sensor ACTIVE</b></li>
-        <li><b>On Sensor INACTIVE</b></li>
+        <li><strong>On Section Entry</strong></li>
+        <li><strong>On Section Exit</strong></li>
+        <li><strong>On Block Entry</strong></li>
+        <li><strong>On Block Exit</strong></li>
+        <li><strong>On Train Stop</strong></li>
+        <li><strong>On Train Start</strong></li>
+        <li><strong>On Sensor ACTIVE</strong></li>
+        <li><strong>On Sensor INACTIVE</strong></li>
       </ul>
 
-      <p>Optionally a <b>Delay</b> may be set for each
-      <b><i>When</i></b> event, specified in milliseconds.
+      <p>Optionally a <strong>Delay</strong> may be set for each
+      <strong><em>When</em></strong> event, specified in milliseconds.
       If the Delay time is set to zero (the default),
       the action will be performed immediately after the
-      <b><i>When</i></b> event occurs. If a Delay time is
+      <strong><em>When</em></strong> event occurs. If a Delay time is
       specified, the program will wait for the specified time in
-      fast clock minutes after the <b><i>When</i></b> event occurs
+      fast clock minutes after the <strong><em>When</em></strong> event occurs
       before performing the action.</p>
 
       <a id="what" name="what"></a>
       <h3>What action to perform?</h3>
 
-      <p>Available <b><i>What</i></b> actions are:</p>
+      <p>Available <strong><em>What</em></strong> actions are:</p>
 
       <ul>
-        <li><b>Pause Train</b> - Stop the Train for a specified
+        <li><strong>Pause Train</strong> - Stop the Train for a specified
         number of fast clock minutes. This item may be used to
         request a station stop. Set the duration in fast clock
         minutes using the spinner.</li>
 
-        <li><b>Set Maximum Speed</b> - Set the maximum speed to a
+        <li><strong>Set Maximum Speed</strong> - Set the maximum speed to a
         specified percentage of the maximum hardware speed.<br>When
         a Train is run in automatic mode, the program will never
         exceed this maximum speed. For example, this item may be
@@ -121,10 +121,10 @@
         town. Setting maximum speed does not affect the current
         speed of the Train if it is less than the specified maximum
         speed (percentage).<br>
-        <img src="images/AddEditWhatMaxSpeed.png" height="169" width="461">
+        <img src="images/AddEditWhatMaxSpeed.png" height="169" width="461" alt="max speed action">
         </li>
 
-        <li><b>Set Train Speed</b> - Set the current train speed to
+        <li><strong>Set Train Speed</strong> - Set the current train speed to
         the target percentage. The throttle will send the new speed
         to the locomotive after the delay set under When.<br>
         How long it takes the Train to reach the new speed after
@@ -133,53 +133,53 @@
         previous value, but will not be allowed to exceed the
         maximum speed.</li>
 
-        <li><b>Ramp Train Speed</b> - Set the current train speed
+        <li><strong>Ramp Train Speed</strong> - Set the current train speed
         to the target percentage by ramping to the target value
         using the default ramp rate of the automatically running
         Train. If the default ramp rate of the Train is RAMP_NONE,
-        this action is equivalent to <b>Set Train Speed</b>. The
+        this action is equivalent to <strong>Set Train Speed</strong>. The
         new speed may be either lower or higher than the previous
         value, but will not be allowed to exceed the maximum
         speed.</li>
 
-        <li><b>Go to Manual Mode</b> - Drop out of automatic mode
+        <li><strong>Go to Manual Mode</strong> - Drop out of automatic mode
         to allow a human engineer to perform work with a manual
         throttle. This action supports the scenario where a Train
         might be run automatically to a work site, where a human
         operator takes over to perform work, after which automatic
         running is continued. The Train will remain in manual mode
         until directed by the dispatcher to resume automatic
-        operation. An optional <b>Done Sensor</b> allows an
+        operation. An optional <strong>Done Sensor</strong> allows an
         operator remote from the dispatcher to notify the
         dispatcher that work has been completed and automatic
-        running can be resumed. When the <b>Done Sensor</b> goes
+        running can be resumed. When the <strong>Done Sensor</strong> goes
         active, the status of the Train is changed from WORKING to
-        READY. For more information on this action, see <b><a href=
-        "../dispatcher/DispatcherFrame.shtml">Dispatcher</a></b>.
-        <b>Note:</b> When the Train is in manual mode, the computer
+        READY. For more information on this action, see <strong><a href=
+        "../dispatcher/Dispatcher.shtml">Dispatcher</a></strong>.
+        <strong>Note:</strong> When the Train is in manual mode, the computer
         does not have a throttle for the train available, so
         delayed actions that happen then and require a throttle are
         ignored.<br>
-        <img src="images/AddEditWhatManual.png" height="169" width="460">
+        <img src="images/AddEditWhatManual.png" height="169" width="460" alt="manual mode action">
         </li>
 
-        <li><b>Set Locomotive Light</b> - Sets the locomotive light
-        either <i>On</i> or <i>Off</i> as selected.<br>
-        <img src="images/AddEditWhatLight.png" height="167" width="461">
+        <li><strong>Set Locomotive Light</strong> - Sets the locomotive light
+        either <em>On</em> or <em>Off</em> as selected.<br>
+        <img src="images/AddEditWhatLight.png" height="167" width="461" alt="set light action">
         </li>
 
-        <li><b>Start Bell</b> - Start bell ringing on a sound
+        <li><strong>Start Bell</strong> - Start bell ringing on a sound
         decoder. This item will turn throttle function 1 on.</li>
 
-        <li><b>Stop Bell</b> - Stop bell ringing on a sound
+        <li><strong>Stop Bell</strong> - Stop bell ringing on a sound
         decoder. This item will turn throttle function 1 off.</li>
 
-        <li><b>Sound Horn</b> - Sound the horn (whistle) of a sound
+        <li><strong>Sound Horn</strong> - Sound the horn (whistle) of a sound
         decoder for a specified time. This item is equivalent to
         holding down throttle function 2 for the specified
         time.</li>
 
-        <li><b>Pattern Sound Horn</b> - Sound the horn (whistle) in
+        <li><strong>Pattern Sound Horn</strong> - Sound the horn (whistle) in
         a manner specified by a user-entered pattern. The pattern
         consists of short and long blasts, specified as "s" and "l"
         in the pattern. For example, a pattern of "lsl" specifies
@@ -189,17 +189,17 @@
         wait time between blasts. Actual times realized will depend
         on the sound decoder and how busy the computer is. The
         horn/whistle is assumed to be throttle function 2.<br>
-        <img src="images/AddEditWhatPattern.png" height="171" width="460">
+        <img src="images/AddEditWhatPattern.png" height="171" width="460" alt="horn pattern action">
         </li>
 
-        <li><b>Set Decoder Function</b> - Sets the specified
-        decoder function either <i>On</i> or <i>Off</i> as
+        <li><strong>Set Decoder Function</strong> - Sets the specified
+        decoder function either <em>On</em> or <em>Off</em> as
         selected. This works for both sound decoders and decoders
         without sound.<br>
-        <img src="images/AddEditWhatFunction.png" height="129" width="460">
+        <img src="images/AddEditWhatFunction.png" height="129" width="460" alt="function action">
         </li>
 
-        <li><b>Set Sensor ACTIVE</b> - Set a specified Sensor
+        <li><strong>Set Sensor ACTIVE</strong> - Set a specified Sensor
         active. Select a Sensor from the drop down (Sensor Table).
         If the specified Sensor is already in the Active state, it
         is first toggled to the Inactive state, then set Active.
@@ -207,23 +207,23 @@
         Sensor to trigger a Logix, set a Route, or set a Light.
         It offers access to a wide variety of actions not included
         here, such as running scripts or playing sounds.<br>
-        <img src="images/AddEditWhatSensor.png" height="132" width="459">
+        <img src="images/AddEditWhatSensor.png" height="132" width="459" alt="sensor action">
         </li>
 
-        <li><b>Set Sensor INACTIVE</b> - Set a specified Sensor
+        <li><strong>Set Sensor INACTIVE</strong> - Set a specified Sensor
         inactive. Select a Sensor from the drop down (Sensor Table).
         If the specified Sensor is already in the inactive state,
         it is first toggled to the active state, then set inactive.
         This is equivalent to the action above, except with a
         different target Sensor state.</li>
 
-        <li><b>Hold Signal</b> - Set a specified Signal Mast or
+        <li><strong>Hold Signal</strong> - Set a specified Signal Mast or
         Signal Head to HELD. Select either a Signal Mast or
         Head from one of the drop downs.<br>
-        <img src="images/AddEditWhatHold.png" height="151" width="424">
+        <img src="images/AddEditWhatHold.png" height="151" width="424" alt="signal hold action">
         </li>
 
-        <li><b>Release Signal</b> - Set a specified Signal Mast or
+        <li><strong>Release Signal</strong> - Set a specified Signal Mast or
         Signal Head to NOT HELD. Select either a Signal Mast or
         Head from one of the drop downs.</li>
       </ul>
@@ -232,30 +232,30 @@
 
       <p>The View Actions window is displayed
       for a specific Section in a Transit by pressing the
-      <b>View/Add/Edit Actions</b> button in that Section's row in
-      the <b>Sections in Transit</b> table on the <b>Add Transit</b> or
-      <b>Edit Transit</b> pane:</p><img src=
-      "images/ViewActionsButton.png" height="101" width="340">
+      <strong>View/Add/Edit Actions</strong> button in that Section's row in
+      the <strong>Sections in Transit</strong> table on the <strong>Add Transit</strong> or
+      <strong>Edit Transit</strong> pane:</p><img src=
+      "images/ViewActionsButton.png" height="101" width="340" alt="action buttons">
 
-      <p>The <b>View Actions</b> window (illustrated below) displays
+      <p>The <strong>View Actions</strong> window (illustrated below) displays
       Actions that are currently set, and provides for adding,
       editing, or deleting Actions.</p><img src=
-      "images/ViewSpecialActions.png" height="340" width="771">
+      "images/ViewSpecialActions.png" height="340" width="771" alt="action list">
 
       <p>For all Actions that have been created, the
-      <b><i>When</i></b> event and the <b><i>What</i></b> action
-      are described in the <b>When</b> and <b>Action Requested</b>
+      <strong><em>When</em></strong> event and the <strong><em>What</em></strong> action
+      are described in the <strong>When</strong> and <strong>Action Requested</strong>
       columns respectively.<br>
-      To add a new Action, click <b>Add New Action...</b> to
-      bring up the <b><a href="AddEditAction.shtml">Add/Edit
-      Action</a></b> window.<br>
+      To add a new Action, click <strong>Add New Action...</strong> to
+      bring up the <strong><a href="AddEditAction.shtml">Add/Edit
+      Action</a></strong> window.<br>
       To edit an existing Action, click the
-      <b><a href="AddEditAction.shtml">Edit</a></b> button in its
-      row. To delete an existing Action, click the <b>Delete</b>
+      <strong><a href="AddEditAction.shtml">Edit</a></strong> button in its
+      row. To delete an existing Action, click the <strong>Delete</strong>
       button in its row. The order of the Actions is not important.</p>
 
       <p>When the Actions are completely defined, click the
-      <b>Done</b> button.</p>
+      <strong>Done</strong> button.</p>
 
       <p>Back to the <a href="TransitAddEdit.shtml">Transit Add/Edit
       help page</a>.</p>

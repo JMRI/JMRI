@@ -2,7 +2,6 @@ package jmri.implementation;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -86,13 +85,12 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
         }
 
         // check to see if any properties have been added
-        Set keySet = getPropertyKeys();
-        // we have properties, so append the values to the
+        // If we have properties, so append the values to the
         // end of the report, seperated by spaces.
-        for( Object s : keySet) {
+        getPropertyKeys().forEach(s -> {
             sb.append(" ");
-            sb.append(getProperty((String)s));
-        }
+            sb.append(getProperty(s));
+        });
         return sb.toString();
     }
 

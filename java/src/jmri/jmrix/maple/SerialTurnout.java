@@ -90,38 +90,19 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command
-     *
-     * @param newState desired new state, one of the Turnout class constants
+     * {@inheritDoc}
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        // implementing classes will typically have a function/listener to get
-        // updates from the layout, which will then call
-        //  public void firePropertyChange(String propertyName,
-        //                    Object oldValue,
-        //      Object newValue)
-        // _once_ if anything has changed state (or set the commanded state directly)
-
-        // sort out states
-        if ((newState & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((newState & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN: {}", newState);
-                return;
-            } else {
-                // send a CLOSED command
-                sendMessage(true);
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false);
+        try {
+            sendMessage(stateChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 
     /**
-     * Turnouts do support inversion
+     * Turnouts do support inversion.
      */
     @Override
     public boolean canInvert() {
@@ -147,6 +128,7 @@ public class SerialTurnout extends AbstractTurnout {
      * Control the actual layout hardware. The request is for a particular
      * functional setting, e.g. CLOSED or THROWN. The "inverted" status of the
      * output leads is handled here.
+     * @param closed true sets the Turnout to CLOSED
      */
     protected void sendMessage(boolean closed) {
         // if a Pulse Timer is running, ignore the call

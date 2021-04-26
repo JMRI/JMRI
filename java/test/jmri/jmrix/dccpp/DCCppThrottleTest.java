@@ -2,27 +2,22 @@ package jmri.jmrix.dccpp;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
- * DCCppThrottleTest.java
+ * Test for the jmri.jmrix.dccpp.DCCppThrottle class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppThrottle class
- *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
+ * @author Egbert Broerse 2021
  */
 public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
     public void testCtor() {
-        // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppThrottle t = new DCCppThrottle(new DCCppSystemConnectionMemo(tc), tc);
+        DCCppThrottle t = new DCCppThrottle(memo, tc);
         Assert.assertNotNull(t);
     }
 
@@ -385,29 +380,39 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertNotNull(instance);
     }
 
-    // Test the initilization sequence.
+    // Test the initialization sequence.
     @Test
     public void testInitSequence() throws Exception {
         Assert.assertEquals("Throttle in THROTTLEIDLE state", DCCppThrottle.THROTTLEIDLE, ((DCCppThrottle)instance).requestState);
     }
 
-    // The minimal setup for log4J
+    private DCCppInterfaceScaffold tc;
+    private DCCppSystemConnectionMemo memo;
+    private DCCppThrottleManager tm;
+
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc); 
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new DCCppThrottleManager(memo));
+        tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        memo = new DCCppSystemConnectionMemo(tc);
+        tm = new DCCppThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         instance = new DCCppThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // no need to dispose of instance
+        if (tm != null) {
+            tm.dispose();
+        }
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
-
     }
 
 }

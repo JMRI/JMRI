@@ -14,8 +14,8 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class TrainByCarTypeAction extends AbstractAction {
 
-    public TrainByCarTypeAction(String s, Train train) {
-        super(s);
+    public TrainByCarTypeAction(Train train) {
+        super(Bundle.getMessage("MenuItemShowCarTypes"));
         _train = train;
     }
 

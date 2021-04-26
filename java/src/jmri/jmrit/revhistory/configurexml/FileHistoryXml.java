@@ -32,6 +32,8 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * this.
      * <p>
      * Then adds, instead of replacing, the history information
+     * @param e element to load.
+     * @return true when complete, false if unexpected.
      */
     public boolean loadDirectly(Element e) {
         if (!e.getName().equals("filehistory")) {

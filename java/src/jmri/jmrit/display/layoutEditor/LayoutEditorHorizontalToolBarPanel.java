@@ -10,8 +10,6 @@ import javax.swing.border.*;
  *
  * @author George Warner Copyright: (c) 2019
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel {
 
     /**
@@ -192,5 +190,5 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
     }   //layoutComponents
 
     //initialize logging
-    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorHorizontalToolBarPanel.class);
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorHorizontalToolBarPanel.class);
 }

@@ -1,6 +1,6 @@
 package jmri.jmrit.roster.swing;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +26,7 @@ import javax.swing.SortOrder;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.RowSorterEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
@@ -53,6 +54,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     private RosterGroupSelector rosterGroupSource = null;
     protected transient ListSelectionListener tableSelectionListener;
     private RosterEntry[] selectedRosterEntries = null;
+    private RosterEntry[] sortedRosterEntries = null;
     private RosterEntry re = null;
 
     public RosterTable() {
@@ -68,6 +70,12 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         super();
         dataModel = new RosterTableModel(editable);
         sorter = new TableRowSorter<>(dataModel);
+        sorter.addRowSorterListener(rowSorterEvent -> {
+            if (rowSorterEvent.getType() ==  RowSorterEvent.Type.SORTED) {
+                // clear sorted cache
+                sortedRosterEntries = null;
+            }
+        });
         dataTable = new JTable(dataModel);
         dataTable.setRowSorter(sorter);
         dataScroll = new JScrollPane(dataTable);
@@ -265,6 +273,18 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             }
         }
         return Arrays.copyOf(selectedRosterEntries, selectedRosterEntries.length);
+    }
+
+    // cache getSortedRosterEntries so that multiple calls to this
+    // between selection changes will not require the creation of a new array
+    public RosterEntry[] getSortedRosterEntries() {
+        if (sortedRosterEntries == null) {
+            sortedRosterEntries = new RosterEntry[sorter.getModelRowCount()];
+            for (int idx = 0; idx < sorter.getModelRowCount(); idx++) {
+                sortedRosterEntries[idx] = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(idx), RosterTableModel.IDCOL).toString());
+            }
+        }
+        return Arrays.copyOf(sortedRosterEntries, sortedRosterEntries.length);
     }
 
     public void setEditable(boolean editable) {

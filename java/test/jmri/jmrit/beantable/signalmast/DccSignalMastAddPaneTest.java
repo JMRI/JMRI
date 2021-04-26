@@ -5,13 +5,12 @@ import jmri.implementation.*;
 import jmri.util.*;
 
 import java.util.*;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
@@ -53,7 +52,7 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -86,7 +85,7 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

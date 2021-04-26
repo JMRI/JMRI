@@ -31,25 +31,29 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return (GrapevineSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String prefix = getSystemPrefix();
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, prefix);
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
-            return null;
+            throw new IllegalArgumentException("Cannot create System Name from " + systemName);
         }
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
         if (t != null) {
-            return null;
+            return t;
         }
         // check under alternate name
         String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
         t = getBySystemName(altName);
         if (t != null) {
-            return null;
+            return t;
         }
         // create the turnout
         t = new SerialTurnout(sName, userName, getMemo());
@@ -109,43 +113,30 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Return the next valid free turnout hardware address.
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
-        String tmpSName = "";
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            throw ex;
-        }
+        String tmpSName = createSystemName(curAddress, prefix);
 
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
-        if (t == null) {
+        if (t == null && !ignoreInitialExisting) {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
             //return ""+nNode+(nCard+bitNum);
         }
 
         // The Number of Output Bits of the previous turnout will help determine the next
         // valid address.
-        bitNum = bitNum + t.getNumberOutputBits();
-        // Check to determine if the systemName is in use, return null if it is,
-        // otherwise return the next valid address.
-        tmpSName = prefix + "T" + nNode + (nCard + bitNum);
-        t = getBySystemName(tmpSName);
-        if (t != null) {
-            for (int x = 1; x < 10; x++) {
-                bitNum = bitNum + t.getNumberOutputBits();
-                tmpSName = prefix + "T" + nNode + (nCard + bitNum);
-                t = getBySystemName(tmpSName);
-                if (t == null) {
-                    return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
-                }
+        int increment = ( t==null ? 1 : t.getNumberOutputBits());
+        for (int x = 0; x < 10; x++) {
+            bitNum = bitNum + increment;
+            tmpSName = prefix + "T" + nNode + (nCard + bitNum);
+            t = getBySystemName(tmpSName);
+            if (t == null) {
+                return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
             }
-            return null;
-        } else {
-            return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
         }
+        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
     }
 
     /**

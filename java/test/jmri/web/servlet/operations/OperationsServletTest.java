@@ -1,10 +1,9 @@
 package jmri.web.servlet.operations;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.web.servlet.operations.OperationsServlet class
@@ -19,13 +18,13 @@ public class OperationsServletTest {
         Assert.assertNotNull(a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

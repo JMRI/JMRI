@@ -16,12 +16,14 @@
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20180103"/>
   <version author="Michael Mosher" version="2" lastUpdated="20180314"/>
   <version author="Michael Mosher" version="3" lastUpdated="20180410"/>
-  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives        -->
-  <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.              -->
+  <version author="Marc N Fournier" version="4" lastUpdated="20200614"/>
+  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives       -->
+  <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.           -->
   <!-- version 1.1 Specific UserID with tooltip indicating version number,
-                  from SoundTraxx Product Identification guide Rev.B                         -->
-  <!-- version 2	Fix bug in CV57 and add missing cv19 and 217                               -->
-  <!-- version 3	Add ES44AC model, add manual RPM function mapping                          -->
+                  from SoundTraxx Product Identification guide Rev.B                        -->
+  <!-- version 2	Fix bug in CV57 and add missing cv19 and 217                            -->
+  <!-- version 3	Add ES44AC model, add manual RPM function mapping                       -->
+  <!-- version 4	Add Alco PA-PB (docs Avail) and EMD F7A-B (no docs avail)				-->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders">
@@ -44,6 +46,25 @@
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
         </functionlabels>
       </model>
+	  <model model="ALCO PA-PB" numOuts="3" numFns="14" connector="other" productID="ALCO-PA">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="FX6|Rule 17"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="Reserved"/>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="RPM" label="-"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Mars light</functionlabel>
+        </functionlabels>
+      </model>
       <model model="ES44AC" numOuts="3" numFns="14" connector="other" productID="ES">
         <versionCV lowVersionID="82"/>
         <output name="3" label="  FX5  "/>
@@ -61,6 +82,25 @@
         <output name="RPM" label="-"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Ditch</functionlabel>
+        </functionlabels>
+      </model>
+	  <model model="F7A-B" numOuts="3" numFns="14" connector="other" productID="F7A-B">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="FX6|Rule 17"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="Reserved"/>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="RPM" label="-"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Beacon</functionlabel>
         </functionlabels>
       </model>
       <model model="GP15" numOuts="3" numFns="14" connector="other" productID="GP15">
@@ -830,6 +870,10 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
       </variable>
+	  <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="2" minOut="3" tooltip="Determines the effect generated from the FX5 light output" include="ALCO-PA,F7A-B">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+      </variable>
       <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="7" minOut="3" tooltip="Determines the effect generated from the FX5 light output" include="GP15,SD60,8-40B">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
@@ -858,7 +902,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
-      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="3" default="1" exclude="ES,SD70ACe" tooltip="Used to configure the directionality of FX5A function output">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="3" default="1" exclude="ALCO-PA,ES,SD70ACe" tooltip="Used to configure the directionality of FX5A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>

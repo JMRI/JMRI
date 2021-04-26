@@ -99,6 +99,22 @@
                 </label>
             </griditem>
         </grid>
+        <group include="ESU LokSound 5,Essential Sound Unit">
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <label>
+                    <text>Slot Volumes above 128 need firmware version 5.1.96 or later ("Read full sheet" may be needed to check). Your version is</text>
+                </label>
+                <display item="Firmware Major Version" label=""/>
+                <display item="Firmware Minor Version" label=""/>
+                <display item="Firmware Build Number" label=""/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+        </group>
         <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10">
             <!-- default settings for all grid items -->
             <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">

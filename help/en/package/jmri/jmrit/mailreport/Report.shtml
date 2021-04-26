@@ -25,6 +25,11 @@
     <div id="mainContent">
 
       <h1>JMRI: Upload Debugging Information</h1>
+      
+      <b>Note:  This tool is now obsolete.  Please 
+      see the new 
+      <a href="../../../apps/util/issuereporter/swing/IssueReporter.shtml">"Report Issue ..." menu item</a>
+      instead.</b>
       <a href="SampleReportForm.png"><img src="SampleReportForm.png" height="25%" width="25%" align="right"></a>
       <p>The "Upload
       Debugging Information" item in JMRI Help menus lets you store

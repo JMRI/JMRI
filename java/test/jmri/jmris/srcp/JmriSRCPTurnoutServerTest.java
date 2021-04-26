@@ -1,11 +1,12 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.io.OutputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -28,7 +29,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
             ((JmriSRCPTurnoutServer) ts).initTurnout(1,1,"N");
             jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
                             .provideTurnout("IT1").setState(jmri.Turnout.THROWN);
-            assertThat(sb.toString()).endsWith("101 INFO 1 GA 1 N\n\r").withFailMessage("Thrown Message Sent");
+            assertThat(sb.toString()).withFailMessage("Thrown Message Sent").endsWith("101 INFO 1 GA 1 N\n\r");
         });
         assertThat(thrown).withFailMessage("Exception setting Status").isNull();
     }
@@ -42,41 +43,41 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
             ((JmriSRCPTurnoutServer) ts).initTurnout(1,1,"N");
             jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
                             .provideTurnout("IT1").setState(jmri.Turnout.CLOSED);
-            assertThat(sb.toString()).endsWith("101 INFO 1 GA 0 N\n\r").withFailMessage("Closed Message Sent");
+            assertThat(sb.toString()).withFailMessage("Closed Message Sent").endsWith("101 INFO 1 GA 0 N\n\r");
         });
         assertThat(thrown).withFailMessage("Exception setting Status").isNull();
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkErrorStatusSent(){
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkTurnoutThrownSent(){
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkTurnoutClosedSent() {
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkTurnoutUnknownSent() {
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     @BeforeEach
@@ -93,19 +94,18 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
-                });
+                };
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         ts = new JmriSRCPTurnoutServer(input, output);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         ts.dispose();
         ts = null;
         sb = null;

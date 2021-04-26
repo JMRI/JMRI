@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.Reporter;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainCommon;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages locations.
@@ -23,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013, 2014
  */
-public class LocationManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class LocationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
 
@@ -64,6 +68,32 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
 
     public Location getLocationById(String id) {
         return _locationHashTable.get(id);
+    }
+    
+    /**
+     * Used to determine if a division name has been assigned to a location
+     * @return true if a location has a division name
+     */
+    public boolean hasDivisions() {
+        for (Location location : getList()) {
+            if (location.getDivision() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Used to determine if a reporter has been assigned to a location
+     * @return true if a location has a RFID reporter
+     */
+    public boolean hasReporters() {
+        for (Location location : getList()) {
+            if (location.getReporter() != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -238,7 +268,7 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
         List<Location> sortList = getList();
         List<Track> trackList = new ArrayList<Track>();
         for (Location location : sortList) {
-            List<Track> tracks = location.getTrackByNameList(type);
+            List<Track> tracks = location.getTracksByNameList(type);
             for (Track track : tracks) {
                 trackList.add(track);
             }
@@ -247,7 +277,8 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
     }
 
     /**
-     * Returns all tracks of type sorted by use
+     * Returns all tracks of type sorted by use. Alternate tracks
+     * are not included.
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
      *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
@@ -260,6 +291,9 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
         List<Track> moveList = new ArrayList<Track>();
         for (Track track : trackList) {
             boolean locAdded = false;
+            if (track.isAlternate()) {
+                continue;
+            }
             for (int j = 0; j < moveList.size(); j++) {
                 if (track.getMoves() < moveList.get(j).getMoves()) {
                     moveList.add(j, track);
@@ -303,7 +337,7 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
         List<Location> locs = getList();
         for (Location loc : locs) {
             // now adjust tracks
-            List<Track> tracks = loc.getTrackList();
+            List<Track> tracks = loc.getTracksList();
             for (Track track : tracks) {
                 for (String loadName : track.getLoadNames()) {
                     if (loadName.equals(oldLoadName)) {
@@ -431,20 +465,10 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
                 .getOldValue(), e.getNewValue()); // NOI18N
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocationManager.class);

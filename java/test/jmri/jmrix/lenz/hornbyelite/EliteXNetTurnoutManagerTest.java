@@ -1,22 +1,20 @@
 package jmri.jmrix.lenz.hornbyelite;
 
-import java.util.ArrayList;
-import java.util.List;
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -31,8 +29,8 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     @Override
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        assertThat(l.getByUserName("foo")).isNull();
+        assertThat(l.getBySystemName("bar")).isNull();
     }
 
     @Test
@@ -55,59 +53,50 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         lnis.sendTestMessage(m2);
 
         // try to get turnouts to see if they exist
-        Assert.assertTrue(null != l.getBySystemName("XT20"));
-        Assert.assertTrue(null != l.getBySystemName("XT21"));
+        EliteXNetTurnout xt20 = (EliteXNetTurnout) l.getBySystemName("XT20");
+        EliteXNetTurnout xt21 = (EliteXNetTurnout) l.getBySystemName("XT21");
+        assertThat(xt20).isNotNull();
+        assertThat(xt21).isNotNull();
 
-        // check the list
-        List<String> testList = new ArrayList<String>(2);
-        testList.add("XT20");
-        testList.add("XT21");
-        Assert.assertEquals("system name list", testList, l.getSystemNameList());
+        assertThat(l.getNamedBeanSet()).contains(xt20,xt21);
     }
 
     @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
-        Turnout o = l.newTurnout("XT21", "my name");
+        Turnout newTurnout = l.newTurnout("XT21", "my name");
+        log.debug("received turnout value {}", newTurnout);
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
-        Assert.assertTrue(null != (EliteXNetTurnout) o);
+        assertThat(newTurnout).isNotNull();
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("XT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
-        }
+        log.debug("by system name: {}", l.getBySystemName("XT21"));
+        log.debug("by user name:   {}", l.getByUserName("my name"));
 
-        Assert.assertTrue(null != l.getBySystemName("XT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
-
+        assertThat(l.getBySystemName("XT21")).isEqualTo(newTurnout);
+        assertThat(l.getByUserName("my name")).isEqualTo(newTurnout);
     }
 
     @Test
     @Override
     public void testThrownText(){
-         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+         assertThat(l.getThrownText()).isEqualTo(Bundle.getMessage("TurnoutStateThrown"));
     }
 
     @Test
     @Override
     public void testClosedText(){
-         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+        assertThat(l.getClosedText()).isEqualTo(Bundle.getMessage("TurnoutStateClosed"));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        lnis.getSystemConnectionMemo().getXNetTrafficController().terminateThreads();
         JUnitUtil.tearDown();
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface, register

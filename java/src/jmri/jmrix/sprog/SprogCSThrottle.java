@@ -14,12 +14,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Crosland Copyright (C) 2006, 2012
  */
 public class SprogCSThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address Loco Address.
      */
     public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
@@ -32,20 +34,10 @@ public class SprogCSThrottle extends AbstractThrottle {
         }
 
         // cache settings.
-        this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
+        // Functions default to false
         this.isForward = true;
 
         //@TODO - this needs a little work. Current implementation looks like it
@@ -60,7 +52,7 @@ public class SprogCSThrottle extends AbstractThrottle {
 
     }
 
-    private SprogCommandStation commandStation;
+    private final SprogCommandStation commandStation;
 
     DccLocoAddress address;
 
@@ -111,7 +103,41 @@ public class SprogCSThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Send the message to set the state of functions F13 - F20
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup4() {
+        commandStation.function13Through20Packet(address,
+                getF13(), getF13Momentary(),
+                getF14(), getF14Momentary(),
+                getF15(), getF15Momentary(),
+                getF16(), getF16Momentary(),
+                getF17(), getF17Momentary(),
+                getF18(), getF18Momentary(),
+                getF19(), getF19Momentary(),
+                getF20(), getF20Momentary());
+    }
+
+    /**
+     * Send the message to set the state of functions F21 - F28
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup5() {
+        commandStation.function21Through28Packet(address,
+                getF21(), getF21Momentary(),
+                getF22(), getF22Momentary(),
+                getF23(), getF23Momentary(),
+                getF24(), getF24Momentary(),
+                getF25(), getF25Momentary(),
+                getF26(), getF26Momentary(),
+                getF27(), getF27Momentary(),
+                getF28(), getF28Momentary());
+    }
+
+    /**
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
@@ -119,7 +145,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         SpeedStepMode mode = getSpeedStepMode();
         if (mode == SpeedStepMode.NMRA_DCC_28) {
             // 28 step mode speed commands are 
@@ -137,9 +163,7 @@ public class SprogCSThrottle extends AbstractThrottle {
                 value = 1;        // emergency stop
             }
             commandStation.setSpeed(SpeedStepMode.NMRA_DCC_28, address, value, isForward);
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-            }
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         } else {
             // 128 step mode speed commands are
             // stop, estop, 2, 3, ..., 127
@@ -156,9 +180,7 @@ public class SprogCSThrottle extends AbstractThrottle {
                 value = 1;        // emergency stop
             }
             commandStation.setSpeed(SpeedStepMode.NMRA_DCC_128, address, value, isForward);
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-            }
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -167,17 +189,19 @@ public class SprogCSThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // Update the speed setting
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // Update the speed setting
         }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         commandStation.release(address);
         finishRecord();
     }
+
     private final static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class);
+
 }

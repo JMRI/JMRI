@@ -56,7 +56,7 @@ Il y a des moments o&#249; vous pouvez vouloir faire des choses un peu plus comp
 </ul>
 
 Nous pr&#233;f&#233;rerions que vous manipuliez les questions de liaison qui se posent dans ce cas par l'interm&#233;diaire de la clase
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>.
+<a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>.
 ThreadingUtil fournit des utilitaires qui rendent cela ais&#233; 
 pour appeler les fonctions n&#233;cessaire sur le bon lien.
 <p>

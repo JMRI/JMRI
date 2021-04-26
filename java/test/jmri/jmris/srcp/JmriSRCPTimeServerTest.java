@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.OutputStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -16,7 +18,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     private StringBuilder sb = null;
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void confirmErrorStatusSent(){
@@ -24,7 +26,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void confirmStatusSent(){
@@ -34,13 +36,13 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     @Test
     public void sendRate() throws java.io.IOException {
        a.sendRate();
-       assertThat(sb.toString()).endsWith("101 INFO 0 TIME 1 1\n\r").withFailMessage("Rate Sent");
+       assertThat(sb.toString()).withFailMessage("Rate Sent").endsWith("101 INFO 0 TIME 1 1\n\r");
     }
 
     @Test
     public void sendTime() throws java.io.IOException {
        a.sendTime();
-       assertThat(sb.toString()).matches(".* 100 INFO 0 TIME .* .{1,2} .{1,2} .{1,2}\n\r").withFailMessage("time sent");
+       assertThat(sb.toString()).withFailMessage("time sent").matches(".* 100 INFO 0 TIME .* .{1,2} .{1,2} .{1,2}\n\r");
     }
 
     @BeforeEach
@@ -49,14 +51,13 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
-                });
-        a = new JmriSRCPTimeServer(output);
+                };
+        a = new JmriSRCPTimeServer(new TimeStampedOutput(output));
     }
 
     @AfterEach

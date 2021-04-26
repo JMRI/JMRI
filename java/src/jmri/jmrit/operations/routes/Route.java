@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
-public class Route implements java.beans.PropertyChangeListener {
+public class Route extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
 
@@ -506,23 +507,13 @@ public class Route implements java.beans.PropertyChangeListener {
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, "RouteLocation"); // NOI18N
         }
         if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
-            pcs.firePropertyChange(ROUTE_STATUS_CHANGED_PROPERTY, true, false);
+            firePropertyChange(ROUTE_STATUS_CHANGED_PROPERTY, true, false);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Route.class);

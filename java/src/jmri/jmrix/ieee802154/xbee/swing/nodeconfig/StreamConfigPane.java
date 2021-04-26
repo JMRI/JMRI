@@ -125,6 +125,7 @@ public class StreamConfigPane extends JmrixConfigPane {
      * existing information in an existing StreamConnectionConfig object. It's
      * permitted to call this with a null argument, e.g. for when first
      * configuring the system.
+     * @param original Connection configuration to use
      */
     protected StreamConfigPane(StreamConnectionConfig original) {
         ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
@@ -174,14 +175,14 @@ public class StreamConfigPane extends JmrixConfigPane {
                         }
                     } else {
                         Class<?> cl = Class.forName(className);
-			try {
-                           config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
-                           modeBox.addItem(config.name());
-			} catch (ClassCastException cce) {
-		           // the list may include non-StreamConnectinoConfig 
-			   // objects, so just ignore those.
-			   continue;
-			}
+                        try {
+                            config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
+                            modeBox.addItem(config.name());
+                        } catch (ClassCastException cce) {
+                            // the list may include non-StreamConnectinoConfig 
+                            // objects, so just ignore those.
+                            continue;
+                        }
                     }
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
@@ -249,9 +250,9 @@ public class StreamConfigPane extends JmrixConfigPane {
                         modeBox.setSelectedIndex(1);
                     }
                 } catch (ClassCastException cce) {
-		    // the list may include non-StreamConnectinoConfig 
-		    // objects, so just ignore those.
-	            continue;
+                    // the list may include non-StreamConnectinoConfig 
+                    // objects, so just ignore those.
+                    continue;
                 } catch (NullPointerException | ClassNotFoundException | InstantiationException | 
                             IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);

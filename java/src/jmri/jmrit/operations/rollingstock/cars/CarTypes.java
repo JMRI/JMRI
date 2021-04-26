@@ -107,7 +107,7 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
 
     /**
      * Get the maximum character length of a car type when printing on a
-     * manifest or switch list. Car subtypes or characters after the "-" are
+     * manifest or switch list. Car "subtypes" or characters after the hyphen are
      * ignored.
      *
      * @return the maximum character length of a car type
@@ -138,7 +138,7 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
      *
      */
     public void store(Element root) {
-        store(root, Xml.TYPES, Xml.TYPE, Xml.CAR_TYPES);
+        store(root, Xml.TYPES, Xml.TYPE);
     }
 
     public void load(Element root) {

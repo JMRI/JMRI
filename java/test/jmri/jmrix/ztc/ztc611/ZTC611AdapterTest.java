@@ -1,15 +1,14 @@
 package jmri.jmrix.ztc.ztc611;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * ZTC611AdapterTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.ztc611.ZTC611Adapter class
+ * Test for the jmri.jmrix.lenz.ztc611.ZTC611Adapter class
  *
  * @author Paul Bender
  */
@@ -21,12 +20,12 @@ public class ZTC611AdapterTest {
         Assert.assertNotNull(a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

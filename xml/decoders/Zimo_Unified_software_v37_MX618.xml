@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Ronald Kuhn, ronald@wirkuhns.de" version="3" lastUpdated="20200502"/>
+  <!-- v1.1,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <version author="Ronald Kuhn ronald@wirkuhns.de" version="2" lastUpdated="20190422"/>
   <!-- V 2 file, dated 20190422. added FW v37-options.                                       -->
   <!--                                                                                       -->
@@ -33,7 +35,7 @@
   <!-- V 1 new file -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX618N18 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="243">
+      <model model="MX618N18 version 37+" replacementModel="MX618N18 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="243">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -70,7 +72,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 37 -->
-      <variable CV="7" readOnly="yes" default="37">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

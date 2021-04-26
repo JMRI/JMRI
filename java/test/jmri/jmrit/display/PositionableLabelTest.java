@@ -13,11 +13,13 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
@@ -25,11 +27,10 @@ import jmri.util.JUnitSwingUtil;
 import jmri.util.JUnitSwingUtil.Pixel;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -52,7 +53,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     PositionableLabel to = null;
 
     @Test
-    public void testSmallPanel() {
+    public void testSmallPanel() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         editor = new EditorScaffold("PositionableLabel Test Panel");
@@ -546,8 +547,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -562,7 +562,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         to = null;
         super.tearDown();

@@ -3,21 +3,23 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.beantable.turnout.TurnoutTableDataModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTurnoutManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Swing tests for the turnout table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010, 2017
+ * @author Bob Jacobsen Copyright 2009, 2010, 2017
  */
 public class TurnoutTableWindowTest {
 
@@ -102,17 +104,11 @@ public class TurnoutTableWindowTest {
         jbo.doClick();
         // Ask to close Add pane
         afo.requestClose();
-
-        // Open the Edit Turnout IT1 pane, how to find & click the LT1 Edit col button?
+        
+        // Open the Edit Turnout IT1 pane, 
         // Find the Edit button in EDITCOL of line 0 (for LT1)
-        //AbstractButtonFinder edfinder = new AbstractButtonFinder("Edit");
-        //JButton editbutton = (JButton) edfinder.find(ft, 0);
-        //Assert.assertNotNull(editbutton);
-        // Click button to edit turnout
-        //getHelper().enterClickAndLeave(new MouseEventData(this, editbutton));
-        // open Edit pane by method instead
-        Turnout it1 = InstanceManager.turnoutManagerInstance().getTurnout("IT1");
-        a.editButton(it1); // open edit pane
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        tbl.clickOnCell(0, TurnoutTableDataModel.EDITCOL);
 
         // Find Edit Turnout pane by name
         JFrameOperator efo = new JFrameOperator("Edit Turnout IT1");
@@ -155,8 +151,7 @@ public class TurnoutTableWindowTest {
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -165,7 +160,7 @@ public class TurnoutTableWindowTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

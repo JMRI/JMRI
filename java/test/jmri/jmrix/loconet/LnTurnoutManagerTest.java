@@ -2,19 +2,19 @@ package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -32,6 +32,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLocoNetMessages() {
         // send messages for 21, 22
         // notify the Ln that somebody else changed it...
@@ -59,6 +60,13 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         testList.add("LT21");
         testList.add("LT22");
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
+        
+        Assert.assertEquals("2 Turnouts in nambedbeanset",2,l.getNamedBeanSet().size());
+        Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT21")));
+        Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT22")));
+        
     }
 
     @Test
@@ -161,7 +169,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     private LocoNetSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -174,7 +182,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         lnis = null;

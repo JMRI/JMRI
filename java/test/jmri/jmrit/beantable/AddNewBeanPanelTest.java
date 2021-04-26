@@ -2,14 +2,14 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -33,13 +33,12 @@ public class AddNewBeanPanelTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

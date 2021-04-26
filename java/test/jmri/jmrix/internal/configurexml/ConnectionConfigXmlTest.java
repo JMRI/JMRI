@@ -1,20 +1,22 @@
 package jmri.jmrix.internal.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.internal.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
  *
- * Description: tests for the ConnectionConfigXml class
+ * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +24,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();
@@ -30,9 +32,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
         cc = null;
     }
 
-    @Test(timeout=5000)
+    @Test
+    @Timeout(5000)
     @Override
-    @Ignore("occasionally causing ConncurrentModificationSetting while disabling connection")
+    @Disabled("occasionally causing ConncurrentModificationSetting while disabling connection")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
        Assert.fail("test needs more setup");
     }

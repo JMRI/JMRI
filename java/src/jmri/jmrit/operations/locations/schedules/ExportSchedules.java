@@ -1,41 +1,28 @@
 package jmri.jmrit.operations.locations.schedules;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
-import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.locations.tools.ExportLocations;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
+
 /**
- * Exports the Operation Schedules into a comma delimitated file (CSV).
+ * Exports the Operation Schedules into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2018
  *
  */
 public class ExportSchedules extends XmlFile {
-
-    /**
-     * Does nothing.
-     * 
-     * @param delimiter the new delimiter for the CSV file
-     * @deprecated since 4.19.4 without direct replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
-        // does nothing; maintained to prevent API breakage
-    }
 
     public void writeOperationsScheduleFile() {
         makeBackupFile(defaultOperationsFilename());
@@ -55,7 +42,7 @@ public class ExportSchedules extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -109,7 +96,7 @@ public class ExportSchedules extends XmlFile {
             }
             fileOut.flush();
             fileOut.close();
-            log.info("Exported " + schedules.size() + " schedules to file " + defaultOperationsFilename());
+            log.info("Exported {} schedules to file {}", schedules.size(), defaultOperationsFilename());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
                 schedules.size(), defaultOperationsFilename()}),
@@ -143,6 +130,6 @@ public class ExportSchedules extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsSchedules.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportLocations.class);
+    private final static Logger log = LoggerFactory.getLogger(ExportSchedules.class);
 
 }

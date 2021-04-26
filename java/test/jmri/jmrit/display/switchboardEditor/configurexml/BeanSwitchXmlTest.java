@@ -1,10 +1,8 @@
 package jmri.jmrit.display.switchboardEditor.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SwitchboardEditorXml class
@@ -16,16 +14,15 @@ public class BeanSwitchXmlTest {
     @Test
     public void testCtor() {
         BeanSwitchXml t = new BeanSwitchXml();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

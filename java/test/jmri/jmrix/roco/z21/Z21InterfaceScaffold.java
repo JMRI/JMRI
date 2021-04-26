@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Use an object of this type as a Z21TrafficController in tests
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class Z21InterfaceScaffold extends Z21TrafficController {
 
@@ -31,7 +31,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     @Override
     public void sendz21Message(Z21Message m, Z21Listener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendZ21Message [" + m + "]");
+            log.debug("sendZ21Message [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -45,7 +45,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     public void sendTestMessage(Z21Reply m) {
         // forward a test message to Z21Listeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyReply(m, null);
     }

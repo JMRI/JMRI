@@ -1,12 +1,8 @@
 package jmri.jmrit.vsdecoder;
 
 import java.awt.event.ActionEvent;
-import java.awt.GraphicsEnvironment;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <hr>
@@ -26,23 +22,17 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDecoderCreationAction extends AbstractAction {
 
-    Boolean _useNewGUI = false;
-
     /**
      * Constructor
      *
      * @param s Name for the action.
      */
-    public VSDecoderCreationAction(String s, Boolean ng) {
+    public VSDecoderCreationAction(String s) {
         super(s);
-        _useNewGUI = ng;
-        if (GraphicsEnvironment.isHeadless()) {
-            log.info("GUI lookAndFeel: {}", UIManager.getLookAndFeel().getName());
-        }
     }
 
     public VSDecoderCreationAction() {
-        this("Virtual Sound Decoder", true);
+        this("Virtual Sound Decoder");
     }
 
     /**
@@ -54,17 +44,13 @@ public class VSDecoderCreationAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         JFrame tf;
 
-        if (_useNewGUI) {
-            tf = VSDecoderManager.instance().provideManagerFrame(); // headless will return null
-        } else {
-            tf = new VSDecoderFrame(); // old GUI
-        }
+        tf = VSDecoderManager.instance().provideManagerFrame(); // headless will return null
 
         if (tf != null) {
             tf.toFront();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class);
+    //private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class);
 
 }

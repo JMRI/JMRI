@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Methods to decode CBUS opcodes
  *
  * https://github.com/MERG-DEV/CBUSlib
- * @author Andrew Crosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009, 2021
  * @author Steve Young (C) 2018
  */
 public class CbusOpCodes {
@@ -72,18 +72,42 @@ public class CbusOpCodes {
             buf.append(fields[i]);
         }
         
-        // extra info for ERR opc
-        if (msg.getElement(0)==CbusConstants.CBUS_ERR) {
-            buf.append(getCbusErr(msg));
-        }
-        
-        // extra info for CMDERR opc
-        if (msg.getElement(0)==CbusConstants.CBUS_CMDERR) {
-            if ((msg.getElement(3) > 0 ) && (msg.getElement(3) < 13 )) {
-                buf.append(Bundle.getMessage("CMDERR"+msg.getElement(3)));
-            }
+        // special cases
+        switch (msg.getElement(0)) {
+            case CbusConstants.CBUS_ERR: // extra info for ERR opc
+                buf.append(getCbusErr(msg));
+                break;
+            case CbusConstants.CBUS_CMDERR: // extra info for CMDERR opc
+                if ((msg.getElement(3) > 0 ) && (msg.getElement(3) < 13 )) {
+                    buf.append(Bundle.getMessage("CMDERR"+msg.getElement(3)));
+                }
+                break;
+            case CbusConstants.CBUS_GLOC: // extra info GLOC OPC
+                appendGloc(msg,buf);
+                break;
+            case CbusConstants.CBUS_FCLK:
+                return CbusClockControl.dateFromCanFrame(msg);
+            default:
+                break;
         }
         return buf.toString();
+    }
+    
+    private static void appendGloc(AbstractMessage msg, StringBuilder buf) {
+        buf.append(" ");
+        if (( ( ( msg.getElement(3) ) & 1 ) == 1 ) // bit 0 is 1
+            && ( ( ( msg.getElement(3) >> 1 ) & 1 ) == 1 )) { // bit 1 is 1
+            buf.append(Bundle.getMessage("invalidFlags"));
+        }
+        else if ( ( ( msg.getElement(3) ) & 1 ) == 1 ){ // bit 0 is 1
+            buf.append(Bundle.getMessage("stealRequest"));
+        }
+        else if ( ( ( msg.getElement(3) >> 1 ) & 1 ) == 1 ){ // bit 1 is 1
+            buf.append(Bundle.getMessage("shareRequest"));
+        }
+        else { // bit 0 and bit 1 are 0 
+            buf.append(Bundle.getMessage("standardRequest"));
+        }
     }
     
     /**
@@ -152,10 +176,77 @@ public class CbusOpCodes {
      */
     @Nonnull
     public static final String decode(AbstractMessage msg) {
-        if ((msg instanceof CanFrame) && !((CanFrame) msg).isExtended()) {
-            return fullDecode(msg);
+        if (msg instanceof CanFrame) {
+            if (!((CanFrame) msg).isExtended()) {
+                return fullDecode(msg);
+            }
+            else {
+                return decodeExtended((CanFrame)msg);
+            }
         }
-        return Bundle.getMessage("OPC_BOOT_TYP") + ((CanFrame) msg).getHeader();
+        return "";
+    }
+    
+    /**
+     * Return a string representation of a decoded Extended CBUS Message
+     *
+     * @param msg Extended CBUS CAN Frame to be decoded
+     * @return decoded message after extended frame check
+     */
+    @Nonnull
+    public static final String decodeExtended(CanFrame msg) {
+        StringBuilder sb = new StringBuilder(Bundle.getMessage("decodeBootloader"));
+        switch (msg.getHeader()) {
+            case 4: // outgoing Bootload Command
+                int newChecksum;
+                switch (msg.getElement(5)) { // data payload of bootloader control frames
+                    case CbusConstants.CBUS_BOOT_NOP: // 0
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_NOP"));
+                        break;
+                    case CbusConstants.CBUS_BOOT_RESET: // 1
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_RESET"));
+                        break;
+                    case CbusConstants.CBUS_BOOT_INIT: // 2
+                        newChecksum = ( msg.getElement(2)*65536+msg.getElement(1)*256+msg.getElement(0)  );
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_INIT",newChecksum));
+                        break;
+                    case CbusConstants.CBUS_BOOT_CHECK: // 3
+                        newChecksum = ( msg.getElement(7)*256+msg.getElement(6)  );
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_CHECK",newChecksum));
+                        break;
+                    case CbusConstants.CBUS_BOOT_TEST: // 4
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_TEST"));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 5: // outgoing pure data frame
+                sb.append( Bundle.getMessage("OPC_DA")).append(" :");
+                msg.appendHexElements(sb);
+                break;
+            case 0x10000004: // incoming Bootload Info
+                switch (msg.getElement(0)) { // data payload of bootloader control frames
+                    case CbusConstants.CBUS_EXT_BOOT_ERROR: // 0
+                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_ERROR"));
+                        break;
+                    case CbusConstants.CBUS_EXT_BOOT_OK: // 1
+                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OK"));
+                        break;
+                    case CbusConstants.CBUS_EXT_BOOTC: // 2
+                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTC"));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        if (sb.toString().equals(Bundle.getMessage("decodeBootloader"))){
+            return(Bundle.getMessage("decodeUnknownExtended"));
+        }
+        return sb.toString();
     }
 
     /**
@@ -173,18 +264,22 @@ public class CbusOpCodes {
      * Return a string OPC of a CBUS Message
      *
      * @param msg CbusMessage
-     * @return if extended, else decoded CBUS OPC, eg. "RTON" or "ACON2", else Reserved string.
+     * @return decoded CBUS OPC, eg. "RTON" or "ACON2", else Reserved string.
+     * Empty String for Extended Frames as no OPC concept.
      */
     @Nonnull
     public static final String decodeopc(AbstractMessage msg) {
-        if ((msg instanceof CanFrame) && !((CanFrame) msg).isExtended()) {
+        if ((msg instanceof CanFrame) &&  !((CanFrame) msg).extendedOrRtr()) {
             return decodeopcNonExtended(msg);
         }
-        return Bundle.getMessage("OPC_BOOT_TYP") + ((CanFrame) msg).getHeader();
+        else {
+            return "";
+        }
     }
     
     /**
-     * Test if CBUS OpCode is translatable.
+     * Test if CBUS OpCode is known to JMRI.
+     * Performs Extended / RTR Frame check.
      *
      * @param msg CanReply or CanMessage
      * @return True if opcode is known
@@ -192,7 +287,7 @@ public class CbusOpCodes {
     public static final boolean isKnownOpc(AbstractMessage msg){
         return ( MAP.get(msg.getElement(0))!=null
                 && ( msg instanceof CanFrame)
-                && (!((CanFrame) msg).isExtended()));
+                && (!((CanFrame) msg).extendedOrRtr()));
     }
     
     /**
@@ -234,7 +329,7 @@ public class CbusOpCodes {
      * <p>
      * TOF, TON, ESTOP, RTOF, RTON, RESTP, KLOC, QLOC, DKEEP,
      * RLOC, QCON, ALOC, STMOD, PCON, KCON, DSPD, DFLG, DFNON, DFNOF, SSTAT,
-     * DFUN, GLOC, ERR, RDCC3, WCVO, WCVB, QCVS, PCVS, RDCC4, WCVS,
+     * DFUN, GLOC, ERR, RDCC3, WCVO, WCVB, QCVS, PCVS, RDCC4, WCVS, VCVS,
      * RDCC5, WCVOA, RDCC6, PLOC, STAT, RSTAT
      * 
      * @param opc CBUS op code
@@ -409,7 +504,7 @@ public class CbusOpCodes {
         }
         
         private EnumSet<CbusFilterType> getFilters(){
-            return _filterMap;
+            return EnumSet.copyOf(_filterMap);
         }
     }
     

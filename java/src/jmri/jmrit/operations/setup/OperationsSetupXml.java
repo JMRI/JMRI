@@ -1,18 +1,19 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
-import jmri.InstanceManager;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 import jmri.jmrit.operations.trains.TrainManifestText;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores the operation setup using xml files.

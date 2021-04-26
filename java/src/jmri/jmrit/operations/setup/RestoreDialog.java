@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-import apps.Apps;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -228,7 +227,11 @@ public class RestoreDialog extends JDialog {
                     Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
             dispose();
 
-            Apps.handleRestart();
+            try {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+            } catch (Exception er) {
+                log.error("Continuing after error in handleRestart", er);
+            }
         } // These may need to be enhanced to show the backup store being used,
           // auto or default.
         catch (IOException ex) {
@@ -237,7 +240,7 @@ public class RestoreDialog extends JDialog {
             new ExceptionDisplayFrame(context, this).setVisible(true);
 
         } catch (Exception ex) {
-            log.error("Doing restore from " + setName, ex);
+            log.error("Doing restore from {}", setName, ex);
 
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restoring") + " " + setName);

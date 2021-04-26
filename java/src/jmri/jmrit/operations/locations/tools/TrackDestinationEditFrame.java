@@ -242,7 +242,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             addCheckBoxAction(cb);
             if (destinationsAll.isSelected()) {
                 cb.setSelected(true);
-            } else if (_track != null && _track.acceptsDestination(loc)
+            } else if (_track != null && _track.isDestinationAccepted(loc)
                     ^ _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
                 cb.setSelected(true);
             }
@@ -293,7 +293,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     private boolean checkLocationsLoop() {
         boolean noIssues = true;
         for (Location destination : locationManager.getLocationsByNameList()) {
-            if (_track.acceptsDestination(destination)) {
+            if (_track.isDestinationAccepted(destination)) {
                 log.debug("Track ({}) accepts destination ({})", _track.getName(), destination.getName());
                 //                text.setText("Destination : " + destination.getName());
                 //                statusFrame.revalidate();
@@ -303,7 +303,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 }
                 // now check to see if the track's rolling stock is accepted by the destination
                 checkTypes: for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
-                    if (!_track.acceptsTypeName(type)) {
+                    if (!_track.isTypeNameAccepted(type)) {
                         continue;
                     }
                     if (!destination.acceptsTypeName(type)) {
@@ -317,8 +317,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         return false; // done
                     }
                     // now determine if there's a track willing to service car type
-                    for (Track track : destination.getTrackList()) {
-                        if (track.acceptsTypeName(type)) {
+                    for (Track track : destination.getTracksList()) {
+                        if (track.isTypeNameAccepted(type)) {
                             continue checkTypes; // yes there's a track
                         }
                     }
@@ -333,12 +333,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 }
                 // now check road names
                 checkRoads: for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
-                    if (!_track.acceptsRoadName(road)) {
+                    if (!_track.isRoadNameAccepted(road)) {
                         continue;
                     }
                     // now determine if there's a track willing to service this road
-                    for (Track track : destination.getTrackList()) {
-                        if (track.acceptsRoadName(road)) {
+                    for (Track track : destination.getTracksList()) {
+                        if (track.isRoadNameAccepted(road)) {
                             continue checkRoads; // yes there's a track
                         }
                     }
@@ -353,17 +353,17 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 }
                 // now check load names
                 for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
-                    if (!_track.acceptsTypeName(type)) {
+                    if (!_track.isTypeNameAccepted(type)) {
                         continue;
                     }
                     List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
                     checkLoads: for (String load : loads) {
-                        if (!_track.acceptsLoadName(load)) {
+                        if (!_track.isLoadNameAccepted(load)) {
                             continue;
                         }
                         // now determine if there's a track willing to service this load
-                        for (Track track : destination.getTrackList()) {
-                            if (track.acceptsLoadName(load)) {
+                        for (Track track : destination.getTracksList()) {
+                            if (track.isLoadNameAccepted(load)) {
                                 continue checkLoads;
                             }
                         }
@@ -377,12 +377,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     }
                     // now check car type and load combinations
                     checkLoads: for (String load : loads) {
-                        if (!_track.acceptsLoad(load, type)) {
+                        if (!_track.isLoadNameAndCarTypeAccepted(load, type)) {
                             continue;
                         }
                         // now determine if there's a track willing to service this load
-                        for (Track track : destination.getTrackList()) {
-                            if (track.acceptsLoad(load, type)) {
+                        for (Track track : destination.getTracksList()) {
+                            if (track.isLoadNameAndCarTypeAccepted(load, type)) {
                                 continue checkLoads;
                             }
                         }
@@ -400,16 +400,16 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 Car car = new Car();
                 car.setLength(Integer.toString(-RollingStock.COUPLERS)); // set car length to net out to zero
                 for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
-                    if (!_track.acceptsTypeName(type)) {
+                    if (!_track.isTypeNameAccepted(type)) {
                         continue;
                     }
                     List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
                     for (String load : loads) {
-                        if (!_track.acceptsLoad(load, type)) {
+                        if (!_track.isLoadNameAndCarTypeAccepted(load, type)) {
                             continue;
                         }
                         for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
-                            if (!_track.acceptsRoadName(road)) {
+                            if (!_track.isRoadNameAccepted(road)) {
                                 continue;
                             }
                             // is there a car with this road?
@@ -433,7 +433,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             // does the destination accept this car?
                             // this checks tracks that have schedules
                             String testDest = "";
-                            for (Track track : destination.getTrackList()) {
+                            for (Track track : destination.getTracksList()) {
                                 if (track.getScheduleMode() == Track.SEQUENTIAL) {
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);

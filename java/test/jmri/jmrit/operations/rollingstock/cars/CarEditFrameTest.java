@@ -5,9 +5,7 @@ import java.text.MessageFormat;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -27,12 +25,9 @@ import jmri.util.swing.JemmyUtil;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
+@Timeout(10)
 public class CarEditFrameTest extends OperationsTestCase {
-    
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
-    @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
     
     @Test
@@ -141,12 +136,12 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editRoadButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.ROAD, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.ROAD, f.carAttributeEditFrame._attribute);
 
         // now change to car type
         JemmyUtil.enterClickAndLeave(f.editTypeButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -161,7 +156,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editTypeButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -176,7 +171,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editColorButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.COLOR, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.COLOR, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -191,7 +186,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editLengthButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.LENGTH, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.LENGTH, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -206,7 +201,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editOwnerButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.OWNER, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.OWNER, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -221,7 +216,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editGroupButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.KERNEL, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.KERNEL, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);

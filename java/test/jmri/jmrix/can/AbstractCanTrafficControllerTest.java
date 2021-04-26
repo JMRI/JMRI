@@ -4,8 +4,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractCanTrafficController.
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
     
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
@@ -56,7 +56,7 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

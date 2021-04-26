@@ -5,22 +5,22 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.TrainSwitchLists;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
+import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Manages train schedules. The default is the days of the week, but can be
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class TrainScheduleManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class TrainScheduleManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public TrainScheduleManager() {
     }
@@ -254,14 +254,16 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
 
     public void buildSwitchLists() {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+        TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
         String locationName = ""; // only create switch lists once for locations with similar names
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
             if (location.isSwitchListEnabled() && !locationName.equals(TrainCommon.splitString(location.getName()))) {
+                trainCsvSwitchLists.buildSwitchList(location);
                 trainSwitchLists.buildSwitchList(location);
+                locationName = TrainCommon.splitString(location.getName());
                 // print switch lists for locations that have changes
-                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.MODIFIED)) {
+                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.UPDATED)) {
                     trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
-                    locationName = TrainCommon.splitString(location.getName());
                 }
             }
         }
@@ -325,19 +327,9 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
                 e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);

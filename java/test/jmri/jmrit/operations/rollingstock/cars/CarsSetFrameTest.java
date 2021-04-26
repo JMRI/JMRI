@@ -6,10 +6,12 @@ import javax.swing.JTable;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -117,6 +119,72 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
+    }
+    
+    @Test
+    public void testCarInTrain() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        
+        // build train
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainByName("STF");
+        Assert.assertNotNull("Train exists", train1);
+        Assert.assertTrue("Train builds", train1.build());
+        
+        // get a cars table with data
+        CarsSetFrame f = new CarsSetFrame();
+        CarsTableFrame ctf = new CarsTableFrame(true, null, null);
+        JTable ctm = ctf.carsTable;
+        
+        // select CP 888
+        ctm.setRowSelectionInterval(2, 2);
+        
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+        Car c3 = cManager.getByRoadAndNumber("CP", "888");
+        Assert.assertNotNull("car exists", c3);
+        Assert.assertEquals("Car is part of train", train1, c3.getTrain()); 
+
+        // should cause dialog car in train to appear
+        Thread load = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                f.initComponents(ctm);
+            }
+        });
+        load.setName("car set frame"); // NOI18N
+        load.start();
+
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return load.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
+
+        JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonOK"));
+
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+        
+        // pressing "Save" when car has destination and train will cause dialog box to appear
+        Assert.assertNotNull("car has destination", c3.getDestination());
+        Assert.assertNotNull("car has destination track", c3.getDestinationTrack());
+
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonNo"));
+        
+        // Confirm that car's destination is still there
+        Assert.assertNotNull("car has destination", c3.getDestination());
+        Assert.assertNotNull("car has destination track", c3.getDestinationTrack());
+        
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonYes"));
+
+        Assert.assertNull("car has destination removed", c3.getDestination());
+        Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
+        
+        JUnitUtil.dispose(f);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);

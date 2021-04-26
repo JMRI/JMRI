@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Used so that that server objects need only to use a single object/method to
  * send data to any supported object type.
  *
- * @author rhwood Randall Wood Copyright (C) 2012, 2014
+ * @author Randall Wood Copyright (C) 2012, 2014
  */
 public class JmriConnection {
 

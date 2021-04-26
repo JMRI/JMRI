@@ -1,34 +1,29 @@
 package jmri.util.iharder.dnd;
 
-import org.junit.After;
+import java.io.File;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TransferableObjectTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
-    public void testCTor() throws java.io.IOException  {
-        TransferableObject t = new TransferableObject(folder.newFile());
+    public void testCTor(@TempDir File folder) throws java.io.IOException  {
+        TransferableObject t = new TransferableObject(folder);
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

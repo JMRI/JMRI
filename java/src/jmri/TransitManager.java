@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -31,7 +30,7 @@ import jmri.managers.AbstractManager;
 public class TransitManager extends AbstractManager<Transit> implements InstanceManagerAutoDefault {
 
     public TransitManager() {
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        super();
         InstanceManager.getDefault(jmri.SectionManager.class).addVetoableChangeListener(this);
     }
 

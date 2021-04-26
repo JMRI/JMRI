@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.swing.mon;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetMonPaneTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.swing.mon.XNetMonPane class
+ * Test for the jmri.jmrix.lenz.swing.mon.XNetMonPane class
  *
- * @author	Paul Bender Copyright (C) 2014,2016
+ * @author Paul Bender Copyright (C) 2014,2016
  */
 public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -23,8 +22,7 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -37,11 +35,12 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         title = Bundle.getMessage("MenuItemXNetCommandMonitor");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        panel = pane = null;
         jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

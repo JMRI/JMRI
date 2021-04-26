@@ -40,7 +40,7 @@ public interface LightManager extends ProvidingManager<Light> {
      * @return Never null under normal circumstances
      */
     @Nonnull
-    public Light provideLight(@Nonnull String name);
+    public Light provideLight(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
@@ -52,24 +52,20 @@ public interface LightManager extends ProvidingManager<Light> {
     public void dispose();
 
     /**
-     * Get an existing Light or return null if it doesn't exist. 
-     * 
-     * Locates via user name, then system name if needed.
-     *
+     * Get an existing Light or return null if it doesn't exist.
+     * <p>
+     * Locates via user name, then system name if needed. 
      * @param name User name, system name, or address which can be promoted to
      *             system name
-     * @return Never null
-     * @throws IllegalArgumentException if Light doesn't already exist and the
-     *                                  manager cannot create the Light due to
-     *                                  an illegal name or name that can't be
-     *                                  parsed.
+     * @return Light, or null if no existing Light.
      */
     @CheckReturnValue
     @CheckForNull
     public Light getLight(@Nonnull String name);
 
     /**
-     * Return a Light with the specified system and user names. 
+     * Return a Light with the specified user or system name.
+     * Lookup Light by UserName, then Provide New Light by SystemName.
      * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Light object representing a given physical Light and therefore
@@ -99,7 +95,7 @@ public interface LightManager extends ProvidingManager<Light> {
      *                                  parsed.
      */
     @Nonnull
-    public Light newLight(@Nonnull String systemName, @CheckForNull String userName);
+    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Locate a Light by its user name.
@@ -109,6 +105,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Light getByUserName(@Nonnull String s);
 
     /**
@@ -119,6 +116,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Light getBySystemName(@Nonnull String s);
 
     /**
@@ -128,7 +126,14 @@ public interface LightManager extends ProvidingManager<Light> {
      * @return true if valid; false otherwise
      */
     @CheckReturnValue
-    public boolean validSystemNameConfig(@Nonnull String systemName);
+    public default boolean validSystemNameConfig(@Nonnull String systemName){
+        try {
+            validateSystemNameFormat(systemName);
+            return true;
+        } catch (jmri.NamedBean.BadSystemNameException ex) {
+            return false;
+        }
+    }
 
     /**
      * Convert the system name to a normalized alternate name.
@@ -173,5 +178,35 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
+    
+    /**
+     * Get the Next valid hardware address.
+     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
+     * <p>
+     * System-specific methods may want to override getIncrement() rather than this one.
+     * @param curAddress the starting hardware address to get the next valid from.
+     * @param prefix system prefix, just system name, not type letter.
+     * @param ignoreInitialExisting false to return the starting address if it 
+     *                          does not exist, else true to force an increment.
+     * @return the next valid system name, excluding both system name prefix and type letter.
+     * @throws JmriException    if unable to get the current / next address, 
+     *                          or more than 10 next addresses in use.
+     */
+    @Nonnull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
 
+    /**
+     * Get a system name for a given hardware address and system prefix.
+     *
+     * @param curAddress desired hardware address
+     * @param prefix     system prefix used in system name, excluding Bean type-letter.
+     * @return the complete Light system name for the prefix and current
+     *         address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
+     */
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    
 }

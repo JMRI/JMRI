@@ -2,15 +2,14 @@
 
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of JMRIClientMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -22,7 +21,7 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,14 +33,14 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         title = Bundle.getMessage("MenuItemJmriClientCommandMonitorTitle");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-	    memo = null;
-	    panel = pane = null;
-	    helpTarget = null;
-	    title = null;
+        memo = null;
+        panel = pane = null;
+        helpTarget = null;
+        title = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

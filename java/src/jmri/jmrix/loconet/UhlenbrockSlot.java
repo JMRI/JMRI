@@ -2,7 +2,7 @@ package jmri.jmrix.loconet;
 
 
 /**
- * Extends representation of a single slot for the UhlenBrock command station
+ * Extends representation of a single slot for the Uhlenbrock IB command station.
  * <p>
  * Does specific Uhlenbrock Intellibox message handling.
  * <p>
@@ -84,4 +84,5 @@ public class UhlenbrockSlot extends LocoNetSlot {
             notifySlotListeners();
         }
     }
+
 }

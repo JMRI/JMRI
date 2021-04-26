@@ -65,9 +65,9 @@
 			</p>
 
 			<p>
-				The protocol is described on a <a href="Protocol.shtml">separate
-					page</a>. For more on JMRI networking, see the <a
-					href="../../../../html/doc/Technical/Networking.shtml">networking
+				The <a href="Protocol.shtml">WiThrottle protocol</a> is described on a 
+					<a href="Protocol.shtml">separate page</a>. For more on JMRI networking, 
+					see the <a href="../../../../html/doc/Technical/Networking.shtml">networking
 					technical page</a>.
 			</p>
 
@@ -90,7 +90,7 @@
 						single locomotive) and a purchased version (control up to four locomotives at once).
 					</td>
 					<td><a target="_blank" href="https://withrottle.com"><img
-							src="images/WiT150x250.png" height="125" width="75"
+							src="images/WiT125x250.png" height="125"
 							alt="WiThrottle for Apple devices"
 							title="WiThrottle for Apple devices"></a></td>
 					<td></td>
@@ -107,7 +107,7 @@
 						and windows.</td>
 					<td></td>
 					<td><a target="_blank" href="https://enginedriver.mstevetodd.com"><img
-							src="images/EngineDriverScreen.png" height="125" width="60"
+							src="images/EngineDriverScreen.png" height="125" 
 							alt="EngineDriver for Android devices"
 							title="EngineDriver for Android devices"></a></td>
 					<td></td>
@@ -148,10 +148,22 @@
 					<td></td>
 					<td><a target="_blank"
 						href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j">
-							<img src="images/TrainThrottleLogo.png" height="100" width="100"
+							<img src="images/TrainThrottleLogo.png" height="100"
 							alt="Train Throttle App for Windows devices"
 							title="Train Throttle App for Windows devices">
 					</a></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832">Locontrol</a></td>
+					<td>An elegant controller for iOS.
+					</td>
+					<td><a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832"><img
+							src="https://is3-ssl.mzstatic.com/image/thumb/Purple113/v4/c0/96/c6/c096c6e1-3c67-5d22-43aa-aba2a1bb1b36/pr_source.jpg/230x0w.jpg"
+							alt="Locontrol for Apple devices" height="125"
+							title="Locontrol for Apple devices"></a></td>
+					<td></td>
+					<td></td>
 					<td></td>
 				</tr>
 				<tr>
@@ -166,7 +178,7 @@
 					<td></td>
 					<td><a target="_blank"
 						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
-							<img src="/resources/logo.gif" height="100" width="100"
+							<img src="/resources/logo.gif" height="100" 
 							alt="WebThrottle for browsers" title="WebThrottle for browsers">
 					</a></td>
 				</tr>

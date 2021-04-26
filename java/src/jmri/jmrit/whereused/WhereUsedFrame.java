@@ -1,15 +1,9 @@
 package jmri.jmrit.whereused;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -33,7 +27,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     JComboBox<ItemType> _itemTypeBox;
 
     NamedBean _itemBean;
-    NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<Sensor>(
+    NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<>(
                         InstanceManager.getDefault(SensorManager.class));
 
     JPanel _topPanel;
@@ -41,6 +35,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     JPanel _scrolltext = new JPanel();
     JTextArea _textArea;
     JButton _createButton;
+    JLabel itemNameLabel;
 
     public WhereUsedFrame() {
         super(true, true);
@@ -63,7 +58,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         contentPane.add(_topPanel, BorderLayout.NORTH);
 
         // Build an empty where used listing
-        JScrollPane scrollPane = null;
+        JScrollPane scrollPane;
         buildWhereUsedListing(ItemType.NONE, null);
         scrollPane = new JScrollPane(_scrolltext);
         contentPane.add(scrollPane);
@@ -77,15 +72,19 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
     void buildTopPanel() {
         _topPanel = new JPanel();
-        _topPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"))));  // NOI18N
+        JLabel itemTypeLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType")));  // NOI18N
+        _topPanel.add(itemTypeLabel);
         _itemTypeBox = new JComboBox<>();
+        itemTypeLabel.setLabelFor(_itemTypeBox);
         for (ItemType itemType : ItemType.values()) {
             _itemTypeBox.addItem(itemType);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_itemTypeBox);
         _topPanel.add(_itemTypeBox);
 
-        _topPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName"))));  // NOI18N
+        itemNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName")));  // NOI18N
+        _topPanel.add(itemNameLabel);
+        itemNameLabel.setLabelFor(_itemNameBox);
         _topPanel.add(_itemNameBox);
         _itemTypeBox.addActionListener((e) -> {
             _itemType = _itemTypeBox.getItemAt(_itemTypeBox.getSelectedIndex());
@@ -98,7 +97,6 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         _topPanel.add(_createButton);
         _itemNameBox.setEnabled(false);
         _createButton.setEnabled(false);
-        return;
     }
 
     void buildBottomPanel() {
@@ -126,6 +124,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             return;
         }
         _itemNameBox = newNameBox;
+        itemNameLabel.setLabelFor(newNameBox);
         _itemNameBox.setSelectedIndex(-1);
         _topPanel.remove(3);
         _topPanel.add(_itemNameBox, 3);
@@ -146,6 +145,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      * <p>
      * The selected object is passed to the appropriate detail class which returns a populated textarea.
      * The textarea is formatted and inserted into a scrollable panel.
+     * @param type Indicated type of item being examined
+     * @param bean The bean being examined
      */
     void buildWhereUsedListing(ItemType type, NamedBean bean) {
         switch (type) {
@@ -189,7 +190,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                 _textArea = EntryExitWhereUsed.getWhereUsed(bean);
                 break;
             default:
-                _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
+                _textArea = new JTextArea(Bundle.getMessage("TypePrompt", Bundle.getMessage("ButtonCreate")));
                 break;
         }
 
@@ -203,7 +204,6 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         _scrolltext.add(_textArea);
         pack();
         repaint();
-        return;
     }
 
     JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
@@ -232,7 +232,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                     Bundle.getMessage("SaveDuplicateAppend"),  // NOI18N
                     Bundle.getMessage("ButtonCancel")};               // NOI18N
             int selectedOption = JOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("SaveDuplicatePrompt", file.getName()), // NOI18N
+                    Bundle.getMessage("SaveDuplicatePrompt", file.getName(),
+                            Bundle.getMessage("SaveDuplicateAppend"),
+                            Bundle.getMessage("SaveDuplicateReplace")), // NOI18N
                     Bundle.getMessage("SaveDuplicateTitle"),   // NOI18N
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.WARNING_MESSAGE,
@@ -333,7 +335,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
         private final String _bundleKey;
 
-        private ItemType(String bundleKey) {
+        ItemType(String bundleKey) {
             _bundleKey = bundleKey;
         }
 

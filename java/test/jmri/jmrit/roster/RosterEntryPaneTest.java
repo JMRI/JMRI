@@ -2,12 +2,14 @@ package jmri.jmrit.roster;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class RosterEntryPaneTest {
 
@@ -17,7 +19,7 @@ public class RosterEntryPaneTest {
     RosterEntry rOld = null;
     RosterEntry rNew = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -64,7 +66,7 @@ public class RosterEntryPaneTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -13,12 +13,13 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Crosland Copyright (C) 2006, 2012
  */
 public class SprogCSThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public SprogCSThrottleManager(SprogSystemConnectionMemo memo) {
         super(memo);
@@ -32,7 +33,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
             
             // The SPROG protocol doesn't require an interaction with the command
             // station for this, so immediately trigger the callback
-            log.debug("new SprogThrottle for " + a);
+            log.debug("new SprogThrottle for {}", a);
             notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, a), a);
         }
         else {

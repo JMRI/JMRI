@@ -110,9 +110,9 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     }
 
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        return (e.getPropertyName().indexOf("state") >= 0 || e.getPropertyName().indexOf("hop") >= 0
-                || e.getPropertyName().indexOf("metric") >= 0 || e.getPropertyName().indexOf("valid") >= 0
-                || e.getPropertyName().indexOf("neighbourmetric") >= 0);
+        return (e.getPropertyName().contains("state") || e.getPropertyName().contains("hop")
+                || e.getPropertyName().contains("metric") || e.getPropertyName().contains("valid")
+                || e.getPropertyName().contains("neighbourmetric"));
     }
 
     /**
@@ -135,13 +135,13 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
                 }
                 return nextBlock;
             case HOPCOUNTCOL:
-                return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row));
+                return lBlock.getRouteHopCountAtIndex(row);
             case DIRECTIONCOL:
-                return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)));
+                return jmri.Path.decodeDirection(lBlock.getRouteDirectionAtIndex(row));
             case METRICCOL:
-                return Integer.valueOf(lBlock.getRouteMetric(row));
+                return lBlock.getRouteMetric(row);
             case LENGTHCOL:
-                return Float.valueOf(lBlock.getRouteLengthAtIndex(row));
+                return lBlock.getRouteLengthAtIndex(row);
             case STATECOL:
                 return lBlock.getRouteStateAsString(row);
             case VALIDCOL:
@@ -157,7 +157,6 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        return;
     }
 
     public int getPreferredWidth(int column) {
@@ -183,5 +182,5 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
 
     private LayoutBlock lBlock = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockRouteTableModel.class);
 }

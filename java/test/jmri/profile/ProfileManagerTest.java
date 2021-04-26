@@ -2,15 +2,14 @@ package jmri.profile;
 
 import java.io.File;
 import java.io.IOException;
+
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -19,9 +18,6 @@ import org.junit.rules.TemporaryFolder;
  */
 public class ProfileManagerTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
     public void testCTor() {
         ProfileManager pm = new ProfileManager();
@@ -29,13 +25,13 @@ public class ProfileManagerTest {
     }
 
     @Test
-    public void testSetActiveProfile_Profile() throws IOException {
+    public void testSetActiveProfile_Profile(@TempDir File folder) throws IOException {
         ProfileManager pm = new ProfileManager();
         // null profile
         pm.setActiveProfile((Profile) null);
         Assert.assertNull(pm.getActiveProfile());
         // non-null profile
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+        File profileFolder = new File(folder, "test");
         NullProfile p = new NullProfile("test", "test", profileFolder);
         Assert.assertNotNull(p);
         pm.setActiveProfile(p);
@@ -43,7 +39,7 @@ public class ProfileManagerTest {
     }
 
     @Test
-    public void testSetActiveProfile_String() throws IOException {
+    public void testSetActiveProfile_String(@TempDir File folder) throws IOException {
         ProfileManager pm = new ProfileManager();
         // null profile
         pm.setActiveProfile((String) null);
@@ -53,13 +49,17 @@ public class ProfileManagerTest {
         Assert.assertNull(pm.getActiveProfile());
         JUnitAppender.assertWarnMessage("Unable to set active profile.  No profile with id NonExistantId could be found.");
         // existant non-profile directory (real directory, but no profile)
-        String folderName = folder.newFolder("non-profile").getAbsolutePath();
+        File newFolder = new File(folder, "non-profile");
+        newFolder.mkdir();
+        String folderName = newFolder.getAbsolutePath();
         pm.setActiveProfile(folderName);
         Assert.assertNull(pm.getActiveProfile());
         JUnitAppender.assertErrorMessage(folderName + " is not a profile folder.");
         JUnitAppender.assertWarnMessage("Unable to set active profile.  No profile with id " + folderName + " could be found.");
         // existant profile directory
-        folderName = folder.newFolder("profile").getAbsolutePath();
+        newFolder = new File(folder, "profile");
+        newFolder.mkdir();
+        folderName = newFolder.getAbsolutePath();
         File profileFolder = new File(folderName);
         FileUtil.copy(new File("java/test/jmri/profile/samples/ln-simulator"), profileFolder); // where is existing profile?
         pm.setActiveProfile(folderName);
@@ -68,13 +68,12 @@ public class ProfileManagerTest {
         Assert.assertEquals(p, pm.getActiveProfile());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

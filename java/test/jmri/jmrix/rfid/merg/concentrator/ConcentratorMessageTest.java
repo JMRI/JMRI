@@ -1,34 +1,33 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorMessageTest.java
+ * <p>
+ * Test for the jmri.jmrix.rfid.merge.concentrator.ConcentratorMessage class
  *
- * Description:	tests for the jmri.jmrix.rfid.merge.concentrator.ConcentratorMessage class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        m = new ConcentratorMessage(20){
-           @Override
-           public String toMonitorString(){
-               return "";
-           }
+        m = new ConcentratorMessage(20) {
+            @Override
+            public String toMonitorString() {
+                return "";
+            }
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

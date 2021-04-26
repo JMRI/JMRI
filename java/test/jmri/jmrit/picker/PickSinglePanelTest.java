@@ -4,7 +4,9 @@ import java.awt.GraphicsEnvironment;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -18,7 +20,7 @@ public class PickSinglePanelTest {
     public void testSinglePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<Sensor> sensorModel = PickListModel.sensorPickModelInstance();
-        PickSinglePanel<Sensor> sensorPanel = new PickSinglePanel<Sensor>(sensorModel);
+        PickSinglePanel<Sensor> sensorPanel = new PickSinglePanel<>(sensorModel);
         Assert.assertNotNull("exists", sensorPanel);
 
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Single Pick List");  // NOI18N
@@ -31,27 +33,28 @@ public class PickSinglePanelTest {
 
         // Add an invalid name
         JTextFieldOperator jto = new JTextFieldOperator(jfo, 0);
-        jto.enterText("QRS");
+        jto.typeText("QRS");
         Thread add1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "add1");  // NOI18N
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "add1 finished");  // NOI18N
 
         // Add a valid name
         jto = new JTextFieldOperator(jfo, 0);
-        jto.enterText("IS999");
+        jto.clearText();
+        jto.typeText("IS999");
         jto = new JTextFieldOperator(jfo, 1);
-        jto.enterText("User Name");
+        jto.typeText("User Name");
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
 
         JTableOperator jtbo = new JTableOperator(jfo);
         jtbo.clickOnCell(0, 1);
-        jmri.NamedBeanHandle nbh = sensorPanel.getSelectedBeanHandle();
+        jmri.NamedBeanHandle<Sensor> nbh = sensorPanel.getSelectedBeanHandle();
         Assert.assertNotNull(nbh);
 
         // Switch to the signal head table
         f.remove(sensorPanel);
         PickListModel<SignalHead> signalHeadModel = PickListModel.signalHeadPickModelInstance();
-        PickSinglePanel<SignalHead> signalHeadPanel = new PickSinglePanel<SignalHead>(signalHeadModel);
+        PickSinglePanel<SignalHead> signalHeadPanel = new PickSinglePanel<>(signalHeadModel);
         f.setContentPane(signalHeadPanel);
         f.pack();
 
@@ -74,13 +77,12 @@ public class PickSinglePanelTest {
         return t;
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -30,13 +30,16 @@
 
       <p>The Warrant List is a table of all Recorded Warrants.
       It also temporarily lists NX Warrants during the time they
-      are in effect. You access the Warrant Table by selecting
+      are in effect. The Warrant List window is a dispatchers sheet
+      to run and control warranted trains. 
+      </p>
+      <p>You access the Warrant Table by selecting
       <b>Warrant List</b> from the Warrants menu of your
       Control Panel. For an overview discussion of Warrants,
       see <a href="Warrant.shtml">Warrants</a>.</p>
 
       <a href="images/WarrantTable.png"><img
-      src="images/WarrantTable.png" width="780" height="130"
+      src="images/WarrantTable.png" width="1030" height="389"
       hspace="0" vspace="0" alt="Warrant List
       pane in in JMRI 4.10"></a>
 
@@ -59,14 +62,16 @@
         current motive power of the Train.</li>
 
         <li><b>Allocate</b> - A button that reserves the route for
-        the Warrant. The Indicator Track Icons display green to
-        indicate the route.</li>
+        the Warrant. The Indicator Track Icons of the blocks of
+        the route display green but the turnouts are not disturbed.</li>
 
         <li><b>Deallocate</b> - A button that removes the
         reservation for the Warrant.</li>
 
         <li><b>Set</b> - A button that allocates and sets the
-        turnouts for the Warrant route.</li>
+        turnouts for the Warrant route. The Indicator Track Icons
+         of the route display green and the turnouts
+         indicate the paths taken in the block.</li>
 
         <li><b>AutoRun</b> - A button that runs the train over the
         route according to the throttle commands of the Warrant.
@@ -114,7 +119,7 @@
             due to a short or other hardware malfunction. This
             reset may allow a stopped train to continue.)</li>
 
-			<li><b>E-Stop</b> - Issue an emergency stop to the train
+			<li><b>Emergency Stop</b> - Issue an emergency stop to the train
 			and suspend execution of the throttle command script.
 			</li>
 
@@ -123,17 +128,12 @@
           </ul>
         </li>
 
-        <li><b>Edit</b> - A button that opens an editing window for
-        the Warrant.
-        <a href="images/WarrantEdit.png"><img
-        src="images/WarrantEdit.png" width="241" height="235"
-        align="right" alt="Warrants Edit pane in in JMRI 4.10"></a>
-        Just as when you created the Warrant, you may use your
-        Control Panel to change the Track Icons that are part of
-        the Warrrant. With every click, the total number of items
-        in the indicator track items in the Warrant increases
-        (or decreases when an already highlighted (included) icon
-        is clicked.</li>
+        <li><b>Edit</b> - A button that opens the window used for
+        creating and editing warrants. This window has several display
+        modes. In this case, it is opened in the mode where many of the
+        warrants parameters can be edited while preserving its route.
+        The <a href="CreateEditWarrant.shtml">Creating and Editing Warrants</a>
+        help page has information about editing a warrant.</li>
 
         <li><b>Delete</b> - A button that deletes the Warrant.</li>
       </ul>
@@ -154,15 +154,17 @@
         path of the first Warrant must be equal to the first block
         and path of the second Warrant.</li>
 
-        <li><b>Create New Warrant</b> - After providing system and
-        user names this opens a blank Warrant Editing Window to
-        create a new Warrant. The operations of this frame are
-        discussed in <a href="CreateEditWarrant.shtml">Creating and
-        Editing Warrants</a>.</li>
+        <li><b>Create New Warrant</b> - Opens the window used for
+        creating and editing warrants. This window has several display
+        modes. In this case, it is opened in the mode to create a
+        route for a new warrant.
+        The <a href="CreateEditWarrant.shtml">Creating and Editing Warrants</a>
+        help page has information about creating a warrant.</li>
 
-        <li><b>Train Trackers</b> - Opens window where the identity
-        of trains can be displayed as they move from one occupancy
-        block to another.</li>
+        <li><b>Train Trackers</b> - Opens the Tracker Table window.
+        The <a href="Tracker.shtml">Train Trackers</a> help page
+        discusses how the movements of a train can be displayed 
+        as they move from one occupancy block to another.</li>
 
         <li><b>Create NX Warrant</b> - Opens a window to create an
         eNtry/eXit Warrant. This is discussed in the <a href=
@@ -191,9 +193,10 @@
       The throttle commands recorded in a Warrant are played back
       to run the train, but additional control of the train can be
       done through the choices provided by the <b>Control/Status</b>
-      down down combobox. Note there are there ways to stop the
-      train: Emergency stop, halt(stop), or ramp down to a stop and one
-      command to restart it, keeping the Warrant in effect.
+      down down combobox. Note there are two ways to stop the
+      train: <b>Emergency Stop</b> an immediate stop or <b>Halt</b> 
+      that slows the train to a stop smoothly. Once stopped, the
+      <b>Resume</b>command will restart it, keeping the Warrant in effect.
        <b>Move into Next Block</b> is "repair" command
       should the train overrun a block and become "Lost". This
       command aligns the Warrant to the next block and restarts the
@@ -201,50 +204,58 @@
       annuls the Warrant.
 
       <p>There are separate operations in the Warrant List
-      table to reserve a Warrant route; (<b>Allocate</b>) and 
-      set  turnouts for the route (<b>Set</b>). These operations 
-      do not have to be done to run an automated train. They are
+      table to reserve a Warrant route; the safer <b>Allocate</b> 
+      will not throw turnouts in blocks possibly occupied by
+      trains or the
+      <b>Set</b> (allocate and set turnouts). These operations 
+      do not have to be done before running an automated train. They are
       used to preview the route. An <b>AutoRun</b> operation
       can begin without them. The train will seek allocation and
       set turnouts as it proceeds on the route.</p>
       
-      <p>As a safety feature, whenever a warranted train has
+      <h3>Automatic control of trains</h3>
+      Whenever a warranted train has
       permission to enter the next Block, the turnouts are reset
-      to the route. Having permission from Signals should mean
-       that resetting the
-      turnouts does not interfere with any interlocking logic.
-      "Stop" aspects of Signals, occupancy or allocation to another
-      Warrant will deny permission. Only clearing the most
-      restrictive of these conditions will give the auto-run train
-      permission to proceed. When such a denial is cleared, the
-      train will proceed automatically. The only thing that
-      overrides automatically proceeding is if the user has set
+      to the route. This will correct any inadvertent setting of
+      turnouts by other operators. If a warranted train does not
+      have permission the enter a block, no turnouts for the
+      route are thrown in the block or in the blocks beyond it.
+
+      <p>"Stop" aspects of Signals, detection of occupancy or 
+      allocation to another warrant will deny permission for
+      a warranted train to enter a block. Also, signals may
+      prescribe speed restrictions. Whenever the train
+      enters a block or is given a control command the warrant
+      looks ahead for permission or speed restrictions. When
+      this is detected, the warrant will suspend the warrant's
+      throttle commands and issue throttle commands it calculates
+      to ramp the train's speed smoothly to meet the required
+	  speed or stop just before entering the block.</p>
+      
+      <p>When permission to enter a block is denied, a warranted
+      train will not move. Clearing these conditions causing
+      the a denial is cleared, the
+      train will proceed automatically. The only thing that may
+      override automatically proceeding is if the user has set
       the control to "Halt". The train will not move until the user
       sets "Resume".</p>
 
-      <p> When confronted
-      with an occupied block, the train will stop and wait until
-      the block clears. When the next block is clear but the block
-      beyond the next block is occupied, the train will approach at
-      reduced speed. Similarly, if the Portals have been defined
+      <p><b>Note</b>: In order for warranted trains to respond to
+      signal aspects, the Portals must be defined
       with Signal Heads or Signal Masts protecting the blocks they
       join, the train will modify the speed according to the
-      appearance or aspect of the signal. An automated train will
-      attempt to secure allocation of the blocks ahead each time
-      it enters a Block. It also checks whether the block is
-      occupied by an unknown train and will not enter if the Block
-      is occupied. <a href="SpeedChanges.shtml">When Warrant Speeds
-      Are Modified</a> has details about how Warrants modify
-      recorded speeds.</p>
+      appearance or aspect of the signal. <a href="SpeedChanges.shtml">
+      When Warrant Speeds Are Modified</a> has details about 
+      how Warrants modifyrecorded speeds.</p>
 
       <h3>When the Starting block is Unoccupied</h3>
-      <p>If a Warrant is
+      If a Warrant is
       started and the starting block is not occupied, the Warrant
       will wait until the block is occupied. When occupation occurs
       the Warrant will set to the "Halt" and wait for the user to
       set the "Resume" control. Note it is vital that the correct
       train occupies the starting block. The address specified in
-      the Warrant, is the train that will begin moving.</p>
+      the Warrant, is the train that will begin moving.
 
       <p>Back to <a href="Warrant.shtml">Warrants Help</a>.</p>
 

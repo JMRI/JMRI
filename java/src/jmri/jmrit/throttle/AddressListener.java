@@ -37,13 +37,15 @@ public interface AddressListener extends EventListener {
      * Receive notification that a new Consist address has been selected.
      *
      * @param newAddress The address that is now selected.
+     * @param isLong true if a long address, else false.
      */
     public void notifyConsistAddressChosen(int newAddress, boolean isLong);
 
     /**
-     * Receive notification that a consist address has been released/dispatched
+     * Receive notification that a consist address has been released/dispatched.
      *
-     * @param address The address released/dispatched
+     * @param address The address released/dispatched.
+     * @param isLong true if a long address, else false.
      */
     public void notifyConsistAddressReleased(int address, boolean isLong);
 

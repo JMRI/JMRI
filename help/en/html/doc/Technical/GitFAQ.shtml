@@ -9,16 +9,8 @@
   <title>JMRI: Git FAQ</title>
     <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git FAQ">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+
+ <!--#include virtual="/Style.shtml" -->
 
   <!-- FAQ-Head -->
   <script type="text/javascript">
@@ -27,6 +19,7 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen">
   <!-- /FAQ-Head -->
+  
 </head>
 
 <body>
@@ -39,6 +32,8 @@
 
       <p>This is a list of Frequently Asked Questions for Git,
       particularly regarding how we use it with JMRI.<br>
+      
+      
       Click on a question to open the answer.</p>
 
       <p>There's a <a href="getgitcode.shtml">separate JMRI Help
@@ -47,6 +42,8 @@
 
       <p>See also the <a href="index.shtml">Technical index</a> for
       more information on maintaining JMRI code.</p>
+      
+     <p>See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a></p>
 
       <h2>Common User Topics</h2>
 
@@ -62,13 +59,13 @@
 
           <ul>
             <li>Get it from the <a href=
-            "http://git-scm.com/downloads">Git download
+            "http://git-scm.com/downloads" target="_blank">Git download
             page</a>.</li>
 
             <li>It comes with the GitHub Desktop application,
             available from the <a href=
-            "https://desktop.github.com">Git desktop download
-            page</a> (OS X and Windows only).</li>
+            "https://desktop.github.com" target="_blank">Git desktop download
+            page</a> (OS X and Windows only).See <a href="githubdesktopintro.shtml">here for an intro.</a></li>
 
             <li>On the Mac, it's included when you <a href=
             "https://developer.apple.com/xcode/download/">install
@@ -88,7 +85,7 @@
           (also on GitHub):
 
           <a href="/web/images/GitHubWorkflow.png">
-            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%">
+            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%" alt="GitHub Work Flow">
           </a>
             
           <p>That horizontal arrow is the "Pull Request" (and
@@ -131,7 +128,7 @@
             and</li>
 
             <li>press the green compare icon <img src=
-            "/web/images/GitHubPR1.png">, then click on Create Pull
+            "/web/images/GitHubPR1.png" alt="GitHub PR1">, then click on Create Pull
             Request.</li>
 
             <li>After your pull request has been reviewed, it can
@@ -264,7 +261,7 @@
             <p>
             For more on GitHub Desktop,
             please see our
-            <a href="githubdesktopinto.shtml">page on using GitHub Desktop</a>.
+            <a href="githubdesktopintro.shtml">page on using GitHub Desktop</a>.
             
               <ul>
                 <li>Clone the JMRI repo to your local system by
@@ -386,7 +383,7 @@
         <dt id="branchexamples">Branch Examples</dt>
         
         <dd>
-        <img src="images/git_branch_baseline.png" align="right">
+        <img src="images/git_branch_baseline.png" align="right" alt="Branch Baseline">
         The figure to the right shows a couple examples
         of how we use branches in Git. 
         The black line
@@ -419,7 +416,7 @@
         If just a couple changes have been made, they rarely overlap.
         This motivates our "merge often" philosophy.
 
-        <img src="images/git_branch_merge_master.png" align="right">
+        <img src="images/git_branch_merge_master.png" align="right" alt="Branch merge">
         
         <p>
         Sometimes development goes on for such a long time that
@@ -703,35 +700,27 @@
           <p>You can add this to your repositor(ies) so that each
           push will get automatically tested.</p>
 
-          <p>The two CI test services are called "Travis" and
-          "Appveyor":</p>
+          <p>The two CI test services are "Travis CI" and
+          "GitHub":</p>
 
           <ul>
-            <li>Travis runs on Linux. It first does a check for
+            <li>Travis CI runs on Linux. It first does a check for
             wrong line ends (see <a href="#lineends">later
             section</a>), then runs the complete set of JUnit
             tests, including testing screen operations.</li>
 
-            <li>Appveyor runs on Windows. It skips the line end
-            test, as that isn't reliable on Windows. In the
-            interest of time, it also skips some of the XML format
-            tests (Travis is covering those anyway).</li>
+            <li>GitHub runs multiple operating systems.</li>
           </ul>To add these to your own repository:
 
           <ul>
-            <li>For Travis, go to the <a href=
-            "https://travis-ci.org">Travis web page</a> and "Sign
+            <li>For Travis CI, go to the <a href=
+            "https://travis-ci.org">Travis CI web page</a> and "Sign
             Up". Use your GitHub account and email. At the end of
             that process, it will ask you which of your GitHub
             repositories to monitor; you can select both the "JMRI"
             and "website" forks.</li>
 
-            <li>For Appveyor, go to the <a href=
-            "https://www.appveyor.com">Appveyor web page</a> and
-            "Sign up for free". Use your GitHub account and email.
-            At the end of that process, it will ask you which of
-            your GitHub repositories to monitor; you can select
-            both the "JMRI" and "website" forks.</li>
+            <li>GitHub is automatically available and working on personal forks.</li>
           </ul>From then on, pushing to your own repository will
           run the tests. You'll get an email when the tests are
           complete, or you can check on the web.
@@ -1125,30 +1114,6 @@
           anything.</p>
         </dd>
 
-        <dt id="AppVeyorRestart">Restarting a Failed AppVeyor test</dt>
-        <dd>
-        AppVeyor CI can have transient failures when processing a Pull Request.  When it 
-        does, it looks like this:
-        <br><img src="images/AppVeyorRestart1.png">
-        <p>
-        In that case, one of the JMRI Maintainers can sign in and restart the build to have AppVeyor try again.
-        To do that, click the "Details" link indicated above. This will take you to:
-        <br><img src="images/AppVeyorRestart2.png"><br>
-        Click the indicated sign in link (if you're already signed in, click sign off, then sign in)
-        You'll get a choice of methods:
-        <br><img src="images/AppVeyorRestart3.png"><br>
-        Pick GitHub.<br>
-        Registered users with sufficient user priviliges will get a choice of accounts.
-        DO NOT select your own or anybody elses; select &quot;JMRI&quot;.
-        <br><img src="images/AppVeyorRestart4.png"><br>
-        Then click the "GitHub" bar again to finish the sign in.
-        <p>
-        Now, go back to the original pull request and click the "Details" link again.
-        This will again take you to the summary, but this time it will have extra controls:
-        <br><img src="images/AppVeyorRestart5.png"><br>
-        Click "Re-build PR" and off it will go.
-        
-        </dd>
         <dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
 
         <dd>

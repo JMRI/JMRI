@@ -30,7 +30,7 @@
 
       <h2>Introduction</h2>
 
-      <p>The <b>Allocate Extra Section</b> pane allows "Extra Sections"
+      <p>The <strong>Allocate Extra Section</strong> pane allows "Extra Sections"
       to be allocated to any Dispatcher Active Train.
       "Extra Sections" are
       <a href="../beantable/SectionTable.shtml">Sections</a>
@@ -45,12 +45,12 @@
       <p>Extra Sections are allocated manually via the Dispatcher
       panel, using this window to select the Active Train and the
       Section to be allocated. Once allocated, extra Sections will
-      show in the <b>Allocated Sections</b> table in the
-      <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.
+      show in the <strong>Allocated Sections</strong> table in the
+      <strong><a href="Dispatcher.shtml">Dispatcher</a></strong> window.
       <br>The
-      <b>Release</b> button in the Allocated Section Table should
+      <strong>Release</strong> button in the Allocated Section Table should
       be used to release the extra Sections when they are no longer
-      required. The <b>Auto Release</b> option does not release
+      required. The <strong>Auto Release</strong> option does not release
       extra Sections; extra Sections must be released manually.</p>
 
       <p>Note: Turnout checking and turnout setting are turned off
@@ -64,41 +64,41 @@
 
       <ol>
         <li>
-          <p>Click the <b>Allocate Extra...</b> button in the
-          <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.
+          <p>Click the <strong>Allocate Extra...</strong> button in the
+          <strong><a href="Dispatcher.shtml">Dispatcher</a></strong> window.
           This brings up the window shown below.</p><img src=
-          "images/AllocateExtraWindow.png" width="326" height="141">
+          "images/AllocateExtraWindow.png" width="433" height="135" alt="Allocate extra section">
         </li>
 
         <li>
-          <p>Select an Active Train in the <b>Active Train:</b>
+          <p>Select an Active Train in the <strong>Active Train:</strong>
           selection box. When an Active Train is selected, the
-          <b>Section to Allocate:</b> selection box will change to
+          <strong>Section to Allocate:</strong> selection box will change to
           display Sections that are appropriate to that Active
           Train. Active Train names are displayed in either short
           form (shown above) or long form depending on the option
-          set in <b><a href="Options.shtml">Dispatcher
-          Options</a></b>.</p>
+          set in <strong><a href="Options.shtml">Dispatcher
+          Options</a></strong>.</p>
         </li>
 
         <li>
-          <p>Select a Section to allocate in the <b>Section to
-          Allocate:</b> selection box. To be listed in this select
+          <p>Select a Section to allocate in the <strong>Section to
+          Allocate:</strong> selection box. To be listed in this select
           box, a Section must be FREE (not allocated to any Active
           Train), and must be connected to a Section that is
           currently allocated to the Active Train selected in the
-          <b>Active Train:</b> selection box.</p>
+          <strong>Active Train:</strong> selection box.</p>
         </li>
 
         <li>
-          <p>Click the <b>Allocate</b> button to allocate the
+          <p>Click the <strong>Allocate</strong> button to allocate the
           selected Section to the selected Active Train. The
           Section is allocated immediately, and this window
           disappears.</p>
         </li>
 
         <li>
-          <p>Or click the <b>Cancel</b> button to exit without
+          <p>Or click the <strong>Cancel</strong> button to exit without
           allocating an extra Section.</p>
         </li>
       </ol>

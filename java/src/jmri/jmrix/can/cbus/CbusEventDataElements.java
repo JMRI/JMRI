@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import javax.annotation.Nonnull;
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
 
 // import org.slf4j.Logger;
@@ -166,9 +167,13 @@ public class CbusEventDataElements {
     /**
      * Get value of a single event Data Byte.
      * @param index Event Index: 1, 2 or 3
-     * @return Byte value 0-255
+     * @return Byte value 0-255 , -1 for unset
      */
     public int getData(int index) {
+        
+        if ( getNumElements()<index ){
+            return -1;
+        }
         switch (index) {
             case 1:
                 return _dat1;
@@ -179,6 +184,58 @@ public class CbusEventDataElements {
             default:
                 throw new IllegalArgumentException("Data Index " + index + " Invalid");
         }
+    }
+    
+    public static int getNumEventDataElements(AbstractMessage m){
+        if ( CbusFilterType.allFilters(m.getElement(0)).contains(CbusFilterType.CFED1) ){
+            return 1;
+        }
+        else if ( CbusFilterType.allFilters(m.getElement(0)).contains(CbusFilterType.CFED2) ){
+            return 2;
+        }
+        else if ( CbusFilterType.allFilters(m.getElement(0)).contains(CbusFilterType.CFED3) ){
+            return 3;
+        }
+        return 0;
+    }
+    
+    /**
+     * Set Event Data from CAN Frame.
+     * @param m CanMessage or CanReply
+     */
+    public void setDataFromFrame(AbstractMessage m) {
+        setNumElements(getNumEventDataElements(m));
+        for ( int i=0; i<getNumEventDataElements(m); i++ ){
+            setData(i+1, m.getElement(i+5));
+        }
+    }
+    
+    /**
+     * Get the event state from a CAN Frame.
+     * @param m CanMessage or CanReply
+     * @return Event State ENUM of Off, On or Request
+     */    
+    public static final EvState getEvState(AbstractMessage m) {
+        EvState state = EvState.OFF;
+        if (CbusOpCodes.isOnEvent(CbusMessage.getOpcode(m))) {
+            state = EvState.ON;
+        }
+        if (CbusOpCodes.isEventRequest(CbusMessage.getOpcode(m))) {
+            state = EvState.REQUEST;
+        }
+        return state;
+    }
+
+    public static String getJmriString(int nn, int en){
+        StringBuilder jmriAddress = new StringBuilder(13);
+        jmriAddress.append("+");
+        if ( nn > 0 ) {
+            jmriAddress.append("N");
+            jmriAddress.append(nn);
+            jmriAddress.append("E");
+        }
+        jmriAddress.append(en);
+        return jmriAddress.toString();
     }
     
     // private static final Logger log = LoggerFactory.getLogger(CbusEventDataElements.class);

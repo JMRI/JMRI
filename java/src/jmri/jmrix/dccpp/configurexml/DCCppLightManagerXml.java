@@ -1,8 +1,8 @@
 package jmri.jmrix.dccpp.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring DCCppLightManagers.
@@ -27,11 +27,6 @@ public class DCCppLightManagerXml extends jmri.managers.configurexml.AbstractLig
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element lights) {
         // load individual lights
         return loadLights(lights);
@@ -42,6 +37,6 @@ public class DCCppLightManagerXml extends jmri.managers.configurexml.AbstractLig
         return loadLights(shared);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(DCCppLightManagerXml.class);
 
 }

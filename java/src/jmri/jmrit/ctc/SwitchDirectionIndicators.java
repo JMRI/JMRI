@@ -34,14 +34,14 @@ public class SwitchDirectionIndicators {
     private int _mLastIndicatorState = CTCConstants.OUTOFCORRESPONDENCE;
 
     public SwitchDirectionIndicators(   String userIdentifier,
-                                        String normalIndicatorSensor,
-                                        String reveresedIndicatorSensor,
-                                        String actualTurnout,
+                                        NBHSensor normalIndicatorSensor,
+                                        NBHSensor reveresedIndicatorSensor,
+                                        NBHTurnout actualTurnout,
                                         int codingTimeInMilliseconds,           // Instead of "CodingDistrict"
                                         boolean feedbackDifferent) {
-        _mNormalIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "normalIndicatorSensor", normalIndicatorSensor, false);            // NOI18N
-        _mReversedIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "reveresedIndicatorSensor", reveresedIndicatorSensor, false);    // NOI18N
-        _mActualTurnout = new NBHTurnout("SwitchDirectionIndicators", userIdentifier, "actualTurnout", actualTurnout, feedbackDifferent);                       // NOI18N
+        _mNormalIndicatorSensor = normalIndicatorSensor;
+        _mReversedIndicatorSensor = reveresedIndicatorSensor;
+        _mActualTurnout = actualTurnout;
         _mActualTurnoutHasFeedback = _mActualTurnout.getFeedbackMode() != Turnout.DIRECT && _mActualTurnout.getFeedbackMode() != Turnout.MONITORING;
 
         if (_mActualTurnoutHasFeedback) {

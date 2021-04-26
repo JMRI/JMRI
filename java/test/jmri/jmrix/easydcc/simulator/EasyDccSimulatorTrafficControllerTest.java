@@ -5,31 +5,25 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
+
 import jmri.util.JUnitUtil;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Rule;
+import org.junit.jupiter.api.*;
 import jmri.util.junit.rules.RetryRule;
-import org.junit.rules.Timeout;
 
 /**
  * JUnit tests for the EasyDccSimulatorTrafficController class
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
+@Timeout(90)
 public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
-
-    @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
@@ -60,9 +54,8 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
         
-		// test the result of sending
-
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());
@@ -165,16 +158,15 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new EasyDccSimulatorTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test"));
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         if (tc!=null) {
             tc.terminateThreads();

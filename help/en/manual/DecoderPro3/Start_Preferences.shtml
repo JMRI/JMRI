@@ -288,7 +288,13 @@
           <p><input name="checkbox" id="checkbox" type="checkbox">
           Additional Connection Settings, if checked: <img src=
           "images/Preferences3.png" alt="preference" height="139"
-          width="350"></p>
+          width="350"><br>
+          <ul>
+            <li>Connection Baud rate (if applicable, match your hardware)</li>
+            <li>Flow Control (option only on specific types, best to leave at default)</li>
+            <li>Output Interval (default: 250 milliseconds, serial connections only, intended for
+              debugging/advanced users)</li>
+          </ul>
 
           <p><input name="button2" id="button2" value=
           "Disable Connection" type="submit"> will disable all the

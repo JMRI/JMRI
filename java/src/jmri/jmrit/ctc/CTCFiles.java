@@ -2,6 +2,11 @@ package jmri.jmrit.ctc;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.StandardCopyOption;
 import jmri.util.FileUtil;
 
 /**
@@ -43,26 +48,84 @@ public class CTCFiles {
         return new File(getFileLocation(), fileName).getAbsolutePath();
     }
 
-    /**
-     * Rotate a file with 4 versions.  The file name extension is .bup.
-     * @param fileName The file name.
-     * @param isPortableFileName Indicates whether the name is just the file or full path name.
-     */
-    public static void rotate(String fileName, boolean isPortableFileName) {
-        File file;
-        if (isPortableFileName) {
-            file = getFile(fileName);
-        } else {
-            file = new File(fileName);
+    public static boolean fileExists(String fileName) {
+        File file = getFile(fileName);
+        return (file == null ? false : file.exists());
+    }
+
+    public static boolean copyFile(String sourceFileName, String destFileName, boolean replace) {
+        File sourceFile = getFile(sourceFileName);
+        File destFile = getFile(destFileName);
+        if (destFile.exists() && !replace) {
+            log.error("Copy file {} failed: new file {} already exists", sourceFileName,  destFileName);
+            return false;
         }
-        if (file.exists()) {
-            try {
-                FileUtil.rotate(file, 4, "bup");  // NOI18N
-            } catch (IOException ex) {
-                log.warn("Rotate failed for file {}", fileName);  // NOI18N
+        try {
+            if (Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING) == null) return false;
+        } catch(IOException ex) {
+            log.error("Copy file {} to {} failed, exception: ", sourceFileName,  destFileName, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean renameFile(String oldFileName, String newFileName, boolean replace) {
+        File oldFile = getFile(oldFileName);
+        File newFile = getFile(newFileName);
+        if (newFile.exists() && !replace) {
+            log.error("Rename file {} failed: new file {} already exists", oldFileName,  newFileName);
+            return false;
+        }
+        try {
+            if (Files.move(oldFile.toPath(), oldFile.toPath().resolveSibling(newFileName), StandardCopyOption.REPLACE_EXISTING) == null) return false;
+        } catch(IOException ex) {
+            log.error("Rename file {} to {} failed, exception: ", oldFileName,  newFileName, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean deleteFile(String fileName) {
+        File file = getFile(fileName);
+        if (!file.exists()) {
+            return true;
+        }
+        try {
+            Files.delete(file.toPath());
+        } catch(IOException ex) {
+            log.error("Delete file {} failed, exception: ", fileName, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public static String addExtensionIfMissing(String path, String missingExtension) {
+        String filenameOnly = getFilenameOnly(path);
+        if (filenameOnly.indexOf('.') >= 0) return path;
+        return path + missingExtension;
+    }
+
+    public static String changeExtensionTo(String path, String newExtension) {
+        return addExtensionIfMissing(removeFileExtension(path), newExtension);
+    }
+
+    public static String removeFileExtension(String filename) {
+        final int lastIndexOf = filename.lastIndexOf('.');
+        return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;
+    }
+
+    public static String getFilenameOnly(String path) {
+        // Paths.get(path) can return null per the Paths documentation
+        Path file = Paths.get(path);
+        if (file != null){
+            Object fileName = file.getFileName();
+            if (fileName!=null) {
+                return fileName.toString();
             }
         }
+        return "";
     }
+
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CTCFiles.class);
 }

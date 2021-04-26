@@ -3,15 +3,14 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.Block;
 import jmri.Memory;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutBlock
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutBlockTest {
 
@@ -44,8 +43,8 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem,"IM1");
 
         // verify the memory is associated
         Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
@@ -68,8 +67,8 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem,"IM1");
 
         // verify the memory is associated
         Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
@@ -94,8 +93,8 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem,"IM1");
 
         // verify the memory is associated
         Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
@@ -115,17 +114,19 @@ public class LayoutBlockTest {
 
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         // Create layout block and the related automatic block
         layoutBlock = new LayoutBlock("ILB999", "Test Block");
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         layoutBlock = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockTest.class);
 }

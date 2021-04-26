@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.util.List;
+
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.ConfigureManager;
@@ -11,10 +12,9 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * Tests for BlockManagerXml.
@@ -429,13 +429,13 @@ public class BlockManagerXmlTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

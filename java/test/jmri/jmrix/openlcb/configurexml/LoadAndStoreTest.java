@@ -4,9 +4,13 @@ import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.jmrix.openlcb.*;
 
 import java.io.File;
-import org.junit.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openlcb.*;
 
 /**
@@ -23,29 +27,33 @@ import org.openlcb.*;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
-@RunWith(Parameterized.class)
 public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
-    @Parameterized.Parameters(name = "{0} (pass={1})")
-    public static Iterable<Object[]> data() {
+    public static Stream<Arguments> data() {
         return getFiles(new File("java/test/jmri/jmrix/openlcb/configurexml"), false, true);
     }
 
-    public LoadAndStoreTest(File file, boolean pass) {
-        super(file, pass, SaveType.Config, false);
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
+    @MethodSource("data")
+    public void loadAndStoreTest(File file, boolean pass) throws Exception {
+        super.loadLoadStoreFileCheck(file);
+    }
+
+    public LoadAndStoreTest() {
+        super(SaveType.Config, false);
     }
 
     // from here down is testing infrastructure
-    private static OlcbSystemConnectionMemo memo;
-    static Connection connection;
-    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
-    static java.util.ArrayList<Message> messages;
+    private OlcbSystemConnectionMemo memo;
+    private Connection connection;
+    private NodeID nodeID;
+    private ArrayList<Message> messages;
 
-    @Before
+    @BeforeEach
     public void localSetUp() {
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
-        
-        messages = new java.util.ArrayList<>();
+
+        messages = new ArrayList<>();
         connection = new AbstractConnection() {
             @Override
             public void put(Message msg, Connection sender) {
@@ -61,14 +69,14 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
                 return connection;
             }
         });
-        
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);}, "Initialization Complete message");
+
+        jmri.util.JUnitUtil.waitFor(() -> (!messages.isEmpty()), "Initialization Complete message");
     }
 
-    @After
-    public void localTearDown() throws Exception {
-        if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
+    @AfterEach
+    public void localTearDown() {
+        if (memo != null && memo.getInterface() != null) {
+            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;

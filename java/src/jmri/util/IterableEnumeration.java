@@ -10,7 +10,8 @@ import java.util.Iterator;
  * <a href="http://www.javaspecialists.eu/archive/Issue107.html">JavaSpecialists
  * issue 107</a>
  *
- * @author rhwood
+ * @author Randall Wood
+ * @param <T> the supported type
  */
 public class IterableEnumeration<T> implements Iterable<T> {
 
@@ -42,6 +43,6 @@ public class IterableEnumeration<T> implements Iterable<T> {
     }
 
     public static <T> Iterable<T> make(Enumeration<T> en) {
-        return new IterableEnumeration<T>(en);
+        return new IterableEnumeration<>(en);
     }
 }

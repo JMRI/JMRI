@@ -27,11 +27,6 @@ public class OlcbTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // We tell the Turnout managers that we will be loading turnouts from XML and they should
         // expect additional property set sequences. This is somewhat tricky in the face of
@@ -52,6 +47,6 @@ public class OlcbTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return ret;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutManagerXml.class);
 
 }

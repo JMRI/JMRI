@@ -55,7 +55,7 @@
 <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" /> 
 <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="-1004" y="361" height="554" width="790" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both"> 
 
-<slipturnouticon turnoutType="scissor" x="284" y="104" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml"> 
+<slipturnouticon turnoutType="scissor" x="284" y="104" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" degrees="0" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml"> 
 <turnoutEast>IT608</turnoutEast> 
 <turnoutWest>IT607</turnoutWest> 
 <lowerWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-closed.gif" degrees="0" scale="1.0"> 

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
- * provide rotation {@literal &} scaling services.
+ * provide rotation and scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
  * this later), plus a shorter (localized) "name" for display in GUI.
@@ -94,7 +94,13 @@ public class NamedIcon extends ImageIcon {
             Iterator<ImageReader> rIter = ImageIO.getImageReadersByFormatName("gif");
             ImageReader gifReader = rIter.next();
 
-            InputStream is = FileUtil.findInputStream(mURL);
+            InputStream is = FileUtil.findInputStream(pUrl);
+            // findInputStream can return null, which has to be handled.
+            if (is == null) {
+                log.warn("NamedIcon can't scan {} for animated status", pUrl);
+                return;
+            }
+            
             ImageInputStream iis = ImageIO.createImageInputStream(is);
             gifReader.setInput(iis, false);
             
@@ -140,7 +146,7 @@ public class NamedIcon extends ImageIcon {
      * @param pGifState  Breakdown of GIF Image metadata and frames
      */
     public NamedIcon(String pUrl, String pName, GIFMetadataImages pGifState) {
-        super(FileUtil.findURL(pUrl));
+        super(substituteDefaultUrl(pUrl));
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
             log.warn("Could not load image from {} (file does not exist)", pUrl);
@@ -155,6 +161,16 @@ public class NamedIcon extends ImageIcon {
         mRotation = 0;
     }
 
+    static private final String DEFAULTURL = "resources/icons/misc/X-red.gif";
+    static private URL substituteDefaultUrl(String pUrl) {
+        URL url = FileUtil.findURL(pUrl);
+        if (url == null) {
+            url = FileUtil.findURL(DEFAULTURL);
+            log.error("Did not find \"{}\" for NamedIcon, substitute {}", pUrl, url);
+        }
+        return url;
+    }
+
     /**
      * Create a named icon that includes an image to be loaded from a URL.
      *
@@ -164,7 +180,8 @@ public class NamedIcon extends ImageIcon {
     public NamedIcon(URL pUrl, String pName) {
         this(pUrl.toString(), pName);
     }
-
+    
+    
     /**
      * Create a named icon from an Image. N.B. NamedIcon's create
      * using this constructor can NOT be animated GIFs
@@ -406,7 +423,7 @@ public class NamedIcon extends ImageIcon {
 
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
-            if (log.isDebugEnabled()) {
+            if (comp instanceof jmri.jmrit.display.Positionable) {
                 log.debug("transformImage bad coords {}",
                         ((jmri.jmrit.display.Positionable) comp).getNameString());
             }

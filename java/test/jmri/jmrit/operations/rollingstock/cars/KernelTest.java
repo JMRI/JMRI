@@ -2,7 +2,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Cars Kernel class Last manually cross-checked
@@ -10,7 +10,7 @@ import org.junit.Test;
  *
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class KernelTest extends OperationsTestCase {
 

@@ -63,7 +63,7 @@ public class PrintDecoderListAction extends AbstractAction {
         DecoderIndexFile f = InstanceManager.getDefault(DecoderIndexFile.class);
         List<DecoderFile> l = f.matchingDecoderList(null, null, null, null, null, null); // take all
         int i = -1;
-        log.debug("Roster list size: " + l.size());
+        log.debug("Roster list size: {}", l.size());
         for (i = 0; i < l.size(); i++) {
             DecoderFile d = l.get(i);
             if (!d.getMfg().equals(lastMfg)) {
@@ -89,7 +89,7 @@ public class PrintDecoderListAction extends AbstractAction {
             String s = "\n                       " + d.getModel();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: " + e);
+            log.error("Error printing: {}", e);
         }
     }
 
@@ -98,7 +98,7 @@ public class PrintDecoderListAction extends AbstractAction {
             String s = "\n\n" + d.getMfg();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: " + e);
+            log.error("Error printing: {}", e);
         }
     }
 
@@ -107,7 +107,7 @@ public class PrintDecoderListAction extends AbstractAction {
             String s = "\n           " + d.getFamily();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: " + e);
+            log.error("Error printing: {}", e);
         }
     }
 

@@ -52,11 +52,11 @@
       The code for a general type, like "LocoNet connections"
       or "NCE connections", should be gathered in a specific
       package right under
-      <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/package-summary.html">jmri.jmrix</a></code>
+      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/package-summary.html">jmri.jmrix</a></code>
       e.g.
-      <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">jmri.jmrix.loconet</a></code>
+      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">jmri.jmrix.loconet</a></code>
       and
-      <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/nce/package-summary.html">jmri.jmrix.nce</a></code>.
+      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/nce/package-summary.html">jmri.jmrix.nce</a></code>.
       In the preferences dialog and <code>JmrixConfigPane</code> main configuration code, this
       level is called the "manufacturer selection".
       It provides a level of grouping, which we may someday want to use for
@@ -84,10 +84,10 @@
 
       The key to normal operation (after start up and before shut down)
       is a
-      <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a></code>
+      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a></code>
       object that provides all necessary access to the system connection's objects.
       For example, the
-      <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetSystemConnectionMemo.html">LocoNetSystemConnectionMemo</a></code>
+      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetSystemConnectionMemo.html">LocoNetSystemConnectionMemo</a></code>
       provides access to a number of LocoNet-specific objects and LocoNet-specific implementations of common objects.
       Although some of those (e.g. a SensorManager) might be separately
       available from the InstanceManager, accessing them from a SystemConnectionMemo
@@ -168,24 +168,24 @@
         at application startup.</li>
 
         <li>The ConnectionConfigXml object is a child of the
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a>
         class, which is in turn a child of the
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractConnectionConfigXml</a> class.
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractConnectionConfigXml</a> class.
 
         <li>After it's constructed, the ConnectionConfigManager calls
         <code>load(..)</code> on the ConnectionConfigXml object.
         This is implemented in
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a>
         which does:
             <ul>
             <li>Invoke <code>getInstance()</code> which initializes an <code>adapter</code>
                 member implementing
-                <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html">SerialPortAdapter</a></code>.
+                <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html">SerialPortAdapter</a></code>.
                 In this case,
                 <code>getInstance()</code> is implemented in
-                <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/configurexml/ConnectionConfigXml.html#getInstance--">jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</a></code>
+                <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/configurexml/ConnectionConfigXml.html#getInstance--">jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</a></code>
                 and assigns a
-                <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/LocoBufferUsbAdapter.html">jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter</a></code>
+                <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/LocoBufferUsbAdapter.html">jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter</a></code>
                 to the "adapter" member of "ConnectionConfigXml"  That's used later on to configure the port, etc.
 
             <li>Some load of serial port information, e.g. port name
@@ -325,26 +325,26 @@
     <a href="images/JmrixLocoNetClassDiagram.png"><img src="images/JmrixLocoNetClassDiagram.png" align="right"
     alt="Class Diagram with diamond shape" height="25%" width="25%"></a></li>
     <li>Much work is done in the PortAdapter subclasses.  From a common
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
     interface, JMRI has two different
     forms for those:
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html"><code>jmrix.SerialPortAdapter</code></a> (Serial/USB connections)
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html"><code>jmrix.SerialPortAdapter</code></a> (Serial/USB connections)
     and
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/NetworkPortAdapter.html"><code>jmrix.NetworkPortAdapter</code></a> (network connections).
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/NetworkPortAdapter.html"><code>jmrix.NetworkPortAdapter</code></a> (network connections).
     <p>
 
 
     Abstract base classes implement those as
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortController</code></a> (Serial/USB connections)
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortController</code></a> (Serial/USB connections)
     and
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a> (network connections)
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a> (network connections)
     (most, but not all, systems use one of those) with a common base of
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a>.
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a>.
 
     <p>These in turn are inherited into the system-specific classes, e.g
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"><code>loconet.LnPortController</code></a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"><code>loconet.LnPortController</code></a>
     and
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnNetworkPortController.html"><code>loconet.LnNetworkPortController</code></a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnNetworkPortController.html"><code>loconet.LnNetworkPortController</code></a>
     respectively (see UML diagrams on those linked Javadoc pages).
     <p>
     Because Java doesn't allow multiple inheritance, the system-specific descendants of the two abstract base classes can't
@@ -420,7 +420,7 @@
 
       <h2>Configuration Process</h2>
 
-      See <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
+      See <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
       for links to configuration elements.
       (Is there another place that the configuration process and preferences support is described? If so, it should
       be linked from here.)
@@ -444,7 +444,7 @@ jmri.jmrix.loconet.LnConnectionTypeList
       <p>
       The contents of the
       <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java"><code>jmri.jmrix.loconet.LnConnectionTypeList</code></a>, an instance of
-      <A href="http://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix
+      <A href="https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix
           .ConnectionTypeList</code></a>
       then provides the contents for the second-level JComboBox of specific connection
       types, each corresponding (generally) to a specific

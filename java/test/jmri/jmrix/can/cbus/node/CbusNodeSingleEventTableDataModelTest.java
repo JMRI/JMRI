@@ -1,11 +1,15 @@
 package jmri.jmrix.can.cbus.node;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.assertj.swing.edt.GuiActionRunner;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 /**
  *
@@ -21,8 +25,7 @@ public class CbusNodeSingleEventTableDataModelTest {
         CbusNodeSingleEventTableDataModel t = new CbusNodeSingleEventTableDataModel(
             null, 3,CbusNodeSingleEventTableDataModel.MAX_COLUMN,ev);
         
-        Assert.assertNotNull("exists",t);
-        
+        assertThat(t).isNotNull();
         
     }
     
@@ -34,18 +37,21 @@ public class CbusNodeSingleEventTableDataModelTest {
         CbusNodeSingleEventTableDataModel t = new CbusNodeSingleEventTableDataModel(
             null, 3,CbusNodeSingleEventTableDataModel.MAX_COLUMN,evNoRows);
         
-        Assert.assertTrue( t.getRowCount()== 0 );
-        Assert.assertTrue( t.getColumnCount()== 7 );
-        Assert.assertTrue("isTableLoaded t false", t.isTableLoaded()== false );
+        assertThat(t.getRowCount()).isEqualTo(0);
+        assertThat(t.getColumnCount()).isEqualTo(7);
+
+        assertThat(t.isTableLoaded()).isFalse();
         
-        for (int i = 0; i <t.getColumnCount(); i++) {
-            Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeSingleEventTableDataModel.getPreferredWidth(i) > 0 );
-        }
-        
-        Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeSingleEventTableDataModel.getPreferredWidth(999) > 0 );
-        
+        GuiActionRunner.execute(() -> {
+            for (int i = 0; i <t.getColumnCount(); i++) {
+                assertThat(t.getColumnName(i)).isNotEmpty();
+                assertThat(CbusNodeSingleEventTableDataModel.getPreferredWidth(i)).isGreaterThan(0);
+            }
+            
+            assertThat(t.getColumnName(999)).isEqualTo("unknown 999");
+            
+            assertThat(CbusNodeSingleEventTableDataModel.getPreferredWidth(999)).isGreaterThan(0);
+        });
     }
 
     @Test
@@ -57,101 +63,68 @@ public class CbusNodeSingleEventTableDataModelTest {
         CbusNodeSingleEventTableDataModel t = new CbusNodeSingleEventTableDataModel(
             null, 3,CbusNodeSingleEventTableDataModel.MAX_COLUMN,evThreeRows);
     
-        Assert.assertTrue( t.getRowCount()== 3 );
+        assertThat(t.getRowCount()).isEqualTo(3);
+        assertThat(t.isCellEditable(0,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN)).isTrue();
+        assertThat(t.isCellEditable(0,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)).isFalse();
+        assertThat(t.isCellEditable(0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isTrue();
         
-        Assert.assertTrue("cell not editable", 
-            t.isCellEditable(0,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN) == false );
+        assertThat(t.getColumnClass(CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(Integer.class);
+        assertThat(t.getColumnClass(CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN)).isEqualTo(String.class);
         
-        Assert.assertTrue("cell editable", 
-            t.isCellEditable(0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN) == true );
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)).isEqualTo(1);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)).isEqualTo(3);
         
-        Assert.assertTrue("column class int", 
-            t.getColumnClass(CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN) == Integer.class );
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)).isEqualTo(0);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)).isEqualTo(255);
         
-        Assert.assertTrue("column class string", 
-            t.getColumnClass(CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN) == String.class );
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN)).isEqualTo("00");
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN)).isEqualTo("02");
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN)).isEqualTo("FF");
         
-        Assert.assertTrue("getValueAt ev number", (Integer)t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)== 1 );
-        Assert.assertTrue("getValueAt ev number", (Integer)t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)== 2 );
-        Assert.assertTrue("getValueAt ev number", (Integer)t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_NUMBER_COLUMN)== 3 );
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN)).isEqualTo("0000 0000");
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN)).isEqualTo("0000 0010");
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN)).isEqualTo("1111 1111");
         
-        Assert.assertTrue("getValueAt EV_CURRENT_VAL_COLUMN 0", (Integer)t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)== 0 );
-        Assert.assertTrue("getValueAt EV_CURRENT_VAL_COLUMN 1", (Integer)t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)== 2 );
-        Assert.assertTrue("getValueAt EV_CURRENT_VAL_COLUMN 2", (Integer)t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)== 255 );
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(0);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(255);
         
-        Assert.assertEquals("hex val 0","00", t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
-        Assert.assertEquals("hex val 1","02", t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
-        Assert.assertEquals("hex val 2","FF", t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN)).isEqualTo("");
         
-        Assert.assertEquals("EV_CURRENT_BIT_COLUMN 0","0000 0000", t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN));
-        Assert.assertEquals("EV_CURRENT_BIT_COLUMN 1","0000 0010", t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN));
-        Assert.assertEquals("EV_CURRENT_BIT_COLUMN 2","1111 1111", t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN));
-            
-        Assert.assertTrue("getValueAt EV_SELECT_COLUMN 0", (Integer)t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)== 0 );
-        Assert.assertTrue("getValueAt EV_SELECT_COLUMN 1", (Integer)t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)== 2 );
-        Assert.assertTrue("getValueAt EV_SELECT_COLUMN 2", (Integer)t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)== 255 );
-            
-        Assert.assertEquals("EV_SELECT_HEX_COLUMN val 0","", t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN));
-        Assert.assertEquals("EV_SELECT_HEX_COLUMN 1","", t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN));
-        Assert.assertEquals("EV_SELECT_HEX_COLUMN 2","", t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN));
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt(2,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN)).isEqualTo("");
         
-        Assert.assertEquals("EV_SELECT_BIT_COLUMN 0","", t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN));
-        Assert.assertEquals("EV_SELECT_BIT_COLUMN 1","", t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN));
-        Assert.assertEquals("EV_SELECT_BIT_COLUMN 2","", t.getValueAt(
-            2,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN));        
-        
-        Assert.assertTrue("isTableDirty t false", t.isTableDirty()== false );
-        Assert.assertTrue("isTableLoaded t true", t.isTableLoaded()== true );
-        Assert.assertTrue("getCountDirty 0 ", t.getCountDirty()== 0 );
+        assertThat(t.isTableDirty()).isFalse();
+        assertThat(t.isTableLoaded()).isTrue();
+        assertThat(t.getCountDirty()).isEqualTo(0);
         
         t.setValueAt(211,1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN);
         
-        Assert.assertTrue("getValueAt EV_SELECT_COLUMN edit 1", (Integer)t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)== 211 );
-        Assert.assertEquals("EV_SELECT_HEX_COLUMN edit 1","D3", t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN));
-        Assert.assertEquals("EV_SELECT_BIT_COLUMN edit 1","1101 0011", t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN));
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(211);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN)).isEqualTo("D3");
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN)).isEqualTo("1101 0011");
         
-        Assert.assertTrue("isSingleEvDirty 0 false", t.isSingleEvDirty(0)== false );
-        Assert.assertTrue("isSingleEvDirty 1 true", t.isSingleEvDirty(1)== true );
-        Assert.assertTrue("getCountDirty 1 ", t.getCountDirty()== 1 );
+        assertThat(t.isSingleEvDirty(0)).isFalse();
+        assertThat(t.isSingleEvDirty(1)).isTrue();
         
-        Assert.assertTrue("isTableDirty t true", t.isTableDirty()== true );
+        assertThat(t.getCountDirty()).isEqualTo(1);
+        assertThat(t.isTableDirty()).isTrue();
         
         t.resetnewEVs();
         
-        Assert.assertTrue("resetnewEVs EV_SELECT_COLUMN ", (Integer)t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)== 2 );
-        Assert.assertTrue("isTableDirty aftr reset false", t.isTableDirty()== false );
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(2);
+        assertThat(t.isTableDirty()).isFalse();
         
         t.setValueAt(211,1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN);
-        Assert.assertTrue("cell not editable ", (Integer)t.getValueAt(
-            1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)== 2 );
         
-        Assert.assertTrue("getValueAt 999", t.getValueAt(0,999) == null );
-        
-    
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt(0,999)).isNull();
+            
     }
     
     @Test
@@ -163,25 +136,61 @@ public class CbusNodeSingleEventTableDataModelTest {
         CbusNodeSingleEventTableDataModel t = new CbusNodeSingleEventTableDataModel(
             new CanSystemConnectionMemo(), 3,CbusNodeSingleEventTableDataModel.MAX_COLUMN,evThreeRows);    
     
-        Assert.assertTrue("isTableLoaded fal 1", t.isTableLoaded()== false );
+        assertThat(t.isTableLoaded()).isFalse();
         
-        Assert.assertTrue("hex val -1",-1 == (Integer) t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
-        Assert.assertTrue("bit val -1",-1 == (Integer) t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN));
-        Assert.assertTrue("select val -1",(Integer) t.getValueAt(
-            0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN) == -1 );
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN)).isEqualTo(-1);
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN)).isEqualTo(-1);
+        assertThat(t.getValueAt(0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(-1);
+        
+    }
+    
+    @Test
+    public void testSetGetValues(){
+        CbusNodeEvent evThreeRows = new CbusNodeEvent(null,0,1,0,0,3);
+        evThreeRows.setEvArr( new int[]{0,2,255});
+        
+        CbusNodeSingleEventTableDataModel t = new CbusNodeSingleEventTableDataModel(
+            null, 3,CbusNodeSingleEventTableDataModel.MAX_COLUMN,evThreeRows);
+        
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(2);
+        
+        t.setValueAt("EE", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(238);
+        
+        t.setValueAt("00", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(0);
+        
+        t.setValueAt("FF", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(255);
+        
+        t.setValueAt("FF", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(255);
+        
+        t.setValueAt("0000 0000", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(0);
+        
+        t.setValueAt("1111 1111", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(255);
+        
+        t.setValueAt("1100 0011", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(195);
+        
+        t.setValueAt("not binary", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(195);
+        
+        t.setValueAt("111111111", 1, CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN); // too big
+        assertThat(t.getValueAt(1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)).isEqualTo(195);
         
     }
     
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

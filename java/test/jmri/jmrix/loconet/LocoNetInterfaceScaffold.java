@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Test scaffold implementation of LocoNetInterface.
  * Use an object of this type as a LnTrafficController in tests.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class LocoNetInterfaceScaffold extends LnTrafficController {
 
@@ -61,7 +61,6 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         // forward a test message to LocoNetListeners
         log.debug("sendTestMessage    [{}]", m);
         notify(m);
-        return;
     }
 
     /**

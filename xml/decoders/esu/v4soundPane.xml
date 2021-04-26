@@ -49,6 +49,12 @@
         <label>
             <text> </text>
         </label>
+        <row>
+        <display item="ESU V5 Divide Trigger Impulses" format="checkbox"/>
+        </row>
+        <label>
+            <text> </text>
+        </label>
         <separator/>
         <label>
             <text>Volume</text>
@@ -121,7 +127,7 @@
             <text> </text>
         </label>
     </column>
-    <group exclude="ESU LokSound 5,Essential Sound Unit">
+    <group exclude="ESU LokSound 5,Essential Sound Unit,ESU LokPilot 5">
         <column>
             <separator/>
             <label>

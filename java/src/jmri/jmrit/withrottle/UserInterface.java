@@ -31,6 +31,7 @@ import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
 /**
@@ -246,8 +247,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         menu.add(new ControllerFilterAction());
 
-        Action prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(
-                ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
+        Action prefsAction = InstanceManager.getDefault(JmriPreferencesActionFactory.class).getCategorizedAction(
+                Bundle.getMessage("MenuMenuPrefs"),
                 "WITHROTTLE");
 
         menu.add(prefsAction);
@@ -280,7 +281,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         }
 
         if (numConnected != null) {
-        	numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
+            numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         }
         if (withrottlesListModel != null) {
             withrottlesListModel.updateDeviceList(deviceList);

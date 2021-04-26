@@ -28,22 +28,16 @@ public class CbusBasicNodeTableOperations extends CbusBasicNodeTable {
     public void addNode(CbusNode node) {
         _mainArray.add(node);
         
-        if (_mainArray.size()==1){
-            setRequestNodeDisplay(node.getNodeNumber());
-        }
-        
-        // notify the JTable object that a row has changed; do that in the Swing thread!
-        ThreadingUtil.runOnGUI( ()->{
-            fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
-            setRequestNodeDisplay(-1);
-
-        });
-        
         if (this instanceof CbusNodeTableDataModel) {
             node.setTableModel( (CbusNodeTableDataModel)this);
             node.addPropertyChangeListener((CbusNodeTableDataModel)this);
             ((CbusNodeTableDataModel) this).startBackgroundFetch();
         }
+        if (_mainArray.size()==1){
+            setRequestNodeDisplay(node.getNodeNumber());
+        }
+        // notify the JTable object that a row has changed; do that in the Swing thread!
+        ThreadingUtil.runOnGUIEventually(() -> fireTableDataChanged() );
     }
     
     /**

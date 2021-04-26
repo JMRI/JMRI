@@ -99,7 +99,7 @@
         </enumVal>
         <label>Speed curve select</label>
       </variable>
-      <variable CV="7" readOnly="yes" tooltip="=32 for all MRC Brilliance models, Read Only" item="Decoder Version" default="32">
+      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=32 for all MRC Brilliance models, Read Only" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
         <label xml:lang="it">Versione Decoder: </label>

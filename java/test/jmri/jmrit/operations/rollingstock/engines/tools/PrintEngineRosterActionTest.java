@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
@@ -25,7 +25,7 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EnginesTableFrame etf = new EnginesTableFrame();
-        PrintEngineRosterAction t = new PrintEngineRosterAction("Test Action", true, etf);
+        PrintEngineRosterAction t = new PrintEngineRosterAction(true, etf);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(etf);
         
@@ -38,7 +38,7 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
 
         JUnitOperationsUtil.initOperationsData();
         EnginesTableFrame ctf = new EnginesTableFrame();
-        PrintEngineRosterAction pcra = new PrintEngineRosterAction("Test Action", true, ctf);
+        PrintEngineRosterAction pcra = new PrintEngineRosterAction(true, ctf);
         Assert.assertNotNull("exists", pcra);
 
         EnginePrintOptionFrame f = pcra.new EnginePrintOptionFrame(pcra);

@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import jmri.SystemConnectionMemo;
+
 /**
  * Scaffold for port controller objects.
  *
@@ -67,14 +69,12 @@ public class AbstractSerialPortControllerScaffold extends AbstractSerialPortCont
 
     @Override
     public String[] validBaudRates(){
-       String[] retval = {"9600"};
-       return retval;
+        return new String[]{"9600"};
     }
 
     @Override
     public int[] validBaudNumbers() {
-        int[] retval = {9600};
-        return retval;
+        return new int[]{9600};
     }
 
     /**
@@ -87,4 +87,3 @@ public class AbstractSerialPortControllerScaffold extends AbstractSerialPortCont
     }
 
 }
-

@@ -18,6 +18,7 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public MarklinThrottleManager(MarklinSystemConnectionMemo memo) {
         super(memo);
@@ -35,7 +36,7 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
 
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        /*Here we do not set notifythrottle, we simply create a new Marklin throttle.
+        /* Here we do not set notifythrottle, we simply create a new Marklin throttle.
          The Marklin throttle in turn will notify the throttle manager of a successful or
          unsuccessful throttle connection. */
         log.debug("new MarklinThrottle for {}", address);

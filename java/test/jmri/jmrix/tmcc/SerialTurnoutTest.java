@@ -2,8 +2,8 @@ package jmri.jmrix.tmcc;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SerialTurnout class
@@ -15,7 +15,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     private SerialTrafficControlScaffold tcis = null;
     private TmccSystemConnectionMemo memo = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -46,8 +46,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 //       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROUGH (CLOSED) message
     }
 
-    // The minimal setup for log4J
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         t = null;

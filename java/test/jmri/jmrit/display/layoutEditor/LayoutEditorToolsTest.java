@@ -21,8 +21,8 @@ import org.netbeans.jemmy.operators.*;
 /**
  * Test simple functioning of LayoutEditorTools
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	George Warner Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorToolsTest {
 
@@ -79,24 +79,32 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         //create a new Layout Turnout
-        layoutTurnout = new LayoutTurnout("Right Hand",
-                LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
-                33.0, 1.1, 1.2, layoutEditor);
+        layoutTurnout = new LayoutRHTurnout("Right Hand",
+                // new Point2D.Double(150.0, 100.0),
+                // 33.0, 1.1, 1.2,
+                layoutEditor);
+        LayoutTurnoutView ltv = new LayoutTurnoutView(layoutTurnout,
+                new Point2D.Double(150.0, 100.0),
+                33.0, 1.1, 1.2,
+                layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
-        layoutEditor.getLayoutTracks().add(layoutTurnout);
+        layoutEditor.addLayoutTrack(layoutTurnout, ltv);
 
-        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 100.0), layoutEditor);
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(250.0, 100.0),
+        PositionablePointView pp1v = new PositionablePointView(positionablePoint1, new Point2D.Double(250.0, 100.0), layoutEditor);
         Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
-        layoutEditor.getLayoutTracks().add(positionablePoint1);
+        layoutEditor.addLayoutTrack(positionablePoint1, pp1v);
 
-        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(50.0, 100.0), layoutEditor);
-        layoutEditor.getLayoutTracks().add(positionablePoint2);
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(50.0, 100.0),
+        PositionablePointView pp2v = new PositionablePointView(positionablePoint2, new Point2D.Double(250.0, 100.0), layoutEditor);
+        layoutEditor.addLayoutTrack(positionablePoint2, pp2v);
         Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
 
-        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 150.0), layoutEditor);
-        layoutEditor.getLayoutTracks().add(positionablePoint3);
+        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView pp3v = new PositionablePointView(positionablePoint3, new Point2D.Double(250.0, 150.0), layoutEditor);
+        layoutEditor.addLayoutTrack(positionablePoint3, pp3v);
         Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
 
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -265,16 +273,18 @@ public class LayoutEditorToolsTest {
 
         //define connection
         String uName = "T" + (idx + 1);
-        int types[] = {LayoutTrack.TURNOUT_B, LayoutTrack.TURNOUT_C, LayoutTrack.TURNOUT_A, LayoutTrack.TURNOUT_A};
+        HitPointType types[] = {HitPointType.TURNOUT_B, HitPointType.TURNOUT_C, HitPointType.TURNOUT_A, HitPointType.TURNOUT_A};
         PositionablePoint[] positionablePoints = {positionablePoint2, positionablePoint3, positionablePoint1, positionablePoint1};
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
-                positionablePoints[idx], LayoutTrack.POS_POINT,
-                false, false, layoutEditor);
+                positionablePoints[idx], HitPointType.POS_POINT,
+                false, layoutEditor);
+        TrackSegmentView trackSegmentView = new TrackSegmentView(trackSegment, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
-        layoutEditor.getLayoutTracks().add(trackSegment);
+        Assert.assertNotNull("trackSegmentView not null", trackSegmentView);
+        layoutEditor.addLayoutTrack(trackSegment, trackSegmentView);
         try {
-            layoutTurnout.setConnection(types[idx], trackSegment, LayoutTrack.TRACK);
+            layoutTurnout.setConnection(types[idx], trackSegment, HitPointType.TRACK);
         } catch (JmriException ex) {
             Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,7 +308,7 @@ public class LayoutEditorToolsTest {
         });
 
         //change anchor to end bumper
-        positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
+        positionablePoints[idx].setType(PositionablePoint.PointType.END_BUMPER);
 
         //pressing "Done" should throw up a "blocks have not been defined around this item."  (InfoMessage6)
         //error dialog... dismiss it
@@ -363,9 +373,9 @@ public class LayoutEditorToolsTest {
         trackSegment.setLayoutBlock(null);
         layoutBlocks.get(lbIndex[idx]).setOccupancySensorName(null);
         //le.removeTrackSegment(trackSegment);
-        positionablePoint1.setType(PositionablePoint.ANCHOR);
-        positionablePoint2.setType(PositionablePoint.ANCHOR);
-        positionablePoint3.setType(PositionablePoint.ANCHOR);
+        positionablePoint1.setType(PositionablePoint.PointType.ANCHOR);
+        positionablePoint2.setType(PositionablePoint.PointType.ANCHOR);
+        positionablePoint3.setType(PositionablePoint.PointType.ANCHOR);
     }
 
     @Test
@@ -373,10 +383,11 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
-            LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            LayoutRHTurnout to = new LayoutRHTurnout("Right Hand", layoutEditor);
+            LayoutRHTurnoutView tov = new LayoutRHTurnoutView(to,
+                    point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
-            layoutEditor.getLayoutTracks().add(to);
+            layoutEditor.addLayoutTrack(to, tov);
 
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
@@ -397,10 +408,11 @@ public class LayoutEditorToolsTest {
 
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
-            LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            LayoutRHTurnout to = new LayoutRHTurnout("Right Hand", layoutEditor);
+            LayoutRHTurnoutView tov = new LayoutRHTurnoutView(to,
+                    point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
-            layoutEditor.getLayoutTracks().add(to);
+            layoutEditor.addLayoutTrack(to, tov);
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
@@ -431,8 +443,10 @@ public class LayoutEditorToolsTest {
     public void testSetSignalsAtLevelXingFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
-            Point2D point = new Point2D.Double(150.0, 100.0);
-            LevelXing lx = new LevelXing("LevelCrossing", point, layoutEditor);
+            // Point2D point = new Point2D.Double(150.0, 100.0);
+            LevelXing lx = new LevelXing("LevelCrossing", layoutEditor);
+            // LevelXingView lxv = new LevelXingView(lx, point, layoutEditor);
+
             lx.setLayoutBlockAC(layoutBlocks.get(0));
             lx.setLayoutBlockBD(layoutBlocks.get(1));
 
@@ -573,6 +587,7 @@ public class LayoutEditorToolsTest {
 
     /**
      * convenience method for accessing...
+     *
      * @return the layout editor's toolbar panel
      */
     @Nonnull
@@ -621,7 +636,7 @@ public class LayoutEditorToolsTest {
             for (int i = 0; i < 5; i++) {
                 String sName = "IH" + i;
                 String uName = "signal head " + i;
-                VirtualSignalHead signalHead = new VirtualSignalHead(sName,uName);
+                VirtualSignalHead signalHead = new VirtualSignalHead(sName, uName);
                 InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
             }
             signalHeads = InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
@@ -645,6 +660,8 @@ public class LayoutEditorToolsTest {
         turnouts = null;
         signalHeads = null;
         sensors = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

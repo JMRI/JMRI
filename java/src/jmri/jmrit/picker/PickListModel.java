@@ -2,7 +2,6 @@ package jmri.jmrit.picker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -79,15 +78,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     }
 
     /**
-     * No longer needed. Now done in BeanTableDataModel.
-     *
-     * @deprecated since Jan 1, 2014, marked as such May 1, 2017
-     */
-    @Deprecated
-    public void init() {
-    }
-
-    /**
      * If table has been sorted table row no longer is the same as array index.
      *
      * @param index row of table
@@ -123,35 +113,24 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         makePickList();
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void makePickList() {
         // Don't know who is added or deleted so remove all name change listeners
         if (_pickList != null) {
-            for (int i = 0; i < _pickList.size(); i++) {
-                _pickList.get(i).removePropertyChangeListener(this);
+            for (E e : _pickList) {
+                e.removePropertyChangeListener(this);
             }
         }
-        List<String> systemNameList = getManager().getSystemNameList();
         TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator<>());
+        ts.addAll(getManager().getNamedBeanSet());
 
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            ts.add(getBySystemName(iter.next()));
-        }
-        _pickList = new ArrayList<>(systemNameList.size());
+        _pickList = new ArrayList<>(getManager().getNamedBeanSet().size());
 
-        Iterator<E> it = ts.iterator();
-        while (it.hasNext()) {
-            E elt = it.next();
-            _pickList.add(elt);
-        }
+        _pickList.addAll(ts);
         // add name change listeners
-        for (int i = 0; i < _pickList.size(); i++) {
-            _pickList.get(i).addPropertyChangeListener(this);
+        for (E e : _pickList) {
+            e.addPropertyChangeListener(this);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("_pickList has " + _pickList.size() + " beans");
-        }
+        log.debug("_pickList has {} beans", _pickList.size());
     }
 
     /** {@inheritDoc} */
@@ -176,14 +155,15 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     /**
      * Return bean with name given in parameter. Create if needed and possible.
      *
-     * @param name the name for the bean
-     * @return the bean or null if not made
+     * @param name the System name for the Bean.
+     * @return the Bean or null if not made.
+     * @throws IllegalArgumentException with reason why Bean cannot be created.
      */
     @CheckForNull
-    abstract public E addBean(@Nonnull String name);
+    abstract public E addBean(@Nonnull String name) throws IllegalArgumentException;
 
     @CheckForNull
-    abstract public E addBean(@Nonnull String sysName, String userName);
+    abstract public E addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException;
 
     /**
      * Check if beans can be added by this model.
@@ -300,8 +280,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("propertyChange of \"" + e.getPropertyName()
-                    + "\" for " + e.getSource().toString());
+            log.debug("propertyChange of \"{}\" for {}", e.getPropertyName(), e.getSource().toString());
         }
     }
 
@@ -527,6 +506,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Turnout> getManager() {
             manager = InstanceManager.turnoutManagerInstance();
             return manager;
@@ -534,13 +514,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Turnout addBean(String name) throws IllegalArgumentException {
+        public Turnout addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideTurnout(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Turnout addBean(String sysName, String userName) {
+        public Turnout addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newTurnout(sysName, userName);
         }
 
@@ -553,7 +533,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     static class SensorPickModel extends PickListModel<Sensor> {
 
-        SensorManager manager = InstanceManager.sensorManagerInstance();
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
 
         SensorPickModel() {
             _name = rb.getString("TitleSensorTable");
@@ -561,6 +541,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Sensor> getManager() {
             manager = InstanceManager.sensorManagerInstance();
             return manager;
@@ -568,13 +549,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Sensor addBean(String name) throws IllegalArgumentException {
+        public Sensor addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideSensor(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Sensor addBean(String sysName, String userName) {
+        public Sensor addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newSensor(sysName, userName);
         }
 
@@ -621,6 +602,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<SignalHead> getManager() {
             manager = InstanceManager.getDefault(SignalHeadManager.class);
             return manager;
@@ -628,13 +610,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public SignalHead addBean(String name) {
+        public SignalHead addBean(@Nonnull String name) {
             return manager.getSignalHead(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public SignalHead addBean(String sysName, String userName) {
+        public SignalHead addBean(@Nonnull String sysName, String userName) {
             SignalHead sh = manager.getSignalHead(userName);
             if (sh == null) {
                 sh = manager.getSignalHead(sysName);
@@ -659,6 +641,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<SignalMast> getManager() {
             manager = InstanceManager.getDefault(SignalMastManager.class);
             return manager;
@@ -666,13 +649,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public SignalMast addBean(String name) throws IllegalArgumentException {
+        public SignalMast addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideSignalMast(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public SignalMast addBean(String sysName, String userName) throws IllegalArgumentException {
+        public SignalMast addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             SignalMast sm = manager.getSignalMast(userName);
             if (sm == null) {
                 sm = manager.provideSignalMast(sysName);
@@ -697,6 +680,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Memory> getManager() {
             manager = InstanceManager.memoryManagerInstance();
             return manager;
@@ -704,13 +688,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Memory addBean(String name) throws IllegalArgumentException {
+        public Memory addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideMemory(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Memory addBean(String sysName, String userName) {
+        public Memory addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newMemory(sysName, userName);
         }
 
@@ -731,6 +715,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Block> getManager() {
             manager = InstanceManager.getDefault(BlockManager.class);
             return manager;
@@ -738,13 +723,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Block addBean(String name) throws IllegalArgumentException {
+        public Block addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideBlock(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Block addBean(String sysName, String userName) {
+        public Block addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.createNewBlock(sysName, userName);
         }
 
@@ -765,6 +750,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Reporter> getManager() {
             manager = InstanceManager.getDefault(ReporterManager.class);
             return manager;
@@ -772,13 +758,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Reporter addBean(String name) throws IllegalArgumentException {
+        public Reporter addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideReporter(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Reporter addBean(String sysName, String userName) {
+        public Reporter addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newReporter(sysName, userName);
         }
 
@@ -799,6 +785,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Light> getManager() {
             manager = InstanceManager.lightManagerInstance();
             return manager;
@@ -806,13 +793,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Light addBean(String name) throws IllegalArgumentException {
+        public Light addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideLight(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Light addBean(String sysName, String userName) {
+        public Light addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newLight(sysName, userName);
         }
 
@@ -833,6 +820,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<OBlock> getManager() {
             manager = InstanceManager.getDefault(OBlockManager.class);
             return manager;
@@ -840,13 +828,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public OBlock addBean(String name) throws IllegalArgumentException {
+        public OBlock addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideOBlock(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public OBlock addBean(String sysName, String userName) {
+        public OBlock addBean(@Nonnull String sysName, String userName) {
             return manager.createNewOBlock(sysName, userName);
         }
 
@@ -867,6 +855,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Warrant> getManager() {
             manager = InstanceManager.getDefault(WarrantManager.class);
             return manager;
@@ -874,13 +863,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Warrant addBean(String name) throws IllegalArgumentException {
+        public Warrant addBean(@Nonnull String name) throws IllegalArgumentException {
             return manager.provideWarrant(name);
         }
 
         /** {@inheritDoc} */
         @Override
-        public Warrant addBean(String sysName, String userName) {
+        public Warrant addBean(@Nonnull String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName, false, 0);
         }
 
@@ -901,6 +890,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<DestinationPoints> getManager() {
             manager = InstanceManager.getDefault(EntryExitPairs.class);
             return manager;
@@ -908,13 +898,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public DestinationPoints addBean(String name) {
+        public DestinationPoints addBean(@Nonnull String name) {
             return null;
         }
 
         /** {@inheritDoc} */
         @Override
-        public DestinationPoints addBean(String sysName, String userName) {
+        public DestinationPoints addBean(@Nonnull String sysName, String userName) {
             return null;
         }
 
@@ -946,6 +936,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
+        @Nonnull
         public Manager<Logix> getManager() {
             manager = InstanceManager.getDefault(LogixManager.class);
             return manager;
@@ -953,13 +944,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Logix addBean(String name) {
+        public Logix addBean(@Nonnull String name) {
             return null;
         }
 
         /** {@inheritDoc} */
         @Override
-        public Logix addBean(String sysName, String userName) {
+        public Logix addBean(@Nonnull String sysName, String userName) {
             return null;
         }
 
@@ -969,4 +960,5 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             return false;
         }
     }
+
 }

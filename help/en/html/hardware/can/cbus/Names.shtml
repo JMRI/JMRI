@@ -5,18 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS naming long short events event add sensor hex">
-  <title>JMRI Hardware Support - MERG CBUS - Naming</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help CBUS naming long short events event add sensor hex">
+  <title>JMRI Hardware Support - CBUS&reg; - Events</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -25,16 +16,16 @@
       <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI Hardware Support: MERG CBUS - Naming</h1>
+      <h1>JMRI Hardware Support: CBUS - Naming</h1>
 
         <ul class="snav">
         <li><a href="#events">Event Name and Numbering</a></li>
         <li><a href="#reporters">Reporters</a></li>
         <li><a href="#sysname">System Names</a></li>
-        <li><a href="#summary">Summary of MERG CBUS Events</a></li>
+        <li><a href="#summary">Summary of CBUS Events</a></li>
         <li><a href="#namingspec">Event Naming Specification</a></li>
         <li><a href="#hex">Sending hex strings</a></li>
-        <li><a href="#opc">MERG CBUS Operation Codes in JMRI</a></li>
+        <li><a href="#opc">CBUS Operation Codes in JMRI</a></li>
         </ul>
       
         <!--
@@ -43,7 +34,7 @@
         @icklesteve June 2018
         -->      
         <p>This page describes how JMRI uses System Names to access
-        MERG CBUS-attached resources.</p>
+        CBUS-attached resources.</p>
       
       
       <h2><a name="events" id="events">Event Name and Numbering</a></h2>
@@ -129,10 +120,10 @@
       <h4><a name="automatic" id="automatic">Sensors - JMRI Automatic Creation</a></h4>
 
         <p>JMRI DOES NOT attempt to create Sensor objects from
-        the traffic that it hears on the MERG CBUS network, 
+        the traffic that it hears on the CBUS network, 
         unlike some other hardware systems.</p>
         
-        <p>This is because MERG CBUS is essentially a networking protocol, 
+        <p>This is because CBUS is essentially a networking protocol, 
         not a sensor generator.
         Events are not intrinsically associated with
         specific hardware objects, people can use events in many ways.</p>
@@ -141,7 +132,7 @@
       
        <h4><a name="turnout" id="turnout">Turnout Operation</a></h4>
       
-      <p>MERG CBUS is setup in JMRI for 4 types of turnout ( output ) feedback.</p>
+      <p>CBUS is setup in JMRI for 4 types of turnout ( output ) feedback.</p>
       <p>Turnouts have 2 states, the commanded state, and the Feedback state 
       which is used on panel displays and elsewhere.</p>
       
@@ -211,11 +202,11 @@
         <p><strong>This really is all you need to know to get started</strong>, the rest of the information on this page 
         is aimed at advanced use cases, debugging panel xml files, and system development.</p>
       
-        <p>JMRI internally associates MERG CBUS events with individual JMRI objects
+        <p>JMRI internally associates CBUS events with individual JMRI objects
         (Sensors, Turnouts, Lights, etc.) via the <a href="../../../doc/Technical/Names.shtml">JMRI System Names</a>.
         </p>        
 
-        <p>Depending on which MERG CBUS event IDs are used on a
+        <p>Depending on which CBUS event IDs are used on a
         particular layout, these system names can get very long, in
         which case the "user names" are much more useful.</p>
         
@@ -236,7 +227,7 @@
         </ul>         
       
       
-      <h3><a name="summary" id="summary">Summary of MERG CBUS events ( Sensors, Turnouts and Lights )</a></h3>
+      <h3><a name="summary" id="summary">Summary of CBUS events ( Sensors, Turnouts and Lights )</a></h3>
       
       <table border="1">
         <tbody><tr>
@@ -309,7 +300,7 @@
           <td>MTX90002D002E;X91FFFFFFFE</td>
           <td>hex;hex</td>
           <td>N/A</td>
-          <td colspan="2">Depends on Opscode</td>
+          <td colspan="2">Depends on opcode</td>
           <td>In eg. Thrown sends Long Event N 45 E 46 <br>Closed sends Long Event N 65535 E 65534 </td>
         </tr>
         <tr>
@@ -361,11 +352,11 @@
       frame):<br>
       <code>MS18;21</code></p>
 
-      <p>The ON and OFF coding of MERG CBUS is not entirely consistent
+      <p>The ON and OFF coding of CBUS is not entirely consistent
       with the event model, 
       <br>it may be useful to connect the
       ACTIVE or INACTIVE transition of a JMRI Sensor to an OFF or
-      ON MERG CBUS frame respectively. 
+      ON CBUS frame respectively. 
       <br>Leading "+" and "-" characters
       can do this. For example,<br>
       <code>MS-18;+21</code><br>
@@ -374,7 +365,7 @@
       <br>and goes INACTIVE when an ON frame
       with ID number 21 is received.</p>
 
-      <p>MERG CBUS event numbers (usually) contain a node number in
+      <p>CBUS event numbers (usually) contain a node number in
       their most-significant bytes. 
       <br>You can specify the node number
       either by using a full 5 decimal digits for the event number
@@ -384,7 +375,7 @@
       parts:<br>
       <code>MSN2E18</code><br></p>
 
-      <p>You can mask off part of the MERG CBUS packet, so any values in
+      <p>You can mask off part of the CBUS packet, so any values in
       the masked part will still match, using the "M" format
       letter.<br>
       <code>MS200018M07</code><br>
@@ -394,7 +385,7 @@
       
       <br>In the example above, "18" through "1F" will
       match. 
-      <br>This is particularly useful for matching e.g. MERG CBUS
+      <br>This is particularly useful for matching e.g. CBUS
       short events, where parts of the packet include the node
       number which should (usually) be ignored.</p>
       
@@ -403,9 +394,9 @@
     <h2><a name="hex" id="hex">Sending hex strings</a></h2>
      <div>
       
-      <p>Hexadcimal numbering is based on the power of 16, using 0-9, then A-F.</p>
+      <p>Hexadecimal numbering is based on the power of 16, using 0-9, then A-F.</p>
       
-      <p>MERG CBUS modules
+      <p>CBUS modules
       communicate by messages with a fixed format: One byte of
       command and length information, followed optionally by
       additional data bytes.</p>
@@ -414,22 +405,22 @@
       to send identifiable "events". In turn, events come in two
       types: "ON" and "OFF", with two forms, short ( SLiM ), and long ( FiLM ).</p>
       
-      <p>These are actually sent across a MERG CBUS network in the form of an Opscode, the command information.</p>
+      <p>These are actually sent across a CBUS network in the form of an opcode, the command information.</p>
       
-      <p>There are 255 ops codes, the length of the data string following the Opscode changes depending on which Opscode is used.</p>
+      <p>There are 255 opcodes, the length of the data string following the opcode changes depending on which opcode is used.</p>
       
-      <p>There are multiple Opscodes for events, Controlling and programming DCC devices, DCC consisting, Programming nodes with Node Variables, Programming nodes with events, Fast clock and temperature information, RfID reader data, and many more.</p>
+      <p>There are multiple opcodes for events, Controlling and programming DCC devices, DCC consisting, Programming nodes with Node Variables, Programming nodes with events, Fast clock and temperature information, RfID reader data, and many more.</p>
       
-      <p>Four of these are the common Opscodes for events :</p>
+      <p>Four of these are the common opcodes for events :</p>
       
       <table border="1">
       <tr>
       <th>Ops Code Name 
       <br>( MERG console log ) </th>
       <th>Decimal
-      <br>Opscode</th>
+      <br>opcode</th>
       <th>Hexadecimal
-      <br>Opscode</th>
+      <br>opcode</th>
       <th></th>
       </tr>
       <tr>
@@ -467,7 +458,7 @@
       on the layout.</p>
       
       
-      <p>These particular event Opscodes use a Hex string 4 digits long, split into High then Low :</p>
+      <p>These particular event opcodes use a Hex string 4 digits long, split into High then Low :</p>
       
       <img src="images/web/merg-add-turnout-hex-620x147.png" align="right" 
       alt="merg cbus add new turnout hexadecimal hex" width="620" height="147">
@@ -548,9 +539,9 @@
       they need both an on and off side seperated by a ";".
       </p>
       
-      <p>The CAN frames can send MERG CBUS opscodes in the hex form of the code you require.
+      <p>The CAN frames can send CBUS opcodes in the hex form of the code you require.
       <br>
-      eg, to set up a sensor to send ( DCC emergency stop / Track power on ) opscodes over MERG CBUS, 
+      eg, to set up a sensor to send ( DCC emergency stop / Track power on ) opcodes over CBUS, 
       <br>you could use a hardware address of <code>X0A;X05</code>
       </p>
 
@@ -566,7 +557,7 @@
       <td><code>[x[7f]0A]</code></td>
       <td><code>S0FE0N0A;</code></td>
       <td>(RESTP) Request Emergency Stop ALL trains
-      <br>A MERG CANCMD confirms request with an ESTOP 06 Opscode.</td>
+      <br>A CBUS command station confirms request with an ESTOP 06 opcode.</td>
       </tr> 
       <tr>
       <td><code>X05</code></td>
@@ -577,7 +568,7 @@
       </table>
 
       <p>
-      All of these Opscode messages are sent with the Standard CAN event frame, 
+      All of these opcode messages are sent with the Standard CAN event frame, 
       however the protocol also allows for access to extended CAN frames.
       <br>These frames enable bootloading of modules ( firmware updates ), 
       while future uses of this may also be for local media streaming ( eg. transferring 
@@ -588,37 +579,35 @@
       
       <p>Extended CAN frames ( which are not CBUS messages ) can be monitored in the 
       <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
-        >CBUS console</a>,
-        and are filtered from all other JMRI objects ( Sensors, Turnouts etc. ).</p>
+        >CBUS console</a>, and are filtered from all other JMRI objects ( Sensors, Turnouts etc. ).</p>
       
-      <p>Although module firmware updates are not currently available within JMRI, 
-      full support for this is available via 3rd party software ( FCU - FLiM Configuration Utility ), 
-      available free for MERG members to download.
+      <p>Module firmware updates are supported by the <a href=../../../../package/jmri/jmrix/can/cbus/swing.bootloader/CbusBootloaderPane.shtml>
+            CBUS bootloader </a> and by 3rd party software (FCU - FLiM Configuration Utility), 
+            available free for MERG members to download.
       </p>
+      
+      <p>For advanced system development and packet proving, you may prefer to view the 
+      full packet across various applications, eg CBUS SERVER.</p>
       
       <img src="images/web/merg-cbus-server-400x256.png"
       width="400" height="256" alt="merg cbus server" align="right">
       
-      
-      <p>For advanced system development and packet proving, you may prefer to view the 
-      full packet across various applications, eg MERG CBUS SERVER.</p>
-      
         <p>The <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
-        >JMRI MERG CBUS Console Tool</a> can be very useful in seeing what is being sent 
+        >JMRI CBUS Console Tool</a> can be very useful in seeing what is being sent 
         across the network by the hardware addresses you create.
         <br>The console is intended to be a tool to help users monitor packets using short and long events,
         and may attempt to beautify the output.</p>      
       
-        <p>Check the MERG CBUS wiki and developers guide for more info and absolute specification.</p>
+        <p>Check the CBUS wiki and developers guide for more info and absolute specification.</p>
       
       
      </div>
       
-     <h2><a name="opc" id="opc">JMRI Supported Operation Codes</a></h2>
+     <h2><a name="opc" id="opc">JMRI Supported Operation Codes (Opcodes)</a></h2>
       <div>
-        <p>The majority of Opscodes according to the MERG CBUS developers guide 6b are supported in some sort of form.</p>
+        <p>The majority of opcodes according to the CBUS developers guide 6b are supported in some sort of form.</p>
 
-        <p>All outgoing JMRI MERG CBUS messages have their OPC priority added to the header section of the message.</p>
+        <p>All outgoing JMRI CBUS messages have their OPC priority added to the header section of the message.</p>
         
         <p>Many JMRI functions utilise the OPC support within : </p>
         
@@ -626,20 +615,20 @@
         <li>
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusOpCodes.java"
         >CbusOpCodes.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html"
         >JavaDoc</a>
         </li>
 
         <li>
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusConstants.java"
         >CbusConstants.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html"
         >JavaDoc</a>
         </li>
         
         <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusMessage.java"
         >CbusMessage.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html"
         >JavaDoc</a>
         </li>
         
@@ -649,16 +638,16 @@
         
         <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusProgrammer.java"
         >CbusProgrammer.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusProgrammer.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusProgrammer.html"
         >JavaDoc</a>
         Functions for dealing with Node programming ( Node Config Tool functions to be moved here )
         </li>
         
         </ul>
 
-       <h4>Opscodes used in JMRI MERG CBUS Tools</h4>
+       <h4>Opcodes used in JMRI CBUS Tools</h4>
        
-       <p>There's a list of supported OPCs for each JMRI MERG CBUS tool support page.</p>
+       <p>There's a list of supported OPCs for each JMRI CBUS tool support page.</p>
         
        <ul>
        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml#opc"
@@ -724,7 +713,7 @@
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusReporterManager.java"
         >CbusReporterManager.java</a>
         </p>
-        <p>Messages sent from, and received by JMRI are handled the same by MERG CBUS Reporters.</p>
+        <p>Messages sent from, and received by JMRI are handled the same by CBUS Reporters.</p>
         <ul>
         <li>DDES - Constant Listener</li>
         <li>DDRS - Constant Listener</li>
@@ -825,13 +814,17 @@
       
      <h2>JMRI Help</h2>
       <div>
-      <p><a href="index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
+      <p><a href="index.shtml">Main JMRI CBUS Support page</a>.</p>
       
       <p><a href="../scripting.shtml">JMRI Scripting</a> for CAN frames with CanExample.py</p>
       
-      <p><a href="index.shtml#thirdparty">MERG CBUS 3rd Party Links</a> See link for the MERG CBUS Developers Guide</p>
+      <p><a href="index.shtml#thirdparty">CBUS 3rd Party Links</a> See link for the CBUS Developers Guide</p>
       </div>
       
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

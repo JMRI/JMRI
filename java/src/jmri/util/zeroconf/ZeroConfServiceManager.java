@@ -25,8 +25,8 @@ import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ShutDownManager;
-import jmri.implementation.QuietShutDownTask;
 import jmri.profile.ProfileManager;
+import jmri.util.SystemType;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
@@ -93,7 +93,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     // class data objects
     protected final HashMap<String, ZeroConfService> services = new HashMap<>();
     protected final NetworkListener networkListener = new NetworkListener(this);
-    protected final ShutDownTask shutDownTask = new ShutDownTask(this);
+    protected final Runnable shutDownTask = () -> dispose(this);
 
     protected final ZeroConfPreferences preferences = new ZeroConfPreferences(ProfileManager.getDefault().getActiveProfile());
 
@@ -305,7 +305,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
         new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
-            new Thread(() -> {
+            Thread t = new Thread(() -> {
                 dns.unregisterAllServices();
                 if (close) {
                     try {
@@ -315,7 +315,9 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                     }
                 }
                 nsLatch.countDown();
-            }, "dns.close in ZeroConfServiceManager#stopAll").start();
+            });
+            t.setName("dns.close in ZerConfServiceManager#stopAll");
+            t.start();
         });
         try {
             zcLatch.await();
@@ -358,7 +360,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                                 try {
                                     JMDNS_SERVICES.put(address, JmDNS.create(address, name));
                                 } catch (IOException ex) {
-                                    log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
+                                    log.warn("Unable to create JmDNS with error", ex);
                                 }
                             }
                         }
@@ -368,6 +370,9 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                 }
             } catch (SocketException ex) {
                 log.error("Unable to get network interfaces.", ex);
+            }
+            if (!SystemType.isMacOSX()) {
+                JmmDNS.Factory.getInstance().addNetworkTopologyListener(networkListener);
             }
             InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
         }
@@ -544,8 +549,10 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
     private static void dispose(ZeroConfServiceManager manager) {
         Date start = new Date();
-        JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
-        log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+        if (!SystemType.isMacOSX()) {
+            JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
+            log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+        }
         start = new Date();
         log.debug("Starting to stop services...");
         manager.stopAll(true);
@@ -609,35 +616,5 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             });
         }
 
-    }
-
-    protected static class ShutDownTask extends QuietShutDownTask {
-
-        private boolean isComplete = false;
-        private final ZeroConfServiceManager manager;
-
-        public ShutDownTask(ZeroConfServiceManager manager) {
-            super("Stop ZeroConfServices");
-            this.manager = manager;
-        }
-
-        @Override
-        public boolean execute() {
-            new Thread(() -> {
-                dispose(manager);
-                this.isComplete = true;
-            }, "ZeroConfServiceManager ShutDownTask").start();
-            return true;
-        }
-
-        @Override
-        public boolean isParallel() {
-            return true;
-        }
-
-        @Override
-        public boolean isComplete() {
-            return this.isComplete;
-        }
     }
 }

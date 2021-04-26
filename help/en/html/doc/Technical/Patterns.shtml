@@ -42,7 +42,7 @@
       <h2>Names, NamedBeans, and Managers</h2>
       The "NamedBean"
       concept is basic to JMRI. A <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+      "https://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       is a basic JMRI object that represents something, typically
       something like a specific Sensor or Turnout.
 
@@ -59,7 +59,7 @@
       </ul>Functionally, all the device object classes (Sensor,
       Turnout, ...) and their specific implementations (LnSensor,
       XNetTurnout, ...) inherit from the base <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+      "https://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       class.
 
       <a id="handles" name="handles"></a>
@@ -68,7 +68,7 @@
       <p>To get access to a specific object (a NamedBean of a
       specific type with a specific name), you make requests of a
       manager: You ask a <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a>
+      "https://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a>
       for a specific Turnout. In turn, you <a href=
       "IntroStructure.shtml">access the managers through the common
       InstanceManager</a>.</p>
@@ -78,7 +78,7 @@
       that user name refers to. "Yard East Turnout" might be "LT12"
       at one point, and later get moved to "CT5". To handle this,
       your code should use <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+      "https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
       objects to handle references to NamedBeans. They automate the
       process of renaming.</p>
       <p>To do this, when you want to store a reference to 
@@ -126,10 +126,10 @@
 
       <p>NamedBeans are created and configured by the user using explicit
       actions. Most of the UI for these actions is in
-      the <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/package-summary.html">jmri.jmrit.beantable</a>
+      the <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/package-summary.html">jmri.jmrit.beantable</a>
       package, using the generic <code>BeanTable{Frame,Pane,Model}</code>
       classes specialized for the particular type, for example in the
-      <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/TurnoutTableAction.html"><code>TurnoutTableAction</code></a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/TurnoutTableAction.html"><code>TurnoutTableAction</code></a>
       class. The configuration options present in the table and the edit dialog
       are specific to the type (<code>Turnout</code>) but not the system.</p>
       
@@ -137,13 +137,13 @@
       Configuration (and Panel) XML file when the user saves those. The
       persistence is handled by the system- and object-specific ManagerXml
       class, for
-      example <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnTurnoutManagerXml.html">LnTurnoutManagerXml</a>
-      or <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/configurexml/OlcbTurnoutManagerXml.html">OlcbTurnoutManagerXml</a>,
+      example <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnTurnoutManagerXml.html">LnTurnoutManagerXml</a>
+      or <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/configurexml/OlcbTurnoutManagerXml.html">OlcbTurnoutManagerXml</a>,
       which heavily rely on shared code
-      in <a href="http://jmri.org/JavaDoc/doc/jmri/managers/configurexml/AbstractTurnoutManagerConfigXML.html">AbstractTurnoutManagerConfigXML</a>,
+      in <a href="https://jmri.org/JavaDoc/doc/jmri/managers/configurexml/AbstractTurnoutManagerConfigXML.html">AbstractTurnoutManagerConfigXML</a>,
       but can introduce system-specific functionality and work together with
       the system- and object-specific manager
-      (e.g. <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/OlcbTurnoutManager.html">OlcbTurnoutManager</a>)
+      (e.g. <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/OlcbTurnoutManager.html">OlcbTurnoutManager</a>)
       to achieve this.</p>
 
       <p>The base class handles persisting the user settings that were entered
@@ -155,9 +155,9 @@
       because the code in the <code>jmrit.beantable</code>
       package <a href="IntroStructure.shtml">cannot depend</a> on the
       jmrix.system-specific packages. All NamedBeans have
-      a <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#setProperty-java.lang.String-java.lang.Object-">setProperty</a>
+      a <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#setProperty-java.lang.String-java.lang.Object-">setProperty</a>
       and
-      <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#getProperty-java.lang.String-">getProperty</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#getProperty-java.lang.String-">getProperty</a>
       method where arbitrary values can be saved for any string key. These
       properties are persisted into the XML file by the base class of the
       ManagerXml, so no code needs to be written for it. A variety of basic
@@ -170,9 +170,9 @@
       <p>To allow the user to edit these system-specific properties, a specific
       <code>Manager</code> can declare the set of supported properties by
       returning appropriately
-      filled <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanPropertyDescriptor.html">NamedBeanPropertyDescriptor</a>
+      filled <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanPropertyDescriptor.html">NamedBeanPropertyDescriptor</a>
       objects from
-      the <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#getKnownBeanProperties--">getKnownBeanProperties</a>
+      the <a href="https://jmri.org/JavaDoc/doc/jmri/Manager.html#getKnownBeanProperties--">getKnownBeanProperties</a>
       method. This descriptor tells the BeanTable that additional columns need
       to be created, what type of data those columns will hold and what should
       be the column names (printed in the header). The system-specific columns
@@ -207,20 +207,20 @@
       Available patterns (links are to the JavaDoc for the interface or class 
       specifying the functionality):
       <dl>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a></dt>
       <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">HttpServlet</a></dt>
         <dd>(Note this is a Java-defined class, not a JMRI-defined interface)</dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
         <dd>Provides a way for the JMRI InstanceManager to create an instance of the class when one is requested</dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.html">SignalMastAddPane</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.html">SignalMastAddPane</a></dt>
         <dd>Provide a type-specific pane used to add/edit the information in a SignalMast concrete object</dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
-      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
       </dl>
 
       <p>

@@ -33,7 +33,7 @@ public class SimpleServerMenuTest {
         JUnitUtil.setUp();
     }
 
-    @AfterEach public void tearDown() throws Exception {
+    @AfterEach public void tearDown() {
         JUnitUtil.tearDown();
     }
 

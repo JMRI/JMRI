@@ -1,10 +1,9 @@
 package jmri.web.server;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.web.server.WebServer class
@@ -85,14 +84,14 @@ public class WebServerTest {
         Assert.assertTrue(a.isStopped());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.tearDown();

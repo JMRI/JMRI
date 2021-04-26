@@ -27,7 +27,9 @@ public interface Lock {
     public boolean isLockClear();  
     
     /**
-     * Check a collection of Locks, handling the logging etc as needed
+     * Check a collection of Locks, handling the logging etc as needed.
+     * @param locks collection of locks.
+     * @return false if a lock is not clear, else true.
      */
     static public boolean checkLocksClear(List<Lock> locks) {
         lockLogger.clear();

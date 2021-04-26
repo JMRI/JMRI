@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -14,11 +15,10 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.jdom2.JDOMException;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Xml class Last manually cross-checked on 20090131
@@ -210,22 +210,22 @@ public class XmlTest extends OperationsTestCase {
         t1.setRoadOption("t1 raod option");
         t1.setRoute(C);
         t1.setSecondLegCabooseRoad("t1 second leg caboose road");
-        t1.setSecondLegEndLocation(midC);
+        t1.setSecondLegEndRouteLocation(midC);
         t1.setSecondLegEngineModel("t1 second leg engine model");
         t1.setSecondLegEngineRoad("t1 second leg engine road");
         t1.setSecondLegNumberEngines("5");
         t1.setSecondLegOptions(Train.ADD_CABOOSE);
-        t1.setSecondLegStartLocation(endC);
+        t1.setSecondLegStartRouteLocation(endC);
         t1.setSendCarsToTerminalEnabled(true);
         t1.setStatusCode(Train.CODE_UNKNOWN);
         t1.setSwitchListStatus(Train.PRINTED);
         t1.setThirdLegCabooseRoad("t1 third leg caboose road");
-        t1.setThirdLegEndLocation(startC);
+        t1.setThirdLegEndRouteLocation(startC);
         t1.setThirdLegEngineModel("t1 third leg engine model");
         t1.setThirdLegEngineRoad("t1 third leg engine road");
         t1.setThirdLegNumberEngines("3");
         t1.setThirdLegOptions(Train.HELPER_ENGINES);
-        t1.setThirdLegStartLocation(midC);
+        t1.setThirdLegStartRouteLocation(midC);
         t1.addTrainSkipsLocation(midC.getId());
 
         t3.setBuildEnabled(false);
@@ -304,30 +304,30 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 route", C, t1.getRoute());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
                 .getSecondLegCabooseRoad());
-        Assert.assertEquals("t1 second leg end location", midC, t1.getSecondLegEndLocation());
+        Assert.assertEquals("t1 second leg end location", midC, t1.getSecondLegEndRouteLocation());
         Assert.assertEquals("t1 second leg engine model", "t1 second leg engine model", t1
                 .getSecondLegEngineModel());
         Assert.assertEquals("t1 second leg engine road", "t1 second leg engine road", t1
                 .getSecondLegEngineRoad());
         Assert.assertEquals("t1 second leg number of engines", "5", t1.getSecondLegNumberEngines());
         Assert.assertEquals("t1 second leg options", Train.ADD_CABOOSE, t1.getSecondLegOptions());
-        Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartLocation());
+        Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartRouteLocation());
         Assert.assertEquals("t1 send cars to terminal", true, t1.isSendCarsToTerminalEnabled());
         Assert.assertEquals("t1 status", Train.UNKNOWN, t1.getStatus());
         Assert.assertEquals("t1 switch list status", Train.PRINTED, t1.getSwitchListStatus());
         Assert.assertEquals("t1 third leg caboose road", "t1 third leg caboose road", t1
                 .getThirdLegCabooseRoad());
-        Assert.assertEquals("t1 third leg end location", startC, t1.getThirdLegEndLocation());
+        Assert.assertEquals("t1 third leg end location", startC, t1.getThirdLegEndRouteLocation());
         Assert.assertEquals("t1 third leg engine model", "t1 third leg engine model", t1
                 .getThirdLegEngineModel());
         Assert.assertEquals("t1 third leg engine road", "t1 third leg engine road", t1
                 .getThirdLegEngineRoad());
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
-        Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartLocation());
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.skipsLocation(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(endC.getId()));
+        Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartRouteLocation());
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());
@@ -353,23 +353,23 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 route", A, t3.getRoute());
         // test second leg defaults
         Assert.assertEquals("t3 second leg caboose road", "", t3.getSecondLegCabooseRoad());
-        Assert.assertEquals("t3 second leg end location", null, t3.getSecondLegEndLocation());
+        Assert.assertEquals("t3 second leg end location", null, t3.getSecondLegEndRouteLocation());
         Assert.assertEquals("t3 second leg engine model", "", t3.getSecondLegEngineModel());
         Assert.assertEquals("t3 second leg engine road", "", t3.getSecondLegEngineRoad());
         Assert.assertEquals("t3 second leg number of engines", "0", t3.getSecondLegNumberEngines());
         Assert.assertEquals("t3 second leg options", Train.NO_CABOOSE_OR_FRED, t3.getSecondLegOptions());
-        Assert.assertEquals("t3 second leg start location", null, t3.getSecondLegStartLocation());
+        Assert.assertEquals("t3 second leg start location", null, t3.getSecondLegStartRouteLocation());
         Assert.assertEquals("t3 send cars to terminal", false, t3.isSendCarsToTerminalEnabled());
         Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
         Assert.assertEquals("t3 switch list status", Train.UNKNOWN, t3.getSwitchListStatus());
         // test third leg defaults
         Assert.assertEquals("t3 third leg caboose road", "", t3.getThirdLegCabooseRoad());
-        Assert.assertEquals("t3 third leg end location", null, t3.getThirdLegEndLocation());
+        Assert.assertEquals("t3 third leg end location", null, t3.getThirdLegEndRouteLocation());
         Assert.assertEquals("t3 third leg engine model", "", t3.getThirdLegEngineModel());
         Assert.assertEquals("t3 third leg engine road", "", t3.getThirdLegEngineRoad());
         Assert.assertEquals("t3 third leg number of engines", "0", t3.getThirdLegNumberEngines());
         Assert.assertEquals("t3 third leg options", Train.NO_CABOOSE_OR_FRED, t3.getThirdLegOptions());
-        Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartLocation());
+        Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartRouteLocation());
 
         Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
         Assert.assertEquals("t5 build failed", false, t5.getBuildFailed());
@@ -466,30 +466,30 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 route", C, t1.getRoute());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
                 .getSecondLegCabooseRoad());
-        Assert.assertEquals("t1 second leg end location", midC, t1.getSecondLegEndLocation());
+        Assert.assertEquals("t1 second leg end location", midC, t1.getSecondLegEndRouteLocation());
         Assert.assertEquals("t1 second leg engine model", "t1 second leg engine model", t1
                 .getSecondLegEngineModel());
         Assert.assertEquals("t1 second leg engine road", "t1 second leg engine road", t1
                 .getSecondLegEngineRoad());
         Assert.assertEquals("t1 second leg number of engines", "5", t1.getSecondLegNumberEngines());
         Assert.assertEquals("t1 second leg options", Train.ADD_CABOOSE, t1.getSecondLegOptions());
-        Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartLocation());
+        Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartRouteLocation());
         Assert.assertEquals("t1 send cars to terminal", true, t1.isSendCarsToTerminalEnabled());
         Assert.assertEquals("t1 status", Train.UNKNOWN, t1.getStatus());
         Assert.assertEquals("t1 switch list status", Train.PRINTED, t1.getSwitchListStatus());
         Assert.assertEquals("t1 third leg caboose road", "t1 third leg caboose road", t1
                 .getThirdLegCabooseRoad());
-        Assert.assertEquals("t1 third leg end location", startC, t1.getThirdLegEndLocation());
+        Assert.assertEquals("t1 third leg end location", startC, t1.getThirdLegEndRouteLocation());
         Assert.assertEquals("t1 third leg engine model", "t1 third leg engine model", t1
                 .getThirdLegEngineModel());
         Assert.assertEquals("t1 third leg engine road", "t1 third leg engine road", t1
                 .getThirdLegEngineRoad());
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
-        Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartLocation());
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.skipsLocation(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(endC.getId()));
+        Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartRouteLocation());
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());
@@ -515,23 +515,23 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 route", A, t3.getRoute());
         // test second leg defaults
         Assert.assertEquals("t3 second leg caboose road", "", t3.getSecondLegCabooseRoad());
-        Assert.assertEquals("t3 second leg end location", null, t3.getSecondLegEndLocation());
+        Assert.assertEquals("t3 second leg end location", null, t3.getSecondLegEndRouteLocation());
         Assert.assertEquals("t3 second leg engine model", "", t3.getSecondLegEngineModel());
         Assert.assertEquals("t3 second leg engine road", "", t3.getSecondLegEngineRoad());
         Assert.assertEquals("t3 second leg number of engines", "0", t3.getSecondLegNumberEngines());
         Assert.assertEquals("t3 second leg options", Train.NO_CABOOSE_OR_FRED, t3.getSecondLegOptions());
-        Assert.assertEquals("t3 second leg start location", null, t3.getSecondLegStartLocation());
+        Assert.assertEquals("t3 second leg start location", null, t3.getSecondLegStartRouteLocation());
         Assert.assertEquals("t3 send cars to terminal", false, t3.isSendCarsToTerminalEnabled());
         Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
         Assert.assertEquals("t3 switch list status", Train.UNKNOWN, t3.getSwitchListStatus());
         // test third leg defaults
         Assert.assertEquals("t3 third leg caboose road", "", t3.getThirdLegCabooseRoad());
-        Assert.assertEquals("t3 third leg end location", null, t3.getThirdLegEndLocation());
+        Assert.assertEquals("t3 third leg end location", null, t3.getThirdLegEndRouteLocation());
         Assert.assertEquals("t3 third leg engine model", "", t3.getThirdLegEngineModel());
         Assert.assertEquals("t3 third leg engine road", "", t3.getThirdLegEngineRoad());
         Assert.assertEquals("t3 third leg number of engines", "0", t3.getThirdLegNumberEngines());
         Assert.assertEquals("t3 third leg options", Train.NO_CABOOSE_OR_FRED, t3.getThirdLegOptions());
-        Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartLocation());
+        Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartRouteLocation());
 
         Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
         Assert.assertEquals("t5 build failed", false, t5.getBuildFailed());
@@ -611,18 +611,18 @@ public class XmlTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
 
         Setup.setBuildAggressive(false);
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

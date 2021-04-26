@@ -57,6 +57,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Set up for initialization of a Serial node.
+     * @param node node to initialize.
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {

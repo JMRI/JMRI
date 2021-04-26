@@ -3,9 +3,9 @@ package jmri.jmrix.can.cbus;
 /**
  * CbusConstants.java
  *
- * Description: Constants to represent CBUS protocol
+ * Constants to represent CBUS protocol
  *
- * @author Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008, 2021
  */
 public final class CbusConstants {
 
@@ -122,6 +122,7 @@ public final class CbusConstants {
     // OPcodes with 5 data
     public static final int CBUS_RDCC4 = 0xA0;
     public static final int CBUS_WCVS = 0xA2;
+    public static final int CBUS_VCVS = 0xA4;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;
@@ -303,6 +304,12 @@ public final class CbusConstants {
     public static final int CBUS_F26 = 0x20;
     public static final int CBUS_F27 = 0x40;
     public static final int CBUS_F28 = 0x80;
+    
+    public static final int[] CBUS_FUNCTION_BITS = new int[]{ CBUS_F0,
+        CBUS_F1, CBUS_F2, CBUS_F3, CBUS_F4, CBUS_F5, CBUS_F6, CBUS_F7,
+        CBUS_F8, CBUS_F9, CBUS_F10, CBUS_F11, CBUS_F12, CBUS_F13, CBUS_F14,
+        CBUS_F15, CBUS_F16, CBUS_F17, CBUS_F18, CBUS_F19, CBUS_F20, CBUS_F21,
+        CBUS_F22, CBUS_F23, CBUS_F24, CBUS_F25, CBUS_F26, CBUS_F27, CBUS_F28 };
 
     /**
      * Throttle modes

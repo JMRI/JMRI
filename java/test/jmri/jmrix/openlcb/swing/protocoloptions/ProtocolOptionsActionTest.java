@@ -2,9 +2,10 @@ package jmri.jmrix.openlcb.swing.protocoloptions;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.openlcb.swing.monitor.MonitorAction;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.swing.protocoloptions package
@@ -22,8 +23,7 @@ public class ProtocolOptionsActionTest {
         Assert.assertNotNull("exists",p);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -35,9 +35,12 @@ public class ProtocolOptionsActionTest {
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tcs.terminateThreads();
+        tcs = null;
         JUnitUtil.tearDown();
 
     }

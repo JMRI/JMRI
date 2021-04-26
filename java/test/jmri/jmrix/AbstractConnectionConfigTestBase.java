@@ -1,6 +1,9 @@
 package jmri.jmrix;
 
-import org.junit.*;
+import org.assertj.swing.edt.GuiActionRunner;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import javax.swing.JPanel;
 
 /**
@@ -14,70 +17,72 @@ abstract public class AbstractConnectionConfigTestBase {
 
     @Test 
     public void testCtor(){
-        Assert.assertNotNull("Exists",cc);
+        Assert.assertNotNull("Exists", cc);
     }
 
     @Test
     public void testLoadDetails(){
-        // verify no exceptions thrown
-        cc.loadDetails(new JPanel());
+        GuiActionRunner.execute(() -> {
+            // verify no exceptions thrown
+            cc.loadDetails(new JPanel());
+        });
     }
 
     @Test
     public void testName(){
-        Assert.assertNotNull("has name",cc.name());
+        Assert.assertNotNull("has name", cc.name());
     }
 
     @Test
     public void testGetInfo(){
-        Assume.assumeNotNull("adapter set",cc.getAdapter());
-        Assert.assertNotNull("has info",cc.getInfo());
+        Assume.assumeNotNull("adapter set", cc.getAdapter());
+        Assert.assertNotNull("has info", cc.getInfo());
     }
 
     @Test
     public void testGetConnectionName(){
-        Assume.assumeNotNull("adapter set",cc.getAdapter());
-        Assert.assertNotNull("has connection name",cc.getConnectionName());
+        Assume.assumeNotNull("adapter set", cc.getAdapter());
+        Assert.assertNotNull("has connection name", cc.getConnectionName());
     }
 
     @Test
     public void testGetAndSetManufacturer(){
-        Assume.assumeNotNull("adapter set",cc.getAdapter());
-        Assert.assertNotNull("has manufacturer",cc.getManufacturer());
+        Assume.assumeNotNull("adapter set", cc.getAdapter());
+        Assert.assertNotNull("has manufacturer", cc.getManufacturer());
         cc.setManufacturer("foo");
-        Assert.assertEquals("new manufacturer","foo",cc.getManufacturer());
+        Assert.assertEquals("new manufacturer", "foo", cc.getManufacturer());
     }
 
     @Test
     public void testGetAdapter(){
-        // many test classes derived from this class need to triger 
+        // many test classes derived from this class need to trigger
         // creation of the adapter.  Remove the assume to see which
         // ones still fail.  
-        Assume.assumeNotNull("adapter set",cc.getAdapter());
-        Assert.assertNotNull("has adapter",cc.getAdapter());
+        Assume.assumeNotNull("adapter set", cc.getAdapter());
+        Assert.assertNotNull("has adapter", cc.getAdapter());
     }
 
     @Test
     public void testGetAndSetDisabled(){
-        Assume.assumeNotNull("adapter set",cc.getAdapter());
+        Assume.assumeNotNull("adapter set", cc.getAdapter());
         cc.setDisabled(true);
-        Assert.assertTrue("disabled",cc.getDisabled());
+        Assert.assertTrue("disabled", cc.getDisabled());
         cc.setDisabled(false);
-        Assert.assertFalse("not disabled",cc.getDisabled());
+        Assert.assertFalse("not disabled", cc.getDisabled());
     }
 
     /**
      * Configure the ConnectionConfig object (cc) and any other
      * necessary objects.
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     /**
      * Clean up the ConnectionConfig object (cc) and any other
      * necessary objects.
      */
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

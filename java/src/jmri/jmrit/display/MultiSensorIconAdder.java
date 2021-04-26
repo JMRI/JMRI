@@ -33,8 +33,8 @@ import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
-import jmri.jmrit.catalog.CatalogTreeLeaf;
-import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,8 +146,7 @@ public class MultiSensorIconAdder extends IconAdder {
             }
             JPanel p1 = new JPanel();
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-            String label = MessageFormat.format(Bundle.getMessage("MultiSensorPosition"),
-                    new Object[]{cnt + 1});
+            String label = MessageFormat.format(Bundle.getMessage("MultiSensorPosition"), cnt + 1);
             p1.add(new JLabel(label));
             p1.add(_iconMap.get(key));
 
@@ -258,9 +257,7 @@ public class MultiSensorIconAdder extends IconAdder {
         p.add(_rightleft);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
         JButton addIcon = new JButton(Bundle.getMessage("AddMultiSensorIcon"));
-        addIcon.addActionListener((ActionEvent e) -> {
-            addIcon();
-        });
+        addIcon.addActionListener((ActionEvent e) -> addIcon());
         p.add(addIcon);
         this.add(p);
         this.add(new JSeparator());
@@ -366,8 +363,8 @@ public class MultiSensorIconAdder extends IconAdder {
             for (int k = index; k < _iconOrderList.size(); k++) {
                 String label = _iconOrderList.get(k);
                 ArrayList<CatalogTreeLeaf> leaves = _defaultIcons.getLeaves(label);
-                for (int i = 0; i < leaves.size(); i++) {
-                    String path = leaves.get(i).getPath();
+                for (CatalogTreeLeaf leaf : leaves) {
+                    String path = leaf.getPath();
                     _defaultIcons.deleteLeaves(label);
                     _defaultIcons.addLeaf("MultiSensorPosition " + (k - 3), path);
                     // break;
@@ -421,14 +418,9 @@ public class MultiSensorIconAdder extends IconAdder {
     private boolean putSensor(String key, Sensor sensor) {
         String name = sensor.getDisplayName();
         log.debug("putSensor: key= {} sensor= {}", key, name);
-        Iterator<NamedBeanHandle<Sensor>> iter = _sensorMap.values().iterator();
-        while (iter.hasNext()) {
-            if (name.equals(iter.next().getName())) {
-                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                        Bundle.getMessage("DupSensorName"),
-                        new Object[]{name}),
-                        Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+        for (NamedBeanHandle<Sensor> sensorNamedBeanHandle : _sensorMap.values()) {
+            if (name.equals(sensorNamedBeanHandle.getName())) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DupSensorName"), name), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }

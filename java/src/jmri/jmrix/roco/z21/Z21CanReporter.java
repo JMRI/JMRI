@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener,CollectingReporter {
 
-    private Z21SystemConnectionMemo _memo = null;
+    private Z21SystemConnectionMemo _memo;
 
     private int networkID=0; // CAN network ID associated with this reporter's module.
     private int moduleAddress=-1; // User assigned address associated with this reporter's module.

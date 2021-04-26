@@ -1,12 +1,16 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
+import jmri.util.JUnitUtil;
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LayoutTrackExpectedStateTest {
 
@@ -14,24 +18,27 @@ public class LayoutTrackExpectedStateTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor le = new LayoutEditor();
-        PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
-        PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), le);
-        TrackSegment s = new TrackSegment("test", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, le);
-        LayoutTrackExpectedState<LayoutTrack> t = new LayoutTrackExpectedState<LayoutTrack>(s,0);
-        Assert.assertNotNull("exists",t);
-        jmri.util.JUnitUtil.dispose(le);
+//         PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, new Point2D.Double(0.0, 0.0), le);
+//         PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, new Point2D.Double(1.0, 1.0), le);
+        PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, le);
+        PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, le);
+        TrackSegment s = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, true, le);
+        LayoutTrackExpectedState<LayoutTrack> t = new LayoutTrackExpectedState<LayoutTrack>(s, 0);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(le);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 }

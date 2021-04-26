@@ -17,6 +17,7 @@ public class NamedBeanUsageReport {
 
     /**
      * Create report with the required key.
+     * @param usageKey Identifies the report type.  Used to control result.
      */
     public NamedBeanUsageReport(@Nonnull String usageKey) {
         this(usageKey, null, "");
@@ -24,6 +25,8 @@ public class NamedBeanUsageReport {
 
     /**
      * Create report with the required key and a bean.
+     * @param usageKey Identifies the report type.  Used to control result.
+     * @param usageBean Identifies a related bean such as SML destination mast.  Can be null.
      */
     public NamedBeanUsageReport(@Nonnull String usageKey, NamedBean usageBean) {
         this(usageKey, usageBean, "");
@@ -31,6 +34,8 @@ public class NamedBeanUsageReport {
 
     /**
      * Create report with the required key and additional data.
+     * @param usageKey Identifies the report type.  Used to control result.
+     * @param usageData Optional additional data.
      */
     public NamedBeanUsageReport(@Nonnull String usageKey, String usageData) {
         this(usageKey, null, usageData);
@@ -41,7 +46,7 @@ public class NamedBeanUsageReport {
      *
      * @param usageKey Identifies the report type.  Used to control result
      * processing.  Might also be used as a bundle key.
-     * @param usageBean Identifies a related bean suach as SML destination mast.  Can be null.
+     * @param usageBean Identifies a related bean such as SML destination mast.  Can be null.
      * @param usageData Optional additional data.
      */
     public NamedBeanUsageReport(@Nonnull String usageKey, NamedBean usageBean, String usageData) {

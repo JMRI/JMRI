@@ -30,7 +30,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * <p>
  * For more info on the product, see http://www.pricom.com
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -93,7 +93,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n" + ex);
+                    log.error("Error while opening port.  Did you select the right one?\n{}", ex);
                 }
             }
         });
@@ -206,7 +206,9 @@ public class DataSource extends jmri.util.JmriJFrame {
                 @Override
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
-                    ((PacketTableFrame) l).setSource(DataSource.this);
+                    if (l instanceof PacketTableFrame) {
+                        ((PacketTableFrame) l).setSource(DataSource.this);
+                    }
                 }
             };
             JButton b = new JButton((String) p.getValue(Action.NAME));
@@ -238,6 +240,7 @@ public class DataSource extends jmri.util.JmriJFrame {
      * Send output bytes, e.g. characters controlling operation, to the tester
      * with small delays between the characters. This is used to reduce overrrun
      * problems.
+     * @param bytes content to send
      */
     synchronized void sendBytes(byte[] bytes) {
         try {
@@ -248,15 +251,16 @@ public class DataSource extends jmri.util.JmriJFrame {
             final byte endbyte = bytes[bytes.length - 1];
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: {}", e);
         } catch (java.lang.InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: " + e);
+            log.error("Interrupted output: {}", e);
         }
     }
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e Event driving this action
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
@@ -339,21 +343,20 @@ public class DataSource extends jmri.util.JmriJFrame {
                 // 8-bits, 1-stop, no parity
                 activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // NO hardware handshaking, but for consistancy, set the Modem Control Lines
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; None is needed or used
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -363,7 +366,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             sendBytes(new byte[]{(byte) 'g'});
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
+            log.debug("input stream shows {} bytes available", count);
             while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
@@ -371,31 +374,24 @@ public class DataSource extends jmri.util.JmriJFrame {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
         } catch (java.io.IOException ex) {
-            log.error("Unexpected I/O exception while opening port " + portName, ex);
+            log.error("Unexpected I/O exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         } catch (NoSuchPortException ex) {
-            log.error("No such port while opening port " + portName, ex);
+            log.error("No such port while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         } catch (UnsupportedCommOperationException ex) {
-            log.error("Unexpected comm exception while opening port " + portName, ex);
+            log.error("Unexpected comm exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port " + p + " in use, cannot open");
+        log.error("Port {} in use, cannot open", p);
     }
 
     DataInputStream serialStream = null;
@@ -426,7 +422,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: " + e.toString());
+                    log.warn("run: Exception: {}", e.toString());
                 }
             }
         }

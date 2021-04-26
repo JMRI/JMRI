@@ -277,7 +277,7 @@ abstract public class SprogUpdateFrame
         if (retVal == JFileChooser.APPROVE_OPTION) {
             hexFile = new SprogHexFile(hexFileChooser.getSelectedFile().getPath());
             if (log.isDebugEnabled()) {
-                log.debug("hex file chosen: " + hexFile.getName());
+                log.debug("hex file chosen: {}", hexFile.getName());
             }
             if ((!hexFile.getName().contains("sprog"))) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("HexFileSelectDialogString"),
@@ -376,7 +376,7 @@ abstract public class SprogUpdateFrame
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      * 
      * @param delay milliseconds until action
      */

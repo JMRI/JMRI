@@ -1,17 +1,19 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.InstanceManager;
 import jmri.Logix;
 
 import jmri.util.*;
-import jmri.util.junit.rules.*;
-import jmri.util.junit.annotations.*;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.*;
-import org.junit.rules.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
@@ -24,12 +26,10 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 * Re-created using JUnit4 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017
  */
+@Timeout(10)
 public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
+    //@Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
@@ -78,7 +78,7 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     }
 
     @Test
-    public void testWhereused() {
+    public void testWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LogixTableAction lgxTable = (LogixTableAction) a;
 
@@ -204,20 +204,20 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     }
 
     @Test
-    @Ignore("Logix create frame does not have a hardware address")
-    @ToDo("Re-write parent class test to use the right name")
+    @Disabled("Logix create frame does not have a hardware address")
     @Override
+    // TODO: Re-write parent class test to use the right name
     public void testAddThroughDialog() {
     }
 
     @Test
-    @Ignore("Logix create frame does not have a hardware address")
-    @ToDo("Re-write parent class test to use the right name, or add without dialog")
+    @Disabled("Logix create frame does not have a hardware address")
     @Override
+    // TODO: Re-write parent class test to use the right name, or add without dialog
     public void testEditButton() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -230,14 +230,16 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Logix 103");
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX104", "Logix 104");
 
-        helpTarget = "package.jmri.jmrit.beantable.LogixTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.LogixTable";
         a = new LogixTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

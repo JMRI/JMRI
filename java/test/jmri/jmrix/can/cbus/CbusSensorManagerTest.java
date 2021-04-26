@@ -7,18 +7,17 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -28,6 +27,11 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     public String getSystemName(int i) {
         return "MSX0A;+N15E" + i;
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "+6";
     }
 
     @Test
@@ -179,28 +183,28 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("S+N156E77;+N15E6");
             Assert.fail("S Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: S+N156E77;+N15E6");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"S+N156E77;+N15E6\" contains invalid character \"S\".");
         }
 
         try {
             l.provideSensor("M+N156E77;+N15E6");
             Assert.fail("M Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: M+N156E77;+N15E6");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"M+N156E77;+N15E6\" contains invalid character \"M\".");
         }
 
         try {
             l.provideSensor("MS++N156E77");
             Assert.fail("++ Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: ++N156E77");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"++N156E77\" contains invalid character \"++\".");
         }
 
         try {
             l.provideSensor("MS--N156E77");
             Assert.fail("-- Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: --N156E77");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"--N156E77\" contains invalid character \"--\".");
         }
 
         try {
@@ -221,14 +225,14 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXLKJK;XLKJK");
             Assert.fail("LKJK Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: XLKJK;XLKJK");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"XLKJK;XLKJK\" contains invalid character \"J\".");
         }
 
         try {
             l.provideSensor("MS+7;-5;+11");
             Assert.fail("3 split Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: +7;-5;+11");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Unable to convert Address: +7;-5;+11");
         }
     }
 
@@ -281,19 +285,21 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testQueryAll() {
         tcis.outbound.clear();
+        memo.setOutputInterval(2); // reduce output interval for tests
+        
         Sensor t1 = l.provideSensor("MS+N123E456");
         Sensor t2 = l.provideSensor("MS-N9875E45670");
 
         Assert.assertTrue(tcis.outbound.isEmpty());
 
         l.updateAll();
-
-        // log.warn("size {}",tcis.outbound);
+        JUnitUtil.waitFor(() -> ( 2 == tcis.outbound.size()));
         Assert.assertEquals(2, tcis.outbound.size());
 
         Sensor t3 = l.provideSensor("MSX0A;X5E6DEEF4");
         tcis.outbound.clear();
         l.updateAll();
+        JUnitUtil.waitFor(() -> ( 3 == tcis.outbound.size()));
         Assert.assertEquals(3, tcis.outbound.size());
         Assert.assertNotNull("exists", t1);
         Assert.assertNotNull("exists", t2);
@@ -325,20 +331,23 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS+N1E2;-N3E4", NameValidity.VALID, l.validSystemNameFormat("MS+N1E2;-N3E4"));
         Assert.assertEquals("MS-N1E2;+N3E4", NameValidity.VALID, l.validSystemNameFormat("MS-N1E2;+N3E4"));
 
+        Assert.assertEquals("MS+1;+0", NameValidity.VALID, l.validSystemNameFormat("MS+1;+0"));
+        Assert.assertEquals("MS+1;-0", NameValidity.VALID, l.validSystemNameFormat("MS+1;-0"));
+        Assert.assertEquals("MS+0;+17", NameValidity.VALID, l.validSystemNameFormat("MS+0;+17"));
+        Assert.assertEquals("MS+0;-17", NameValidity.VALID, l.validSystemNameFormat("MS+0;-17"));
+        Assert.assertEquals("MS+0", NameValidity.VALID, l.validSystemNameFormat("MS+0"));
+        Assert.assertEquals("MS-0", NameValidity.VALID, l.validSystemNameFormat("MS-0"));
+        Assert.assertEquals("MS+N17E0", NameValidity.VALID, l.validSystemNameFormat("MS+N17E0"));
+        Assert.assertEquals("MS+N17E00", NameValidity.VALID, l.validSystemNameFormat("MS+N17E00"));
+        
+        
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("MS", NameValidity.INVALID, l.validSystemNameFormat("MS"));
         Assert.assertEquals("MS-65536", NameValidity.INVALID, l.validSystemNameFormat("MS-65536"));
         Assert.assertEquals("MS65536", NameValidity.INVALID, l.validSystemNameFormat("MS65536"));
-        Assert.assertEquals("MS+1;+0", NameValidity.INVALID, l.validSystemNameFormat("MS+1;+0"));
-        Assert.assertEquals("MS+1;-0", NameValidity.INVALID, l.validSystemNameFormat("MS+1;-0"));
-        Assert.assertEquals("MS+0;+17", NameValidity.INVALID, l.validSystemNameFormat("MS+0;+17"));
-        Assert.assertEquals("MS+0;-17", NameValidity.INVALID, l.validSystemNameFormat("MS+0;-17"));
-        Assert.assertEquals("MS+0", NameValidity.INVALID, l.validSystemNameFormat("MS+0"));
-        Assert.assertEquals("MS-0", NameValidity.INVALID, l.validSystemNameFormat("MS-0"));
+        
         Assert.assertEquals("MS7;0", NameValidity.INVALID, l.validSystemNameFormat("MS7;0"));
         Assert.assertEquals("MS0;7", NameValidity.INVALID, l.validSystemNameFormat("MS0;7"));
-        Assert.assertEquals("MS+N17E0", NameValidity.INVALID, l.validSystemNameFormat("MS+N17E0"));
-        Assert.assertEquals("MS+N17E00", NameValidity.INVALID, l.validSystemNameFormat("MS+N17E00"));
         Assert.assertEquals("MS+N0E17", NameValidity.VALID, l.validSystemNameFormat("MS+N0E17"));
         Assert.assertEquals("MS+N00E17", NameValidity.VALID, l.validSystemNameFormat("MS+N00E17"));
         Assert.assertEquals("MS+0E17", NameValidity.VALID, l.validSystemNameFormat("MS+0E17"));
@@ -350,21 +359,21 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testgetNextValidAddress() throws JmriException {
 
-        Assert.assertEquals("+17", "+17", l.getNextValidAddress("+17", "M"));
+        Assert.assertEquals("+17", "+17", l.getNextValidAddress("+17", "M",false));
         Sensor t = l.provideSensor("MS+17");
         Assert.assertNotNull("exists", t);
-        Assert.assertEquals("+18", "+18", l.getNextValidAddress("+17", "M"));
+        Assert.assertEquals("+18", "+18", l.getNextValidAddress("+17", "M",false));
 
-        Assert.assertEquals("+N45E22", "+N45E22", l.getNextValidAddress("+N45E22", "M"));
+        Assert.assertEquals("+N45E22", "+N45E22", l.getNextValidAddress("+N45E22", "M",false));
         Sensor ta = l.provideSensor("MS+N45E22");
         Assert.assertNotNull("exists", ta);
-        Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));
+        Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M",false));
 
         try {
-            String val = l.getNextValidAddress(null, "M");
+            String val = l.getNextValidAddress("", "M",false);
             Assert.assertNull(val);
         } catch (JmriException ex) {
-            Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
+            Assert.assertEquals("System name \"MS\" is missing suffix.", ex.getMessage());
         }
     }
 
@@ -373,8 +382,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provideSensor("MS+65535");
         Assert.assertNotNull("exists", t);
 
-        Assert.assertEquals("+65535", null, l.getNextValidAddress("+65535", "M"));
-        JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+        Assert.assertThrows(JmriException.class, () -> l.getNextValidAddress("+65535", "M",false));
     }
 
     @Test
@@ -383,7 +391,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provideSensor("MS+10");
         Assert.assertNotNull("exists", t);
 
-        Assert.assertEquals("+10", "+11", l.getNextValidAddress("+10", "M"));
+        Assert.assertEquals("+10", "+11", l.getNextValidAddress("+10", "M",false));
     }
 
     @Test
@@ -394,7 +402,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists", t);
         Assert.assertNotNull("exists", ta);
 
-        Assert.assertEquals(" null +9 +10", "+11", l.getNextValidAddress("+9", "M"));
+        Assert.assertEquals(" null +9 +10", "+11", l.getNextValidAddress("+9", "M",false));
     }
 
     @Test
@@ -405,15 +413,25 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS-N34E610", "MS-N34E610", l.createSystemName("-N34E610", "M"));
         Assert.assertEquals("MS+N34E610;-N987E654", "MS+N34E610;-N987E654", l.createSystemName("+N34E610;-N987E654", "M"));
 
-        Assert.assertEquals("M2S+10", "M2S+10", l.createSystemName("+10", "M2"));
-
-        Assert.assertEquals("ZZZZZZZZZS+10", "ZZZZZZZZZS+10", l.createSystemName("+10", "ZZZZZZZZZ"));
-
+        
         try {
             l.createSystemName("S", "M");
         } catch (JmriException ex) {
-            Assert.assertEquals("java.lang.IllegalArgumentException: Wrong number of events in address: S", ex.getMessage());
+            Assert.assertEquals("System name \"S\" contains invalid character \"S\".", ex.getMessage());
         }
+        
+        boolean contains = Assert.assertThrows(JmriException.class,
+            ()->{
+                l.createSystemName("+10", "M2");
+            }).getMessage().contains("System name must start with \"MS\"");
+        Assert.assertTrue("Exception message relevant", contains);
+        
+        contains = Assert.assertThrows(JmriException.class,
+            ()->{
+                l.createSystemName("+10", "ZZZZZZZZZ");
+            }).getMessage().contains("System name must start with \"MS\"");
+        Assert.assertTrue("Exception message relevant", contains);
+        
     }
     
     @Test
@@ -422,9 +440,8 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -433,7 +450,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         l = new CbusSensorManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         memo.dispose();

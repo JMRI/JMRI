@@ -3,15 +3,17 @@
 
 # Be sure to regex escape all . () [ $ characters, accept differing lines for lambdas, and end with .*
 
-# For checkStandardStreams
+# For checkStandardStreams - exceptions are also in ArchitectureTest#checkStandardStreams
+Method <apps\.SystemConsole\.performStackTrace\(\)> gets field <java\.lang\.System\.out>.*
+Constructor <apps\.SystemConsole\.<init>\(\)> gets field <java\.lang\.System.out>.*
+Constructor <apps\.SystemConsole\.<init>\(\)> gets field <java\.lang\.System.err>.*
+Method <apps\.CheckerFrameworkCheck\.test\(\)> gets field <java\.lang\.System\.out>.*
+Method <apps\.FindBugsCheck\.test\(\)\> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.XmlFile\.lambda\$dumpElement\$.*\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.XmlFile\.lambda\$0\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.XmlFileValidateAction\$2\.showFailResults\(java\.awt\.Component, java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.automat\.JythonAutomaton\.handle\(\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.automat\.JythonSiglet\.defineIO\(\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.managers\.DefaultShutDownManager\.runShutDownTasks\(boolean\)> gets field <java\.lang\.System\.err>.*
 Method <jmri\.util\.FileUtilSupport\.getPreferencesPath\(\)> gets field <java\.lang\.System\.err>.*
-Method <jmri\.util\.com\.dictiography\.collections\.IndexedTreeMap\.dbg\(\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.util\.com\.rbnb\.UDPOutputStream\.write\(\[B, int, int\)> gets field <java\.lang\.System\.err>.*
 
 # For checkBundleNamesOnlyOnBundleClass
@@ -32,7 +34,6 @@ Method <jmri\.UserPreferencesManager\.setWindowLocation\(java\.lang\.String, jav
 Method <jmri\.UserPreferencesManager\.setWindowSize\(java\.lang\.String, java\.awt\.Dimension\)> has parameter of type <java\.awt\.Dimension>.*
 
 # For checkJmriPackageJmrix
-Method <jmri\.Manager\.getMemo\(\)> has return type <jmri\.jmrix\.SystemConnectionMemo>.*
 
 # For checkJmriPackageSwing
 Interface <jmri\.CatalogTree> extends interface <javax\.swing\.tree\.TreeModel>.*

@@ -1,14 +1,13 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class JmriAbstractActionTest {
 
@@ -36,12 +35,12 @@ public class JmriAbstractActionTest {
         Assert.assertEquals(i, a.getValue(javax.swing.Action.SMALL_ICON));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

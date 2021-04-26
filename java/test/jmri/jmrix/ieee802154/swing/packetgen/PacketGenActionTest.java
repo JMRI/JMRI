@@ -1,20 +1,20 @@
 package jmri.jmrix.ieee802154.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of PacketGenAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PacketGenActionTest {
 
@@ -70,12 +70,12 @@ public class PacketGenActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * having to manipulate files.
  * <p>
  * This class doesn't provide tools for defining the index; that's done
- * by the {@link jmri.jmrit.decoderdefn.DecoderIndexBuilder} class which 
+ * by {@link jmri.jmrit.decoderdefn.DecoderIndexCreateAction}, which 
  * rebuilds it from the decoder files.
  * <p>
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance"
@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * one is created.
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2019
- * @see jmri.jmrit.decoderdefn.DecoderIndexBuilder
+ * @see jmri.jmrit.decoderdefn.DecoderIndexCreateAction
  * 
  */
 public class DecoderIndexFile extends XmlFile {
@@ -79,8 +79,15 @@ public class DecoderIndexFile extends XmlFile {
         return _mfgIdFromNameHash.get(name);
     }
 
-    public String mfgNameFromId(String name) {
-        return _mfgNameFromIdHash.get(name);
+    /**
+     *
+     * @param idNum String containing the manufacturer's NMRA
+     *      manufacturer ID number
+     * @return String containing the "friendly" name of the manufacturer
+     */
+
+    public String mfgNameFromID(String idNum) {
+        return _mfgNameFromIdHash.get(idNum);
     }
 
     /**
@@ -98,7 +105,7 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID, String decoderProductID,
             String model) {
-        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null));
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null));
     }
 
     /**
@@ -110,16 +117,18 @@ public class DecoderIndexFile extends XmlFile {
      * @param decoderVersionID decoder version ID
      * @param decoderProductID decoder product ID
      * @param model            decoder model
-     * @param developerID      developer ID
+     * @param developerID      developer ID number
+     * @param manufacturerID   manufacturerID number
+     * @param productID        productID number
      * @return a list, possibly empty, of matching decoders
      */
     @Nonnull
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID,
-            String decoderProductID, String model, String developerID) {
+            String decoderProductID, String model, String developerID, String manufacturerID, String productID) {
         List<DecoderFile> l = new ArrayList<>();
         for (int i = 0; i < numDecoders(); i++) {
-            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID)) {
+            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID, manufacturerID, productID)) {
                 l.add(decoderList.get(i));
             }
         }
@@ -197,12 +206,14 @@ public class DecoderIndexFile extends XmlFile {
      * @param decoderVersionID decoder version ID
      * @param decoderProductID decoder product ID
      * @param model            decoder model
-     * @param developerID      developer ID
+     * @param developerID      developer ID number
+     * @param manufacturerID   manufacturer ID number
+     * @param productID        product ID number
      * @return true if entry at i matches the other parameters; false otherwise
      */
     public boolean checkEntry(int i, String mfgName, String family, String mfgID,
             String decoderVersionID, String decoderProductID, String model,
-            String developerID) {
+            String developerID, String manufacturerID, String productID) {
         DecoderFile r = decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) {
             return false;
@@ -223,13 +234,61 @@ public class DecoderIndexFile extends XmlFile {
                 return false;
             }
         }
-        if (decoderProductID != null && !("," + r.getProductID() + ",").contains("," + decoderProductID + ",")) {
+
+        if (decoderProductID != null && !checkInCommaDelimString(decoderProductID, r.getProductID())) {
             return false;
         }
-        if (developerID != null && !developerID.equals(r.getDeveloperID())) {
-            if (!("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID + ",")) {
-                return false;
+
+        if (developerID != null) {
+            // must have a developerID value that matches to consider this entry a match
+            if (!developerID.equals(r.getDeveloperID())) {
+                // didn't match the getDeveloperID() value, so check the model developerID value
+                if (r.getModelElement().getAttribute("developerID") == null) {
+                    // no model developerID value, so not a match!
+                    return false;
+                }
+                if (!("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID + ",")) {
+                        return false;
+                }
             }
+            log.debug("developerID match");
+        }
+
+
+        if (manufacturerID != null) {
+            log.debug("checking manufactureriD {}, mfgID {}, modelElement[manufacturerID] {}",
+                    manufacturerID, r._mfgID, r.getModelElement().getAttribute("manufacturerID"));
+            // must have a manufacturerID value that matches to consider this entry a match
+
+            if ((r._mfgID == null) || (manufacturerID.compareTo(r._mfgID) != 0)) {
+                // ID number from manufacturer name isn't identical; try another way
+                if (!manufacturerID.equals(r.getManufacturerID())) {
+                    // no match to the manufacturerID attribute at the (family?) level, so try model level
+                    Attribute a = r.getModelElement().getAttribute("manufacturerID");
+                    if ((a == null) || (a.getValue() == null) ||
+                            (manufacturerID.compareTo(a.getValue())!=0)) {
+                            // no model manufacturerID value, or model manufacturerID
+                            // value does not match so this decoder is not a match!
+                            return false;
+                    }
+                }
+            }
+            log.debug("manufacturerID match");
+        }
+
+        if (productID != null) {
+            // must have a productID value that matches to consider this entry a match
+            if (!productID.equals(r.getProductID())) {
+                // didn't match the getProductID() value, so check the model productID value
+                if (r.getModelElement().getAttribute("productID") == null) {
+                    // no model productID value, so not a match!
+                    return false;
+                }
+                if (!("," + r.getModelElement().getAttribute("productID").getValue() + ",").contains("," + productID + ",")) {
+                        return false;
+                }
+            }
+            log.debug("productID match");
         }
         return true;
     }
@@ -347,7 +406,7 @@ public class DecoderIndexFile extends XmlFile {
                 }
             }
         } else {
-            log.warn("{}decoders was missing, though tried to create it", FileUtil.getUserFilesPath());
+            log.debug("{}decoders was missing, though tried to create it", FileUtil.getUserFilesPath());
         }
         // create an array of file names from xml/decoders, count entries
         String[] fileList = (new File(XmlFile.xmlDir() + DecoderFile.fileLocation)).list();
@@ -458,7 +517,7 @@ public class DecoderIndexFile extends XmlFile {
                 }
             }
         } else {
-            log.warn("no mfgList found");
+            log.debug("no mfgList found");
         }
     }
 
@@ -474,7 +533,7 @@ public class DecoderIndexFile extends XmlFile {
                 readFamily(el);
             }
         } else {
-            log.warn("no familyList found in decoderIndexFile");
+            log.debug("no familyList found in decoderIndexFile");
         }
     }
 
@@ -486,7 +545,9 @@ public class DecoderIndexFile extends XmlFile {
         String ParentReplacementFamilyName = ((attr = family.getAttribute("replacementFamily")) != null ? attr.getValue() : null);
         String familyName = ((attr = family.getAttribute("name")) != null ? attr.getValue() : null);
         String mfg = ((attr = family.getAttribute("mfg")) != null ? attr.getValue() : null);
-        String developer = ((attr = family.getAttribute("developerID")) != null ? attr.getValue() : null);
+        String developerID = ((attr = family.getAttribute("developerID")) != null ? attr.getValue() : null);
+        String manufacturerID = ((attr = family.getAttribute("manufacturerID")) != null ? attr.getValue() : null);
+        String productID = ((attr = family.getAttribute("productID")) != null ? attr.getValue() : null);
         String mfgID = null;
         if (mfg != null) {
             mfgID = mfgIdFromName(mfg);
@@ -511,7 +572,9 @@ public class DecoderIndexFile extends XmlFile {
                         parentLowVersID, parentHighVersID,
                         familyName,
                         filename,
-                        (developer != null) ? developer : "-1",
+                        (developerID != null) ? developerID : "-1",
+                        (manufacturerID != null) ? manufacturerID : "-1",
+                        (productID != null) ? productID : "-1",
                         -1, -1, modelElement,
                         ParentReplacementFamilyName, ParentReplacementFamilyName); // numFns, numOuts, XML element equal
         // to the first decoder
@@ -527,10 +590,12 @@ public class DecoderIndexFile extends XmlFile {
             String replacementFamilyName = ((attr = decoder.getAttribute("replacementFamily")) != null ? attr.getValue() : ParentReplacementFamilyName);
             int numFns = ((attr = decoder.getAttribute("numFns")) != null ? Integer.parseInt(attr.getValue()) : -1);
             int numOuts = ((attr = decoder.getAttribute("numOuts")) != null ? Integer.parseInt(attr.getValue()) : -1);
-            String devId = ((attr = decoder.getAttribute("developerId")) != null ? attr.getValue() : "-1");
+            String devId = ((attr = decoder.getAttribute("developerID")) != null ? attr.getValue() : "-1");
+            String manufId = ((attr = decoder.getAttribute("manufacturerID")) != null ? attr.getValue() : "-1");
+            String prodId = ((attr = decoder.getAttribute("productID")) != null ? attr.getValue() : "-1");
             DecoderFile df = new DecoderFile(mfg, mfgID,
                     ((attr = decoder.getAttribute("model")) != null ? attr.getValue() : null),
-                    loVersID, hiVersID, familyName, filename, devId, numFns, numOuts, decoder,
+                    loVersID, hiVersID, familyName, filename, devId, manufId, prodId, numFns, numOuts, decoder,
                     replacementModelName, replacementFamilyName);
             // and store it
             decoderList.add(df);
@@ -544,6 +609,35 @@ public class DecoderIndexFile extends XmlFile {
                 df.setVersionRange(vLoVersID, vHiVersID);
             }
         }
+    }
+
+    /**
+     * Is target string in comma-delimited string
+     *
+     * Example:
+     *      findString = "47"
+     *      inString = "1,4,53,97"
+     *      return value is 'false'
+     *
+     * Example:
+     *      findString = "47"
+     *      inString = "1,31,47,51"
+     *      return value is 'true'
+     *
+     * Example:
+     *      findString = "47"
+     *      inString = "47"
+     *      return value is true
+     *
+     * @param findString string to find
+     * @param inString comma-delimited string of sub-strings
+     * @return true if target string is found as sub-string within comma-
+     *      delimited string
+     */
+    public boolean checkInCommaDelimString(String findString, String inString) {
+        String bracketedFindString = ","+findString+",";
+        String bracketedInString = ","+inString+",";
+        return bracketedInString.contains(bracketedFindString);
     }
 
     public void writeFile(String name, DecoderIndexFile oldIndex, String[] files) throws java.io.IOException {

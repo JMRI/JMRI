@@ -76,7 +76,7 @@
             <li><a href="../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
             <li><a href="../hardware/maple/index.shtml">Maple Systems</a></li>
             <li><a href="../hardware/marklin/index.shtml">M&auml;rklin CS2</a></li>
-            <li><a href="../hardware/can/cbus/index.shtml">MERG CBUS</a></li>
+            <li><a href="../hardware/can/cbus/index.shtml">CBUS&reg;</a></li>
             <li><a href="../hardware/modbus/index.shtml">Modbus</a></li>
             <li><a href="../hardware/mqtt/index.shtml">MQTT</a></li>
             <li><a href="../hardware/mrc/index.shtml">MRC</a></li>
@@ -105,9 +105,9 @@
 		<dt><h3>Syst&#232;mes d'Exploitation Support&#233;s</h3></dt>
 		<dd> 
 		<ul>
-            <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
-            <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
-            <li><a href="http://jmri.org/install/Linux.shtml">Linux</a></li>
+            <li><a href="https://jmri.org/install/WindowsNew.shtml">Windows</a></li>
+            <li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
+            <li><a href="https://jmri.org/install/Linux.shtml">Linux</a></li>
             <li><a href="../setup/index.shtml">Configuration JMRI</a></li>
 		</ul>
 		</dd>

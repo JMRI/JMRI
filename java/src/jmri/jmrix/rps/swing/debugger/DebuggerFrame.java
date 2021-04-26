@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for manual operation and debugging of the RPS system.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class DebuggerFrame extends jmri.util.JmriJFrame
         implements ReadingListener, MeasurementListener {
@@ -201,13 +201,13 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
     void doLoadReadingFromFile() throws IOException {
         if (readingInput == null) {
-            getParser(readingInput, readingFileChooser);
+            readingInput = getParser(readingFileChooser);
         }
 
         // get and load a line
         if (readingInput.getRecords().isEmpty()) {
             // read failed, try once to get another file
-            getParser(readingInput, readingFileChooser);
+            readingInput = getParser(readingFileChooser);
             if (readingInput.getRecords().isEmpty()) {
                 throw new IOException("no valid file");
             }
@@ -224,17 +224,17 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
      *
      * @throws IOException if unable to read file
      * @deprecated since 4.19.3; use
-     * {@link #getParser(org.apache.commons.csv.CSVParser, javax.swing.JFileChooser)}
+     * {@link #getParser(javax.swing.JFileChooser)}
      * instead
      */
     @Deprecated
     void setupReadingFile() throws IOException {
-        getParser(readingInput, readingFileChooser);
+        readingInput = getParser(readingFileChooser);
     }
 
-    private void getParser(CSVParser parser, JFileChooser chooser) throws IOException {
+    private CSVParser getParser(JFileChooser chooser) throws IOException {
         // get file
-        parser = null;
+        CSVParser parser = null;
 
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(this);
@@ -245,17 +245,18 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
             Reader reader = new FileReader(chooser.getSelectedFile());
             parser = new CSVParser(reader, CSVFormat.DEFAULT.withSkipHeaderRecord());
         }
+        return parser;
     }
 
     void doLoadMeasurementFromFile() throws IOException {
         if (measurementInput == null) {
-            getParser(measurementInput, measurementFileChooser);
+            measurementInput = getParser(measurementFileChooser);
         }
 
         // get and load a line
         if (measurementInput.getRecords().isEmpty()) {
             // read failed, try once to get another file
-            getParser(measurementInput, measurementFileChooser);
+            measurementInput = getParser(measurementFileChooser);
             if (measurementInput.getRecords().isEmpty()) {
                 throw new IOException("no valid file");
             }
@@ -280,12 +281,12 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
      *
      * @throws IOException if unable to read file
      * @deprecated since 4.19.3; use
-     * {@link #getParser(org.apache.commons.csv.CSVParser, javax.swing.JFileChooser)}
+     * {@link #getParser(javax.swing.JFileChooser)}
      * instead
      */
     @Deprecated
     void setupMeasurementFile() throws IOException {
-        getParser(measurementInput, measurementFileChooser);
+        measurementInput = getParser(measurementFileChooser);
     }
 
     Measurement lastPoint = null;

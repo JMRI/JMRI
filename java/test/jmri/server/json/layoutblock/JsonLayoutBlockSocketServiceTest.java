@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -24,9 +25,8 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * @author Randall Wood Copyright 2018
@@ -35,15 +35,17 @@ public class JsonLayoutBlockSocketServiceTest {
 
     private Locale locale = Locale.ENGLISH;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initLayoutBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

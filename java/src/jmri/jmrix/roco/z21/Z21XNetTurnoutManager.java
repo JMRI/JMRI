@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XTnnn", where X is the user-configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016 
  */
 public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
@@ -23,9 +23,19 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
     }
 
     // XNet-specific methods
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a numeric Turnout address");
+        }
         Turnout t = new Z21XNetTurnout(getSystemPrefix(), addr, tc);
         t.setUserName(userName);
         return t;
@@ -68,6 +78,15 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
            // turnout
            t.message(l);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull java.util.Locale locale) {
+        return this.validateSystemNameFormatOnlyNumeric(systemName, locale);
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);

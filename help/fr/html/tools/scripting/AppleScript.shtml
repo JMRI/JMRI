@@ -45,7 +45,7 @@
       scripts et ensuite les invoquer pour que votre Mac effectue
       des fonctions en dehors de JMRI. Un exemple de ceci est dans
       le <a href=
-      "http://jmri.org/jython/AppleScript.py">AppleScript.py</a>
+      "https://jmri.org/jython/AppleScript.py">AppleScript.py</a>
       exemple de script distribu&eacute; avec JMRI. Il
       ex&eacute;cute un script AppleScript tr&egrave;s simple:
       <pre style="font-family: monospace;">

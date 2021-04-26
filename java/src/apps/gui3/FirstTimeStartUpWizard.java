@@ -1,6 +1,6 @@
 package apps.gui3;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;

@@ -1,15 +1,14 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NceAIU class.
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  * @author Paul Bender Copyright (C) 2016
  */
 public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -76,7 +75,7 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -89,7 +88,7 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         jmri.InstanceManager.setSensorManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

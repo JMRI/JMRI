@@ -4,7 +4,7 @@ package jmri.jmrix.tams;
  * Identifying class representing a Tams communications port Based on work by
  * Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public abstract class TamsPortController extends jmri.jmrix.AbstractSerialPortController {
 

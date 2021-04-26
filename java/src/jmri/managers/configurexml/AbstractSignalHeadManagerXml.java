@@ -97,11 +97,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         return true;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Utility method to load the individual SignalHead objects. If there's no
      * additional info needed for a specific signal head type, invoke this with

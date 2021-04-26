@@ -1,12 +1,13 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for CodeButton class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class CodeButtonTest {
 
@@ -15,8 +16,7 @@ public class CodeButtonTest {
         new CodeButton("IS21", "IS22");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -26,7 +26,7 @@ public class CodeButtonTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

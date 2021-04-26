@@ -2,6 +2,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
 import java.util.List;
+import jmri.beans.PropertyChangeSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2013
  * @param <T> the type of RollingStock in this group
  */
-public abstract class RollingStockGroup<T extends RollingStock> {
+public abstract class RollingStockGroup<T extends RollingStock> extends PropertyChangeSupport {
 
     protected String _name = "";
     protected T _lead = null;
@@ -41,7 +42,7 @@ public abstract class RollingStockGroup<T extends RollingStock> {
         }
         int oldSize = _group.size();
         _group.add(rs);
-        firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
+        firePropertyChange("grouplistLength", oldSize, _group.size()); // NOI18N
     }
 
     public void delete(T rs) {
@@ -53,7 +54,7 @@ public abstract class RollingStockGroup<T extends RollingStock> {
         _group.remove(rs);
         // need a new lead rs?
         removeLead(rs);
-        firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
+        firePropertyChange("grouplistLength", oldSize, _group.size()); // NOI18N
     }
 
     public List<T> getGroup() {
@@ -123,20 +124,6 @@ public abstract class RollingStockGroup<T extends RollingStock> {
 
     public void dispose() {
 
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockGroup.class);

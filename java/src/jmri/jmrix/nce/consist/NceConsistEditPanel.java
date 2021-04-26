@@ -723,7 +723,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
         String entry = "";
         entry = conRosterBox.getSelectedItem().toString();
-        log.debug("load consist " + entry + " from roster ");
+        log.debug("load consist {} from roster ", entry);
         if (entry.equals("")) {
             changeButtons(false);
             consistNum = getConsist(); // reload panel
@@ -895,7 +895,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 loadFullRoster(nceConsistRosterEntry);
                 saveLoadButton.setEnabled(false);
             } else {
-                log.error("roster consist number is out of range: " + consistNum);
+                log.error("roster consist number is out of range: {}", consistNum);
                 consistStatus.setText(Bundle.getMessage("EditStateERROR"));
             }
         }
@@ -1088,7 +1088,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     return false;
                 }
             }
-            log.debug("Modify consist " + id);
+            log.debug("Modify consist {}", id);
         }
         // save all elements of a consist roster
         nceConsistRosterEntry.setId(id);
@@ -1170,7 +1170,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     // remove selected consist from roster
     private void deleteRoster() {
         String entry = conRosterBox.getSelectedItem().toString();
-        log.debug("remove consist " + entry + " from roster ");
+        log.debug("remove consist {} from roster ", entry);
         // delete it from roster
         nceConsistRoster.removeEntry(nceConsistRoster.entryFromTitle(entry));
         writeRosterFile();
@@ -1337,8 +1337,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
         if (nceReply.getNumDataElements() != replyLen) {
             consistStatus.setText(Bundle.getMessage("EditStateERROR"));
-            log.error("reply length error, expecting: " + replyLen + " got: "
-                    + nceReply.getNumDataElements());
+            log.error("reply length error, expecting: {} got: {}", replyLen, nceReply.getNumDataElements());
             return;
         }
 
@@ -2111,9 +2110,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private int errorCode = 0;
 
     private void queueError(int errorCode) {
-        log.debug("queue warning/error message: " + errorCode);
+        log.debug("queue warning/error message: {}", errorCode);
         if (this.errorCode != 0) {
-            log.debug("multiple errors reported " + this.errorCode);
+            log.debug("multiple errors reported {}", this.errorCode);
             return;
         }
         this.errorCode = errorCode;

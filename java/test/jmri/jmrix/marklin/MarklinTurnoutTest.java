@@ -1,14 +1,13 @@
 package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MarklinTurnoutTest {
 
@@ -16,17 +15,16 @@ public class MarklinTurnoutTest {
     public void testCTor() {
         MarklinTrafficController tc = new MarklinTrafficController();
         new MarklinSystemConnectionMemo(tc);
-        MarklinTurnout t = new MarklinTurnout(1,"MC",tc);
-        Assert.assertNotNull("exists",t);
+        MarklinTurnout t = new MarklinTurnout(1,"MC", tc);
+        Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

@@ -41,7 +41,9 @@ public class RosterFrameAction extends JmriAbstractAction {
     }
 
     /**
-     * Method for opening a new window via the classic JMRI interface
+     * Method for opening a new window via the classic JMRI interface.
+     * @param pName action name.
+     * @param allowQuit Set state to either close JMRI or just the roster window.
      */
     public RosterFrameAction(String pName, boolean allowQuit) {
         super(pName);

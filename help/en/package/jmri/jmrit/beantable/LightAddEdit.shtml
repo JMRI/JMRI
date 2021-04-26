@@ -8,10 +8,10 @@
 
   <title>JMRI: Adding/Editing Lights</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <meta name="author"content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Add Edit lights control timed variable slow fade scenic automated
   fastclock fast clock timer times controller dim follower">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -152,6 +152,8 @@
         </li>
       </ol><a name="addManyLight" id="addManyLight"></a>
 
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2>Adding several new Lights at Once</h2>
       If the selected
       <b>System Connection</b> supports adding multiple Lights at once, the
@@ -214,6 +216,8 @@
         </li>
       </ul>
 
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2><a name="editLight" id="editLight">Editing an existing Light</a></h2>
       To edit an existing Light,
 
@@ -269,6 +273,7 @@
           
       </ol>
       
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
     <h2><a name="lightcontrol" id="lightcontrol">Automated Control Options for Lights</a></h2>
       
@@ -445,8 +450,9 @@
           conflict or overlap with each other, producing strange
           results. <b>The user is responsible for ensuring that
           Light Controllers do not conflict.</b></p>
-        
 
+        
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       
       <h2><a name="varLight" id="varLight">Working with Variable Intensity Lights</a></h2>
       If the selected <b>System Connection</b> supports Lights
@@ -480,10 +486,17 @@
       Intensity</b> outside the <b>Minimum Intensity to Maximum
       Intensity</b> range will result in the <b>Target
       Intensity</b> being set to the relevant limit.</p>
-      
-      <h4>Further JMRI Support</h4>
 
-      <p>JMRI <a href="LightTable.shtml" title="Light Table">Light Table help page</a>.</p>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      
+      <h2>Other Light Reading</h2>
+      
+      <p><a href="LightTable.shtml" title="Light Table">Light Table Help</a></p>
+      
+      <p><a href="../../../../html/tools/Lights.shtml" >Lights General Documentation</a></p>
+
+      <p><a href="../simplelightctrl/SimpleLightCtrl.shtml"> Light Control Tool</a> (for manual Light operation)</p>
+                   
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

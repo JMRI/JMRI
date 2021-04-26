@@ -42,6 +42,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is reply to poll message.
+     * @return true if reply to a poll message, else false.
      */
     public int getAddr() {
         return getElement(0) & 0x7F;
@@ -109,6 +110,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * <p>
      * Since Grapevine doesn't distinguish between message and reply, this uses
      * the Message method.
+     * @return human readable text of reply.
      */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")

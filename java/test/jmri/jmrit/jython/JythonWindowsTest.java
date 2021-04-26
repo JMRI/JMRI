@@ -1,13 +1,14 @@
 package jmri.jmrit.jython;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -15,7 +16,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * Some of these tests are here, as they're cross-class functions
  *
- * @author	Bob Jacobsen Copyright 2009, 2016
+ * @author Bob Jacobsen Copyright 2009, 2016
  */
 public class JythonWindowsTest {
 
@@ -63,15 +64,17 @@ public class JythonWindowsTest {
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

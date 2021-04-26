@@ -34,7 +34,7 @@ public final class JSON {
      * this is a semantic version string; prior to that, it is just an X.Y
      * version string.
      */
-    public static final String V5_PROTOCOL_VERSION = "5.3.0"; // NOI18N
+    public static final String V5_PROTOCOL_VERSION = "5.4.0"; // NOI18N
 
     /**
      * JMRI JSON protocol version. See {@link jmri.server.json} for the version
@@ -766,6 +766,25 @@ public final class JSON {
      * {@value #THROWN}
      */
     public static final int THROWN = 0x04;
+
+    /* OBlock status */
+    /**
+     * {@value #ALLOCATED}
+     */
+    public static final int ALLOCATED = 0x10;
+    /**
+     * {@value #RUNNING}
+     */
+    public static final int RUNNING = 0x20;
+    /**
+     * {@value #OUT_OF_SERVICE}
+     */
+    public static final int OUT_OF_SERVICE = 0x30;
+    /**
+     * {@value #TRACK_ERROR}
+     */
+    public static final int TRACK_ERROR = 0x40;
+
     /**
      * {@value #UNIT}
      *

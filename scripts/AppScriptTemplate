@@ -21,9 +21,9 @@
 # options, this one cannot be set in the jmri.conf file, since it determines
 # from where the jmri.conf file is read).
 #
-# If your serial ports are not in the default list, include them in the
+# If your serial ports are not in the default list, include the names in the
 # command line argument --serial-ports separated by commas:
-#    --serial-ports=/dev/locobuffer,/dev/cmri
+#    --serial-ports=locobuffer,cmri
 #
 # You can run separate instances of the program with their own preferences
 # if you
@@ -55,11 +55,13 @@ Usage: $( basename $0 ) [--help] [OPTIONS] [--] [ARGUMENTS]
   --cp:p=CLASSPATH               Prepend specified JARs to the classpath
                                  Multiple JARs are separated with colons (:)
   -d, --debug                    Add verbose output to this script
+  -ea, -da, -enableassertions, -disableassertions Java assertions
   -DPROPERTY                     Set the Java System property PROPERTY
   -JOPTION                       Pass the option OPTION to the JVM
   -m MAIN, --main=MAIN           Use main() method in class MAIN to start JMRI
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
-  --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS
+  --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS by name
+                                 Multiple names are separated with commas (,)
   --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
   --                             Do not process anything following as an option,
                                  even if it matches one of the above options
@@ -97,6 +99,11 @@ function parse_args() {
             -J-Xmx*) jmri_xmx="${1#-J}" ;;
             # JVM arguments other than max memory
             -J*) jmri_options="${jmri_options} ${1#-J}" ;;
+            # assertions
+            -ea|-enableassertions) jmri_options="${jmri_options} ${1}" ;;
+            -da|-disableassertions) jmri_options="${jmri_options} ${1}" ;;
+            -ea:*|-enableassertions:*) jmri_options="${jmri_options} ${1}" ;;
+            -da:*|-disableassertions:*) jmri_options="${jmri_options} ${1}" ;;
             # main class
             -m|--main) CLASSNAME="${2}" ; shift ;;
             --main=*) CLASSNAME="${1#*=}" ;;
@@ -316,13 +323,16 @@ if [ -z "${JAVA_HOME}" ] ; then
             JAVA_HOME=""
         fi
         # Find an installed JRE/JDK location
-        if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
-            # Test for any JDKs of version 1.8 or newer
-            JAVA_HOME=$( /usr/libexec/java_home --version 1.8+ --failfast 2>/dev/null )
-            if [ -n "${JAVA_HOME}" ] ; then
-                JAVACMD="${JAVA_HOME}/bin/java"
+        for jversion in 1.8 9 10 11 12 13 14 15 16 17 ; do
+            if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
+                # Test for any JDKs
+                JAVA_HOME=$( /usr/libexec/java_home --version ${jversion} --failfast 2>/dev/null )
+                if [ -n "${JAVA_HOME}" ] ; then
+                    JAVACMD="${JAVA_HOME}/bin/java"
+                    break
+                fi
             fi
-        fi
+        done
         if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
@@ -553,5 +563,10 @@ while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}" | tee -a ${launcher_log}
 done
-
+if [ $EXIT_STATUS -eq 200 ] ; then
+    sudo shutdown -h now
+fi
+if [ $EXIT_STATUS -eq 210 ] ; then
+    sudo shutdown -r now
+fi
 exit $EXIT_STATUS

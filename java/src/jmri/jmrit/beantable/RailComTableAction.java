@@ -84,12 +84,12 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
             }
 
             @Override
-            public RailCom getBySystemName(String name) {
+            public RailCom getBySystemName(@Nonnull String name) {
                 return (RailCom) tagManager.getBySystemName(name);
             }
 
             @Override
-            public RailCom getByUserName(String name) {
+            public RailCom getByUserName(@Nonnull String name) {
                 return (RailCom) tagManager.getByUserName(name);
             }
 
@@ -104,7 +104,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
                 if (col == CLEARCOL) {
                     RailCom t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
-                        log.debug("Clear where & when last seen for " + t.getSystemName());
+                        log.debug("Clear where & when last seen for {}", t.getSystemName());
                     }
                     t.setWhereLastSeen(null);
                     fireTableRowsUpdated(row, row);

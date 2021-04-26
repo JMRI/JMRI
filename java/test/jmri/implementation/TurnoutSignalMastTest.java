@@ -3,14 +3,12 @@ package jmri.implementation;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TurnoutSignalMastTest {
 
@@ -130,15 +128,14 @@ public class TurnoutSignalMastTest {
         Assert.assertEquals(Turnout.THROWN, it3.getCommandedState());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

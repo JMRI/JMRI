@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +28,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.ColorUtil;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Provides an export to the Timetable feature.
@@ -98,18 +98,6 @@ public class ExportTimetable extends XmlFile {
         // nothing to do
     }
 
-    /**
-     * Sets the delimiter for the CSV export. Does nothing, left in place to
-     * avoid API breakage during deprecation period.
-     *
-     * @param delimiter ignored
-     * @deprecated since 4.19.4 without replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
-        // nothing to do
-    }
-
     public void writeOperationsTimetableFile() {
         makeBackupFile(defaultOperationsFilename());
         try {
@@ -128,7 +116,7 @@ public class ExportTimetable extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -158,7 +146,7 @@ public class ExportTimetable extends XmlFile {
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open export timetable CSV file: " + file.getName());
+            log.error("Can not open export timetable CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
                             new Object[]{defaultOperationsFilename()}),
@@ -227,7 +215,7 @@ public class ExportTimetable extends XmlFile {
                     distance,
                     "No",
                     "0",
-                    location.isStaging() ? location.getTrackList().size() : "0");
+                    location.isStaging() ? location.getTracksList().size() : "0");
         }
     }
 

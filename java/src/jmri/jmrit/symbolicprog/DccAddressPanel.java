@@ -138,7 +138,7 @@ public class DccAddressPanel extends JPanel {
                         primaryAddr.updatedTextField();
                         val.setBackground(primaryAddr.getCommonRep().getBackground());
                         if (log.isDebugEnabled()) {
-                            log.debug("set color: " + primaryAddr.getCommonRep().getBackground());
+                            log.debug("set color: {}", primaryAddr.getCommonRep().getBackground());
                         }
                     }
 
@@ -148,7 +148,7 @@ public class DccAddressPanel extends JPanel {
                         extendAddr.updatedTextField();
                         val.setBackground(extendAddr.getCommonRep().getBackground());
                         if (log.isDebugEnabled()) {
-                            log.debug("set color: " + extendAddr.getCommonRep().getBackground());
+                            log.debug("set color: {}", extendAddr.getCommonRep().getBackground());
                         }
                     }
                 };
@@ -197,7 +197,7 @@ public class DccAddressPanel extends JPanel {
                     primaryAddr.updatedTextField();
                     val.setBackground(primaryAddr.getCommonRep().getBackground());
                     if (log.isDebugEnabled()) {
-                        log.debug("set color: " + primaryAddr.getCommonRep().getBackground());
+                        log.debug("set color: {}", primaryAddr.getCommonRep().getBackground());
                     }
                 }
 
@@ -207,7 +207,7 @@ public class DccAddressPanel extends JPanel {
                     extendAddr.updatedTextField();
                     val.setBackground(extendAddr.getCommonRep().getBackground());
                     if (log.isDebugEnabled()) {
-                        log.debug("set color: " + extendAddr.getCommonRep().getBackground());
+                        log.debug("set color: {}", extendAddr.getCommonRep().getBackground());
                     }
                 }
             };
@@ -222,9 +222,7 @@ public class DccAddressPanel extends JPanel {
      */
     void updateDccAddress() {
         if (log.isDebugEnabled()) {
-            log.debug("updateDccAddress: short " + (primaryAddr == null ? "<null>" : primaryAddr.getValueString())
-                    + " long " + (extendAddr == null ? "<null>" : extendAddr.getValueString())
-                    + " mode " + (addMode == null ? "<null>" : addMode.getValueString()));
+            log.debug("updateDccAddress: short {} long {} mode {}", primaryAddr == null ? "<null>" : primaryAddr.getValueString(), extendAddr == null ? "<null>" : extendAddr.getValueString(), addMode == null ? "<null>" : addMode.getValueString());
         }
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
             @Override
@@ -240,7 +238,7 @@ public class DccAddressPanel extends JPanel {
                 val.setBackground(primaryAddr.getCommonRep().getBackground());
                 val.setDocument(f.getDocument());
                 if (log.isDebugEnabled()) {
-                    log.debug("set color: " + primaryAddr.getCommonRep().getBackground());
+                    log.debug("set color: {}", primaryAddr.getCommonRep().getBackground());
                 }
             }
 
@@ -257,7 +255,7 @@ public class DccAddressPanel extends JPanel {
                 val.setBackground(extendAddr.getCommonRep().getBackground());
                 val.setDocument(f.getDocument());
                 if (log.isDebugEnabled()) {
-                    log.debug("set color: " + extendAddr.getCommonRep().getBackground());
+                    log.debug("set color: {}", extendAddr.getCommonRep().getBackground());
                 }
             }
         };

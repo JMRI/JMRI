@@ -20,6 +20,8 @@ public class SerialLight extends AbstractLight {
      * Create a Light object, with only system name.
      * <p>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName light system name.
+     * @param memo system connection.
      */
     public SerialLight(String systemName, OakTreeSystemConnectionMemo memo) {
         super(systemName);
@@ -32,6 +34,9 @@ public class SerialLight extends AbstractLight {
      * Create a Light object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName light system name.
+     * @param userName light username.
+     * @param memo system connection.
      */
     public SerialLight(String systemName, String userName, OakTreeSystemConnectionMemo memo) {
         super(systemName, userName);

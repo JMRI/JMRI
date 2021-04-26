@@ -90,7 +90,7 @@
         </tr>
 
         <tr>
-          <td>Multi-version JARs can help with migration, see
+          <td>Multi-version JARs can help with migration from then on, see
           <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
 
           <td>9</td>
@@ -124,29 +124,29 @@
         </tr>
         
         <tr>
-          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
-                More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
-                worse code) of JMRI indepdendent.</td>
-
-          <td>9</td>
-
-          <td>9</td>
-        </tr>
-
-        <tr>
           <td>JLink - improve packaging, faster startup</td>
 
           <td>9</td>
 
-          <td>?</td>
+          <td>9</td>
         </tr>
         
+        <tr>
+          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
+                More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
+                worse code) of JMRI independent.</td>
+
+          <td>9</td>
+
+          <td>9</td>
+        </tr>
+
         <tr>
           <td>var syntax - improves readability of code, use of generics</td>
 
           <td>10<br>11</td>
 
-          <td>?</td>
+          <td>10</td>
         </tr>
 
         <tr>
@@ -154,26 +154,51 @@
 
           <td>10</td>
 
-          <td>?</td>
+          <td>10</td>
+        </tr>
+
+        <tr>
+          <td>Improvements in Optional:  or(), ifPresentOrElse()</td>
+
+          <td>9</td>
+
+          <td>9</td>
         </tr>
  
         <tr>
-          <td>It seems that MacOS X (macOS) users will lose the use
-          of the OS X App menu for About, Preferences, and
-          (critically) Quit handling on that platform</td>
+          <td>More improvements in Optional: orElseThrow()</td>
 
-          <td>&gt; 10</td>
+          <td>10</td>
 
-          <td>&gt; 10</td>
+          <td>10</td>
+        </tr>
+ 
+        <tr>
+          <td>Completion of Optional class:  isEmpty()</td>
+
+          <td>11</td>
+
+          <td>11</td>
+        </tr>
+ 
+        <tr>
+          <td>Incompatible change in the MacOS X (macOS) App menu About,
+              Preferences, and (critically) Quit handling on that platform</td>
+
+          <td>&gt; 9</td>
+
+          <td>&gt; 9</td>
         </tr>
 
         <tr>
-          <td>It seems that MacOS X (macOS) users will lose
-          Applescript scripting</td>
+          <td>Applescript support on MacOS X (macOS) removed from the JVM
+              (Note that Java 7 and 8 included Applescript support but disabled
+              it unless an additional JAR file enabling it was added by the
+              user).</td>
 
-          <td>&gt; 10</td>
+          <td>&gt; 9</td>
 
-          <td>&gt; 10</td>
+          <td>&gt; 9</td>
         </tr>
 
         <tr>
@@ -181,7 +206,7 @@
 
           <td>11</td>
 
-          <td>?</td>
+          <td>11</td>
         </tr>
 
         <tr>
@@ -191,9 +216,57 @@
           need to migrate away from these before using a more 
           advanced JRE or JDK.</td>
 
-          <td>&gt; 11</td>
+          <td>&gt; >11</td>
 
-          <td>&gt; 11</td>
+          <td>&gt; >11</td>
+
+        </tr>
+
+        <tr>
+
+          <td>The <a href="https://www.baeldung.com/jvm-zgc-garbage-collector">Z Garbage Collector</a>
+            may provide better performance because of reduced garbage collection
+            pauses.</td>
+
+          <td>11</td>
+
+          <td>11</td>
+
+        </tr>
+
+        <tr>
+
+          <td>The <a href="https://www.infoworld.com/article/2888189/red-hat-shenandoah-boosts-java-garbage-collection.html">Shenandoah garbage collector</a> might be another source of 
+            better performance.</td>
+
+          <td>12</td>
+
+          <td>12</td>
+
+        <tr>
+          <td>The Nashorn interpreter will be removed in Java 15.
+          Some adaptation will be needed to have a JavaScript interpreter, perhaps
+          <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
+          or <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino">Rhino</a>.
+          </td>
+
+          <td>15</td>
+
+          <td>15</td>
+        </tr>
+
+        <tr>
+          <td>A standard installation of GraalVM is available that can
+          <a href="https://www.graalvm.org/docs/reference-manual/languages/python/">run parts of Python 3.7</a>. 
+          Although this is "far from complete", 
+          no other project appears to be emerging
+          to include Python 3 support in i.e. Jython.
+          Having this available can let JMRI start a gentler migration.
+          </td>
+
+          <td>11</td>
+
+          <td>11</td>
         </tr>
 
       </table>(* indicates that a compatibility library is used in
@@ -220,7 +293,7 @@
       <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a>
       makes no mention of XP, it seems reasonable to assume the same applies.
       JMRI's 
-      <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
+      <a href="https://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
       keeps updated information on this.
       Several JMRI users have reported that Java 1.8_151 is the last one that 
       can be cleanly installed and run on XP.  See
@@ -235,18 +308,47 @@
 </blockquote>
       
       <P>
-      For more details, see the Oracle Java pages for:
+      For more details, see the Java pages for:
       <ul>
-        <li><a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8</a></li>
-        <li><a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java 9</a></li>
-        <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 (March 2014)</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java 9 (Sept 2017)</a> 
+                    see also the <a href="https://openjdk.java.net/projects/jdk9/">OpenJDK page</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10 (March 2018)</a></li>
+        <li><a href="https://openjdk.java.net/projects/jdk/11/">Java 11 LTS (Sept 2018)</a>
+        <li><a href="https://openjdk.java.net/projects/jdk/12/">Java 12 (March 2019)</a>
+        <li><a href="https://openjdk.java.net/projects/jdk/13/">Java 13 (Sept 2019)</a>
+        <li><a href="https://openjdk.java.net/projects/jdk/14/">Java 14 (March 2020)</a>
+        <li><a href="https://openjdk.java.net/projects/jdk/15/">Java 15 (Sept 2020)</a>
       </ul>
 
-    <p><a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, 
+    <p>Java <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">plans for end of life</a> of various versions: <ul>
+        <li>Java 8 will <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">keep receiving updates indefinitely</a>
+            for personal use.
+            which 18-month warning expected when "indefinitely" ends.
+            Note that Oracle is 
+            <a href="https://blogs.oracle.com/java-platform-group/end-of-public-updates-is-a-process%2c-not-an-event">no longer actively maintaining Java 8</a>.
+            Commercial support for security patches ends in Spring 2020 for many organizations.
+        <li><a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, 
         made available in September 2018, 
-        will be a "Long Term Support" release.  Java 9, 10, 12 and 13 will not be.
+        will be a "Long Term Support" (LTS) release. That means five years of 
+        support, 
+        <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through 2023</a>.
+        <li>Java 9, 10, and 12 through 16 will not be LTS releases, and support will end
+        shortly after the following release comes out.
+        <li>Java 17 is announced as the next LTS release, expected in September of 2021.
+            It is also expected to get five years of support.
+        </ul>
+        Model railroaders may not care if they're using a Java version that's supported.
+        Some of them don't connect their layout computers to the internet; some have
+        single-purpose machines that, if messed up, they'll just reload.  But other JMRI
+        users have multi-purpose machines whose security matters; essentially all of the
+        JMRI developers are in this situation.  At least some of the developers use
+        dual-purpose machines that are required to meet various security and update
+        standards.  For those, Java 8 is going to increasing become a liability.
 
-      <P>Java 11 only runs on 64-bit Windows versions (no 32-bit).
+      <P>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit).
+          <a href="https://adoptopnjdk.net">AdoptOpenJDK</a> continues to make 32
+          and 64-bit JREs and JDKs available.
 
       <table border="1">
         <tr>
@@ -258,13 +360,13 @@
         <tr>
           <td>Linux</td>
 
-          <td>(depends, but<br>generally 1.8)</td>
+          <td>(depends, but<br>generally 11+)</td>
         </tr>
 
         <tr>
-          <td>Win 10 (64-bit)</td>
+          <td>Win 1!+ (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -306,25 +408,25 @@
         <tr>
           <td>Win 8 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 R2 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win 7 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -348,7 +450,7 @@
         <tr>
           <td>Win Vista (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -396,11 +498,11 @@
         <tr>
           <td>Mac OS X 10.10 and later</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3</td>
+          <td>Mac OS X 10.8.3 Mountain Lion</td>
 
           <td>8</td>
         </tr>
@@ -464,20 +566,20 @@
             <th>Java</th>
 
             <th><a href=
-            "http://jmri.org/install/MacOSX.shtml#sysreq">OS
+            "https://jmri.org/install/MacOSX.shtml#sysreq">OS
             X</a></th>
 
             <th><a href=
-            "http://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
+            "https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
 
             <th><a href=
-            "http://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
+            "https://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
 
             <th><a href=
-            "http://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
+            "https://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
 
             <th><a href=
-            "http://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
+            "https://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
           </tr>
 
           <tr>
@@ -489,7 +591,7 @@
 
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
 
-            <td>5.5+</td>
+            <td>5.5+</td><!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
             <td>12.04+</td>
 
@@ -505,7 +607,7 @@
 
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
 
-            <td>5.5+</td>
+            <td>5.5+</td><!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>12.04</td>
 
@@ -521,7 +623,7 @@
 
             <td>Win2003, Win2000 (x86)</td>
 
-            <td>5.5</td>
+            <td>5.5</td><!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>10.4</td>
 

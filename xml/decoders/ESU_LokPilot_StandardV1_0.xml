@@ -24,6 +24,8 @@
     <version author="Dave Heap" version="1.3" lastUpdated="20161101"/>
     <!-- ver1.4 refactor -->
     <version author="Dave Heap" version="1.4" lastUpdated="20190507"/>
+    <!-- ver1.5 refactor and add Pullman Silberling -->
+    <version author="Dave Heap" version="1.5" lastUpdated="20200726"/>
     <decoder>
         <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308,16777361">
@@ -88,6 +90,16 @@
                 <size length="25.5" width="15.5" height="4.5" units="mm"/>
                 <!-- connector="NEM651, 21MTC, Plux12, wires" -->
             </model>
+            <model model="Pullman Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777378">
+                <output name="1" label="Head|Lights"/>
+                <output name="2" label="Red|Light"/>
+                <output name="3" label="Cab|Light"/>
+                <output name="4" label="Destination|Light"/>
+                <output name="5" label="Panel|Light"/>
+                <output name="6" label="High|Beam"/>
+                <output name="7" label="Cargo|Light"/>
+                <output name="8" label="Interior|Light"/>
+            </model>
             <model model="MBW Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777360">
                 <output name="1" label="|White"/>
                 <output name="2" label="Front|Red"/>
@@ -144,7 +156,7 @@
         </programming>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-            <variables exclude="LokPilot Fx Nano V1.0,MBW Silberling,Bachmann MK2F">
+            <variables exclude="LokPilot Fx Nano V1.0,Pullman Silberling,MBW Silberling,Bachmann MK2F">
                 <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-255">
                     <decVal min="1" max="255"/>
                     <label>Starting Voltage</label>
@@ -207,7 +219,7 @@
                 <label xml:lang="de">Bremszeit (0-255)</label>
                 <label xml:lang="ca">Desacceleració (0-255)</label>
             </variable>
-            <variable CV="7" readOnly="yes" default="000" item="Decoder Version" tooltip="The decoder version number (read only)">
+            <variable CV="7" item="Decoder Version" readOnly="yes" default="000" tooltip="The decoder version number (read only)">
                 <decVal/>
                 <label>Software Version Number</label>
                 <label xml:lang="it">Versione Decoder: </label>
@@ -297,7 +309,7 @@
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
-            <variables exclude="MBW Silberling,Bachmann MK2F">
+            <variables exclude="Pullman Silberling,MBW Silberling,Bachmann MK2F">
                 <variable CV="27" mask="XXXXVXXX" item="ESU V4 ABC Brake Left Rail Higher" default="1">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Brake on DC, polarity against direction</label>
@@ -344,7 +356,7 @@
             </variable>
             <!-- Function Mapping in a fragment file -->
             <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1FnMapCVs.xml"/>
-            <variables include="MBW Silberling,Bachmann MK2F">
+            <variables include="Pullman Silberling,MBW Silberling,Bachmann MK2F">
                 <variable CV="59" default="0" tooltip="Unit is 0.25 seconds" item="ESU V4 Function Settings Power On Delay Slider 1">
                     <decVal/>
                     <label>Minimum Startup Delay</label>
@@ -371,7 +383,7 @@
                 <label>Rate for Blinking Effects</label>
             </variable>
             <!-- Function Outputs -->
-            <variables exclude="MBW Silberling,Bachmann MK2F">
+            <variables exclude="Pullman Silberling,MBW Silberling,Bachmann MK2F">
                 <variable label="Headlight Mode" CV="113" default="0" item="ESU V4 Function Output HL-1 effect generated" mask="VVVVXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1lightEnum.xml"/>
                 </variable>
@@ -425,10 +437,85 @@
                     </variables>
                 </variables>
             </variables>
-            <variables include="MBW Silberling">
-                <variable label="White Mode" CV="113" default="0" item="ESU V4 Function Output HL-1 behavior" mask="XXVVVXXX">
+            <variables include="Pullman Silberling">
+                <variable label="Headlights Mode" CV="113" default="0" item="ESU V4 Function Output HL-1 effect generated c" mask="XXVVVXXX">
                     <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
                 </variable>
+                <variable label="Red Light Mode" CV="114" default="0" item="ESU V4 Function Output RL-1 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Cab Light Mode" CV="115" default="0" item="ESU V4 Function Output A1-1 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Destination Light Mode" CV="116" default="0" item="ESU V4 Function Output A2-1 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Panel Light Mode" CV="117" default="0" item="ESU V4 Function Output A3 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="High Beam Mode" CV="118" default="0" item="ESU V4 Function Output A4 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Cargo Light Mode" CV="119" default="0" item="ESU V4 Function Output A5 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Interior Light Mode" CV="120" default="0" item="ESU V4 Function Output A6 effect generated c" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+            </variables>
+            <variables include="MBW Silberling">
+                <variable label="White Mode" CV="113" default="0" item="ESU V4 Function Output HL-1 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Front Red Mode" CV="114" default="0" item="ESU V4 Function Output RL-1 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Rear Red Mode" CV="115" default="0" item="ESU V4 Function Output A1-1 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Interior Light 1 Mode" CV="116" default="0" item="ESU V4 Function Output A2-1 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Interior Light 2 Mode" CV="117" default="0" item="ESU V4 Function Output A3 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Entrance Mode" CV="118" default="0" item="ESU V4 Function Output A4 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Rear Coupler Mode" CV="119" default="0" item="ESU V4 Function Output A5 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Front Coupler Mode" CV="120" default="0" item="ESU V4 Function Output A6 effect generated a" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+            </variables>
+            <variables include="Bachmann MK2F">
+                <variable label="Front White Mode" CV="113" default="0" item="ESU V4 Function Output HL-1 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Rear White Mode" CV="114" default="0" item="ESU V4 Function Output RL-1 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Red Light Mode" CV="115" default="0" item="ESU V4 Function Output A1-1 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Cab Light Mode" CV="116" default="0" item="ESU V4 Function Output A2-1 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Interior Light Front Mode" CV="117" default="0" item="ESU V4 Function Output A3 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Interior Light Rear Mode" CV="118" default="0" item="ESU V4 Function Output A4 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Door Interlock Light Left Mode" CV="119" default="0" item="ESU V4 Function Output A5 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+                <variable label="Door Interlock Light Right Mode" CV="120" default="0" item="ESU V4 Function Output A6 effect generated b" mask="XXVVVXXX">
+                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
+                </variable>
+            </variables>
+            <variables include="Pullman Silberling,MBW Silberling,Bachmann MK2F">
                 <variable label="Brightness" CV="113" default="7" item="ESU V4 Function Output HL-1 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
                 </variable>
@@ -437,9 +524,6 @@
                 </variable>
                 <variable label="Random On/Off" CV="113" default="0" item="ESU V4 Function Output HL-1 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Front Red Mode" CV="114" default="0" item="ESU V4 Function Output RL-1 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
                 </variable>
                 <variable label="Brightness" CV="114" default="7" item="ESU V4 Function Output RL-1 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
@@ -450,9 +534,6 @@
                 <variable label="Random On/Off" CV="114" default="0" item="ESU V4 Function Output RL-1 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable label="Rear Red Mode" CV="115" default="0" item="ESU V4 Function Output A1-1 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
                 <variable label="Brightness" CV="115" default="7" item="ESU V4 Function Output A1-1 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
                 </variable>
@@ -461,9 +542,6 @@
                 </variable>
                 <variable label="Random On/Off" CV="115" default="0" item="ESU V4 Function Output A1-1 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Interior Light 1 Mode" CV="116" default="0" item="ESU V4 Function Output A2-1 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
                 </variable>
                 <variable label="Brightness" CV="116" default="7" item="ESU V4 Function Output A2-1 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
@@ -474,9 +552,6 @@
                 <variable label="Random On/Off" CV="116" default="0" item="ESU V4 Function Output A2-1 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable label="Interior Light 2 Mode" CV="117" default="0" item="ESU V4 Function Output A3 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
                 <variable label="Brightness" CV="117" default="7" item="ESU V4 Function Output A3 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
                 </variable>
@@ -485,9 +560,6 @@
                 </variable>
                 <variable label="Random On/Off" CV="117" default="0" item="ESU V4 Function Output A3 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Entrance Mode" CV="118" default="0" item="ESU V4 Function Output A4 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
                 </variable>
                 <variable label="Brightness" CV="118" default="7" item="ESU V4 Function Output A4 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
@@ -498,9 +570,6 @@
                 <variable label="Random On/Off" CV="118" default="0" item="ESU V4 Function Output A4 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable label="Rear Coupler Mode" CV="119" default="0" item="ESU V4 Function Output A5 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
                 <variable label="Brightness" CV="119" default="7" item="ESU V4 Function Output A5 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
                 </variable>
@@ -509,9 +578,6 @@
                 </variable>
                 <variable label="Random On/Off" CV="119" default="0" item="ESU V4 Function Output A5 Check 4" mask="VXXXXXXX">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Front Coupler Mode" CV="120" default="0" item="ESU V4 Function Output A6 behavior" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
                 </variable>
                 <variable label="Brightness" CV="120" default="7" item="ESU V4 Function Output A6 Slider 6" mask="XXXXXVVV">
                     <decVal max="7"/>
@@ -523,106 +589,8 @@
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
             </variables>
-            <variables include="Bachmann MK2F">
-                <variable label="Front White Mode" CV="113" default="0" item="ESU V4 Function Output HL-1 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="113" default="7" item="ESU V4 Function Output HL-1 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="113" default="0" item="ESU V4 Function Output HL-1 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="113" default="0" item="ESU V4 Function Output HL-1 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Rear White Mode" CV="114" default="0" item="ESU V4 Function Output RL-1 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="114" default="7" item="ESU V4 Function Output RL-1 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="114" default="0" item="ESU V4 Function Output RL-1 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="114" default="0" item="ESU V4 Function Output RL-1 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Red Light Mode" CV="115" default="0" item="ESU V4 Function Output A1-1 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="115" default="7" item="ESU V4 Function Output A1-1 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="115" default="0" item="ESU V4 Function Output A1-1 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="115" default="0" item="ESU V4 Function Output A1-1 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Cab Light Mode" CV="116" default="0" item="ESU V4 Function Output A2-1 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="116" default="7" item="ESU V4 Function Output A2-1 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="116" default="0" item="ESU V4 Function Output A2-1 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="116" default="0" item="ESU V4 Function Output A2-1 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Interior Light Front Mode" CV="117" default="0" item="ESU V4 Function Output A3 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="117" default="7" item="ESU V4 Function Output A3 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="117" default="0" item="ESU V4 Function Output A3 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="117" default="0" item="ESU V4 Function Output A3 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Interior Light Rear Mode" CV="118" default="0" item="ESU V4 Function Output A4 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="118" default="7" item="ESU V4 Function Output A4 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="118" default="0" item="ESU V4 Function Output A4 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="118" default="0" item="ESU V4 Function Output A4 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Door Interlock Light Left Mode" CV="119" default="0" item="ESU V4 Function Output A5 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="119" default="7" item="ESU V4 Function Output A5 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="119" default="0" item="ESU V4 Function Output A5 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="119" default="0" item="ESU V4 Function Output A5 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Door Interlock Light Right Mode" CV="120" default="0" item="ESU V4 Function Output A6 options" mask="XXVVVXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1AltLightEnum.xml"/>
-                </variable>
-                <variable label="Brightness" CV="120" default="7" item="ESU V4 Function Output A6 Slider 7" mask="XXXXXVVV">
-                    <decVal max="7"/>
-                </variable>
-                <variable label="On Delay" CV="120" default="0" item="ESU V4 Function Output A6 Check 2" mask="XVXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-                <variable label="Random On/Off" CV="120" default="0" item="ESU V4 Function Output A6 Check 5" mask="VXXXXXXX">
-                    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                </variable>
-            </variables>
             <!-- Startup Delay -->
-            <variable CV="128" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Starting Delay Time" exclude="MBW Silberling,Bachmann MK2F">
+            <variable CV="128" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Starting Delay Time" exclude="Pullman Silberling,MBW Silberling,Bachmann MK2F">
                 <decVal/>
                 <label>&lt;html&gt;Prime Mover Startup Delay&lt;br&gt;if Virtual Drive Sound Enabled&lt;/html&gt;</label>
             </variable>

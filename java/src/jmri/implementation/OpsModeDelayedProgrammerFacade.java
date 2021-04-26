@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2014
+ * @author Andrew Crosland Copyright (C) 2021
  */
 // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
 // @ToDo("read handling needs to be aligned with other ops mode programmers")
@@ -67,9 +68,14 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
 
     @Override
     public synchronized void readCV(String cv, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(cv, p, 0);
+    }
+
+    @Override
+    public synchronized void readCV(String cv, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         useProgrammer(p);
         state = ProgState.READCOMMANDSENT;
-        prog.readCV(cv, this);
+        prog.readCV(cv, this, startVal);
     }
 
     @Override
@@ -93,7 +99,7 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
         log.debug("useProgrammer entry: _usingProgrammer is {}", _usingProgrammer);
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -138,7 +144,7 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
                 _delay = _writeDelay;
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;
@@ -152,7 +158,7 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
             jmri.ProgListener temp = _usingProgrammer;
             _usingProgrammer = null; // done
             state = ProgState.NOTPROGRAMMING;
-            log.debug("notifying value " + value + " status " + status);
+            log.debug("notifying value {} status {}", value, status);
             temp.programmingOpReply(value, status);
         }, _delay);
 

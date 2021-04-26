@@ -9,9 +9,7 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 
 import jmri.InstanceManager;
@@ -83,7 +81,7 @@ public class ManagerComboBoxTest {
         frame.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -91,7 +89,7 @@ public class ManagerComboBoxTest {
         box = new ManagerComboBox<Turnout>();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         box = null;
         JUnitUtil.tearDown();

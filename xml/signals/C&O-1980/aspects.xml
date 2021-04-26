@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>C&amp;O 1980</name>
+  <date>1980</date>
+  <reference>As described in the 1980 version of the Chessie System Operating Rules "Signal Rules - 281-292".</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2011</year>
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    
+	<author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+
+    <author>
+      <personname>
+        <firstname>Greg</firstname>
+        <surname>McCartney</surname>
+      </personname>
+      <email>gpmccartney@gmail.com</email>
+    </author>
+  
+  </authorgroup>
+  
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    
+	<revision>
+      <revnumber>1</revnumber>
+      <date>2016-12-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+	
+	<revision>
+      <revnumber>2</revnumber>
+      <date>2020-03-05</date>
+      <authorinitials>GM</authorinitials>
+      <revremark>Initial version of the 1980 C&amp;O Signal rules.  This set was created by back dating the CSX-2014-Chessie rule set created by Suzi Tall.  Back dating required removal of some aspects and altering the mapping to compensate for their removal.  While based on the 1980 rule book, they are the same rules that were in affect in 1969.</revremark>
+    </revision>
+  
+  </revhistory>
+
+  <aspects>
+  
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed, approaching next signal not exceeding Medium Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed.</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach Slow</name>
+      <rule>Rule 283A</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed, approaching next signal not exceeding Slow Speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>11</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed, approaching next signal not exceeding slow speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed prepared to stop at the next signal. Train exceeding medium speed must immediately begin reduction to Medium Speed as soon as the engine passes the Approach Signal.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches, then proceed, prepared to stop at next signal.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule 287</rule>
+      <indication>Slow Speed through turnouts, crossovers, sidings and over power-operated switches, then proceed.</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Slow Speed through turnouts, crossovers, sidings and over power-operated switches, then proceed, prepared to stop at next signal.</indication>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop, then proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-CO-333-hi.xml" />
+	<appearancefile href="appearance-CO-333-hi-shortblock.xml" />
+	<appearancefile href="appearance-CO-332-hi.xml" />
+	<appearancefile href="appearance-CO-332-hi-shortblock.xml" />
+	<appearancefile href="appearance-CO-331-hi.xml" />
+	<appearancefile href="appearance-CO-331-hi-shortblock.xml" />
+	<appearancefile href="appearance-CO-322-hi.xml" />
+	<appearancefile href="appearance-CO-133-hi.xml" />
+	<appearancefile href="appearance-CO-132-hi.xml" />
+	<appearancefile href="appearance-CO-131-hi.xml" />
+	<appearancefile href="appearance-CO-122-hi.xml" />
+	<appearancefile href="appearance-CO-33-hi.xml" />
+	<appearancefile href="appearance-CO-33-hi-shortblock.xml" />
+	<appearancefile href="appearance-CO-32-hi.xml" />
+	<appearancefile href="appearance-CO-32-hi-shortblock.xml" />
+	<appearancefile href="appearance-CO-31g-hi.xml" />
+	<appearancefile href="appearance-CO-31g-hi-shortblock.xml" />
+	<appearancefile href="appearance-CO-31r-hi.xml" />
+	<appearancefile href="appearance-CO-31y-hi.xml" />
+	<appearancefile href="appearance-CO-13-hi.xml" />
+	<appearancefile href="appearance-CO-12-hi.xml" />
+	<appearancefile href="appearance-CO-3-mast.xml" />
+	<appearancefile href="appearance-CO-33-dwarf.xml" />
+	<appearancefile href="appearance-CO-3-dwarf.xml" />
+	<appearancefile href="appearance-CO-3p-dwarf.xml" />
+	<appearancefile href="appearance-CO-1-dwarf.xml" />
+  </appearancefiles>
+</aspecttable>

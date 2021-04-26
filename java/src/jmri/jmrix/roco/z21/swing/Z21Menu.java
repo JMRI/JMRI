@@ -8,7 +8,7 @@ import javax.swing.JMenu;
 /**
  * Create a menu containing the Z21 specific tools
  *
- * @author	Paul Bender Copyright 2014
+ * @author Paul Bender Copyright 2014
  */
 public class Z21Menu extends JMenu {
 

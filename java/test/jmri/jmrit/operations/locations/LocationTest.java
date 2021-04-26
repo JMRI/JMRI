@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -9,9 +14,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -46,8 +48,8 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Location id", "Test id", l.getId());
         Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-        Assert.assertEquals("Location Constant NORMAL", 1, Location.NORMAL);
-        Assert.assertEquals("Location Constant STAGING", 2, Location.STAGING);
+        Assert.assertEquals("Location Constant NORMAL", "1", Location.NORMAL);
+        Assert.assertEquals("Location Constant STAGING", "2", Location.STAGING);
 
         Assert.assertEquals("Location Constant EAST", 1, Location.EAST);
         Assert.assertEquals("Location Constant WEST", 2, Location.WEST);
@@ -84,22 +86,6 @@ public class LocationTest extends OperationsTestCase {
 
         l.setUsedLength(200);
         Assert.assertEquals("Location Used Length", 200, l.getUsedLength());
-    }
-
-    // test operation attributes
-    @Test
-    public void testOperationAttributes() {
-        Location l = new Location("Test id", "Test Name");
-        Assert.assertEquals("Location id", "Test id", l.getId());
-        Assert.assertEquals("Location Name", "Test Name", l.getName());
-
-        l.setLocationOps(Location.STAGING);
-        Assert.assertEquals("Location Ops Staging", Location.STAGING, l.getLocationOps());
-
-        l.setLocationOps(Location.NORMAL);
-        Assert.assertEquals("Location Ops Normal", Location.NORMAL, l.getLocationOps());
-
-        Assert.assertFalse("Location isn't staging", l.isStaging());
     }
 
     // test direction attributes
@@ -210,11 +196,11 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
 
-        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
-        Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
-        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName(Bundle.getMessage("Caboose")));
-        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
+        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.isTypeNameAccepted("BoxCar"));
+        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.isTypeNameAccepted("boxCar"));
+        Assert.assertEquals("Track Accepts Type Name MOW", true, t.isTypeNameAccepted("MOW"));
+        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.isTypeNameAccepted(Bundle.getMessage("Caboose")));
+        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.isTypeNameAccepted("undefined"));
 
         t.addTypeName("Baggage");
         t.addTypeName("BoxCar");
@@ -228,12 +214,12 @@ public class LocationTest extends OperationsTestCase {
         t.addTypeName("Stock");
         t.addTypeName("Tank Oil");
 
-        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
-        Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
-        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName(Bundle.getMessage("Caboose")));
-        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
+        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.isTypeNameAccepted("BoxCar"));
+        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.isTypeNameAccepted("boxCar"));
+        Assert.assertEquals("Track Accepts Type Name MOW", true, t.isTypeNameAccepted("MOW"));
+        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.isTypeNameAccepted(Bundle.getMessage("Caboose")));
+        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.isTypeNameAccepted("BoxCar"));
+        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.isTypeNameAccepted("undefined"));
 
         // test replace
         // also test replace type in schedules
@@ -250,7 +236,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertFalse("Location Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
         Assert.assertTrue("Location Accepts Type Name boxcar", l.acceptsTypeName("boxcar"));
         Assert.assertFalse("Track Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
-        Assert.assertTrue("Track Accepts Type Name boxcar", t.acceptsTypeName("boxcar"));
+        Assert.assertTrue("Track Accepts Type Name boxcar", t.isTypeNameAccepted("boxcar"));
         Assert.assertEquals("ScheudleItem i1 Type boxcar", "boxcar", i1.getTypeName());
         Assert.assertEquals("Check ScheudleItem i2 Type Caboose", Bundle.getMessage("Caboose"), i2.getTypeName());
 
@@ -278,18 +264,18 @@ public class LocationTest extends OperationsTestCase {
         i1.setRoadName("Test Road Name");
         i2.setRoadName("Test Road Name 2");
 
-        Assert.assertTrue("track should accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
-        Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
-        Assert.assertFalse("track should Not accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
+        Assert.assertTrue("track should accept road Test Road Name", t.isRoadNameAccepted("Test Road Name"));
+        Assert.assertTrue("track should accept road Test Road Name 2", t.isRoadNameAccepted("Test Road Name 2"));
+        Assert.assertFalse("track should Not accept road New Test Road Name", t.isRoadNameAccepted("New Test Road Name"));
         Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "Test Road Name", i1.getRoadName());
         Assert.assertEquals("ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoadName());
 
         CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.replaceName("Test Road Name", "New Test Road Name");
 
-        Assert.assertFalse("track should Not accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
-        Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
-        Assert.assertTrue("track should accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
+        Assert.assertFalse("track should Not accept road Test Road Name", t.isRoadNameAccepted("Test Road Name"));
+        Assert.assertTrue("track should accept road Test Road Name 2", t.isRoadNameAccepted("Test Road Name 2"));
+        Assert.assertTrue("track should accept road New Test Road Name", t.isRoadNameAccepted("New Test Road Name"));
         Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "New Test Road Name", i1.getRoadName());
         Assert.assertEquals("Check ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoadName());
 
@@ -430,8 +416,8 @@ public class LocationTest extends OperationsTestCase {
         Location l = locMan.newLocation("TestPriority Location");
         Track t1 = l.addTrack("Yard 1", Track.YARD);
         Track t2 = l.addTrack("Yard 2", Track.YARD);
-        Track t3 = l.addTrack("Siding 1", Track.SPUR);
-        Track t4 = l.addTrack("Siding 2", Track.SPUR);
+        Track t3 = l.addTrack("Spur 1", Track.SPUR);
+        Track t4 = l.addTrack("Spur 2", Track.SPUR);
         Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
         Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
         Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
@@ -446,7 +432,7 @@ public class LocationTest extends OperationsTestCase {
         t7.setMoves(15);
 
         // get all tracks ids
-        List<Track> tracks = l.getTrackByMovesList(null);
+        List<Track> tracks = l.getTracksByMovesList(null);
 
         Assert.assertEquals("number of tracks", 7, tracks.size());
         Assert.assertEquals("1st track", t5, tracks.get(0));
@@ -458,22 +444,22 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("7th track", t3, tracks.get(6));
 
         // get interchange tracks ids
-        tracks = l.getTrackByMovesList(Track.INTERCHANGE);
+        tracks = l.getTracksByMovesList(Track.INTERCHANGE);
 
         Assert.assertEquals("number of tracks", 3, tracks.size());
         Assert.assertEquals("1st track", t5, tracks.get(0));
         Assert.assertEquals("2nd track", t7, tracks.get(1));
         Assert.assertEquals("3rd track", t6, tracks.get(2));
 
-        // get siding tracks ids
-        tracks = l.getTrackByMovesList(Track.SPUR);
+        // get spur tracks ids
+        tracks = l.getTracksByMovesList(Track.SPUR);
 
         Assert.assertEquals("number of tracks", 2, tracks.size());
         Assert.assertEquals("1st track", t4, tracks.get(0));
         Assert.assertEquals("2nd track", t3, tracks.get(1));
 
         // get yard tracks ids
-        tracks = l.getTrackByMovesList(Track.YARD);
+        tracks = l.getTracksByMovesList(Track.YARD);
 
         Assert.assertEquals("number of tracks", 2, tracks.size());
         Assert.assertEquals("1st track", t1, tracks.get(0));
@@ -484,7 +470,7 @@ public class LocationTest extends OperationsTestCase {
         t3.setSchedule(sch);
 
         // get all tracks ids
-        tracks = l.getTrackByMovesList(null);
+        tracks = l.getTracksByMovesList(null);
 
         Assert.assertEquals("number of tracks", 7, tracks.size());
         Assert.assertEquals("1st track", t3, tracks.get(0));
@@ -499,7 +485,7 @@ public class LocationTest extends OperationsTestCase {
         t4.setSchedule(sch);
 
         // get all tracks ids
-        tracks = l.getTrackByMovesList(null);
+        tracks = l.getTracksByMovesList(null);
 
         Assert.assertEquals("number of tracks", 7, tracks.size());
         Assert.assertEquals("1st track", t4, tracks.get(0));
@@ -520,7 +506,7 @@ public class LocationTest extends OperationsTestCase {
         LocationManager locMan = new LocationManager();
         Location l = locMan.newLocation("TestPlannedPickUps Location");
         Track t1 = l.addTrack("Yard 1", Track.YARD);
-        Track t3 = l.addTrack("Siding 1", Track.SPUR);
+        Track t3 = l.addTrack("Spur 1", Track.SPUR);
         Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
 
         // also test staging
@@ -677,7 +663,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");

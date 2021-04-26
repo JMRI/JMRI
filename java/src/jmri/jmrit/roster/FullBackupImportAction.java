@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -155,6 +154,8 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
     /**
      * @return true if OK to continue to next entry
+     * @param zipper Stream to receive output
+     * @throws IOException from underlying operations
      */
 
     protected boolean processRosterFile(ZipInputStream zipper) throws IOException {

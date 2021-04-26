@@ -3,22 +3,24 @@ package jmri.jmrit.display.configurexml;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
+
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.SensorIcon;
+import jmri.jmrit.display.*;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle configuration for display.SensorIcon objects
+ * Handle configuration for display.SensorIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */
 public class SensorIconXml extends PositionableLabelXml {
 
-    static final HashMap<String, String> _nameMap = new HashMap<String, String>();
+    static final HashMap<String, String> _nameMap = new HashMap<>();
 
     public SensorIconXml() {
         // map previous store names to property key names
@@ -29,7 +31,7 @@ public class SensorIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a SensorIcon
+     * Default implementation for storing the contents of a SensorIcon.
      *
      * @param o Object to store, of type SensorIcon
      * @return Element containing the complete info
@@ -153,13 +155,15 @@ public class SensorIconXml extends PositionableLabelXml {
     boolean _icon;
 
     /**
-     * Create a PositionableLabel, then add to a target JLayeredPane
+     * Create a PositionableLabel, then add to a target JLayeredPane.
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         Editor ed = (Editor) o;
         SensorIcon l;
         String name;
@@ -227,7 +231,11 @@ public class SensorIconXml extends PositionableLabelXml {
         loadTextInfo(l, element);
         l.setSensor(name);
 
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);
         if (l.isIcon() && l.getText()!=null) {
@@ -250,17 +258,17 @@ public class SensorIconXml extends PositionableLabelXml {
                 if (icon == null) {
                     icon = ed.loadFailed(msg, iconName);
                     if (icon == null) {
-                        log.info(msg + " removed for url= " + iconName);
+                        log.info("{} removed for url= {}", msg, iconName);
                     }
                 } else {
                     icon.setRotation(rotation, l);
                 }
             } else {
-                log.warn("did not locate " + state + " icon file for " + name);
+                log.warn("did not locate {} icon file for {}", state, name);
             }
         }
         if (icon == null) {
-            log.info(msg + " removed");
+            log.info("{} removed", msg);
         } else {
             l.setIcon(_nameMap.get(state), icon);
         }
@@ -286,7 +294,7 @@ public class SensorIconXml extends PositionableLabelXml {
         Color clrBackground = null;
         List<Element> textList = element.getChildren(state.toLowerCase() + "Text");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + textList.size() + " " + state + "Text objects");
+            log.debug("Found {} {}Text objects", textList.size(), state);
         }
         if (textList.size() > 0) {
             Element elem = textList.get(0);

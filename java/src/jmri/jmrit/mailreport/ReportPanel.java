@@ -1,7 +1,8 @@
 package jmri.jmrit.mailreport;
 
-import apps.PerformFileModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformFileModel;
+import jmri.util.startup.StartupActionsManager;
+
 import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.BoxLayout;
@@ -22,11 +24,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
 import jmri.util.javaworld.GridLayout2;
+import jmri.util.problemreport.LogProblemReportProvider;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,7 +150,7 @@ public class ReportPanel extends JPanel {
     }
     
     // made static, public, not final so can be changed via script
-    static public String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
+    static public String requestURL = "http://jmri.org/problem-report.php";  // NOI18N
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -173,7 +178,7 @@ public class ReportPanel extends JPanel {
             // build detailed error report (include context if selected)
             String report = descField.getText() + "\r\n";
             if (checkContext.isSelected()) {
-                report += "=========================================================\r\n"; //NOI18N
+                report += "=========================================================\r\n"; // NOI18N
                 report += (new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
             }
             msg.addFormField("problem", report);
@@ -233,21 +238,13 @@ public class ReportPanel extends JPanel {
             // add the log if OK
             if (checkLog.isSelected()) {
                 log.debug("prepare log attachments");
-                // search for an appender that stores a file
-                for (java.util.Enumeration<org.apache.log4j.Appender> en = org.apache.log4j.Logger.getRootLogger().getAllAppenders(); en.hasMoreElements();) {
-                    // does this have a file?
-                    org.apache.log4j.Appender a = en.nextElement();
-                    // see if it's one of the ones we know
-                    if (log.isDebugEnabled()) {
-                        log.debug("check appender {}", a);
-                    }
-                    try {
-                        org.apache.log4j.FileAppender f = (org.apache.log4j.FileAppender) a;
-                        log.debug("find file: {}", f.getFile());
-                        msg.addFilePart("logfileupload[]", new File(f.getFile()), "application/octet-stream");
-                    } catch (ClassCastException ex) {
+                ServiceLoader<LogProblemReportProvider> loggers = ServiceLoader.load(LogProblemReportProvider.class);
+                for(LogProblemReportProvider provider : loggers) {
+                    for(File file : provider.getFiles()) {
+                        msg.addFilePart("logfileupload[]", file, "application/octet-stream");
                     }
                 }
+                loggers.reload(); // allow garbage collection of loaders
             }
             log.debug("done adding attachments");
 
@@ -274,10 +271,10 @@ public class ReportPanel extends JPanel {
             }
 
         } catch (IOException ex) {
-            log.error("Error when attempting to send report: " + ex);
+            log.error("Error when attempting to send report: {}", ex);
             sendButton.setEnabled(true);
         } catch (AddressException ex) {
-            log.error("Invalid email address: " + ex);
+            log.error("Invalid email address: {}", ex);
             JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
             sendButton.setEnabled(true);
         }
@@ -293,6 +290,10 @@ public class ReportPanel extends JPanel {
         File[] files = source.listFiles();
 
         log.debug("Add directory: {}", directory);
+        if ( files == null ) {
+            log.warn("No files in directory {}",source);
+            return;
+        }
 
         for (File file : files) {
             // if current file is a directory, call recursively
@@ -302,7 +303,7 @@ public class ReportPanel extends JPanel {
                     try {
                         out.putNextEntry(new ZipEntry(directory + file.getName() + "/"));
                     } catch (IOException ex) {
-                        log.error("Exception when adding directory: " + ex);
+                        log.error("Exception when adding directory: {}", ex);
                     }
                     addDirectory(out, file, directory + file.getName() + "/");
                 } else {
@@ -330,9 +331,9 @@ public class ReportPanel extends JPanel {
                     log.debug("Skip file: {}{}", directory, file.getName());
                 }
             } catch (FileNotFoundException ex) {
-                log.error("Exception when adding file: " + ex);
+                log.error("Exception when adding file: {}", ex);
             } catch (IOException ex) {
-                log.error("Exception when adding file: " + ex);
+                log.error("Exception when adding file: {}", ex);
             }
         }
     }

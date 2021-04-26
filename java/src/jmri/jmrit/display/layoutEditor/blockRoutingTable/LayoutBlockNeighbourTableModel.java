@@ -95,7 +95,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     }
 
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        return (e.getPropertyName().indexOf("neighbourmetric") >= 0 || e.getPropertyName().indexOf("neighbourpacketflow") >= 0);
+        return (e.getPropertyName().contains("neighbourmetric") || e.getPropertyName().contains("neighbourpacketflow"));
     }
 
     /**
@@ -118,9 +118,9 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
                 }
                 return Bundle.getMessage("ButtonNo");
             case DIRECTIONCOL:
-                return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getNeighbourDirection(row)));
+                return jmri.Path.decodeDirection(lBlock.getNeighbourDirection(row));
             case METRICCOL:
-                return Integer.valueOf(lBlock.getNeighbourMetric(row));
+                return lBlock.getNeighbourMetric(row);
             case RELATCOL:
                 return lBlock.getNeighbourPacketFlowAsString(row);
             default:
@@ -130,7 +130,6 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        return;
     }
 
     public int getPreferredWidth(int column) {
@@ -154,7 +153,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         return jmri.InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
-    private transient LayoutBlock lBlock = null;
+    private LayoutBlock lBlock = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockNeighbourTableModel.class);
 }

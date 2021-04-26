@@ -7,15 +7,15 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the OPath class
  *
- * @author	Pete Cressman Copyright 2014
+ * @author Pete Cressman Copyright 2014
  */
 public class LogixActionTest {
 
@@ -30,137 +30,135 @@ public class LogixActionTest {
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
 
         Memory im6 = InstanceManager.memoryManagerInstance().getMemory("IM6");
-        Assert.assertNotNull("Memory IM6", im6);
-        Assert.assertEquals("Contents IM6", "EastToWestOnSiding", im6.getValue());
+        assertThat(im6).withFailMessage("Memory IM6").isNotNull();
+        assertThat(im6.getValue()).withFailMessage("Contents IM6").isEqualTo("EastToWestOnSiding");
 
         // Find Enable Logix button  <<< Use GUI, but need Container to find button in
         // JUnitUtil.pressButton(container, "Enable/Disable Tests");
         // OK, do it this way
         Sensor sensor = InstanceManager.sensorManagerInstance().getSensor("enableButton");
-        Assert.assertNotNull("Sensor IS5", sensor);
+        assertThat(sensor).withFailMessage("Sensor IS5").isNotNull();
         sensor.setState(Sensor.ACTIVE);
         sensor.setState(Sensor.INACTIVE);
         sensor.setState(Sensor.ACTIVE);
         SignalHead sh1 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1");
-        Assert.assertNotNull("shi null", sh1);
-        Assert.assertEquals("SignalHead IH1", SignalHead.RED, sh1.getAppearance());
+        assertThat(sh1).withFailMessage("shi null").isNotNull();
+        assertThat(sh1.getAppearance()).withFailMessage("SignalHead IH1").isEqualTo(SignalHead.RED);
 
         // do some buttons -Sensors
         sensor = InstanceManager.sensorManagerInstance().getSensor("ISLITERAL");
-        Assert.assertNotNull("sensor null", sensor);
-        sensor.setState(Sensor.ACTIVE);		// activate direct logix action
+        assertThat(sensor).withFailMessage("sensor null").isNotNull();
+        sensor.setState(Sensor.ACTIVE); // activate direct logix action
         Sensor is1 = InstanceManager.sensorManagerInstance().getSensor("sensor1");
-        Assert.assertNotNull("is1 null", is1);
-        Assert.assertEquals("direct set Sensor IS1 active", Sensor.ACTIVE, is1.getState());		// action
+        assertThat(is1).withFailMessage("is1 null").isNotNull();
+        assertThat(is1.getState()).withFailMessage("direct set Sensor IS1 active").isEqualTo(Sensor.ACTIVE); // action
         sensor = InstanceManager.sensorManagerInstance().getSensor("ISINDIRECT");
-        Assert.assertNotNull("sensor null", sensor);
-        sensor.setState(Sensor.ACTIVE);		// activate Indirect logix action
-        Assert.assertEquals("Indirect set Sensor IS1 inactive", Sensor.INACTIVE, is1.getState());		// action
+        assertThat(sensor).withFailMessage("sensor null").isNotNull();
+        sensor.setState(Sensor.ACTIVE); // activate Indirect logix action
+        assertThat(is1.getState()).withFailMessage("Indirect set Sensor IS1 inactive").isEqualTo(Sensor.INACTIVE); // action
 
         // SignalHead buttons
         Sensor is4 = InstanceManager.sensorManagerInstance().getSensor("IS4");
-        Assert.assertNotNull("is4 null", is4);
-        is4.setState(Sensor.ACTIVE);		// activate direct logix action
-        Assert.assertEquals("direct set SignalHead IH1 to Green", SignalHead.GREEN, sh1.getAppearance());
-        is4.setState(Sensor.INACTIVE);		// activate direct logix action
-        Assert.assertEquals("direct set SignalHead IH1 to Red", SignalHead.RED, sh1.getAppearance());
+        assertThat(is4).withFailMessage("is4 null").isNotNull();
+        is4.setState(Sensor.ACTIVE); // activate direct logix action
+        assertThat(sh1.getAppearance()).withFailMessage("direct set SignalHead IH1 to Green").isEqualTo(SignalHead.GREEN);
+        is4.setState(Sensor.INACTIVE); // activate direct logix action
+        assertThat(sh1.getAppearance()).withFailMessage("direct set SignalHead IH1 to Red").isEqualTo(SignalHead.RED);
 
         Memory im3 = InstanceManager.memoryManagerInstance().getMemory("IM3");
-        Assert.assertNotNull("Memory IM3", im3);
-        Assert.assertEquals("Contents IM3", "IH1", im3.getValue());
+        assertThat(im3).withFailMessage("Memory IM3").isNotNull();
+        assertThat(im3.getValue()).withFailMessage("Contents IM3").isEqualTo("IH1");
         Sensor is3 = InstanceManager.sensorManagerInstance().getSensor("IS3");
-        Assert.assertNotNull("is3 null", is3);
-        is3.setState(Sensor.ACTIVE);		// activate indirect logix action
-        Assert.assertEquals("Indirect set SignalHead IH1 to Green", SignalHead.GREEN, sh1.getAppearance());
-        is3.setState(Sensor.INACTIVE);		// activate indirect logix action
-        Assert.assertEquals("Indirect set SignalHead IH1 to Red", SignalHead.RED, sh1.getAppearance());
+        assertThat(is3).withFailMessage("is3 null").isNotNull();
+        is3.setState(Sensor.ACTIVE); // activate indirect logix action
+        assertThat(sh1.getAppearance()).withFailMessage("Indirect set SignalHead IH1 to Green").isEqualTo(SignalHead.GREEN);
+        is3.setState(Sensor.INACTIVE); // activate indirect logix action
+        assertThat(sh1.getAppearance()).withFailMessage("Indirect set SignalHead IH1 to Red").isEqualTo(SignalHead.RED);
         // change memory value
         im3.setValue("IH2");
-        is3.setState(Sensor.ACTIVE);		// activate logix action
-        Assert.assertEquals("Contents IM3", "IH2", im3.getValue());
+        is3.setState(Sensor.ACTIVE); // activate logix action
+        assertThat(im3.getValue()).withFailMessage("Contents IM3").isEqualTo("IH2");
         SignalHead sh2 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2");
-        Assert.assertNotNull("sh2 null", sh2);
-        Assert.assertEquals("Indirect SignalHead IH2", SignalHead.GREEN, sh2.getAppearance());
+        assertThat(sh2).withFailMessage("sh2 null").isNotNull();
+        assertThat(sh2.getAppearance()).withFailMessage("Indirect SignalHead IH2").isEqualTo(SignalHead.GREEN);
 
         // Turnout Buttons
         Sensor is6 = InstanceManager.sensorManagerInstance().getSensor("IS6");
-        Assert.assertNotNull("is6 null", is6);
-        is6.setState(Sensor.ACTIVE);		// activate direct logix action
+        assertThat(is6).withFailMessage("is6 null").isNotNull();
+        is6.setState(Sensor.ACTIVE); // activate direct logix action
         Turnout it2 = InstanceManager.turnoutManagerInstance().getTurnout("IT2");
-        Assert.assertNotNull("it2 null", it2);
-        Assert.assertEquals("direct set Turnout IT2 to Closed", Turnout.CLOSED, it2.getState());
+        assertThat(it2).withFailMessage("it2 null").isNotNull();
+        assertThat(it2.getState()).withFailMessage("direct set Turnout IT2 to Closed").isEqualTo(Turnout.CLOSED);
         Memory im4 = InstanceManager.memoryManagerInstance().getMemory("IM4");
-        Assert.assertNotNull("im4 null", im4);
-        Assert.assertEquals("Contents IM4", "IT3", im4.getValue());
+        assertThat(im4).withFailMessage("im4 null").isNotNull();
+        assertThat(im4.getValue()).withFailMessage("Contents IM4").isEqualTo("IT3");
         Sensor is7 = InstanceManager.sensorManagerInstance().getSensor("IS7");
-        Assert.assertNotNull("is7 null", is7);
-        is7.setState(Sensor.INACTIVE);		// activate indirect logix action
+        assertThat(is7).withFailMessage("is7 null").isNotNull();
+        is7.setState(Sensor.INACTIVE); // activate indirect logix action
         Turnout it3 = InstanceManager.turnoutManagerInstance().getTurnout("IT3");
-        Assert.assertNotNull("it3 null", it3);
-        Assert.assertEquals("Indirect set Turnout IT2 to Thrown", Turnout.THROWN, it3.getState());
-        is7.setState(Sensor.ACTIVE);		// activate indirect logix action
-        Assert.assertEquals("Indirect set Turnout IT2 to Closed", Turnout.CLOSED, it3.getState());
+        assertThat(it3).withFailMessage("it3 null").isNotNull();
+        assertThat(it3.getState()).withFailMessage("Indirect set Turnout IT2 to Thrown").isEqualTo(Turnout.THROWN);
+        is7.setState(Sensor.ACTIVE); // activate indirect logix action
+        assertThat(it3.getState()).withFailMessage("Indirect set Turnout IT2 to Closed").isEqualTo(Turnout.CLOSED);
         // change memory value
         im4.setValue("IT2");
-        Assert.assertEquals("Contents IM4", "IT2", im4.getValue());
-        is7.setState(Sensor.INACTIVE);		// activate indirect logix action
-        Assert.assertEquals("Indirect set Turnout IT2 to Thrown", Turnout.THROWN, it2.getState());
-        is7.setState(Sensor.ACTIVE);		// activate indirect logix action
-        Assert.assertEquals("Indirect set Turnout IT2 to Closed", Turnout.CLOSED, it2.getState());
+        assertThat(im4.getValue()).withFailMessage("Contents IM4").isEqualTo("IT2");
+        is7.setState(Sensor.INACTIVE); // activate indirect logix action
+        assertThat(it2.getState()).withFailMessage("Indirect set Turnout IT2 to Thrown").isEqualTo(Turnout.THROWN);
+        is7.setState(Sensor.ACTIVE); // activate indirect logix action
+        assertThat(it2.getState()).withFailMessage("Indirect set Turnout IT2 to Closed").isEqualTo(Turnout.CLOSED);
 
         // OBlock Buttons
         OBlock ob1 = InstanceManager.getDefault(OBlockManager.class).getOBlock("Left");
-        Assert.assertEquals("OBlock OB1", (OBlock.OUT_OF_SERVICE | Sensor.INACTIVE), ob1.getState());
+        assertThat(ob1.getState()).withFailMessage("OBlock OB1").isEqualTo((OBlock.OUT_OF_SERVICE | Sensor.INACTIVE));
         OBlock ob2 = InstanceManager.getDefault(OBlockManager.class).getOBlock("Right");
-        Assert.assertEquals("OBlock OB2", (OBlock.TRACK_ERROR | Sensor.INACTIVE), ob2.getState());
+        assertThat(ob2.getState()).withFailMessage("OBlock OB2").isEqualTo((OBlock.TRACK_ERROR | Sensor.INACTIVE));
         Sensor is8 = InstanceManager.sensorManagerInstance().getSensor("IS8");
-        Assert.assertNotNull("is8 null", is8);
-        is8.setState(Sensor.ACTIVE);			// direct action
-        Assert.assertEquals("Direct set OBlock OB1 to normal", Sensor.INACTIVE, ob1.getState());
-        is8.setState(Sensor.INACTIVE);			// direct action
-        Assert.assertEquals("Direct set OBlock OB1 to OOS", (OBlock.OUT_OF_SERVICE | Sensor.INACTIVE), ob1.getState());
+        assertThat(is8).withFailMessage("is8 null").isNotNull();
+        is8.setState(Sensor.ACTIVE); // direct action
+        assertThat(ob1.getState()).withFailMessage("Direct set OBlock OB1 to normal").isEqualTo(Sensor.INACTIVE);
+        is8.setState(Sensor.INACTIVE); // direct action
+        assertThat(ob1.getState()).withFailMessage("Direct set OBlock OB1 to OOS").isEqualTo((OBlock.OUT_OF_SERVICE | Sensor.INACTIVE));
         Sensor is9 = InstanceManager.sensorManagerInstance().getSensor("IS9");
-        Assert.assertNotNull("is9 null", is9);
-        is9.setState(Sensor.ACTIVE);			// indirect action
-        Assert.assertEquals("Indirect set OBlock OB2 to normal", Sensor.INACTIVE, ob2.getState());
+        assertThat(is9).withFailMessage("is9 null").isNotNull();
+        is9.setState(Sensor.ACTIVE); // indirect action
+        assertThat(ob2.getState()).withFailMessage("Indirect set OBlock OB2 to normal").isEqualTo(Sensor.INACTIVE);
         // change memory value
         Memory im5 = InstanceManager.memoryManagerInstance().getMemory("IM5");
-        Assert.assertNotNull("im5 null", im5);
+        assertThat(im5).withFailMessage("im5 null").isNotNull();
         im5.setValue("OB1");
-        is9.setState(Sensor.INACTIVE);			// indirect action
-        Assert.assertEquals("Indirect set OBlock OB1 to normal",
-                (OBlock.TRACK_ERROR | OBlock.OUT_OF_SERVICE | Sensor.INACTIVE), ob1.getState());
-        is9.setState(Sensor.ACTIVE);			// indirect action
-        is8.setState(Sensor.ACTIVE);			// indirect action
-        Assert.assertEquals("Direct set OBlock OB1 to normal", Sensor.INACTIVE, ob1.getState());
+        is9.setState(Sensor.INACTIVE); // indirect action
+        assertThat(ob1.getState()).withFailMessage("Indirect set OBlock OB1 to normal").isEqualTo((OBlock.TRACK_ERROR | OBlock.OUT_OF_SERVICE | Sensor.INACTIVE));
+        is9.setState(Sensor.ACTIVE); // indirect action
+        is8.setState(Sensor.ACTIVE); // indirect action
+        assertThat(ob1.getState()).withFailMessage("Direct set OBlock OB1 to normal").isEqualTo(Sensor.INACTIVE);
 
         // Warrant buttons
         Sensor is14 = InstanceManager.sensorManagerInstance().getSensor("IS14");
-        Assert.assertNotNull("is14 null", is14);
-        is14.setState(Sensor.ACTIVE);			// indirect action
+        assertThat(is14).withFailMessage("is14 null").isNotNull();
+        is14.setState(Sensor.ACTIVE); // indirect action
         Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant("EastToWestOnSiding");
-        Assert.assertTrue("warrant EastToWestOnSiding allocated", w.isAllocated());
+        assertThat(w.isAllocated()).withFailMessage("warrant EastToWestOnSiding allocated").isTrue();
         Sensor is15 = InstanceManager.sensorManagerInstance().getSensor("IS15");
-        Assert.assertNotNull("is15 null", is15);
-        is15.setState(Sensor.ACTIVE);			// indirect action
+        assertThat(is15).withFailMessage("is15 null").isNotNull();
+        is15.setState(Sensor.ACTIVE); // indirect action
         Assert.assertFalse("warrant EastToWestOnSiding deallocated", w.isAllocated());
         // change memory value
         im6.setValue("WestToEastOnMain");
-        is14.setState(Sensor.INACTIVE);			// toggle
-        is14.setState(Sensor.ACTIVE);			// indirect action
+        is14.setState(Sensor.INACTIVE); // toggle
+        is14.setState(Sensor.ACTIVE); // indirect action
         Warrant w2 = InstanceManager.getDefault(WarrantManager.class).getWarrant("WestToEastOnMain");
-        Assert.assertTrue("warrant WestToEastOnMain allocated", w2.isAllocated());
+        assertThat(w2.isAllocated()).withFailMessage("warrant WestToEastOnMain allocated").isTrue();
         im6.setValue("LeftToRightOnPath");
-        is14.setState(Sensor.INACTIVE);			// toggle
-        is14.setState(Sensor.ACTIVE);			// indirect action
+        is14.setState(Sensor.INACTIVE); // toggle
+        is14.setState(Sensor.ACTIVE); // indirect action
         w = InstanceManager.getDefault(WarrantManager.class).getWarrant("LeftToRightOnPath");
-        Assert.assertTrue("warrant LeftToRightOnPath allocated", w.isAllocated());
+        assertThat(w.isAllocated()).withFailMessage("warrant LeftToRightOnPath allocated").isTrue();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();       
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
 
@@ -170,10 +168,11 @@ public class LogixActionTest {
         JUnitUtil.initWarrantManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         InstanceManager.getDefault(WarrantManager.class).dispose();
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

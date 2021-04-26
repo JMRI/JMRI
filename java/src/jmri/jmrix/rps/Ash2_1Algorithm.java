@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
  *
- * @author	Robert Ashenfelter Copyright (C) 2007
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Robert Ashenfelter Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
@@ -37,20 +37,11 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     }
 
     public Ash2_1Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[3];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
+        this(new Point3d[]{sensor1, sensor2, sensor3}, vsound);
     }
 
     public Ash2_1Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, Point3d sensor4, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[4];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
-        sensors[3] = sensor4;
+        this(new Point3d[]{sensor1, sensor2, sensor3, sensor4}, vsound);
     }
 
     double Vs;
@@ -121,28 +112,28 @@ public class Ash2_1Algorithm extends AbstractCalculator {
         return convert(r);
     }
 
-//	RPS  POSITION  SOLVER	Version 2.1	by R. C. Ashenfelter    2-02-07
-//						Return values modified	7-10-07
+// RPS POSITION SOLVER Version 2.1 by R. C. Ashenfelter 02-02-07
+// Return values modified 07-10-07
 
-    /*							*
-     *  This algorithm was provided by Robert Ashenfelter	*
-     *  who provides no guarantee as to its usability,	*
-     *  correctness nor intellectual property status.	*
-     *  Use it at your own risk.				*
-     *							*/
-    int offset = 0;			//  Offset (usec), add to delay
-
-    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int TMAX = 35000;			//  Max. allowable delay (usec)
+    /*
+     * This algorithm was provided by Robert Ashenfelter
+     * who provides no guarantee as to its usability,
+     * correctness nor intellectual property status.
+     * Use it at your own risk.
+     */
+    int offset = 0; //  Offset (usec), add to delay
 
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int TMIN = 150;			//  Min. allowable delay (usec)
+    static public int TMAX = 35000; //  Max. allowable delay (usec)
 
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int SMAX = 30;			//  Max. OK std. dev. (usec)
+    static public int TMIN = 150; //  Min. allowable delay (usec)
 
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int NMAX = 50;			//  Max. no. of receivers used
+    static public int SMAX = 30; //  Max. OK std. dev. (usec)
+
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
+    static public int NMAX = 50; //  Max. no. of receivers used
 
     //  Compute RPS Position  using
     RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   many
@@ -281,7 +272,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
                 w = 1.0 - Rs[j] / Rmax;
                 w = w * w;//    Weight by distance
                 w *= 0.01 * (k + 1);
-            }//		 with fade out
+            } // with fade out
             else if (S == 3) {//   Stage 3
             }//   No "One-at-a-time"
 
@@ -368,15 +359,15 @@ public class Ash2_1Algorithm extends AbstractCalculator {
         Zt = z;//  Computed position
         if ((var > vmax) || ((ns == 3) && (var > vmin))) {//   Failed:
             return new RetVal(-ns, Xt, Yt, Zt, Vs);
-        }//	       variance too big
+        } // variance too big
         if ((ns == 3) && ((nss > 4) || (nxx > 1) || (tov != 0))) {//   Questionable:   uncertain
             return new RetVal(1, Xt, Yt, Zt, Vs);
-        }//		gross rejection
+        } // gross rejection
         if ((ns == 4) && ((nss > 5) || ((nss == 5) && (nxx == 1) && (tov == 1)))) {//   or
             return new RetVal(2, Xt, Yt, Zt, Vs);
-        }//		       too many
+        } // too many
         if ((ns >= 5) && (nss > (3 * ns - 3) / 2)) {
-            return new RetVal(2, Xt, Yt, Zt, Vs);//	     outlier rejections
+            return new RetVal(2, Xt, Yt, Zt, Vs); // outlier rejections
         }
         return new RetVal(ns, Xt, Yt, Zt, Vs);//   Success!    (probably...)
     }//  End of RPSpos()

@@ -40,7 +40,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
-        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable maxNode upper limit
+        super.init(0, 1024); // 1024 is an artificial limit but economically reasonable maxNode upper limit
 
         reallyReadyToPoll = false;           // Need to not start polling until we are ready
         needToPollNodes = true;              // Need to poll and create corresponding nodes
@@ -93,6 +93,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Get minimum address of an Acela node as set on this TrafficController.
+     * @return minimum node address.
      */
     public int getMinimumNodeAddress() {
         return minNode;
@@ -100,6 +101,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Get maximum number of Acela nodes as set on this TrafficController.
+     * @return max number of nodes.
      */
     public int getMaximumNumberOfNodes() {
         return maxNode;
@@ -128,7 +130,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     public void incrementAcelaSensorInitCount() {
         acelaSensorInitCount++;
-        log.debug("Number of Acela sensors initialized: " + getAcelaSensorInitCount());
+        log.debug("Number of Acela sensors initialized: {}", getAcelaSensorInitCount());
     }
 
     public int getAcelaSensorInitCount() {
@@ -148,12 +150,37 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     public void setReallyReadyToPoll(boolean newstate) {
-        log.debug("setting really ready to poll (nodes): " + newstate);
+        log.debug("setting really ready to poll (nodes): {}", newstate);
         reallyReadyToPoll = newstate;
     }
 
     /**
+     * Reference to the system connection memo.
+     */
+    AcelaSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public AcelaSystemConnectionMemo getSystemConnectionMemo() {
+        return (mMemo);
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(AcelaSystemConnectionMemo m) {
+        mMemo = m;
+    }
+
+    /**
      * Public method to register an Acela node.
+     * @param node which node to register.
      */
     public void registerAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -190,6 +217,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Public method to set up for initialization of an Acela node.
+     * @param node which node to initialize.
      */
     public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -203,6 +231,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      * <p>
      * Note: nodeAddress is numbered from 0
      *
+     * @param bitAddress address to query.
+     * @param isSensor true to use start sensor address, false to use start output address.
      * @return '-1' if an AcelaNode with the specified address was not found
      */
     public int lookupAcelaNodeAddress(int bitAddress, boolean isSensor) {
@@ -237,6 +267,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Forward an AcelaMessage to all registered AcelaInterface listeners.
+     * {@inheritDoc}
      */
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
@@ -245,6 +276,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Forward an AcelaReply to all registered AcelaInterface listeners.
+     * {@inheritDoc}
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
@@ -282,7 +314,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 }
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();
-                log.debug("send Acela reset (init step 1) message: " + m);
+                log.debug("send Acela reset (init step 1) message: {}", m);
                 m.setTimeout(1000);  // wait for init to finish (milliseconds)
                 mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
@@ -290,7 +322,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             }
             if (needToCreateNodesState == 1) {
                 AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
-                log.debug("send Acela Online (init step 2) message: " + m);
+                log.debug("send Acela Online (init step 2) message: {}", m);
                 m.setTimeout(1000);  // wait for init to finish (milliseconds)
                 mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
@@ -299,7 +331,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             if (needToPollNodes) {
                 if (needToCreateNodesState == 2) {
                     AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
-                    log.debug("send Acela poll nodes message: " + m);
+                    log.debug("send Acela poll nodes message: {}", m);
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     needToInitAcelaNetwork = false;
@@ -333,7 +365,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Acela Config Sensor message: " + m);
+                    log.debug("send Acela Config Sensor message: {}", m);
                     incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
@@ -349,12 +381,12 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             getNode(curAcelaNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curAcelaNodeIndex).createOutPacket();
             m.setTimeout(100);  // no need to wait for output to answer
-            log.debug("request write command to send: " + m);
+            log.debug("request write command to send: {}", m);
             mCurrentMode = NORMALMODE;
             return m;
         }
 
-        // Trying to serialize Acela initiatization so system is stable
+        // Trying to serialize Acela initialization so system is stable
         // So we will not poll sensors or send om/off commands until we have
         // initialized all of the sensor modules -- this can take several seconds
         // during a cold system startup.
@@ -364,7 +396,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
         if (acelaSensorsState) {    //  Flag to indicate whether we have an active sensor and therefore need to poll
             AcelaMessage m = AcelaMessage.getAcelaPollSensorsMsg();
-            log.debug("send Acela poll sensors message: " + m);
+            log.debug("send Acela poll sensors message: {}", m);
             m.setTimeout(100);  // wait for init to finish (milliseconds)
             mCurrentMode = NORMALMODE;
             return m;
@@ -397,6 +429,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Forward a pre-formatted message to the actual interface.
+     * {@inheritDoc}
      */
     @Override
     public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
@@ -463,6 +496,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * For each sensor node call markChanges.
+     * @param r reply to use in sensor update.
      */
     public void updateSensorsFromPoll(AcelaReply r) {
         for (int i = 0; i < getNumNodes(); i++) {

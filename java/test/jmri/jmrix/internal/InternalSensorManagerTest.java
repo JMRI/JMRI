@@ -1,13 +1,17 @@
 package jmri.jmrix.internal;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.managers.InternalSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
@@ -23,6 +27,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Override
     public String getSystemName(int i) {
         return "IS" + i;
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "My Sensor 6";
     }
 
     @Test
@@ -136,11 +145,13 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
         
         List<String> sortedList = l.getSystemNameList();
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
@@ -187,16 +198,21 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testUnmodifiable() {
         l.provideSensor("IS1");
         l.provideSensor("IS2");
         
         List<String> nameList = l.getSystemNameList();
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
 
         try {
             nameList.add("Foo");
             Assert.fail("Should have thrown");
         } catch (UnsupportedOperationException e) { /* this is OK */}
+        
+        java.util.SortedSet<Sensor> set = l.getNamedBeanSet();
+        Assert.assertThrows(UnsupportedOperationException.class, () -> set.add(null));
 
     }
 
@@ -244,9 +260,107 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Changed";
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testBeansAreSilenceable() {
+        CountingPropertyChangeListener pcl = new CountingPropertyChangeListener();
+        l.addPropertyChangeListener("beans", pcl);
+        assertThat(pcl.count).isEqualTo(0);
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+        l.provide("IS1");
+        assertThat(pcl.count).isEqualTo(1);
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+        l.setPropertyChangesSilenced("beans", true);
+        l.provide("IS2");
+        assertThat(pcl.count).isEqualTo(1);
+        assertThat(pcl.count).isNotEqualTo(l.getNamedBeanSet().size());
+        l.setPropertyChangesSilenced("beans", false);
+        assertThat(pcl.count).isEqualTo(2);
+        // this is true only if 1 item is added while silenced
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+        l.provide("IS3");
+        assertThat(pcl.count).isEqualTo(3);
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+    }
+
+    @Test
+    public void testFooIsNotSilenceable() {
+        assertThatThrownBy(() -> l.setPropertyChangesSilenced("foo", true))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Property foo cannot be silenced.");
+    }
+    
+    // No manager-specific system name validation at present
+    @Test
     @Override
-    @Before
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
+    
+    @SuppressWarnings("deprecation")
+    @Test
+    public void testDeprecatedGetNextValidAddress() throws JmriException {
+    
+        Assert.assertEquals("2", "My Sensor 2", l.getNextValidAddress("My Sensor 2", l.getSystemPrefix()));
+        JUnitAppender.assertWarnMessageStartingWith("getNextValidAddress is deprecated, please remove references to it");
+        
+    }
+    
+    @Test
+    public void testgetNextValidAddressMaxedOut() throws JmriException {
+
+        Assert.assertNotNull("Created S1", l.provide("My Sensor 1"));
+        Assert.assertEquals("2 false", "My Sensor 2", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        Assert.assertEquals("2 true", "My Sensor 2", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),true));
+        
+
+        Assert.assertNotNull("Created S2", l.provide("My Sensor 2"));
+        Assert.assertNotNull("Created S3", l.provide("My Sensor 3"));
+        Assert.assertEquals("2", "My Sensor 4", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S4", l.provide("My Sensor 4"));
+        Assert.assertNotNull("Created S5", l.provide("My Sensor 5"));
+        Assert.assertNotNull("Created S6", l.provide("My Sensor 6"));
+        Assert.assertNotNull("Created S7", l.provide("My Sensor 7"));
+        Assert.assertNotNull("Created S8", l.provide("My Sensor 8"));
+        Assert.assertEquals("9", "My Sensor 9", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S9", l.provide("My Sensor 9"));
+        Assert.assertEquals("10", "My Sensor 10", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S10", l.provide("My Sensor 10"));
+        Assert.assertEquals("11", "My Sensor 11", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S11", l.provide("My Sensor 11"));
+        
+        Assert.assertThrows(JmriException.class, () -> l.getNextValidAddress("My Sensor 1",l.getSystemPrefix(),false));
+        
+        Assert.assertEquals("12", "My Sensor 12", l.getNextValidAddress("My Sensor 2", l.getSystemPrefix(),false));
+
+        Assert.assertEquals("99 true", "My Sensor 100", l.getNextValidAddress("My Sensor 99", l.getSystemPrefix(),true));
+                
+    }
+
+    private static class CountingPropertyChangeListener implements PropertyChangeListener {
+
+        int count = 0;
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            count++;
+        }
+        
+    }
+
+    @Override
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -264,10 +378,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = null;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
     private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerTest.class);
 
 }

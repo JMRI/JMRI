@@ -1,13 +1,14 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -19,21 +20,19 @@ public class WarrantTableFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantTableFrame t = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

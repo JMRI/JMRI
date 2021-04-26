@@ -1,9 +1,10 @@
 package apps.configurexml;
 
-import apps.PerformScriptModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformScriptModel;
+import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @see apps.startup.PerformScriptModelFactory
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.PerformScriptModelXml} instead
  */
+@Deprecated
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformScriptModelXml() {

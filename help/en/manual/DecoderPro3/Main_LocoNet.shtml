@@ -548,7 +548,7 @@
       interface. If you're using a PR3, it needs to be put into
       "Programmer mode" before trying to download, see the main
       <a target="_blank" href=
-      "http://jmri.org/help/en/html/hardware/loconet/PR3.shtml">PR3
+      "https://jmri.org/help/en/html/hardware/loconet/PR3.shtml">PR3
       page</a>.</p>
 
       <p>Digitrax provides sample sound project files at their
@@ -558,10 +558,10 @@
       additional tools there.</p>
 
       <p>JMRI also provides tools for <a target="_blank" href=
-      "http://jmri.org/help/en/package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">
+      "https://jmri.org/help/en/package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">
       editing sound project files</a> to include new sounds and
       even to <a target="_blank" href=
-      "http://jmri.org/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">
+      "https://jmri.org/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">
       change the sound logic</a>. When you first select the
       Download Sounds tool, it opens a dialog with most of the
       controls disabled:<br>

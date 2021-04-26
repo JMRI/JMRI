@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MonFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
 public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listener, Mx1PanelInterface {
 
@@ -35,7 +35,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         } else {
             x.append("Mx1_"); // NOI18N
         }
-        x.append(": "); //IN18N
+        x.append(": "); // NOI18N
         x.append("Command Monitor"); // I18N
         return x.toString();
     }
@@ -117,13 +117,16 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         }
 
         // display the decoded data
-        // we use Llnmon to format, expect it to provide consistent \n after each line
+        // we use Mx1Message to format
         nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw.toString());
     }
 
     /**
      * Nested class to create one of these using old-style defaults.
+     * 
+     * @deprecated since 4.19.7; use {@link Mx1MonPanelAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 
         public Default() {

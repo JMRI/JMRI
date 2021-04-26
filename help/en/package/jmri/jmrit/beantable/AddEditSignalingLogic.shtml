@@ -14,7 +14,7 @@
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content=
   "JMRI help SignalMast Logic Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

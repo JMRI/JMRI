@@ -34,8 +34,8 @@ import jmri.InstanceManager;
  * name in the TXT record with the key "node".
  * <p>
  * All ZeroConfServices are automatically stopped when the JMRI application
- * shuts down. Use {@link #allServices() } to get a collection of all published
- * ZeroConfService objects.
+ * shuts down. Use {@link ZeroConfServiceManager#allServices()} to get a
+ * collection of all published ZeroConfService objects.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -140,19 +140,6 @@ public class ZeroConfService {
     }
 
     /**
-     * Get the key of the ZeroConfService object. The key is fully qualified
-     * name of the service in all lowercase, for example
-     * {@code jmri._http.local }.
-     *
-     * @return The fully qualified name of the service
-     * @deprecated since 4.15.1; use {@link #getKey() } instead
-     */
-    @Deprecated
-    public String key() {
-        return getKey();
-    }
-
-    /**
      * Get the name of the ZeroConfService object. The name can only be set when
      * creating the object.
      *
@@ -164,19 +151,6 @@ public class ZeroConfService {
     }
 
     /**
-     * Get the name of the ZeroConfService object. The name can only be set when
-     * creating the object.
-     *
-     * @return The service name as reported by the
-     *         {@link javax.jmdns.ServiceInfo} object
-     * @deprecated since 4.15.1; use {@link #getName() } instead
-     */
-    @Deprecated
-    public String name() {
-        return getName();
-    }
-
-    /**
      * Get the type of the ZeroConfService object. The type can only be set when
      * creating the object.
      *
@@ -185,19 +159,6 @@ public class ZeroConfService {
      */
     public String getType() {
         return this.getServiceInfo().getType();
-    }
-
-    /**
-     * Get the type of the ZeroConfService object. The type can only be set when
-     * creating the object.
-     *
-     * @return The service type as reported by the
-     *         {@link javax.jmdns.ServiceInfo} object
-     * @deprecated since 4.15.1; use {@link #getType() } instead
-     */
-    @Deprecated
-    public String type() {
-        return getType();
     }
 
     /**
@@ -263,20 +224,6 @@ public class ZeroConfService {
     }
 
     /**
-     * Get the reference ServiceInfo for the object. This is the JmDNS
-     * implementation of a zeroConf service. The reference ServiceInfo is never
-     * actually registered with a JmDNS service, since registrations with a
-     * JmDNS service are unique per InetAddress.
-     *
-     * @return The getServiceInfo object.
-     * @deprecated since 4.15.1; use {@link #getServiceInfo() } instead
-     */
-    @Deprecated
-    public ServiceInfo serviceInfo() {
-        return getServiceInfo();
-    }
-
-    /**
      * Get the state of the service.
      *
      * @return True if the service is being advertised, and false otherwise.
@@ -297,73 +244,6 @@ public class ZeroConfService {
      */
     public void stop() {
         InstanceManager.getDefault(ZeroConfServiceManager.class).stop(this);
-    }
-
-    /**
-     * Stop advertising all services.
-     *
-     * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#stopAll() } instead
-     */
-    @Deprecated
-    public static void stopAll() {
-        InstanceManager.getDefault(ZeroConfServiceManager.class).stopAll();
-    }
-
-    /**
-     * A list of published ZeroConfServices
-     *
-     * @return Collection of ZeroConfServices
-     * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#allServices() } instead
-     */
-    @Deprecated
-    public static Collection<ZeroConfService> allServices() {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).allServices();
-    }
-
-    /**
-     * The list of JmDNS handlers.
-     *
-     * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
-     *         accessible by {@link java.net.InetAddress} keys.
-     * @deprecated since 4.15.1 without public replacement
-     */
-    @Deprecated
-    synchronized public static HashMap<InetAddress, JmDNS> netServices() {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes();
-    }
-
-    /**
-     * Return the system name or "computer" if the system name cannot be
-     * determined. This method returns the first part of the fully qualified
-     * domain name from {@link #FQDN}.
-     *
-     * @param address The {@link java.net.InetAddress} for the host name
-     * @return The hostName associated with the first interface encountered
-     * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#hostName(java.net.InetAddress) }
-     * instead
-     */
-    @Deprecated
-    public static String hostName(InetAddress address) {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).hostName(address);
-    }
-
-    /**
-     * Return the fully qualified domain name or "computer" if the system name
-     * cannot be determined. This method uses the
-     * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
-     *
-     * @param address The {@link java.net.InetAddress} for the FQDN
-     * @return The fully qualified domain name
-     * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#FQDN(java.net.InetAddress) }
-     * instead
-     */
-    @Deprecated
-    public static String FQDN(InetAddress address) {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).FQDN(address);
     }
 
     public void addEventListener(ZeroConfServiceListener l) {

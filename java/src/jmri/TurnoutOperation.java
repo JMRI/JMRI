@@ -1,6 +1,7 @@
 package jmri;
 
 import javax.annotation.Nonnull;
+import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -86,7 +87,7 @@ import jmri.implementation.AbstractTurnout;
  *
  * @author John Harper Copyright 2005
  */
-public abstract class TurnoutOperation implements Comparable<Object> {
+public abstract class TurnoutOperation extends PropertyChangeSupport implements Comparable<Object> {
 
     String name;
     int feedbackModes = 0;
@@ -224,7 +225,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         if (!isDefinitive()) {
             InstanceManager.getDefault(TurnoutOperationManager.class).removeOperation(this);
             name = "*deleted";
-            pcs.firePropertyChange("Deleted", null, null);  // this will remove all dangling references
+            firePropertyChange("Deleted", null, null);  // this will remove all dangling references
         }
     }
 
@@ -267,19 +268,6 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         TurnoutOperation op = makeCopy("*" + t.getSystemName());
         op.setNonce(true);
         return op;
-    }
-
-    /*
-     * property change support
-     */
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     /**

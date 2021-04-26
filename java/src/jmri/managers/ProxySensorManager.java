@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 
@@ -10,9 +11,9 @@ import jmri.SensorManager;
  * Implementation of a SensorManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxySensorManager extends AbstractProxyManager<Sensor>
+public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         implements SensorManager {
 
     public ProxySensorManager() {
@@ -30,12 +31,15 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      * @return Null if nothing by that name exists
      */
     @Override
+    @CheckForNull
     public Sensor getSensor(@Nonnull String name) {
         return super.getNamedBean(name);
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected Sensor makeBean(Manager<Sensor> manager, String systemName, String userName) {
+    @Nonnull
+    protected Sensor makeBean(Manager<Sensor> manager, String systemName, String userName) throws IllegalArgumentException {
         return ((SensorManager) manager).newSensor(systemName, userName);
     }
 
@@ -50,37 +54,10 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     @Nonnull
     public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
-    /**
-     * Return an instance with the specified system and user names. Note that
-     * two calls with the same arguments will get the same instance; there is
-     * only one Sensor object representing a given physical turnout and
-     * therefore only one with a specific system or user name.
-     * <p>
-     * This will always return a valid object reference for a valid request; a
-     * new object will be created if necessary. In that case:
-     * <ul>
-     * <li>If a null reference is given for user name, no user name will be
-     * associated with the Turnout object created; a valid system name must be
-     * provided
-     * <li>If a null reference is given for the system name, a system name will
-     * _somehow_ be inferred from the user name. How this is done is system
-     * specific. Note: a future extension of this interface will add an
-     * exception to signal that this was not possible.
-     * <li>If both names are provided, the system name defines the hardware
-     * access of the desired turnout, and the user address is associated with
-     * it.
-     * </ul>
-     * Note that it is possible to make an inconsistent request if both
-     * addresses are provided, but the given values are associated with
-     * different objects. This is a problem, and we don't have a good solution
-     * except to issue warnings. This will mostly happen if you're creating
-     * Sensors when you should be looking them up.
-     *
-     * @return requested Sensor object (never null)
-     */
+    /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Sensor newSensor(@Nonnull String systemName, String userName) {
+    public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return newNamedBean(systemName, userName);
     }
 
@@ -94,23 +71,15 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
         return ((SensorManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
-    @Override
-    @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return createSystemName(curAddress, prefix, SensorManager.class);
-    }
-
+    @SuppressWarnings("deprecation") // user warned by actual manager class
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return getNextValidAddress(curAddress, prefix, typeLetter());
     }
-
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
     @Override

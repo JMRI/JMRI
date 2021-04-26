@@ -1,20 +1,20 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -25,7 +25,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 /**
  * Swing tests for the light table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010, 2017
+ * @author Bob Jacobsen Copyright 2009, 2010, 2017
  */
 public class LightTableWindowTest {
 
@@ -53,7 +53,7 @@ public class LightTableWindowTest {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).enterText("1");
+        new JTextFieldOperator(hwAddressField).typeText("1");
         JButton createButton = JButtonOperator.findJButton(fa, new NameComponentChooser("createButton"));
         createButton.setEnabled(true); // skip validation
 
@@ -83,7 +83,7 @@ public class LightTableWindowTest {
         Assert.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -92,7 +92,7 @@ public class LightTableWindowTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

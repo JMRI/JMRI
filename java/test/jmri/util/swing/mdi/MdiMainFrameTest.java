@@ -1,15 +1,15 @@
 package jmri.util.swing.mdi;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2003, 2010
+ * @author Bob Jacobsen Copyright 2003, 2010
  */
 public class MdiMainFrameTest {
 
@@ -28,14 +28,14 @@ public class MdiMainFrameTest {
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,0 +1,643 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2016 -->
+
+  <title>PanelPro: Getting Started with PanelPro</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+  <style type="text/css">
+    a.reflink, span.reflink {
+        color: #fff;
+        background: #888;
+        background-size: 100% 100%;
+        border-radius: 4px;
+        margin: 2px 2px 2px 2px;
+        padding: .2em .3em;
+    }
+
+    p.refPanel {
+        color: #000;
+        border: solid;
+        border-radius: 4px;
+        margin: 2px 2px 2px 2px;
+        padding: .2em .3em;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+    <h1>Getting Started with PanelPro</h1>
+
+    <h2>Introduction</h2>
+
+    <p>As indicated on the PanelPro introduction page, there are several editors within
+    PanelPro and a significant number of other tools that supplement and build upon PanelPro
+    content.  This page provides an overview of creating a layout editor panel with
+    turnout control, block detection and signaling.</p>
+
+    <p>The goal is to provide an introduction to the main PanelPro tables while creating a
+    Layout Editor panel.  When done, the panel and its table data provide the foundation
+    for other PanelPro activities such as creating a CTC panel, using Entry/Exit,
+    using Dispatcher to run trains, or building a separate panel using Control Panel Editor
+    to use Warrants.</p>
+
+    <h3>Table of Contents</h3>
+    <ul>
+      <li><a href="#GandD">Givens and Druthers</a></li>
+      <li><a href="#Setup">Set up PanelPro</a></li>
+      <li><a href="#Phase1">The Basic Panel</a>
+        <ul>
+          <li><a href="#TrackPlan">Draw the Track Plan</a></li>
+          <li><a href="#Events">Layout Events</a></li>
+        </ul>
+      </li>
+      <li><a href="#Phase2">Signaling</a>
+        <ul>
+          <li><a href="#Masts">Signal Masts</a></li>
+          <li><a href="#SML">Signal Mast Logic</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <a name="GandD" id="GandD"></a>
+    <h2>Givens and Druthers</h2>
+
+    <p>While this is a term from the NMRA LDSIG (Layout Design Special Interest Group), it
+    helps to set the stage.</p>
+    <ul>
+      <li>The layout connection will use the Digitrax Simulator for turnouts and occupancy sensors.</li>
+      <li>The layout components will be numbered sequentially without reference to any specific
+            LocoNet hardware.</li>
+      <li>Signaling will be based on Signal Masts using Signal Mast Logic (SML)</li>
+      <li>The SML will be based on the <strong>Basic</strong> signaling system.</li>
+      <li>The following description is just one of many possible workflows.</li>
+      <li>JMRI 4.20 is being used.</li>
+      <li>Turnouts have their own blocks.</li>
+      <li>Table items will have user names.  If a connection change is required which results
+            in different system names, the user names can be moved without impacting the
+            configuration.</li>
+      <li>Clickable <span class="reflink">keywords</span> are provided that link to detail help pages.</li>
+      <li>The screenshots are based on macOS 10.15.5, they will look different depending on the operating system.</li>
+      <li>The Store and Load process is documented at <a href="../LoadStoreWork.shtml">Loading and Storing your work</a>.</li>
+    </ul>
+
+    <p>A <a href="GettingStarted.zip">GettingStarted.zip</a> file is available
+    for download and contains a JMRI profile with panel xml files.  These are provided for
+    reference and can be used to practice the getting started steps.  The appropriate
+    file name will be indicated by a specially formated paragraph.</p>
+
+    <p class="refPanel">Demo panel: &lt;file name&gt;</p>
+
+    <p>Download the zip file and unzip it.  Use the OS file manager to move the resulting
+    profile and its contents to the <strong>settings</strong> location.  When starting JMRI,
+    select the GettingStart profile.  If the profile selector is not active, use
+    <strong>Preferences &rArr; Config Profiles</strong> to select the profile.</p>
+
+    <p>The <strong>settings</strong> location is an OS specific location that provides access to the user data. </p>
+    <ul>
+      <li>Windows:  C:\Users\&lt;username&gt;\JMRI</li>
+      <li>Linux:    /home/&lt;username&gt;/.jmri</li>
+      <li>macOS:  /Users/&lt;username&gt;/Library/Preferences/JMRI</li>
+    </ul>
+
+    <a name="Setup" id="Setup"></a>
+    <h2>Set up PanelPro if needed</h2>
+
+    <p>The first time PanelPro is started, a connection must be defined.  For this exercise
+    the Digitrax LocoNet Simulator will be used.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-Connection.png">
+    <img src="images/LEGS-Connection.png"
+    alt="JMRI Connection window" width="937" height="464"></a>
+    </div>
+
+    <p>Detail help:
+    <a class="reflink" href="../../../package/apps/TabbedPreferences.shtml#Connection">Connections</a>
+    </p>
+
+    <p>Add the JMRI System Console as a startup action.  When something is not working as expected,
+    having the system console available makes it easy to see if there was an error or a warning.
+    The error might not make sense, but using the <strong>Copy to clipboard</strong> button
+    makes it easy to include the content in a posting to the JMRI users's group at groups.io:
+    <a href="https://groups.io/g/jmriusers">JMRI Users Group</a>.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-StartupActions.png">
+    <img src="images/LEGS-StartupActions.png"
+    alt="JMRI Startup Actions" width="937" height="464"></a>
+    </div>
+
+    <p>Detail help:
+    <a class="reflink" href="../../../package/apps/TabbedPreferences.shtml#Startup">Start Up Actions</a>
+    </p>
+
+    <a name="Phase1" id="Phase1"></a>
+    <h2>The Basic Panel</h2>
+    <p>When PanelPro <strong>Panels &rArr; New Panel &rArr; Layout Editor</strong> is selected, a blank panel
+    will be created with a default name.  The panel will fill the screen, it will have a
+    grid and at the top will be the Layout Editor tool bar.</p>
+
+    <p>Detail help:
+    <a class="reflink" href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+    </p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EmptyPanel.png">
+    <img src="images/LEGS-EmptyPanel.png"
+    alt="Empty Layout Editor Panel" width="1440" height="315"></a>
+    </div>
+
+    <p>As the panel is switched between edit and display mode, the tool bar is shown/hidden
+    and the panel shifts. Layout Editor <strong>Options &rArr; Toolbar &rArr; Toolbar Side &rArr; Float</strong>
+    provides a floating tool box that avoids the shifting behavior.  The tool box can be
+    closed or minimized.  To re-open the tool box use the <strong>Window</strong> menu (next to Help).
+    The window name will start with <strong>Tool Box:</strong> followed by the panel name.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-Toolbox.png">
+    <img src="images/LEGS-Toolbox.png"
+    alt="Layout Editor Toolbox" width="736" height="640"></a>
+    </div>
+
+    <a name="TrackPlan" id="TrackPlan"></a>
+    <h3>Draw the Track Plan</h3>
+
+    <p>Click on Layout Editor <strong>Options &rArr; Show Help Bar in Edit Mode</strong>.
+    This will add a help bar to the bottom of the panel window or the floating tool box.
+    It shows the mouse and keyboard actions to add and move layout components. The third line
+    changes based on the operating system.  The image shows the macOS version.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-HelpBar.png">
+    <img src="images/LEGS-HelpBar.png"
+    alt="Layout Editor toolbox help bar" width="766" height="57"></a>
+    </div>
+
+    <p>The track plan is a short stretch of track with 2 turnouts and a siding.</p>
+
+    <p>Add a left hand turnout and a right hand turnout to the panel. Rotate the right hand
+    turnout 180 degrees, add two end bumpers and draw the track between the connection
+    points.  The demo uses the mainline option for the main track.  When the connection
+    points turn green, they are valid.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-RoughCut.png">
+    <img src="images/LEGS-RoughCut.png"
+    alt="Initial track plan" width="732" height="315"></a>
+    </div>
+
+    <p>Clean up the track plan by moving components to the grid.  The <strong>snap to grid</strong>
+    settings for adding and moving items can be set using Layout Editor <strong>Options &rArr; Grid Options</strong>.
+    The diverging legs of the turnouts have been extended at a 45&deg; angle.  A label has
+    been added to provide a name for the siding.  Everything on the prototype has a name.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-PanelWithLabel.png">
+    <img src="images/LEGS-PanelWithLabel.png"
+    alt="Initial track plan" width="645" height="244"></a>
+    </div>
+
+    <a name="Events" id="Events"></a>
+    <h3>Layout Events</h3>
+
+    <p>The track, as is, does not do much.  It needs to create and respond to layout events.
+    The primary events are setting turnouts and responding to block occupancy. The
+    implementation of these events is based on the layout connection and related
+    hardware.</p>
+
+    <h4><a class="reflink" href="../../tools/Turnouts.shtml">Turnouts</a></h4>
+
+    <p>Turnouts are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Turnouts</strong>.
+    Click on <strong>Add</strong>.  Two turnouts are defined and assigned user names:  T-Alpha-Left and T-Alpha-Right.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-AddTurnouts.png">
+    <img src="images/LEGS-AddTurnouts.png"
+    alt="Add turnouts" width="857" height="165"></a>
+    </div>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-RenameTurnouts.png">
+    <img src="images/LEGS-RenameTurnouts.png"
+    alt="Rename turnouts" width="931" height="252"></a>
+    </div>
+
+    <h4><a class="reflink" href="../../tools/Sensors.shtml">Sensors</a></h4>
+
+    <p>Sensors are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Sensors</strong>.
+    Click on <strong>Add</strong>.  For now, create one <strong>Internal</strong> sensor with an address of
+    999 and <strong>Reset</strong> as the user name.  This will create a sensor with a
+    system name of IS999.</p>
+
+    <p>Note: The Reset sensor is <strong>Internal</strong> because it is not physically
+    on the layout.  It is used for internal JMRI purposes.  It could easily be a physical
+    push button on the layout. Then the system name would be LS999.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-AddResetSensor.png">
+    <img src="images/LEGS-AddResetSensor.png"
+    alt="Add reset sensor" width="931" height="252"></a>
+    </div>
+
+    <h4><a class="reflink" href="../../tools/Routes.shtml">Routes</a></h4>
+
+    <p>Since the connection is simulated, setting the initial value helps with testing later on.</p>
+
+    <p>Routes are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Routes</strong>.
+    Click on <strong>Add</strong>. Select Automatically generate System Name, enter a Route user name,
+    select the two turnouts and set the state to Close.  Select the Reset sensor from the
+    <strong>Sensor 1</strong> list.  Click on Create.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-TurnoutRoute.png">
+    <img src="images/LEGS-TurnoutRoute.png"
+    alt="Add turnout route" width="1141" height="787"></a>
+    </div>
+
+    <h4><a class="reflink" href="../../tools/LRoutes.shtml">LRoutes</a></h4>
+
+    <p>A LRoute is stored as a Logix. There is a special LRoute know as a
+    <strong>RTXINITIALIZER</strong>.  The Logix created by this LRoute is the very first
+    Logix invoked after loading a data file. This makes it perfect for doing the initial setup.</p>
+
+    <p>Use PanelPro <strong>Tools &rArr; Tables &rArr; LRoutes</strong>.  Click on <strong>Add</strong>. Click on the
+    <strong>Actions (output)</strong> tab, select the Reset sensor and set the state to Active.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-LRouteAction.png">
+    <img src="images/LEGS-LRouteAction.png"
+    alt="LRoute action tab" width="799" height="290"></a>
+    </div>
+
+    <p>Click on the <strong>LRoute Basics</strong> tab, enter a name in the user name field and
+    select the <strong>Initializer</strong> option.  Click on Create.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-LRouteBasic.png">
+    <img src="images/LEGS-LRouteBasic.png"
+    alt="LRoute basic tab" width="804" height="674"></a>
+    </div>
+
+    <p>When the data file is loaded, the RTXINITIALIZER Logix will set the Reset sensor to Active
+    which will trigger the Turnouts route which will set the turnouts to Closed.</p>
+
+    <h4>Add the Reset sensor to the panel</h4>
+
+    <p>Add the <strong>Reset</strong> sensor to the panel using the toolbar
+    <strong>Sensor Icon</strong> option.  Use the right click context menu to change the
+    sensor to <strong>Momentary</strong>.</p>
+
+    <p>The next steps are going to convert the sensor icon into a clickable label.  This
+    can help save space on the panel. Use the right click context menu <strong>Change To Text</strong>
+    item and then the <strong>Properties</strong> item.</p>
+
+    <p>Set the Active and Inactive Font and Background colors.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-FontProperties.png">
+    <img src="images/LEGS-FontProperties.png"
+    alt="Font properties" width="456" height="674"></a>
+    </div>
+
+    <p>Select the Size &amp; Position tab, set the Width and Height.  As the width and
+    height are changed, the preview boxes at the bottom will show the current results.
+    This helps to insure that the resulting labels are acceptable.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SizeProperties.png">
+    <img src="images/LEGS-SizeProperties.png"
+    alt="Size properties" width="456" height="678"></a>
+    </div>
+
+    <p class="refPanel">Demo panel: GS-1-Basic Track Plan.xml</p>
+
+    <h4>Add turnouts and blocks to the panel</h4>
+
+    <p>Right click each turnout to get the context menu and select <strong>Edit</strong>.
+    Select the turnout name and type the block name in the Block field.  Click Done.  The
+    Block table entry will be automatically created.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EditTurnout.png">
+    <img src="images/LEGS-EditTurnout.png"
+    alt="Edit turnout" width="467" height="290"></a>
+    </div>
+
+    <p>Repeat the block assignment process for each track segment.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EditTrackSegment.png">
+    <img src="images/LEGS-EditTrackSegment.png"
+    alt="Edit track segment" width="340" height="240"></a>
+    </div>
+
+    <p class="refPanel">Demo panel: GS-2-Blocks.xml</p>
+
+    <h4>Assign Occupancy Sensors to Blocks</h4>
+
+    <h5>Create occupancy sensors.</h5>
+
+    <p>Go to the sensor table and create six LocoNet sensors in the sensor table.
+    Assign user names based on the block names.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-OccupancySensors.png">
+    <img src="images/LEGS-OccupancySensors.png"
+    alt="Occupancy sensors" width="931" height="366"></a>
+    </div>
+
+    <h5>Create a Route to initialize the sensors.</h5>
+
+    <p>Go to the route table and create a route table entry to initialize the occupancy
+    sensors to Inactive. Select the Reset sensor from the <strong>Sensor 1</strong> list.
+    Click on Create.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SensorRoute.png">
+    <img src="images/LEGS-SensorRoute.png"
+    alt="Create occupancy sensors route" width="1279" height="787"></a>
+    </div>
+
+    <h5>Add the sensors to the <a class="reflink" href="../../tools/Blocks.shtml">Block</a> table entries.</h5>
+
+    <p>Use PanelPro <strong>Tools &rArr; Tables &rArr; Blocks</strong> to assign the occupancy sensors to
+    each block. The blocks were automatically created when the block names were assigned
+    using the Layout Editor <strong>Edit</strong> dialog for each piece of track.
+    To simplify the process, drag the Sensor column next to the User Name column.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-BlockSensors.png">
+    <img src="images/LEGS-BlockSensors.png"
+    alt="Assign sensors to blocks" width="669" height="335"></a>
+    </div>
+
+    <h5>Add occupancy sensors to the panel</h5>
+
+    <p>Add the occupancy sensors to the panel.  The sensors on the panel are used to simulate
+    train occupancy.  They can be used to see how the track responds to occupancy changes.
+    They will be used later to validate the signal mast logic.</p>
+
+    <p>If desired, there is a context menu item to <strong>Hide when not editing</strong>.
+    This can be used to reduce clutter on the screen when not in edit mode.</p>
+
+    <p>Position them near the appropriate track block.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-BasicPanel.png">
+    <img src="images/LEGS-BasicPanel.png"
+    alt="Basic panel" width="633" height="236"></a>
+    </div>
+
+    <p class="refPanel">Demo panel: GS-3-Panel Sensors.xml</p>
+
+    <h5 style="text-align: center; padding-left: 0">- - - - -</h5>
+
+    <p>The basic panel is now done.  It has turnouts, occupancy sensors and blocks.  It can
+    simulate sending turnout commands to the layout and respond to simulated occupancy changes.
+    It includes the ability to initialize the layout after panel loading using Routes, LRoutes and
+    Logix.</p>
+
+    <a name="Phase2" id="Phase2"></a>
+    <h2><a class="reflink" href="../../tools/signaling/index.shtml">Signaling</a></h2>
+
+    <p>The above link provides an overview of signaling support in JMRI along with links to
+    specific topics.</p>
+
+    <p>The sample layout will be using signal masts based on the <strong>Basic</strong>
+    signaling system.  The selected signaling system provides the aspects, the appearances
+    of signal masts, their icons, and the rules for determining the signal mast aspect.
+    JMRI provides signaling systems for many prototypes.  The logic to set the mast aspects
+    will be done using signal mast logic (SML).</p>
+
+    <a name="Masts" id="Masts"></a>
+    <h3>Signal Masts</h3>
+
+    <p>A signal mast protects the trackage beyond the signal mast up to the next signal mast.
+    Signal masts are placed at block boundaries.  This means they are protecting one or more
+    blocks which can contain turnouts.</p>
+
+    <p>The turnouts on the panel at Alpha have their own blocks which means they provide
+    3 block boundaries.  The two end bumpers are also considered block boundaries.  Block
+    boundaries can also occur at level crossings, anchor points and edge connectors. Most
+    layouts are not large enough to have long mainlines with intermediate signals.</p>
+
+    <h4>Add Signal Masts to the <a class="reflink" href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a></h4>
+
+    <p>Signal masts are created using PanelPro <strong>Tools &rArr; Tables &rArr; Signals &rArr; Signal Masts</strong>.
+
+    <p>Select <strong>Add</strong> to create a new signal mast.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-AddMast.png">
+    <img src="images/LEGS-AddMast.png"
+    alt="Add signal mast" width="422" height="543"></a>
+    </div>
+
+    <p>The <strong>User Name:</strong> can be anything.  In this example, the entered name
+    indicates that the signal mast is related to the right turnout at Alpha and will be
+    placed at the throat (T) of the turnout.  The suffixes for the signal masts at the frog
+    end will be C for the straight leg (Continuing) and D for the curved leg (Diverging).</p>
+
+    <p>The <strong>Signal System:</strong> is set to Basic Model Signals.  The list contains
+    <a class="reflink" href="../../tools/signaling/AspectSignaling.shtml#systems">signal systems</a> for
+    many prototype railroads.</p>
+
+    <p>After the signal system has been selected, the <strong>Mast Type:</strong> list will
+    be changed based on the selected signal system.  Select the appropriate mast type.  For the turnout
+    throat the <strong>Double searchlight high signal</strong> will be used.  The frog end masts
+    use the <strong>Single searchlight high signal</strong> type and the end bumper masts will
+    use the <strong>Single searchlight low signal</strong> type.
+
+    <p>The selected <strong>Mast Driver:</strong> controls how the signal mast aspect
+    information is sent to the layout.  The appropriate driver will depend on the signaling
+    hardware that has been installed on the layout.  There is also a <strong>Virtual Mast</strong>
+    driver that can be used when there are no signals on the layout or the decision for the
+    layout hardware is still pending.</p>
+
+    <p>The signal mast table now contains 8 signal masts</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-MastList.png">
+    <img src="images/LEGS-MastList.png"
+    alt="Signal mast list" width="1078" height="332"></a>
+    </div>
+
+    <h4>Add Signal Masts to the panel</h4>
+
+    <p>The Layout Editor Toolbar has a selection for adding signal mast icons to the panel.
+    This results in an unconnected icon that is not related to any block boundary.  The
+    proper method is to use the <strong>Set Signal Masts</strong> item from the context menu.
+    Right click a turnout, level crossing, end bumper, anchor point or edge connector that forms
+    a block boundary.  If the block boundary is valid, there will be an entry for Set Signal Masts.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SetSignalMasts.png">
+    <img src="images/LEGS-SetSignalMasts.png"
+    alt="Set Signal Masts" width="262" height="288"></a>
+    </div>
+
+    <p>A dialog will be displayed with combo lists for selecting masts and options for placing
+    the masts on the panel.  Each box identifies the blocks that form the boundary.  This
+    helps with choosing the proper signal mast.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-Turnout.png">
+    <img src="images/LEGS-Turnout.png"
+    alt="Turnout signal mast dialog" width="572" height="518"></a>
+    </div>
+
+    <p>The number of boxes depends on the number of block boundaries.  Standard turnouts (
+    LH, RH, Wye) can have up to 3. Crossovers and level crossings can have up to 4.  Anchor
+    Points and Edge Connectors will have two and End Bumpers will have one.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EndBumper.png">
+    <img src="images/LEGS-EndBumper.png"
+    alt="End bumper signal mast dialog" width="274" height="328"></a>
+    </div>
+
+    <p>The dialog can also be used to remove masts.  Set the signal mast selection to the
+    blank row at the top of the list.</p>
+
+    <p>The new masts on the panel will display a red X.  This occurs because there is no
+    logic to determine the proper aspect.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-RedX.png">
+    <img src="images/LEGS-RedX.png"
+    alt="Red Xs on panel" width="633" height="236"></a>
+    </div>
+
+    <a name="SML" id="SML"></a>
+    <h3><a class="reflink" href="../../tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a></h3>
+<!-- https://www.jmri.org/help/en/html/tools/signaling/SignalMastLogic.shtml -->
+    <p>In order to display an aspect, the signal mast needs to have logic to determine the
+    proper aspect based on some set of rules.  This can be done using Logix, scripting or
+    Signal Mast Logic (SML).  SML will be used for this exercise.</p>
+
+    <p>The <strong>Signal System</strong> definitions referred to earlier include the
+    <strong>rules</strong> for setting signal mast aspects.</p>
+
+    <p>SML is based on signal mast pairs.  From any signal mast it is possible to reach
+    one or more signal masts depending on turnout positions.  For example, the two head mast,
+    SM-Alpha-Left-T, at the throat of Alpha Left, can reach either SM-Alpha-Right-C or
+    SM-Alpha-Right-D depending on the position of T-Alpha-Left.  This then defines the blocks
+    that need to be unoccupied for the SM-Alpha-Left-T to display an aspect other than Stop.
+    The actual aspect will depend on the current aspect for the destination mast and whether
+    the route is normal or diverging.</p>
+
+    <p>Note:  The signal mast at an end bumper does not have a destination mast and
+    therefore will not have any logic.</p>
+
+    <h4><a class="reflink" href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a></h4>
+
+    <p>Signal mast logic is maintained at PanelPro <strong>Tools &rArr; Tables &rArr;
+    Signals &rArr; Signal Mast Logic</strong>.</p>
+
+    <p>While it is possible to use the Add button to create each set of signal mast logic, use
+    the <strong>Tools &rArr; Auto Generate Signaling Pairs</strong> menu item.  This will
+    discover all the signal mast pairs and build the signal mast logic definitions.</p>
+
+    <p>The first time SML is created, a system setting needs to be updated.  Click on Yes.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-BlockRouting.png">
+    <img src="images/LEGS-BlockRouting.png"
+    alt="Enable block routing" width="366" height="167"></a>
+    </div>
+
+    <p>A confirmation dialog will be displayed.  Do not select Generate Sections.  Click on Yes.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SMLPairs.png">
+    <img src="images/LEGS-SMLPairs.png"
+    alt="Generate signaling pairs" width="394" height="195"></a>
+    </div>
+
+    <p>When the auto generate it done, the signal mast logic table will be shown.
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SMLList.png">
+    <img src="images/LEGS-SMLList.png"
+    alt="Signal mast logic list" width="1072" height="330"></a>
+    </div>
+
+    <p>The panel icons now show proper aspects.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-MastsOnPanel.png">
+    <img src="images/LEGS-MastsOnPanel.png"
+    alt="Masts on panel" width="633" height="236"></a>
+    </div>
+
+    <p>Click on the turnouts and occupancy sensors to verify that the signal mast logic
+    is updating the <strong>aspects</strong> as shown by the icons changing.
+
+    <h4>Signal Mast Logic Detail</h4>
+
+    <p>To see the detail for a specific mast, select <strong>Edit Logic</strong> from the
+    entry in <strong>Signal Mast</strong> table or select <strong>Edit</strong> from the
+    <strong>Signal Mast Logic</strong> table or select <strong>Signal Mast Logic</strong>
+    in the right click context menu for the mast icon.  Yes, those are 3 different ways to
+    get to the same place.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SelectSML.png">
+    <img src="images/LEGS-SelectSML.png"
+    alt="Select SML menu item" width="430" height="447"></a>
+    </div>
+
+    <p>Depending on the selection method, a summary will be displayed which shows the
+    destinations for the signal mast and the active destination if there is one.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SMLSummary.png">
+    <img src="images/LEGS-SMLSummary.png"
+    alt="SML destination summary" width="604" height="186"></a>
+    </div>
+
+    <p>The next two images show the Block and Turnout tabs for the SML.  The automatic
+    sections were generated by the discovery process.  The manual sections can be used
+    to override automatic entries or add additional entries.  If use <strong>Layout Editor Paths</strong>
+    is turned off, then manual logic can be created.  This might be needed for special cases.
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-BlockTab.png">
+    <img src="images/LEGS-BlockTab.png"
+    alt="SML block tab" width="916" height="779"></a>
+    </div>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-TurnoutTab.png">
+    <img src="images/LEGS-TurnoutTab.png"
+    alt="SML turnout tab" width="916" height="779"></a>
+    </div>
+
+    <h5 style="text-align: center; padding-left: 0">- - - - -</h5>
+
+    <p>The panel is now fully functional and can be used as the basis for other activities
+    such as CTC, Entry/Exit or Dispatching.
+
+    <p class="refPanel">Demo panel: GS-4-Masts SML.xml</p>
+
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

@@ -5,24 +5,15 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -34,8 +25,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing train schedules for operations.
@@ -83,7 +72,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     // check boxes
     // panel
     JPanel schedule = new JPanel();
-    
+
     // text area
     JTextArea commentTextArea = new JTextArea(2, 70);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -99,13 +88,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         trainsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         trainsScheduleModel.initTable(trainsScheduleTable, this);
-        
+
         // row comment
         JPanel pC = new JPanel();
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         pC.setLayout(new GridBagLayout());
         addItem(pC, commentScroller, 1, 0);
-        
+
         // adjust text area width based on window size
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
@@ -180,7 +169,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         getContentPane().add(trainsPane);
         getContentPane().add(controlPane);
-        
+
         // show run button only if create CSV files is enabled
         updateRunButton();
 
@@ -215,7 +204,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         setJMenuBar(menuBar);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainSchedule", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainSchedules", true); // NOI18N
 
         setTitle(Bundle.getMessage("TitleScheduleTrains"));
 
@@ -223,7 +212,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
         trainScheduleManager.addPropertyChangeListener(this);
         addPropertyChangeLocations();
@@ -276,28 +265,27 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()
-                        + ", file name: " + InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
-                JOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()}), Bundle
-                        .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
+                        InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
+                                new Object[] { InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName() }),
+                        Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
             List<Train> trains = getSortByList();
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt()) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                                        train.getName()}),
-                                Bundle.getMessage("ErrorTitle"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
+                                        new Object[] { train.getName() }),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
-                        // Make sure our csv manifest file exists for this Train.
-                        File csvFile = train.createCSVManifestFile();
-                        // Add it to our collection to be processed.
-                        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(csvFile);
+                        // Add csv manifest file to our collection to be processed.
+                        InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(train.createCsvManifestFile());
                         train.setPrinted(true);
                     }
                 }
@@ -389,7 +377,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         while (en.hasMoreElements()) {
             b = en.nextElement();
             if (b.isSelected()) {
-                log.debug("schedule radio button " + b.getText());
+                log.debug("schedule radio button {}", b.getText());
                 return b.getName();
             }
         }
@@ -406,11 +394,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         switchListsButton.setEnabled(enable);
         terminateButton.setEnabled(enable);
 
-        log.debug("Selected id: {}, Active id: {}", getSelectedScheduleId(), trainScheduleManager.getTrainScheduleActiveId());
+        log.debug("Selected id: {}, Active id: {}", getSelectedScheduleId(),
+                trainScheduleManager.getTrainScheduleActiveId());
 
-        activateButton.setEnabled(getSelectedScheduleId() != null
-                && !getSelectedScheduleId().equals(trainScheduleManager.getTrainScheduleActiveId()));
-        
+        activateButton.setEnabled(getSelectedScheduleId() != null &&
+                !getSelectedScheduleId().equals(trainScheduleManager.getTrainScheduleActiveId()));
+
         commentTextArea.setEnabled(enable);
     }
 
@@ -454,7 +443,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         switchListsButton.setBackground(Color.GREEN);
     }
-    
+
     private void updateRunButton() {
         runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
     }
@@ -472,7 +461,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     @Override
     public void dispose() {
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         trainScheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrainSchedules();
@@ -514,8 +503,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
-        if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
             updateControlPanel();
         }
         if (e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)) {
@@ -529,8 +518,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (e.getPropertyName().equals(Setup.REAL_TIME_PROPERTY_CHANGE)) {
             setSwitchListButtonText();
         }
-        if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
             updateSwitchListButton();
         }
         if (e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)) {

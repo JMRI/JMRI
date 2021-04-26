@@ -41,55 +41,55 @@
       <br>
       For information how to do this, see:
       <ul>
-      <li>The <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample script
-      <li>The <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation on
+      <li>The <a href="https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample script
+      <li>The <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation on
         the various components</a>
       </ul>
       
       The available tools are:
       <dl>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Code Line</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Code Line</a></dt>
                             <dd>Implements the code line between the CTC machine and the field.
                             Can use a turnout output to tell e.g. a lamp to light or relays to make noise.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Station</a></dt>  
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Station</a></dt>  
                             <dd>Corresponds to a single station on the code line, usually
                             a single column on the CTC machine and all the items in the field that
                             are connected to it.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Code Button</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Code Button</a></dt>
                             <dd>One per section, this defines the connection to the code button (a sensor input)
                             and the code lamp (a turnout output) on the panel.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Turnout Section</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Turnout Section</a></dt>
                             <dd>Controls a single turnout in the field. You configure it with that turnout's name
                             along with sensor inputs for the lever on the panel, and turnout outputs for the
                             indicator lamps. Can optionally take Lock objects to add prototypical locking.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">SignalHead Section</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">SignalHead Section</a></dt>
                             <dd>Controls the signal heads around a single OS in the field.
                             You configure it with lists of left-going and right-going heads
                             which it can hold and release, 
                             along with sensor inputs for the lever on the panel, and turnout outputs for the
                             indicator lamps. Can optionally take Lock objects to add prototypical locking.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Track Circuit Section</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Track Circuit Section</a></dt>
                             <dd>This drives a track occupancy indicator lamp (an output) on the panel from a 
                                 occupancy sensor in the field (a sensor input). Optionally, 
                                 can ring a bell when goes occupied or unoccupied.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Maintainer Call Section</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Maintainer Call Section</a></dt>
                             <dd>This drives a maintainer call lamp (an output) in the field from a 
                                 lever or switch on the central panel (a sensor input).
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Occupancy Lock</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Occupancy Lock</a></dt>
                             <dd>When added to a Turnout or SignalHead section, this prevents changes
                             while the OS section (defined into the Lock) is occupied.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Route Lock</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Route Lock</a></dt>
                             <dd>When added to a Turnout section, this prevents changes
                             while the OS section has a route cleared through the Turnout.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Time Lock</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Time Lock</a></dt>
                             <dd>When added to a Turnout section, this prevents changes
                             while the OS section has signals running time.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Traffic Lock</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Traffic Lock</a></dt>
                             <dd>Locks against signals being cleared in opposite directions onto
                             a single segment of track.  Can be configured with turnout settings
                             (BeanSetting objects) to allow e.g. signals at opposite ends of a town
                             to clear when one turnout is set ot the main and the other to the siding.
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Turnout Lock</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Turnout Lock</a></dt>
                             <dd>A bit of a misnomer, because this refers to locking based on the state of a JMRI Turnout,  
                             which should be considered a generalized output.  Can be used to e.g. lock 
                             sections when a Call On state (on an internal turnout that represents the state)

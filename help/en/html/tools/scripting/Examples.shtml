@@ -9,16 +9,9 @@
 
   <title>JMRI: Scripting Examples</title>
   <meta name="author" content="Bob Jacobsen">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+
+  <!--#include virtual="/Style.shtml" -->
+
 </head>
 
 <body>
@@ -37,12 +30,14 @@
 
       <p>To run one of these scripts, start DecoderPro or PanelPro (set
       preferences to "LocoNet Simulator" to run without connecting
-      to a layout), then under the Panels manu, select Run Script.
+      to a layout), then under the <strong>Scripting</strong>
+      {<em>Old: <strong>Panels</strong></em>} menu, select <strong>Run Script</strong>.
+      In DecoderPro, Run Script is in the <strong>Actions</strong> menu.
       Find and select the desired script file in the "jython" folder of
       the JMRI program directory and click the Run button.</p>
 
       <p>To browse the most current set of scripts, please see the
-      <a href="http://jmri.org/jython">jython directory</a> on the
+      <a href="https://jmri.org/jython">jython directory</a> on the
       JMRI web site.</p>
 
       <p><a href=
@@ -62,7 +57,7 @@
       window that loads a script file</p>
 
       <p><a href=
-      "../../../../../jython/AddButton.py">AlarmClock.py</a></p>
+      "../../../../../jython/AlarmClock.py">AlarmClock.py</a></p>
 
       <p>This is an example script to pulse an output based on a
       Fast Clock.</p>
@@ -183,7 +178,8 @@
       it causes the data to be displayed on the Java console and the
       "Data entry" panel to disappear. To see the output on the
       Java console you need to open the Java console or select
-      "Script Output" from the JMRI "Panels" menu.</p>
+      <strong>Script Output</strong> from the PanelPro <strong>Scripting</strong>
+      {<em>Old: <strong>Panels</strong></em>} menu.</p>
 
       <p><a href=
       "../../../../../jython/JButtonExample.py">JButtonExample.py</a></p>

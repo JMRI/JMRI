@@ -9,7 +9,7 @@ import jmri.Turnout;
  * System names are "DTnnn", where D is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -37,19 +37,36 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return (SRCPBusConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        Turnout t;
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new SRCPTurnout(addr, getMemo());
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout address");
+        }
+        Turnout t = new SRCPTurnout(addr, getMemo());
         t.setUserName(userName);
-
         return t;
     }
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
+    }
+    
+    /**
+     * Validates to only numeric.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name,locale);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class);

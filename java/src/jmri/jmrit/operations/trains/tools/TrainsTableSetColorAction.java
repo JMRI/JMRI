@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.trains.Train;
 
 /**
@@ -19,8 +21,8 @@ public class TrainsTableSetColorAction extends AbstractAction {
 
     Train _train = null;
 
-    public TrainsTableSetColorAction(String s, Train train) {
-        super(s);
+    public TrainsTableSetColorAction(Train train) {
+        this();
         _train = train;
     }
 

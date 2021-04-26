@@ -6,4 +6,6 @@
  * which is expanded in JDK 9 to support OS X integration that once depended
  * upon the com.apple.eawt package.
  */
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.plaf.macosx;

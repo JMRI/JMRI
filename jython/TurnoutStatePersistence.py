@@ -44,7 +44,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
     log = Logger.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.PersistTurnoutStateTask")
 
     # Define task to run at ShutDown
-    def execute(self):
+    def run(self):
 
         # Write an info entry to the log
         self.log.info("Write turnout state to file: '%s'" % turnoutFile)
@@ -95,7 +95,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
         csvFile.close()
 
         # All done
-        return True     # True to allow ShutDown; False to abort
+        return
 
     # Function to convert state values to names
     def stateName(self, state):

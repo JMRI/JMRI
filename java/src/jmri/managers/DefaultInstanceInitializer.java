@@ -2,35 +2,15 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
-import jmri.AudioManager;
-import jmri.BlockManager;
-import jmri.ClockControl;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.IdTagManager;
-import jmri.InstanceInitializer;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.LogixManager;
-import jmri.Manager;
-import jmri.MemoryManager;
-import jmri.RailComManager;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.SensorManager;
-import jmri.SignalGroupManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.SignalSystemManager;
-import jmri.Timebase;
-import jmri.TurnoutManager;
+
+import jmri.*;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -64,6 +44,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         // In order for getDefault() to create a new object, the manager also
         // needs to be added to the method getInitalizes() below.
 
+        if (type == AnalogIOManager.class) {
+            return new ProxyAnalogIOManager().init();
+        }
+
         if (type == AudioManager.class) {
             return new DefaultAudioManager(memo);
         }
@@ -80,12 +64,20 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new ProxyLightManager();
         }
 
+        if (type == VariableLightManager.class) {
+            return new DefaultVariableLightManager(memo).init();
+        }
+
         if (type == LogixManager.class) {
             return new DefaultLogixManager(memo);
         }
 
         if (type == MemoryManager.class) {
             return new DefaultMemoryManager(memo);
+        }
+
+        if (type == MeterManager.class) {
+            return new ProxyMeterManager();
         }
 
         if (type == RailComManager.class) {
@@ -128,8 +120,12 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultSignalSystemManager(memo);
         }
 
+        if (type == StringIOManager.class) {
+            return new ProxyStringIOManager();
+        }
+
         if (type == Timebase.class) {
-            Timebase timebase = new SimpleTimebase();
+            Timebase timebase = new SimpleTimebase(memo);
             InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
             return timebase;
         }
@@ -153,14 +149,15 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
+                AnalogIOManager.class,
                 AudioManager.class,
-                BlockManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
                 IdTagManager.class,
                 LightManager.class,
                 LogixManager.class,
                 MemoryManager.class,
+                MeterManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,
@@ -170,8 +167,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 SignalMastLogicManager.class,
                 SignalMastManager.class,
                 SignalSystemManager.class,
+                StringIOManager.class,
                 Timebase.class,
                 TurnoutManager.class,
+                VariableLightManager.class,
                 VSDecoderManager.class
         ));
         return set;

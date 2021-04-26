@@ -1,18 +1,18 @@
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
+
 import javax.swing.JComboBox;
+
 import jmri.progdebugger.ProgDebugger;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * ComboRadioButtonsTest.java
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class ComboRadioButtonsTest {
 
@@ -125,12 +125,12 @@ public class ComboRadioButtonsTest {
         var.lastItem();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

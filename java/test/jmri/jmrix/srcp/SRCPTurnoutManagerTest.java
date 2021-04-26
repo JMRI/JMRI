@@ -1,17 +1,16 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPTurnoutManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnoutManager class
+ * Test for the jmri.jmrix.srcp.SRCPTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -33,9 +32,8 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
@@ -48,7 +46,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         memo.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

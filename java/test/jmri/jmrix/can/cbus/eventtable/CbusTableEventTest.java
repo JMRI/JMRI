@@ -1,10 +1,10 @@
 package jmri.jmrix.can.cbus.eventtable;
 
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -15,25 +15,17 @@ public class CbusTableEventTest {
 
     @Test
     public void testCTor() {
-        // memo,int,int,EvState,int,String,String,String,int,int,int,int,Date
-        CbusTableEvent t = new CbusTableEvent(null,0,1,null,0,"","",0,0,0,0,null);
+        CbusTableEvent t = new CbusTableEvent(null,0,1);
         Assert.assertNotNull("exists",t);
-        t = null;
     }
     
     @Test
     public void testSetGet() {
         
-        CbusTableEvent t = new CbusTableEvent(null,0,1,null,0,"","",0,0,0,0,null);
+        CbusTableEvent t = new CbusTableEvent(null,0,1);
         
         t.setDate(new java.util.Date() );
         Assert.assertNotNull("date",t.getDate());
-        
-        t.setStlOn("ON STL String");
-        Assert.assertEquals("ON STL String", "ON STL String",(t.getStlOn()) );
-        
-        t.setStlOff("OFF STL String");
-        Assert.assertEquals("OFF STL String", "OFF STL String",(t.getStlOff()) );
         
         t.setCanId(123);
         Assert.assertEquals("Can ID set", 123,(t.getEventCanId()) );
@@ -41,60 +33,62 @@ public class CbusTableEventTest {
         t.setComment("EvEnT CoMmEnT");
         Assert.assertEquals("EvEnT CoMmEnT", "EvEnT CoMmEnT",(t.getComment()) );
         
-        Assert.assertEquals("getSessionOn starts 0", 0,(t.getSessionOn()) );
-        Assert.assertEquals("getSessionOff starts 0", 0,(t.getSessionOff()) );
-        Assert.assertEquals("getSessionIn starts 0", 0,(t.getSessionIn()) );
-        Assert.assertEquals("getSessionOut starts 0", 0,(t.getSessionOut()) );
+        Assert.assertEquals("getSessionOn starts 0", 0,(t.getSessionOnOff(true)) );
+        Assert.assertEquals("getSessionOff starts 0", 0,(t.getSessionOnOff(false)) );
+        Assert.assertEquals("getSessionIn starts 0", 0,(t.getSessionInOut(true)) );
+        Assert.assertEquals("getSessionOut starts 0", 0,(t.getSessionInOut(false)) );
         
-        Assert.assertEquals("getTotalOn starts 0", 0,(t.getTotalOn()) );
-        Assert.assertEquals("getTotalOff starts 0", 0,(t.getTotalOff()) );
-        Assert.assertEquals("getTotalIn starts 0", 0,(t.getTotalIn()) );
-        Assert.assertEquals("getTotalOut starts 0", 0,(t.getTotalOut()) );
+        Assert.assertEquals("getTotalOn starts 0", 0,(t.getTotalOnOff(true)) );
+        Assert.assertEquals("getTotalOff starts 0", 0,(t.getTotalOnOff(false)) );
+        Assert.assertEquals("getTotalIn starts 0", 0,(t.getTotalInOut(true)) );
+        Assert.assertEquals("getTotalOut starts 0", 0,(t.getTotalInOut(false)) );
         
         
-        t.bumpSessionOn();
-        t.bumpSessionOff();
-        t.bumpSessionIn();
-        t.bumpSessionOut();
-
-        Assert.assertEquals("getSessionOn 1", 1,(t.getSessionOn()) );
-        Assert.assertEquals("getSessionOff 1", 1,(t.getSessionOff()) );
-        Assert.assertEquals("getSessionIn 1", 1,(t.getSessionIn()) );
-        Assert.assertEquals("getSessionOut 1", 1,(t.getSessionOut()) );
+        t.setState(CbusTableEvent.EvState.ON);
+        Assert.assertEquals("getSessionOn 1", 1,(t.getSessionOnOff(true)) );
         
-        Assert.assertEquals("getTotalOn 1", 1,(t.getTotalOn()) );
-        Assert.assertEquals("getTotalOff 1", 1,(t.getTotalOff()) );
-        Assert.assertEquals("getTotalIn 1", 1,(t.getTotalIn()) );
-        Assert.assertEquals("getTotalOut 1", 1,(t.getTotalOut()) );
+        t.setState(CbusTableEvent.EvState.OFF);
+        Assert.assertEquals("getSessionOff 1", 1,(t.getSessionOnOff(false)) );
+        
+        t.bumpDirection(CbusConstants.EVENT_DIR_IN);
+        Assert.assertEquals("getSessionIn 1", 1,(t.getSessionInOut(true)) );
+        
+        t.bumpDirection(CbusConstants.EVENT_DIR_OUT);
+        Assert.assertEquals("getSessionOut 1", 1,(t.getSessionInOut(false)) );
+        
+        Assert.assertEquals("getTotalOn 1", 1,(t.getTotalOnOff(true)) );
+        Assert.assertEquals("getTotalOff 1", 1,(t.getTotalOnOff(false)) );
+        Assert.assertEquals("getTotalIn 1", 1,(t.getTotalInOut(true)) );
+        Assert.assertEquals("getTotalOut 1", 1,(t.getTotalInOut(false)) );
         
         
         t.resetSessionTotals();
         
-        Assert.assertEquals("getSessionOn reset", 0,(t.getSessionOn()) );
-        Assert.assertEquals("getSessionOff reset", 0,(t.getSessionOff()) );
-        Assert.assertEquals("getSessionIn reset", 0,(t.getSessionIn()) );
-        Assert.assertEquals("getSessionOut reset", 0,(t.getSessionOut()) );
+        Assert.assertEquals("getSessionOn reset", 0,(t.getSessionOnOff(true)) );
+        Assert.assertEquals("getSessionOff reset", 0,(t.getSessionOnOff(false)) );
+        Assert.assertEquals("getSessionIn reset", 0,(t.getSessionInOut(true)) );
+        Assert.assertEquals("getSessionOut reset", 0,(t.getSessionInOut(false)) );
         
-        t.setTotalOn(123);
-        t.setTotalOff(456);
-        t.setTotalIn(789);
-        t.setTotalOut(0);
+        t.setCounts(123,456,789,0);
         
-        Assert.assertEquals("getTotalOn 123", 123,(t.getTotalOn()) );
-        Assert.assertEquals("getTotalOff 456", 456,(t.getTotalOff()) );
-        Assert.assertEquals("getTotalIn 789", 789,(t.getTotalIn()) );
-        Assert.assertEquals("getTotalOut 0", 0,(t.getTotalOut()) );
+        Assert.assertEquals("getTotalOn 123", 123,(t.getTotalOnOff(true)) );
+        Assert.assertEquals("getTotalOff 456", 456,(t.getTotalOnOff(false)) );
+        Assert.assertEquals("getTotalIn 789", 789,(t.getTotalInOut(true)) );
+        Assert.assertEquals("getTotalOut 0", 0,(t.getTotalInOut(false)) );
         
-    }    
+    }
     
+    @Test
+    public void testEqualsToNormalEvent(){
+        Assert.assertEquals(new jmri.jmrix.can.cbus.CbusEvent(null,123,456), new CbusTableEvent(null,123,456));
+    }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

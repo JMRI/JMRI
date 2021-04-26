@@ -3,7 +3,6 @@ package jmri.server.json;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
-import jmri.implementation.QuietShutDownTask;
 import org.eclipse.jetty.io.EofException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
@@ -25,7 +24,7 @@ public class JsonWebSocket {
     private static final Logger log = LoggerFactory.getLogger(JsonWebSocket.class);
     private JsonConnection connection;
     private JsonClientHandler handler;
-    private QuietShutDownTask shutDownTask;
+    private Runnable shutDownTask;
 
     @OnWebSocketConnect
     public void onOpen(Session sn) {
@@ -35,18 +34,15 @@ public class JsonWebSocket {
             sn.setIdleTimeout(
                     (long) (InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval() * 1.1));
             this.handler = new JsonClientHandler(this.connection);
-            this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
-                @Override
-                public boolean execute() {
-                    try {
-                        getConnection().sendMessage(
-                                getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), 0);
-                    } catch (IOException e) {
-                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
-                    }
-                    JsonWebSocket.this.getConnection().getSession().close();
-                    return true;
+            this.shutDownTask = () -> {
+                try {
+                    getConnection().sendMessage(
+                            getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), 0);
                 }
+                catch (IOException e) {
+                    log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
+                }
+                this.getConnection().getSession().close();
             };
             log.debug("Sending hello");
             this.handler.onMessage(JsonClientHandler.HELLO_MSG);
@@ -75,7 +71,7 @@ public class JsonWebSocket {
                 this.onClose(StatusCode.ABNORMAL, thrwbl.getMessage());
             }
         } else {
-            log.error("Unanticipated error {}", thrwbl.getMessage(), thrwbl);
+            log.error("Unanticipated error", thrwbl);
         }
     }
 

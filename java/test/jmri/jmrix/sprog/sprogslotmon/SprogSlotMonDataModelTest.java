@@ -1,19 +1,19 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of SprogSlotMonDataModel 
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SprogSlotMonDataModelTest {
 
@@ -23,12 +23,12 @@ public class SprogSlotMonDataModelTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        int numSlots = SprogSlotMonDataModel.getSlotCount();
+        int numSlots = m.getNumSlots();
         SprogSlotMonDataModel action = new SprogSlotMonDataModel(numSlots, 8, m);
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new jmri.jmrix.sprog.SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
@@ -37,7 +37,7 @@ public class SprogSlotMonDataModelTest {
         m.configureCommandStation();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();

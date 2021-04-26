@@ -3,7 +3,6 @@ package jmri.jmrix.marklin;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,25 +18,17 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
      */
     public MarklinThrottle(MarklinSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
         tc = memo.getTrafficController();
 
-        this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
+        // Functions default to false
         this.address = address;
         this.isForward = true;
 
@@ -57,11 +48,11 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     protected void sendFunctionGroup1() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 0, (f0 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 1, (f1 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 2, (f2 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 3, (f3 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 4, (f4 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 0, (getFunction(0) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 1, (getFunction(1) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 2, (getFunction(2) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 3, (getFunction(3) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 4, (getFunction(4) ? 0x01 : 0x00)), this);
 
     }
 
@@ -71,53 +62,53 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     protected void sendFunctionGroup2() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 5, (f5 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 6, (f6 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 7, (f7 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 8, (f8 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 5, (getFunction(5) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 6, (getFunction(6) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 7, (getFunction(7) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 8, (getFunction(8) ? 0x01 : 0x00)), this);
 
     }
 
     @Override
     protected void sendFunctionGroup3() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 9, (f9 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 10, (f10 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 11, (f11 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 12, (f12 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 9, (getFunction(9) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 10, (getFunction(10) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 11, (getFunction(11) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 12, (getFunction(12) ? 0x01 : 0x00)), this);
 
     }
 
     @Override
     protected void sendFunctionGroup4() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 13, (f13 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 14, (f14 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 15, (f15 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 16, (f16 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 17, (f17 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 18, (f18 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 19, (f19 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 20, (f20 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 13, (getFunction(13) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 14, (getFunction(14) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 15, (getFunction(15) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 16, (getFunction(16) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 17, (getFunction(17) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 18, (getFunction(18) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 19, (getFunction(19) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 20, (getFunction(20) ? 0x01 : 0x00)), this);
 
     }
 
     @Override
     protected void sendFunctionGroup5() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 21, (f21 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 22, (f22 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 23, (f23 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 24, (f24 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 25, (f25 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 26, (f26 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 27, (f27 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 28, (f28 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 21, (getFunction(21) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 22, (getFunction(22) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 23, (getFunction(23) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 24, (getFunction(24) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 25, (getFunction(25) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 26, (getFunction(26) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 27, (getFunction(27) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 28, (getFunction(28) ? 0x01 : 0x00)), this);
 
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -125,7 +116,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
@@ -139,16 +130,15 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         } else {
             tc.sendMarklinMessage(MarklinMessage.setLocoSpeed(getCANAddress(), value), this);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Float speed = " + speed + " Int speed = " + value);
-        }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        log.debug("Float speed = {} Int speed = {}", speed, value);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     /**
      * Convert a Marklin speed integer to a float speed value
+     * @param lSpeed Marklin-format speed value
+     * @return 0.0 - 1.0 speed value
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -163,9 +153,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         isForward = forward;
         setSpeedSetting(0.0f); //Stop the loco first before changing direction.
         tc.sendMarklinMessage(MarklinMessage.setLocoDirection(getCANAddress(), (forward ? 0x01 : 0x02)), this);
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     private LocoAddress address;
@@ -175,8 +163,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     public void setSpeedStepMode(SpeedStepMode Mode) {
         if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode
-                    + " Current mode is: " + this.speedStepMode);
+            log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode);
         }
         boolean isLong = ((jmri.ThrottleManager) adapterMemo.get(jmri.ThrottleManager.class)).canBeLongAddress(address.getNumber());
         switch (address.getProtocol()) {
@@ -204,8 +191,9 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
+         finishRecord();
     }
 
     @Override
@@ -218,240 +206,56 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.MANCOMMANDSTART && m.getCommand() <= MarklinConstants.MANCOMMANDEND) {
             if (m.getAddress() != getCANAddress()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Addressed packet is not for us " + m.getAddress() + " " + getCANAddress());
+                    log.debug("Addressed packet is not for us {} {}", m.getAddress(), getCANAddress());
                 }
                 return;
             }
             if (m.getCommand() == MarklinConstants.LOCODIRECTION) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Loco Direction " + m.getElement(9));
+                    log.debug("Loco Direction {}", m.getElement(9));
                 }
                 //The CS2 sets the speed of the loco to Zero when changing direction, however it doesn't appear to broadcast it out.
-                switch (m.getElement(9)) {
-                    case 0x00:
-                        return; //No change
-                    case 0x01:
-                        if (!isForward) {
+                synchronized(this) {
+                    switch (m.getElement(9)) {
+                        case 0x00:
+                            return; //No change
+                        case 0x01:
+                            if (!isForward) {
+                                speedSetting = 0.0f;
+                                super.setSpeedSetting(speedSetting);
+                                isForward = true;
+                                firePropertyChange(ISFORWARD, false, isForward);
+                            }
+                            return;
+                        case 0x02:
+                            if (isForward) {
+                                speedSetting = 0.0f;
+                                super.setSpeedSetting(speedSetting);
+                                isForward = false;
+                                firePropertyChange(ISFORWARD, true, isForward);
+                            }
+                            return;
+                        case 0x03:
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            notifyPropertyChangeListener(ISFORWARD, isForward, true);
-                            isForward = true;
-                        }
-                        return;
-                    case 0x02:
-                        if (isForward) {
-                            speedSetting = 0.0f;
-                            super.setSpeedSetting(speedSetting);
-                            notifyPropertyChangeListener(ISFORWARD, isForward, false);
-                            isForward = false;
-                        }
-                        return;
-                    case 0x03:
-                        speedSetting = 0.0f;
-                        super.setSpeedSetting(speedSetting);
-                        notifyPropertyChangeListener(ISFORWARD, isForward, !isForward);
-                        isForward = !isForward;
-                        return;
-                    default:
-                        log.error("No Match Found for loco direction " + m.getElement(9));
-                        return;
+                            isForward = !isForward;
+                            firePropertyChange(ISFORWARD, !isForward, isForward);
+                            return;
+                        default:
+                            log.error("No Match Found for loco direction {}", m.getElement(9));
+                            return;
+                    }
                 }
             }
             if (m.getCommand() == MarklinConstants.LOCOSPEED) {
                 int speed = m.getElement(9);
                 speed = (speed << 8) + (m.getElement(10));
-                Float newSpeed = Float.valueOf(floatSpeed(speed));
-                if (log.isDebugEnabled()) {
-                    log.debug("Speed raw " + speed + " float " + newSpeed);
-                }
+                float newSpeed = floatSpeed(speed);
+                log.debug("Speed raw {} float {}", speed, newSpeed);
                 super.setSpeedSetting(newSpeed);
             }
             if (m.getCommand() == MarklinConstants.LOCOFUNCTION) {
-                int function = m.getElement(9);
-                int state = m.getElement(10);
-                boolean functionresult = true;
-                if (state == 0) {
-                    functionresult = false;
-                }
-                switch (function) {
-                    case 0:
-                        if (this.f0 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F0, this.f0, functionresult);
-                            this.f0 = functionresult;
-                        }
-                        break;
-                    case 1:
-                        if (this.f1 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F1, this.f1, functionresult);
-                            this.f1 = functionresult;
-                        }
-                        break;
-                    case 2:
-                        if (this.f2 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F2, this.f2, functionresult);
-                            this.f2 = functionresult;
-                        }
-                        break;
-                    case 3:
-                        if (this.f3 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F3, this.f3, functionresult);
-                            this.f3 = functionresult;
-                        }
-                        break;
-                    case 4:
-                        if (this.f4 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F4, this.f4, functionresult);
-                            this.f4 = functionresult;
-                        }
-                        break;
-                    case 5:
-                        if (this.f5 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F5, this.f5, functionresult);
-                            this.f5 = functionresult;
-                        }
-                        break;
-                    case 6:
-                        if (this.f6 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F6, this.f6, functionresult);
-                            this.f6 = functionresult;
-                        }
-                        break;
-                    case 7:
-                        if (this.f7 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F7, this.f7, functionresult);
-                            this.f7 = functionresult;
-                        }
-                        break;
-                    case 8:
-                        if (this.f8 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F8, this.f8, functionresult);
-                            this.f8 = functionresult;
-                        }
-                        break;
-                    case 9:
-                        if (this.f9 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F9, this.f9, functionresult);
-                            this.f9 = functionresult;
-                        }
-                        break;
-                    case 10:
-                        if (this.f10 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F10, this.f10, functionresult);
-                            this.f10 = functionresult;
-                        }
-                        break;
-                    case 11:
-                        if (this.f11 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F11, this.f11, functionresult);
-                            this.f11 = functionresult;
-                        }
-                        break;
-                    case 12:
-                        if (this.f12 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F12, this.f12, functionresult);
-                            this.f12 = functionresult;
-                        }
-                        break;
-                    case 13:
-                        if (this.f13 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F13, this.f13, functionresult);
-                            this.f13 = functionresult;
-                        }
-                        break;
-                    case 14:
-                        if (this.f14 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F14, this.f14, functionresult);
-                            this.f14 = functionresult;
-                        }
-                        break;
-                    case 15:
-                        if (this.f15 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F15, this.f15, functionresult);
-                            this.f15 = functionresult;
-                        }
-                        break;
-                    case 16:
-                        if (this.f16 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F16, this.f16, functionresult);
-                            this.f16 = functionresult;
-                        }
-                        break;
-                    case 17:
-                        if (this.f17 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F17, this.f17, functionresult);
-                            this.f17 = functionresult;
-                        }
-                        break;
-                    case 18:
-                        if (this.f18 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F18, this.f18, functionresult);
-                            this.f18 = functionresult;
-                        }
-                        break;
-                    case 19:
-                        if (this.f19 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F19, this.f19, functionresult);
-                            this.f19 = functionresult;
-                        }
-                        break;
-                    case 20:
-                        if (this.f20 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F20, this.f20, functionresult);
-                            this.f20 = functionresult;
-                        }
-                        break;
-                    case 21:
-                        if (this.f21 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F21, this.f21, functionresult);
-                            this.f21 = functionresult;
-                        }
-                        break;
-                    case 22:
-                        if (this.f22 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F22, this.f22, functionresult);
-                            this.f22 = functionresult;
-                        }
-                        break;
-                    case 23:
-                        if (this.f23 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F23, this.f23, functionresult);
-                            this.f23 = functionresult;
-                        }
-                        break;
-                    case 24:
-                        if (this.f24 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F24, this.f24, functionresult);
-                            this.f24 = functionresult;
-                        }
-                        break;
-                    case 25:
-                        if (this.f25 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F25, this.f25, functionresult);
-                            this.f25 = functionresult;
-                        }
-                        break;
-                    case 26:
-                        if (this.f26 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F26, this.f26, functionresult);
-                            this.f26 = functionresult;
-                        }
-                        break;
-                    case 27:
-                        if (this.f27 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F27, this.f27, functionresult);
-                            this.f27 = functionresult;
-                        }
-                        break;
-                    case 28:
-                        if (this.f28 != functionresult) {
-                            notifyPropertyChangeListener(Throttle.F28, this.f28, functionresult);
-                            this.f28 = functionresult;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                return;
+                updateFunction(m.getElement(9),!(m.getElement(10)==0));
             }
         }
     }

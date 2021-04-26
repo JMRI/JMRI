@@ -75,7 +75,11 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/switchboardeditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/meters.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/meterframes.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/ctcdata.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/logixng-4.23.1.xsd"/>
 
   <xs:element name="layout-config">
     <xs:complexType>
@@ -314,6 +318,8 @@ signals - obsolete, EMPTY, never used
         <xs:element name="sections"     type="SectionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="transits"     type="TransitManagerType" minOccurs="0" maxOccurs="unbounded" />
 
+        <xs:element name="meters"       type="MeterManagerType" minOccurs="0" maxOccurs="unbounded" />
+
         <xs:element name="timebase"     type="TimebaseType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" >
@@ -348,6 +354,18 @@ signals - obsolete, EMPTY, never used
         <xs:element name="logixs"       type="LogixManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="conditionals" type="ConditionalManagerType" minOccurs="0" maxOccurs="unbounded" />
 
+        <xs:element name="LogixNGs"                      type="LogixNG_ManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGConditionalNGs"         type="LogixNG_ConditionalNGManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGModules"                type="LogixNG_ModuleManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGTables"                 type="LogixNG_TableManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGAnalogActions"          type="LogixNG_AnalogActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGAnalogExpressions"      type="LogixNG_AnalogExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGDigitalActions"         type="LogixNG_DigitalActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGDigitalBooleanActions"  type="LogixNG_DigitalBooleanActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGDigitalExpressions"     type="LogixNG_DigitalExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGStringActions"          type="LogixNG_StringActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGStringExpressions"      type="LogixNG_StringExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
+
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
@@ -372,6 +390,9 @@ signals - obsolete, EMPTY, never used
             </xs:keyref>
         </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="meterFrames"  type="MeterFrameManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="ctcdata" type="CtcDataType" minOccurs="0" maxOccurs="1" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
 

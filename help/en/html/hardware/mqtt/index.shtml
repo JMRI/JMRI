@@ -1,12 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - MQTT</title>
+  
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="author" content="Jerry Grochow">
+    <meta name="keywords" content="JMRI MQTT">
+
   <!--#include virtual="/Style.shtml" -->
+  
 </head>
 
 <body>
@@ -15,155 +18,378 @@
     <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
+      <a name="top" id="top"></a>
       <h1>Hardware Support: MQTT</h1>
-      <img src="http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" align="right">
-      JMRI can
-      connect to 
-      <a href="https://en.wikipedia.org/wiki/Internet_of_things">IOT devices</a>
-      via the
-      <a href="https://en.wikipedia.org/wiki/MQTT">MQTT protocol</a>.
+      <img src="images/mqtt-logo.png" alt="MQTT logo" class="floatRight">
       
-
-      <h3>Naming</h3>
-
-      <p>The default system letter is "M", so we'll use that in examples.</p>
-
-      <a name= "limitations" id="limitations"></a>
-      <h2>Limitations</h2>
+      <p><a href="https://mqtt.org" target="_blank">MQTT </a>is a "client-server publish-subscribe" protocol, meaning that JMRI connects
+      to an MQTT server and subscribes to receive messages on certain topics.  JMRI also publishes messages to the MQTT server
+      and any device subscribed to that topic will receive a copy.  This approach makes it relatively easy for the model railroader
+      to use MQTT communication to develop any number of layout control and automation scenarios.
+      </p>
       
-      Older code (i.e. JMRI 4.12 and later) only 
-      supports Turnouts. 
-      We hope to add Sensor, Light and Reporter support soon.
+      <p>Devices both on and off the layout can use the MQTT protocol to connect to JMRI. As of release 4.21.1, JMRI implements 
+      MQTT-connected turnouts, sensors, and lights with additional object types expected in the future. For other objects and
+      devices off the layout, you can use a provided <a href="#scripts"> script </a> or write your own using JMRI's MQTT Adapter
+      object and methods.  You can use JMRI's MQTT capability to communicate with <a href="https://en.wikipedia.org/wiki/Internet_of_things"
+      target="_blank">IOT devices</a> as well as <a href="../arduino/index.shtml">arduinos</a> and other microcontrollers.
+      </p>
+      
+      <ul class="snav">
+        <li><a href="#connecting">Connecting MQTT Broker</a></li>
+        <li><a href="#objects">Layout Objects</a></li>
+        <li><a href="#topics">MQTT Topics</a></li>
+        <li><a href="#payload">Message Content</a></li>
+        <li><a href="#scripts">Scripting</a></li>
+        <li><a href="#testing">Testing</a></li>        
+    </ul>
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
       
       <a name="connecting" id="connecting"></a>
-
-      <h2>Connecting</h2>
-      
-      You tell JMRI about how to connect to your MQTT
-      hardware via the Connections pane in the Preferences window.
-      Select "MQTT" as the manufacturer name.
+      <h2>Connecting to the MQTT Message Broker</h2>
       
       <p>
-      Currently, JMRI can handle only one MQTT connection at a time.
-      You can combine that MQTT connection with other connection types,
-      but two MQTT connections won't work properly. This 
-      may be improved at some later point if people find a 
-      reason to need two MQTT connections.
+      Establish a connection to an MQTT message broker via the Connections pane in the <a href="../../../package/apps/TabbedPreferences.shtml">
+      Preferences window.</a>
+      </p>
+
+      <ul>
+      <li>Select "MQTT" as the "System manufacturer"
+      <li>Select "MQTT Connection" as the "System Connection" (it is possible that "MQTT Simulator" may be added to this list in the future to allow 
+      testing without direct attachment to an MQTT broker).  
+      <li>The "IP Address/Host Name" should be "localhost" if you are running an MQTT message broker on the same machine as JMRI, or the IP address or
+      host name of an external server (see under <a href="#testing">Testing</a>).
+      <li>The default "Connection Prefix" for MQTT is "M" (this can be changed when setting up the connection).
+      <li>The default "Connection Name" is "MQTT." Currently, JMRI can handle only one MQTT connection at a time. [This may be changed at some point 
+      necessitating the ability to change the Connection Name.]   
+      </ul>
       
-        <h3>Topics</h3>
+      <p>
+      You can establish an MQTT connection at the same time as other connection types.
+      </p>
+      
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+      
+
+      <a name="objects" id="objects"></a>
+      <h2>Layout Objects</h2>
+
+         <a name= "limitations" id="limitations"></a>
+         <h3>Available Objects</h3>
+      
+         <p>
+         Older versions of JMRI (4.12 and earlier) directly support Turnouts only.  Sensors and Lights were added in version 4.21.1.  Direct 
+         support for Reporters is expected to be added in version 4.22.  Support for Signal Masts is planned but not yet scheduled.
+         </p>
+         
+         <p>
+         MQTT messages can be sent and received and used with other object types, such as <a href="../../tools/Memories.shtml">Memories</a>, 
+         by writing custom <a href="#scripts">scripts.</a>
+         </p>
+      
+        <h3>Object Names</h3>
+
+        <p>
+        As with all objects within JMRI, directly supported layout objects (turnouts, sensors, and lights) using MQTT must have a 
+        <a href="../../doc/Technical/Names.shtml"> "system name" </a> and may have a "user name."  If you are assigning the system name manually, the first 
+        letter must be the <a href="#connecting">MQTT Connection Prefix.</a>  The next character must be an Object Type of "T", "S", or "L" for turnout, 
+        sensor, or light, respectively. The remainder of the name does not have to follow any particular model and can be any alphanumeric characters.  
+        For example, JMRI MQTT Turnouts can be specified with JMRI system names such as "MTabcd" or "MT123" or "MT.X$42".
+        </p>
+
+        <p>
+        If you create objects by "adding" them to their tables, select "MQTT" from the pulldown and the Connection Prefix and Object Type will automatically
+        be inserted when the objects are created.  
+        </p>
+
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+    
+    <a name="topics" id="topics"></a>
+    <h2>MQTT Topics</h2>
+    
         
-        JMRI MQTT Turnouts are specified with JMRI system names like "MTabcd".
-        The "M" is the system connection letter, "T" specifies 
-        Turnout, and all after that is a suffix that is used to generate
-        the specific topic which JMRI publishes and subscribes to when
-        communicating with the layout.
-        <p>
-        By default, the MQTT topic for a Turnout is constructed by prepending
-        "/trains/track/turnout/" to the suffix.  For example, a JMRI Turnout with
-        system name MTabcd will publish and subscribe to the topic /trains/track/turnout/abcd.
-        There are two parts to that: A base topic common
-        to everything JMRI does on that connection, and 
-        a type-specific topic specific to each type.
-        <p>
-        By default the base topic is "/trains/";
-        the turnout-specific part is "track/turnout/",
-        leading to a complete prefix of "/trains/track/turnout/".
-        When e.g. Sensors become available, they might have
-        e.g. a type-specific part of "track/sensor/".
-        <p>
-        <a href="images/MQTT_Preferences.png"><img
-        src="images/MQTT_Preferences.png" align="right" height="211"
-        width="345"></a>
-        You can change the base topic by 
-        going to the JMRI Connection preferences,
-        selecting your MQTT connection's preference
-        pane, checking the "Additional Connection Settings" box,
-        and then entering the desired value in the "MQTT channel"
-        selection box.  Depending on which kind of computer you
-        have, you might have to click once or twice in that box
-        before you can enter your new prefix text.  Then
-        save your changes and restart the program.
+    <h3>Topics for Available Objects</h3>
+    
+    <p>
+    <span class="since">Since JMRI 4.15.5</span>
+    JMRI publishes and receives MQTT messages on specific "topics."  An MQTT topic is the label or headline for a message that is broadcast or subscribed
+    to. MQTT topics within JMRI are formed by concatenating:
+    </p>
+    
+    <ul>
+    <li>the base topic or "MQTT channel," </li>
+    <li>the object type-specific MQTT topic (may be different for publishing and subscribing), and</li> 
+    <li>the object's system name suffix.</li>
+    </ul>
+    
+    <p>
+    The designated "MQTT channel" and object type-specific MQTT topics can be seen and changed by selecting "Additional Connection Settings" on the MQTT 
+    Connection page under Preferences.
+    </p>
+    
+    <p>
+    Using the defaults in the JMRI Preferences Connection pane <a href="images/MQTT_Preferences_rel4_21_2.png">
+    <img src="images/MQTT_Preferences_rel4_21_2.png" alt="MQTT preferences rel 4.21.2" class="floatRight" height="278"
+         width="278">shown in the picture to the right</a>,
+    JMRI constructs the MQTT topic to send status of a Turnout with system name "MTabcd" by concatenating:
+    </p>
+    
+    <ul>
+    <li>the channel: "/trains/"</li>
+    <li>the object-type specific "send" topic: "track/turnout/"</li> 
+    <li>the system name suffix: "abcd"</li>
+    </ul>
+    
+    <p>
+    yielding the complete message topic: "/trains/track/turnout/abcd".
+    </p>
+    
+    <p>
+    All default components can by changed on the MQTT connection tab (check the "Additional Connection Settings" box), and then entering the desired values. 
+    It is recommended that you change the default channel, typically to something based on your own railroad name. Current guidance from the MQTT community
+    is not to have a leading slash; it is present in the JMRI default for historical reasons. [A good reason to change the default is that "/trains/" is the
+    default for all users of JMRI.  If you use a public MQTT message broker such as htttp://test.mosquitto.org test server (<a href="#testing">linked below</a>),
+    keeping that default channel will show you messages from every other  JMRI instance anywhere in the world also using the default channel and connected to
+    that broker -- and show everyone else your messages!] 
+    </p>
+    
+    <p>You can change the object type-specific part of each topic using the other fields on the Preferences Connection page.  There are separate fields
+    for specifying what JMRI should publish (the "send" field) and what JMRI should subscribe to (recognize back from the layout, the "receive" field).
+    The initial defaults contain two parts ("track/" and an object-specific part) and are the same for publish and subscribe but they need not be in this format.
+    As noted below, identical send and receive topics are recommended for normal use.
+    </p>
+
+    <p>
+    If you want the object's system name suffix to be in the topic string at some place other than at the end, you can use a "wild card" of "{0}"
+    within the string to put the object's system name suffix at that place.  This allows you to set up topics like "track/turnout/{0}/state" so
+    JMRI will generate "/trains/track/turnout/abc123/state" for turnout "MTabc123".
+    </p>
+    
+    <p class="noted">
+    Be sure to save the JMRI Preferences if you have changed anything (hit the "Save" button on the Preferences list pane) and restart JMRI to put the
+    changes into effect.
+    </p>
+    
+    <p>
+    You can also change the object type-specific part of the topic strings as part of JMRI start-up using a script as described <a href="#scripts">below.</a>
+    </p>
+    
+    <h3>Topic Use</h3>
+    
+    <p>
+    JMRI only uses some of the listed topics for its standard actions.</p>
+    
+    <ul>
+    <li><strong>Sensors</strong>: JMRI expects to receive sensor state on the "Sensor receive topic." It sends state on the "Sensor send topic" if a user changes sensor state
+    by clicking on a panel or table.</li>
+    <li><strong>Turnouts</strong>: JMRI sends on the "Turnout send topic" if a user commands a turnout change by clicking on a panel or table.  Additionally, if a Turnout has been
+    created in either the Direct mode or Monitoring mode (see <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout documentation</a>),
+    JMRI expects to received turnout state on the "Turnout receive topic."</li>
+    <li><strong>Lights</strong>: JMRI sends on the "Light send topic" if a user commands a Light change by clicking on a panel or table.   JMRI also acts on Light state messages sent
+    from the layout on the "Light receive topic."</li>
+    </ul>
+    
+    <p>All other messages, even on defined topics, are ignored by the standard JMRI processing. To avoid confusion, it is recommended that send and receive topics are set the 
+    same except for advanced usage involving custom programmed layout microcontrollers. Any message topic, defined or custom, can be subscribed to and processed by a custom script.
+    </p>    
+    
+    
+    <h3>Custom Topics</h3>
+    
+    <p>
+    It is possible to use the JMRI MQTT capability to send and receive messages at any time on a topic of your own choosing via a script (<a href="#scripts">see below</a>).
+    These messages can further be used to trigger <a href="../../tools/Logix.shtml"> Logix,</a> populate <a href="../../tools/Memories.shtml">Memories</a> 
+    and then displayed on panels, or whatever purposes you find useful.
+    </p>
         
-        <p>
-        You can change the type-specific part of the prepended string using
-        a script at startup time.  See the
-        <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
-        sample script for an example.  
-        Note that any changes should be made at startup time
-        before creating any Turnout objects, i.e. 
-        the script must be run as the 
-        first startup action before any panel files are loaded.
-        Changing the prefix only affects Turnouts that are
-        created after the change.
-        
-      <a id="payload" name="payload"></a>
-      <h2>Message Content</h2>
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+
+   <a id="payload" name="payload"></a>
+   <h2>Message Content</h2>
+   
+    <p>
+    Message "payloads" for JMRI objects are typically single words that represent the state of the object.  It is also possible to replace the 
+    standard message payloads by using a <a href="#scripts">custom version of the message parser</a> (including using  
+    <a href="https://www.json.org/json-en.html" target="_blank">JSON messages</a>).
+    </p>
+    
+    <p>Note that some of the behavior listed in the following sub-sections is under review and future JMRI release (beyond version 4.21.3) may makes
+    behaviors more consistent.
+    </p>
+ 
+            
+        <h3>Sensors</h3>
+            <span class="since">Since JMRI 4.21.1</span>        
+            The expected message content for sensors is "ACTIVE" and "INACTIVE". Any other message will generate a Warning in the  
+            <a href="../../../package/apps/SystemConsole.shtml">JMRI System Console</a> but will  not change the Sensor state.            
+            
         <h3>Turnouts</h3>
-            By default, the message content for turnouts is
-            "CLOSED" and "THROWN".
-        <h3>Changing the Coding</h3>
-        <span class="since">Since JMRI 4.15.5</span>
-            You can use
-            <a href="../../tools/scripting/index.shtml">scripting</a>
-            to install a new 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">jmri.jmrix.mqtt.MqttContentParser</a>
-            object to code and decode the content of messages.
-            See the 
-            <a href="/jython/SetMqttParser.py">jython/SetMqttParser.py</a>
-            sample script for how to do that.
-            For a Java example, see the
-            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/mqtt/MqttTurnout.java#L24">inner
+            The expected message content (send, also receive in Direct or Monitoring mode) for turnouts is "CLOSED" and "THROWN". 
+            Turnouts in Direct or Monitoring mode can also receive messages and have their Known State set to "INCONSISTENT" and "UNKNOWN".
+            Receiving any other message will generate a Warning in the  <a href="../../../package/apps/SystemConsole.shtml">
+            JMRI System Console</a> and will set the turnout Known state to "UNKNOWN."
+
+        <h3>Lights</h3>
+            <span class="since">Since JMRI 4.21.1</span>
+            The expected message content for lights is "ON" and "OFF".  Receiving any other messages will result in a Warning in the
+            <a href="../../../package/apps/SystemConsole.shtml"> JMRI System Console.</a> and cause the Light state to be set to "UNKNOWN."
+
+    
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+
+    <a id="scripts" name="scripts"></a>
+    <h2>Scripting</h2>
+    
+    <p>
+    The JMRI MQTT capability is very general and can be used to send and receive arbitrary messages from any MQTT-aware device on or off the layout.
+    In addition, scripts can be used to change standard message processing and default parameters.
+    </p>
+    
+    <p>
+    All the scripts discussed here can be found in <a href="../../../../../jython/MQTT/"> the JMRI distribution jython directory under "MQTT."</a>  More information about 
+    scripting with JMRI is provided under <a href="../../tools/scripting/index.shtml"> Scripting</a> in the JMRI Help and web site.  Custom scripts for MQTT
+    will typically use the <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttAdapter.html">MQTT Adapter object and methods. </a>
+    </p>
+
+           <h4>Changing the Default Message Parsing</h4>
+           <span class="since">Since JMRI 4.15.5</span>
+        
+            <p>
+            You can use a script to install a new <a href="../../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">MqttContentParser</a>
+            object to code and decode the content of messages. You might want to use JSON format, or need to adapt to specific messages from 
+            some already-existing device; you can create a custom parser to do any of that. See the <a href="../../../../../jython/MQTT/SetMqttParser.py">
+            SetMqttParser.py</a> sample script. For a Java example, see the
+            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/mqtt/MqttTurnout.java#L41" target="_blank">inner
             class implementation in MqttTurnout</a>.
+            </p>
+            
             <p>
             Note that you can call
             <code>setParser(...)</code>
             on the
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
+            <a href="../../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
             or on an individual
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
-            object.  If you call it on an individual 
-            MqttTurnout, that's the only one that's affected.
-            If you call it on the MqttTurnoutManager
-            all <u>later created</u> 
-            MqttTurnout objects will use the new parser; earlier-created ones
-            will not be changed.  This means you should 
-            call a script to change this before loading any panel files
+            <a href="../../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
+            object. If you call it on the MqttTurnoutManager, all <strong>later created</strong> MqttTurnout objects will use the new parser;
+            earlier-created ones will not be changed.  This means you should execute a script to change the parser before loading any panel files
             if you want all MqttTurnouts to be modified.
-        
-    <h2>Debugging</h2>
+            </p>
 
-      <a id="testserver" name="testserver"></a>
-      <a href="http://test.mosquitto.org">
-        <img src="https://mosquitto.org/stickers/mosquitto-mono.png" height="80" width="80" align="right"></a>
-      If you don't have an MQTT system, and want to play with this connection type, 
-      you can enter "test.mosquitto.org" for the host name
-      to use a publicly-available (non-JMRI) test server. 
-      For more information on this server, see the 
-      <a href="http://test.mosquitto.org">test.mosquitto.org</a>
-      web page.
-      <p>
-      If you install the 
-      <a href="https://mosquitto.org/download/">mosquitto tools</a>
-      on your machine,
-      you can use a command like
+            <h4>Publishing Messages</h4>
+            <p>
+            The <a href="../../../../../jython/MQTT/SendMqttMessage.py">SendMqttMessage.py</a> is an example of how to send any message
+            on any topic (automatically prefixed with the JMRI MQTT channel) for processing by other devices.
+            </p>
+            
+            <h4>Subscribing to (Receiving) Messages</h4>
+            <p>
+            You can use the <a href="../../../../../jython/MQTT/ReceiveMqttMessage.py">ReceiveMqttMessage.py</a> script to subscribe to any topic 
+            on the JMRI MQTT channel (both for JMRI objects and custom) to receive message for further processing.  Standard 
+            <a href="https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/" target="_blank"> MQTT wildcards (# and +)</a>
+            can be used (as of release 4.21.3).
+            </p>
+            
+            <h4>Changing the MQTT Message Topic at JMRI Startup</h4>
+            <span class="since">Since JMRI 4.15.5</span>
+            <p>
+            The sample script <a href="../../../../../jython/MQTT/SetMqttPrefix.py">SetMqttPrefix.py</a> shows how to set object type-specific topic components
+            at JMRI startup. Note that any changes should be made at startup time before creating any Turnout objects, i.e. the script must be
+            run before any panel files are loaded. Changing the prefix only affects Turnouts that are created after the change.
+            </p>
+            
+            
+            <h4>Changing MQTT Default Parameters</h4>           
+            <span class="since">Since JMRI 4.21.3</span>
+            <p>
+            Two parameters used in MQTT processing can be reset via scripts.
+            </p>
+            
+            <p>
+            <a href="https://mosquitto.org/man/mqtt-7.html" target="_blank">MQTT Quality of Service</a> indicates to the MQTT message broker how to
+            handle message delivery and receipt. Allowable values are 0, 1, and 2.  JMRI uses QoS level 1 (broker will deliver message at least once) by default.
+            </p>
+            
+            <p>
+            <a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target="_blank">Retained Messages</a> indicates to the MQTT message
+            broker whether to retain the last message received for a certain topic.  JMRI publishes messages with the retain option on.  This allows any new
+            subscriber to automatically receive the last message send to a topic (often the state of a JMRI object) when that new subscriber starts up.
+            </p>
+            
+            <p>
+            Both of these parameters can be changed using the <a href="../../../../../jython/MQTT/SetMqttOptions.py">SetMqttOptions.py</a> script.           
+            </p>
+
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+      
+    <a name="testing" id="testing"></a>
+    <h2>Testing</h2>
+
+    <a href="http://test.mosquitto.org" target="_blank">
+    <img src="https://mosquitto.org/stickers/mosquitto-mono.png" alt="Mosquitto logo" height="80" width="80" align="right"></a>
+    <p>
+    If you don't already run an MQTT broker and want to test with this connection type, you can use a publicly-available (non-JMRI) test server.
+    Enter "test.mosquitto.org" as the Host Name on the Preferences Connections page to connect to the host provided by mosquitto.org (for more 
+    information, type <a href="https://test.mosquitto.org" target="_blank">test.mosquitto.org</a> into a browser.
+    </p>
+
+    <p>
+    You can also install the <a href="https://mosquitto.org/download/" target="_blank">mosquitto tools</a> on your own machine.  You can then publish and subscribe to
+    messages from JMRI. 
 <pre>
     mosquitto_sub -h test.mosquitto.org -v -t '/trains/#'
 </pre>
 
-    to subscribe and print JMRI turnout info as it's published. 
-    To publish a change for JMRI to pick up:
+    to subscribe and print all JMRI messages as they are published. 
+    To publish messages for JMRI to pick up:
 
 <pre>
     mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "CLOSED"
     mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
 </pre>
 
-These commands can be run on the same machine as JMRI, or on a separate machine.
-<p>
-There are also MQTT tools available for 
-<a href="https://www.google.com/search?q=apple+app+store+mqtt&amp;oq=apple+app+store+mqtt">iOS devices</a> and 
-<a href="https://play.google.com/store/search?q=mqtt&amp;c=apps&amp;authuser">Android devices</a>
-that can be useful for monitoring, testing and operating your layout.
+    These commands can be run on the same machine as JMRI, or on a separate machine.
+    
+    <p>
+    You can also install a copy of the mosquitto broker by typing:
+<pre>
+    mosquitto -v   
+</pre>    
+   and enter "localhost" as the Host Name on the JMRI Connection for MQTT.  If you are using version 2.0 of mosquitto or later, you will need to provide a
+   "configuration file": 
+<pre>
+    mosquitto -c "[location of your config file]/mosquitto.conf"
+</pre>
+
+    Include at least the following lines in mosquitto.conf:
+<pre>
+    log_type all                 #Equivalent to setting -v (verbose mode)
+    listener 1883                #To ensure listening on the appropriate port
+    allow_anonymous true         #Allows JMRI to subscribe without an ID or password
+</pre>    
+    See the <a href="https://mosquitto.org/man/mosquitto-conf-5.html" target="_blank">mosquitto documentation</a> for more information.   
+
+   
+   <p>
+   There are also MQTT tools available for 
+   <a href="https://www.google.com/search?q=apple+app+store+mqtt&amp;oq=apple+app+store+mqtt" target="_blank">iOS devices</a> and 
+   <a href="https://play.google.com/store/search?q=mqtt&amp;c=apps&amp;authuser" target="_blank">Android devices</a>
+   that can be useful for monitoring, testing and operating your layout.
+   </p>
+
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

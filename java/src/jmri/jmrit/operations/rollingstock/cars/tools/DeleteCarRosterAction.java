@@ -1,16 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This routine will remove all cars from the operation database,
@@ -21,10 +23,6 @@ import org.slf4j.LoggerFactory;
 public class DeleteCarRosterAction extends AbstractAction {
 
     CarsTableFrame _carsTableFrame;
-
-    public DeleteCarRosterAction(String actionName, Component frame) {
-        super(actionName);
-    }
 
     public DeleteCarRosterAction(CarsTableFrame carsTableFrame) {
         super(carsTableFrame.carsTableModel.trackName == null ?

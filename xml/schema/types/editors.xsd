@@ -52,7 +52,7 @@
     <xs:complexType name="EditorIconTextType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an icon reference with extended "text" information
+          Define the XML structure for storing an icon reference with extended "text" information
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SlipTurnoutIconXml#storeIcon
@@ -106,6 +106,7 @@
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
         </xs:appinfo>
       </xs:annotation>
+      <xs:attribute name="id" type="xs:string"></xs:attribute>
       <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
       <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
       <xs:attribute name="level" type="xs:int"></xs:attribute>
@@ -202,6 +203,7 @@
           <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
         </xs:element>
       </xs:sequence>
+      <xs:attribute name="portalFamily" type="xs:string"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutTrackDrawingOptionsType">
@@ -269,6 +271,31 @@
       <xs:attribute name="text" type="xs:string"></xs:attribute>
     </xs:complexType>
 
+    <xs:simpleType name="PositionablePointType">
+      <xs:annotation>
+        <xs:documentation>
+          Represents values of PositionablePoint.??? enum,
+          both as 0-3 and as String names.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:union>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="3"/>
+          </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="NONE"></xs:enumeration>
+            <xs:enumeration value="ANCHOR"></xs:enumeration>
+            <xs:enumeration value="END_BUMPER"></xs:enumeration>
+            <xs:enumeration value="EDGE_CONNECTOR"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+
     <xs:complexType name="EditorPositionablePointType">
       <xs:annotation>
         <xs:documentation>
@@ -276,6 +303,7 @@
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionablePointXml
+          jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml
         </xs:appinfo>
       </xs:annotation>
 
@@ -298,7 +326,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type" type="PositionablePointType" use="required"></xs:attribute>
       <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="connect1name" type="xs:string"></xs:attribute>
@@ -1134,6 +1162,36 @@
     </xs:complexType>
 
 
+    <xs:simpleType name="LayoutTurnoutType">
+      <xs:annotation>
+        <xs:documentation>
+          Represents values of LayoutTurnout.TurnoutType enum,
+          both as 0-63 and as String names.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:union>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="8"/>
+          </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="NONE"></xs:enumeration>
+            <xs:enumeration value="RH_TURNOUT"></xs:enumeration>
+            <xs:enumeration value="LH_TURNOUT"></xs:enumeration>
+            <xs:enumeration value="WYE_TURNOUT"></xs:enumeration>
+            <xs:enumeration value="DOUBLE_XOVER"></xs:enumeration>
+            <xs:enumeration value="RH_XOVER"></xs:enumeration>
+            <xs:enumeration value="LH_XOVER"></xs:enumeration>
+            <xs:enumeration value="SINGLE_SLIP"></xs:enumeration>
+            <xs:enumeration value="DOUBLE_SLIP"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+
     <xs:complexType name="EditorLayoutTurnoutType">
       <xs:annotation>
         <xs:documentation>
@@ -1159,7 +1217,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type" type="LayoutTurnoutType" use="required"></xs:attribute>
       <xs:attribute name="continuing" type="xs:string" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float"></xs:attribute>
@@ -1201,6 +1259,7 @@
       <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
       <xs:attribute name="linktype" type="xs:string"></xs:attribute>
     </xs:complexType>
+
 
     <xs:complexType name="EditorLayoutSlipType">
       <xs:annotation>
@@ -1275,7 +1334,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="slipType" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="slipType" type="LayoutTurnoutType" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ya" type="xs:float" use="required"></xs:attribute>
@@ -1535,9 +1594,9 @@
       </xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>  <!-- required in DTD, missing from some files -->
       <xs:attribute name="connect1name" type="beanNameType" use="required"></xs:attribute>
-      <xs:attribute name="type1" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type1" type="HitPointType" use="required"></xs:attribute>
       <xs:attribute name="connect2name" type="beanNameType" use="required"></xs:attribute>
-      <xs:attribute name="type2" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type2" type="HitPointType" use="required"></xs:attribute>
       <xs:attribute name="dashed" type="yesNoType"></xs:attribute>
       <xs:attribute name="mainline" type="yesNoType"></xs:attribute>
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
@@ -1548,6 +1607,141 @@
       <xs:attribute name="angle" type="xs:float"></xs:attribute>
       <xs:attribute name="hideConLines" type="yesNoType"></xs:attribute>
     </xs:complexType>
+
+    <xs:simpleType name="HitPointType">
+      <xs:annotation>
+        <xs:documentation>
+          Represents values of LayoutEditor.HitPointType enum,
+          both as 0-63 and as String names.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:union>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="113"/>
+          </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="NONE"></xs:enumeration>
+            <xs:enumeration value="POS_POINT"></xs:enumeration>
+            <xs:enumeration value="TURNOUT_A"></xs:enumeration>
+            <xs:enumeration value="TURNOUT_B"></xs:enumeration>
+            <xs:enumeration value="TURNOUT_C"></xs:enumeration>
+            <xs:enumeration value="TURNOUT_D"></xs:enumeration>
+            <xs:enumeration value="LEVEL_XING_A"></xs:enumeration>
+            <xs:enumeration value="LEVEL_XING_B"></xs:enumeration>
+            <xs:enumeration value="LEVEL_XING_C"></xs:enumeration>
+            <xs:enumeration value="LEVEL_XING_D"></xs:enumeration>
+            <xs:enumeration value="TRACK"></xs:enumeration>
+            <xs:enumeration value="TURNOUT_CENTER"></xs:enumeration>
+            <xs:enumeration value="LEVEL_XING_CENTER"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_CENTER"></xs:enumeration>
+            <xs:enumeration value="LAYOUT_POS_LABEL"></xs:enumeration>
+            <xs:enumeration value="LAYOUT_POS_JCOMP"></xs:enumeration>
+            <xs:enumeration value="MULTI_SENSOR"></xs:enumeration>
+            <xs:enumeration value="MARKER"></xs:enumeration>
+            <xs:enumeration value="TRACK_CIRCLE_CENTRE"></xs:enumeration>
+            <xs:enumeration value="UNUSED_19"></xs:enumeration>
+            <xs:enumeration value="SLIP_CENTER"></xs:enumeration>
+            <xs:enumeration value="SLIP_A"></xs:enumeration>
+            <xs:enumeration value="SLIP_B"></xs:enumeration>
+            <xs:enumeration value="SLIP_C"></xs:enumeration>
+            <xs:enumeration value="SLIP_D"></xs:enumeration>
+            <xs:enumeration value="SLIP_LEFT"></xs:enumeration>
+            <xs:enumeration value="SLIP_RIGHT"></xs:enumeration>
+            <xs:enumeration value="UNUSED_27"></xs:enumeration>
+            <xs:enumeration value="UNUSED_28"></xs:enumeration>
+            <xs:enumeration value="UNUSED_29"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_0"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_1"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_2"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_3"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_4"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_5"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_6"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_7"></xs:enumeration>
+            <xs:enumeration value="BEZIER_CONTROL_POINT_8"></xs:enumeration>
+            <xs:enumeration value="SHAPE_CENTER"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_0"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_1"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_2"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_3"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_4"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_5"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_6"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_7"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_8"></xs:enumeration>
+            <xs:enumeration value="SHAPE_POINT_9"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_0"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_1"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_2"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_3"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_4"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_5"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_6"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_7"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_8"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_9"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_10"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_11"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_12"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_13"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_14"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_15"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_16"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_17"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_18"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_19"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_20"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_21"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_22"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_23"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_24"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_25"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_26"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_27"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_28"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_29"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_30"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_31"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_32"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_33"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_34"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_35"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_36"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_37"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_38"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_39"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_40"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_41"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_42"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_43"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_44"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_45"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_46"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_47"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_48"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_49"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_50"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_51"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_52"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_53"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_54"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_55"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_56"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_57"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_58"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_59"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_60"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_61"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_62"></xs:enumeration>
+            <xs:enumeration value="TURNTABLE_RAY_63"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
 
     <xs:complexType name="EditorLevelXingType">
       <xs:annotation>
@@ -1630,6 +1824,9 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
+      <xs:attribute name=" blockname" type="beanNameType">
+        <xs:annotation><xs:documentation>Added 4.19.6 to identify block to which turntable belongs</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="radius" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
@@ -1676,7 +1873,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
-            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+          <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
@@ -1715,7 +1912,7 @@
     <xs:complexType name="EditorSlipTurnoutTconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an SlipTurnoutTcon
+          Define the XML structure for storing an SlipTurnoutTcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SlipTurnoutIconXml
@@ -1772,6 +1969,7 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="degrees" type="xs:float"></xs:attribute>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
 
        <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1780,7 +1978,7 @@
     <xs:complexType name="EditorIndicatorTurnoutIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an IndicatorTurnoutIcon
+          Define the XML structure for storing an IndicatorTurnoutIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml
@@ -1979,7 +2177,14 @@
             <xs:sequence>
               <xs:element name="point" minOccurs="1" maxOccurs="10">
                 <xs:complexType>
-                  <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="type" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:token">
+                        <xs:enumeration value="Straight"></xs:enumeration>
+                        <xs:enumeration value="Curve"></xs:enumeration>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
                   <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
                   <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
                 </xs:complexType>
@@ -1990,7 +2195,15 @@
       </xs:sequence>
 
       <xs:attribute name="ident" type="xs:string" use="required"></xs:attribute>
-      <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="Open"></xs:enumeration>
+            <xs:enumeration value="Filled"></xs:enumeration>
+            <xs:enumeration value="Closed"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="level" type="xs:string" use="required"></xs:attribute>
       <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
       <xs:attribute name="lineColor" type="screenColorType" use="required"></xs:attribute>

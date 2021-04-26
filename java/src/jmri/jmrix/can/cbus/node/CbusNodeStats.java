@@ -144,6 +144,6 @@ public class CbusNodeStats {
         return _node.getNodeTimerManager().numEvTimeoutCount + _node.getNodeTimerManager().paramRequestTimeoutCount + _node.getNodeTimerManager().allEvTimeoutCount > 0;
     }
     
-    private static final Logger log = LoggerFactory.getLogger(CbusNode.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeStats.class);
     
 }

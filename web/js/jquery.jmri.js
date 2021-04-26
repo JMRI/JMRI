@@ -39,6 +39,8 @@
  * metadata(data array)
  * networkService(name, data)
  * networkServices(data array)
+ * oblock(name, status, data)
+ * oblocks(data array)
  * panel(name, value, data)
  * panels(data array)
  * power(state)
@@ -75,6 +77,7 @@
 (function ($) {
     $.extend({
         JMRI: function (url, bindings) {
+            var log = new Logger();
             var jmri = new Object();
             if (typeof (url) === 'string') {
                 jmri.url = url;
@@ -150,6 +153,10 @@
             jmri.networkService = function (name, data) {
             };
             jmri.networkServices = function (data) {
+            };
+            jmri.oblock = function (name, value, data) {
+            };
+            jmri.oblocks = function (data) {
             };
             jmri.panel = function (name, value, data) {
             };
@@ -367,6 +374,32 @@
                     });
                 }
             };
+            jmri.getOblock = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("oblock", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "oblock/" + name, function (json) {
+                        jmri.oblock(json.data.name, json.data.status, json.data); // copied from sensor
+                    });
+                }
+            };
+            jmri.setOblock = function (name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("oblock", { name: name, value: value }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "oblock/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ value: value }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.oblock(json.data.name, json.data.status, json.data);
+                            jmri.getOblock(json.data.name, json.data.status);
+                        }
+                    });
+                }
+            };
+
             /**
              * Request a json list of the specified list type. Individual
              * listeners for each instance of the type will need to be set
@@ -395,6 +428,9 @@
                     case "memory":
                         jmri.getMemory(name);
                         break;
+                    case "oblock":
+                        jmri.getOblock(name);
+                        break;
                     case "reporter":
                         jmri.getReporter(name);
                         break;
@@ -420,9 +456,7 @@
                         jmri.getTurnout(name);
                         break;
                     default:
-                        if (window.console) {
-                            console.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
-                        }
+                        log.warn("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
 
                 }
             };
@@ -446,6 +480,9 @@
                     case "layoutBlock":
                         jmri.setLayoutBlock(name, state, 'post');
                         break;
+                    case "oblock":
+                        jmri.setOblock(name, status, 'post');
+                        break;
                     case "rosterEntry":
                         jmri.setRosterEntry(name, state, 'post');
                         break;
@@ -465,18 +502,17 @@
                         jmri.setTurnout(name, state, 'post');
                         break;
                     default:
-                        if (window.console) {
-                            console.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
-                        }
+                        log.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
                 }
             };
             jmri.getPower = function () {
                 if (jmri.socket) {
                     jmri.socket.send("power", {});
                 } else {
-                    $.getJSON(jmri.url + "power", function (json) {
-                        jmri.power(json.data.state);
-                    });
+                	$.getJSON(jmri.url + "power", function (json) {
+                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
+                		jmri.power(json.data.state);
+                	});
                 }
             };
             jmri.setPower = function (state) {
@@ -620,7 +656,7 @@
              */
             jmri.getThrottle = function (throttle) {
                 if (jmri.socket) {
-                    jmri.socket.send("throttle", { throttle: throttle, status: true });
+                    jmri.socket.send("throttle", throttle);
                     return true;
                 } else {
                     return false;
@@ -650,9 +686,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("time", {});
                 } else {
-                    $.getJSON(jmri.url + "time", function (json) {
-                        jmri.time(json.data.time, json.data);
-                    });
+                	$.getJSON(jmri.url + "time", function (json) {
+                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
+                		jmri.time(json.data.time, json.data);
+                	});
                 }
             };
             jmri.getTrain = function (name) {
@@ -721,12 +758,10 @@
             jmri.serialNumber = (Math.random().toString(16) + "000000000").substr(2, 8);
             jmri.logWithDateTimeStamp = false;
             jmri.log = function (message) {
-                if (window.console) {
-                    if (jmri.logWithDateTimeStamp) {
-                        window.console.log(new Date().toJSON() + " " + jmri.serialNumber + " " + message);
-                    } else {
-                        window.console.log(jmri.serialNumber + " " + message);
-                    }
+                if (jmri.logWithDateTimeStamp) {
+                    log.log(new Date().toJSON() + " " + jmri.serialNumber + " " + message);
+                } else {
+                    log.log(jmri.serialNumber + " " + message);
                 }
             };
             // Heartbeat
@@ -852,6 +887,12 @@
                 networkServices: function (e) {
                     jmri.networkServices(e.data);
                 },
+                oblock: function (e) {
+                    jmri.oblock(e.data.name, e.data.status, e.data);
+                },
+                oblocks: function (e) {
+                    jmri.oblocks(e.data);
+                },
                 panel: function (e) {
                     jmri.panel(e.data.name, e.data.value, e.data);
                 },
@@ -955,9 +996,9 @@
                                 if (h) {
                                     h.call(this, o);
                                 } else if (!o.type) {
-                                    jmri.log("ERROR: missing type property in " + o);
+                                    log.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
-                                    jmri.log("Ignoring JSON type ", o.type);
+                                    jmri.log("Ignoring JSON type '" + o.type + "'");
                                 }
                             })
                         } else {
@@ -965,9 +1006,9 @@
                             if (h) {
                                 h.call(this, m);
                             } else if (!m.type) {
-                                jmri.log("ERROR: missing type property in " + m);
+                                log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
-                                jmri.log("Ignoring JSON type ", m.type);
+                                    jmri.log("Ignoring JSON type '" + m.type + "'");
                             }
                         }
                     }

@@ -68,7 +68,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

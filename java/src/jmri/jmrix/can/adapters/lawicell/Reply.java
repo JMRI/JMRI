@@ -34,7 +34,7 @@ public class Reply extends AbstractMRReply {
         // is this just an ACK to e.g. a send?
         if (_dataChars[0] != 't' && _dataChars[0] != 'T') {
             if (log.isDebugEnabled()) {
-                log.debug("non-frame reply skipped: " + this);
+                log.debug("non-frame reply skipped: {}", this);
             }
             return null;
         }

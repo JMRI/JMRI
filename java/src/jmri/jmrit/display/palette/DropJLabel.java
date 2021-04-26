@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.JLabel;
-import jmri.CatalogTreeManager;
-import jmri.InstanceManager;
+
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
@@ -28,7 +27,6 @@ public class DropJLabel extends JLabel implements DropTargetListener {
 
     private DataFlavor _dataFlavor;
     private HashMap<String, NamedIcon> _iconMap;
-    private boolean _update;
 
     DropJLabel(Icon icon) {
         super(icon);
@@ -41,10 +39,9 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
     }
 
-    DropJLabel(Icon icon, HashMap<String, NamedIcon> iconMap, boolean update) {
+    DropJLabel(Icon icon, HashMap<String, NamedIcon> iconMap) {
         this(icon);
         _iconMap = iconMap;
-        _update = update;
     }
 
     @Override
@@ -77,7 +74,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
             } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
                 if (log.isDebugEnabled()) {
-                    log.debug("drop for stringFlavor " + text);
+                    log.debug("drop for stringFlavor {}", text);
                 }
                 NamedIcon newIcon = new NamedIcon(text, text);
                 accept(e, newIcon);
@@ -100,30 +97,29 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         }
     }
 
-    private void accept(DropTargetDropEvent e, NamedIcon newIcon) {
+    protected void accept(DropTargetDropEvent e, NamedIcon newIcon) {
         e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
         DropTarget target = (DropTarget) e.getSource();
         DropJLabel label = (DropJLabel) target.getComponent();
         if (log.isDebugEnabled()) {
             log.debug("accept drop of {} for {} name, {}", label.getClass().getName(), label.getName(),newIcon.getURL());
         }
-        if (newIcon == null || newIcon.getIconWidth() < 1 || newIcon.getIconHeight() < 1) {
+        if (newIcon.getIconWidth() < 1 || newIcon.getIconHeight() < 1) {
             label.setText(Bundle.getMessage("invisibleIcon"));
             label.setForeground(Color.lightGray);
         } else {
-//            newIcon.reduceTo(100, 100, 0.2);
             label.setText(null);
         }
         label.setIcon(newIcon);
-        if (newIcon != null && label.getName() != null) {
-            _iconMap.put(label.getName(), newIcon);
-        } else {
-            log.error("Map key= {}, icon= {} ", label.getName(), (newIcon==null?"null":newIcon.getName()));
-            e.dropComplete(false);
-            return;
-        }
-        if (!_update) {  // only prompt for save from palette
-            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        if (_iconMap != null) {
+            String name = label.getName();
+            if (name != null) {
+                _iconMap.put(name, newIcon);
+            } else {
+                log.error("Map key= {}, icon= {} ", label.getName(), newIcon.getName());
+                e.dropComplete(false);
+                return;
+            }
         }
         e.dropComplete(true);
         if (log.isDebugEnabled()) {

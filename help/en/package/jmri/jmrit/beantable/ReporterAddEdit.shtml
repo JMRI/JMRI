@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Reporter Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

@@ -1,16 +1,20 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import java.io.IOException;
+import java.nio.file.Path;
+
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusDccProgrammerManagerTest {
 
@@ -20,19 +24,68 @@ public class CbusDccProgrammerManagerTest {
         Assert.assertNotNull("exists",t);
     }
     
+    @Test
+    public void testCTor2() {
+        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(memo),memo);
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testInitialPrefs() {
+        memo.setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        memo.setProgModeSwitch(ConfigurationManager.ProgModeSwitch.EITHER);
+        prefs.setProgTrackMode(SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
+        Assert.assertEquals(true, prefs.isGlobalProgrammerAvailable());
+        Assert.assertEquals(true, prefs.isAddressedModePossible());
+        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
+        Assert.assertNotNull("exists",t);
+        Assert.assertEquals(true , prefs.isGlobalProgrammerAvailable());
+        Assert.assertEquals(false , prefs.isAddressedModePossible());
+    }
+    
+    @Test
+    public void test3PlusPrefsOff() {
+        memo.setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        memo.setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
+        prefs.setProgTrackMode(SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
+        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
+        Assert.assertNotNull("exists",t);
+        Assert.assertEquals(true , prefs.isGlobalProgrammerAvailable());
+        Assert.assertEquals(true , prefs.isAddressedModePossible());
+    }
+    
+    @Test
+    public void test3PlusPrefsAr() {
+        memo.setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        memo.setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
+        prefs.setProgTrackMode(SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE);
+        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
+        Assert.assertNotNull("exists",t);
+        Assert.assertEquals(false , prefs.isGlobalProgrammerAvailable());
+        Assert.assertEquals(true , prefs.isAddressedModePossible());
+    }
+    
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
+    private CbusPreferences prefs;
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @TempDir
+    protected Path tempDir;
+    
+    @BeforeEach
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
+        prefs = new CbusPreferences();
+        jmri.InstanceManager.store(prefs,CbusPreferences.class );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         tc = null;

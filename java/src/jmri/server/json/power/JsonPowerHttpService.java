@@ -21,15 +21,10 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonPowerHttpService extends JsonHttpService {
-
-    private static final Logger log = LoggerFactory.getLogger(JsonPowerHttpService.class);
 
     public JsonPowerHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -40,41 +35,36 @@ public class JsonPowerHttpService extends JsonHttpService {
     public JsonNode doGet(String type, @CheckForNull String name, JsonNode parameters, JsonRequest request)
             throws JsonException {
         ObjectNode data = mapper.createObjectNode();
-        try {
-            PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
-            if (name != null && !name.isEmpty()) {
-                for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
-                    if (pm.getUserName().equals(name)) {
-                        manager = pm;
-                    }
+        PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
+        if (name != null && !name.isEmpty()) {
+            for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
+                if (pm.getUserName().equals(name)) {
+                    manager = pm;
                 }
             }
-            if (manager != null) {
-                data.put(NAME, manager.getUserName());
-                switch (manager.getPower()) {
-                    case PowerManager.OFF:
-                        data.put(STATE, OFF);
-                        break;
-                    case PowerManager.ON:
-                        data.put(STATE, ON);
-                        break;
-                    default:
-                        data.put(STATE, UNKNOWN);
-                        break;
-                }
-                data.put(DEFAULT, false);
-                if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
-                    data.put(DEFAULT, true);
-                }
-            } else {
-                // No PowerManager is defined; just report it as UNKNOWN
-                data.put(STATE, UNKNOWN);
-                data.put(NAME, "");
-                data.put(DEFAULT, false);
+        }
+        if (manager != null) {
+            data.put(NAME, manager.getUserName());
+            switch (manager.getPower()) {
+                case PowerManager.OFF:
+                    data.put(STATE, OFF);
+                    break;
+                case PowerManager.ON:
+                    data.put(STATE, ON);
+                    break;
+                default:
+                    data.put(STATE, UNKNOWN);
+                    break;
             }
-        } catch (JmriException e) {
-            log.error("Unable to get Power state.", e);
-            throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorPower"), request.id);
+            data.put(DEFAULT, false);
+            if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
+                data.put(DEFAULT, true);
+            }
+        } else {
+            // No PowerManager is defined; just report it as UNKNOWN
+            data.put(STATE, UNKNOWN);
+            data.put(NAME, "");
+            data.put(DEFAULT, false);
         }
         return message(POWER, data, request.id);
     }

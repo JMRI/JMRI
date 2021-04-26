@@ -103,7 +103,10 @@
     <enumChoice choice="Single strobe random" value="18">
         <choice>Single strobe random</choice>
     </enumChoice>
-    <enumChoiceGroup include="LokSound 5">
+    <enumChoiceGroup include="ESU LokSound 5,ESU LokPilot 5">
+        <enumChoice choice="Brake Light" value="19">
+            <choice>Brake Light</choice>
+        </enumChoice>
         <enumChoice choice="ESU coupler" value="21">
             <choice>ESU coupler</choice>
         </enumChoice>
@@ -132,7 +135,7 @@
         <choice>External controlled smoke unit</choice>
         <choice xml:lang="de">externer Rauchgenerator</choice>
     </enumChoice>
-    <enumChoiceGroup include="LokSound XL V4.0,LokSound 5">
+    <enumChoiceGroup include="LokSound L V4.0,LokSound XL V4.0,ESU LokSound 5,ESU LokPilot 5">
         <enumChoice choice="Servo" value="27">
             <choice xml:lang="it">Servo</choice>
             <choice xml:lang="ca">Servo</choice>
@@ -153,14 +156,20 @@
     <enumChoice choice="Panto control" value="30">
         <choice>Panto control</choice>
     </enumChoice>
-    <enumChoiceGroup include="Essential Sound Unit,ESU LokSound 5">
+    <enumChoiceGroup include="LokSound L V4.0,LokSound XL V4.0">
+        <enumChoice choice="Servo coupler" value="31">
+            <choice>Servo coupler</choice>
+        </enumChoice>
+    </enumChoiceGroup>
+    <enumChoiceGroup include="Essential Sound Unit,ESU LokSound 5,ESU LokPilot 5">
         <enumChoice choice="PowerPack control" value="31">
             <choice>PowerPack control</choice>
         </enumChoice>
-    </enumChoiceGroup>
-    <enumChoiceGroup include="LokSound XL V4.0">
-        <enumChoice choice="Servo coupler" value="31">
-            <choice>Servo coupler</choice>
+        <enumChoice choice="Servo Power" value="32">
+            <choice>Servo Power</choice>
+        </enumChoice>
+        <enumChoice choice="Digital coupler Coil#2" value="33">
+            <choice>Digital coupler Coil#2</choice>
         </enumChoice>
     </enumChoiceGroup>
 </enumVal>

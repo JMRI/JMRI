@@ -1,6 +1,7 @@
 package jmri.jmrix.nce.ncemon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.nce.NceInterfaceScaffold;
 import jmri.jmrix.nce.NceMessage;
@@ -8,19 +9,26 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.*;
+import jmri.util.ThreadingUtil;
+
+import org.assertj.swing.edt.GuiActionRunner;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * JUnit tests for the NceProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     private NceSystemConnectionMemo memo = null;
 
     @Test
-    @Ignore("Ignore due to timing-specific, occasionally fail")
+    @Disabled("Ignore due to timing-specific, occasionally fail")
     public void testMsg() {
         NceMessage m = new NceMessage(3);
         m.setBinary(false);
@@ -37,7 +45,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Test
-    @Ignore("Ignore due to timing-specific, occasionally fail")
+    @Disabled("Ignore due to timing-specific, occasionally fail")
     public void testReply() {
         NceReply m = new NceReply(memo.getNceTrafficController());
         m.setBinary(false);
@@ -64,27 +72,28 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
-        Assert.assertTrue(s.getAutoScrollCheckBoxValue());
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).withFailMessage("could not load pane: {}",thrown).isNull();
+        ThreadingUtil.runOnGUI( () -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
+        assertThat(s.getAutoScrollCheckBoxValue()).isTrue();
         s.checkAutoScrollCheckBox();
-        Assert.assertFalse(s.getAutoScrollCheckBoxValue());
-        f.setVisible(false);
-        f.dispose();
+        assertThat(s.getAutoScrollCheckBoxValue()).isFalse();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -92,13 +101,14 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
         memo = tc.getAdapterMemo();
         // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
         panel = pane = new NceMonPanel();
-        ((NceMonPanel) pane).initContext(memo);
+        ThreadingUtil.runOnGUI( () -> ((NceMonPanel) pane).initContext(memo));
         title = "NCE: Command Monitor";
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
+        panel = pane = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

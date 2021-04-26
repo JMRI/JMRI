@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <title>JMRI Hardware Support - IPOCS and IPOCSMR</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+    <div id="mainContent">
+
+      <h1>Protocol Support: IPOCS</h1>
+
+      For details about the IPOCS protocol, visit the
+      <a href="https://ipocsmr.github.io">IPOCSMR project website</a>.
+
+      <h1>Hardware Support: IPOCSMR</h1>
+
+      <p>The IPOCSMR Connection provides a method of allowing IPOCSMR units
+      to connect to JMRI.</p>
+
+      <p>
+        IPOCSMR is an Open Source Software implementation of an IP based
+        interface to control Model Railway objects such as points/switch
+        motors, lamps and detectors. IPOCSMR is designed using ESP8266 as
+        the Wi-Fi link to the object controllers and Arduino UNO to
+        realize the direct object control. IPOCS interfaces JMRI utilizing
+        MQTT and comprises of an interface software running in the JMRI
+        environment, an IP communication software running in an ESP8266
+        and an object control software running in Arduino.
+      </p>
+
+      <p>For details on the system, visit the <a href="https://ipocsmr.github.io">IPOCSMR project website</a>.</p>
+
+      <h2>Connecting</h2>
+
+      <p>Creating a IPOCSMR connection will automatically register
+      your JMRI instance to accept connections from any IPOCSMR unit
+      on the local network. This is done by registering a 
+      mDNS/ZeroConf/Bonjour service that the IPOCSMR units look for.</p>
+
+      <p>This connection currently supports Turnouts, turning
+      Lights on and off and Sensor feedback. TCP port 10000 is used
+      on the computer running JMRI for accepting connections.</p>
+
+      <h3>Operational Notes</h3>
+
+      <ol>
+        <li>The objects username (i.e the username of for example a Turnout)
+        is used by the IPOCSMR system. Make sure that the username is the same
+        in JMRI as given in the configuration of the IPOCSMR system.</li>
+      </ol><!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

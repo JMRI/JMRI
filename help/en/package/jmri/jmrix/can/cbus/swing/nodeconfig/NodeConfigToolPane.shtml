@@ -5,18 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS NODE Manager CONFIG TOOL configuration variable">
-  <title>JMRI: MERG CBUS Node Manager</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help CBUS NODE Manager CONFIG TOOL configuration variable">
+  <title>JMRI: CBUS&reg; Node Manager</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,7 +15,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-     <h1>JMRI: MERG CBUS Node Manager</h1>
+     <h1>JMRI: CBUS Node Manager</h1>
      
       <ul class="snav">
       <li><a href="#table">Node Table</a></li>
@@ -39,7 +30,7 @@
      
      
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-752x541.png"
-      width="676" height="487" alt="MERG CBUS Node Manager screenshot"
+      width="676" height="487" alt="CBUS Node Manager screenshot"
       align="right">
       
       <p>The node manager comprises a Node Table, along with node configuration abilities.</p>
@@ -107,7 +98,7 @@
         
         <h4>Options Menu</h4>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-options-372x216.png"
-      width="372" height="216" alt="MERG CBUS Node Manager options"
+      width="372" height="216" alt="CBUS Node Manager options"
       align="right">
         
         
@@ -201,9 +192,9 @@
     <h3><a name="events" id="events">Node Events</a></h3>
     <div>
     <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-generic-edit-ev-488x525.png"
-      width="488" height="525" alt="MERG CBUS Node Event Generic Config" align="right">
+      width="488" height="525" alt="CBUS Node Event Generic Config" align="right">
       
-      <p>You can create new node events by dragging an event from the MERG CBUS event table to the Node Manager window.</p>
+      <p>You can create new node events by dragging an event from the CBUS event table to the Node Manager window.</p>
       
       <p>If the event is new to the node it will open in a new event window.</p>
       
@@ -249,7 +240,7 @@
     <h3><a name="setup" id="setup">Node Setup</a></h3>
     <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-setup-752x541.png"
-      width="676" height="487" alt="MERG CBUS Node Setup" align="right">
+      width="676" height="487" alt="CBUS Node Setup" align="right">
       
       <p>The node setup tab contains some lesser used node setup functionality.</p>
       
@@ -298,7 +289,7 @@
     <h3><a name="fcuimport" id="fcuimport">MERG FCU xml file - Restore Node / Import CBUS Event and Node Names</a></h3>
     <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus_node_restore_from_fcu_661x619.png"
-      width="661" height="619" alt="MERG CBUS Node Setup" align="right">
+      width="661" height="619" alt="CBUS Node Setup" align="right">
       
       <ul>
       <li>Restore Node NV's and Events</li>
@@ -340,7 +331,7 @@
         confirming the options which are set.</p>
         
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-teach-from-fcu-file-confirm-278x215.png"
-      width="278" height="215" alt="MERG CBUS Confirm write restore" >
+      width="278" height="215" alt="CBUS Confirm write restore" >
       
         <p>Click OK, the busy icon will appear and the write process will commence.</p>
         <p>Any unchanged values will NOT be written to the node.</p>
@@ -419,7 +410,7 @@
     
     </div>
     
-    <h4>Variance to MERG CBUS Developers Guide 6b</h4>
+    <h4>Variance to CBUS Developers Guide 6b</h4>
     
     <div>
       
@@ -430,13 +421,17 @@
     <h3>JMRI Help</h3>
       
       <p>You can view this help page within JMRI by selecting Help > Window Help 
-      in the top bar of the MERG CBUS Node Manager window.</p>
+      in the top bar of the CBUS Node Manager window.</p>
       
       <p>The methods to teach nodes are accessible via Jython script, and include single commands
       which take care of all of the loops.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
       
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

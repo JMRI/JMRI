@@ -2,7 +2,7 @@ package jmri.web.servlet.json;
 
 import java.util.Locale;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the JsonBundle class
@@ -16,9 +16,9 @@ public class JsonBundleTest {
         Assert.assertEquals("Turnout", JsonBundle.getMessage("BeanNameTurnout"));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessage() {
-        JsonBundle.getMessage("FFFFFTTTTTTT");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test
@@ -27,9 +27,9 @@ public class JsonBundleTest {
         Assert.assertEquals("About Test", JsonBundle.getMessage("TitleAbout", "Test"));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessageArg() {
-        JsonBundle.getMessage("FFFFFTTTTTTT", new Object[]{});
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
     @Test

@@ -186,7 +186,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      *         which can be sent to an SimpleOperationsServer or received from a
      *         SimpleOperationsServer
      */
-    public static String constructOperationsMessage(ArrayList<Attribute> contents) {
+    public static String constructOperationsMessage(List<Attribute> contents) {
         StringBuilder result = new StringBuilder(OPERATIONS);
         for (Attribute content : contents) {
             result.append(REQUEST_DELIMITER).append(content.getName());
@@ -211,8 +211,19 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * @return an ArrayList of Attributes of the constituent pieces of the
      *         message
      */
-    private static ArrayList<Attribute> parseOperationsMessage(String message) {
-        ArrayList<Attribute> contents = new ArrayList<Attribute>();
+    // This should never have been a public method, Deprecating so we can 
+    // make it private or eliminate it later.
+    //
+    // Note from @pabender in Issue #8877
+    // parseOprationsMessage() actually is just decoding a piece of the message after it has
+    // been sent over the network. It doesn't appear to decode the whole message. parseStatus()
+    // really is the method in the server message that actually does something use.
+    // The missing piece is that there isn't any code in the JMRIClient that handles the operations
+    // data. Until that is in place, parseOperationsMessage() shouldn't have been made private
+    // because there isn't any other way to use the message data sent by the server.
+    @Deprecated
+    public static ArrayList<Attribute> parseOperationsMessage(String message) {
+        ArrayList<Attribute> contents = new ArrayList<>();
         int start;
         int end;
         int equals;
@@ -250,7 +261,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
         ArrayList<Attribute> contents = parseOperationsMessage(statusString);
-        ArrayList<Attribute> response = new ArrayList<Attribute>();
+        ArrayList<Attribute> response = new ArrayList<>();
         String trainName = null;
         String tag;
         String value;
@@ -337,12 +348,12 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
         List<Train> trainList = tm.getTrainsByNameList();
         ArrayList<Attribute> aTrain;
         for (Train train : trainList) {
-            aTrain = new ArrayList<Attribute>(1);
+            aTrain = new ArrayList<>(1);
             aTrain.add(new Attribute(TRAINS, train.getName()));
             try {
                 sendMessage(aTrain);
             } catch (IOException ioe) {
-                log.debug("could not send train " + train.getName());
+                log.debug("could not send train {}",train.getName());
             }
         }
     }
@@ -355,12 +366,12 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
         List<Location> locationList = lm.getLocationsByNameList();
         ArrayList<Attribute> location;
         for (Location loc : locationList) {
-            location = new ArrayList<Attribute>(1);
+            location = new ArrayList<>(1);
             location.add(new Attribute(LOCATIONS, loc));
             try {
                 sendMessage(location);
             } catch (IOException ioe) {
-                log.debug("could not send train " + loc.getName());
+                log.debug("could not send train {}",loc.getName());
             }
         }
     }
@@ -373,7 +384,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      */
     @Override
     public void sendFullStatus(Train train) throws IOException {
-        ArrayList<Attribute> status = new ArrayList<Attribute>();
+        ArrayList<Attribute> status = new ArrayList<>();
         if (train != null) {
             status.add(new Attribute(TRAIN, train.getName()));
             status.add(new Attribute(TRAINLOCATION, train.getCurrentLocationName()));
@@ -398,6 +409,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleOperationsServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleOperationsServer.class);
 
 }

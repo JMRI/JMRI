@@ -1,17 +1,17 @@
 package jmri.jmrix.dccpp;
 
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+import jmri.InstanceManager;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * DCCppInitializationManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppInitializationManager class
+ * Test for the jmri.jmrix.dccpp.DCCppInitializationManager class
  *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppInitializationManagerTest {
 
@@ -23,13 +23,9 @@ public class DCCppInitializationManagerTest {
         DCCppListenerScaffold l = new DCCppListenerScaffold();
         
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(t);
+        InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(memo));
 
-        DCCppInitializationManager m = new DCCppInitializationManager(memo) {
-                @Override
-                protected int getInitTimeout() {
-                    return 50;   // shorten, because this will fail & delay test
-                }
-            };
+        DCCppInitializationManager m = new DCCppInitializationManager(memo);
         Assert.assertNotNull("exists", t);
         Assert.assertNotNull("exists", l);
         Assert.assertNotNull("exists", m);
@@ -37,12 +33,12 @@ public class DCCppInitializationManagerTest {
         //jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down");
     }
     
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();

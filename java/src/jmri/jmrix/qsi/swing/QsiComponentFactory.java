@@ -6,8 +6,8 @@ import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 /**
  * Provide access to Swing components for the Qsi subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Paul Bender Copyright (C) 2010,2016
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010,2016
  * @since 4.5.1
  */
 public class QsiComponentFactory extends jmri.jmrix.swing.ComponentFactory {

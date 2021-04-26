@@ -141,9 +141,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuantity"), this));
-        toolMenu.add(new PrintCarLoadsAction(true, this));
-        toolMenu.add(new PrintCarLoadsAction(false, this));
+        toolMenu.add(new CarLoadAttributeAction(this));
+        toolMenu.add(new PrintCarLoadsAction(true));
+        toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         // add help menu to window
@@ -355,6 +355,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
         if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {
             carLoads.updateComboBox(_type, loadComboBox);
+            loadComboBox.setSelectedItem(addTextBox.getText().trim());
         }
     }
 

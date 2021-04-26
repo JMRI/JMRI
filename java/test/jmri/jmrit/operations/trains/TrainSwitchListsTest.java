@@ -2,11 +2,12 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -68,7 +69,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
     }
 
     @Test
-    public void testSwitchListRealTime() {
+    public void testSwitchListRealTime() throws IOException {
         loadLocationsEnginesAndCars();
 
         Train train = tmanager.newTrain("Test switchlists train");
@@ -90,12 +91,13 @@ public class TrainSwitchListsTest extends OperationsTestCase {
 
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, in.lines().count());
+        in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
-    public void testSwitchListTrain() {
+    public void testSwitchListTrain() throws IOException {
 
         Setup.setSwitchListPageFormat(Setup.PAGE_PER_VISIT);
 
@@ -164,15 +166,20 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 20, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 18, inC.lines().count());
+        
+        inA.close();
+        inB.close();
+        inC.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
      * Creates a switch list for a train that visits a location twice
+     * @throws IOException BufferedReader close
      */
     @Test
-    public void testSwitchListTrainTurn() {
+    public void testSwitchListTrainTurn() throws IOException {
 
         Setup.setPrintLoadsAndEmptiesEnabled(true); // improve test coverage
         Setup.setSwitchListPageFormat(Setup.PAGE_PER_VISIT);
@@ -261,7 +268,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(rlc); // move train to C
-        Assert.assertEquals("current train location", "Test Location C", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB); // should report that already serviced train
@@ -278,9 +285,9 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(); // move train to D
-        Assert.assertEquals("current train location", "Test Location D", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
         train.move(); // move train to D reverse direction
-        Assert.assertEquals("current train location", "Test Location D", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -297,7 +304,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to C
-        Assert.assertEquals("current train location", "Test Location C", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -314,7 +321,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to B
-        Assert.assertEquals("current train location", "Test Location B", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location B", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -331,7 +338,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to A
-        Assert.assertEquals("current train location", "Test Location A", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location A", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -362,12 +369,17 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 7, inC.lines().count());
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 4, inD.lines().count());
+        
+        inA.close();
+        inB.close();
+        inC.close();
+        inD.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
-    public void testSwitchListTwoColumnFormat() {
+    public void testSwitchListTwoColumnFormat() throws IOException {
 
         Setup.setManifestFormat(Setup.TWO_COLUMN_FORMAT);
         Setup.setSwitchListPageFormat(Setup.PAGE_PER_TRAIN);
@@ -391,12 +403,13 @@ public class TrainSwitchListsTest extends OperationsTestCase {
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, inA.lines().count());
+        inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
-    public void testSwitchListTwoColumnTrackFormat() {
+    public void testSwitchListTwoColumnTrackFormat() throws IOException {
 
         Setup.setManifestFormat(Setup.TWO_COLUMN_TRACK_FORMAT);
 
@@ -419,12 +432,13 @@ public class TrainSwitchListsTest extends OperationsTestCase {
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 38, inA.lines().count());
+        inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
-    public void testSwitchListNotRealTime() {
+    public void testSwitchListNotRealTime() throws IOException {
 
         Setup.setSwitchListRealTime(false);
         loadLocationsEnginesAndCars();
@@ -451,19 +465,21 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         // now append new work to file
         Assert.assertTrue(train2.build());
 
+        Assert.assertEquals("Confirm append mode", Location.SW_APPEND, locationA.getSwitchListState());
         tsl.buildSwitchList(locationA);
 
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 22, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
-    public void testSwitchListSwitcher() {
+    public void testSwitchListSwitcher() throws IOException {
         loadLocationsEnginesAndCars();
 
         Train train = tmanager.newTrain("Test switchlists train");
@@ -487,6 +503,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 28, inA.lines().count());
+        inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -516,48 +533,22 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         yardAA.setLength(400);
 
         // place 6 cars
-        Car c1 = cmanager.newRS("AA", "1");
-        c1.setLength("40");
-        c1.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(locationA, spurA));
-
-        Car c2 = cmanager.newRS("AA", "2");
-        c2.setLength("40");
-        c2.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c2.setLocation(locationA, spurA));
-
-        Car c3 = cmanager.newRS("AA", "3");
-        c3.setLength("40");
-        c3.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c3.setLocation(locationA, spurA));
-
+        JUnitOperationsUtil.createAndPlaceCar("AA", "1", "Boxcar", "40", "DAB", "1984", spurA, 0);
+        JUnitOperationsUtil.createAndPlaceCar("AA", "2", "Boxcar", "40", "DAB", "1984", spurA, 0);
+        JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40", "DAB", "1984", spurA, 0);
         // 3 on yard tracks
-        Car c4 = cmanager.newRS("AA", "4");
-        c4.setLength("40");
-        c4.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c4.setLocation(locationA, yardA));
-
-        Car c5 = cmanager.newRS("AA", "5");
-        c5.setLength("40");
-        c5.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c5.setLocation(locationA, yardA));
-
-        Car c6 = cmanager.newRS("AA", "6");
-        c6.setLength("40");
-        c6.setTypeName("Boxcar");
+        JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "40", "DAB", "1984", yardA, 0);
+        JUnitOperationsUtil.createAndPlaceCar("AA", "5", "Boxcar", "40", "DAB", "1984", yardA, 0);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("AA", "6", "Boxcar", "40", "DAB", "1984", yardA, 20);
         c6.setUtility(true); // make this car a utility car for better test coverage
-        c6.setMoves(20); // make the last car to get pulled
-        Assert.assertEquals("Place car on track", Track.OKAY, c6.setLocation(locationA, yardA));
 
         Engine e1 = emanager.newRS("NYC", "1");
         e1.setModel("E8");
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
-
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         // setup new managers
@@ -573,7 +564,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tmanager.setBuildReportEnabled(false);
 
         Setup.setBuildAggressive(false);
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         Setup.setLocalInterchangeMovesEnabled(false);
@@ -581,10 +572,10 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Setup.setLocalYardMovesEnabled(false);
         Setup.setCarMoves(5);
         Setup.setMaxNumberEngines(6);
-        Setup.setTrainIntoStagingCheckEnabled(true);
-        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setStagingTrainCheckEnabled(true);
+        Setup.setStagingAllowReturnEnabled(false);
         Setup.setGenerateCsvManifestEnabled(false);
-        Setup.setPromptToStagingEnabled(false);
+        Setup.setStagingPromptToEnabled(false);
         Setup.setCarRoutingEnabled(true);
 
         // improve test coverage
@@ -598,7 +589,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

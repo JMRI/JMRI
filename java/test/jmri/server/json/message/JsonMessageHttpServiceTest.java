@@ -1,8 +1,6 @@
 package jmri.server.json.message;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -73,7 +71,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -81,7 +79,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

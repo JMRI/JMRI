@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UpdateSwitchListActionTest extends OperationsTestCase {
 

@@ -3,15 +3,14 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.GraphicsEnvironment;
 
 //import jmri.jmrit.catalog.NamedIcon;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -42,21 +41,24 @@ public class EditPortalFrameTest {
 
         EditPortalFrame portalFrame = new EditPortalFrame("Edit Portal Frame", cb, ob1);
         Assert.assertNotNull("exists", portalFrame);
-        
+
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(portalFrame);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         blkMgr = new OBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        blkMgr.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        //JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
         JUnitUtil.tearDown();
     }
 

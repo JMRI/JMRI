@@ -84,21 +84,6 @@ public class CheckJMRIObject {
         return verifyClassCommon("", object);
     }
 
-    public void analyzeClass(Object object, ArrayList<String> errors) {
-        Field[] objFields = object.getClass().getDeclaredFields();
-        for (Field field : objFields) { // For all fields in the class
-            if (field.getType() == String.class) { // Strings only: need to check variable name:
-                String fieldContent;
-                try {
-                    fieldContent = (String)field.get(object);
-                    if (ProjectsCommonSubs.isNullOrEmptyString(fieldContent)) continue;    // Skip blank fields
-                } catch (IllegalAccessException e) { continue; }    // Should never happen, if it does, just skip this field.
-                VerifyClassReturnValue verifyClassReturnValue = processField(field.getName(), fieldContent);
-                if (verifyClassReturnValue != null) errors.add(verifyClassReturnValue.toString());
-            }
-        }
-    }
-
     private VerifyClassReturnValue verifyClassCommon(String prefix, Object object) {
         String fieldName;
         Field[] objFields = object.getClass().getDeclaredFields();
@@ -183,7 +168,6 @@ public class CheckJMRIObject {
     }
 
     private boolean lowLevelCheck(OBJECT_TYPE objectType, String JMRIObjectName) {
-        if (!InstanceManager.getDefault(FrmMainForm.class)._mPanelLoaded) return true;
         switch(objectType) {
             case SENSOR:
                 if (InstanceManager.sensorManagerInstance().getSensor(JMRIObjectName) != null) return true;

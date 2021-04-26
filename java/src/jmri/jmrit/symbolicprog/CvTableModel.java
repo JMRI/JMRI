@@ -245,12 +245,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("action command: " + e.getActionCommand());
+            log.debug("action command: {}", e.getActionCommand());
         }
         char b = e.getActionCommand().charAt(0);
         int row = Integer.parseInt(e.getActionCommand().substring(1));
         if (log.isDebugEnabled()) {
-            log.debug("event on " + b + " row " + row);
+            log.debug("event on {} row {}", b, row);
         }
         if (b == 'R') {
             // read command
@@ -345,7 +345,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         for (int i = 0; i < len; i++) {
             if (_cvDisplayVector.elementAt(i).getState() == CvValue.EDITED) {
                 if (log.isDebugEnabled()) {
-                    log.debug("CV decoder dirty due to " + _cvDisplayVector.elementAt(i).number());
+                    log.debug("CV decoder dirty due to {}", _cvDisplayVector.elementAt(i).number());
                 }
                 return true;
             }

@@ -252,11 +252,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      */
     abstract public void setStoreElementClass(Element audio);
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Utility method to load the individual Audio objects. If there's no
      * additional info needed for a specific Audio type, invoke this with the

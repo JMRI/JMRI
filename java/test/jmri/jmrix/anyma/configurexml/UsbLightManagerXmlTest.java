@@ -1,15 +1,14 @@
 package jmri.jmrix.anyma.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * UsbLightManagerXmlTest.java
  * <p>
- * Description: tests for the UsbLightManagerXml class
+ * Test for the UsbLightManagerXml class
  *
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
@@ -21,13 +20,12 @@ public class UsbLightManagerXmlTest {
         Assert.assertNotNull("UsbLightManagerXml constructor", new UsbLightManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

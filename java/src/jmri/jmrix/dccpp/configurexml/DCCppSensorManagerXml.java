@@ -2,8 +2,8 @@ package jmri.jmrix.dccpp.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring DCCppSensorManagers.
@@ -26,17 +26,12 @@ public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSe
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual sensors
         return loadSensors(sensors);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManagerXml.class);
 
     @Override
     public boolean load(Element sharedSensors, Element perNodeSensors) throws JmriConfigureXmlException {

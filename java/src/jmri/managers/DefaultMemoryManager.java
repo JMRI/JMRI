@@ -9,7 +9,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 /**
  * Provide the concrete implementation for the Internal Memory Manager.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class DefaultMemoryManager extends AbstractMemoryManager {
 

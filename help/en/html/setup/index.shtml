@@ -48,17 +48,17 @@
 
       <ul>
         <li><a href=
-        "http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
+        "https://jmri.org/install/WindowsNew.shtml">Windows</a></li>
 
-        <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS
+        <li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS
         X</a></li>
 
         <li>
-          <a href="http://jmri.org/install/Linux.shtml">Linux</a>
+          <a href="https://jmri.org/install/Linux.shtml">Linux</a>
 
           <ul>
             <li><a href=
-            "http://jmri.org/install/Raspbian.shtml">RasPi</a></li>
+            "https://jmri.org/install/Raspbian.shtml">Raspberry Pi</a></li>
           </ul>
         </li>
       </ul>
@@ -67,15 +67,29 @@
 
       <ul>
         <li>Version 2.12 can run on any computer system that will
-        run Java 1.5 or later.</li>
+        run Java 1.5 through Java 8 (also known as Java 1.8).</li>
 
-        <li>Version 2.14.1 requires Java 1.5 (or 1.6 if you wish
-        for drag &amp; drop)</li>
+        <li>Version 2.14.1 requires Java 1.5 (or Java 1.6 to support
+        for drag &amp; drop) through Java 8.</li>
 
-        <li>Version 3.10.1 requires Java 1.7 or later.</li>
+        <li>Version 3.10.1 requires Java 1.7 through Java 8.</li>
 
-        <li>Version 4.2 requires Java 1.8.</li>
-      </ul><a name="startprog" id="startprog"></a>
+        <li>Version 4.2 requires Java 8.</li>
+      </ul>
+      
+      <p>As of JMRI 4.20, JMRI is only fully supported when running on the most
+          current update possible to the two most recent Java Long Term Support
+          (LTS) releases (8 or 11 as of July 2020) and will receive "best effort"
+          support on the latest Java release (14 as of July 2020). Some problems
+          encountered while using a Java version that is "best effort" may only be
+          addressable by using a supported version.</p>
+
+      <p>The JMRI project recommends Java from <a href="https://adoptopenjdk.net">AdoptOpenJDK</a>
+          or the operating system vendor unless using Windows 8 or older, in which case
+          Java from <a href="https://java.com">Oracle</a> is recommended. See the
+          operating system-specific installation guidance for further details.</p>
+
+      <a name="startprog" id="startprog"></a>
 
       <h2>Starting the program</h2>
 
@@ -129,13 +143,13 @@
       <h2>Fixing Problems</h2>
 
       <ul>
-        <li><a href="http://jmri.org/install/Debug.shtml">Debugging
+        <li><a href="https://jmri.org/install/Debug.shtml">Debugging
         an installation</a></li>
 
-        <li><a href="../setup/Errors.shtml">Error Codes</a></li>
+        <li><a href="../apps/Errors.shtml">Error Codes</a></li>
 
         <li><a href=
-        "http://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a>
+        "https://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a>
         (Windows only)</li>
 
         <li><a href="Faq.shtml">Frequently Asked Questions</a></li>

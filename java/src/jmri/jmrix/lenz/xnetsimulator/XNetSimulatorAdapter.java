@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.BitSet;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetConstants;
@@ -14,6 +15,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSimulatorPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,13 +37,12 @@ import org.slf4j.LoggerFactory;
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable {
 
     private boolean outputBufferEmpty = true;
-    private boolean checkBuffer = true;
 
     private int csStatus;
     // status flags from the XpressNet Documentation.
-    private final static int CS_EMERGENCY_STOP = 0x01; // bit 0
+    private static final int CS_EMERGENCY_STOP = 0x01; // bit 0
     // 0x00 means normal mode.
-    private final static int CS_NORMAL_MODE = 0x00;
+    private static final int CS_NORMAL_MODE = 0x00;
 
     // information about the last throttle command(s).
     private int currentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
@@ -57,49 +58,31 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
     
+    /**
+     * Accessory state cache. A "1" bit means THROWN, "0" means
+     * CLOSED. 
+     */
+    private final BitSet accessoryState = new BitSet(1024);
+    
+    /**
+     * Bit is set if the accessory was operated.
+     */
+    private final BitSet accessoryOperated = new BitSet(1024);
+
     public XNetSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
-            PipedOutputStream tempPipeI = new ImmediatePipeOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new ImmediatePipeOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}",e);
             return;
         }
         csStatus = CS_NORMAL_MODE;
-    }
-    
-    /**
-     * Makes a workaround for standard {@link PipedOutputStream} wait.
-     * <p>The {@link PipedInputStream#read()}, in case the receive buffer is
-     * empty at the time of the call, waits for up to 1000ms. 
-     * {@link PipedOutputStream#write(int)} does call <code>sink.receive</code>,
-     * but does not <code>notify()</code> the sink object so that read's
-     * wait() terminates.
-     * </p><p>
-     * As a result, the read side of the pipe waits full 1000ms even though data
-     * become available during the wait.
-     * </p><p>
-     * The workaround is to simply {@link PipedOutputStream#flush} after write, 
-     * which returns from wait()s immediately.
-     * </p>
-     */
-    final static class ImmediatePipeOutputStream extends PipedOutputStream {
-        @Override
-        public void write(byte[] b, int off, int len) throws IOException {
-            super.write(b, off, len);
-            flush();
-        }
-
-        @Override
-        public void write(int b) throws IOException {
-            super.write(b);
-            flush();
-        }
     }
 
     @Override
@@ -116,7 +99,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * @param s true if the buffer is empty; false otherwise
      */
     @Override
-    synchronized public void setOutputBufferEmpty(boolean s) {
+    public synchronized void setOutputBufferEmpty(boolean s) {
         outputBufferEmpty = s;
     }
 
@@ -128,6 +111,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      */
     @Override
     public boolean okToSend() {
+        boolean checkBuffer = true;
         if (checkBuffer) {
             log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty && super.okToSend());
@@ -145,16 +129,24 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
+        configure(packets);
+    }
+    
+    protected void configure(XNetTrafficController packets) {
         packets.connectPort(this);
 
         // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         sourceThread = new Thread(this);
         sourceThread.start();
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // Base class methods for the XNetSimulatorPortController interface
@@ -184,14 +176,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     @Override
     public boolean status() {
         return (pout != null && pin != null);
-    }
-
-    @Deprecated
-    static public XNetSimulatorAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new XNetSimulatorAdapter();
-        }
-        return mInstance;
     }
 
     @Override
@@ -346,6 +330,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 // LZ100 and LZV100 respond with an ACC_INFO_RESPONSE.
                 // but XpressNet standard says to no response (which causes
                 // the interface to send an OK reply).
+                reply = accReqReply(m);
+                break;
             case XNetConstants.ACC_INFO_REQ:
                 reply = accInfoReply(m);
                 break;
@@ -477,8 +463,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         XNetReply reply = new XNetReply();
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
         reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
-        reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
-        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100;
+        reply.setElement(2, 0x36); // indicate we are version 3.6
+        reply.setElement(3, 0x00 ); // indicate we are an LZ100
         reply.setElement(4, 0x00); // set the parity byte to 0
         reply.setParity();
         return reply;
@@ -495,32 +481,143 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return reply;
     }
 
-    // Create a reply to a request for the accessory device Status
-    private XNetReply accInfoReply(XNetMessage m) {
-        XNetReply reply = new XNetReply();
-        reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
-        reply.setElement(1, m.getElement(1));
-           if (m.getOpCode() == XNetConstants.ACC_OPER_REQ || 
-               m.getElement(1) < 64) {
-              // treat as turnout feedback request.
-              if (m.getElement(2) == 0x80) {
-                 reply.setElement(2, 0x00);
-              } else {
-                 reply.setElement(2, 0x10);
-              }
-           } else {
-              // treat as feedback encoder request.
-              if (m.getElement(2) == 0x80) {
-                 reply.setElement(2, 0x40);
-              } else {
-                 reply.setElement(2, 0x50);
-              }
-           }
-           reply.setElement(3, 0x00);
-           reply.setParity();
-        return reply;
+    /**
+     * Return the turnout feedback type.
+     * <ul>
+     * <li>0x00 - turnout without feedback, ie DR5000
+     * <li>0x01 - turnout with feedback, ie NanoX
+     * <li>0x10 - feedback module
+     * </ul>
+     * @return the turnout type reported by this station.
+     */
+    protected int getTurnoutFeedbackType() {
+        return 0x01;
+    }
+    
+    /**
+     * Returns accessory state, in the Operation Info Reply bit format. If the
+     * accessory has not been operated yet, returns 00 (not operated).
+     * 
+     * @param a accessory number
+     * @return two bits representing the accessory state.
+     */
+    protected int getAccessoryStateBits(int a) {
+        if (!accessoryOperated.get(a)) {
+            return 0x00;
+        }
+        boolean state = accessoryState.get(a);
+        int zbits = state ? 0b10 : 0b01;
+        return zbits;
     }
 
+    protected XNetReply accInfoReply(XNetMessage m) {
+        if (m.getElement(1) >= 64) {
+            return feedbackInfoReply(m);
+        } else {
+            boolean nibble = (m.getElement(2) & 0x01) == 0x01;
+            int ba = m.getElement(1);
+            return accInfoReply(ba, nibble);
+        }
+    }
+    
+    protected XNetReply feedbackInfoReply(XNetMessage m) {
+        XNetReply reply = new XNetReply();
+       reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+        reply.setElement(1, m.getElement(1));
+        // treat as feedback encoder request.
+        if (m.getElement(2) == 0x80) {
+            reply.setElement(2, 0x40);
+        } else {
+            reply.setElement(2, 0x50);
+        }
+       reply.setElement(3, 0x00);
+       reply.setParity();
+       return reply;
+    }
+
+    /**
+     * Creates a reply packet for a turnout/accessory.
+     * @param baseAddress base address for the feedback, the 4-turnout block; numbered from 0
+     * @param nibble lower or upper nibble (2 turnout block) delivered in the reply
+     * @return constructed reply.
+     */
+    protected XNetReply accInfoReply(int baseAddress, boolean nibble) {
+        XNetReply r = new XNetReply();
+        r.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+        r.setElement(1, baseAddress);
+        int nibbleVal = 0;
+        int a = baseAddress * 4 + 1;
+        if (nibble) {
+            a += 2;
+        }
+        int zbits = getAccessoryStateBits(a++);
+        nibbleVal |= zbits;
+        zbits = getAccessoryStateBits(a++);
+        nibbleVal |= (zbits << 2);
+        r.setElement(2, // 0 << 7 |          // turnout movement completed, unsupported; always done
+            getTurnoutFeedbackType() << 5 | // two bits: accessory without feedback
+            (nibble ? 1 : 0) << 4 |         // upper / lower nibble
+            nibbleVal & 0x0f);
+        r.setElement(3, 0);
+        r.setParity();
+        return r;
+    }
+    
+    /**
+     * Generate reply to accessory request command.
+     * The returned XNetReply is the first to be returned by this simulated command station.
+     * @param address the accessory address
+     * @param output the output to be manipulated
+     * @param state true if output should be on, false for off
+     * @param previousAccessoryState the previous accessory state
+     * @return the reply instance.
+     */
+    protected XNetReply generateAccRequestReply(int address, int output, boolean state, boolean previousAccessoryState) {
+        XNetReply r;
+
+        if (state) {
+            if (accessoryOperated.get(address) && previousAccessoryState == (output != 0)) {
+                // just OK, the accessory is in the same state.
+                return okReply();
+            } else {
+                accessoryOperated.set(address);
+                r = accInfoReply(address);
+                r.setUnsolicited();
+            }
+        } else {
+            accessoryOperated.set(address);
+            // generate just OK to OFF
+            r = okReply();
+        }
+        return r;
+    }
+
+    /**
+     * Creates a reply for the specific turnout dcc address. 
+     * @param dccTurnoutAddress the turnout address
+     * @return a reply packet
+     */
+    protected XNetReply accInfoReply(int dccTurnoutAddress) {
+        dccTurnoutAddress--;
+        int baseAddress = dccTurnoutAddress / 4;
+        boolean upperNibble = dccTurnoutAddress % 4 >= 2;
+        return accInfoReply(baseAddress, upperNibble);
+    }
+
+    protected XNetReply accReqReply(XNetMessage m) {
+        int baseaddress = m.getElement(1);
+        int subaddress = (m.getElement(2) & 0x06) >> 1;
+        int address = (baseaddress * 4) + subaddress + 1;
+        int output = m.getElement(2) & 0x01;
+        boolean on = ((m.getElement(2) & 0x08)) == 0x08;
+        boolean oldState = accessoryState.get(address);
+        if (on) {
+            accessoryState.set(address, output != 0);
+        }
+        log.debug("Received command {} ... {}", m, m.toMonitorString());
+        return generateAccRequestReply(address, output, on, oldState);
+    }
+    
     private void writeReply(XNetReply r) {
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
@@ -545,7 +642,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * @return filled message
      * @throws IOException when presented by the input source.
      */
-    private XNetMessage loadChars() throws java.io.IOException {
+    protected XNetMessage loadChars() throws java.io.IOException {
         int i;
         byte char1;
         char1 = readByteProtected(inpipe);
@@ -566,6 +663,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream the input data source
+     * @return the next byte, waiting for it to become available
+     * @throws java.io.IOException from the underlying operations
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         byte[] rcvBuffer = new byte[1];
@@ -578,7 +678,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         }
     }
 
-    volatile static XNetSimulatorAdapter mInstance = null;
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes

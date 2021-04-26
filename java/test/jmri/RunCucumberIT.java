@@ -20,7 +20,7 @@ import org.junit.BeforeClass;
  * command line
  * </p>
  * <p>
- * To override those in ant, run:<br/>
+ * To override those in ant, run:<br>
  * JAVA_OPTIONS='-Dcucumber.options="..."' ant target
  * </p>
  * 
@@ -30,7 +30,7 @@ import org.junit.BeforeClass;
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"junit:cucumber-results.xml", "progress", "json:cucumber-results.json"},
         features = "java/acceptancetest/features/web",
-        tags = {"not @webtest", "not @Ignore", "not @ignore"},
+        tags = {"not @webtest", "not @Disabled", "not @Ignore", "not @ignore"},
         glue = {"jmri"})
 public class RunCucumberIT {
 

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Represents the loads that cars can have.
@@ -121,7 +122,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     }
 
     /**
-     * Gets the load names for a given car type
+     * Gets a sorted list of load names for a given car type
      *
      * @param type car type
      * @return list of load names
@@ -145,6 +146,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         for (CarLoad carLoad : loads) {
             names.add(carLoad.getName());
         }
+        java.util.Collections.sort(names);
         return names;
     }
 
@@ -164,7 +166,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             log.debug("car type ({}) does not exist", type);
             return;
         }
-        loads.add(0, new CarLoad(name));
+        loads.add(new CarLoad(name));
         maxNameLength = 0; // reset maximum name length
         setDirtyAndFirePropertyChange(LOAD_CHANGED_PROPERTY, null, name);
     }
@@ -199,8 +201,8 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
 
     public void updateComboBox(String type, JComboBox<String> box) {
         box.removeAllItems();
-        List<String> loads = getNames(type);
-        for (String name : loads) {
+        List<String> names = getNames(type);
+        for (String name : names) {
             box.addItem(name);
         }
     }
@@ -235,9 +237,15 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 box.addItem(name);
             }
         }
-        // must return with at least one load name
-        if (box.getItemCount() == 0) {
-            box.addItem(getDefaultEmptyName());
+    }
+    
+    public void updateRwlComboBox(String type, JComboBox<String> box) {
+        box.removeAllItems();
+        List<String> loads = getNames(type);
+        for (String name : loads) {
+            if (getLoadType(type, name).equals(CarLoad.LOAD_TYPE_LOAD)) {
+                box.addItem(name);
+            }
         }
     }
 
@@ -350,6 +358,12 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         return "error"; // NOI18N
     }
 
+    /**
+     * Sets the comment for a car type's load
+     * @param type the car type
+     * @param name the load name
+     * @param comment the comment
+     */
     public void setPickupComment(String type, String name, String comment) {
         if (!containsName(type, name)) {
             return;
@@ -418,9 +432,9 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String key = en.nextElement();
                 List<CarLoad> loads = listCarLoads.get(key);
                 for (CarLoad load : loads) {
-                    if (load.getName().split("-")[0].length() > maxNameLength) {
-                        maxName = load.getName().split("-")[0];
-                        maxNameLength = load.getName().split("-")[0].length();
+                    if (load.getName().split(TrainCommon.HYPHEN)[0].length() > maxNameLength) {
+                        maxName = load.getName().split(TrainCommon.HYPHEN)[0];
+                        maxNameLength = load.getName().split(TrainCommon.HYPHEN)[0].length();
                     }
                 }
             }
@@ -431,19 +445,14 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
 
     private List<CarLoad> getSortedList(String type) {
         List<CarLoad> loads = listCarLoads.get(type);
+        List<String> names = getNames(type);
         List<CarLoad> out = new ArrayList<>();
 
-        // Sort load names
-        String[] loadNames = new String[loads.size()];
-        for (int i = 0; i < loads.size(); i++) {
-            loadNames[i] = loads.get(i).getName();
-        }
-        java.util.Arrays.sort(loadNames);
         // return a list sorted by load name
-        for (int i = loadNames.length - 1; i >= 0; i--) {
-            for (int j = 0; j < loads.size(); j++) {
-                if (loadNames[i].equals(loads.get(j).getName())) {
-                    out.add(loads.get(j));
+        for (String name : names) {
+            for (CarLoad carLoad : loads) {
+                if (name.equals(carLoad.getName())) {
+                    out.add(carLoad);
                     break;
                 }
             }

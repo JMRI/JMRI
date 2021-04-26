@@ -72,7 +72,7 @@ class NotchTrigger extends Trigger {
         prev_notch = current_notch;
         current_notch = EngineSound.calcEngineNotch((Float) event.getNewValue());
 
-        log.debug("Notch Trigger prev_notch = " + prev_notch + " current_notch = " + current_notch);
+        log.debug("Notch Trigger prev_notch = {} current_notch = {}", prev_notch, current_notch);
         this.callback.takeAction(current_notch);
         /*
          if ((prev == prev_notch) && (next == next_notch)) {

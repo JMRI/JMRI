@@ -3,8 +3,11 @@ package jmri.jmrix.cmri.serial.sim;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.PipedInputStream;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -63,7 +66,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     @Override
     public DataInputStream getInputStream() {
         try {
-            return new DataInputStream(new java.io.PipedInputStream(new java.io.PipedOutputStream()));
+            return new DataInputStream(new PipedInputStream(new ImmediatePipedOutputStream()));
         } catch (Exception e) {
             return null;
         }

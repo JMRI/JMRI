@@ -18,7 +18,7 @@
     <xs:complexType name="WarrantManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a WarrantManager implementation.
+          Define the XML structure for storing the contents of a WarrantManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">mri.jmrit.logix.configurexml.WarrantManagerXml</jmri:usingclass>
@@ -98,6 +98,28 @@
                   <xs:attribute name="pathName" type="xs:string" use="required"></xs:attribute>
                   <xs:attribute name="entryName" type="xs:string"></xs:attribute>
                   <xs:attribute name="exitName" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="throttleSetting" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:sequence>
+               	    <xs:element name="command" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="commandType" type="xs:string" use="required"/>
+                        <xs:attribute name="fKey" type="xs:integer"/>
+                      </xs:complexType>
+              	    </xs:element>
+              	    <xs:element name="commandValue" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="valueType" type="xs:nonNegativeInteger" use="required"/>
+                        <xs:attribute name="speedMode" type="xs:string"/>
+                        <xs:attribute name="floatValue" type="xs:float"/>
+                      </xs:complexType>
+              	    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="elapsedTime" type="xs:integer" use="required"></xs:attribute>
+                  <xs:attribute name="beanName" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="trackSpeed" type="xs:float"></xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="throttleCommand" minOccurs="0" maxOccurs="unbounded">

@@ -94,13 +94,13 @@ public class SerialDriverAdapter extends SprogPortController {
             // set RTS high, DTR high
             boolean doNotlog = false; // if using socat to forward serial port though network, following
             try {                     // commands will fail, as well as bellow logging
-                activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-                activeSerialPort.setDTR(true);	
+                activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+                activeSerialPort.setDTR(true);
             } catch (PureJavaIllegalStateException e) {
                 log.info("Cannot setRTS/DTR will continue anyway");
                 doNotlog = true;
             }
-            	// pin 1 in DIN8; on main connector, this is DTR
+            // pin 1 in DIN8; on main connector, this is DTR
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             //AJB: Removed Jan 2010 -
             //Setting flow control mode to zero kills comms - SPROG doesn't send data
@@ -121,17 +121,9 @@ public class SerialDriverAdapter extends SprogPortController {
             // report status?
             if (log.isInfoEnabled()) {
                 if (doNotlog) {
-                    log.info(portName + " port opened at "
-                            + activeSerialPort.getBaudRate() + " baud");
+                    log.info("{} port opened at {} baud", portName, activeSerialPort.getBaudRate());
                 } else {
-                    log.info(portName + " port opened at "
-                            + activeSerialPort.getBaudRate() + " baud, sees "
-                            + " DTR: " + activeSerialPort.isDTR()
-                            + " RTS: " + activeSerialPort.isRTS()
-                            + " DSR: " + activeSerialPort.isDSR()
-                            + " CTS: " + activeSerialPort.isCTS()
-                            + "  CD: " + activeSerialPort.isCD()
-                    );
+                    log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
                     }
             }
 
@@ -183,7 +175,7 @@ public class SerialDriverAdapter extends SprogPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }
@@ -212,14 +204,8 @@ public class SerialDriverAdapter extends SprogPortController {
 
     InputStream serialStream = null;
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
-
+    protected int numSlots = 1;
+    
     /**
      * Set up all of the other objects to operate with an Sprog command station
      * connected to this port.
@@ -229,7 +215,7 @@ public class SerialDriverAdapter extends SprogPortController {
         // connect to the traffic controller
         this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        this.getSystemConnectionMemo().configureCommandStation();
+        this.getSystemConnectionMemo().configureCommandStation(numSlots);
         this.getSystemConnectionMemo().configureManagers();
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {

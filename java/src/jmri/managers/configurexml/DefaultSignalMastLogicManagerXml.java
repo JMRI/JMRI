@@ -35,7 +35,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
         List<SignalMastLogic> smll = smlm.getSignalMastLogicList();
         for (SignalMastLogic sml : smll) {
+        
             List<SignalMast> destinations = sml.getDestinationList();
+            
+            // write in consistent order
+            java.util.Comparator<SignalMast> comparator = new jmri.util.NamedBeanComparator<>();
+            java.util.Collections.sort(destinations, comparator);
+
             if (destinations.size() == 0) {
                 log.warn("Empty SML for source mast {} skipped", sml.getSourceMast().getDisplayName());
                 continue;
@@ -90,6 +96,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
                     if (sml.getStoreState(dest) == SignalMastLogic.STOREALL) {
                         List<Block> blocks = sml.getBlocks(dest);
+
+                        // write in consistent order
+                        java.util.Comparator<Block> blockComp = new jmri.util.NamedBeanComparator<>();
+                        java.util.Collections.sort(blocks, blockComp);
+
                         if (blocks.size() > 0) {
                             Element blockElement = new Element("blocks");
                             for (Block bl : blocks) {
@@ -106,7 +117,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                             elem.addContent(blockElement);
                         }
+
                         List<NamedBeanHandle<Turnout>> turnouts = sml.getNamedTurnouts(dest);
+
+                        // write in consistent order
+                        java.util.Comparator<NamedBeanHandle<Turnout>> turnoutComp = new jmri.util.NamedBeanHandleComparator<>();
+                        java.util.Collections.sort(turnouts, turnoutComp);
+
                         if (turnouts.size() > 0) {
                             Element turnoutElement = new Element("turnouts");
                             for (NamedBeanHandle<Turnout> t : turnouts) {
@@ -121,7 +138,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                             elem.addContent(turnoutElement);
                         }
+
                         List<NamedBeanHandle<Sensor>> sensors = sml.getNamedSensors(dest);
+                        
+                        // write in consistent order
+                        java.util.Comparator<NamedBeanHandle<Sensor>> sensorsComp = new jmri.util.NamedBeanHandleComparator<>();
+                        java.util.Collections.sort(sensors, sensorsComp);
+
                         if (sensors.size() > 0) {
                             Element sensorElement = new Element("sensors");
                             for (NamedBeanHandle<Sensor> s : sensors) {
@@ -136,7 +159,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                             elem.addContent(sensorElement);
                         }
+
                         List<SignalMast> masts = sml.getSignalMasts(dest);
+
+                        // write in consistent order
+                        java.util.Comparator<SignalMast> mastComp = new jmri.util.NamedBeanComparator<>();
+                        java.util.Collections.sort(masts, mastComp);
+
                         if (masts.size() > 0) {
                             Element mastElement = new Element("masts");
                             for (SignalMast sm : masts) {

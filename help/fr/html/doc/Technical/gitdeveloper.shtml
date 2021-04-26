@@ -7,7 +7,7 @@
     </title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code Git download">
-    <!--#include virtual="/Style" -->
+    <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

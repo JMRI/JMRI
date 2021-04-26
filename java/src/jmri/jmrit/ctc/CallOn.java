@@ -1,5 +1,6 @@
 /*
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ *
  */
 package jmri.jmrit.ctc;
 
@@ -11,7 +12,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
-import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
+import jmri.jmrit.ctc.ctcserialdata.CallOnData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -62,14 +63,14 @@ You should probably use "YELLOW" in that case!
 */
 public class CallOn {
     private static class GroupingData {
-        public final NBHAbstractSignalCommon _mSignal;    // Signal
+        public final NBHSignal _mSignal;         // Signal
         public final int _mSignalHeadFaces;      // Which way above faces.
         public final int _mCallOnAspect;         // What it should be set to if CallOn sucessful.
         public final NBHSensor _mCalledOnExternalSensor;
         public final NamedBeanHandle<Block> _mNamedBeanHandleBlock;
         public final SwitchIndicatorsRoute _mRoute;
 //  NOTE: When calling this constructor, ALL values MUST BE VALID!  NO check is done!
-        public GroupingData(NBHAbstractSignalCommon signal, String signalHeadFaces, int callOnAspect, NBHSensor calledOnExternalSensor, NamedBeanHandle<Block> namedBeanHandleBlock, SwitchIndicatorsRoute route) {
+        public GroupingData(NBHSignal signal, String signalHeadFaces, int callOnAspect, NBHSensor calledOnExternalSensor, NamedBeanHandle<Block> namedBeanHandleBlock, SwitchIndicatorsRoute route) {
             _mSignal = signal;
             _mSignalHeadFaces = signalHeadFaces.equals(Bundle.getMessage("InfoDlgCOLeftTraffic")) ? CTCConstants.LEFTTRAFFIC : CTCConstants.RIGHTTRAFFIC;   // NOI18N
             _mCallOnAspect = callOnAspect;
@@ -84,52 +85,34 @@ public class CallOn {
     private final NBHSensor _mCallOnToggleSensor;
     private final ArrayList<GroupingData> _mGroupingDataArrayList = new ArrayList<>();
 
-    public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, String callOnToggleSensor, String groupingsListString, OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
+    public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, NBHSensor callOnToggleSensor, ArrayList<CallOnData> groupingsList, OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
         _mLockedRoutesManager = lockedRoutesManager;
         _mSignalHeadSelected = (signalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
-        _mCallOnToggleSensor = new NBHSensor("CallOn", userIdentifier, "callOnToggleSensor", callOnToggleSensor, false);    // NOI18N
-        if (!ProjectsCommonSubs.isNullOrEmptyString(groupingsListString)) {
-            ArrayList<String> groupingList = ProjectsCommonSubs.getArrayListFromSSV(groupingsListString);
-            for (String groupingString : groupingList) {
-                CallOnEntry callOnEntry = new CallOnEntry(groupingString);
-                try {
-                    NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("CallOn", userIdentifier, "groupingString" + " " + groupingString, callOnEntry._mExternalSignal);    // NOI18N
-                    String trafficDirection = callOnEntry._mSignalFacingDirection;
-                    if (!trafficDirection.equals(Bundle.getMessage("InfoDlgCOLeftTraffic")) && !trafficDirection.equals(Bundle.getMessage("InfoDlgCORightTraffic"))) {  // NOI18N
-                        throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " not " + Bundle.getMessage("InfoDlgCOLeftTraffic") + " or " + Bundle.getMessage("InfoDlgCORightTraffic") + ".");   // NOI18N
-                    }
-                    SwitchIndicatorsRoute route = new SwitchIndicatorsRoute("CallOn", userIdentifier, "groupingString", // NOI18N
-                                                                            callOnEntry._mSwitchIndicator1,
-                                                                            callOnEntry._mSwitchIndicator2,
-                                                                            callOnEntry._mSwitchIndicator3,
-                                                                            callOnEntry._mSwitchIndicator4,
-                                                                            callOnEntry._mSwitchIndicator5,
-                                                                            callOnEntry._mSwitchIndicator6);
-                    if (_mSignalHeadSelected) {
+        _mCallOnToggleSensor = callOnToggleSensor;
+        for (CallOnData callOnData : groupingsList) {
+            try {
+                NBHSignal signal = callOnData._mExternalSignal;
+                String trafficDirection = callOnData._mSignalFacingDirection;
+                if (!trafficDirection.equals(Bundle.getMessage("InfoDlgCOLeftTraffic")) && !trafficDirection.equals(Bundle.getMessage("InfoDlgCORightTraffic"))) {  // NOI18N
+                    throw new CTCException("CallOn", userIdentifier, "groupingString", callOnData.toString() + " not " + Bundle.getMessage("InfoDlgCOLeftTraffic") + " or " + Bundle.getMessage("InfoDlgCORightTraffic") + ".");   // NOI18N
+                }
+                SwitchIndicatorsRoute route = new SwitchIndicatorsRoute(callOnData._mSwitchIndicators);
+                if (_mSignalHeadSelected) {
 //  Technically, I'd have liked to call this only once, but in reality, each signalhead could have a different value list:
-                        String[] validStateNames = signal.getValidStateNames(); // TODO consider using getValidStateKeys() to skip localisation issue
-                        int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
-                        // TODO use non-localized validStateNKeys instead of localized validStateNames
-                        if (validStateNamesIndex == -1) { // Not found:
-                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnNotValidAspect"));   // NOI18N
-                        }
-                        NBHSensor calledOnExternalSensor = new NBHSensor("CallOn", userIdentifier, "groupingString", callOnEntry._mCalledOnExternalSensor, false);
-                        int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a correlated 1 for 1 with "getValidStateNames", via tests it seems to be.
-                        _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, correspondingValidStates[validStateNamesIndex], calledOnExternalSensor, null, route));
-                    } else {
-                        String externalBlockName = callOnEntry._mExternalBlock;
-                        if (ProjectsCommonSubs.isNullOrEmptyString(externalBlockName)) {
-                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError")); // NOI18N
-                        }
-                        Block externalBlock = InstanceManager.getDefault(BlockManager.class).getBlock(externalBlockName);
-                        if (externalBlock == null) {
-                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError2"));    // NOI18N
-                        }
-                        NamedBeanHandle<Block> namedBeanHandleExternalBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(externalBlockName, externalBlock);
-                        _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, 0, null, namedBeanHandleExternalBlock, route));
+                    String[] validStateNames = signal.getValidStateNames(); // TODO consider using getValidStateKeys() to skip localisation issue
+                    int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnData._mSignalAspectToDisplay));
+                    // TODO use non-localized validStateNKeys instead of localized validStateNames
+                    if (validStateNamesIndex == -1) { // Not found:
+                        throw new CTCException("CallOn", userIdentifier, "groupingString", callOnData.toString() + " " + Bundle.getMessage("CallOnNotValidAspect"));   // NOI18N
                     }
-                } catch (CTCException e) { e.logError(); return; }
-            }
+                    NBHSensor calledOnExternalSensor = callOnData._mCalledOnExternalSensor;
+                    int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a correlated 1 for 1 with "getValidStateNames", via tests it seems to be.
+                    _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, correspondingValidStates[validStateNamesIndex], calledOnExternalSensor, null, route));
+                } else {
+                    NamedBeanHandle<Block> externalBlock = callOnData._mExternalBlock;
+                    _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, 0, null, externalBlock, route));
+                }
+            } catch (CTCException e) { e.logError(); return; }
         }
         resetToggle();
     }
@@ -184,14 +167,14 @@ NOTE:
             }
 //  Check to see if the route specified is free:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
-            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber);
+            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber, signalDirectionLever == CTCConstants.RIGHTTRAFFIC);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
 
             foundGroupingData._mSignal.setHeld(false);    // Original order in .py code
             foundGroupingData._mSignal.setAppearance(foundGroupingData._mCallOnAspect);
-        } else {
+        } else {    // Signal mast
 //  We get this EVERY time (we don't cache this in "foundGroupingData._mCalledOnExternalSensor") because this property of Block
-//  can be changed DYNAMICALLY at runtime (I believe) via the Block Editor:
+//  can be changed DYNAMICALLY at runtime via the Block Editor:
             NBHSensor sensor = new NBHSensor(foundGroupingData._mNamedBeanHandleBlock.getBean().getNamedSensor());
             if (Sensor.ACTIVE != sensor.getKnownState()) return returnValue;       // Has to be active EXACTLY, pretend we did it, but we didn't!
             if (sensor.valid()) {
@@ -200,8 +183,9 @@ NOTE:
 
 //  Check to see if the route specified is free:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
-            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber);
+            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber, signalDirectionLever == CTCConstants.RIGHTTRAFFIC);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
+            foundGroupingData._mSignal.allowPermissiveSML();
             foundGroupingData._mSignal.setHeld(false);
         }
 

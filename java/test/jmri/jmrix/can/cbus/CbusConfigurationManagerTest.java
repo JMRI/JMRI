@@ -1,18 +1,23 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import java.io.IOException;
+import java.nio.file.Path;
+
+import jmri.InstanceManager;
+import jmri.MeterManager;
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (c) 2019
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusConfigurationManagerTest {
 
@@ -40,7 +45,6 @@ public class CbusConfigurationManagerTest {
         Assert.assertNull( t.getReporterManager() );
         Assert.assertNull( t.getLightManager() );
         Assert.assertNull( t.getCommandStation() );
-        Assert.assertNull( t.getMultiMeter() );
         Assert.assertNull( t.getCbusPreferences() );
         Assert.assertNull( t.getCabSignalManager() );
         
@@ -58,7 +62,6 @@ public class CbusConfigurationManagerTest {
         Assert.assertTrue( t.provides(jmri.ReporterManager.class) );
         Assert.assertTrue( t.provides(jmri.LightManager.class) );
         Assert.assertTrue( t.provides(jmri.CommandStation.class) );
-        Assert.assertTrue( t.provides(jmri.MultiMeter.class) );
         Assert.assertTrue( t.provides(CbusPreferences.class) );
         Assert.assertTrue( t.provides(jmri.CabSignalManager.class) );
         
@@ -80,16 +83,22 @@ public class CbusConfigurationManagerTest {
         Assert.assertNotNull( t.get(jmri.ReporterManager.class) );
         Assert.assertNotNull( t.get(jmri.LightManager.class) );
         Assert.assertNotNull( t.get(jmri.CommandStation.class) );
-        Assert.assertNotNull( t.get(jmri.MultiMeter.class) );
         Assert.assertNotNull( t.get(CbusPreferences.class) );
         Assert.assertNotNull( t.get(jmri.CabSignalManager.class) );
         
     }    
     
     @Test
+    public void testGetMeters() {
+        t.configureManagers();
+        Assert.assertNotNull( InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter") );
+        Assert.assertNotNull( InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSVoltageMeter") );
+    }
+    
+    @Test
     public void testgetClasses() {
         
-        CbusDccProgrammerManager prm = new CbusDccProgrammerManager( new CbusDccProgrammer(tcis), memo);
+        CbusDccProgrammerManager prm = new CbusDccProgrammerManager( new CbusDccProgrammer(memo), memo);
         t.setProgrammerManager(prm);
         Assert.assertTrue("programme manager",prm == t.get(jmri.GlobalProgrammerManager.class) );
         
@@ -115,9 +124,6 @@ public class CbusConfigurationManagerTest {
         CbusCommandStation cs = t.getCommandStation();
         Assert.assertTrue("CommandStation",cs == t.get(jmri.CommandStation.class) );        
         
-        CbusMultiMeter cbmm = t.getMultiMeter();
-        Assert.assertTrue("MultiMeter",cbmm == t.get(jmri.MultiMeter.class) );
-        
         CbusPreferences cbpref = t.getCbusPreferences();
         Assert.assertTrue("CbusPreferences",cbpref == t.get(CbusPreferences.class) );
         
@@ -129,20 +135,36 @@ public class CbusConfigurationManagerTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis; // needed for DCC programming mgr?
     private CbusConfigurationManager t;
+    private CbusPreferences prefs;
     
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @TempDir
+    protected Path tempDir;
+    
+    @BeforeEach
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+
+        // This test requires a registred connection config since ProxyMeterManager
+        // auto creates system meter managers using the connection configs.
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+        jmri.jmrix.NetworkPortAdapter pa = new jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter();
+        pa.setSystemPrefix("M");
+        jmri.jmrix.ConnectionConfig cc = new jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig(pa);
+        InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(cc);
+        
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        prefs = new CbusPreferences();
+        
+        jmri.InstanceManager.store(prefs,CbusPreferences.class );
         
         t = new CbusConfigurationManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         t.dispose();

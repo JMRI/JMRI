@@ -1,19 +1,18 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +21,7 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the NceTrafficController class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceTrafficControlScaffold extends NceTrafficController {
 
@@ -28,7 +28,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
     @Override
     public void sendNceMessage(NceMessage m, NceListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendNceMessage [" + m + "]");
+            log.debug("sendNceMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -43,7 +43,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
     protected void sendTestMessage(NceMessage m, NceListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;

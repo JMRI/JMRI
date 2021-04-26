@@ -1,4 +1,6 @@
 <!-- SidebarApplicationsNew.shtml -->
 <!-- For testing new formats and contents.  If nothing new, then just include... -->
+
 <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+
 <!-- /SidebarApplicationsNew.shtml -->

@@ -70,7 +70,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
         }
         if (rosterEntries != null) {
             for (RosterEntry re : rosterEntries) {
-                log.debug("Adding RosterEntry " + re.getId() + " to new group " + entry);
+                log.debug("Adding RosterEntry {} to new group {}", re.getId(), entry);
                 re.putAttribute(Roster.ROSTER_GROUP_PREFIX + entry, "yes");
                 re.updateFile();
             }

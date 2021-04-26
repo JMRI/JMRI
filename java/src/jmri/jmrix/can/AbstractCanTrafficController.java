@@ -55,7 +55,7 @@ abstract public class AbstractCanTrafficController
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
 //        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
-        log.debug("forwardToPort message: [" + m + "]");//warn
+        log.debug("forwardToPort message: [{}]", m);//warn
 
         // remember who sent this
         mLastSender = reply;
@@ -73,7 +73,7 @@ abstract public class AbstractCanTrafficController
         } else {
             hm = encodeForHardware((CanMessage) m);
         }
-        log.debug("Encoded for hardware: [" + hm.toString() + "]");
+        log.debug("Encoded for hardware: [{}]", hm.toString());
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(hm)];
@@ -110,7 +110,7 @@ abstract public class AbstractCanTrafficController
                         break;
                     } else if (hm.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Retry message: " + hm.toString() + " attempts remaining: " + hm.getRetries());
+                            log.debug("Retry message: {} attempts remaining: {}", hm.toString(), hm.getRetries());
                         }
                         hm.setRetries(hm.getRetries() - 1);
                         try {
@@ -122,7 +122,7 @@ abstract public class AbstractCanTrafficController
                             log.error("retry wait interrupted");
                         }
                     } else {
-                        log.warn("sendMessage: port not ready for data sending: " + Arrays.toString(msg));
+                        log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));
                     }
                 }
             } else {
@@ -172,6 +172,7 @@ abstract public class AbstractCanTrafficController
 
     /**
      * Get the correct concrete class for the hardware connection message
+     * @return new blank message
      */
     abstract protected AbstractMRMessage newMessage();
 
@@ -214,8 +215,7 @@ abstract public class AbstractCanTrafficController
         replyInDispatch = true;
 
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + msg.getNumDataElements()
-                    + " contains " + msg.toString() + " state " + mCurrentState);
+            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
 
         // actually distribute the reply
@@ -281,8 +281,7 @@ abstract public class AbstractCanTrafficController
                     replyInDispatch = false;
                     if (allowUnexpectedReply == true) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: "
-                                    + mCurrentState + " was " + msg.toString());
+                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
                         }
                     } else {
                         unexpectedReplyStateError(mCurrentState,msg.toString());

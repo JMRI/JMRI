@@ -1,20 +1,21 @@
 package jmri.jmrit.log;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.slf4j.LoggerFactory;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.log tree
  *
- * @author	Bob Jacobsen Copyright 2003, 2010
+ * @author Bob Jacobsen Copyright 2003, 2010
  */
 public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -33,8 +34,7 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -46,7 +46,7 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
         helpTarget="package.jmri.jmrit.log.Log4JTreePane";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         panel = null;

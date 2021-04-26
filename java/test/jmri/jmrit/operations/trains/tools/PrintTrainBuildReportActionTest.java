@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -29,7 +29,7 @@ public class PrintTrainBuildReportActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-        PrintTrainBuildReportAction t = new PrintTrainBuildReportAction("Test Action", true, train1);
+        PrintTrainBuildReportAction t = new PrintTrainBuildReportAction(true, train1);
         Assert.assertNotNull("exists", t);
     }
 
@@ -46,14 +46,14 @@ public class PrintTrainBuildReportActionTest extends OperationsTestCase {
         Assert.assertTrue(train1.build());
         train1.terminate(); // this will cause dialog window to appear
 
-        PrintTrainBuildReportAction pa = new PrintTrainBuildReportAction("Test Action", true, train1);
+        PrintTrainBuildReportAction pa = new PrintTrainBuildReportAction(true, train1);
         Assert.assertNotNull("exists", pa);
 
         // should cause file chooser to appear
         Thread printAction = new Thread(new Runnable() {
             @Override
             public void run() {
-                pa.actionPerformed(new ActionEvent(this, 0, null));
+                pa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         printAction.setName("Test Print Action"); // NOI18N

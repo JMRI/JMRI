@@ -8,7 +8,6 @@ import org.openlcb.protocols.TimeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
 
@@ -34,12 +33,7 @@ public class OlcbClockControl extends DefaultClockControl {
             hardwareClock = consumer;
         }
         jmriClock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
-        listener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                clockUpdate(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
-            }
-        };
+        listener = propertyChangeEvent -> clockUpdate(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
         hardwareClock.addPropertyChangeListener(listener);
     }
 
@@ -55,16 +49,22 @@ public class OlcbClockControl extends DefaultClockControl {
     /// Called when the layout sends an update to state, for example when someone else operates a
     /// clock controlling node.
     private void clockUpdate(String property, Object newValue) {
-        if (property.equals(TimeProtocol.PROP_RUN_UPDATE)) {
-            jmriClock.setRun(hardwareClock.isRunning());
-        } else if (property.equals(TimeProtocol.PROP_RATE_UPDATE)) {
-            try {
-                jmriClock.userSetRate(hardwareClock.getRate());
-            } catch (TimebaseRateException e) {
-                log.warn("Failed to set OpenLCB rate to internal clock.");
-            }
-        } else if (property.equals(TimeProtocol.PROP_TIME_UPDATE)) {
-            jmriClock.setTime(new Date(hardwareClock.getTimeInMsec()));
+        switch (property) {
+            case TimeProtocol.PROP_RUN_UPDATE:
+                jmriClock.setRun(hardwareClock.isRunning());
+                break;
+            case TimeProtocol.PROP_RATE_UPDATE:
+                try {
+                    jmriClock.userSetRate(hardwareClock.getRate());
+                } catch (TimebaseRateException e) {
+                    log.warn("Failed to set OpenLCB rate to internal clock.");
+                }
+                break;
+            case TimeProtocol.PROP_TIME_UPDATE:
+                jmriClock.setTime(new Date(hardwareClock.getTimeInMsec()));
+                break;
+            default:
+                // no default action.
         }
     }
 
@@ -132,12 +132,7 @@ public class OlcbClockControl extends DefaultClockControl {
             hardwareClock.requestSetRate(newRate);
         } else if (Math.abs(hardwareClock.getRate() - newRate) > 0.0001) {
             // Trigger update notification that we rejected the change, but not inline.
-            ThreadingUtil.runOnLayoutDelayed(new ThreadingUtil.ThreadAction() {
-                @Override
-                public void run() {
-                    clockUpdate(TimeProtocol.PROP_RATE_UPDATE, null);
-                }
-            }, 50);
+            ThreadingUtil.runOnLayoutDelayed(() -> clockUpdate(TimeProtocol.PROP_RATE_UPDATE, null), 50);
         }
 
     }
@@ -163,17 +158,17 @@ public class OlcbClockControl extends DefaultClockControl {
     }
 
     /// Stores instance to the JMRI clock master.
-    private Timebase jmriClock;
+    private final Timebase jmriClock;
     /// This is the interface to the clock generator or consumer.
     private TimeProtocol hardwareClock;
     /// The clock identifier on the OpenLCB bus.
-    private NodeID clockId;
+    private final NodeID clockId;
     /// If we instantiated a clock consumer, this is the object.
     private TimeBroadcastConsumer consumer;
     /// If we instantiated a generator, this is the object
     private TimeBroadcastGenerator generator;
     /// The listener registered for the hardwareClock.
-    private PropertyChangeListener listener;
+    private final PropertyChangeListener listener;
 
     private final static Logger log = LoggerFactory.getLogger(OlcbClockControl.class);
 }

@@ -17,8 +17,9 @@ import javax.swing.SwingUtilities;
  * oldValue and newValue objects should probably not be wrapped in this class.
  *
  * @author Balazs Racz Copyright (C) 2017
+ * @deprecated since 4.17.1; use {@link jmri.util.ThreadingPropertyChangeListener} instead
  */
-
+@Deprecated // retroactively deprecated to match deprecation of only using class
 public class DedupingPropertyChangeListener implements PropertyChangeListener {
     public DedupingPropertyChangeListener(PropertyChangeListener listener) {
         this.listener = listener;

@@ -1,11 +1,11 @@
 package jmri.jmrit.sample.configurexml;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SampleFunctionalClass class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SampleFunctionalClassXmlTest {
 
@@ -15,12 +15,12 @@ public class SampleFunctionalClassXmlTest {
         new SampleFunctionalClassXml();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

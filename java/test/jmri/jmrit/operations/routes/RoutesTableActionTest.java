@@ -1,12 +1,20 @@
 package jmri.jmrit.operations.routes;
 
-import jmri.jmrit.operations.OperationsTestCase;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RoutesTableActionTest extends OperationsTestCase {
 
@@ -15,7 +23,19 @@ public class RoutesTableActionTest extends OperationsTestCase {
         RoutesTableAction t = new RoutesTableAction();
         Assert.assertNotNull("exists",t);
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(RoutesTableActionTest.class);
-
+    
+    @Test
+    public void testAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        RoutesTableAction a = new RoutesTableAction();
+        Assert.assertNotNull("exists", a);
+        
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+        
+        JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("TitleRoutesTable"));
+        Assert.assertNotNull("frame exists", f);
+        JUnitUtil.dispose(f);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 }

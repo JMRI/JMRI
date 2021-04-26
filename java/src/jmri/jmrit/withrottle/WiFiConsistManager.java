@@ -52,6 +52,7 @@ public class WiFiConsistManager extends NmraConsistManager {
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
      *
+     * @param listener the listener to add.
      */
     public void addControllerListener(ControllerInterface listener) {
         if (listeners == null) {

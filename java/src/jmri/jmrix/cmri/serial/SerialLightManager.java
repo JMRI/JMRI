@@ -39,50 +39,42 @@ public class SerialLightManager extends AbstractLightManager {
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
      *
-     * @return null if the
+     * @throws IllegalArgumentException if the
      * system name is not in a valid format or if the system name does not
-     * correspond to a configured C/MRI digital output bit
+     * correspond to a configured C/MRI digital output bit.
+     * @return New Light.
      */
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Light lgt = null;
         // check if the output bit is available
         int nAddress;
         nAddress = getMemo().getNodeAddressFromSystemName(systemName);
         if (nAddress == -1) {
-            return null;
+            throw new IllegalArgumentException("Invalid Node Address from System Name: " + systemName);
         }
         int bitNum = getMemo().getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return null;
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
         String conflict;
         conflict = getMemo().isOutputBitFree(nAddress, bitNum);
-        if (!conflict.equals("")) {
-            log.error("Assignment conflict with " + conflict + ".  Light not created.");
-            notifyLightCreationError(conflict, bitNum);
-            return null;
+        if (!conflict.isEmpty()) {
+            log.error("Assignment conflict with {}.  Light not created.", conflict);
+            throw new IllegalArgumentException(Bundle.getMessage("ErrorAssignDialog", bitNum, conflict));
         }
         // Validate the systemName
         if (getMemo().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName,getMemo());
             if (!getMemo().validSystemNameConfig(systemName, 'L',getMemo().getTrafficController())) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
         return lgt;
-    }
-
-    /**
-     * Public method to notify user of Light creation error.
-     */
-    public void notifyLightCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
-                Bundle.getMessage("ErrorAssignLine2L"), Bundle.getMessage("ErrorAssignTitle"),
-                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
     /**

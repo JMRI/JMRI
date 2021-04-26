@@ -9,7 +9,7 @@ import jmri.Sensor;
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
@@ -45,7 +45,7 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor t;
         int addr;
         try {
@@ -59,6 +59,16 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         t.setUserName(userName);
 
         return t;
+    }
+    
+    /**
+     * Validates to only numeric.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name,locale);
     }
 
 }

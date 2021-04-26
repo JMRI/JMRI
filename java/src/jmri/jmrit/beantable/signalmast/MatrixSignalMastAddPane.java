@@ -507,6 +507,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     
     /**
      * Index is 1-based here:  1..MAXMATRIXBITS
+     * @param turnoutPanel The panel to convert to an output panel
+     * @param index The 1..MAXMATRIXBITS index of the one to be set visible
+     * @return An output panel containing the selected turnout panel
      */
     JPanel makeOutputPanel(JPanel turnoutPanel, int index) {
         JPanel outputpanel = new JPanel();

@@ -346,7 +346,7 @@ public class MenuScroller
                 @Override
                 public void keyTyped(KeyEvent e) {
                     int keyCode = e.getKeyCode();
-                    log.debug("keyTyped(" + keyCode + ")");
+                    log.debug("keyTyped({})", keyCode);
                 }
             });
 
@@ -558,9 +558,11 @@ public class MenuScroller
             }
             menu.setPreferredSize(new Dimension(maxPreferredWidth, menu.getPreferredSize().height));
 
-            JComponent parent = (JComponent) upItem.getParent();
-            parent.revalidate();
-            parent.repaint();
+            java.awt.Container cont = upItem.getParent();
+            if (cont instanceof JComponent) {
+                ((JComponent) cont).revalidate();
+                ((JComponent) cont).repaint();
+            }
         }
     }
 
@@ -664,13 +666,13 @@ public class MenuScroller
         @Override
         public void menuKeyTyped(MenuKeyEvent e) {
             int keyCode = e.getKeyCode();
-            log.debug("MenuScroller.keyTyped(" + keyCode + ")");
+            log.debug("MenuScroller.keyTyped({})", keyCode);
         }
 
         @Override
         public void menuKeyPressed(MenuKeyEvent e) {
             int keyCode = e.getKeyCode();
-            log.debug("MenuScroller.keyPressed(" + keyCode + ")");
+            log.debug("MenuScroller.keyPressed({})", keyCode);
         }
 
         @Override
@@ -694,7 +696,7 @@ public class MenuScroller
                 }
 
                 default: {
-                    log.debug("MenuScroller.keyReleased(" + keyCode + ")");
+                    log.debug("MenuScroller.keyReleased({})", keyCode);
                     break;
                 }
             }   //switch

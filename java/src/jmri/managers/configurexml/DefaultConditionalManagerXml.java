@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 
 import jmri.Conditional;
@@ -114,10 +115,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 // save action information
                 List<ConditionalAction> actionList = c.getCopyOfActions();
-                /*               	if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
-                 }*/
                 for (ConditionalAction action : actionList) {
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N
@@ -157,11 +154,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         conditionals.setAttribute("class", this.getClass().getName());  // NOI18N
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
-    }
-
     /**
      * Create a ConditionalManager object of the correct class, then register
      * and fill it.
@@ -171,7 +163,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return true if successful
      */
     @Override
-    public boolean load(Element sharedConditionals, Element perNodeConditionals) {
+    public boolean load(@Nonnull Element sharedConditionals, Element perNodeConditionals) {
         // create the master object
         replaceConditionalManager();
         // load individual logixs
@@ -293,12 +285,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     variable.setOpern(operator);
                 }
                 if (cvar.getAttribute("negated") != null) {  // NOI18N
-                    if ("yes".equals(cvar
-                            .getAttribute("negated").getValue())) {  // NOI18N
-                        variable.setNegation(true);
-                    } else {
-                        variable.setNegation(false);
-                    }
+                    // NOI18N
+                    variable.setNegation("yes".equals(cvar.getAttribute("negated").getValue()));
                 }
                 variable.setType(Conditional.Type.getOperatorFromIntValue(
                         Integer.parseInt(cvar.getAttribute("type").getValue())));  // NOI18N
@@ -339,7 +327,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             //    log.warn("No actions found for conditional {}", sysName);
             //}
             List<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
-            org.jdom2.Attribute attr = null;
+            org.jdom2.Attribute attr;
             for (Element cact : conditionalActionList) {
                 ConditionalAction action = new DefaultConditionalAction();
                 attr = cact.getAttribute("option");  // NOI18N

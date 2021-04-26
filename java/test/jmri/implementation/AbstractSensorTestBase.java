@@ -1,13 +1,13 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.JmriException;
 import jmri.Sensor;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 
 /**
@@ -15,7 +15,7 @@ import org.junit.Test;
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
+ * @author Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  * @author  Paul Bender Copyright (C) 2018
 */
 public abstract class AbstractSensorTestBase {
@@ -25,22 +25,21 @@ public abstract class AbstractSensorTestBase {
     // return number of listeners registered with the TrafficController
     abstract public int numListeners();
 
-    abstract public void checkOnMsgSent();
+    abstract public void checkActiveMsgSent();
 
-    abstract public void checkOffMsgSent();
+    abstract public void checkInactiveMsgSent();
 
     abstract public void checkStatusRequestMsgSent();
 
     // implementing classes must provide this abstract member:
-    @Before
+    @BeforeEach
     abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
-    protected AbstractSensor t = null;	// holds object under test; set by setUp()
+    protected AbstractSensor t = null; // holds object under test; set by setUp()
 
     static protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
-
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
@@ -80,9 +79,18 @@ public abstract class AbstractSensorTestBase {
 
     @Test
     public void testDispose() throws JmriException {
-        t.setState(Sensor.ACTIVE);  	// in case registration with TrafficController is deferred to after first use
+        t.setState(Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
+    }
+    
+    @Test
+    public void testRemoveListenerOnDispose() {
+        Assert.assertEquals("starts 0 listeners", 0, t.getNumPropertyChangeListeners());
+        t.addPropertyChangeListener(new Listen());
+        Assert.assertEquals("controller listener added", 1, t.getNumPropertyChangeListeners());
+        t.dispose();
+        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
     }
 
     @Test
@@ -102,10 +110,24 @@ public abstract class AbstractSensorTestBase {
     }
 
     @Test
+    public void testCommandSentActive() throws JmriException {
+        t.setState(Sensor.ACTIVE);
+        Assert.assertEquals("Sensor goes active", Sensor.ACTIVE, t.getState());
+        checkActiveMsgSent();
+    }
+    
+    @Test
+    public void testCommandSentInactive() throws JmriException {
+        t.setState(Sensor.INACTIVE);
+        Assert.assertEquals("sensor goes inactive", Sensor.INACTIVE, t.getState());
+        checkInactiveMsgSent();
+    }
+    
+    @Test
     public void testInvertAfterInactive() throws JmriException {
         Assume.assumeTrue(t.canInvert());
         t.setState(Sensor.INACTIVE);
-	t.setInverted(true);
+        t.setInverted(true);
         // check
         Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
         Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
@@ -195,9 +217,31 @@ public abstract class AbstractSensorTestBase {
         jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
         Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
     }
+    
+    @Test
+    public void testSensorSetKnownState() throws JmriException {
+
+        // Assert.assertEquals("ACTIVE", t.describeState(Sensor.ACTIVE), t.describeState(t.getState()));
+        
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("ACTIVE", Sensor.ACTIVE, t.getState());
+
+        t.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("INACTIVE", Sensor.INACTIVE, t.getState());
+
+        t.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("UNKNOWN", Sensor.UNKNOWN, t.getState());
+
+        // Reset known state to something normal
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("ACTIVE", Sensor.ACTIVE, t.getState());
+
+        t.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertEquals("INCONSISTENT", Sensor.INCONSISTENT, t.getState());
+    }
 
     //dispose of t.
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

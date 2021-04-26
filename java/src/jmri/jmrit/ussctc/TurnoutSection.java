@@ -273,6 +273,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         /** 
          * Initially, align with what's in the field
+         * @param to Turnout in field to align to
          */
         void initializeState(Turnout to) {
             if (to.getCommandedState() == Turnout.CLOSED) {

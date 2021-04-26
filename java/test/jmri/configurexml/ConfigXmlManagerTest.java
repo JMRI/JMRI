@@ -6,12 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * Tests for ConfigXmlManager.
@@ -166,13 +166,13 @@ public class ConfigXmlManagerTest {
         f.delete();  // make sure it's gone again
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

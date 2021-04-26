@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -12,12 +13,12 @@ import javax.swing.AbstractAction;
  */
 public class TrainConductorAction extends AbstractAction {
 
-    Train train;
+    Train _train;
     TrainConductorFrame f = null;
 
-    public TrainConductorAction(String s, Train train) {
-        super(s);
-        this.train = train;
+    public TrainConductorAction(Train train) {
+        super(Bundle.getMessage("TitleTrainConductor"));
+        _train = train;
         setEnabled(train != null);
     }
 
@@ -25,7 +26,7 @@ public class TrainConductorAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a copy train frame
         if (f == null || !f.isVisible()) {
-            f = new TrainConductorFrame(train);
+            f = new TrainConductorFrame(_train);
         } else {
             f.setExtendedState(Frame.NORMAL);
         }

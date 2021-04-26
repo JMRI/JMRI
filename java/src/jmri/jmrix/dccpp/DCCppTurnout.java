@@ -74,7 +74,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     //@SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     //protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "DCCPP"; // default
+    protected String _prefix = "D"; // default
     protected DCCppTrafficController tc = null;
 
     public DCCppTurnout(String prefix, int pNumber, DCCppTrafficController controller) {  // a human-readable turnout number must be specified!
@@ -161,10 +161,13 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             synchronized (this) {
                 newKnownState(s);
             }
-	    }
+        }
     }
 
-    // Handle a request to change state by sending a DCC++ command
+    /**
+     * {@inheritDoc}
+     * Sends a DCC++ command.
+     */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         DCCppMessage msg;
@@ -172,48 +175,45 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             log.warn("Turnout {}: state {} not forwarded to layout.", mNumber, s);
             return;
         }
-        // newstate = TRUE if s == THROWN ...
-        // ... unless we are inverted, then newstate = TRUE if s == CLOSED
-        boolean newstate = (s == THROWN);
+        // newState = TRUE if s == THROWN ...
+        // ... unless we are inverted, then newState = TRUE if s == CLOSED
+        boolean newState = (s == THROWN);
         if (getInverted()) {
-            newstate = !newstate;
+            newState = !newState;
         }
         switch (_activeFeedbackType) {
-        case EXACT: // Use <z ... > command
-            // mNumber is the index ID into the Base Station's internal table of outputs.
-            // Convert the integer Turnout value to boolean for DCC++ internal code.
-            // Assume if it's not THROWN (true), it must be CLOSED (false).
-            // Note for Outputs (EXACT mode), LOW is THROWN, HIGH is CLOSED
-            // As defined in DCC++ Base Station SerialCommand.cpp, so newstate
-            // is inverted when making the message 
-            msg = DCCppMessage.makeOutputCmdMsg(mNumber, !newstate);
-            internalState = COMMANDSENT;
-            break;
-        case MONITORING: // Use <T ... > command
-            // mNumber is the index ID into the Base Station's internal table of Turnouts.
-            // Convert the integer Turnout value to boolean for DCC++ internal code.
-            // Assume if it's not THROWN (true), it must be CLOSED (false).
-            msg = DCCppMessage.makeTurnoutCommandMsg(mNumber, newstate);
-            internalState = COMMANDSENT;
-            break;
-        default: // DIRECT -- use <a ... > command
-            // mNumber is the DCC address of the device.
-            // Convert the integer Turnout value to boolean for DCC++ internal code.
-            // Assume if it's not THROWN (true), it must be CLOSED (false).
-            msg = DCCppMessage.makeAccessoryDecoderMsg(mNumber, newstate);
-	    internalState = IDLE;
-            break;
-            
+            case EXACT: // Use <z ... > command
+                // mNumber is the index ID into the Base Station's internal table of outputs.
+                // Convert the integer Turnout value to boolean for DCC++ internal code.
+                // Assume if it's not THROWN (true), it must be CLOSED (false).
+                // Note for Outputs (EXACT mode), LOW is THROWN, HIGH is CLOSED
+                // As defined in DCC++ Base Station SerialCommand.cpp, so newstate
+                // is inverted when making the message
+                msg = DCCppMessage.makeOutputCmdMsg(mNumber, !newState);
+                internalState = COMMANDSENT;
+                break;
+            case MONITORING: // Use <T ... > command
+                // mNumber is the index ID into the Base Station's internal table of Turnouts.
+                // Convert the integer Turnout value to boolean for DCC++ internal code.
+                // Assume if it's not THROWN (true), it must be CLOSED (false).
+                msg = DCCppMessage.makeTurnoutCommandMsg(mNumber, newState);
+                internalState = COMMANDSENT;
+                break;
+            default: // DIRECT -- use <a ... > command
+                // mNumber is the DCC address of the device.
+                // Convert the integer Turnout value to boolean for DCC++ internal code.
+                // Assume if it's not THROWN (true), it must be CLOSED (false).
+                msg = DCCppMessage.makeAccessoryDecoderMsg(mNumber, newState);
+            internalState = IDLE;
+                break;
         }
-        log.debug("Sending Message: {}", msg.toString());
+        log.debug("Sending Message: '{}'", msg);
         tc.sendDCCppMessage(msg, null);  // status returned via manager
     }
     
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"), _prefix, mNumber);
-        }
+        log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"), _prefix, mNumber);
     }
     
     /**
@@ -225,7 +225,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         super.requestUpdateFromLayout();
         // (02/2017) Yes it does... using the <s> command or possibly
         // some others.  TODO: Plumb this in... IFF it is needed.
-        return;
         /*
         // DCCppMessage msg = DCCppMessage.getFeedbackRequestMsg(mNumber,
         //         ((mNumber - 1) % 4) < 2);
@@ -244,11 +243,11 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     /**
      * initmessage is a package proteceted class which allows the Manger to send
-     * a feedback message at initilization without changing the state of the
+     * a feedback message at initialization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
      *
-     *
+     * @param l Init message
      */
     synchronized void initmessage(DCCppReply l) {
         int oldState = internalState;
@@ -261,8 +260,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      */
     @Override
     synchronized public void message(DCCppReply l) {
-        log.debug("received message: {}", l);
-
         switch (getFeedbackMode()) {
         case EXACT:
             handleExactModeFeedback(l);
@@ -276,7 +273,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    // Listen for the outgoing messages (to the command station)
     @Override
     public void message(DCCppMessage l) {
     }
@@ -284,9 +281,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message {}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     /*

@@ -1,0 +1,12 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: CATS.shtml,v 1.1 2008-05-23 16:39:46 jacobsen Exp $ -->
+<head><title>JMRI: Redirected Page</title>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<!-- CHANGE FOLLOWING LINE -->
+<META HTTP-EQUIV="Refresh" CONTENT="6; URL=../../scripthelp/DispatcherSystem/DispatcherSystem.shtml ">
+<p>The page you requested, DispatcherSystem.shtml, has been moved to the scripthelp folder,
+<p>as part of updating and reorganizing our web site.</p> 
+<p>Its new location is:</p>
+<p><a href="../../scripthelp/DispatcherSystem/DispatcherSystem.shtml">/help/en/html/scripthelp/DispatcherSystem/DispatcherSystem.shtml</a>)</p>
+<p></p>
+<p>You should be redirected to the new location within 6 seconds, or click the link above.</p> 

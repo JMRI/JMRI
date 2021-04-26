@@ -140,27 +140,27 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
        }
     }
 
-    // Adds changelistener to blocks	
+    // Adds changelistener to blocks
     private void initBlocks(){
-        blockInit = true;	
-        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);	
-        Set<Block> blockSet = bmgr.getNamedBeanSet();	
-        for (Block b : blockSet) {	
-            PropertyChangeListener listener = (PropertyChangeEvent e) -> {	
-                handleBlockChange(e);	
-            };	
-            b.addPropertyChangeListener(listener);	
-            mBlockListeners.add(listener);	
-        }	
+        blockInit = true;
+        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
+        Set<Block> blockSet = bmgr.getNamedBeanSet();
+        for (Block b : blockSet) {
+            PropertyChangeListener listener = (PropertyChangeEvent e) -> {
+                handleBlockChange(e);
+            };
+            b.addPropertyChangeListener(listener);
+            mBlockListeners.add(listener);
+        }
     }
 
     /**
      * Handle tasks when block contents change.
      * @param e propChgEvent
      */
-  private void handleBlockChange(PropertyChangeEvent e) {	
+  private void handleBlockChange(PropertyChangeEvent e) {
         log.debug("property {} new value {} old value {}",e.getPropertyName(), e.getNewValue(), e.getOldValue());
-        if (e.getPropertyName().equals("value")){	
+        if (e.getPropertyName().equals("value")){
            if(e.getOldValue() == null && e.getNewValue() != null){
               for(CabSignal c : signalList.values()){
                  if(c.getBlock() == null){

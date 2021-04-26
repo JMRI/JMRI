@@ -1,77 +1,85 @@
 package jmri.jmrix.rfid;
 
 import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
-public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class RfidSystemConnectionMemoTest extends SystemConnectionMemoTestBase<RfidSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
-    public void setUp(){
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
-        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
-        RfidTrafficController tc = new RfidTrafficController(){
-           @Override
-           public void sendInitString(){
-           }
-           @Override
-           public void transmitLoop(){
-           }
-           @Override
-           public void receiveLoop(){
-           }
-        };
-        memo.setRfidTrafficController(tc);
-        RfidSensorManager s = new RfidSensorManager(memo){
+        scm = new RfidSystemConnectionMemo();
+        RfidTrafficController tc = new RfidTrafficController() {
             @Override
-            protected Sensor createNewSensor(@Nonnull String systemName, String userName){
-               return null;
+            public void sendInitString() {
             }
-            @Override
-            public void message(RfidMessage m){}
 
             @Override
-            public void reply(RfidReply m){}
-
-        };
-        RfidReporterManager r = new RfidReporterManager(memo){
-            @Override
-            protected Reporter createNewReporter(@Nonnull String systemName, String userName){
-               return null;
+            public void transmitLoop() {
             }
-            @Override
-            public void message(RfidMessage m){}
 
             @Override
-            public void reply(RfidReply m){}
+            public void receiveLoop() {
+            }
+        };
+        scm.setRfidTrafficController(tc);
+        RfidSensorManager s = new RfidSensorManager(scm) {
+            @Override
+            protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
+                return null;
+            }
+
+            @Override
+            public void message(RfidMessage m) {
+            }
+
+            @Override
+            public void reply(RfidReply m) {
+            }
 
         };
-        memo.configureManagers(s,r);
-        scm = memo;
+        RfidReporterManager r = new RfidReporterManager(scm) {
+            @Override
+            protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+                return null;
+            }
+
+            @Override
+            public void message(RfidMessage m) {
+            }
+
+            @Override
+            public void reply(RfidReply m) {
+            }
+
+        };
+        scm.configureManagers(s, r);
     }
 
     @Override
-    @After
-    public void tearDown(){
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    @AfterEach
+    public void tearDown() {
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
 
     }

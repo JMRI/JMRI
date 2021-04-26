@@ -4,14 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.annotation.Nonnull;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
@@ -42,7 +35,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // disable ourself if there is no primary Reporter manager available
         if (reporterManager == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 
@@ -103,7 +96,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              * {@inheritDoc}
              */
             @Override
-            public Reporter getBySystemName(String name) {
+            public Reporter getBySystemName(@Nonnull String name) {
                 return reporterManager.getBySystemName(name);
             }
 
@@ -111,7 +104,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              * {@inheritDoc}
              */
             @Override
-            public Reporter getByUserName(String name) {
+            public Reporter getByUserName(@Nonnull String name) {
                 return reporterManager.getByUserName(name);
             }
 
@@ -154,7 +147,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public int getColumnCount() {
-                return LASTREPORTCOL + 1;
+                return LASTREPORTCOL + getPropertyColumnCount() +1;
             }
 
             /**
@@ -278,20 +271,20 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         return "package.jmri.jmrit.beantable.ReporterTable";
     }
 
-    JmriJFrame addFrame = null;
-    JTextField hardwareAddressTextField = new JTextField(20);
-    JTextField userNameTextField = new JTextField(20);
-    ManagerComboBox<Reporter> prefixBox = new ManagerComboBox<>();
-    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
-    JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton;
-    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
-    String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
-    Manager<Reporter> connectionChoice = null;
-    jmri.UserPreferencesManager pref;
-    SystemNameValidator hardwareAddressValidator;
+    private JmriJFrame addFrame = null;
+    private final JTextField hardwareAddressTextField = new JTextField(20);
+    private final JTextField userNameTextField = new JTextField(20);
+    private final ManagerComboBox<Reporter> prefixBox = new ManagerComboBox<>();
+    private final SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    private final JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    private final JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    private final String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+    private JButton addButton;
+    private final JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    private final String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
+    private Manager<Reporter> connectionChoice = null;
+    private jmri.UserPreferencesManager pref;
+    private SystemNameValidator hardwareAddressValidator;
 
     /**
      * {@inheritDoc}
@@ -310,7 +303,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
-            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            
+            if (hardwareAddressValidator==null){
+                hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, java.util.Objects.requireNonNull(prefixBox.getSelectedItem()), true);
+            } else {
+                hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
+            }
+
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
@@ -323,7 +322,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBarLabel.setForeground(Color.gray);
-
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(addButton);
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -370,24 +370,16 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage = null;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             try {
-                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix, false);
             } catch (jmri.JmriException ex) {
                 displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);
                 return;
-            }
-            if (curAddress == null) {
-                log.debug("Error converting HW or getNextValidAddress");
-                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBarLabel.setForeground(Color.red);
-                // The next address returned an error, therefore we stop this attempt and go to the next address.
-                break;
             }
 
             // Compose the proposed system name from parts:
@@ -398,11 +390,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 r = reporterManager.provideReporter(rName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(rName); // displays message dialog to the user
-                // add to statusBarLabel as well
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                handleCreateException(ex, rName); // displays message dialog to the user
                 return; // without creating
             }
 
@@ -431,14 +419,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
             // end of for loop creating rangeCheckBox of Reporters
         }
-        // provide feedback to uName
-        if (errorMessage == null) {
-            statusBarLabel.setText(statusMessage);
-            statusBarLabel.setForeground(Color.gray);
-        } else {
-            statusBarLabel.setText(errorMessage);
-            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
-        }
+        // provide success feedback to uName
+        statusBarLabel.setText(statusMessage);
+        statusBarLabel.setForeground(Color.gray);        
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
         removePrefixBoxListener(prefixBox);
@@ -474,11 +457,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String sysName) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        statusBarLabel.setForeground(Color.red);
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(ReporterManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**

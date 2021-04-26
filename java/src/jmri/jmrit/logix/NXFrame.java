@@ -1,17 +1,17 @@
 package jmri.jmrit.logix;
 
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,8 +20,11 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import jmri.jmrit.logix.ThrottleSetting.Command;
+import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.JmriException;
-import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.SpeedStepMode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,26 +51,20 @@ import org.slf4j.LoggerFactory;
  */
 public class NXFrame extends WarrantRoute {
 
-    private static final String WARNING_TITLE = "WarningTitle";
-    private static final String ZERO_PATH_LENGTH = "zeroPathLength";
-    private static final String FALSE = "false";
-    private static final String TRUE = "true";
-    private static final String SPEED = "Speed";
-    private static final String ENTER_BLOCK = "Enter Block";
-    private float _scale = 87.1f;
     private float _maxThrottle = 0.75f;
     private float _startDist;   // mm start distance to portal
     private float _stopDist;    // mm stop distance from portal
 
     private final JTextField _maxThrottleBox = new JTextField(6);
     private final JTextField _maxSpeedBox = new JTextField(6);
-    private JButton _speedUnits;
+    private final JLabel _maxSpeedBoxLabel = new JLabel(Bundle.getMessage("scaleSpeed"));
+    private DisplayButton _speedUnits;
     private final JTextField _originDist = new JTextField(6);
-    private JButton _originUnits;
+    private DisplayButton _originUnits;
     private final JTextField _destDist = new JTextField(6);
-    private JButton _destUnits;
-    private JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));
-    private JTextField _rampIncre = new JTextField(6);
+    private DisplayButton _destUnits;
+    private final JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));
+    private final JTextField _rampIncre = new JTextField(6);
     private final JRadioButton _forward = new JRadioButton();
     private final JRadioButton _reverse = new JRadioButton();
     private final JCheckBox _noRamp = new JCheckBox();
@@ -78,7 +75,7 @@ public class NXFrame extends WarrantRoute {
     private final JCheckBox _addTracker = new JCheckBox();
     private final JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     private final JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
-
+    
     private JPanel _routePanel = new JPanel();
     private JPanel _autoRunPanel;
     private final JPanel __trainHolder = new JPanel();
@@ -100,6 +97,7 @@ public class NXFrame extends WarrantRoute {
         _routePanel.add(makeBlockPanels(true));
  
         _forward.setSelected(true);
+        _speedUtil.setIsForward(true);
         _stageEStop.setSelected(false);
         _haltStartBox.setSelected(false);
         _runAuto.setSelected(true);
@@ -112,6 +110,10 @@ public class NXFrame extends WarrantRoute {
         mainPanel.add(_routePanel);
         getContentPane().add(mainPanel);
         
+        float prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale()*100;
+        _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
+        maxThrottleEventAction();
+
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -194,134 +196,200 @@ public class NXFrame extends WarrantRoute {
         return panel;
     }
 
-    private JButton getButton(String text) {
-        JButton button = new JButton();
-        button.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        button.setText(text);
-        button.setSelected(true);
-        int bWidth = new JTextField(2).getPreferredSize().width;
-        int bHeight = new JTextField(2).getPreferredSize().height;
-        button.setMaximumSize(new Dimension(bWidth, bHeight));
-        return button;
-    }
-
-    private void maxThrottleEventAction() {
-        boolean isForward = _forward.isSelected();
-        RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
-        if (profile != null) {
-            NumberFormat formatter = NumberFormat.getNumberInstance(); 
-            float num = 0;
-            try {
-                num =  formatter.parse(_maxThrottleBox.getText()).floatValue();
-            } catch (java.text.ParseException pe) {
-                _maxThrottleBox.setText("");
-                return;
-            }
-            float speed = profile.getSpeed(num, isForward);
-            if (_speedUnits.getText().equals("Mph")) {
-                _maxSpeedBox.setText(formatter.format(speed * _scale * .0022369363f));                        
-            } else {
-                _maxSpeedBox.setText(formatter.format(speed * _scale * .0036f));                                               
-            }
+    @Override
+    protected void maxThrottleEventAction() {
+        NumberFormat formatter = NumberFormat.getNumberInstance(); 
+        float num = 0;
+        try {
+            num =  formatter.parse(_maxThrottleBox.getText()).floatValue();
+            num = Math.min(100.0f, Math.max(num,  0.f));
+            _maxThrottleBox.setText(formatter.format(num));
+        } catch (java.text.ParseException pe) {
+            _maxThrottleBox.setText(null);
+            _maxSpeedBox.setText(null);
             return;
         }
-        _maxSpeedBox.setText(Bundle.getMessage("NoData"));        
+        float speed = _speedUtil.getTrackSpeed(num/100);    // returns mm/ms (meters/sec)
+        switch(_displayPref) {
+            case MPH:
+                // Convert meters/sec to scale miles/hr
+                _maxSpeedBox.setText(formatter.format(speed * _scale * 2.2369363f));
+                break;
+            case KPH:
+                // Convert meters/sec to scale kilometers/hr
+                _maxSpeedBox.setText(formatter.format(speed * _scale * 3.6f));
+                break;
+            case MMPS:
+                // Convert meters/sec to millimeters/sec
+                _maxSpeedBox.setText(formatter.format(speed * 1000));  // mm/sec
+                break;
+            case INPS:
+            default:
+                // Convert meters/sec to inchec/sec
+                _maxSpeedBox.setText(formatter.format(speed * 39.37f));  // in/sec
+        }
+    }
+
+    private void unitsEventAction(JButton button, JTextField field) {
+        if (button.getText().equals(Display.IN.toString())) {
+            _units = Display.CM;
+        } else {
+            _units = Display.IN;
+        }
+        setFieldText(button, field);
+    }
+    // convert to units change
+    private void setFieldText(JButton button, JTextField field) {
+        NumberFormat formatter = NumberFormat.getNumberInstance(); 
+        float num = 0;
+        try {
+            num =  formatter.parse(field.getText()).floatValue();
+        } catch (java.text.ParseException pe) {
+            // errors reported later
+        }
+        if (_units.equals(Display.IN)) {
+            num = Math.round(num * 0.393701f);  // convert centimeters to inches
+        } else {
+            num = Math.round(num * 2.54f);  // convert inches to centimeters
+        }
+        button.setText(_units.toString());
+        field.setText(formatter.format(num));
     }
 
     private JPanel makeAutoRunPanel() {
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
 
-        _speedUnits = getButton("Mph");
+        _speedUnits = new DisplayButton(_displayPref);
+        _originUnits = new DisplayButton(_units);
+        _destUnits = new DisplayButton(_units);
+        
         _maxThrottleBox.addActionListener((ActionEvent evt)-> maxThrottleEventAction());
 
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
-            boolean isForward = _forward.isSelected();
-            RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
-            if (profile != null) {
-                NumberFormat formatter = NumberFormat.getNumberInstance(); 
-                float num = 0;
-                try {
-                    num =  formatter.parse(_maxSpeedBox.getText()).floatValue();
-                } catch (java.text.ParseException pe) {
-                    _maxSpeedBox.setText("");
-                    return;
-                }
-                if (_speedUnits.getText().equals("Mph")) {
-                    num = num * 447.04f / _scale;                        
-                } else {
-                    num = num * 277.7778f / _scale;                        
-                }
-                float throttle = profile.getThrottleSetting(num, isForward);
-                if (throttle > 0.0f) {
-                    _maxThrottleBox.setText(formatter.format(throttle));                    
-                    return;
-                }
+            NumberFormat formatter = NumberFormat.getNumberInstance(); 
+            float num = 0;
+            try {
+                num =  formatter.parse(_maxSpeedBox.getText()).floatValue();
+            } catch (java.text.ParseException pe) {
+                _maxSpeedBox.setText("");
+                return;
             }
-            _maxSpeedBox.setText(Bundle.getMessage("NoData"));
+            if (num < 0) {
+                _maxSpeedBox.setText(formatter.format(0));
+                _maxThrottleBox.setText(formatter.format(0));
+                return;
+            }
+            // maxSpeed is speed at full throttle in mm/sec
+            float maxSpeed = _speedUtil.getTrackSpeed(1);   // mm/ms, i.e. m/s
+            // maximum number is maxSpeed when converted to selected units
+            float maxNum;
+            // convert to display units. Note real world speed is converted to scaled world speed
+            // display label changes "Scale speed" to "Track Speed" accordingly
+            switch (_displayPref) {
+                case MPH:
+                    maxNum = maxSpeed * 2.2369363f *_scale; // convert meters/sec to miles/hr
+                    break;
+                case KPH:
+                    maxNum = maxSpeed * 3.6f * _scale;  // convert meters/sec to to kilometers/hr 
+                    break;
+                case MMPS:
+                    maxNum = maxSpeed * 1000;   // convert meters/sec to milimeters/sec
+                    break;
+                default:
+                    maxNum = maxSpeed * 39.37f; // convert meters/sec to inches/sec
+                    break;
+            }
+            if (num > maxNum) {
+                String name = _speedUtil.getRosterId();
+                if (name == null || name.charAt(0) == '$') {
+                    name = getTrainName();
+                    if (name == null || name.isEmpty()) {
+                        name = Bundle.getMessage("unknownTrain");
+                    }
+                }
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("maxSpeedLimit", 
+                        name, formatter.format(maxNum), _speedUnits.getText()),
+                        Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                _maxSpeedBox.setText(formatter.format(maxNum));
+                _maxThrottleBox.setText(formatter.format(100));
+                return;
+            }
+            // convert to display num in selected units to track speed in meters/sec (mm/ms)
+            // reciprocal of above
+            switch (_displayPref) {
+                case MPH:
+                    num = num * 0.44704f / _scale;  // convert scale miles/hr to mm/msec
+                    break;
+                case KPH:
+                    num = num * 0.277778f / _scale;  // convert scale kilometers/hr to mm/msec
+                    break;
+                case MMPS:
+                    num = num / 1000;  // convert mm/sec to mm/msec
+                    break;
+                default:
+                    num = num / 39.37f;  // convert inches/sec to mm/msec
+                    break;
+            }
+            // get throttla setting and display as percent full throttle.
+            float throttle = _speedUtil.getThrottleSettingForSpeed(num)*100;
+            _maxThrottleBox.setText(formatter.format(throttle));
         });
+
+        // User makes a choice for their desired units (_displayPref) to show max speed
         _speedUnits.addActionListener((ActionEvent evt)-> {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
             float num = 0;
             try {
                 num =  formatter.parse(_maxSpeedBox.getText()).floatValue();
             } catch (java.text.ParseException pe) {
+                _maxSpeedBox.setText(null);
                 return;
             }
-            if (_speedUnits.getText().equals("Mph")) {
-                _speedUnits.setText("Kmph");
-                num = Math.round(num * 160.9344f);
-                _maxSpeedBox.setText(formatter.format(num / 100));
-            } else {
-                num = Math.round(num * 62.137119f);
-                _speedUnits.setText("Mph");
-                _maxSpeedBox.setText(formatter.format(num / 100));
-            }
-        });
-        p1.add(makeTextBoxPanel(false, _maxThrottleBox, "MaxSpeed", null));
-        p1.add(makeTextAndButtonPanel(_maxSpeedBox, _speedUnits, "scaleSpeed", "ToolTipScaleSpeed"));
+            // display preference for units cycles through 4 choices
+            // convert old choice to new 
+            switch (_displayPref) {
+                case MPH:
+                    _displayPref = Display.KPH;
+                    _maxSpeedBox.setText(formatter.format(num * 1.60934f)); // miles/hr to km/hr
+                    break;
+                case KPH:
+                    _displayPref = Display.MMPS;
+                    _maxSpeedBox.setText(formatter.format(num * 0277.778f / _scale));   // scale km/hr to mm/sec
+                    _maxSpeedBoxLabel.setText(Bundle.getMessage("trackSpeed"));
+                    break;
+                case MMPS:
+                    _displayPref = Display.INPS;
+                    _maxSpeedBox.setText(formatter.format(num * 0.03937f)); // mm/sec to in/sec
+                    break;
+                default:
+                    _displayPref = Display.MPH;
+                    _maxSpeedBox.setText(formatter.format(num * 0.056818f * _scale)); // inches/sec to scale miles/hr
+                    _maxSpeedBoxLabel.setText(Bundle.getMessage("scaleSpeed"));
+                    break;
+                }
+                // display label changes "Scale speed" to "Track Speed" accordingly
+                _speedUnits.setDisplayPref(_displayPref);
+            });
 
-        _originUnits = getButton("In");
-        _destUnits = getButton("In");
-        
+        p1.add(makeTextAndButtonPanel(_maxThrottleBox, new JLabel(Bundle.getMessage("percent")), 
+                new JLabel(Bundle.getMessage("MaxSpeed")), "ToolTipPercentThrottle"));
+        p1.add(makeTextAndButtonPanel(_maxSpeedBox, _speedUnits, 
+                _maxSpeedBoxLabel, "ToolTipScaleSpeed"));
+
         _originUnits.addActionListener((ActionEvent evt)-> {
-            NumberFormat formatter = NumberFormat.getNumberInstance(); 
-            float num = 0;
-            try {
-                num =  formatter.parse(_originDist.getText()).floatValue();
-            } catch (java.text.ParseException pe) {
-                // errors reported later
-            }
-            if (_originUnits.getText().equals("In")) {
-                _originUnits.setText("Cm");
-                num = Math.round(num * 254f);
-                _originDist.setText(formatter.format(num / 100));
-            } else {
-                num = Math.round(num * 100f / 2.54f);
-                _originUnits.setText("In");
-                _originDist.setText(formatter.format(num / 100));
-            }
+            unitsEventAction(_originUnits, _originDist);
+            setFieldText(_destUnits, _destDist);
         });
-        _destUnits.setActionCommand("In");
         _destUnits.addActionListener((ActionEvent evt)-> {
-            NumberFormat formatter = NumberFormat.getNumberInstance(); 
-            float num = 0;
-            try {
-                num =  formatter.parse(_destDist.getText()).floatValue();
-            } catch (java.text.ParseException pe) {
-                // errors reported later
-            }
-            if (_destUnits.getText().equals("In")) {
-                _destUnits.setText("Cm");
-                _destDist.setText(formatter.format(num * 2.54f));
-            } else {
-                _destUnits.setText("In");
-                _destDist.setText(formatter.format(num / 2.54f));
-            }
+            unitsEventAction(_destUnits, _destDist);
+            setFieldText(_originUnits, _originDist);
         });
 
-        p1.add(makeTextAndButtonPanel(_originDist, _originUnits, "startDistance", "ToolTipStartDistance"));
-        p1.add(makeTextAndButtonPanel(_destDist, _destUnits, "stopDistance", "ToolTipStopDistance"));
+        p1.add(makeTextAndButtonPanel(_originDist, _originUnits, 
+                new JLabel(Bundle.getMessage("startDistance")), "ToolTipStartDistance"));
+        p1.add(makeTextAndButtonPanel(_destDist, _destUnits, 
+                new JLabel(Bundle.getMessage("stopDistance")), "ToolTipStopDistance"));
         p1.add(WarrantPreferencesPanel.timeIncrementPanel(false, _timeIncre));
         p1.add(WarrantPreferencesPanel.throttleIncrementPanel(false, _rampIncre));
         _rampIncre.addActionListener((ActionEvent e)->{
@@ -335,7 +403,7 @@ public class NXFrame extends WarrantRoute {
                 }
                 if (showdialog) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
-                            Bundle.getMessage(WARNING_TITLE), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 }
             });
         ButtonGroup bg = new ButtonGroup();
@@ -385,21 +453,16 @@ public class NXFrame extends WarrantRoute {
         _startDist = getPathLength(_orders.get(0)) / 2;
         _stopDist = getPathLength(_orders.get(_orders.size()-1)) / 2;
         NumberFormat formatter = NumberFormat.getNumberInstance(); 
-        if (_originUnits.getText().equals("In")) {
-            float num = Math.round(_startDist * 100 / 25.4f);
-            _originDist.setText(formatter.format(num / 100f));
+        if (_units.equals(Display.IN)) {
+            // convert millimeters to inches
+            _originDist.setText(formatter.format(_startDist * 0.0393701));
+            _destDist.setText(formatter.format(_stopDist * 0.0393701));
         } else {
-            float num = Math.round(_startDist * 100);
-            _originDist.setText(formatter.format(num / 1000f));
+         // convert millimeters to centimeters
+            _originDist.setText(formatter.format(_startDist / 10));
+            _destDist.setText(formatter.format(_stopDist / 10));
         }
-        if (_destUnits.getText().equals("In")) {
-            float num = Math.round(_stopDist * 100 / 25.4f);
-            _destDist.setText(formatter.format(num / 100f));
-        } else {
-            float num = Math.round(_stopDist * 100);
-            _destDist.setText(formatter.format(num / 1000f));
-        }
-        _autoRunPanel.repaint();
+         _autoRunPanel.repaint();
     }
 
     private void makeMenus() {
@@ -412,7 +475,7 @@ public class NXFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        log.debug("propertyChange \"{}\" old= {} new= {} source= {}",property,
+        log.trace("propertyChange \"{}\" old= {} new= {} source= {}",property,
                                             e.getOldValue(),e.getNewValue(),
                                             e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
@@ -450,7 +513,7 @@ public class NXFrame extends WarrantRoute {
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage(WARNING_TITLE), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         // There is a dccAddress so a throttle can be acquired
@@ -513,20 +576,15 @@ public class NXFrame extends WarrantRoute {
                     }
                 }
                 Halter h = new Halter(warrant);
-                new Thread(h).start();
+                jmri.util.ThreadingUtil.newThread(h).start();
             }
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage(WARNING_TITLE), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
         } else {
             WarrantTableAction.getDefault().closeNXFrame();
         }
-    }
-
-    // for the convenience of testing
-    protected void setScale(float s) {
-        _scale = s;
     }
 
     // for testing
@@ -538,8 +596,6 @@ public class NXFrame extends WarrantRoute {
     private String getBoxData() {
         String text = null;
         float maxSpeed;
-        float oDist;
-        float dDist;
         NumberFormat formatter = NumberFormat.getNumberInstance(); 
         try {
             text = _maxThrottleBox.getText();
@@ -548,37 +604,30 @@ public class NXFrame extends WarrantRoute {
             if (text==null) {
                 text = "\"\"";
             }
-            return Bundle.getMessage("badSpeed", text);
-        }
-        try {
-            text = _originDist.getText();
-            oDist = formatter.parse(text).floatValue();
-            text = _destDist.getText();
-            dDist = formatter.parse(text).floatValue();
-        } catch (java.text.ParseException pe) {
-            return Bundle.getMessage("MustBeFloat", text);
+            return Bundle.getMessage("badSpeed100", text);
         }
 
         try {
-            _startDist = checkDistance(_originUnits.getText().equals("In"), oDist, _orders.get(0));
+            _startDist = getDistance(_originDist, _orders.get(0));
         } catch (JmriException je) {
-            displayDistance(_destUnits.getText().equals("In"), oDist, _originDist, _orders.get(0));
             return je.getMessage();
         }
 
         try {
-            _stopDist = checkDistance(_destUnits.getText().equals("In"), dDist, _orders.get(_orders.size()-1));
+            _stopDist = getDistance(_destDist, _orders.get(_orders.size()-1));
         } catch (JmriException je) {
-            displayDistance(_destUnits.getText().equals("In"), dDist, _destDist, _orders.get(_orders.size()-1));
             return je.getMessage();
         }
 
-        if (maxSpeed > 1.0f || maxSpeed < 0.008f) {
-            return Bundle.getMessage("badSpeed", maxSpeed);
+        if (maxSpeed > 100f || maxSpeed < 0.001f) {
+            return Bundle.getMessage("badSpeed100", maxSpeed);
         }
-        _maxThrottle = maxSpeed;
+        _maxThrottle = maxSpeed / 100;
 
-        setAddress();
+        String msg = setAddress();
+        if (msg != null) {
+            return msg;
+        }
 
         int time = (Integer)_timeIncre.getValue();
         _speedUtil.setRampTimeIncrement(time);
@@ -599,52 +648,35 @@ public class NXFrame extends WarrantRoute {
         return null;
     }
 
-    private float checkDistance(boolean isInches, float distance, BlockOrder bo) throws JmriException {
+    private float getDistance(JTextField field, BlockOrder bo) throws JmriException {
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        float distance;
+        String text = field.getText();
+        try {
+            distance = formatter.parse(text).floatValue();
+        } catch (java.text.ParseException pe) {
+            throw new JmriException(Bundle.getMessage("MustBeFloat", text));
+        }
         float pathLen = getPathLength(bo);
         if (pathLen <= 0) {
-            throw new JmriException(Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName()));
+            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
         }
-        if (isInches){
-            distance *= 25.4f;
+        if (_units.equals(Display.IN)){
+            distance *= 25.4f;  // convert inches to millimeters
             if (distance < 0 || distance > pathLen) {
-                pathLen /= 25.4;
-                distance /= 25.4;
+                field.setText(formatter.format(pathLen * 12.07));
                 throw new JmriException(Bundle.getMessage(
-                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen, distance));                                        
+                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.039701f, text));                                        
             }
         } else {
-            distance *= 10f;
+            distance *= 10f;  // convert centimeters to millimeters
             if (distance < 0 || distance > pathLen) {
-                pathLen /= 10;
-                distance /= 10;
+                field.setText(formatter.format(pathLen * 5));
                 throw new JmriException(Bundle.getMessage(
-                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen, distance));                                        
+                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.5f, text));                                        
             }
         }
         return distance;
-    }
-
-    private void displayDistance(boolean isInches, float distance, JTextField textBox, BlockOrder bo) {
-        float pathLen = getPathLength(bo);
-        if (pathLen <= 0) {
-            return;                        
-        }
-        NumberFormat formatter = NumberFormat.getNumberInstance();
-        if (distance < 0f) {
-            textBox.setText(formatter.format(0f));
-        } else {
-            if (isInches) {
-                float num = Math.round(pathLen * 100 / 25.4f);
-                if (distance*25.4f > pathLen) {
-                    textBox.setText(formatter.format(num / 100));
-                }
-            } else {
-                float num = Math.round(pathLen * 100);
-                if (distance*10 > pathLen) {
-                    textBox.setText(formatter.format(num / 1000));
-                }
-            }
-        }
     }
 
     private float getPathLength(BlockOrder bo) {
@@ -653,13 +685,13 @@ public class NXFrame extends WarrantRoute {
             len = bo.getTempPathLen();
             if ( len <= 0) {
                 String sLen = JOptionPane.showInputDialog(this, 
-                        Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName())
+                        Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
                         + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
-                        Bundle.getMessage(WARNING_TITLE), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 try {
                     len = NumberFormat.getNumberInstance().parse(sLen).floatValue();                    
                 } catch (java.text.ParseException | java.lang.NullPointerException pe) {
-                    len = -1.0f;
+                    len = 0.0f;
                 }
                 bo.setTempPathLen(len);
             }
@@ -669,7 +701,7 @@ public class NXFrame extends WarrantRoute {
     private float adjustdistance(float fromSpeed, float toSpeed, float distance, BlockOrder bo) throws JmriException {
         float pathLen = getPathLength(bo);
         if (pathLen <= 0) {
-            throw new JmriException(Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName()));
+            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
         }
         int timeIncrement = _speedUtil.getRampTimeIncrement();
         float minDist = _speedUtil.getDistanceOfSpeedChange(fromSpeed, toSpeed, timeIncrement) +.1f;
@@ -694,7 +726,7 @@ public class NXFrame extends WarrantRoute {
             BlockOrder bo = orders.get(i);
             float pathLen = getPathLength(bo);
             if (pathLen <= 0) {
-                throw new JmriException(Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName()));
+                throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
             }
             totalLen += pathLen;
         }
@@ -709,28 +741,27 @@ public class NXFrame extends WarrantRoute {
         List<BlockOrder> orders = getOrders();
         BlockOrder bo = orders.get(nextIdx++);
         String blockName = bo.getBlock().getDisplayName();
-        boolean hasProfileSpeeds = _speedUtil.profileHasSpeedInfo();
 
         int cmdNum;
-        w.addThrottleCommand(new ThrottleSetting(0, "F0", TRUE, blockName));
+        w.addThrottleCommand(new ThrottleSetting(0, Command.FKEY, 0, ValueType.VAL_ON, SpeedStepMode.UNKNOWN, 0, blockName));
         if (_forward.isSelected()) {
-            w.addThrottleCommand(new ThrottleSetting(100, "Forward", TRUE, blockName));
+            w.addThrottleCommand(new ThrottleSetting(100, Command.FORWARD, -1, ValueType.VAL_TRUE, SpeedStepMode.UNKNOWN, 0,  blockName));
             if (!_noSound.isSelected()) {
-                w.addThrottleCommand(new ThrottleSetting(1000, "F2", TRUE, blockName));
-                w.addThrottleCommand(new ThrottleSetting(2500, "F2", FALSE, blockName));
-                w.addThrottleCommand(new ThrottleSetting(1000, "F2", TRUE, blockName));
-                w.addThrottleCommand(new ThrottleSetting(2500, "F2", FALSE, blockName));
+                w.addThrottleCommand(new ThrottleSetting(1000, Command.FKEY, 2, ValueType.VAL_ON, SpeedStepMode.UNKNOWN, 0, blockName));
+                w.addThrottleCommand(new ThrottleSetting(2500, Command.FKEY, 2, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
+                w.addThrottleCommand(new ThrottleSetting(1000, Command.FKEY, 2, ValueType.VAL_ON, SpeedStepMode.UNKNOWN, 0, blockName));
+                w.addThrottleCommand(new ThrottleSetting(2500, Command.FKEY, 2, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
                 cmdNum = 7;
             } else {
                 cmdNum = 3;
             }
         } else {
-            w.addThrottleCommand(new ThrottleSetting(100, "Forward", FALSE, blockName));
+            w.addThrottleCommand(new ThrottleSetting(100, Command.FORWARD, -1, ValueType.VAL_FALSE, SpeedStepMode.UNKNOWN, 0, blockName));
             if (!_noSound.isSelected()) {
-                w.addThrottleCommand(new ThrottleSetting(1000, "F3", TRUE, blockName));
-                w.addThrottleCommand(new ThrottleSetting(500, "F3", FALSE, blockName));
-                w.addThrottleCommand(new ThrottleSetting(500, "F3", TRUE, blockName));
-                w.addThrottleCommand(new ThrottleSetting(500, "F1", TRUE, blockName));
+                w.addThrottleCommand(new ThrottleSetting(1000, Command.FKEY, 3, ValueType.VAL_ON, SpeedStepMode.UNKNOWN, 0,  blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, Command.FKEY, 3, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, Command.FKEY, 3, ValueType.VAL_ON, SpeedStepMode.UNKNOWN, 0, blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, Command.FKEY, 3, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
                 cmdNum = 6;
             } else {
                 cmdNum = 2;
@@ -761,14 +792,6 @@ public class NXFrame extends WarrantRoute {
         } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
         _maxThrottle = downRamp.getMaxSpeed();
 
-        if (log.isDebugEnabled()) {
-            if (hasProfileSpeeds) {
-                log.debug("maxThrottle= {} ({} meters per sec), scale= {}", 
-                        _maxThrottle, _speedUtil.getTrackSpeed(_maxThrottle), _scale);                
-            } else {
-                log.debug("maxThrottle= {} scale= {} no SpeedProfile data", _maxThrottle, _scale);                                
-            }
-        }
         float blockLen = _startDist;    // length of path in current block
 
         // start train
@@ -798,9 +821,8 @@ public class NXFrame extends WarrantRoute {
                     blkDistance += dist;
                     remRamp -= dist;
                     curThrottle = nextThrottle;
-                    w.addThrottleCommand(new ThrottleSetting((int) speedTime, SPEED,
-                            Float.toString(curThrottle), blockName, 
-                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                    w.addThrottleCommand(new ThrottleSetting((int) speedTime, Command.SPEED, -1, ValueType.VAL_FLOAT, 
+                            SpeedStepMode.UNKNOWN, curThrottle, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                     if (log.isDebugEnabled()) {
                         log.debug("{}. Ramp Up in block \"{}\" to speed {} in {}ms to distance= {}mm, remRamp= {}",
                                 ++cmdNum, blockName, curThrottle, (int) speedTime, blkDistance, remRamp);
@@ -847,11 +869,11 @@ public class NXFrame extends WarrantRoute {
                 bo = orders.get(nextIdx++);
                 blockLen = getPathLength(bo);
                 if (blockLen <= 0) {
-                    return Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName());
+                    return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
                  }
                 blockName = bo.getBlock().getDisplayName();
-                w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", ENTER_BLOCK, blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                w.addThrottleCommand(new ThrottleSetting((int) noopTime, Command.NOOP, -1, ValueType.VAL_NOOP, 
+                        SpeedStepMode.UNKNOWN, 0, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                 if (log.isDebugEnabled()) {
                     log.debug("{}. Enter RampUp block \"{}\" noopTime= {}, speedTime= {} blockLen= {}, remTotal= {}",
                         cmdNum++, blockName, noopTime, speedTime, blockLen, remTotal);
@@ -870,11 +892,11 @@ public class NXFrame extends WarrantRoute {
                 bo = orders.get(nextIdx++);
                 blockLen = getPathLength(bo);
                 if (blockLen <= 0) {
-                    return Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName());
+                    return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
                  }
                 blockName = bo.getBlock().getDisplayName();
-                w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", ENTER_BLOCK, blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                w.addThrottleCommand(new ThrottleSetting((int) noopTime, Command.NOOP, -1, ValueType.VAL_NOOP, 
+                        SpeedStepMode.UNKNOWN, 0, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                 if (log.isDebugEnabled()) {
                     log.debug("{}. Enter block \"{}\" noopTime= {}, blockLen= {}, curDistance={}",
                             cmdNum++, blockName, noopTime, blockLen, curDistance);
@@ -894,14 +916,14 @@ public class NXFrame extends WarrantRoute {
                 bo = orders.get(nextIdx++);
                 blockLen = getPathLength(bo);
                 if (blockLen <= 0) {
-                    return Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName());
+                    return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
                  }
                 blockName = bo.getBlock().getDisplayName();
                 if (nextIdx == orders.size()) {
                     blockLen = _stopDist;
                 }
-                w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", ENTER_BLOCK, blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                w.addThrottleCommand(new ThrottleSetting((int) noopTime, Command.NOOP, -1, ValueType.VAL_NOOP, 
+                        SpeedStepMode.UNKNOWN, 0, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                 if (log.isDebugEnabled()) {
                     log.debug("{}. Enter MidRoute block \"{}\" noopTime= {}, blockLen= {}, curDistance={}",
                             cmdNum++, blockName, noopTime, blockLen, curDistance);
@@ -926,7 +948,7 @@ public class NXFrame extends WarrantRoute {
         // distance in block where down ramp is started
         blkDistance += remMaxSpeedDist;
         // time to start down ramp
-        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist) + timeInterval;
+        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist);
 
         if (log.isDebugEnabled()) {
             log.debug("Begin Ramp Down at block \"{}\" blockLen={}, at distance= {} curDistance = {} remTotal= {} curThrottle= {} ({})",
@@ -938,8 +960,8 @@ public class NXFrame extends WarrantRoute {
             if (nextIdx == orders.size()) { // at last block
                 atLastBlock = true;
                 if (_stageEStop.isSelected()) {
-                    w.addThrottleCommand(new ThrottleSetting(50, SPEED, "-0.5", blockName,
-                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                    w.addThrottleCommand(new ThrottleSetting(50, Command.SPEED, -1, ValueType.VAL_FLOAT, 
+                            SpeedStepMode.UNKNOWN, -0.5f, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                     if (log.isDebugEnabled()) {
                         log.debug("{}. At block \"{}\" EStop set speed= {}", cmdNum++, blockName, -0.5);
                     }
@@ -962,8 +984,8 @@ public class NXFrame extends WarrantRoute {
                     break;
                 }
                 if (hasPrevious) {
-                    w.addThrottleCommand(new ThrottleSetting((int) speedTime, SPEED, Float.toString(curThrottle), blockName,
-                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                    w.addThrottleCommand(new ThrottleSetting((int) speedTime, Command.SPEED, -1, ValueType.VAL_FLOAT, 
+                            SpeedStepMode.UNKNOWN, curThrottle, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                     if (log.isDebugEnabled()) {
                         log.debug("{}. Ramp Down in block \"{}\" to curThrottle {} in {}ms to distance= {}mm, remRamp= {}",
                                 ++cmdNum, blockName, curThrottle, (int) speedTime, blkDistance, remRamp);
@@ -1004,12 +1026,12 @@ public class NXFrame extends WarrantRoute {
                 } else {
                     blockLen = getPathLength(bo);
                     if (blockLen <= 0) {
-                        return Bundle.getMessage(ZERO_PATH_LENGTH, bo.getPathName(), bo.getBlock().getDisplayName());
+                        return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
                      }
                 }
                 blockName = bo.getBlock().getDisplayName();
-                w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", ENTER_BLOCK, blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                w.addThrottleCommand(new ThrottleSetting((int) noopTime, Command.NOOP, -1, ValueType.VAL_NOOP, 
+                        SpeedStepMode.UNKNOWN, 0, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                 if (log.isDebugEnabled()) {
                     log.debug("{}. Enter block \"{}\" noopTime= {}ms, blockLen= {}, curDistance={}",
                             cmdNum++, blockName, noopTime, blockLen, curDistance);
@@ -1024,11 +1046,11 @@ public class NXFrame extends WarrantRoute {
         log.debug("Ramp down done at block \"{}\",  remRamp= {}, curDistance= {} remRamp= {}",
                 blockName, remRamp, curDistance, remTotal);
         if (!_noSound.isSelected()) {
-            w.addThrottleCommand(new ThrottleSetting(500, "F1", FALSE, blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F2", TRUE, blockName));
-            w.addThrottleCommand(new ThrottleSetting(3000, "F2", FALSE, blockName));
+            w.addThrottleCommand(new ThrottleSetting(500, Command.FKEY, 1, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
+            w.addThrottleCommand(new ThrottleSetting(1000, Command.FKEY, 2, ValueType.VAL_ON, SpeedStepMode.UNKNOWN, 0, blockName));
+            w.addThrottleCommand(new ThrottleSetting(2000, Command.FKEY, 2, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
         }
-        w.addThrottleCommand(new ThrottleSetting(1000, "F0", FALSE, blockName));
+        w.addThrottleCommand(new ThrottleSetting(500, Command.FKEY, 0, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
         return null;
     }
 

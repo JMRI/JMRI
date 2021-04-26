@@ -2,6 +2,7 @@ package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -12,8 +13,8 @@ import javax.swing.AbstractAction;
  */
 public class SetTrainIconPositionAction extends AbstractAction {
 
-    public SetTrainIconPositionAction(String s) {
-        super(s);
+    public SetTrainIconPositionAction() {
+        super(Bundle.getMessage("MenuSetTrainIcon"));
     }
 
     SetTrainIconPositionFrame f = null;

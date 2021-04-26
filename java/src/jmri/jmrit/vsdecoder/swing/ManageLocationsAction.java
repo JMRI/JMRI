@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Loading of Reporters, Blocks, Locations and Listener attributes.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -38,12 +40,9 @@ import org.slf4j.LoggerFactory;
 public class ManageLocationsAction extends AbstractAction {
 
     private ManageLocationsFrame f = null;
-    private HashMap<String, PhysicalLocation> reporterMap;
-    private HashMap<String, PhysicalLocation> blockMap;
-    private HashMap<String, PhysicalLocation> opsMap;
     private ListeningSpot listenerLoc;
 
-    public ManageLocationsAction(String s, String a) {
+    public ManageLocationsAction(String s) {
         super(s);
     }
 
@@ -54,52 +53,51 @@ public class ManageLocationsAction extends AbstractAction {
             listenerLoc = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition();
 
             // Handle Reporters
-            ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
+            ReporterManager rmgr = jmri.InstanceManager.getDefault(ReporterManager.class);
             Set<Reporter> reporterSet = rmgr.getNamedBeanSet();
-            Object[][] reporterTable = new Object[reporterSet.size()][6];
-            reporterMap = new HashMap<>();
+            Object[][] reporterTable = new Object[reporterSet.size()][7];
             int i = 0;
             for (Reporter r : reporterSet) {
                 if (r != null) {
                     if (r instanceof PhysicalLocationReporter) {
-                        reporterMap.put(r.getSystemName(), ((PhysicalLocationReporter) r).getPhysicalLocation());
                         PhysicalLocation p = ((PhysicalLocationReporter) r).getPhysicalLocation();
-                        reporterTable[i][0] = r.getSystemName();
-                        reporterTable[i][1] = true;
-                        reporterTable[i][2] = p.getX();
-                        reporterTable[i][3] = p.getY();
-                        reporterTable[i][4] = p.getZ();
-                        reporterTable[i][5] = p.isTunnel();
+                        reporterTable[i][ManageLocationsTableModel.SYSNAMECOL] = r.getSystemName();
+                        reporterTable[i][ManageLocationsTableModel.USERNAMECOL] = r.getDisplayName();
+                        reporterTable[i][ManageLocationsTableModel.USECOL + 1] = true;
+                        reporterTable[i][ManageLocationsTableModel.XCOL + 1] = p.getX();
+                        reporterTable[i][ManageLocationsTableModel.YCOL + 1] = p.getY();
+                        reporterTable[i][ManageLocationsTableModel.ZCOL + 1] = p.getZ();
+                        reporterTable[i][ManageLocationsTableModel.TUNNELCOL + 1] = p.isTunnel();
                     } else {
-                        reporterTable[i][0] = r.getSystemName();
-                        reporterTable[i][1] = false;
-                        reporterTable[i][2] = Float.valueOf(0.0f);
-                        reporterTable[i][3] = Float.valueOf(0.0f);
-                        reporterTable[i][4] = Float.valueOf(0.0f);
-                        reporterTable[i][5] = false;
+                        reporterTable[i][ManageLocationsTableModel.SYSNAMECOL] = r.getSystemName();
+                        reporterTable[i][ManageLocationsTableModel.USERNAMECOL] = r.getDisplayName();
+                        reporterTable[i][ManageLocationsTableModel.USECOL + 1] = false;
+                        reporterTable[i][ManageLocationsTableModel.XCOL + 1] = Float.valueOf(0.0f);
+                        reporterTable[i][ManageLocationsTableModel.YCOL + 1] = Float.valueOf(0.0f);
+                        reporterTable[i][ManageLocationsTableModel.ZCOL + 1] = Float.valueOf(0.0f);
+                        reporterTable[i][ManageLocationsTableModel.TUNNELCOL + 1] = false;
                     }
                 }
                 i++;
             }
 
             // Handle Blocks
-            BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
+            BlockManager bmgr = jmri.InstanceManager.getDefault(BlockManager.class);
             Set<Block> blockSet = bmgr.getNamedBeanSet();
-            Object[][] blockTable = new Object[blockSet.size()][6];
-            blockMap = new HashMap<>();
+            Object[][] blockTable = new Object[blockSet.size()][7];
             i = 0;
             for (Block b : blockSet) {
                 // NOTE: Unlike Reporters, all Blocks are (now) PhysicalLocationReporters, so no need to do a check here.
                 // We'll keep the explicit cast for now, but it's not actually necessary.
                 if (b != null) {
-                    blockMap.put(b.getSystemName(), ((PhysicalLocationReporter) b).getPhysicalLocation());
                     PhysicalLocation p = ((PhysicalLocationReporter) b).getPhysicalLocation();
-                    blockTable[i][0] = b.getSystemName();
-                    blockTable[i][1] = true;
-                    blockTable[i][2] = p.getX();
-                    blockTable[i][3] = p.getY();
-                    blockTable[i][4] = p.getZ();
-                    blockTable[i][5] = p.isTunnel();
+                    blockTable[i][ManageLocationsTableModel.SYSNAMECOL] = b.getSystemName();
+                    blockTable[i][ManageLocationsTableModel.USERNAMECOL] = b.getDisplayName();
+                    blockTable[i][ManageLocationsTableModel.USECOL + 1] = true;
+                    blockTable[i][ManageLocationsTableModel.XCOL + 1] = p.getX();
+                    blockTable[i][ManageLocationsTableModel.YCOL + 1] = p.getY();
+                    blockTable[i][ManageLocationsTableModel.ZCOL + 1] = p.getZ();
+                    blockTable[i][ManageLocationsTableModel.TUNNELCOL + 1] = p.isTunnel();
                 }
                 i++;
             }
@@ -107,24 +105,22 @@ public class ManageLocationsAction extends AbstractAction {
             // Handle Ops Locations
             LocationManager lmgr = jmri.InstanceManager.getDefault(LocationManager.class);
             List<Location> locations = lmgr.getLocationsByIdList();
-            opsMap = new HashMap<>();
             log.debug("TableSize: {}", locations.size());
             Object[][] opsTable = new Object[locations.size()][6];
             i = 0;
             for (Location l : locations) {
                 log.debug("i: {}, MLA: {}, Name: {}, table: {}", i, l.getId(), l.getName(), java.util.Arrays.toString(opsTable[i]));
-                opsTable[i][0] = l.getName();
+                opsTable[i][ManageLocationsTableModel.NAMECOL] = l.getName();
                 PhysicalLocation p = l.getPhysicalLocation();
                 if (p == PhysicalLocation.Origin) {
-                    opsTable[i][1] = false;
+                    opsTable[i][ManageLocationsTableModel.USECOL] = false;
                 } else {
-                    opsTable[i][1] = true;
+                    opsTable[i][ManageLocationsTableModel.USECOL] = true;
                 }
-                opsTable[i][2] = p.getX();
-                opsTable[i][3] = p.getY();
-                opsTable[i][4] = p.getZ();
-                opsTable[i][5] = p.isTunnel();
-                opsMap.put(l.getName(), l.getPhysicalLocation());
+                opsTable[i][ManageLocationsTableModel.XCOL] = p.getX();
+                opsTable[i][ManageLocationsTableModel.YCOL] = p.getY();
+                opsTable[i][ManageLocationsTableModel.ZCOL] = p.getZ();
+                opsTable[i][ManageLocationsTableModel.TUNNELCOL] = p.isTunnel();
                 i++;
             }
 

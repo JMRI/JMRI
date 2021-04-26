@@ -28,10 +28,12 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Create and return an internal (no layout connection) turnout
+     * Create and return an internal (no layout connection) Turnout.
+     * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new AbstractTurnout(systemName, userName) {
 
             @Override
@@ -48,15 +50,29 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
             public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
+            
+            @Override
+            public boolean isCanFollow() {
+                return true;
+            }
         };
     }
 
+    /**
+     * Multiple additions enabled for Internal Turnouts.
+     * {@inheritDoc}
+     */
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
+    /**
+     * No validation for Internal Turnouts.
+     * {@inheritDoc}
+     */
     @Override
+    @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }

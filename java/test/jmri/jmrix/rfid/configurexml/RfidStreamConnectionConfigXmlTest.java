@@ -1,7 +1,9 @@
 package jmri.jmrix.rfid.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidStreamConnectionConfig;
 
@@ -12,8 +14,7 @@ import jmri.jmrix.rfid.RfidStreamConnectionConfig;
  */
 public class RfidStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +22,7 @@ public class RfidStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.A
         cc = new RfidStreamConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         // if we've started a traffic controller, dispose of it

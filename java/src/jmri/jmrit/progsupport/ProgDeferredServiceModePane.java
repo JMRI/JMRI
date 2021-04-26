@@ -112,7 +112,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
             //ProgrammingMode mode = (ProgrammingMode)e.getNewValue();
             //updateStatus(mode);
         } else {
-            log.warn("propertyChange with unexpected propertyName: " + e.getPropertyName());
+            log.warn("propertyChange with unexpected propertyName: {}", e.getPropertyName());
         }
     }
 

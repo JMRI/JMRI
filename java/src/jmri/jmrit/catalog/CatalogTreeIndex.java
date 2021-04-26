@@ -1,6 +1,8 @@
 package jmri.jmrit.catalog;
 
 import java.util.HashMap;
+import jmri.CatalogTreeNode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +40,7 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
             newNode = new CatalogTreeNode(pName);
         }
         if (log.isDebugEnabled()) {
-            log.debug("insertNodeInto: newNode= " + newNode.getUserObject()
-                    + ", into parent= " + pParent.getUserObject());
+            log.debug("insertNodeInto: newNode= {}, into parent= {}", newNode.getUserObject(), pParent.getUserObject());
         }
         insertNodeInto(newNode, pParent, pParent.getChildCount());
     }

@@ -3,8 +3,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -12,7 +12,7 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CarRosterMenuTest extends OperationsTestCase {
 

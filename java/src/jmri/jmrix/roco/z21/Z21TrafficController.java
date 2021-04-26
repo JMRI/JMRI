@@ -2,11 +2,12 @@ package jmri.jmrix.roco.z21;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.DatagramPacket;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractPortController;
-import jmri.jmrix.ConnectionStatus;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import jmri.jmrix.*;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +95,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
+            log.debug("forwardToPort message: [{}]", m);
         }
         // remember who sent this
         mLastSender = reply;
@@ -106,7 +107,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         javax.swing.SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        byte[] msg = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
 
@@ -121,8 +122,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         try {
             if (log.isDebugEnabled()) {
                 StringBuilder f = new StringBuilder("formatted message: ");
-                for (int i = 0; i < msg.length; i++) {
-                    f.append(Integer.toHexString(0xFF & msg[i]));
+                for (byte b : msg) {
+                    f.append(Integer.toHexString(0xFF & b));
                     f.append(" ");
                 }
                 log.debug(new String(f));
@@ -131,12 +132,12 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 if (portReadyToSend(controller)) {
                     // create a datagram with the data from the
                     // message.
-                    byte data[] = ((Z21Message) m).getBuffer();
+                    byte[] data = ((Z21Message) m).getBuffer();
                     DatagramPacket sendPacket
                             = new DatagramPacket(data, ((Z21Message) m).getLength(), host, port);
                     // and send it.
                     ((Z21Adapter) controller).getSocket().send(sendPacket);
-                    log.debug("written, msg timeout: " + m.getTimeout() + " mSec");
+                    log.debug("written, msg timeout: {} mSec", m.getTimeout());
                     break;
                 } else if (m.getRetries() >= 0) {
                     if (log.isDebugEnabled()) {
@@ -215,28 +216,21 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             }
         }
         // and start threads
-        xmtThread = new Thread(xmtRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    transmitLoop();
-                } catch (Throwable e) {
-                    if(!threadStopRequest) log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
-                    // ThreadDeath must be thrown per Java API JavaDocs
-                    if (e instanceof ThreadDeath) {
-                        throw e;
-                    }
+        xmtThread = new Thread(xmtRunnable = () -> {
+            try {
+                transmitLoop();
+            } catch (Throwable e) {
+                if(!threadStopRequest)
+                    log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+                // ThreadDeath must be thrown per Java API JavaDocs
+                if (e instanceof ThreadDeath) {
+                    throw e;
                 }
             }
         });
         xmtThread.setName("z21.Z21TrafficController Transmit thread");
         xmtThread.start();
-        rcvThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                receiveLoop();
-            }
-        });
+        rcvThread = new Thread(this::receiveLoop);
         rcvThread.setName("z21.Z21TrafficController Receive thread");
         int xr = rcvThread.getPriority();
         xr++;
@@ -263,8 +257,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
     @Override
     protected boolean endOfMessage(AbstractMRReply r) {
-        // since this is a UDP protocol, and each UDP message contains
-        // exactly one UDP reply, we don't check for end of message manually.
+        // since this is a UDP protocol, and each reply in the packet is complete,
+        // we don't check for end of message manually.
         return true;
     }
 
@@ -281,7 +275,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         // threading to let other stuff happen
 
         // create a buffer to hold the incoming data.
-        byte buffer[] = new byte[100];  // the size here just needs to be longer
+        byte[] buffer = new byte[100];  // the size here just needs to be longer
         // than the longest protocol message.  
         // Otherwise, the receive will truncate.
 
@@ -299,15 +293,34 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             return;
         }
         if (threadStopRequest) return;
-        
-        // create the reply from the received data.
-        Z21Reply msg = new Z21Reply(buffer, receivePacket.getLength());
 
+        // handle more than one reply in the same UDP packet.
+        List<Z21Reply> replies = new ArrayList<>();
+
+        int totalLength=receivePacket.getLength();
+        int consumed=0;
+
+        do {
+            int length = (0xff & buffer[0]) + ((0xff & buffer[1]) << 8);
+            Z21Reply msg = new Z21Reply(buffer, length);
+
+            replies.add(msg);
+
+            buffer = Arrays.copyOfRange(buffer,length,buffer.length);
+            consumed +=length;
+            log.trace("total length: {} consumed {}",totalLength,consumed);
+        } while(totalLength>consumed);
+
+
+        // and then dispatch each reply
+        replies.forEach(this::dispatchReply);
+    }
+
+    private void dispatchReply(Z21Reply msg) {
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + msg.getNumDataElements()
-                    + " contains " + msg.toString() + " state " + mCurrentState);
+            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
 
         // forward the message to the registered recipients,
@@ -316,11 +329,11 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (java.lang.InterruptedException ie) {
+        } catch (InterruptedException ie) {
             if(threadStopRequest) return;
-            log.error("Unexpected exception in invokeAndWait:" + ie,ie);
+            log.error("Unexpected exception in invokeAndWait:{}", ie, ie);
         } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e,e);
+            log.error("Unexpected exception in invokeAndWait:{}", e, e);
         }
         if (log.isDebugEnabled()) {
             log.debug("dispatch thread invoked");
@@ -390,10 +403,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 }
                 default: {
                     replyInDispatch = false;
-                    if (allowUnexpectedReply == true) {
+                    if (allowUnexpectedReply) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: "
-                                    + mCurrentState + " was " + msg.toString());
+                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
                         }
                         synchronized (xmtRunnable) {
                             // The transmit thread sometimes gets stuck
@@ -411,8 +423,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             // Unsolicited message
         } else {
             if (log.isDebugEnabled()) {
-                log.debug("Unsolicited Message Received "
-                        + msg.toString());
+                log.debug("Unsolicited Message Received {}", msg.toString());
             }
 
             replyInDispatch = false;
@@ -457,7 +468,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     public void terminateThreads() {
         threadStopRequest = true;
         // ensure socket closed to end pending operations
-        if ( controller!=null && ((Z21Adapter) controller).getSocket()!=null) ((Z21Adapter) controller).getSocket().close();
+        if ( controller != null && ((Z21Adapter) controller).getSocket() != null) ((Z21Adapter) controller).getSocket().close();
         
         // usual stop process
         super.terminateThreads();

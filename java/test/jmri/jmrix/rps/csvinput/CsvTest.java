@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.rps.csvinput package.

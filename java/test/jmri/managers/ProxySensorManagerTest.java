@@ -9,19 +9,17 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxySensorManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014
  */
 public class ProxySensorManagerTest implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
-    protected ProxySensorManager l = null;	// holds objects under test
+    protected ProxySensorManager l = null; // holds objects under test
 
     @Test
     public void testDispose() {
@@ -86,15 +84,10 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideSensor("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-            throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideSensor(""));
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -180,6 +173,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     // but they need a concrete implementation to do it, hence are here.
     
     @Test
+    @SuppressWarnings("deprecation") // getNamedBeanList, addDataListener references
     public void testAddTracking() {
         Sensor s1 = l.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -228,7 +222,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
-        Assert.assertEquals("propertyListenerCount", 4, propertyListenerCount);
+        Assert.assertEquals("propertyListenerCount", 5, propertyListenerCount);
         Assert.assertEquals("last call", "length", propertyListenerLast);
 
         // listener should have been immediately invoked
@@ -239,10 +233,11 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("index 3", 3, lastEvent0);
         Assert.assertEquals("content at added index", s4, l.getNamedBeanList().get(lastEvent0));
         
-        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getNamedBeanList, addDataListener references
     public void testRemoveTrackingI() {
         
         Sensor s1 = l.provideSensor("IS1");
@@ -261,10 +256,13 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("type", Manager.ManagerDataEvent.INTERVAL_REMOVED, lastType);
         Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
         Assert.assertEquals("index", 1, lastEvent0);
-        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));       
+        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getNamedBeanList, addDataListener references
     public void testRemoveTrackingJ() {
         
         l.provideSensor("IS10");
@@ -286,7 +284,9 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("type", Manager.ManagerDataEvent.INTERVAL_REMOVED, lastType);
         Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
         Assert.assertEquals("index", 3, lastEvent0);
-        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));       
+        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
     }
 
     @Test
@@ -311,6 +311,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
+    @SuppressWarnings("deprecation") // setDataListenerMute, addDataListener references
     public void testRemoveTrackingJMute() {
         
         l.setDataListenerMute(true);
@@ -340,6 +341,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList, getNamedBeanList references
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
@@ -403,10 +405,14 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("bean set 2nd", s2, iter.next());
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
 
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList, getNamedBeanList references
     public void testUnmodifiable() {
         Sensor s1 = l.provideSensor("IS1");
         l.provideSensor("IS2");
@@ -429,6 +435,9 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
             beanSet.add(s1);
             Assert.fail("beanSet should have thrown");
         } catch (UnsupportedOperationException e) { /* this is OK */}
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
 
     }
 
@@ -494,7 +503,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = "Changed";
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -516,7 +525,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = null;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

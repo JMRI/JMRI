@@ -24,17 +24,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame for Sprog Console
- *
+ * <p>
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying to send
  * some commands while slot manager is active
- * 
+ * <p>
  * Updated April 2016 by Andrew Crosland - remove the checks on slot manager
  * status, implement a timeout and look for the correct replies which may be
  * delayed by replies for slot manager.
- *
+ * <p>
  * Refactored, I18N
  *
- * @author	Andrew Crosland Copyright (C) 2008, 2016
+ * @author Andrew Crosland Copyright (C) 2008, 2016
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener, SprogVersionListener {
 
@@ -72,10 +72,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
         IDLE,
         CURRENTQUERYSENT, // awaiting reply to "I"
-        MODEQUERYSENT,    // awaiting reply to "M"
-        CURRENTSENT,      // awaiting reply to "I xxx"
-        MODESENT,         // awaiting reply to "M xxx"
-        WRITESENT   	  // awaiting reply to "W"
+        MODEQUERYSENT, // awaiting reply to "M"
+        CURRENTSENT, // awaiting reply to "I xxx"
+        MODESENT, // awaiting reply to "M xxx"
+        WRITESENT         // awaiting reply to "W"
     }
 
     public SprogConsoleFrame(SprogSystemConnectionMemo memo) {
@@ -106,9 +106,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      */
     @Override
     public void dispose() {
-	if(tc!=null) {
-           tc.removeSprogListener(this);
-	}
+        if (tc != null) {
+            tc.removeSprogListener(this);
+        }
         super.dispose();
     }
 
@@ -283,7 +283,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         }
         try {
             currentLimit = Integer.parseInt(currentTextField.getText());
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
                     Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
             currentLimit = validLimit;
@@ -304,7 +305,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         if (isCurrentLimitPossible()) {
             validateCurrent();
             // Value written is scaled from mA to hardware units
-            currentLimitForHardware = (int) (currentLimit * (1/sv.sprogType.getCurrentMultiplier()));
+            currentLimitForHardware = (int) (currentLimit * (1 / sv.sprogType.getCurrentMultiplier()));
             if (sv.sprogType.sprogType < SprogType.SPROGIIv3) {
                 // Hack for SPROG bug where MSbyte of value must be non-zero
                 currentLimitForHardware += 256;
@@ -348,9 +349,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     /**
      * Handle a SprogVersion notification.
      * <p>
-     * Decode the SPROG version and populate the console gui appropriately with 
+     * Decode the SPROG version and populate the console gui appropriately with
      * the features applicable to the version.
-     * 
+     *
      * @param v The SprogVersion being handled
      */
     @Override
@@ -367,7 +368,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
                     Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
         } else {
-            if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) &&(sv.sprogType.sprogType < SprogType.NANO)) {
+            if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) && (sv.sprogType.sprogType < SprogType.NANO)) {
                 currentTextField.setToolTipText(Bundle.getMessage("CurrentLimitFieldTooltip2500"));
             }
             // We know what we're connected to
@@ -429,10 +430,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     /**
      * Handle a SprogReply in a console specific way.
      * <p>
-     * Parse replies from the SPROG using a state machine to determine what we are
-     * expecting in response to commands sent to the SPROG. Extract data to populate
-     * various fields in the gui.
-     * 
+     * Parse replies from the SPROG using a state machine to determine what we
+     * are expecting in response to commands sent to the SPROG. Extract data to
+     * populate various fields in the gui.
+     *
      * @param l The SprogReply to be parsed
      */
     @Override
@@ -445,11 +446,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // *** Check for error reply
         switch (state) {
             case IDLE:
-                log.debug("reply in IDLE state: " + replyString);
+                log.debug("reply in IDLE state: {}", replyString);
                 break;
             case CURRENTQUERYSENT:
                 // Look for an "I=" reply
-                log.debug("reply in CURRENTQUERYSENT state: " + replyString);
+                log.debug("reply in CURRENTQUERYSENT state: {}", replyString);
                 if (replyString.contains("I=")) {
                     stopTimer();
                     int valueLength = 4;
@@ -458,19 +459,20 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     }
                     tmpString = replyString.substring(replyString.indexOf("=")
                             + 1, replyString.indexOf("=") + valueLength);
-                    log.debug("Current limit string: " + tmpString);
+                    log.debug("Current limit string: {}", tmpString);
                     try {
                         currentLimitFromHardware = Integer.parseInt(tmpString);
-                    } catch (NumberFormatException e) {
+                    }
+                    catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogLimit"),
                                 Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
                     // Value written is scaled from hardware units to mA
-                    currentLimit = (int)(currentLimitFromHardware * sv.sprogType.getCurrentMultiplier());
-                    log.debug("Current limit scale factor: " + sv.sprogType.getCurrentMultiplier());
-                    log.debug("Current limit from hardware: " + currentLimitFromHardware + " scaled to: " + currentLimit + "mA");
+                    currentLimit = (int) (currentLimitFromHardware * sv.sprogType.getCurrentMultiplier());
+                    log.debug("Current limit scale factor: {}", sv.sprogType.getCurrentMultiplier());
+                    log.debug("Current limit from hardware: {} scaled to: {}mA", currentLimitFromHardware, currentLimit);
                     currentTextField.setText(String.valueOf(currentLimit));
                     currentTextField.setEnabled(true);
 
@@ -484,7 +486,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 }
                 break;
             case MODEQUERYSENT:
-                log.debug("reply in MODEQUERYSENT state: " + replyString);
+                log.debug("reply in MODEQUERYSENT state: {}", replyString);
                 if (replyString.contains("M=")) {
                     stopTimer();
                     tmpString = replyString.substring(replyString.indexOf("=")
@@ -492,7 +494,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     // Value returned is in hex
                     try {
                         modeWord = Integer.parseInt(tmpString, 16);
-                    } catch (NumberFormatException e) {
+                    }
+                    catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogWord"),
                                 Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
@@ -517,7 +520,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 break;
             case CURRENTSENT:
                 // Any reply will do here
-                log.debug("reply in CURRENTSENT state: " + replyString);
+                log.debug("reply in CURRENTSENT state: {}", replyString);
                 // Get new mode word - assume 128 steps
                 modeWord = SprogConstants.STEP128_BIT;
                 if (speed14Button.isSelected()) {
@@ -549,7 +552,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 break;
             case MODESENT:
                 // Any reply will do here
-                log.debug("reply in MODESENT state: " + replyString);
+                log.debug("reply in MODESENT state: {}", replyString);
                 // Write to EEPROM
                 state = State.WRITESENT;
                 msg = new SprogMessage("W");
@@ -558,7 +561,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 break;
             case WRITESENT:
                 // Any reply will do here
-                log.debug("reply in WRITESENT state: " + replyString);
+                log.debug("reply in WRITESENT state: {}", replyString);
                 // All done
                 state = State.IDLE;
                 break;
@@ -598,7 +601,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      *
      * @param delay milliseconds to delay
      */

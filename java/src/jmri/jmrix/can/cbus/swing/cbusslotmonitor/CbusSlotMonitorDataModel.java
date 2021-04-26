@@ -3,10 +3,7 @@ package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import jmri.DccLocoAddress;
-import jmri.util.swing.TextAreaFIFO;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -15,6 +12,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
+import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
 
@@ -65,6 +63,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         tc = memo.getTrafficController();
         addTc(tc);
         tablefeedback = new TextAreaFIFO(MAX_LINES);
+        tablefeedback.setEditable ( false );
         
     }
     
@@ -132,33 +131,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return "unknown"; // NOI18N
         }
     }
-
-    /**
-    * Returns int of startup column widths
-    * @param col int col number
-    * @return preferred initial width
-    */
-    public static int getPreferredWidth(int col) {
-        switch (col) {
-            case SPEED_STEP_COLUMN:
-            case LOCO_ID_LONG_COLUMN:
-            case LOCO_CONSIST_COLUMN:
-                return new JTextField(3).getPreferredSize().width;
-            case LOCO_ID_COLUMN:
-            case FLAGS_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
-            case SESSION_ID_COLUMN:
-            case LOCO_COMMANDED_SPEED_COLUMN:
-            case ESTOP_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case FUNCTION_LIST:
-                return new JTextField(6).getPreferredSize().width;
-            case LOCO_DIRECTION_COLUMN:
-                return new JTextField(8).getPreferredSize().width;
-            default:
-                return new JTextField(8).getPreferredSize().width;
-        }
-    }
     
     /**
      * {@inheritDoc}
@@ -199,32 +171,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
 
     /**
-     * Configure a table to have our standard rows and columns.
-     * <p>
-     * This is optional, in that other table formats can use this table model.
-     * But we put it here to help keep it consistent.
-     * @param cmdStatTable Table to be configured
-     */
-    public void configureTable(JTable cmdStatTable) {
-        // allow reordering of the columns
-        cmdStatTable.getTableHeader().setReorderingAllowed(true);
-
-        // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        cmdStatTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // resize columns as requested
-        for (int i = 0; i < cmdStatTable.getColumnCount(); i++) {
-            int width = getPreferredWidth(i);
-            cmdStatTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-       // cmdStatTable.sizeColumnsToFit(-1);
-       tablefeedback.setEditable ( false );
-    }
-
-    /**
-     * Return table values
-     * @param row int row number
-     * @param col int col number
+     * {@inheritDoc}
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -260,9 +207,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     /**
-     * @param value object value
-     * @param row int row number
-     * @param col int col number
+     * {@inheritDoc}
      */
     @Override
     public void setValueAt(Object value, int row, int col) {

@@ -2,7 +2,7 @@ package jmri.jmrix.cmri.serial;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a CMRI communications port.

@@ -7,16 +7,16 @@ import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
  * Provide the required SystemConnectionMemo for the XPA+Modem adapters.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
- * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016,2020
  */
-public class XpaSystemConnectionMemo extends SystemConnectionMemo {
+public class XpaSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public XpaSystemConnectionMemo() {
         this("P", "XPA"); // Prefix from XpaTurnoutManager, UserName from XpaThrottleManager
@@ -24,9 +24,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
 
     public XpaSystemConnectionMemo(String prefix, String userName){
         super(prefix, userName); 
-        register(); // registers general type
-        InstanceManager.store(this,XpaSystemConnectionMemo.class); // also register as specific type
-
+        InstanceManager.store(this,XpaSystemConnectionMemo.class);
         // create and register the XNetComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.xpa.swing.XpaComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
@@ -43,8 +41,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         return new NamedBeanComparator<>();
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
-
+    final jmri.jmrix.swing.ComponentFactory cf;
 
     /* manage the associated traffic controller */
     private XpaTrafficController tc = null;
@@ -72,84 +69,35 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the Throttle Manager for this particular connection.
      */
     public ThrottleManager getThrottleManager() {
-        if (throttleManager == null) {
-            throttleManager = new XpaThrottleManager(this);
-        }
-        return throttleManager;
+        return (ThrottleManager)classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> { return new XpaThrottleManager(this);});
     }
 
 
     public void setThrottleManager(ThrottleManager t) {
-        throttleManager = t;
+        store(t,ThrottleManager.class);
     }
-
-    private ThrottleManager throttleManager;
 
     /*
      * Provide access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
-        if (powerManager == null) {
-            powerManager = new XpaPowerManager(getXpaTrafficController());
-        }
-        return powerManager;
-
+        return (PowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class c) -> { return new XpaPowerManager(this); });
     }
 
     public void setPowerManager(PowerManager p) {
-        powerManager = p;
+        store(p,PowerManager.class);
     }
-
-    private PowerManager powerManager;
 
     /*
      * Provide access to the TurnoutManager for this particular connection.
      */
     public TurnoutManager getTurnoutManager() {
-        if (turnoutManager == null) {
-            turnoutManager = new XpaTurnoutManager(this);
-        }
-        return turnoutManager;
+        return (TurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> { return  new XpaTurnoutManager(this); });
     }
 
     public void setTurnoutManager(TurnoutManager t) {
-        turnoutManager = t;
+        store(t,TurnoutManager.class);
     }
-
-    private TurnoutManager turnoutManager = null;
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        } else if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        return null; // nothing, by default
-   }
 
     @Override
     public void dispose() {

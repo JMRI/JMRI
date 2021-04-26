@@ -8,6 +8,11 @@ public class LocoIOMode {
 
     /**
      * Create a new instance of LocoIOMode.
+     * @param isOutput isOutput value.
+     * @param opcode opcode.
+     * @param sv0 sv0 value.
+     * @param sv2 sv2 value.
+     * @param mode IO mode.
      */
     public LocoIOMode(int isOutput, int opcode, int sv0, int sv2, String mode) {
         this.isOutput = isOutput;
@@ -16,11 +21,11 @@ public class LocoIOMode {
         this.sv2 = sv2;
         this.mode = mode;
     }
-    private int isOutput;
-    private int opcode;
-    private int sv0;
-    private int sv2;
-    private String mode;
+    private final int isOutput;
+    private final int opcode;
+    private final int sv0;
+    private final int sv2;
+    private final String mode;
 
     public String getMode() {
         return mode;

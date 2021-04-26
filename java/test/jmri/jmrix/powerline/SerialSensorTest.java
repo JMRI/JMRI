@@ -1,12 +1,12 @@
 package jmri.jmrix.powerline;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -14,18 +14,17 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
 
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SerialTrafficController tc = new SerialTrafficController(){
@@ -39,7 +38,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

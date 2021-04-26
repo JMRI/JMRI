@@ -24,27 +24,27 @@ import jmri.jmrit.picker.PickSinglePanel;
  */
 public class OpenPickListButton<T extends NamedBean> {
 
-    private JPanel _buttonPanel;
+    private final JPanel _buttonPanel;
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
     String[] _blurbLines;
     PickListModel<T> _model;
     Window _parent;
    
-    OpenPickListButton(String[] blurbLines, PickListModel<T> model, Window parent) {
+    OpenPickListButton(String[] blurbLines, PickListModel<T> model, Window parent, String buttonCaption) {
         _model = model;
         _blurbLines = blurbLines;
-        _buttonPanel = makePickListPanel();
+        _buttonPanel = makePickListPanel(buttonCaption);
         _parent = parent;
     }
 
-    private JPanel makePickListPanel() {
+    private JPanel makePickListPanel(String buttonCaption) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
-        _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist", _model.getName()));
+        _openPicklistButton = new JButton(buttonCaption);
         _openPicklistButton.addActionListener((ActionEvent a) -> {
             if (_pickFrame == null) {
                 openPickList();
@@ -79,7 +79,7 @@ public class OpenPickListButton<T extends NamedBean> {
         JPanel panel = new JPanel();
         panel.add(blurb);
         content.add(panel);
-        PickSinglePanel<T> pickPanel = new PickSinglePanel<T>(_model);
+        PickSinglePanel<T> pickPanel = new PickSinglePanel<>(_model);
         content.add(pickPanel);
         content.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         pickPanel.setToolTipText(Bundle.getMessage("ToolTipPickLists"));

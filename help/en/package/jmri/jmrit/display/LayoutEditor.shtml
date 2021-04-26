@@ -172,7 +172,7 @@
       <p>Below is a short tutorial on the basics of using Layout
       Editor. A more complete tutorial is available for download as
       a pdf file on the JMRI web site. See <a href=
-      "http://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using
+      "https://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using
       the JMRI/PanelPro Layout Editor</strong></a> and its two
       associated demonstration .xml files. <a name="start" id=
       "start"></a></p>
@@ -594,26 +594,14 @@
       panels.</p>
 
       <ul>
-        <li><strong>Store Panels...</strong> - When this item is selected, a
-        Save dialog is shown. When Save is selected in the Save
-        dialog, all layout configuration information is written to
-        disk, including information for all panels, Layout
-        Editor, Control Panel Editor and Panel Editor types, and all non-panel
-        specific layout configuration items (e.g. turnouts,
-        sensors, lights, signal heads, routes, logixs, blocks,
-        etc.)<br>
-        <strong>Store panels...</strong> is available in the File menu
-        of each panel, and in the Panels menu. It can also be
-        reached by selecting <strong>Store Configuration And Panels To
-        File...</strong> in the Store submenu of the File menu of any
-        table.</li>
+        <li><strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store Panels...</strong></em>} <span class="since">since 4.23.3</span>
+        See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</li>
 
         <li><strong>Delete this Panel...</strong> - This item deletes the
         front most panel. A confirmation dialog is displayed,
         allowing the choice of canceling before deleting. Deletion
         removes the panel from the program. To permanently delete a
-        panel from your panel file, <strong>Store panels...</strong> must be
-        selected after deleting that panel. <strong>There is no undo for
+        panel from your PanelPro data file, do the store process. <strong>There is no undo for
         deletion.</strong> Unless the panel previously was saved to
         disk under a different file name, it is gone after deletion.</li>
       </ul>
@@ -712,7 +700,7 @@
         <li><span class="since">Since 4.15.6</span>
         <strong>Save Location and Size</strong> - This item is only displayed
         when the <strong>Use old location and size logic for editor panels</strong>
-        option is enabled in <strong>Preferences >> Display</strong>.<br>
+        option is enabled in <strong>Preferences &gt; Display</strong>.<br>
 
         When this item is selected, the current panel window size and location
         replace the default size and location of the panel window.  If the panel
@@ -804,8 +792,12 @@
             block names are <strong>AUTOBLK:n</strong> where n is a number.</li>
 
             <li><strong>Hide Track Construction Lines</strong> - Some track
-            objects create construction lines.  This mainly applieds to curved
-            track.  If this option is enabled, then those lines are not displayed,</li>
+            objects create construction lines.  This mainly applies to curved
+            track.  If this option is enabled, then those lines are not displayed. Note: 
+            This state remains in effect ONLY during the current PanelPro session and WILL NOT
+            be stored to the PanelPro file if the panel file is stored.  To store the state of the 
+            given track segment in the PanelPro file, right click on the given track segment, select
+            hide construction lines from the resulting pop up menu, and store the panel.</li>
 
           </ul>
         </li>
@@ -1380,7 +1372,7 @@
       Once linked to actual turnouts, turnout drawings show the
       "known states" of the turnouts they represent. After linking,
       you can toggle each turnout on your layout by clicking on the
-      center point of its drawing (provided <strong>Disabled</strong> 
+      center point of its drawing (provided <strong>Disabled</strong>
       is not checked in the Options menu, and your
       system supports computer control of turnouts). The ability to
       toggle by clicking can be turned off by checking
@@ -1389,16 +1381,16 @@
 
     <img style="float:right;" src="images/edit-layoutEditor-Turnout-468x492.png"
       alt="Edit Layout Editor Turnout" height="492" width="468">
-      
-      <p><strong>Supporting Turnouts</strong> can be set for Turnout types which 
+
+      <p><strong>Supporting Turnouts</strong> can be set for Turnout types which
       use 2 normal Turnouts on different addresses to operate.</p>
-      
+
       <p>When two turnouts are linked, when one is thrown, the other is thrown.
       When one is thrown, the other is also thrown.
       Check the Invert second Turnout to produce the opposite behaviour, ie
       throwing one turnout will close the other and vice versa.</p>
-      
-      <p>If the state of the two turnouts does not match 
+
+      <p>If the state of the two turnouts does not match
       ( eg. one is reporting closed and the other thrown when invert is not checked ),
       the Layout Editor turnout will display as inconsistent.</p>
 
@@ -1407,12 +1399,12 @@
       drawings are created, by entering its Turnout Table name
       (either system name or user name) in the <strong>Turnout: Name</strong>
       field (top row of the tool bar) before clicking to create
-      that turnout. 
+      that turnout.
       Alternatively, you can create your turnout
       drawings first, then select <strong>Edit...</strong> in each turnout's
       popup menu to open an <strong>Edit Turnout</strong> dialog that allows
-      entry of the turnout name ( see image on right ). 
-      
+      entry of the turnout name ( see image on right ).
+
       Once the name of an actual turnout
       is entered, the actual turnout can be toggled by clicking the
       mouse at the center of the turnout. Turnout toggling can be
@@ -1423,7 +1415,7 @@
       is in either by entering a block name in the <strong>Block:
       Name</strong> field of the tool bar prior to creating each turnout
       drawing, or by entering a block name in the Edit Turnout
-      dialog at a later time. 
+      dialog at a later time.
       The Edit Turnout dialog also allows
       an Edit Block dialog to be requested, where information for
       the turnout's block may be entered or changed. (Blocks are

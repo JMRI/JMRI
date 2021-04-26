@@ -43,12 +43,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * When reading a file, validation is controlled heirarchically:
  * <ul>
- * <li>There's a global default
- * <li>Which can be overridden on a particular XmlFile object
- * <li>Finally, the static call to create a builder can be invoked with a
+ *   <li>There's a global default
+ *   <li>Which can be overridden on a particular XmlFile object
+ *   <li>Finally, the static call to create a builder can be invoked with a
  * validation specification.
  * </ul>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
@@ -109,7 +108,7 @@ public abstract class XmlFile {
         File fp = findFile(name);
         if (fp != null && fp.exists() && fp.canRead()) {
             if (log.isDebugEnabled()) {
-                log.debug("readFile: " + name + " from " + fp.getAbsolutePath());
+                log.debug("readFile: {} from {}", name, fp.getAbsolutePath());
             }
             return rootFromFile(fp);
         }
@@ -120,7 +119,7 @@ public abstract class XmlFile {
             if (!name.startsWith("xml")) {
                 return this.rootFromName("xml" + File.separator + name);
             }
-            log.warn("Did not find file or resource " + name);
+            log.warn("Did not find file or resource {}", name);
             throw new FileNotFoundException("Did not find file or resource " + name);
         }
     }
@@ -139,7 +138,7 @@ public abstract class XmlFile {
      */
     public Element rootFromFile(File file) throws JDOMException, IOException {
         if (log.isDebugEnabled()) {
-            log.debug("reading xml from file: " + file.getPath());
+            log.debug("reading xml from file: {}", file.getPath());
         }
 
         try (FileInputStream fs = new FileInputStream(file)) {
@@ -175,7 +174,7 @@ public abstract class XmlFile {
      */
     public Element rootFromURL(URL url) throws JDOMException, IOException {
         if (log.isDebugEnabled()) {
-            log.debug("reading xml from URL: " + url.toString());
+            log.debug("reading xml from URL: {}", url.toString());
         }
         return getRoot(url.openConnection().getInputStream());
     }
@@ -243,13 +242,15 @@ public abstract class XmlFile {
     }
 
     /**
-     * Return a File object for a name. This is here to implement the search
-     * rule: <ol> <li>Look in user preferences directory, located by
-     * {@link jmri.util.FileUtil#getUserFilesPath()} <li>Look in current working
-     * directory (usually the JMRI distribution directory) <li>Look in program
-     * directory, located by {@link jmri.util.FileUtil#getProgramPath()}
-     * <li>Look in XML directory, located by {@link #xmlDir} <li>Check for
-     * absolute name. </ol>
+     * Get a File object for a name. This is here to implement the search
+     * rule:
+     * <ol>
+     *   <li>Look in user preferences directory, located by {@link jmri.util.FileUtil#getUserFilesPath()}
+     *   <li>Look in current working directory (usually the JMRI distribution directory)
+     *   <li>Look in program directory, located by {@link jmri.util.FileUtil#getProgramPath()}
+     *   <li>Look in XML directory, located by {@link #xmlDir}
+     *   <li>Check for absolute name.
+     * </ol>
      *
      * @param name Filename perhaps containing subdirectory information (e.g.
      *             "decoders/Mine.xml")
@@ -292,19 +293,19 @@ public abstract class XmlFile {
     public void makeBackupFile(String name) {
         File file = findFile(name);
         if (file == null) {
-            log.info("No " + name + " file to backup");
+            log.info("No {} file to backup", name);
         } else if (file.canWrite()) {
             String backupName = backupFileName(file.getAbsolutePath());
             File backupFile = findFile(backupName);
             if (backupFile != null) {
                 if (backupFile.delete()) {
-                    log.debug("deleted backup file " + backupName);
+                    log.debug("deleted backup file {}", backupName);
                 }
             }
             if (file.renameTo(new File(backupName))) {
-                log.debug("created new backup file " + backupName);
+                log.debug("created new backup file {}", backupName);
             } else {
-                log.error("could not create backup file " + backupName);
+                log.error("could not create backup file {}", backupName);
             }
         }
     }
@@ -323,14 +324,14 @@ public abstract class XmlFile {
         } else if (file.canWrite()) {
             String backupFullName = directory + File.separator + createFileNameWithDate(file.getName());
             if (log.isDebugEnabled()) {
-                log.debug("new backup file: " + backupFullName);
+                log.debug("new backup file: {}", backupFullName);
             }
 
             File backupFile = findFile(backupFullName);
             if (backupFile != null) {
                 if (backupFile.delete()) {
                     if (log.isDebugEnabled()) {
-                        log.debug("deleted backup file " + backupFullName);
+                        log.debug("deleted backup file {}", backupFullName);
                     }
                 }
             } else {
@@ -340,7 +341,7 @@ public abstract class XmlFile {
             File parentDir = backupFile.getParentFile();
             if (!parentDir.exists()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("creating backup directory: " + parentDir.getName());
+                    log.debug("creating backup directory: {}", parentDir.getName());
                 }
                 if (!parentDir.mkdirs()) {
                     log.error("backup directory not created");
@@ -349,11 +350,11 @@ public abstract class XmlFile {
             }
             if (file.renameTo(new File(backupFullName))) {
                 if (log.isDebugEnabled()) {
-                    log.debug("created new backup file " + backupFullName);
+                    log.debug("created new backup file {}", backupFullName);
                 }
             } else {
                 if (log.isDebugEnabled()) {
-                    log.debug("could not create backup file " + backupFullName);
+                    log.debug("could not create backup file {}", backupFullName);
                 }
                 return false;
             }
@@ -370,20 +371,20 @@ public abstract class XmlFile {
     public void revertBackupFile(String name) {
         File file = findFile(name);
         if (file == null) {
-            log.info("No " + name + " file to revert");
+            log.info("No {} file to revert", name);
         } else {
             String backupName = backupFileName(file.getAbsolutePath());
             File backupFile = findFile(backupName);
             if (backupFile != null) {
-                log.info("No " + backupName + " backup file to revert");
+                log.info("No {} backup file to revert", backupName);
                 if (file.delete()) {
-                    log.debug("deleted original file " + name);
+                    log.debug("deleted original file {}", name);
                 }
 
                 if (backupFile.renameTo(new File(name))) {
-                    log.debug("created original file " + name);
+                    log.debug("created original file {}", name);
                 } else {
-                    log.error("could not create original file " + name);
+                    log.error("could not create original file {}", name);
                 }
             }
         }
@@ -402,7 +403,7 @@ public abstract class XmlFile {
     public String backupFileName(String name) {
         String f = name + ".bak";
         if (log.isDebugEnabled()) {
-            log.debug("backup file name is: " + f);
+            log.debug("backup file name is: {}", f);
         }
         return f;
     }
@@ -412,7 +413,7 @@ public abstract class XmlFile {
         String[] fileName = name.split(".xml");
         String f = fileName[0] + "_" + getDate() + ".xml";
         if (log.isDebugEnabled()) {
-            log.debug("backup file name is: " + f);
+            log.debug("backup file name is: {}", f);
         }
         return f;
     }
@@ -468,11 +469,11 @@ public abstract class XmlFile {
                 try {
                     doc = processOneInstruction((ProcessingInstruction) c, doc);
                 } catch (org.jdom2.transform.XSLTransformException ex) {
-                    log.error("XSLT error while transforming with " + c + ", ignoring transform", ex);
+                    log.error("XSLT error while transforming with {}, ignoring transform", c, ex);
                 } catch (org.jdom2.JDOMException ex) {
-                    log.error("JDOM error while transforming with " + c + ", ignoring transform", ex);
+                    log.error("JDOM error while transforming with {}, ignoring transform", c, ex);
                 } catch (java.io.IOException ex) {
-                    log.error("IO error while transforming with " + c + ", ignoring transform", ex);
+                    log.error("IO error while transforming with {}, ignoring transform", c, ex);
                 }
             }
         }
@@ -481,7 +482,7 @@ public abstract class XmlFile {
     }
 
     Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
-        log.trace("handling ", p);
+        log.trace("handling {}", p);
 
         // check target
         String target = p.getTarget();
@@ -696,6 +697,8 @@ public abstract class XmlFile {
 
         return builder;
     }
+
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(XmlFile.class);
+
 }

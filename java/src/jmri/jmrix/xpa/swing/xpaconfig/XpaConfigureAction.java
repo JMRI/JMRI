@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a XpaConfigureFrame object.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class XpaConfigureAction extends AbstractAction {
   
-    private jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
+    private final jmri.jmrix.xpa.XpaSystemConnectionMemo memo;
 
     public XpaConfigureAction(String s,jmri.jmrix.xpa.XpaSystemConnectionMemo m) {
         super(s);
@@ -25,7 +25,7 @@ public class XpaConfigureAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

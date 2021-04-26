@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2016</year>
         <holder>JMRI</holder>
@@ -44,10 +44,29 @@
             <revremark>added german translation</revremark>
         </revision>
         <revision>
-            <revnumber>1</revnumber>
+            <revnumber>3</revnumber>
             <date>2019-12-04</date>
             <authorinitials>DGH</authorinitials>
             <revremark>Added Bounce Effects and Secondary Address Warning</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2020-10-23</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>
+                Swapped pane display order of Second Address Enable and Secondary Address
+                to work around unresolved issue with splitVal and eumVal interaction,
+                which causes CV value corruption with Read Sheets.
+                Removed Secondary Address Warning.
+            </revremark>
+        </revision>
+        <revision>
+            <revnumber>5</revnumber>
+            <date>2020-11-16</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>
+                Refactored to use new splitVal syntax.
+            </revremark>
         </revision>
     </revhistory>
     <decoder>
@@ -132,20 +151,20 @@
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
             <!-- Primary Address. Definition order is important for correct loading of defaults. -->
-            <variable item="Primary_Address_1" CV="1" mask="XXVVVVVV" default="01">
-                <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3" min="1" max="2041"/>
+            <variable item="Primary_Address_1" CV="1,9" mask="XXVVVVVV XXXXXVVV" default="01">
+                <splitVal factor="4" offset="-3" min="1" max="2041"/>
             </variable>
-            <variable item="Primary_Address_2" CV="1" mask="XXVVVVVV" default="02">
-                <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-2" min="2" max="2042"/>
+            <variable item="Primary_Address_2" CV="1,9" mask="XXVVVVVV XXXXXVVV" default="02">
+                <splitVal factor="4" offset="-2" min="2" max="2042"/>
             </variable>
-            <variable item="Primary_Address_3" CV="1" mask="XXVVVVVV" default="03">
-                <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-1" min="3" max="2043"/>
+            <variable item="Primary_Address_3" CV="1,9" mask="XXVVVVVV XXXXXVVV" default="03">
+                <splitVal factor="4" offset="-1" min="3" max="2043"/>
             </variable>
-            <variable item="Primary_Address_4" CV="1" mask="XXVVVVVV" default="04">
-                <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" min="4" max="2044"/>
+            <variable item="Primary_Address_4" CV="1,9" mask="XXVVVVVV XXXXXVVV" default="04">
+                <splitVal factor="4" min="4" max="2044"/>
             </variable>
-            <variable CV="1" mask="XXVVVVVV" item="Short Address" default="01">
-                <splitVal highCV="9" upperMask="XXXXXVVV" min="1" max="511"/>
+            <variable CV="1,9" mask="XXVVVVVV XXXXXVVV" item="Short Address" default="01">
+                <splitVal min="1" max="511"/>
                 <label>Primary Decoder Address</label>
                 <label xml:lang="de">Primäre Decoderadresse</label>
                 <tooltip>Sets base address for primary</tooltip>
@@ -153,18 +172,18 @@
             </variable>
             <!-- Secondary Address. Definition order is important for correct loading of defaults. -->
             <variables exclude="SwitchPilot Servo,SwitchPilot Servo (MA)">
-                <variable item="Secondary_Address_1" CV="35" mask="XXVVVVVV" default="2">
-                    <splitVal highCV="36" upperMask="XXXXXVVV" factor="4" offset="-3" min="1" max="2041"/>
+                <variable item="Secondary_Address_1" CV="35,36" mask="XXVVVVVV XXXXXVVV" default="2">
+                    <splitVal factor="4" offset="-3" min="1" max="2041"/>
                 </variable>
-                <variable item="Secondary_Address_2" CV="35" mask="XXVVVVVV" default="2">
-                    <splitVal highCV="36" upperMask="XXXXXVVV" factor="4" offset="-2" min="2" max="2042"/>
+                <variable item="Secondary_Address_2" CV="35,36" mask="XXVVVVVV XXXXXVVV" default="2">
+                    <splitVal factor="4" offset="-2" min="2" max="2042"/>
                 </variable>
                 <variables exclude="SwitchPilot,SwitchPilot V2.0">
-                    <variable item="Secondary_Address_3" CV="35" mask="XXVVVVVV" default="2">
-                        <splitVal highCV="36" upperMask="XXXXXVVV" factor="4" offset="-1" min="3" max="2043"/>
+                    <variable item="Secondary_Address_3" CV="35,36" mask="XXVVVVVV XXXXXVVV" default="2">
+                        <splitVal factor="4" offset="-1" min="3" max="2043"/>
                     </variable>
-                    <variable item="Secondary_Address_4" CV="35" mask="XXVVVVVV" default="2">
-                        <splitVal highCV="36" upperMask="XXXXXVVV" factor="4" min="4" max="2044"/>
+                    <variable item="Secondary_Address_4" CV="35,36" mask="XXVVVVVV XXXXXVVV" default="2">
+                        <splitVal factor="4" min="4" max="2044"/>
                     </variable>
                 </variables>
                 <variable CV="36" mask="XXXXVXXX" item="Second Address Enable" default="1">
@@ -174,8 +193,8 @@
                     <comment>This variable interacts badly with the Second Address Variables, also using CV 36 but different bitmasks.</comment>
                     <comment>There is a warning on the Basic pane and a JMRI issue will be raised.</comment>
                 </variable>
-                <variable CV="35" mask="XXVVVVVV" item="Second Address" default="2">
-                    <splitVal highCV="36" upperMask="XXXXXVVV" min="1" max="511"/>
+                <variable CV="35,36" mask="XXVVVVVV XXXXXVVV" item="Second Address" default="2">
+                    <splitVal min="1" max="511"/>
                     <label>Secondary Decoder Address</label>
                     <label xml:lang="de">Zweite Decoderadresse</label>
                 </variable>
@@ -393,8 +412,11 @@
                         </column>
                         <group include="SwitchPilot,SwitchPilot V2.0">
                             <column>
-                                <display item="Second Address Enable" format="checkbox"/>
+                                <!-- The order of the following two display items must not be swapped -->
+                                <!-- in order to avoid CV corruption during Read Sheet. -->
+                                <!-- See: https://github.com/JMRI/JMRI/issues/9084 -->
                                 <display item="Second Address" tooltip="Sets base address for Secondary"/>
+                                <display item="Second Address Enable" format="checkbox"/>
                                 <label>
                                     <text> </text>
                                 </label>
@@ -418,8 +440,11 @@
                         </group>
                         <group exclude="SwitchPilot,SwitchPilot V2.0">
                             <column>
-                                <display item="Second Address Enable" format="checkbox"/>
+                                <!-- The order of the following two display items must not be swapped -->
+                                <!-- in order to avoid CV corruption during Read Sheet. -->
+                                <!-- See: https://github.com/JMRI/JMRI/issues/9084 -->
                                 <display item="Second Address" tooltip="Sets base address for Secondary"/>
+                                <display item="Second Address Enable" format="checkbox"/>
                                 <label>
                                     <text> </text>
                                 </label>
@@ -469,6 +494,7 @@
                     </display>
                 </column>
             </row>
+            <!--
             <column>
                 <group>
                     <qualifier>
@@ -504,6 +530,7 @@
                     <separator/>
                 </group>
             </column>
+            -->
         </column>
     </pane>
     <pane>

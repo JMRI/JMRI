@@ -10,8 +10,8 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Mrc messages
  *
- * @author	Ken Cameron	Copyright (C) 2010 derived from:
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Ken Cameron Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
@@ -42,7 +42,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel";
-    }//IN18N
+    }// NOI18N
 
     /**
      * {@inheritDoc}
@@ -53,10 +53,10 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         if (memo != null) {
             x.append(memo.getUserName());
         } else {
-            x.append("MX1_");//IN18N
+            x.append("MX1_");// NOI18N
         }
         x.append(": ");
-        x.append(Bundle.getMessage("Title"));//IN18N
+        x.append(Bundle.getMessage("Title"));// NOI18N
         return x.toString();
     }
 
@@ -69,15 +69,15 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         this.tc = m.getMx1TrafficController();
 
         // the following code sets the frame's initial state
-        jLabel1.setText("Command: ");//IN18N
+        jLabel1.setText("Command: ");// NOI18N
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");//IN18N
+        sendButton.setText("Send");// NOI18N
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");//IN18N
+        sendButton.setToolTipText("Send packet");// NOI18N
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command"); //IN18N
+        packetTextField.setToolTipText("Enter command"); // NOI18N
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
@@ -97,11 +97,12 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-
-        /*Mx1Message m = new Mx1Message(packetTextField.getText().length());
-         for (int i = 0; i < packetTextField.getText().length(); i++)
-         m.setElement(i, packetTextField.getText().charAt(i));*/
-        tc.sendMx1Message(createPacket(packetTextField.getText()), null);
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        /*Mx1Message m = new Mx1Message(input.length());
+         for (int i = 0; i < input.length(); i++)
+         m.setElement(i, input.charAt(i));*/
+        tc.sendMx1Message(createPacket(input), null);
     }
 
     Mx1Message createPacket(String s) {
@@ -131,7 +132,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
             super("Open MRC Send Binary Command",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     Mx1PacketGenPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(Mx1SystemConnectionMemo.class));//IN18N
+                    jmri.InstanceManager.getDefault(Mx1SystemConnectionMemo.class));// NOI18N
         }
     }
 }

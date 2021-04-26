@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -26,9 +27,8 @@ import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.sensor.JsonSensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -224,7 +224,7 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -235,7 +235,7 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();

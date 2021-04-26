@@ -9,10 +9,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -48,17 +46,30 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDControl extends JPanel {
 
+    public static final String OPTION_CHANGE = "OptionChange"; // NOI18N
+    public static final String DELETE = "DeleteDecoder"; // NOI18N
+
+    /**
+     * 
+     * @deprecated since 4.19.5; use {@link #OPTION_CHANGE} or {@link #DELETE} instead
+     */
+    @Deprecated
     public static enum PropertyChangeId {
 
         OPTION_CHANGE, DELETE
     }
 
+    /**
+     * 
+     * @deprecated since 4.19.5; use {@link #OPTION_CHANGE} or {@link #DELETE} instead
+     */
+    @Deprecated
     public static final Map<PropertyChangeId, String> PCIdMap;
 
     static {
         Map<PropertyChangeId, String> aMap = new HashMap<>();
-        aMap.put(PropertyChangeId.OPTION_CHANGE, "OptionChange"); // NOI18N
-        aMap.put(PropertyChangeId.DELETE, "DeleteDecoder"); // NOI18N
+        aMap.put(PropertyChangeId.OPTION_CHANGE, OPTION_CHANGE);
+        aMap.put(PropertyChangeId.DELETE, DELETE);
         PCIdMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -142,7 +153,8 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Initialize the GUI components
+     * Initialize the GUI components.
+     * @param title future title, not yet coded..
      */
     protected void initComponents(String title) {
         // Create the border.
@@ -201,6 +213,7 @@ public class VSDControl extends JPanel {
 
     /**
      * Add buttons for the selected Profile's defined sounds
+     * @param elist list of sounds to make buttons from.
      */
     public void addSoundButtons(ArrayList<SoundEvent> elist) {
         soundsPanel.removeAll();
@@ -225,7 +238,8 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Handle "Option" button presses
+     * Handle "Option" button presses.
+     * @param e unused.
      */
     protected void optionButtonPressed(ActionEvent e) {
         log.debug("({}) Option Button Pressed", address);
@@ -240,63 +254,36 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Handle "Delete" button presses
+     * Handle "Delete" button presses.
+     * @param e unused.
      */
     protected void deleteButtonPressed(ActionEvent e) {
         log.debug("({}) Delete Button Pressed", address);
-        firePropertyChange(PropertyChangeId.DELETE, address, address);
+        firePropertyChange(DELETE, address, null);
     }
 
     /**
-     * Callback for the Option Dialog
+     * Callback for the Option Dialog.
+     * @param event the event to get new value from.
      */
     protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal options dialog handler");
-        firePropertyChange(PropertyChangeId.OPTION_CHANGE, event.getOldValue(), event.getNewValue());
+        firePropertyChange(OPTION_CHANGE, null, event.getNewValue());
     }
 
     // VSDecoderManager Events
-    /**
-     * Add a listener for this Pane's property change events
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
-        if (!l.contains(listener)) {
-            listenerList.add(PropertyChangeListener.class, listener);
-        }
-    }
-
-    /**
-     * Remove a listener
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        listenerList.remove(PropertyChangeListener.class, listener);
-    }
 
     /**
      * Fire a property change from this object
+     * @param id prop ID.
+     * @param oldProp old prop.
+     * @param newProp new prop.
+     * @deprecated since 4.19.5; use {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)} directly
      */
     // NOTE: should this be public???
+    @Deprecated
     public void firePropertyChange(PropertyChangeId id, Object oldProp, Object newProp) {
-        String pcname;
-
-        // map the property change ID
-        pcname = PCIdMap.get(id);
-        // Fire the actual PropertyChangeEvent
-        firePropertyChange(new PropertyChangeEvent(this, pcname, oldProp, newProp));
-    }
-
-    /**
-     * Fire a property change from this object
-     */
-    void firePropertyChange(PropertyChangeEvent evt) {
-        //Object[] listeners = listenerList.getListenerList();
-
-        for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
-            l.propertyChange(evt);
-        }
+        firePropertyChange(PCIdMap.get(id), oldProp, newProp);
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDControl.class);

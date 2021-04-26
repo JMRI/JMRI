@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ import jmri.util.JUnitUtil;
  */
 public class OperationsTestCase {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         reset();
@@ -48,8 +47,9 @@ public class OperationsTestCase {
 
     private final boolean waitOnEventQueueNotEmpty = false;
     private final boolean checkEventQueueEmpty = false;
+    private final boolean checkShutDownTask = false;
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (waitOnEventQueueNotEmpty) {
             Thread AWT_EventQueue = JUnitUtil.getThreadStartsWithName("AWT-EventQueue");
@@ -84,16 +84,22 @@ public class OperationsTestCase {
                 // ignore.
             }
         }
-        
+
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<ShutDownTask> list = sm.tasks();
-            for (ShutDownTask task : list) {
-                Assert.fail("Shutdown task found: " + task.getName());
+            while (list.size() > 0) {
+                ShutDownTask task = list.get(0);
+                sm.deregister(task);
+                if (checkShutDownTask) {
+                    Assert.fail("Shutdown task found: " + task.getName());
+                }
             }
         }
 
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 

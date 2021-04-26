@@ -332,6 +332,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     /**
      * Clear is defined as showing above Restricting.
      * We implement that as not Held, not RED, not Restricting.
+     * @param handle signal bean handle.
+     * @return true if clear.
      */
     public boolean headShowsClear(NamedBeanHandle<Signal> handle) { 
         return !handle.getBean().getHeld() && handle.getBean().isCleared();
@@ -339,13 +341,16 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     
     /**
      * "Restricting" means that a signal is showing FLASHRED
+     * @param handle signal bean handle.
+     * @return true if showing restricting.
      */
     public boolean headShowsRestricting(NamedBeanHandle<Signal> handle) { 
         return handle.getBean().isShowingRestricting();
     }
     
     /**
-     * Work out current indication from layout status
+     * Work out current indication from layout status.
+     * @return code group.
      */
     public CodeGroupThreeBits getCurrentIndication() {
         boolean leftClear = false;

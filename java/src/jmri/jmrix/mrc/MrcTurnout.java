@@ -55,23 +55,25 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         return true;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s); //IN18N
+                log.error("Cannot command both CLOSED and THROWN {}", newState); // NOI18N
                 return;
             } else {
                 // send a CLOSED command
-                forwardToCommandStation(true ^ getInverted());
+                forwardToCommandStation(!getInverted());
             }
         } else {
             // send a THROWN command
-            forwardToCommandStation(false ^ getInverted());
+            forwardToCommandStation(getInverted());
         }
     }
 
@@ -122,5 +124,3 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class);
 
 }
-
-

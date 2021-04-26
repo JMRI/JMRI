@@ -247,7 +247,7 @@ public class SoundEvent implements PropertyChangeListener {
                 break;
         }
 
-        log.debug("Building trigger " + t.getName());
+        log.debug("Building trigger {}", t.getName());
         t.setXml(te);
         trigger_list.put(te.getAttributeValue("name"), t);
         //log.debug("target name " + t.getTargetName() + " sound " + parent.getSound(t.getTargetName()));
@@ -316,7 +316,7 @@ public class SoundEvent implements PropertyChangeListener {
                 break;
             case NOTCH:
                 //log.debug("NOTCH");
-                log.debug("making callback t " + t + " target " + t.getTarget());
+                log.debug("making callback t {} target {}", t, t.getTarget());
                 t.setCallback(new TriggerListener() {
                     @Override
                     public void takeAction(int i) {
@@ -335,7 +335,7 @@ public class SoundEvent implements PropertyChangeListener {
                 break;
             case CHANGE:
                 //log.debug("CHANGE");
-                log.debug("making callback t " + t + " target " + t.getTarget());
+                log.debug("making callback t {} target {}", t, t.getTarget());
                 t.setCallback(new TriggerListener() {
                     @Override
                     public void takeAction() {

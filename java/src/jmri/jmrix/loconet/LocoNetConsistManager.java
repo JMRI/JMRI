@@ -95,14 +95,14 @@ public class LocoNetConsistManager extends AbstractConsistManager {
             LocoNetSlot s = sm.slot(i);
             DccLocoAddress address = new DccLocoAddress(s.locoAddr(), LnThrottleManager.isLongAddress(s.locoAddr()));
             if (log.isDebugEnabled()) {
-                log.debug(" Slot " + i + " Address " + address + " consist status " + LnConstants.CONSIST_STAT(s.consistStatus()));
+                log.debug(" Slot {} Address {} consist status {}", i, address, LnConstants.CONSIST_STAT(s.consistStatus()));
             }
             if (s.consistStatus() == LnConstants.CONSIST_TOP || s.consistStatus() == LnConstants.CONSIST_MID) {
                 // this is a consist top, add it to the list, if it is not there
                 // already.
                 if (!consistTable.containsKey(address)) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Adding Consist with Address " + address + " due to command station read");
+                        log.debug("Adding Consist with Address {} due to command station read", address);
                     }
                     addConsist(address);
                     getConsist(address).add(address, true); // add the address to the consist.
@@ -115,7 +115,7 @@ public class LocoNetConsistManager extends AbstractConsistManager {
             LocoNetSlot s = sm.slot(i);
             DccLocoAddress address = new DccLocoAddress(s.locoAddr(), LnThrottleManager.isLongAddress(s.locoAddr()));
             if (log.isDebugEnabled()) {
-                log.debug(" Slot " + i + " Address " + address + " consist status " + LnConstants.CONSIST_STAT(s.consistStatus()));
+                log.debug(" Slot {} Address {} consist status {}", i, address, LnConstants.CONSIST_STAT(s.consistStatus()));
             }
             if (s.consistStatus() == LnConstants.CONSIST_SUB || s.consistStatus() == LnConstants.CONSIST_MID) {
                 // this is a consist member, add it to the consist in the

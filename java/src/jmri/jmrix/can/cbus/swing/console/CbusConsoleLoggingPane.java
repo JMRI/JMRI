@@ -96,7 +96,7 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
             try {
                 openLogFileActionPerformed(e);
             } catch (IOException ex) {
-                log.error("log file open exception " + ex);
+                log.error("log file open exception {}", ex);
             }
         });
         
@@ -149,7 +149,7 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (FileNotFoundException ex) {
-                log.error("exception " + ex);
+                log.error("exception {}", ex);
             }
         }
     }

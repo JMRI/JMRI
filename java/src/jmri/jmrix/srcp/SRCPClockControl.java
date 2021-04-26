@@ -7,7 +7,7 @@ import jmri.implementation.DefaultClockControl;
 /**
  * Class providing SRCP Clock Control to the SRCP client.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class SRCPClockControl extends DefaultClockControl {
 

@@ -3,9 +3,10 @@ package jmri.jmrix.acela;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.jmrix.SystemConnectionMemo;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
+public class AcelaSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public AcelaSystemConnectionMemo() {
         this("A", AcelaConnectionTypeList.CTI); // default to A
@@ -29,8 +30,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
     public AcelaSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        register(); // registers general type
-        InstanceManager.store(this, AcelaSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, AcelaSystemConnectionMemo.class);
 
         // create and register the AcelaComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this),
@@ -42,8 +42,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
         super("A", AcelaConnectionTypeList.CTI); // default to A
         this.tc = tc;
 
-        register(); // registers general type
-        InstanceManager.store(this, AcelaSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, AcelaSystemConnectionMemo.class);
 
         // create and register the AcelaComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this),
@@ -55,6 +54,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return traffic controller, provided if null.
      */
     public AcelaTrafficController getTrafficController() {
         if (tc == null) {
@@ -88,75 +88,29 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
         getTrafficController().setTurnoutManager(getTurnoutManager());
-    }
 
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return true;
-        } else {
-            return false; // nothing, by default
-        }
+        register(); // registers general type
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> type) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (type.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (type.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (type.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        return null; // nothing by default
-    }
-
-    protected AcelaTurnoutManager turnoutManager;
 
     public AcelaTurnoutManager getTurnoutManager() {
         if (getDisabled()) {
             return null;
         }
-        if (turnoutManager == null) {
-            turnoutManager = new AcelaTurnoutManager(this);
-        }
-        return turnoutManager;
+        return (AcelaTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> new AcelaTurnoutManager(this));
     }
-
-    protected AcelaSensorManager sensorManager;
 
     public AcelaSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        if (sensorManager == null) {
-            sensorManager = new AcelaSensorManager(this);
-        }
-        return sensorManager;
+        return (AcelaSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> new AcelaSensorManager(this));
     }
-
-    protected AcelaLightManager lightManager;
 
     public AcelaLightManager getLightManager() {
         if (getDisabled()) {
             return null;
         }
-        if (lightManager == null) {
-            lightManager = new AcelaLightManager(this);
-        }
-        return lightManager;
+        return (AcelaLightManager) classObjectMap.computeIfAbsent(LightManager.class,(Class c) -> new AcelaLightManager(this));
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * NOTE: This currently only supports the SPROG Command Station interfaces.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
 

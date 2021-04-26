@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
@@ -17,7 +16,6 @@ import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table cell editor abstract class with a custom ComboBox per row as the editing component.
  * <p>
- * Used as TableCellRenderer from JTable, declared in ConfigValueColumn()
+ * Used as TableCellRenderer in SignalMast JTable, declared in ConfigValueColumn()
  * Based on: http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/monitor/client/ComboBoxTableCellEditor.java.shtml
  * @author Egbert Broerse 2016
  * @since 4.7.1
@@ -86,15 +84,15 @@ public abstract class RowComboBoxPanel
      *  @param customRenderer renderer to display things
      */
     public RowComboBoxPanel(Object [] values,
-                            ListCellRenderer customRenderer) {
-        super (new JComboBox());
+                            ListCellRenderer<?> customRenderer) {
+        super (new JComboBox<>());
         // is being filled from HashMap
         this.editor = new JPanel(new BorderLayout ());
         if (values != null) {
             setItems(values); // in 4.5.7 this is not yet called using values, but might be useful in a more general application
         }
         this.renderer = new JPanel(new BorderLayout ());
-        setClickCountToStart(1); // value for a DefaultCellEditor: immediately start editing
+        super.setClickCountToStart(1); // value for a DefaultCellEditor: immediately start editing
         //show the combobox if the mouse clicks at the panel
         this.editor.addMouseListener (new MouseAdapter ()
         {
@@ -114,7 +112,7 @@ public abstract class RowComboBoxPanel
         this(new Object [0]);
     } // as it is defined in configValueColumn()
 
-    public RowComboBoxPanel(ListCellRenderer customRenderer) {
+    public RowComboBoxPanel(ListCellRenderer<?> customRenderer) {
         this(new Object [0], customRenderer);
     }
 
@@ -139,13 +137,8 @@ public abstract class RowComboBoxPanel
         if  ( ! this.tableListenerAdded) {
             this.tableListenerAdded = true;
             this.table = table;
-            this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener ()
-            {
-                @Override
-                public final void valueChanged(ListSelectionEvent evt)
-                {
-                    eventTableSelectionChanged ();
-                }
+            this.table.getSelectionModel().addListSelectionListener((ListSelectionEvent evt) -> {
+                eventTableSelectionChanged ();
             });
         }
         this.currentRow = row;
@@ -179,19 +172,17 @@ public abstract class RowComboBoxPanel
         }
         //the user selected another row (or initially no row was selected)
         this.editor.removeAll();  // remove the combobox from the panel
-        JComboBox editorbox = getEditorBox(table.convertRowIndexToModel(row));
+        JComboBox<?> editorbox = getEditorBox(table.convertRowIndexToModel(row));
+        editorbox.putClientProperty("JComponent.sizeVariant", "small");
+        editorbox.putClientProperty("JComboBox.buttonType", "square");
         log.debug("getEditorComponent>notSelected (row={}, value={}; me = {}))", row, value, this.toString());
         if (value != null) {
             editorbox.setSelectedItem(value); // display current Value
         }
-        editorbox.addActionListener(new ActionListener ()
-        {
-            @Override
-            public final void actionPerformed(ActionEvent evt) {
-                Object choice = editorbox.getSelectedItem();
-                log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
-                eventRowComboBoxActionPerformed(choice); // signal the changed row
-            }
+        editorbox.addActionListener((ActionEvent evt) -> {
+            Object choice = editorbox.getSelectedItem();
+            log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
+            eventRowComboBoxActionPerformed(choice); // signal the changed row
         });
         this.editor.add(editorbox);
         return this.editor;
@@ -220,13 +211,8 @@ public abstract class RowComboBoxPanel
         if  ( ! this.tableListenerAdded) {
             this.tableListenerAdded = true;
             this.table = table;
-            this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener ()
-            {
-                @Override
-                public final void valueChanged(ListSelectionEvent evt)
-                {
-                    eventTableSelectionChanged ();
-                }
+            this.table.getSelectionModel().addListSelectionListener((ListSelectionEvent evt) -> {
+                eventTableSelectionChanged ();
             });
         }
 
@@ -256,6 +242,8 @@ public abstract class RowComboBoxPanel
         this.renderer.removeAll();  //remove the combobox from the panel
         JComboBox<String> renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
+        renderbox.putClientProperty("JComponent.sizeVariant", "small");
+        renderbox.putClientProperty("JComboBox.buttonType", "square");
         if (value != null) {
             renderbox.addItem(value.toString()); // display (only) the current Value
         } else {
@@ -276,7 +264,7 @@ public abstract class RowComboBoxPanel
     protected void updateData(int row, boolean isSelected, JTable table) {
         // get valid Value options for ComboBox
         log.debug("RCBP updateData (row:{}; me = {}))", row, this.toString());
-        JComboBox editorbox = getEditorBox(table.convertRowIndexToModel(row));
+        JComboBox<?> editorbox = getEditorBox(table.convertRowIndexToModel(row));
         this.editor.add(editorbox);
         if (isSelected) {
             editor.setBackground(table.getSelectionBackground());
@@ -297,11 +285,11 @@ public abstract class RowComboBoxPanel
         this.startEditingEvent = evt;
         if  (evt instanceof MouseEvent  &&  evt.getSource () instanceof JTable) {
             MouseEvent me = (MouseEvent) evt;
-            JTable table = (JTable) me.getSource ();
+            JTable thisTable = (JTable) me.getSource ();
             Point pt = new Point (me.getX (), me.getY ());
-            int row = table.rowAtPoint (pt);
-            int col = table.columnAtPoint (pt);
-            Rectangle rec = table.getCellRect (row, col, false);
+            int row = thisTable.rowAtPoint (pt);
+            int col = thisTable.columnAtPoint (pt);
+            Rectangle rec = thisTable.getCellRect (row, col, false);
             if  (me.getY () >= rec.y + rec.height  ||  me.getX () >= rec.x + rec.width)
             {
                 return false;
@@ -381,6 +369,6 @@ public abstract class RowComboBoxPanel
         return new JComboBox<>(list);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
+    private final static Logger log = LoggerFactory.getLogger(RowComboBoxPanel.class);
 
 }

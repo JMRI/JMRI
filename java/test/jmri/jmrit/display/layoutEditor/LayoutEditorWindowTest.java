@@ -5,15 +5,14 @@ import java.awt.GraphicsEnvironment;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Swing tests for the LayoutEditor.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class LayoutEditorWindowTest {
 
@@ -36,7 +35,7 @@ public class LayoutEditorWindowTest {
     }
 
     // Setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -46,9 +45,11 @@ public class LayoutEditorWindowTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         cm = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

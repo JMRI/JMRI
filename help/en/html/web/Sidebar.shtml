@@ -21,6 +21,7 @@
 		    <li><a href="JsonServlet.shtml">JSON</a></li>
 		    <li><a href="PanelServlet.shtml">Panels</a></li>
 		    <li><a href="RosterServlet.shtml">Roster</a></li>
+			<li><a href="TablesServlet.shtml">Tables</a></li>
 		    </ul>
 		</dd>
 

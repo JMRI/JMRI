@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2020 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20181201"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20190220"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="3" lastUpdated="20190305"/>
+    <version author="Svata Dedic svatopluk.dedic@gmail.com" version="4" lastUpdated="20191211"/>
+    <!-- Accessory decoder  -->
+    <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
+    <!-- Program description https://sites.google.com/site/sidloweb/elektrika/29-ard-scom-mx -->
+    <!-- e-shop http://dccdoma.eshop-zdarma.cz/ -->
+    
+    <decoder>
+
+        <family name="dccdoma.cz" mfg="Public-domain and DIY" >
+            <model model="XSL - ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
+        </family>
+    
+        <programming direct="yes" paged="yes" register="no" ops="no" />
+        
+    <variables>
+    	
+      <variable CV="1" item="Short Address" default="100" >
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" />
+        <label>Decoder Address:</label>
+        <label xml:lang="cs">Adresa dekodéru:</label>
+        <tooltip>Accessory decoder address. CV1 - LSB. CV9 - MSB.</tooltip>
+        <tooltip xml:lang="cs">Adresa dekodéru příslušenství. CV1 - LSB. CV9 - MSB.</tooltip>
+      </variable>
+
+      <variable CV="7" item="Decoder Version" readOnly="yes" >
+        <decVal/>
+        <label>Decoder Version:</label>
+        <label xml:lang="cs">Verze software:</label>
+      </variable>
+      
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="13" >
+        <decVal/>
+        <label>Manufacturer:</label>
+        <label xml:lang="cs">Výrobce ID:</label>
+      </variable>
+    
+      <variable CV="15" item="Key" default="0">
+        <decVal/>
+        <label>Key:</label>
+        <label xml:lang="cs">Klíč:</label>
+        <tooltip>Key for lock. Universal key is 255.</tooltip>
+        <tooltip xml:lang="cs">Klíč k zámku. Univerzální klíč je 255.</tooltip>
+      </variable>
+    
+      <variable CV="16" item="Lock" default="0">
+        <decVal/>
+        <label>Lock:</label>
+        <label xml:lang="cs">Zámek:</label>
+        <tooltip>Value other than 0 lock the decoder.</tooltip>
+        <tooltip xml:lang="cs">Jiná hodnota než 0 zamkne dekodér.</tooltip>
+      </variable>
+    
+      <variable CV="34" item="Addressing" default="1">
+      	<enumVal>
+      		<enumChoice choice="NMRA"/>
+      		<enumChoice choice="ROCO"/>
+      	</enumVal>
+        <label>Addressing:</label>
+        <label xml:lang="cs">Adresování:</label>
+        <tooltip>ROCO addressing is NMRA addressing + 4.</tooltip>
+        <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
+      </variable>
+    
+      <variable CV="41" item="Aspect lag" default="4" >
+        <decVal min="0" max="255" />
+        <label>Aspect lag:</label>
+        <label xml:lang="cs">Zpoždění návěsti:</label>
+        <tooltip>Signal delay after the last command. lag × 0.128 s</tooltip>
+        <tooltip xml:lang="cs">Zpoždění zobrazení návěsti po poslením příkazu. zpoždění × 0,128 s</tooltip>
+      </variable>
+        
+      <variable CV="42" item="Bit period" default="20" >
+        <decVal min="4" max="30" />
+        <label>Bit period:</label>
+        <label xml:lang="cs">Perioda bitu:</label>
+        <tooltip>Length of bit period in ms.</tooltip>
+        <tooltip xml:lang="cs">Délka periody bitu v ms.</tooltip>
+      </variable>
+        
+      <variable CV="43" item="Start delay" default="24" >
+        <decVal min="0" max="255" />
+        <label>Star delay:</label>
+        <label xml:lang="cs">Zpoždění startu:</label>
+        <tooltip>Delay of decoder after switching on. delay × 0.128 s</tooltip>
+        <tooltip xml:lang="cs">Zpoždění zahájení činnosti dekodéru po zapnutí. zpoždění × 0,128 s</tooltip>
+      </variable>
+        
+      <variable CV="44" item="Address order" default="0">
+      	<enumVal>
+            <enumChoice choice="All successively" value="0" >
+                <choice xml:lang="cs">Všechny postupně</choice>
+            </enumChoice>
+            <enumChoice choice="Only even" value="1" >
+                <choice xml:lang="cs">Pouze sudé</choice>
+            </enumChoice>
+      	</enumVal>
+        <label>Address order:</label>
+        <label xml:lang="cs">Pořadí adres:</label>
+        <tooltip>Use all addresses sequentially or only even.</tooltip>
+        <tooltip xml:lang="cs">Použití všech adres postupně nebo pouze sudé.</tooltip>
+      </variable>
+            
+      <variable CV="47" item="ProductID1" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #1</label>
+        <label xml:lang="cs">Výrobek ID #1:</label>
+        <tooltip>Product ID #1</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #1</tooltip>
+      </variable>
+      
+      <variable CV="48" item="ProductID2" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #2</label>
+        <label xml:lang="cs">Výrobek ID #2:</label>
+        <tooltip>Product ID #2</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #2</tooltip>
+      </variable>
+      
+      <variable CV="49" item="ProductID3" readOnly="yes" default="2" >
+        <decVal/>
+        <label>Product ID #3</label>
+        <label xml:lang="cs">Výrobek ID #3:</label>
+        <tooltip>Product ID #3</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #3</tooltip>
+      </variable>
+      
+      <variable CV="50" item="ProductID4" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #4</label>
+        <label xml:lang="cs">Výrobek ID #4:</label>
+        <tooltip>Product ID #4</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #4</tooltip>
+      </variable>
+      
+<!--  Outputs ============================================================== -->      
+
+    </variables> 
+
+    <resets>
+      <factReset CV="8" default="1">
+        <label>Reset All CVs Settings 16×1</label>
+        <label xml:lang="cs">Reset všech CV Nastavení 16×1</label>
+      </factReset>
+      <factReset CV="8" default="2">
+        <label>Reset All CVs Settings 16×2</label>
+        <label xml:lang="cs">Reset všech CV Nastavení 16×2</label>
+      </factReset>
+      <factReset CV="8" default="3">
+        <label>Reset All CVs Settings 14×2 + 2×3</label>
+        <label xml:lang="cs">Reset všech CV Nastavení 14×2 + 2×3</label>
+      </factReset>
+      <factReset CV="8" default="4">
+        <label>Reset All CVs Settings 13×2 + 3×3</label>
+        <label xml:lang="cs">Reset všech CV Nastavení 13×2 + 3×3</label>
+      </factReset>
+      <factReset CV="8" default="5">
+        <label>Reset All CVs Settings 12×2 + 4×3</label>
+        <label xml:lang="cs">Reset všech CV Nastavení 12×2 + 4×3</label>
+      </factReset>
+    </resets>
+
+  </decoder>
+  
+    <pane>
+<!--  Pane Decoder ========================================================= -->      
+  	<name>Decoder</name>
+        <name xml:lang="cs">Dekodér</name>
+        <column>
+            <display item="Addressing" />
+            <display item="Address order" />
+            <display item="Start delay" />
+            <display item="Bit period" />
+            <display item="Aspect lag" />
+            <display item="Key" />
+            <display item="Lock" />
+        </column>
+        <column>
+            <display item="ProductID1" />
+            <display item="ProductID2" />
+            <display item="ProductID3" />
+            <display item="ProductID4" />
+        </column>
+    </pane>
+            
+            
+    <pane>
+        <!-- Definition of Aspects; do NOT change panel name -->
+        <name>__Aspects</name>
+        <column>
+            <!-- 
+                Metadata: variable definition
+                    label: is the highest number of mast, should be the same as number of labels in <display item="mast"/>
+                    tooltip: starting CV
+                    
+            	CVs are assigned sequentially, starting with mast(0)-aspect(0), going to mast(0)-aspect(31), then mast(1)-aspect(0)....
+            -->
+            <display item="mastcount" label="15" tooltip="128"/>
+
+            <!-- 
+                Metadata: output definition
+                    label contains as many characters as outputs = masts. Each character represents one output.
+            -->
+            <display item="outputs" label="ABCDEFGHIJKLMNOP"/>
+
+            <!--
+            	Metadata: mast names and default setup CVs
+                    tooltip: gives the starting CV number
+                    each label generates one mast; label's content is the mast name. 
+            	
+           	-->
+            <display item="masts" tooltip="512">
+            	<label>0</label><label>1</label><label>2</label><label>3</label><label>4</label><label>5</label><label>6</label><label>7</label>
+            	<label>8</label><label>9</label><label>10</label><label>11</label><label>12</label><label>13</label><label>14</label><label>15</label>
+            </display>
+            <!--
+            	Metadata: aspect names
+                    each label generates one aspect per mast; label's content is the aspect name. 
+           	-->
+            <display item="aspects">
+            	<label>0</label><label>1</label><label>2</label><label>3</label><label>4</label><label>5</label><label>6</label><label>7</label>
+            	<label>8</label><label>9</label><label>10</label><label>11</label><label>12</label><label>13</label><label>14</label><label>15</label>
+            	<label>16</label><label>17</label><label>18</label><label>19</label><label>20</label><label>21</label><label>22</label><label>23</label>
+            	<label>24</label><label>25</label><label>26</label><label>27</label><label>28</label><label>29</label><label>30</label><label>31</label>
+            </display>
+            
+            <!--
+                Metadata: minimum outputs allowed for certain aspects
+                    Each label represents an aspect of the same position (code). The label determines minimum of outputs for the
+                    aspect to be displayed.
+            -->
+            <display item="minOutputs">
+            	<label>1</label><label>1</label>
+            	<label>2</label><label>2</label>
+            	<label>3</label><label>3</label><label>3</label><label>3</label>
+            	
+            	<label>4</label><label>4</label><label>4</label><label>4</label><label>4</label><label>4</label><label>4</label><label>4</label>
+            	
+            	<label>5</label><label>5</label><label>5</label><label>5</label><label>5</label><label>5</label><label>5</label><label>5</label>
+            	<label>5</label><label>5</label><label>5</label><label>5</label><label>5</label><label>5</label><label>5</label><label>5</label>
+            </display>
+            
+            <!--
+                Metadata: binary representation table
+                    Each label represents a binary number 0x00 - 0x1f
+            -->
+            <display item="binary">
+            	<label>□</label>
+            	<label>√</label>
+            	<label>□√</label>
+            	<label>√√</label>
+            	<label>□□√</label>
+            	<label>√□√</label>
+            	<label>□√√</label>
+            	<label>√√√</label>
+            	<label>□□□√</label>
+            	<label>√□□√</label>
+            	<label>□√□√</label>
+            	<label>√√□√</label>
+            	<label>□□√√</label>
+            	<label>√□√√</label>
+            	<label>□√√√</label>
+            	<label>√√√√</label>
+            	<label>□□□□√</label>
+            	<label>√□□□√</label>
+            	<label>□√□□√</label>
+            	<label>√√□□√</label>
+            	<label>□□√□√</label>
+            	<label>√□√□√</label>
+            	<label>□√√□√</label>
+            	<label>√√√□√</label>
+            	<label>□□□√√</label>
+            	<label>√□□√√</label>
+            	<label>□√□√√</label>
+            	<label>√√□√√</label>
+            	<label>□□√√√</label>
+            	<label>√□√√√</label>
+            	<label>□√√√√</label>
+            	<label>√√√√√</label>
+            </display>
+            
+            <!-- Do not repmove this column, it's used to search for "aspectNames" template -->
+            <column>
+                <display item="aspectNames"/>
+                
+                <!-- 
+                    Blueprint:
+                        this column will be copied to the output pane with all its contents.
+                        No templates allowed.
+                -->
+                <column>
+                    <label>
+                        <text>0 – Stop</text>
+                        <text xml:lang="cs">0 – Stůj</text>
+                    </label>
+                    <label>
+                        <text>1 – Clear</text>
+                        <text xml:lang="cs">1 – Volno</text>
+                    </label>
+                    <label>
+                        <text>2 – Caution</text>
+                        <text xml:lang="cs">2 – Výstraha</text>
+                    </label>
+                    <label>
+                        <text>3 – Preparing to 40</text>
+                        <text xml:lang="cs">3 – Očekávej 40</text>
+                    </label>
+                    <label>
+                        <text>4 – 40 then clear</text>
+                        <text xml:lang="cs">4 – 40 a volno</text>
+                    </label>
+                    <label>
+                        <text>5 – ××××× test</text>
+                        <text xml:lang="cs">5 – ××××× test</text>
+                    </label>
+                    <label>
+                        <text>6 – 40 then caution</text>
+                        <text xml:lang="cs">6 – 40 a výstraha</text>
+                    </label>
+                    <label>
+                        <text>7 – 40 then preparing to 40</text>
+                        <text xml:lang="cs">7 – 40 a očekávej 40</text>
+                    </label>
+                    <label>
+                        <text>8 – Call-on</text>
+                        <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
+                    </label>
+                    <label>
+                        <text>9 – Shunting allowed</text>
+                        <text xml:lang="cs">9 – Posun dovolen</text>
+                    </label>
+                    <label>
+                        <text>10 – Shunting allowed</text>
+                        <text xml:lang="cs">10 – Posun dovolen - nezabezpečený</text>
+                    </label>
+                    <label>
+                        <text>11 – Repeated clear</text>
+                        <text xml:lang="cs">11 – Opakovaná volno</text>
+                    </label>
+                    <label>
+                        <text>12 – Repeated caution</text>
+                        <text xml:lang="cs">12 – Opakovaná výstraha</text>
+                    </label>
+                    <label>
+                        <text>13 – Unlit</text>
+                        <text xml:lang="cs">13 – Zhasnuto</text>
+                    </label>
+                    <label>
+                        <text>14 – Repeated preparing to 40</text>
+                        <text xml:lang="cs">14 – Opakovaná očekávej 40</text>
+                    </label>
+                    <label>
+                        <text>15 – 40 and repeated caution</text>
+                        <text xml:lang="cs">15 – 40 a opakovaná výstraha</text>
+                    </label>
+                    <label>
+                        <text>16 – 40 and repeated preparing to 40</text>
+                        <text xml:lang="cs">16 – 40 a opakovaná očekávej 40</text>
+                    </label>
+                    <label>
+                        <text>17 – Proceed according to perspective possibilities</text>
+                        <text xml:lang="cs">17 – Jízda podle rozhledových poměrů</text>
+                    </label>
+                    <label>
+                        <text>18 – 40 and procced according to perspective possibilities</text>
+                        <text xml:lang="cs">18 – 40 a jízda podle rozhledových poměrů</text>
+                    </label>
+                </column>
+            </column>
+        </column>
+    </pane>
+
+            
+</decoder-config>

@@ -16,7 +16,7 @@
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
-  <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=86-90 for all TCS with Back EMF models, Read Only">
+  <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=86-90 for all TCS with Back EMF models, Read Only">
     <decVal/>
     <label>Version ID</label>
     <label xml:lang="it">ID Versione</label>
@@ -133,36 +133,6 @@
     <label>Consist Deceleration Adjustment</label>
     <label xml:lang="it">Correzione Decellazione Consist</label>
     <tooltip xml:lang="it">Valori oltre 128 incrementano correzzione, minori di 128 decrementano</tooltip>
-  </variable>
-  <variable item="Advanced Group 2 Option 12" CV="28" default="1" mask="XXXXXXXV">
-    <qualifier>
-      <variableref>Decoder ID</variableref>
-      <relation>ge</relation>
-      <value>89</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>RailCom Channel 1 Address</label>
-    <tooltip>If enabled, Channel 1 will broadcast the address</tooltip>
-  </variable>
-  <variable item="Advanced Group 2 Option 13" CV="28" default="1" mask="XXXXXXVX">
-    <qualifier>
-      <variableref>Decoder ID</variableref>
-      <relation>ge</relation>
-      <value>89</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>RailCom Channel 2</label>
-    <tooltip>If enabled, Channel 2 will send and receive data and provide acknowledgements. </tooltip>
-  </variable>
-  <variable item="Advanced Group 2 Option 14" CV="28" default="1" mask="XXXVXXXX">
-    <qualifier>
-      <variableref>Decoder ID</variableref>
-      <relation>ge</relation>
-      <value>89</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>RailCom Programming Address 253</label>
-    <tooltip>Serves as a programming lock. If this setting is disabled, programming address 253 will be locked. </tooltip>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV29.xml"/>
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">

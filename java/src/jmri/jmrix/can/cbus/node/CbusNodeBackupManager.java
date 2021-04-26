@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
@@ -72,6 +73,7 @@ public class CbusNodeBackupManager {
      *
      * @return value else null if unknown
      */
+    @CheckForNull
     public java.util.Date getFirstBackupTime() {
         for (int j = _backupInfos.size()-1; j >-1 ; j--) {
             if ( _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
@@ -86,6 +88,7 @@ public class CbusNodeBackupManager {
      *
      * @return value else null if unknown
      */
+    @CheckForNull
     public java.util.Date getLastBackupTime() {
         for (int j = 0; j <_backupInfos.size(); j++) {
             if ( _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
@@ -274,11 +277,11 @@ public class CbusNodeBackupManager {
 
 
             } catch (JDOMException ex) {
-                log.error("File invalid: " + ex);  // NOI18N
+                log.error("File invalid: {}", ex, ex);  // NOI18N
                 return;
             } catch (IOException ex) {
                 // file might not yet exist as 1st time Node on Network
-                log.debug("Possible Error reading file: {}", ex);  // NOI18N
+                log.debug("Possible Error reading file: ", ex);  // NOI18N
                 return;
             }
             // make sure ArrayList is most recent at start array index 0, oldest at end
@@ -387,10 +390,10 @@ public class CbusNodeBackupManager {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: " + ex);  // NOI18N
+            log.error("File not found when writing: ", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("IO Exception when writing: " + ex);  // NOI18N
+            log.error("IO Exception when writing: ", ex);  // NOI18N
             return false;
         }
 
@@ -464,8 +467,7 @@ public class CbusNodeBackupManager {
      * @return Location of the file, creating new if required
      */
     protected File getFileLocation() {
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
-        return x.getFile(_node.getNodeNumber(),true);
+        return new CbusNodeBackupFile().getFile(_node.getNodeNumber(),true);
     }
     
     /**
@@ -504,7 +506,7 @@ public class CbusNodeBackupManager {
     }
     
     protected void setNodeInSlim() {
-        log.info("Node {} in SLiM mode",this);
+        log.info("Node {} in SLiM mode",_node);
         if (getBackupStarted()) { // 1st time in this session
             doLoad();
             nodeInSLiM();

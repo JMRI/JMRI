@@ -4,11 +4,11 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 /**
- * Encodes a single measurement point for RPS
+ * Encodes a single measurement point for RPS.
  * <p>
  * Immutable
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class Measurement {
 
@@ -31,13 +31,15 @@ public class Measurement {
      * <p>
      * By definition, Reading objects are immutable
      *
+     * @return the reading.
      */
     public Reading getReading() {
         return r;
     }
 
     /**
-     * Return the ID int of the transmitter this measurement describes
+     * Return the ID int of the transmitter this measurement describes.
+     * @return transmitter ID.
      */
     public String getId() {
         if (r == null) {
@@ -68,7 +70,7 @@ public class Measurement {
         if (!valid) {
             return false;
         }
-        return !(Math.abs(x) > 1.E10 || Math.abs(x) > 1.E10 || Math.abs(x) > 1.E10);
+        return !(Math.abs(x) > 1.E10 || Math.abs(y) > 1.E10 || Math.abs(z) > 1.E10);
     }
 
     public void setValidPosition(boolean val) {
@@ -76,7 +78,8 @@ public class Measurement {
     }
 
     /**
-     * Error code, defined specifically by generator
+     * Error code, defined specifically by generator.
+     * @return error code.
      */
     public int getCode() {
         return code;
@@ -84,6 +87,7 @@ public class Measurement {
 
     /**
      * Should this be considered a valid measurement?
+     * @return if getCode greater 0.
      */
     public boolean isOkPoint() {
         if (getCode() > 0) {
@@ -93,7 +97,8 @@ public class Measurement {
     }
 
     /**
-     * Get the error code as a human-readable string
+     * Get the error code as a human-readable string.
+     * @return readable error code.
      */
     public String textCode() {
         return "" + getCode();
@@ -108,7 +113,8 @@ public class Measurement {
     }
 
     /**
-     * Get name of the source
+     * Get name of the source.
+     * @return source name.
      */
     public String getSource() {
         return source;

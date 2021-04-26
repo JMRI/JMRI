@@ -26,7 +26,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
-    }//NOI18N
+    }// NOI18N
 
     @Override
     public String getTitle() {
@@ -55,7 +55,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         }
     }
 
-    JCheckBox includePoll = new JCheckBox(Bundle.getMessage("MrcMonPanelCheckIncPoll")); //NOI18N
+    JCheckBox includePoll = new JCheckBox(Bundle.getMessage("MrcMonPanelCheckIncPoll")); // NOI18N
 
     private int trafficFilter = MrcInterface.ALL;
 
@@ -65,7 +65,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         add(includePoll);
         // connect to the LnTrafficController
         if (memo.getMrcTrafficController() == null) {
-            log.error("No traffic controller is available"); //IN18N
+            log.error("No traffic controller is available"); // NOI18N
             return;
         }
         memo.getMrcTrafficController().addTrafficListener(trafficFilter, this);
@@ -80,19 +80,19 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
             return;
         }
 
-        logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextXmit")); //NOI18N
+        logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextXmit")); // NOI18N
     }
 
     @Override
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
 
-        logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextFailed"));   //NOI18N
+        logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextFailed"));   // NOI18N
     }
 
     @Override
     public synchronized void notifyRcv(Date timestamp, MrcMessage m) {
 
-        String prefix = Bundle.getMessage("MrcMonPanelTextRecv"); //NOI18N
+        String prefix = Bundle.getMessage("MrcMonPanelTextRecv"); // NOI18N
         if (!includePoll.isSelected() && (m.getMessageClass() & MrcInterface.POLL) == MrcInterface.POLL && m.getElement(1) == 0x01) {
             //Do not show poll messages
             previousPollMessage = m;
@@ -102,7 +102,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
                 previousPollMessage = null;
                 return;
             }
-            prefix = Bundle.getMessage("MrcMonPanelTextRxCab", Integer.toString(previousPollMessage.getElement(0))); //NOI18N
+            prefix = Bundle.getMessage("MrcMonPanelTextRxCab", Integer.toString(previousPollMessage.getElement(0))); // NOI18N
             previousPollMessage = null;
         }
         logMessage(timestamp, m, prefix);
@@ -118,7 +118,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         }
 
         // display the decoded data
-        // we use Llnmon to format, expect it to provide consistent \n after each line
+        // we use MrcPackets to format
         nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw);
     }
 
@@ -131,7 +131,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
             super("Mrc Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     MrcMonPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class)); //IN18N
+                    jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class)); // NOI18N
         }
     }
 

@@ -1,18 +1,20 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 /**
  * XNetProgrammerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetProgrammerManager class
+ * Test for the jmri.jmrix.lenz.XNetProgrammerManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2018
+ * @author Paul Bender Copyright (C) 2012,2018
  */
 public class XNetProgrammerManagerTest {
 
-    private XNetInterfaceScaffold tc;
     private XNetSystemConnectionMemo memo;
     private XNetProgrammer prog;
  
@@ -25,7 +27,10 @@ public class XNetProgrammerManagerTest {
     @Test
     public void testIsAddressedModePossible() {
         XNetProgrammerManager t = new XNetProgrammerManager(prog,memo);
+        LenzCommandStation commandStation = memo.getXNetTrafficController().getCommandStation();
+        Mockito.when(commandStation.isOpsModePossible()).thenReturn(true).thenReturn(false);
         Assert.assertTrue(t.isAddressedModePossible());
+        Assert.assertFalse(t.isAddressedModePossible());
     }
 
     @Test
@@ -34,18 +39,21 @@ public class XNetProgrammerManagerTest {
         Assert.assertNotNull(t.getAddressedProgrammer(false,42));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        memo = new XNetSystemConnectionMemo(tc);
-        prog = new XNetProgrammer(tc);
+        XNetTrafficController trafficController = Mockito.mock(XNetTrafficController.class);
+        LenzCommandStation commandStation = Mockito.mock(LenzCommandStation.class);
+        Mockito.when(trafficController.getCommandStation()).thenReturn(commandStation);
+        memo = Mockito.mock(XNetSystemConnectionMemo.class);
+        Mockito.when(memo.getXNetTrafficController()).thenReturn(trafficController);
+        prog = new XNetProgrammer(trafficController);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo = null;
+        prog = null;
         JUnitUtil.tearDown();
     }
 

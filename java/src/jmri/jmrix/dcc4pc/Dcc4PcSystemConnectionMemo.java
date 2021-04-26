@@ -3,13 +3,11 @@ package jmri.jmrix.dcc4pc;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-import jmri.AddressedProgrammerManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.RailComManager;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.managers.DefaultRailComManager;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -21,19 +19,17 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public Dcc4PcSystemConnectionMemo(Dcc4PcTrafficController tc) {
         super("D", "Dcc4Pc");
         this.tc = tc;
         tc.setAdapterMemo(this);
-        register();
     }
 
     public Dcc4PcSystemConnectionMemo() {
         super("D", "Dcc4Pc");
-        register(); // registers general type
-        InstanceManager.store(this, Dcc4PcSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, Dcc4PcSystemConnectionMemo.class);
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.dcc4pc.swing.Dcc4PcComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
@@ -43,6 +39,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return traffic controller.
      */
     public Dcc4PcTrafficController getDcc4PcTrafficController() {
         return tc;
@@ -53,51 +50,6 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     }
     private Dcc4PcTrafficController tc;
 
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.ReporterManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            if (getProgrammerManager() != null) {
-                return getProgrammerManager().isGlobalProgrammerAvailable();
-            }
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            if (getProgrammerManager() != null) {
-                return getProgrammerManager().isAddressedModePossible();
-            }
-        }
-        return super.provides(type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.ReporterManager.class)) {
-            return (T) getReporterManager();
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        return super.get(T);
-    }
-
     /**
      * Configure the common managers for Dcc4Pc connections. This puts the
      * common manager config in one place. This method is static so that it can
@@ -106,76 +58,76 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      */
     public void configureManagers() {
 
-        getRailCommManager();
-
         InstanceManager.setReporterManager(
                 getReporterManager());
 
         InstanceManager.setSensorManager(
                 getSensorManager());
 
+        register();
     }
 
-    private DefaultRailComManager railCommManager;
-
+    /**
+     * @return the Default RailCom Manager.
+     * @deprecated since 4.21.1.  retrieve from InstanceManager instead.
+     */
+    @Deprecated
     public RailComManager getRailCommManager() {
         if (getDisabled()) {
             return null;
         }
-        if (railCommManager == null) {
-            railCommManager = new jmri.managers.DefaultRailComManager();
-        }
-        return railCommManager;
+        return InstanceManager.getDefault(RailComManager.class);
     }
 
-    private Dcc4PcReporterManager reporterManager;
 
     public Dcc4PcReporterManager getReporterManager() {
         if (getDisabled()) {
             return null;
         }
-        if (reporterManager == null) {
-            reporterManager = new jmri.jmrix.dcc4pc.Dcc4PcReporterManager(getDcc4PcTrafficController(), this);
-        }
-        return reporterManager;
+        return (Dcc4PcReporterManager) classObjectMap.computeIfAbsent((ReporterManager.class), (Class c) ->
+            new Dcc4PcReporterManager(getDcc4PcTrafficController(), this));
     }
-
-    private Dcc4PcSensorManager sensorManager;
 
     public Dcc4PcSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        if (sensorManager == null) {
-            sensorManager = new jmri.jmrix.dcc4pc.Dcc4PcSensorManager(getDcc4PcTrafficController(), this);
-        }
-        return sensorManager;
+        return (Dcc4PcSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,
+                (Class c) -> new Dcc4PcSensorManager(getDcc4PcTrafficController(), this));
     }
-    private Dcc4PcProgrammerManager programManager;
 
+    /**
+     * @return a programmer manager
+     * @deprecated since 4.21.1 use {@link InstanceManager#getDefault(Class)} instead
+     */
+    @Deprecated
     public Dcc4PcProgrammerManager getProgrammerManager() {
         if (getDisabled()) {
             return null;
         }
-        if (defaultProgrammer == null) {
-            if (progManager == null) {
-                return null;
-            }
-            List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-            if (connList.isEmpty()) {
-                return null;
-            }
-            for (int i = 0; i < connList.size(); i++) {
-                if (connList.get(i).getUserName().equals(progManager)) {
-                    defaultProgrammer = connList.get(i).get(GlobalProgrammerManager.class);
-                    break;
+        return (Dcc4PcProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class c) -> {
+            DefaultProgrammerManager defaultProgrammer=get(GlobalProgrammerManager.class);
+            if (defaultProgrammer == null) {
+                if (progManager == null) {
+                    return null;
+                }
+                List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+                if (connList.isEmpty()) {
+                    return null;
+                }
+                for (SystemConnectionMemo systemConnectionMemo : connList) {
+                    if (systemConnectionMemo.getUserName().equals(progManager)) {
+                        defaultProgrammer = systemConnectionMemo.get(GlobalProgrammerManager.class);
+                        break;
+                    }
                 }
             }
-        }
-        if (programManager == null && defaultProgrammer != null && defaultProgrammer instanceof AddressedProgrammerManager) {
-            programManager = new Dcc4PcProgrammerManager((AddressedProgrammerManager & GlobalProgrammerManager) defaultProgrammer);
-        }
-        return programManager;
+            if(defaultProgrammer != null ) {
+                return new Dcc4PcProgrammerManager(defaultProgrammer);
+            } else {
+                return null;
+            }
+        });
     }
 
     @Override
@@ -198,10 +150,9 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         super.dispose();
     }
 
-    private GlobalProgrammerManager defaultProgrammer;
-
     public <T extends AddressedProgrammerManager & GlobalProgrammerManager> void setRealProgramManager(T dpm) {
-        defaultProgrammer = dpm;
+        store(dpm,GlobalProgrammerManager.class);
+        store(dpm, AddressedProgrammerManager.class);
     }
 
     private String progManager;

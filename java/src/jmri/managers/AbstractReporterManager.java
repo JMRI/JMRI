@@ -6,14 +6,14 @@ import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a ReporterManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {
@@ -44,24 +44,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @Nonnull
     public Reporter provideReporter(@Nonnull String sName) {
         Reporter r = getReporter(sName);
-        if (r != null) {
-            return r;
-        }
-        if (sName.startsWith(getSystemPrefix() + typeLetter())) {
-            return newReporter(sName, null);
-        } else {
-            return newReporter(makeSystemName(sName), null);
-        }
+        return r == null ? newReporter(makeSystemName(sName, true), null) : r;
     }
 
     /** {@inheritDoc} */
     @Override
     public Reporter getReporter(@Nonnull String name) {
         Reporter r = getByUserName(name);
-        if (r != null) {
-            return r;
-        }
-        return getBySystemName(name);
+        return r == null ? getBySystemName(name) : r;
     }
 
     /** {@inheritDoc} */
@@ -82,31 +72,24 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     /** {@inheritDoc} */
     @Override
     public Reporter getByDisplayName(@Nonnull String key) {
-        // First try to find it in the user list.
-        // If that fails, look it up in the system list
-        Reporter retv = this.getByUserName(key);
-        if (retv == null) {
-            retv = this.getBySystemName(key);
-        }
-        // If it's not in the system list, go ahead and return null
-        return (retv);
+        return getReporter(key);        
     }
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Reporter newReporter(@Nonnull String systemName, @CheckForNull String userName) {
+    public Reporter newReporter(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
                + ((userName == null) ? "null" : userName));  // NOI18N
         log.debug("new Reporter: {} {}", systemName, userName);
 
        // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
-                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
+        if (!systemName.startsWith(getSystemNamePrefix())
+                || !(systemName.length() > (getSystemNamePrefix()).length())) {
             log.error("Invalid system name for reporter: {} needed {}{}",
                     systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
-                    + " needed " + getSystemPrefix() + typeLetter());
+                    + " needed " + getSystemNamePrefix());
         }
 
         // return existing if there is one
@@ -142,8 +125,10 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Reporter has been invoked.
      *
+     * @param systemName system name.
+     * @param userName username.
      * @return never null
      */
     abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName);
@@ -156,48 +141,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        Reporter r = getBySystemName(prefix + typeLetter() + curAddress);
-        if (r == null) {
-            return curAddress;
-        }
-
-        // This bit deals with handling the curAddress, and how to get the next address.
-        int iName = 0;
-        try {
-            iName = Integer.parseInt(curAddress);
-        } catch (NumberFormatException ex) {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
-
-        // Check to determine if the systemName is in use, return null if it is,
-        // otherwise return the next valid address.
-        r = getBySystemName(prefix + typeLetter() + iName);
-        if (r != null) {
-            for (int x = 1; x < 10; x++) {
-                iName++;
-                r = getBySystemName(prefix + typeLetter() + iName);
-                if (r == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            // feedback when next address is also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new Reporters added", curAddress);
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);

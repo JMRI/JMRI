@@ -1,15 +1,14 @@
 package jmri.implementation.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * VirtualSignalMastXmlTest.java
  *
- * Description: tests for the VirtualSignalMastXml class
+ * Test for the VirtualSignalMastXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class VirtualSignalMastXmlTest {
       Assert.assertNotNull("VirtualSignalMastXml constructor",new VirtualSignalMastXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

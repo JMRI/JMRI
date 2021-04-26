@@ -10,13 +10,12 @@ import jmri.util.JmriJFrame;
  * While not exactly a singleton class, only one version of the dialog should be
  * viable at a time - i.e. the version for a particular device type.
  *
- * @author Pete Cressman Copyright (c) 2010
+ * @author Pete Cressman Copyright (c) 2010, 2020
  */
 public class ItemDialog extends JmriJFrame {
 
     protected FamilyItemPanel _parent;
     protected String _type;
-    // protected String    _family;
 
     public ItemDialog(String type, String title, FamilyItemPanel parent) {
         super(title, false, false);

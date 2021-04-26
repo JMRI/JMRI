@@ -255,7 +255,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             Train train = (Train) e.getSource();
             int row = sysList.indexOf(train);
             if (Control.SHOW_PROPERTY) {
-                log.debug("Update train table row: " + row + " name: " + train.getName());
+                log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);

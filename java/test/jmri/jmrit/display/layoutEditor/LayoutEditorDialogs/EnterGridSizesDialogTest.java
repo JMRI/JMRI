@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of enterGridSizesDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class EnterGridSizesDialogTest {
 
@@ -56,6 +56,8 @@ public class EnterGridSizesDialogTest {
             layoutEditor = null;
             enterGridSizesDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -103,7 +105,7 @@ public class EnterGridSizesDialogTest {
         }, "misc1 finished");
 
         //restore valid value
-        int oldGridSize1st = layoutEditor.getGridSize();
+        int oldGridSize1st = layoutEditor.gContext.getGridSize();
         primaryGridSizeTextFieldOperator.setText(Integer.toString(oldGridSize1st));
 
         // try to enter an invalid value in the secondary grid size text field
@@ -123,19 +125,19 @@ public class EnterGridSizesDialogTest {
 
         //put in new (valid) values
         primaryGridSizeTextFieldOperator.setText(Integer.toString(oldGridSize1st ^ 1));
-        int oldGridSize2nd = layoutEditor.getGridSize2nd();
+        int oldGridSize2nd = layoutEditor.gContext.getGridSize2nd();
         secondaryGridSizeTextFieldOperator.setText(Integer.toString(oldGridSize2nd ^ 1));
 
         doneButtonOperator.doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
 
-        Assert.assertEquals("new grid size 1st", oldGridSize1st ^ 1, layoutEditor.getGridSize());
-        Assert.assertEquals("new grid size 2nd", oldGridSize2nd ^ 1, layoutEditor.getGridSize2nd());
+        Assert.assertEquals("new grid size 1st", oldGridSize1st ^ 1, layoutEditor.gContext.getGridSize());
+        Assert.assertEquals("new grid size 2nd", oldGridSize2nd ^ 1, layoutEditor.gContext.getGridSize2nd());
 
-        layoutEditor.setGridSize(oldGridSize1st);
-        Assert.assertEquals("old grid size 1st", oldGridSize1st, layoutEditor.getGridSize());
+        layoutEditor.gContext.setGridSize(oldGridSize1st);
+        Assert.assertEquals("old grid size 1st", oldGridSize1st, layoutEditor.gContext.getGridSize());
 
-        layoutEditor.setGridSize2nd(oldGridSize2nd);
-        Assert.assertEquals("old grid size 2nd", oldGridSize2nd, layoutEditor.getGridSize2nd());
+        layoutEditor.gContext.setGridSize2nd(oldGridSize2nd);
+        Assert.assertEquals("old grid size 2nd", oldGridSize2nd, layoutEditor.gContext.getGridSize2nd());
     }
 }

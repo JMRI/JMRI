@@ -45,9 +45,19 @@
         <label>FX5 Effect</label>
         <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
     </variable>
-    <variable CV="1.262" item="Extended Function Map FX6 Effect" default="27" minOut="5">
+    <variable CV="1.262" item="Extended Function Map FX6 Effect" default="27" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
         <label>FX6 Effect</label>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.263" item="Extended Function Map FX7 Effect" default="28" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <label>FX7 Effect</label>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.264" item="Extended Function Map FX8 Effect" default="28" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <label>FX8 Effect</label>
         <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
     </variable>
     <variable CV="1.273" item="Extended Function Map Dimmer" default="7">
@@ -217,23 +227,63 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
     </variable>
-    <variable CV="1.390" mask="XXXXXXXV" item="FX6 Effect Automatic Effects - FWDD" default="0" minOut="5">
+    <variable CV="1.390" mask="XXXXXXXV" item="FX6 Effect Automatic Effects - FWDD" default="0" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
     </variable>
-    <variable CV="1.390" mask="XXXXXXVX" item="FX6 Effect Automatic Effects - REVD" default="0" minOut="5">
+    <variable CV="1.390" mask="XXXXXXVX" item="FX6 Effect Automatic Effects - REVD" default="0" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
     </variable>
-    <variable CV="1.390" mask="XXXXXVXX" item="FX6 Effect Automatic Effects - FWDS" default="0" minOut="5">
+    <variable CV="1.390" mask="XXXXXVXX" item="FX6 Effect Automatic Effects - FWDS" default="0" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
     </variable>
-    <variable CV="1.390" mask="XXXXVXXX" item="FX6 Effect Automatic Effects - REVS" default="0" minOut="5">
+    <variable CV="1.390" mask="XXXXVXXX" item="FX6 Effect Automatic Effects - REVS" default="0" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
     </variable>
-    <variable CV="1.390" mask="XXXVXXXX" item="FX6 Effect Automatic Effects - ESTP" default="0" minOut="5">
+    <variable CV="1.390" mask="XXXVXXXX" item="FX6 Effect Automatic Effects - ESTP" default="0" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.391" mask="XXXXXXXV" item="FX7 Effect Automatic Effects - FWDD" default="0" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.391" mask="XXXXXXVX" item="FX7 Effect Automatic Effects - REVD" default="0" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.391" mask="XXXXXVXX" item="FX7 Effect Automatic Effects - FWDS" default="0" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.391" mask="XXXXVXXX" item="FX7 Effect Automatic Effects - REVS" default="0" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.391" mask="XXXVXXXX" item="FX7 Effect Automatic Effects - ESTP" default="0" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.392" mask="XXXXXXXV" item="FX8 Effect Automatic Effects - FWDD" default="0" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.392" mask="XXXXXXVX" item="FX8 Effect Automatic Effects - REVD" default="0" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.392" mask="XXXXXVXX" item="FX8 Effect Automatic Effects - FWDS" default="0" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.392" mask="XXXXVXXX" item="FX8 Effect Automatic Effects - REVS" default="0" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.392" mask="XXXVXXXX" item="FX8 Effect Automatic Effects - ESTP" default="0" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
     </variable>

@@ -21,7 +21,7 @@ import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.ThrottleManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
@@ -47,7 +47,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2015, 2017
  * @since 2.9.4
- * @see jmri.jmrix.SystemConnectionMemo#provides(java.lang.Class)
+ * @see jmri.SystemConnectionMemo#provides(java.lang.Class)
  */
 @ServiceProvider(service = PreferencesManager.class)
 public class ManagerDefaultSelector extends AbstractPreferencesManager {
@@ -119,7 +119,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         if (log.isDebugEnabled()) {
                             log.debug("Start CONNECTION_ADDED processing with {} existing", list.size());
                             for (int i = 0; i < list.size(); i++) {
-                                log.debug("    System {}: {}", i, list.get(i));
+                                log.debug("    System {}: {} (\"{}\")", i, list.get(i), list.get(i).getUserName());
                             }
                         }
 

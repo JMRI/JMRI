@@ -249,10 +249,10 @@ Pour plus d'information voir la <a href="../scripting/index.shtml">page d'aide S
 JMRI fournit des classes pour vous aider &#224; &#233;crire du code Java pour contr&#244;ler votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
 &#224; l'automatisation en g&#233;n&#233;ral et rend facile &#224; coder votre propre logique de signalisation dans le programme; voir la <a href="../automation/viaJava.shtml"> page web automatisation</a>.
 La
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</a>
+<a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</a>
 et s'est "kin" sont cens&#233;s rendre
 facile l'&#233;criture d'une logique de signalisation complexe personnalis&#233;e; une variante de ceux-ci a &#233;t&#233; utilis&#233;e
-par Nick Kulp's pour l'automatisation de la signalisation sur son  <a href="http://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">R&#233;seau Cornwall</a>..
+par Nick Kulp's pour l'automatisation de la signalisation sur son  <a href="https://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">R&#233;seau Cornwall</a>..
 <p>
 Bien que les Classes d'Automatisation n&#233;cessitent l'&#233;criture de code, au lieu de simplement remplir
 un formulaire GUI, le programme g&#232;re tous les d&#233;tails de la lecture des

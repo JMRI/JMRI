@@ -21,14 +21,11 @@ import jmri.Timebase;
 public class FastClockController extends AbstractController {
 
     private final Timebase fastClock;
-    //  To correct for local time
-    private final int timeZoneOffset;
     private final PropertyChangeListener timeAndRateListener;
     
     public FastClockController() {
                
         fastClock = InstanceManager.getDefault(jmri.Timebase.class);
-        timeZoneOffset = TimeZone.getDefault().getOffset(System.currentTimeMillis());
         timeAndRateListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -70,11 +67,14 @@ public class FastClockController extends AbstractController {
     /**
      * Fast clock should not have a time zone.
      * <p>
-     * Remove the offset to give straight UTC value.
-     * @return Time with offset removed
+     * Add the offset to give straight UTC value,
+     *  based on the fastclock's datetime
+     * @return Time, as UTC in seconds
      */
     private long getAdjustedTime() {
-        return ((fastClock.getTime().getTime() + timeZoneOffset) / 1000);
+        long fastClockTime = fastClock.getTime().getTime(); //fastclock time as milliseconds
+        int timeZoneOffset = TimeZone.getDefault().getOffset(fastClockTime); //timezone offset in milliseconds
+        return ((fastClockTime + timeZoneOffset) / 1000); //returned adjusted time in seconds
     }
        
     /**

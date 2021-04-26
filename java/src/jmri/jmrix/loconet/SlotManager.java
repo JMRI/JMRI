@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -52,6 +53,33 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     static public int postProgDelay = 100; // this is public to allow changes via script
 
+    public int slotScanInterval = 50; // this is public to allow changes via script and tests
+    /**
+     * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
+     * TODO add slottype, eg systemslot, std slot, expanded slot etc
+     * @author sg
+     *
+     */
+    static public class SlotMapEntry {
+        public SlotMapEntry(int from, int to) {
+            fromSlot = from;
+            toSlot = to;
+        }
+        int fromSlot;
+        int toSlot;
+        public int getFrom() {
+            return fromSlot;
+        }
+        public int getTo() {
+            return toSlot;
+        }
+    }
+    
+    /**
+     * a Map of the CS slots.
+     */
+    public List<SlotMapEntry> slotMap = new ArrayList<SlotMapEntry>();
+    
     /**
      * Constructor for a SlotManager on a given TrafficController.
      *
@@ -63,6 +91,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // change timeout values from AbstractProgrammer superclass
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
+        
+        slotMap = Arrays.asList(new SlotMapEntry(0,127));
 
         loadSlots();
 
@@ -336,7 +366,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // just modified the slot information.
                 javax.swing.Timer t = new javax.swing.Timer(500, (java.awt.event.ActionEvent e) -> {
                     log.debug("Updating slots account received opcode 0x8a message");   // NOI18N
-                    update();
+                    update(slotMap,slotScanInterval);
                 });
                 t.stop();
                 t.setInitialDelay(500);
@@ -364,6 +394,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
+            getMoreDetailsForSlot(m, i);
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
@@ -546,6 +577,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             case LnConstants.OPC_LOCO_SND:
             case LnConstants.OPC_LOCO_SPD:
             case LnConstants.OPC_SLOT_STAT1:
+            case LnConstants.OPC_LINK_SLOTS:
+            case LnConstants.OPC_UNLINK_SLOTS:
                 i = m.getElement(1);
                 break;
 
@@ -749,6 +782,65 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("no request for addr {}", addr); // NOI18N
             }
         }
+    }
+
+    /**
+     * If it is a slot being sent COMMON,
+     *  after a delay, get the new status of the slot
+     * If it is a true slot move, not dispatch or null
+     *  after a delay, get the new status of the from slot, which varies by CS.
+     *  the to slot should come in the reply.
+     * @param m a LocoNet message
+     * @param i the slot to which it is directed
+     */
+    protected void getMoreDetailsForSlot(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received.
+        // sets up delayed slot read to update our effected slots to match the CS
+        if (m.getOpCode() == LnConstants.OPC_SLOT_STAT1 &&
+                ((m.getElement(2) & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON ) ) {
+            // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed 
+            // it could have its status changed a number of ways.
+            sendReadSlotDelayed(i,100);
+        } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+            // if a true move get the new from slot status
+            // the to slot status is sent in the reply, but not if dispatch or null
+            // as those return slot info.
+            int slotTwo;
+            slotTwo = m.getElement(2);
+            if (i != 0 && slotTwo != 0 && i != slotTwo) {
+                sendReadSlotDelayed(i,100);
+            }
+        } else if (m.getOpCode() == LnConstants.OPC_LINK_SLOTS ||
+                m.getOpCode() == LnConstants.OPC_UNLINK_SLOTS ) {
+            // unlink and link return first slot by not second (to or from)
+            // the to slot status is sent in the reply
+            int slotTwo;
+            slotTwo = m.getElement(2);
+            if (i != 0 && slotTwo != 0) {
+                sendReadSlotDelayed(slotTwo,100);
+            }
+       }
+    }
+
+    /**
+     * Scedule a delayed slot read.
+     * @param slotNo - the slot.
+     * @param delay - delay in msecs.
+     */
+    protected void sendReadSlotDelayed(int slotNo, long delay) {
+        java.util.TimerTask meterTask = new java.util.TimerTask() {
+            int slotNumber = slotNo;
+
+            @Override
+            public void run() {
+                try {
+                    sendReadSlot(slotNumber);
+                } catch (Exception e) {
+                    log.error("Exception occurred sendReadSlotDelayed:", e);
+                }
+            }
+        };
+        jmri.util.TimerUtil.schedule(meterTask, delay);
     }
 
     /**
@@ -1138,7 +1230,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public void doConfirm(int CV, int val, ProgListener p,
             int pcmd) throws jmri.ProgrammerException {
 
-        log.debug("confirmCV: {}", CV); // NOI18N
+        log.debug("confirmCV: {}, val: {}", CV, val); // NOI18N
 
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
@@ -1152,7 +1244,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(pcmd, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(pcmd, val, CV, false));
     }
 
     int hopsa; // high address for CV read/write
@@ -1160,16 +1252,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     CsOpSwAccess csOpSwAccessor;
 
+    @Override
+    public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(cvNum, p, 0);
+    }
+    
     /**
      * Read a CV via the OpsMode programmer.
      *
      * @param cvNum a String containing the CV number
      * @param p programmer
+     * @param startVal initial "guess" for value of CV, can improve speed if used
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
-    public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
-        log.debug("readCV(string): cvNum={} mode={}", cvNum, getMode());
+    public void readCV(String cvNum, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+        log.debug("readCV(string): cvNum={}, startVal={}, mode={}", cvNum, startVal, getMode());
         if (getMode().equals(csOpSwProgrammingMode)) {
             log.debug("cvOpSw mode!");
             //handle Command Station OpSw programming here
@@ -1212,7 +1310,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 throw new jmri.ProgrammerException("mode not supported"); // NOI18N
             }
 
-            doRead(CV, p, pcmd);
+            doRead(CV, p, pcmd, startVal);
 
         }
     }
@@ -1231,7 +1329,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
-        doRead(CV, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
+        doRead(CV, p, 0x2F, 0);  // although LPE implies 0x2C, 0x2F is observed
     }
 
     /**
@@ -1240,11 +1338,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param CV the CV number
      * @param p programmer
      * @param progByte programming command
+     * @param startVal initial "guess" for value of CV, can improve speed if used
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
+    void doRead(int CV, jmri.ProgListener p, int progByte, int startVal) throws jmri.ProgrammerException {
 
-        log.debug("readCV: {}", CV); // NOI18N
+        log.debug("readCV: {} with startVal: {}", CV, startVal); // NOI18N
 
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
@@ -1256,7 +1355,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
+//        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(progByte, startVal, CV, false));
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -1431,10 +1531,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * This is not invoked by this class, but can be invoked from elsewhere to
      * start the process of scanning all slots to update their contents.
+     * 
+     * @param inputSlotMap array of from to pairs
+     * @param interval ms between slt rds
      */
-    synchronized public void update() {
-        nextReadSlot = 0;
-        readNextSlot();
+    synchronized public void update(List<SlotMapEntry> inputSlotMap, int interval) {
+        for ( SlotMapEntry item: inputSlotMap) {
+            nextReadSlot = item.getFrom();
+            readNextSlot(item.getTo(),interval);
+        }
+    }
+    
+    public void update() {
+        update(slotMap, slotScanInterval);
     }
 
     /**
@@ -1460,17 +1569,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Continue the sequence of reading all slots.
+     * @param toSlot index of the next slot to read
+     * @param interval wait time before operation, milliseconds
      */
-    synchronized protected void readNextSlot() {
+    synchronized protected void readNextSlot(int toSlot, int interval) {
         // send info request
         sendReadSlot(nextReadSlot++);
 
         // schedule next read if needed
-        if (nextReadSlot < 127) {
-            javax.swing.Timer t = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
+        if (nextReadSlot < toSlot) {
+            javax.swing.Timer t = new javax.swing.Timer(interval, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    readNextSlot();
+                    readNextSlot(toSlot,interval);
                 }
             });
             t.setRepeats(false);

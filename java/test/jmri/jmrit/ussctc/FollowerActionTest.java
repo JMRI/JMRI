@@ -1,20 +1,21 @@
 package jmri.jmrit.ussctc;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.Action;
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.FollowerAction class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007
+ * @author Bob Jacobsen Copyright 2003, 2007
  */
 public class FollowerActionTest {
 
@@ -33,14 +34,14 @@ public class FollowerActionTest {
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRouteManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

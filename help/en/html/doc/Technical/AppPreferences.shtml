@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -77,7 +76,7 @@
 
             <h1 id="preferences-managers">Preferences Managers</h1>
             <p><a href="http://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferenceManagers</a> are the primary handlers of preference retrieval and storage in JMRI applications.</p>
-            <p>The JMRI library has a number of Preferences Managers. These managers all provide an implementation of the PreferencesManager interface to allow them to be discovered. Preferences managers are loaded by the JMRI configuration manager, which uses the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">ServiceLoader API</a> to create an instance of every preferences manager (this allows third-party JARs to implement preferences managers; see the ServiceLoader API docs for details on how this works and the <a href="http://jmri.org/JavaDoc/doc/jmri/spi/package-summary.html">jmri.spi API docs</a> for details of how JMRI meets the ServiceLoader API requirements).</p>
+            <p>The JMRI library has a number of Preferences Managers. These managers all provide an implementation of the PreferencesManager interface to allow them to be discovered. Preferences managers are loaded by the JMRI configuration manager, which uses the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">ServiceLoader API</a> to create an instance of every preferences manager (this allows third-party JARs to implement preferences managers; see the ServiceLoader API docs for details on how this works and the <a href="https://jmri.org/JavaDoc/doc/jmri/spi/package-summary.html">jmri.spi API docs</a> for details of how JMRI meets the ServiceLoader API requirements).</p>
             <p>Because the mechanism by which preferences managers are discovered has no deterministic order, the preferences managers API includes methods that allow a preference manager to require that other specific preference managers are correctly initialized before it is initialized.</p>
             <h1 id="preferences-panels">Preferences Panels</h1>
             <p><a href="http://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencePanels</a> are the user interface for interacting with Preferences Managers within the Preferences window of a JMRI application.</p>
@@ -86,8 +85,8 @@
             <h1 id="scripts">Scripts</h1>
             <p>The following scripts included in the JMRI distribution show how to access preferences within a script:</p>
             <ul>
-                <li><strong><a href="http://jmri.org/jython/PreferencesExamples.py">PreferencesExamples.py</a></strong> - Jython sample code that also demonstrates using another Jython script (<a href="http://jmri.org/jython/preferences.py">preferences.py</a>) within a script</li>
-                <li><strong><a href="http://jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> - Working JavaScript or ECMAScript script that controls some ZeroConf network preferences</li>
+                <li><strong><a href="https://jmri.org/jython/PreferencesExamples.py">PreferencesExamples.py</a></strong> - Jython sample code that also demonstrates using another Jython script (<a href="https://jmri.org/jython/preferences.py">preferences.py</a>) within a script</li>
+                <li><strong><a href="https://jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> - Working JavaScript or ECMAScript script that controls some ZeroConf network preferences</li>
             </ul>
 
             <!--#include virtual="/Footer.shtml" -->

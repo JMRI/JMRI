@@ -2,12 +2,9 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
@@ -190,14 +187,14 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         pAddHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpersAt")));
         pAddHelpersAt.add(addHelpersAtTextField);
         addHelpersAtTextField.setText(TrainManifestText.getStringAddHelpers());
-        addHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
+        addHelpersAtTextField.setToolTipText(rb.getString("ToolTipAddHelpers"));
         pManifest.add(pAddHelpersAt);
 
         JPanel pRemoveHelpersAt = new JPanel();
         pRemoveHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("RemoveHelpersAt")));
         pRemoveHelpersAt.add(removeHelpersAtTextField);
         removeHelpersAtTextField.setText(TrainManifestText.getStringRemoveHelpers());
-        removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
+        removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipRemoveHelpers"));
         pManifest.add(pRemoveHelpersAt);
 
         JPanel pLocoChangeAt = new JPanel();
@@ -321,26 +318,26 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return (TrainManifestText.getStringManifestForTrain().equals(manifestForTrainTextField.getText())
-                || TrainManifestText.getStringValid().equals(validTextField.getText())
-                || TrainManifestText.getStringScheduledWork().equals(scheduledWorkAtTextField.getText())
-                || TrainManifestText.getStringWorkDepartureTime().equals(scheduledWorkDepartureTextField.getText())
-                || TrainManifestText.getStringWorkArrivalTime().equals(scheduledWorkArrivalTextField.getText())
-                || TrainManifestText.getStringNoScheduledWork().equals(noScheduledWorkAtTextField.getText())
-                || TrainManifestText.getStringNoScheduledWorkWithRouteComment().equals(noScheduledWorkAtWithRouteCommentTextField.getText())
-                || TrainManifestText.getStringDepartTime().equals(departTimeTextField.getText())
-                || TrainManifestText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
-                || TrainManifestText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText())
-                || TrainManifestText.getStringTrainTerminates().equals(trainTerminatesInTextField.getText())
-                || TrainManifestText.getStringDestination().equals(destinationTextField.getText())
-                || TrainManifestText.getStringTo().equals(toTextField.getText())
-                || TrainManifestText.getStringFrom().equals(fromTextField.getText())
-                || TrainManifestText.getStringDest().equals(destTextField.getText())
-                || TrainManifestText.getStringFinalDestination().equals(finalDestinationTextField.getText())
-                || TrainManifestText.getStringAddHelpers().equals(addHelpersAtTextField.getText())
-                || TrainManifestText.getStringRemoveHelpers().equals(removeHelpersAtTextField.getText())
-                || TrainManifestText.getStringLocoChange().equals(locoChangeAtTextField.getText())
-                || TrainManifestText.getStringCabooseChange().equals(cabooseChangeAtTextField.getText())
-                || TrainManifestText.getStringLocoAndCabooseChange().equals(locoAndCabooseChangeAtTextField.getText()));
+        return !(TrainManifestText.getStringManifestForTrain().equals(manifestForTrainTextField.getText())
+                && TrainManifestText.getStringValid().equals(validTextField.getText())
+                && TrainManifestText.getStringScheduledWork().equals(scheduledWorkAtTextField.getText())
+                && TrainManifestText.getStringWorkDepartureTime().equals(scheduledWorkDepartureTextField.getText())
+                && TrainManifestText.getStringWorkArrivalTime().equals(scheduledWorkArrivalTextField.getText())
+                && TrainManifestText.getStringNoScheduledWork().equals(noScheduledWorkAtTextField.getText())
+                && TrainManifestText.getStringNoScheduledWorkWithRouteComment().equals(noScheduledWorkAtWithRouteCommentTextField.getText())
+                && TrainManifestText.getStringDepartTime().equals(departTimeTextField.getText())
+                && TrainManifestText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
+                && TrainManifestText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText())
+                && TrainManifestText.getStringTrainTerminates().equals(trainTerminatesInTextField.getText())
+                && TrainManifestText.getStringDestination().equals(destinationTextField.getText())
+                && TrainManifestText.getStringTo().equals(toTextField.getText())
+                && TrainManifestText.getStringFrom().equals(fromTextField.getText())
+                && TrainManifestText.getStringDest().equals(destTextField.getText())
+                && TrainManifestText.getStringFinalDestination().equals(finalDestinationTextField.getText())
+                && TrainManifestText.getStringAddHelpers().equals(addHelpersAtTextField.getText())
+                && TrainManifestText.getStringRemoveHelpers().equals(removeHelpersAtTextField.getText())
+                && TrainManifestText.getStringLocoChange().equals(locoChangeAtTextField.getText())
+                && TrainManifestText.getStringCabooseChange().equals(cabooseChangeAtTextField.getText())
+                && TrainManifestText.getStringLocoAndCabooseChange().equals(locoAndCabooseChangeAtTextField.getText()));
     }
 }

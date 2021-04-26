@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;
 import jmri.managers.AbstractManager;
@@ -45,31 +47,48 @@ public class OBlockManager extends AbstractManager<OBlock>
      * systemName or userName already exists, or if there
      * is trouble creating a new OBlock
      */
-    public OBlock createNewOBlock(@Nonnull String systemName, String userName) {
+    @CheckForNull
+    public OBlock createNewOBlock(@Nonnull String systemName, @CheckForNull String userName) {
         // Check that OBlock does not already exist
         OBlock r;
-        if (userName != null && (userName.trim().length() > 0)) {
+        if (userName != null && !userName.equals("")) {
             r = getByUserName(userName);
             if (r != null) {
                 return null;
             }
         }
-        if (!systemName.startsWith("OB")) {
+        if (!isValidSystemNameFormat(systemName)) {
             return null;
         }
-        if (systemName.length() < 3) {
-            return null;
-        }
+
         r = getBySystemName(systemName);
         if (r != null) {
             return null;
         }
         // OBlock does not exist, create a new OBlock
         r = new OBlock(systemName, userName);
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         // save in the maps
         register(r);
         return r;
     }
+
+    /**
+     * Create a new OBlock using an automatically incrementing system
+     * name.
+     *
+     * @param userName the user name for the new OBlock
+     * @return null if an OBlock with the same systemName or userName already
+     *         exists, or if there is trouble creating a new OBlock.
+     */
+    @CheckForNull
+    public OBlock createNewOBlock(@Nonnull String userName) {
+        return createNewOBlock(getAutoSystemName(), userName);
+    }
+
 
     /**
      * Get an existing OBlock by a given name. First looks up assuming that name

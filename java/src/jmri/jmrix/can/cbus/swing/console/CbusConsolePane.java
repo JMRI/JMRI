@@ -10,7 +10,9 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
+import jmri.jmrix.can.cbus.swing.CbusSendEventPane;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.TextAreaFIFO;
 
@@ -39,7 +41,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     
     protected final CbusConsoleStatsPane statsPane;
     protected final CbusConsolePacketPane packetPane;
-    protected final CbusConsoleSendPane sendPane;
+    protected final CbusSendEventPane sendPane;
     protected CbusConsoleDecodeOptionsPane decodePane;
     protected final CbusConsoleLoggingPane logPane;
     public final CbusConsoleDisplayOptionsPane displayPane;
@@ -53,7 +55,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         logBuffer = new ConcurrentLinkedDeque<>();
         statsPane = new CbusConsoleStatsPane(this);
         packetPane = new CbusConsolePacketPane(this);
-        sendPane = new CbusConsoleSendPane(this);
+        sendPane = new CbusSendEventPane(this);
         logPane = new CbusConsoleLoggingPane(this);
         displayPane = new CbusConsoleDisplayOptionsPane(this);
 
@@ -108,11 +110,22 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
+        initComponents( memo, true);
+    }
+    
+    /**
+     * Constructor For testing purposes, not for general use.
+     * @param memo System Connection
+     * @param launchEvTable true to launch a CBUS Event Table Model, else false.
+     */
+    public void initComponents(CanSystemConnectionMemo memo, boolean launchEvTable) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
         decodePane = new CbusConsoleDecodeOptionsPane(this);
+        if (launchEvTable){
+            CbusEventTableDataModel.checkCreateNewEventModel(memo);
+        }
         init();
-        
     }
 
     public void init() {
@@ -292,7 +305,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     // A private subclass of the default highlight painter
-    class CbusHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
+    private class CbusHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
         public CbusHighlightPainter(Color color) {
             super(color);
         }

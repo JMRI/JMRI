@@ -1,115 +1,112 @@
 package jmri.jmrit.whereused;
 
-import java.awt.GraphicsEnvironment;
+import java.nio.file.Path;
+
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.jmrit.entryexit.DestinationPoints;
-import jmri.jmrit.entryexit.EntryExitPairs;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the SensorWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class WhereUsedCollectorsTest {
 
     @Test
     public void testCollectorMethods() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        WhereUsedCollectors ctor = new WhereUsedCollectors();
-        Assert.assertNotNull("exists", ctor);
-
         Sensor sensor = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IT101");
-        String result = WhereUsedCollectors.checkTurnouts(sensor);
-        Assert.assertTrue(result.length() == 0);    // Nothing found
+        assertThat(WhereUsedCollectors.checkTurnouts(sensor)).isEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
-        result = WhereUsedCollectors.checkTurnouts(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkTurnouts(sensor)).isNotEmpty();
+        assertThat(WhereUsedCollectors.checkPanels(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
-        result = WhereUsedCollectors.checkLights(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        result = WhereUsedCollectors.checkRoutes(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkLights(sensor)).isNotEmpty();
+        assertThat(WhereUsedCollectors.checkPanels(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Occupancy");
-        result = WhereUsedCollectors.checkBlocks(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkBlocks(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        result = WhereUsedCollectors.checkLayoutBlocks(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        result = WhereUsedCollectors.checkSignalHeadLogic(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkRoutes(sensor)).isNotEmpty();
+        assertThat(WhereUsedCollectors.checkLayoutBlocks(sensor)).isNotEmpty();
+//        assertThat(WhereUsedCollectors.checkSignalHeadLogic(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-SML-Sensor");
-        result = WhereUsedCollectors.checkSignalMastLogic(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkSignalMastLogic(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Control-1");
-        result = WhereUsedCollectors.checkSignalGroups(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkSignalGroups(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-OBlock-Error");
-        result = WhereUsedCollectors.checkOBlocks(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkOBlocks(sensor)).isNotEmpty();
+
         OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Left-TO");
-        result = WhereUsedCollectors.checkWarrants(oblock);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkWarrants(oblock)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("NX-LeftTO-A");
-        result = WhereUsedCollectors.checkEntryExit(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkEntryExit(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Center");
-        result = WhereUsedCollectors.checkLogixConditionals(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkLogixConditionals(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Fwd");
-        result = WhereUsedCollectors.checkSections(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkSections(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Stop-Allocation");
-        result = WhereUsedCollectors.checkTransits(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkTransits(sensor)).isNotEmpty();
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Transit-When-Action");
-        result = WhereUsedCollectors.checkTransits(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
-        result = WhereUsedCollectors.checkPanels(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");  // Test switchboard
-        result = WhereUsedCollectors.checkPanels(sensor);
-        Assert.assertTrue(result.length() > 0);
+        assertThat(WhereUsedCollectors.checkTransits(sensor)).isNotEmpty();
     }
 
-    @Before
+    @TempDir
+    protected Path tempDir;
+
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
-        cm.load(f);
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initReporterManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initRouteManager();
+        JUnitUtil.initWarrantManager();
+        JUnitUtil.initSectionManager();
+        JUnitUtil.clearBlockBossLogic();
+
+        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        new EditorFrameOperator("LE Panel").closeFrameWithConfirmations();
+        new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
+        new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 

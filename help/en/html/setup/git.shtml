@@ -50,56 +50,21 @@
       and in general manage your JMRI configurations very closely;
       but if you just want share files, Dropbox may be easier.
       
-      <p>Using <a href="https://www.dropbox.com" target=
-      "_blank">Dropbox</a> rather than a shared folder or network
-      drive has a number of advantages:</p>
+      <p>Using Git has some advantages:</p>
 
       <ul>
-        <li>Dropbox keeps a full local copy of all files on every
-        computer, bringing a number of benefits.</li>
+        <li>In normal use, Git will keep the entire
+            history of your files locally so that you can 
+            always back up to an earlier configuration.</li>
 
-        <li>JMRI will continue to work even if only one computer is
-        on, and even if there is no network connection.</li>
+        <li>Git provides every powerful tools for managing 
+            updates when you're making changes on multiple
+            computers, i.e. the main layout computer
+            and some convenient laptoo.
 
-        <li>There will be no speed penalty when accessing files, as
-        there with a network connection.</li>
-
-        <li>JMRI data files are not designed for simultaneous
-        update access, as can happen with a network connection and
-        lead to data corruption. Dropbox works on separate copies
-        of files and any simultaneous update is handled gracefully
-        by Dropbox. Both versions are saved (with one renamed) and
-        if necessary you can choose which one to keep.</li>
-
-        <li>Dropbox protects your files by providing hardware
-        redundancy. If a computer fails, the files are still on the
-        Dropbox servers and any other computers configured to use
-        the same Dropbox account. A shared network drive does not
-        provide hardware redundancy by default.</li>
-
-        <li>Dropbox protects your files by providing a limited
-        backup recovery facility. You can recover any file version
-        or deleted file for the past 30 days, so mistakes can be
-        easily reverted. A shared network drive does not provide
-        retrievable backup history by default.</li>
-
-        <li>Dropbox protects your files by providing an off-site
-        copy of both current and recent (30 days) backup versions.
-        A shared network drive does not provide any off-site copy
-        by default.</li>
-
-        <li>Dropbox provides clients for Windows, Mac OS and Linux
-        computers. All the files in JMRI's <a href=
-        "../../package/apps/TabbedPreferences.shtml#FileLocations"
-        target="_blank">User Files Location</a> are stored in an
-        operating-system-independent format so can be shared by any
-        JMRI client with Dropbox installed. A shared network drive
-        may not necessarily provide cross-platform sharing.</li>
-
-        <li>Note that neither Dropbox or a shared network drive
-        provide a fully isolated non-live off-line copy (external
-        device such as USB drive or CD/DVD) by default. That
-        responsibility is still up to you.</li>
+        <li>Git can be used with a sneaker-net connection
+            by pushing/pulling from a copy of a repository
+            on a USB stick.
       </ul>
 
       <p>The following approach should also work with other
@@ -116,8 +81,20 @@
       <p>To set up a shared User File Location on the web:</p>
 
       <ul>
-        <li>Create a JMRI folder in Dropbox on the first
-        computer.</li>
+        <li>Create a JMRI folder under Git control on the first
+        computer. If you want to use GitHub, the steps are:
+        <ul>
+            <li><a href="https://github.com/join">Create a GitHub account</a> if you don't have one.
+            <li>Create a new repository on GitHub using the "New" button on your
+                Repositories pane.
+            <li>Click the button named "(downarrow) Code" and copy the URL for your repository.
+            <li>On your computer, in the directory you want to contain your JMRI files,
+                check that repository out with (for example):
+<pre>
+            git clone https://github.com/myaccountname/JMRI.git
+</pre>
+        </ul>
+        </li>
 
         <li>If you have already created items (roster entries,
         panels etc.) go to Help&#8209;&gt;Locations and press Open
@@ -165,6 +142,11 @@
         in the User Files window we opened at the first step should
         be moved to the new User Files Location you just
         created.</li>
+        
+        <li>Use "git add", "git commit" to move
+            all those files under Git's control.
+        <li>Finally, "git push" to push the contents back up to GitHub.
+            
       </ul>
 
       <h3>Step 2-...</h3>
@@ -173,6 +155,8 @@
       are:</p>
 
       <ul>
+        <li>"git clone" with the roster URL to make your initial download of the
+            repository ("git pull" after that)
         <li>Preferences &#8209;&gt; Roster &#8209;&gt; Roster
         &#8209;&gt; Roster Location &#8209;&gt; Reset. Do not enter
         a Roster Location. That way it will follow the User Files
@@ -181,7 +165,30 @@
         <li>Preferences &#8209;&gt; Locations &#8209;&gt; User
         Files Location and set it to the JMRI folder you created in
         Dropbox.</li>
-      </ul><!--#include virtual="/Footer.shtml" -->
+      </ul>
+        
+        <h2>Sneaker Net</h2>
+        
+        <p>First, copy the <u>entire</u> directory from one of your
+        computers to the USB stick.  This will be a master that you're moving
+        around. (You can also directly 'git clone' onto the USB stick.)</p>
+        
+        <p>
+        Then, from your computer's JMRI preferences Git directory, 
+        you can bring the USB stick up to date with your directory with
+<pre>
+            git commit -m"really lucid comment" .
+            git push /path/to/USB/directory
+</pre>
+
+        <p>
+        Similarly, you can get the contents from the USB stick with
+<pre>
+            git pull /path/to/USB/directory
+</pre>
+        
+        
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

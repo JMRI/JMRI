@@ -45,8 +45,8 @@
       is changed, keeps the code from slowly getting worse and
       worse without anybody noticing until it's too late.
 
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=PRIORITY" align="right"/></a>
+        <a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">
+            <img src="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=PRIORITY" align="right"/></a>
       <p>For more information on SpotBugs, see <a href=
                                                   "https://spotbugs.github.io">the SpotBugs home
               page</a>.</p>
@@ -54,9 +54,9 @@
       <p>We routinely run SpotBugs as part of our 
       <a href="ContinuousIntegration.shtml">continuous integration process</a>. 
       You can see the 
-      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">detailed results of the most recent (daily) run</a>
+      <a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">detailed results of the most recent (daily) run</a>
       along with 
-      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">recent progress trend</a>
+      <a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">recent progress trend</a>
       online.</p>
 
       <p>If SpotBugs is finding a false positive, a bug that's not
@@ -244,7 +244,7 @@ scanning through the code.
       process, and by 
       <a href="ContinuousIntegration.shtml#jenkins">Jenkins</a>
       as part of the 
-      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">daily builds</a>.
+      <a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">daily builds</a>.
       If new errors appear during CI, the job will (usually) fail.  You can look at
       the Jenkins output to see where there are existing errors to work on.
       
@@ -262,6 +262,9 @@ scanning through the code.
     <pre style="font-family: monospace;">
     spotbugs.home = /Users/jake/.spotbugs/spotbugs-3.1.7
     </pre>
+        <li>In order to check for spotbugs issues in logging statements, we use the <a
+            href="https://www.kengo-toda.jp/findbugs-slf4j/">Findbugs-slf4j</a> plugin by KengoTODA. To use this
+        plugin in ant builds, download the plugin and install it in the plugin directory of your spotbugs installation.
       <li>Then run SpotBugs in ant via:
     <pre style="font-family: monospace;">
     ant spotbugs
@@ -279,7 +282,7 @@ scanning through the code.
     <a href="https://github.com/JMRI/JMRI/blob/master/.spotbugs.xml">.spotbugs.xml</a> 
     file specifies which items in
     SpotBugs reports are suppressed for the JMRI project's 
-    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">usual reporting via Jenkins</a>. 
+    <a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">usual reporting via Jenkins</a>.
     The
     <a href="https://github.com/JMRI/JMRI/blob/master/.spotbugs-check.xml">.spotbugs-check.xml</a> 
     file is a super-set which identifies which are significant enough to fail CI.
@@ -351,6 +354,13 @@ scanning through the code.
         serialization. JMRI doesn't used serialization, and is
         unlikely to do so in the future, so we suppress these to
         raise the average quality of the issued warnings.</dd>
+
+        <dt>SLF4J_LOGGER_SHOULD_BE_NON_STATIC</dt>
+
+        <dd>This warning indicates that loggers should be non-static variables,
+        but the JMRI standard is for the logger to be a static final variable, so
+        every logger would be flagged if this were enabled.</dd>
+
       </dl>
 
      <h4>Status and Counts</h4>

@@ -83,24 +83,21 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
    public boolean canInvert() {
        return true;
    }
-   
+
    /**
-    * Handle a request to change state, typically by sending a message to the
-    * layout in some child class. Public version (used by TurnoutOperator)
-    * sends the current commanded state without changing it.
-    * 
-    * @param s new state value
+    * {@inheritDoc}
+    * Sets the GPIO pin.
     */
    @Override
-   protected void forwardCommandChangeToLayout(int s){
-      if(s == CLOSED){
+   protected void forwardCommandChangeToLayout(int newState) {
+      if (newState == CLOSED) {
          log.debug("Setting turnout '{}' to CLOSED", getSystemName());
          if (!getInverted()) {
              pin.high();
          } else {
              pin.low();
          }
-      } else if (s == THROWN) {
+      } else if (newState == THROWN) {
          log.debug("Setting turnout '{}' to THROWN", getSystemName());
          if (!getInverted()) {
              pin.low();
@@ -117,7 +114,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
            // will remove it from the <GpioPin> pins list in _gpio
        } catch (com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe){
            log.trace("Pin not provisioned, was this turnout already disposed?");
-       }	
+       }
        super.dispose();
    }
 

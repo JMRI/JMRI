@@ -14,19 +14,15 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public class IndicationLockingSignals {
-    private final ArrayList<NBHAbstractSignalCommon> _mListOfSignals = new ArrayList<>();
+    private final ArrayList<NBHSignal> _mListOfSignals;
     private final Turnout turnout;
     private final OtherData.SIGNAL_SYSTEM_TYPE signalType;
 
-    public IndicationLockingSignals(String userIdentifier, String listOfCSVSignalNames, String turnoutName,
+    public IndicationLockingSignals(String userIdentifier, ArrayList<NBHSignal> signals, NBHTurnout nbhTurnout,
             OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
-        turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
+        turnout = nbhTurnout.getBean();
         signalType = signalSystemType;
-
-        ArrayList<String> listOfSignalNames = ProjectsCommonSubs.getArrayListFromCSV(listOfCSVSignalNames);
-        for (String SignalName : listOfSignalNames) {
-            _mListOfSignals.add(NBHAbstractSignalCommon.getExistingSignal("IndicationLockingSignals", userIdentifier, "SignalName " + listOfCSVSignalNames, SignalName));   // NOI18N
-        }
+        _mListOfSignals = signals;
     }
 
     public void removeAllListeners() {}   // None done.
@@ -41,14 +37,14 @@ public class IndicationLockingSignals {
     }
 
     public boolean checkSignalHeads() {
-        for (NBHAbstractSignalCommon signal : _mListOfSignals) {
+        for (NBHSignal signal : _mListOfSignals) {
             if (!signal.isDanger()) return true;
         }
         return false;
     }
 
     public boolean checkSignalMasts() {
-        for (NBHAbstractSignalCommon signal : _mListOfSignals) {
+        for (NBHSignal signal : _mListOfSignals) {
             if (checkMast((SignalMast) signal.getBean(), turnout)) return true;
         }
         return false;

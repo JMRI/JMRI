@@ -1,20 +1,21 @@
 package jmri.jmrit.decoderdefn;
 
 import java.util.List;
+
 import javax.swing.JComboBox;
+
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for DecoderIndexFile class.
  *
- * @author	Bob Jacobsen, Copyright (c) 2001, 2002
+ * @author Bob Jacobsen, Copyright (c) 2001, 2002
  */
 public class DecoderIndexFileTest {
 
@@ -39,7 +40,7 @@ public class DecoderIndexFileTest {
         // check results
         Assert.assertEquals("Digitrax ID from name ", "129", di.mfgIdFromName("Digitrax"));
         Assert.assertEquals("NMRA ID from name ", "999", di.mfgIdFromName("NMRA"));
-        Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromId("129"));
+        Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromID("129"));
     }
 
     @Test
@@ -244,12 +245,12 @@ public class DecoderIndexFileTest {
         return;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

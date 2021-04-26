@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base (and partial implementation) for classes persisting the status
- * of serial port adapters.
+ * of connections.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
@@ -46,6 +46,10 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         } else {
             e.setAttribute("disabled", "no");
         }
+        
+        e.setAttribute("reconnectMaxInterval",String.valueOf(adapter.getReconnectMaxInterval()));
+        e.setAttribute("reconnectMaxAttempts",String.valueOf(adapter.getReconnectMaxAttempts()));
+        
         saveOptions(e, adapter);
     }
 
@@ -58,7 +62,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * load common attributes and elements
+     * Load common attributes and elements.
      *
      * @param shared  the shared element
      * @param perNode the per node element
@@ -97,7 +101,8 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
             if (shared.getAttribute("systemPrefix") != null) {
                 adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
-                checkAndWarnPrefix(shared.getAttribute("systemPrefix").getValue()); // for removal after #4670 resolved
+                // next line for removal after #4670 resolved, see jmri.jmrix.AbstractConnectionConfig
+                checkAndWarnPrefix(shared.getAttribute("systemPrefix").getValue());
             }
         }
 
@@ -111,23 +116,39 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
                 }
             }
         }
+        
+        if (shared.getAttribute("reconnectMaxInterval") != null) {
+            String reconnectI = shared.getAttribute("reconnectMaxInterval").getValue();
+            if ((reconnectI!=null) && (!reconnectI.isEmpty() )) {
+                adapter.setReconnectMaxInterval(Integer.parseInt(reconnectI));
+            }
+        }
+        
+        if (shared.getAttribute("reconnectMaxAttempts") != null) {
+            String reconnectA = shared.getAttribute("reconnectMaxAttempts").getValue();
+            if ((reconnectA!=null) && (!reconnectA.isEmpty() )) {
+                adapter.setReconnectMaxAttempts(Integer.parseInt(reconnectA));
+            }
+        }
+        
     }
     
     
     /** 
-     * Check for a deprecated system prefix and warn if found
+     * Check for a deprecated system prefix and warn if found.
+     *
+     * @param prefix The alphanumeric prefix to test for
      * @deprecated 4.15.3  part of #4670 migration to parsable prefixes
      */
     @Deprecated // part of #4670 migration to parsable prefixes
     protected void checkAndWarnPrefix(String prefix) {
-        if (prefix.length() == 1 && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix) ) return;
+        if ((prefix.length() == 1) && !org.apache.commons.lang3.StringUtils.isNumeric(prefix) ) return;
         if (prefix.length() > 1 
                 && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(0,1)) 
                 && org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(1)) ) return;
         
         // No longer checking jmri.Manager.isLegacySystemPrefix(prefix)) as this is more rigorous
-            
-            
+
         // unparsable, so warn
         log.warn("Connection is using a prefix that needs to be migrated: {}", prefix);
         log.warn("See http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml for more information");
@@ -202,14 +223,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("method with two args invoked");
-    }
-
-    /**
      * Service routine to look through "parameter" child elements to find a
      * particular parameter value
      *
@@ -225,6 +238,20 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
             }
         }
         return null;
+    }
+
+    /**
+     * Store the outputInterval in a connection element for persistence.
+     *
+     * @param adapter the adapter for which properties are stored
+     * @param e the "connection" element being filled
+     */
+    protected void setOutputInterval(PortAdapter adapter, Element e) {
+        if (adapter.getSystemConnectionMemo().getOutputInterval() > 0) {
+            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getOutputInterval()));
+        } else {
+            e.setAttribute("turnoutInterval", "0");
+        }
     }
 
     // initialize logging

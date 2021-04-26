@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: CBUS&reg; Bootloader Tool</title>
+  <meta name="author" content="Andrew Crosland">
+  <meta name="keywords" content="JMRI CBUS Bootloader">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+    <h1>JMRI : CBUS&reg; Bootloader Tool</h1>
+
+    <p>The bootloader tool allows you to update the firmware in a connected CBUS 
+        node</p>
+    <p>To update the firmware you will need a firmware programming file (.hex 
+        file) saved on your computer</p>
+    <p>Start the firmware update tool from the SPROG generation 5 menu.<br><br></p>
+    <img src="images/FirmwareMenu.png" alt="CBUS menu entry for bootloader client">
+    <p></p>
+    
+    <p>Enter the Node Number (the default is 65534) and click Read Node 
+        Parameters.<br><br></p>
+    <img src="images/UpdateNN.png" alt="Select Node Number to be updated">
+    <p></p>
+    
+    <p>Browse to wherever you saved the .hex file and click Open.<br><br></p>
+    <img src="images/BrowseToHexFile.png" alt="Browse to the new firmware hex file">
+    <p></p>
+    
+    <p>Select EEPROM Memory Option to preserve EEPROM contents (Node Variables).<br><br></p>
+    <img src="images/SelectEEPROM.png" alt="Select preserve EEPROM">
+    <p></p>
+    
+    <p>Click the Start Programming button.<br><br></p>
+    <img src="images/StartProgramming.png" alt="Start programming">
+    <p></p>
+    
+    <p>The new firmware will be written to the node. Wait fro the programming to 
+        complete, which may take a little while, indicated by the "Bootloading 
+        complete..." message in the console.<br><br></p>
+    <img src="images/Wait.png" alt="Wait for programming to complete">
+    <p></p>
+    
+    <h2></h2>
+    <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
+      
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

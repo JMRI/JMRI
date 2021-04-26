@@ -200,6 +200,7 @@
         <xs:element name="pane"    type="PaneType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="showEmptyPanes" type="yesNoType"/>
+      <xs:attribute name="allowResetDefaults" type="yesNoType"/>
     </xs:complexType>
   </xs:element>
   
@@ -444,6 +445,14 @@
                     This optional attribute limits the total number of function mapping lines displayed. 
             </xs:documentation></xs:annotation>
           </xs:attribute>
+          <xs:attribute name="maxFnNum" type="xs:int" default="28">
+            <xs:annotation><xs:documentation>
+                This is the highest F key number that will appear in the Function Labels Pane and throttles:
+                    It was originally 28 as per NMRA standards. Many decoders didn't support the whole range F0-F28.
+                    European standards now allow up to 68, i.e. the range F0-F68.
+                Note that this is unrelated to "numFns", which limits the total number of function mapping lines displayed. 
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="numOuts" type="xs:int" >
             <xs:annotation><xs:documentation>
                 Number of physical outputs (wires) on the decoder.
@@ -457,7 +466,7 @@
           <xs:attribute name="productID" type="xs:string" >
             <xs:annotation><xs:documentation>
                 For a decoder definition which
-                describes a device implementing the LocoNet SV2 messaging protocol,
+                describes a device implementing the LocoNet SV2 or LNCV messaging protocol,
                 this value is used to match a "discovered" device
                 to an appropriate decoder definition
             </xs:documentation></xs:annotation>
@@ -909,7 +918,7 @@
             <xs:attribute name="writeOnly" type="yesNoType" default="no" />
             <xs:attribute name="default" type="xs:string"/>
             <xs:attribute name="comment" type="xs:string"/>
-            <xs:attribute name="item" type="xs:string"/><!-- should be use="required" !!! -->
+            <xs:attribute name="item" type="xs:string" use="required"/><!-- required since 4.23.3 -->
             <xs:attribute name="minFn" type="xs:int">
               <xs:annotation><xs:documentation>Only present if the decoder has at least minFn functions defined in numFn</xs:documentation></xs:annotation>
             </xs:attribute>
@@ -1167,23 +1176,35 @@
   <xs:simpleType name="maskType">
     <xs:annotation>
       <xs:documentation>
-        Type for CV mask values in one of two forms: 
-        8 or 16 characters of either V (valid bit) or X (ignore bit).
+        Type for CV mask values in one of two forms:
+        A list of 1 or more maskStringType strings, applied to each respective cv in cvList.
         Decimal integer less than or equal to 128 which is the base. (in that case, max value is needed)
       </xs:documentation>
     </xs:annotation>
     <xs:union>
       <xs:simpleType>
-        <xs:restriction base="xs:normalizedString">
-          <xs:pattern value="(V|X)*"/>
-          <xs:minLength value="8"/>
-          <xs:maxLength value="8"/>
-        </xs:restriction>
+        <xs:annotation><xs:documentation>
+          A series of one or more maskStringType strings, separated by (single) spaces
+        </xs:documentation></xs:annotation>
+        <xs:list itemType="maskStringType" />
       </xs:simpleType>
       <xs:simpleType>
         <xs:restriction base="xs:nonNegativeInteger" />
       </xs:simpleType>
     </xs:union>
+  </xs:simpleType>
+
+  <xs:simpleType name="maskStringType">
+    <xs:annotation>
+      <xs:documentation>
+        8 characters of either V (valid bit) or X (ignore bit).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="(V|X)*"/>
+      <xs:minLength value="8"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="modeType">
@@ -1209,6 +1230,7 @@
       <xs:enumeration value="LOCONETOPSBOARD"/>
       <xs:enumeration value="LOCONETSV1MODE"/>
       <xs:enumeration value="LOCONETSV2MODE"/>
+      <xs:enumeration value="LOCONETLNCVMODE"/>
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>

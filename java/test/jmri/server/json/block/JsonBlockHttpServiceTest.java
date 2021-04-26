@@ -12,6 +12,7 @@ import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
 import java.io.IOException;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -27,9 +28,8 @@ import jmri.server.json.JsonRequest;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.sensor.JsonSensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -37,7 +37,7 @@ import org.junit.Test;
  */
 public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Block, JsonBlockHttpService> {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -47,9 +47,11 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         JUnitUtil.initReporterManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

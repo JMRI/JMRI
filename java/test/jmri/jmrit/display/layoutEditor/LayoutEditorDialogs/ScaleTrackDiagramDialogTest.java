@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of scaleTrackDiagramDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class ScaleTrackDiagramDialogTest {
 
@@ -56,6 +56,8 @@ public class ScaleTrackDiagramDialogTest {
             layoutEditor = null;
             scaleTrackDiagramDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

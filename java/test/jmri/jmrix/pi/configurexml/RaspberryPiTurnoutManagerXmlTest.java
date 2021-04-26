@@ -1,10 +1,9 @@
 package jmri.jmrix.pi.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the RaspberryPiTurnoutManagerXml class.
@@ -18,13 +17,12 @@ public class RaspberryPiTurnoutManagerXmlTest {
       Assert.assertNotNull("RaspberryPiTurnoutManagerXml constructor", new RaspberryPiTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

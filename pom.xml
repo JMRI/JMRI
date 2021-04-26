@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.5-SNAPSHOT</version>
+    <version>4.23.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -17,12 +17,13 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
-        <jetty.version>9.4.26.v20200117</jetty.version>
-        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
+        <jetty.version>9.4.28.v20200408</jetty.version>
+        <!-- this is a custom version, see lib/README.md -->
+        <jemmy.version>22-00c9f753cd0a</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.26</openlcb.version>
+        <openlcb.version>0.7.28</openlcb.version>
         <netbeans.version>RELEASE113</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -30,12 +31,16 @@
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
-        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
-        <ant.version>1.10.7</ant.version>
+        <!-- don't load JInput during CI tests -->
+        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
+        <ant.version>1.10.8</ant.version>
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
+        <!-- define argLines to allow running surefire:test -->
+        <surefire.argLine></surefire.argLine>
+        <failsafe.argLine></failsafe.argLine>
         <surefire.version>2.22.0</surefire.version>
         <failsafe.version>2.22.0</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
@@ -96,51 +101,6 @@
             </build>
         </profile>
         <profile>
-            <id>appveyor</id>
-            <build>
-	        <plugins>
-                <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                             <skipMain>true</skipMain>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
-                        <executions>
-                            <execution>
-                                <id>test</id>
-                                <phase>test</phase>
-                                <configuration>
-                                    <target>
-                                        <ant antfile="${basedir}/build.xml">
-                                            <target name="appveyor"/>
-                                        </ant>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
-		    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-		    </plugin> -->
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>travis-spotbugs</id>
             <build>
                 <plugins>
@@ -157,6 +117,15 @@
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
                         <version>3.1.12</version>
+                        <configuration>
+                            <plugins>
+                                <plugin>
+                                    <groupId>jp.skypencil.findbugs.slf4j</groupId>
+                                    <artifactId>bug-pattern</artifactId>
+                                    <version>1.5.0</version>
+                                </plugin>
+                            </plugins>
+                        </configuration>
                         <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
                         <executions>
                             <execution>
@@ -193,7 +162,11 @@
                                         <sourceDirectory>${basedir}</sourceDirectory>
                                     </sourceDirectories>
                                     <includes>**/*</includes>
-                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
+                                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                                        web/app/node_modules/**,.git/**,target/**</excludes>
                                     <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
@@ -272,6 +245,104 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <!--
+                The profile disables if tests are run in debug mode, so Jacoco instrumentation
+                does not break debugging features.
+            -->
+            <id>jacoco-coverage-unit</id>
+            <activation>
+                <property>
+                    <name>!maven.surefire.debug</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                The profile disables if tests are run in debug mode, so Jacoco instrumentation
+                does not break debugging features.
+            -->
+            <id>jacoco-coverage-integration</id>
+            <activation>
+                <property>
+                    <name>!maven.surefire.debug</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent-integration</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                This profile is a workaround for NetBeans broken (?) support for multiple
+                maven goals on action where Compile-on-Save is enabled. Instead of running a
+                goal sequence, the IDE sets a property that activates this profile.
+            -->
+            <id>jacoco-coverage-ide-report</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>netbeans.jacoco.report</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>ide-report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <!-- Bind to the test phase. The Jacoco plugin is
+                                    configured AFTER surefire plugin in this POM, so starting with Maven 3.0.3
+                                    the Jacoco plugin goals will only run after surefire testing completes
+                                -->
+                                <phase>test</phase>
+                                <configuration>
+                                    <skip>${skipTests}</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
@@ -289,7 +360,7 @@
                 </excludes>
             </resource>
             <resource>
-                <directory>${basedir}/java/maven-template</directory>
+                <directory>${basedir}/java/template</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>jmri/Version.properties</include>
@@ -406,6 +477,13 @@
                 <version>3.1.12</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
+                    <plugins>
+                        <plugin>
+                            <groupId>jp.skypencil.findbugs.slf4j</groupId>
+                            <artifactId>bug-pattern</artifactId>
+                            <version>1.5.0</version>
+                        </plugin>
+                    </plugins>
                     <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>Low</threshold>
@@ -447,7 +525,8 @@
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} ${surefire.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <!-- -ea or -da in the next line to control Java asserts -->
+                    <argLine>@{argLine} @{surefire.argLine} -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
@@ -467,7 +546,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <argLine>@{argLine} ${failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                            <argLine>@{argLine} @{failsafe.argLine} -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                         </configuration>
                     </execution>
                 </executions>
@@ -560,14 +639,17 @@
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
+                    <!-- do not document the generated parser packages -->
+                    <excludePackageNames>*.simpleserver.parser:*.srcp.parser</excludePackageNames>
                     <show>package</show>
-                    <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
-                    <additionalJOption>-breakiterator -Xmaxwarns 1650</additionalJOption>
+                    <!-- change from default 100 warnings; keep number synced with ant javadoc target -->
+                    <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption><!-- 100 is default, here so we can easily change it -->
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
-                    <doclint>all,-missing</doclint>
+                    <doclint>all</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
+                    <failOnWarnings>true</failOnWarnings>
                     <quiet>true</quiet>
                     <splitindex>true</splitindex>
                     <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin-${project.name}</additionalJOption>
@@ -621,9 +703,6 @@
                     <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by: <br/>
-                        <a href="http://www.tagadab.com/">
-                        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
                 ]]>
                     </bottom>
                     <links>
@@ -636,22 +715,24 @@
                         <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
                         <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
-                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/</link>
+                        <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link>
+                        <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
                         <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
                         <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                     </links>
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Warning: do not put this plugin's configuration before surefire plugin one. The sequence
+                     in which the surefire and jacoco goals run is important -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <!-- Do not bind any goals, let a profile to do it conditionally -->
                         <configuration>
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
@@ -660,9 +741,7 @@
                     </execution>
                     <execution>
                         <id>prepare-agent-integration</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <!-- Do not bind any goals, let a profile to do it conditionally -->
                         <configuration>
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
@@ -687,10 +766,47 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Do a merge after unit tests complete, to cover the case that only goals up to 'test' phase
+                             are executed. The post-integration-test will merge in integration tests' coverage -->
+                        <id>post-test-merge</id>
+                        <!-- Must explicitly bind to the phase. Since this plugin is configured AFTER surefire,
+                             it will bind later that surefire:test into the (same) test phase -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
-                        </goals>
+                        </goals>      
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -698,6 +814,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <excludes>
                                 <File>**/*Test*.class</File>
                                 <!-- Exclude testing infrastructure classes -->
@@ -740,6 +857,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                <!-- fails if package only contains interfaces
                                 <rule>
                                     <element>PACKAGE</element>
                                     <limits>
@@ -750,6 +868,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                -->
                                 <rule>
                                     <element>SOURCEFILE</element>
                                     <limits>
@@ -815,7 +934,11 @@
                         <sourceDirectory>${basedir}</sourceDirectory>
                     </sourceDirectories>
                     <includes>**/*</includes>
-                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
+                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                        web/app/node_modules/**,.git/**,target/**</excludes>
                     <!-- show errors, warnings, and infos -->
                     <violationSeverity>info</violationSeverity>
                 </configuration>
@@ -839,6 +962,24 @@
                         </fileset>
                     </filesets>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>local.properties</file>
+                            </files>
+                            <quiet>true</quiet>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -939,6 +1080,11 @@
                             <version>8.29</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -1072,14 +1218,20 @@
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit4</artifactId>
-            <version>0.11.0</version>
+            <artifactId>archunit-junit5</artifactId>
+            <version>0.14.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.12.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-swing-junit</artifactId>
+            <version>3.9.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1109,13 +1261,13 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.6.0</version>
+            <version>3.141.59</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>3.4.0</version>
+            <version>4.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1198,7 +1350,7 @@
         <dependency>
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.1</version>
+            <version>2.7.2</version>
         </dependency>
         <!--
         <dependency>
@@ -1260,15 +1412,15 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-device</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time,
-                                           may be used at runtime. -->
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-gpio-extension</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time,
-                                           may be used at runtime. -->
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
@@ -1371,13 +1523,31 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.3.0</version>
+            <version>3.5.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>3.5.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.5.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.5</version>
+            <version>1.10.14</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>1.10.14</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1396,9 +1566,13 @@
         -->
         <dependency>
             <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
-            <scope>compile</scope>
         </dependency>
         <!-- hid4java for cross-platform HID USB -->
         <dependency>
@@ -1413,8 +1587,8 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>
-            <artifactId>mqtt-client</artifactId>
-            <version>0.4.0</version>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>1.2.5</version>
         </dependency>
         <dependency>
             <groupId>com.alexandriasoftware.swing</groupId>
@@ -1429,13 +1603,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.1.3.RELEASE</version>
+            <version>5.1.14.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.1.3.RELEASE</version>
+            <version>5.1.14.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1443,6 +1617,26 @@
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
         </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apiguardian</groupId>
+            <artifactId>apiguardian-api</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>        
     </dependencies>
 
     <repositories>

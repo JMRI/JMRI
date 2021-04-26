@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Sections">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -22,14 +22,28 @@
 
       <h1>JMRI: Transits Documentation</h1>
 
+      <p>This document describes the characteristics of Transits.  Sections and
+      Transits provide the foundation for the Dispatcher tool.</p>
+
+      <p>Links:</p>
+      <ul>
+        <li><a href="../../package/jmri/jmrit/beantable/TransitTable.shtml">Using the Transit Table</a></li>
+        <li><a href="../../package/jmri/jmrit/beantable/TransitAddEdit.shtml">Add/Edit Transit</a></li>
+        <li><a href="../../package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Transit Actions</a></li>
+        <li><a href="Sections.shtml">Sections Documentation</a></li>
+        <li><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher Documentation</a></li>
+      </ul>
+
       <h2>What is a Transit?</h2>
 
-      <p>A <b>Transit</b> is a group of two or more connected
-      <b><a href="Sections.shtml">Sections</a></b> that
+      <p>A <strong>Transit</strong> is a group of two or more connected
+      <strong><a href="Sections.shtml">Sections</a></strong> that
       describes a route around the layout of a Train traveling in a
-      given direction. A Section may be in multiple Transits, and
+      given direction using JMRI <a href=
+      "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
+      A Section may be in multiple Transits, and
       may be in a given Transit multiple times. Sections are kept
-      in order--the first Section is connected to the second, the
+      in order&mdash;the first Section is connected to the second, the
       second is connected to the third, etc. That means a Section
       in a Transit must be connected to the Section before it (if
       there is one) and to the Section after it (if there is one).
@@ -39,7 +53,10 @@
       numbers. Normally Transits would only be defined for mainline
       track, and sometimes staging yard track.</p>
 
-      <p>In user-specified areas of a Transit, <i>alternate</i>
+      <!-- image by Egbert Broerse @silverailscolo 2018 -->
+      <img src="images/DispatcherTransit.png" width="842" height="137" alt="sample transits">
+
+      <p>In user-specified areas of a Transit, <em>alternate</em>
       Sections may be designated. For example, to move between the
       "2nd" and "4th" Sections in a Transit, there may be multiple
       "3rd" Sections, any of which might be used to travel between
@@ -48,46 +65,81 @@
       reverse loops. To provide for back-and-forth running, e.g.
       for trolley cars, an option is provided in Dispatcher to
       automatically reverse the direction of running through a
-      Transit when the train reaches the end of its Transit, and
-      have the train run in reverse to the beginning of its
+      Transit when the Train reaches the end of its Transit, and
+      have the Train run in reverse to the beginning of its
       Transit.</p>
 
-      <p>Transits support both manual and automatic operation of
-      trains. When a train is running in automatic mode, Transits
-      provide for <b>Actions</b> to be activated when a train
+      <p>Transits support both Manual and Automatic operation of
+      Trains. When a Train is running in automatic mode, Transits
+      provide for <strong>Actions</strong> to be activated when the Train
       reaches a designated Section in the Transit. An Action may be
-      initiated by a number of events, for example, when the train
-      enters a Section, or when the train stops. A variety of
-      actions are possible, such as pausing the train for a
+      initiated by a number of events, for example, when the Train
+      enters a Section, or when the Train stops. A variety of
+      actions are possible, such as pausing the Train for a
       user-designated number of fast clock minutes (a station
       stop), reverting to manual mode for local manual operation,
       or sounding the horn on a sound decoder.</p>
 
-      <p>Transits and their associated <b><a href=
-      "../../package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a></b>
-      are designed to provide support for dispatching, either
-      manual dispatching (by a dispatcher sitting at a panel), or
-      automatic dispatching by the computer. Dispatching is the
-      temporary allocation of Sections for the exclusive use of
-      trains, either run by engineers with a throttle, and/or run
-      automatically by the computer. Support for dispatching is
-      provided by <a href=
-      "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>,
-      which also provides for set up and running of trains
-      automatically.</p>
+      <h2>How are Transits Activated and Used?</h2>
+
+      <p>Transits are static objects. They specify itineraries for
+      Trains to follow around the layout. Transits do not <em>run</em>
+      trains, or <em>keep track</em> of running trains.
+      A Transit becomes part of the train running process when it is
+      <em>activated</em> by being assigned to an <strong>Active Train</strong>.
+      Transits are saved as part of a Panel/Configuration file, only
+      need to be set up once, and can be reused. Active Trains, on the other hand,
+      are dynamic and transient.  Active Trains are not saved to disk, and must be
+      set up each time they are used.</p>
+
+      <p>Transits are <em>activated</em> in the <a href=
+      "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+      window, where a Transit is linked to a Train to create an Active Train.
+      When an Active Train is created, a Transit is selected, a
+      Train is selected, and a starting Block (Train location at
+      start) and ending Block (Train location when travel is
+      complete) are specified, along with options. This process
+      results in an <strong>Active Train</strong>, which can then be
+      dispatched. A Transit may be used by only one Active Train at
+      a time.  When an Active Train is done, its Transit is <em>deactivated</em>,
+      and may be reused for a subsequent Active Train.</p>
+
+      <p>A Train may start from a Block outside of the Transit, but
+      connected to a Block within the Transit, or a train may start
+      from a Block within a Section in the Transit. A train moves
+      through a Transit in only one direction--defined by the order
+      in which Sections are included in the Transit. Trains move
+      from lower sequence number Sections toward higher sequence
+      number Sections. The only exception to this is the
+      back-and-forth option that allows a train to run in reverse
+      through its Transit back to the beginning of the Transit.</p>
+
+      <p>When an Active Train is initiated, an <em>allocation</em>
+      request is placed for a starting Section. If the Section is
+      free, the Section will be <em>allocated</em> to the train.
+      <em>Allocation</em> means that the Section is assigned the
+      Active Train, and the train is authorized by the dispatcher
+      to proceed to the end of that Section.</p>
+
+      <p>When an Active Train is created, it may be activated for
+      running by an engineer using a throttle, or automatically by
+      a <em>virtual engineer</em>. Dispatching consists of
+      <em>allocating</em> Sections, one by one, to the Active Train.
+      The actual dispatching may be done by a dispatcher sitting at
+      the computer running JMRI, or semi-automatically by the
+      computer. If a requested Section is currently in use, a
+      request for assignment is placed in the dispatcher's queue.
+      When a Section is freed, the queue is scanned for the highest
+      priority train requesting it.</p>
 
       <h2>Requirements</h2>
 
-      <p>Transits may be used with a Panel Editor Panel, with a
-      Layout Editor Panel, with a CTC machine, or directly without
-      any Panel. Transits (and Sections) build on JMRI's Blocks and Paths
-      structure. So before attempting to create any Transits, you
-      should have Blocks, Paths and Sections fully initialized for your
-      layout. (An easy way to automatically initialize your Blocks
-      and Paths is to sketch out a Layout Editor panel of your
-      layout, with Blocks assigned. By assigning Blocks to all
-      track segments, Turnouts, etc., the paths will be created
-      automatically for you by JMRI.)</p>
+      <p>Transits contain 2 or more Sections which contain one or more blocks
+      with connectivity supplied by paths.  The paths are derived from a
+      Layout Editor panel. Therefore a Layout Editor panel of your layout with
+      Blocks assigned is required to create the necessary path information.  See
+      <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+      for details on creating a Layout Editor panel.</p>
 
       <h2>How to setup Transits</h2>
 
@@ -96,8 +148,8 @@
       <p>All the Transits that JMRI knows about can be viewed using
       the <a href=
       "../../package/jmri/jmrit/beantable/TransitTable.shtml">Transit
-      Table</a>. Select <b>Transits</b> in the <b>Tables</b>
-      submenu of the <b>Tools</b> menu of the main JMRI program
+      Table</a>. Select <strong>Transits</strong> in the <strong>Tables</strong>
+      submenu of the <strong>Tools</strong> menu of the main JMRI program
       window.
 
       <h3>Transit Table Controls</h3>
@@ -108,21 +160,19 @@
 
       <h3>Creating a new Transit</h3>
 
-      <p>To Create a new Section, click the "<a href=
-      "../../package/jmri/jmrit/beantable/TransitAddEdit.shtml">Add..."
-      button</a> at the bottom of the Transit Table pane.
+      <p>To Create a new Transit, click the "<a href=
+      "../../package/jmri/jmrit/beantable/TransitAddEdit.shtml">Add..."</a>
+      button at the bottom of the Transit Table pane.
 
-      <h3>Saving Sections to disk</h3>
+      <h3>Saving Transits to disk</h3>
 
-      <p>Use the <b>Store</b> item in the <b>File</b> menu of the
-      Transit Table (or the <b>Store Panels...</b> item in the
-      <b>Panels</b> menu of the main JMRI window) to save Transit
-      information to disk. This information is saved with the configuration and
-      panels in an XML file, along with control panel setup and
-      similar stuff. To store your panels in the same file
-      (recommended), select <b>File&gt;Store&gt;Store Configuration
-      and Panels To File...</b> or select <b>Panels&gt;Store
-      Panels...</b> in the main JMRI window.</p>
+      <p>Transits are kept in your <i>layout configuration</i>, along
+      with Turnouts, Sensors, Signal Heads, Lights, control panel
+      setup etc. To store this information on disk, allowing you to
+      <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

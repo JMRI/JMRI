@@ -280,8 +280,9 @@ public class PreviewDialog extends JDialog {
         c.gridx = 0;
         _cnt = 0;       // number of images displayed in this panel
         int cnt = 0;    // total number of images in directory
-        if (_currentDir.listFiles() != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
-            File[] files = _currentDir.listFiles(); // all files, filtered below
+        File[] files = _currentDir.listFiles(); // all files, filtered below
+        if (files != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
+            
             int nCols = 1;
             int nRows = 1;
             int nAvail = 1;
@@ -398,19 +399,17 @@ public class PreviewDialog extends JDialog {
 
     private long availableMemory() {
         long total = 0;
-        ArrayList<byte[]> memoryTest = new ArrayList<byte[]>();
+        ArrayList<byte[]> memoryTest = new ArrayList<>();
         try {
             while (true) {
                 memoryTest.add(new byte[CHUNK]);
                 total += CHUNK;
             }
         } catch (OutOfMemoryError me) {
-            for (int i = 0; i < memoryTest.size(); i++) {
+            for (int i = memoryTest.size() - 1; i >= 0; i--) { // safe direction to remove
                 memoryTest.remove(i);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("availableMemory= {}", total);
-            }
+            log.debug("availableMemory= {}", total);
         }
         return total;
     }

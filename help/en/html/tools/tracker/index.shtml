@@ -150,11 +150,11 @@
 
       <ul>
         <li><a href=
-        "http://jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> -
+        "https://jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> -
         represents each Block and its connections</li>
 
         <li><a href=
-        "http://jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> -
+        "https://jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> -
         represents the connections to and from another Block,
         including any Turnout settings, etc, that are needed.</li>
       </ul><!--#include virtual="/Footer.shtml" -->

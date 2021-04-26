@@ -1,4 +1,7 @@
-<!-- SidebarSupportedHardwareNew.shtml -->
+<!-- SidebarSupportedHardware.shtml -->
+<!-- This is the common sidebar definition for supported hardware pages -->
 <!-- For testing new formats and contents.  If nothing new, then just include... -->
-<!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
-<!-- /SidebarSupportedHardwareNew.shtml -->
+
+<!--#include virtual="/help/en/parts/SidebarHardware.shtml" -->
+
+<!-- /SidebarSupportedHardware.shtml -->

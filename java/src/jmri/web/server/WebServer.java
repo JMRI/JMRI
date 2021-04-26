@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
+
 import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.server.json.JSON;
 import jmri.server.web.spi.WebServerConfiguration;
 import jmri.util.FileUtil;
@@ -18,15 +18,9 @@ import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.servlet.DenialServlet;
 import jmri.web.servlet.RedirectionServlet;
 import jmri.web.servlet.directory.DirectoryHandler;
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.eclipse.jetty.server.handler.ContextHandlerCollection;
-import org.eclipse.jetty.server.handler.DefaultHandler;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
+
+import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.server.handler.*;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
@@ -59,7 +53,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     private final Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
-    private ShutDownTask shutDownTask = null;
+    private Runnable shutDownTask = null;
     private final HashMap<String, Registration> registeredUrls = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(WebServer.class);
 
@@ -106,7 +100,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
                 connector.setPort(preferences.getPort());
                 server.setConnectors(new Connector[]{connector});
                 server.setHandler(new ContextHandlerCollection());
-    
+
                 // Load all path handlers
                 ServiceLoader.load(WebServerConfiguration.class).forEach(configuration -> {
                     configuration.getFilePaths().entrySet()
@@ -119,7 +113,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
                 ServiceLoader.load(HttpServlet.class)
                         .forEach(servlet -> registerServlet(servlet.getClass(), servlet));
                 server.addLifeCycleListener(this);
-    
+
                 Thread serverThread = new ServerThread(server);
                 serverThread.setName("WebServer"); // NOI18N
                 serverThread.start();
@@ -183,7 +177,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             return null;
         }
     }
-    
+
     public int getPort() {
         return preferences.getPort();
     }
@@ -203,7 +197,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         servletContext.setContextPath(urlPattern);
         DenialServlet servlet = new DenialServlet();
         servletContext.addServlet(new ServletHolder(servlet), "/*"); // NOI18N
-        ((ContextHandlerCollection) this.server.getHandler()).addHandler(servletContext);
+        ((HandlerCollection) this.server.getHandler()).addHandler(servletContext);
     }
 
     /**
@@ -265,7 +259,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         ContextHandler handlerContext = new ContextHandler();
         handlerContext.setContextPath(urlPattern);
         handlerContext.setHandler(handlers);
-        ((ContextHandlerCollection) this.server.getHandler()).addHandler(handlerContext);
+        ((HandlerCollection) this.server.getHandler()).addHandler(handlerContext);
     }
 
     /**
@@ -286,7 +280,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         servletContext.setContextPath(urlPattern);
         RedirectionServlet servlet = new RedirectionServlet(urlPattern, redirection);
         servletContext.addServlet(new ServletHolder(servlet), ""); // NOI18N
-        ((ContextHandlerCollection) this.server.getHandler()).addHandler(servletContext);
+        ((HandlerCollection) this.server.getHandler()).addHandler(servletContext);
     }
 
     /**
@@ -318,13 +312,8 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
      * @param instance An un-initialized, un-registered instance of the servlet.
      */
     public void registerServlet(Class<? extends HttpServlet> type, HttpServlet instance) {
-        for (ServletContextHandler handler : this.registerServlet(
-                ServletContextHandler.NO_SECURITY,
-                type,
-                instance
-        )) {
-            ((ContextHandlerCollection) this.server.getHandler()).addHandler(handler);
-        }
+        this.registerServlet(ServletContextHandler.NO_SECURITY, type, instance)
+                .forEach(((HandlerCollection) this.server.getHandler())::addHandler);
     }
 
     private List<ServletContextHandler> registerServlet(int options, Class<? extends HttpServlet> type, HttpServlet instance) {
@@ -352,7 +341,16 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
-        shutDownTask = new ServerShutDownTask(this);
+        shutDownTask = () -> {
+            try {
+                server.stop();
+            } catch (Exception ex) {
+                // Error without stack trace
+                log.warn("Error shutting down WebServer: {}", ex);
+                // Full stack trace
+                log.debug("Details follow: ", ex);
+            }
+        };
         InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
         log.info("Starting Web Server on port {}", preferences.getPort());
     }
@@ -451,45 +449,6 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             } catch (Exception ex) {
                 log.error("Exception starting Web Server", ex);
             }
-        }
-    }
-
-    private static class ServerShutDownTask extends QuietShutDownTask {
-
-        private final WebServer server;
-        private boolean isComplete = false;
-
-        public ServerShutDownTask(WebServer server) {
-            super("Stop Web Server"); // NOI18N
-            this.server = server;
-        }
-
-        @Override
-        public boolean execute() {
-            Thread t = new Thread(() -> {
-                try {
-                    server.stop();
-                } catch (Exception ex) {
-                    // Error without stack trace
-                    log.warn("Error shutting down WebServer: {}", ex);
-                    // Full stack trace
-                    log.debug("Details follow: ", ex);
-                }
-                this.isComplete = true;
-            });
-            t.setName("ServerShutDownTask");
-            t.start();
-            return true;
-        }
-
-        @Override
-        public boolean isParallel() {
-            return true;
-        }
-
-        @Override
-        public boolean isComplete() {
-            return this.isComplete;
         }
     }
 }

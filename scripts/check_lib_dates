@@ -1,0 +1,24 @@
+#! /bin/bash
+#
+# Script to check for control files older than libraries
+#
+# This takes a while
+
+oldest_ctl_time=`for i in pom.xml build.xml lib/README.md ; do git log -1 --format=%ct -- $i; done | sort | head -1`
+# echo $oldest_ctl_time "oldest control file time"
+
+newest_lib_time=`find lib -not -name \*.md -exec git log -1 --format=%ct -- {} \; | sort | tail -1`
+# echo $newest_lib_time "newest lib file time"
+
+
+if [ $newest_lib_time -gt $oldest_ctl_time ]
+then
+    echo "Warning: some control files committed before newest lib files"
+    echo
+    echo "Control file commits:"
+    for i in pom.xml build.xml lib/README.md ; do git log -1 --format="%ci $i" -- $i; done | sort
+    echo
+    echo "Most recent library commits:"
+    find lib -exec echo -n {} \; -exec git log -1 --format=' %ci' -- {} \; | sort -r -k2 -k3 | head -10 | awk '{print $2 " " $3 " " $4 " " $1}'
+    exit 1
+fi

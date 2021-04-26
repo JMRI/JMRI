@@ -52,12 +52,12 @@ public class DccSpeedProfile {
         if (idx < _length) {
             _dataPoints[idx] = val;
             _lastPoint++;
-            log.debug("Index: " + idx + " val: " + val);
+            log.debug("Index: {} val: {}", idx, val);
             if (val > _max) {
-                log.debug("     Old max: " + _max);
+                log.debug("     Old max: {}", _max);
                 // Adjust maximum value
                 _max = (float) (Math.floor(val / 20) + 1) * 20;
-                log.debug("     New max: " + _max);
+                log.debug("     New max: {}", _max);
             }
             ret = true;
         }
@@ -186,7 +186,7 @@ public class DccSpeedProfile {
         for (int i = 2; i < dccProfileData.size(); i++) {
             try {
                 String value = dccProfileData.get(i).get(1);
-                float speed = Float.valueOf(value);
+                float speed = Float.parseFloat(value);
                 // speed values from the speedometer are calc'd and stored in 
                 // the DccSpeedProfile object as KPH so need to convert
                 // if the file was in MPH
@@ -196,7 +196,7 @@ public class DccSpeedProfile {
 
                 setPoint(i - 2, speed);
             } catch (NullPointerException | NumberFormatException | ArrayIndexOutOfBoundsException ex) {
-                log.error("Bad data or format in reference speed profile file: " + ex);
+                log.error("Bad data or format in reference speed profile file: {}", ex);
                 clear();
                 return -1;
             }
@@ -212,7 +212,7 @@ public class DccSpeedProfile {
             try {
                 dccProfileData = CSVParser.parse(file, StandardCharsets.UTF_8, CSVFormat.DEFAULT).getRecords();
             } catch (IOException ex) {
-                log.error("Failed to read reference profile file " + ex);
+                log.error("Failed to read reference profile file {}", ex);
             }
         }
     }

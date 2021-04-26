@@ -1,6 +1,7 @@
 package jmri.jmrit.log;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
@@ -10,7 +11,9 @@ import javax.swing.JFrame;
  * @author Bob Jacobsen Copyright (C) 2009
  * @see jmri.util.JLogoutputFrame
  * @see jmri.util.JTextPaneAppender
+ * @deprecated since 4.22.1; use {@link apps.SystemConsoleAction} instead
  */
+@Deprecated
 public class LogOutputWindowAction extends AbstractAction {
 
     public LogOutputWindowAction(String s) {

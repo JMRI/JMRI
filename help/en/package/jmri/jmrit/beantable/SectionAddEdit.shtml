@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Section Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -34,7 +34,7 @@
           At bottom left, click the <b>Add...</b>
           button at the bottom of the table to bring up the
           Add Section pane:</p><img src=
-          "images/SectionAddFrame.png" height="708" width="693">
+          "images/SectionAddFrame.png" height="705" width="784" alt="Section add frame">
         </li>
 
         <li>
@@ -83,8 +83,7 @@
           program gathered a list of all the Entry Points to the
           new Section. In the <b>Block Entered From</b> column, all
           Blocks not in the Section, but connected to Blocks in the
-          Section are listed. For each Block, the System Name and
-          User Name (in parenthesis) are shown, followed by the
+          Section are listed. For each Block, the bblock name is shown, followed by the
           Path direction. Normally Path direction may be ignored,
           but if there are two Entry Points from the same Block,
           Path direction should allow you to identify which is
@@ -115,32 +114,26 @@
         </li>
 
         <li>
-          <p>If you are using <b>Direction Sensors</b>, enter the
+          <p>If you are using <b>Direction Sensors</b>, select the
           names of your <b>Forward Sensor</b> and <b>Reverse
-          Sensor</b> in the designated fields. These sensors are
-          usually internal sensors (beginning with "IS" in their
-          system name). If you haven't yet created the sensors,
-          enter their system names, and entries will be made in the
-          Sensor Table for those sensors. More information on
+          Sensor</b> from the designated dropdown boxes. These sensors
+          are usually internal sensors. More information on
           direction sensors and their use is given in the <a href=
-          "SectionTable.shtml">Sections Table help</a>. If
+          "../../../../html/tools/Sections.shtml">Sections Documentation</a>. If
           direction sensors are not needed, leave the fields
           blank--you can always add them later via the Edit
           function.</p>
         </li>
 
         <li>
-          <p>If you are using <b>Stopping Sensors</b>, enter the
+          <p>If you are using <b>Stopping Sensors</b>, select the
           names of your <b>Forward Stopping Sensor</b> and
-          <b>Reverse Stopping Sensor</b> in the designated fields.
-          These sensors are physical sensors on the layout that go
-          active when a train has reached the end of the Section
+          <b>Reverse Stopping Sensor</b> from the designated dropdown
+          boxes.  These sensors are physical sensors on the layout that
+          go active when a train has reached the end of the Section
           when traveling in the FORWARD direction or the REVERSE
-          direction. If you haven't yet created entries for these
-          sensors in the Sensor Table, enter their system names,
-          and entries will be added to the Sensor Table. More
-          information on stopping sensors and their use is given in
-          the <a href="SectionTable.shtml">Sections Table help</a>.
+          direction. More information on stopping sensors and their use
+          is given in the <a href="../../../../html/tools/Sections.shtml">Sections Documentation</a>.
           If stopping sensors are not needed, leave the
           fields blank--you can always add them later via the Edit
           function.</p>
@@ -168,7 +161,6 @@
           that shown above, except the System Name will be fixed,
           and the <b>Create</b> button will be replaced by an
           <b>Update</b> Button.</p>
-          <img src="images/SectionEditFrame.png" height="179" width="693">
         </li>
 
         <li>

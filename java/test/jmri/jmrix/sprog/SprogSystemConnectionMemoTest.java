@@ -1,79 +1,94 @@
 package jmri.jmrix.sprog;
 
+import jmri.CommandStation;
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogSystemConnectionMemo.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<SprogSystemConnectionMemo> {
 
-   @Test
-   public void setAndGetSProgMode(){
-       SprogSystemConnectionMemo m = (SprogSystemConnectionMemo)scm;
-       m.setSprogMode(SprogMode.SERVICE);
-       Assert.assertEquals("Sprog Mode",SprogMode.SERVICE,m.getSprogMode());
-   }
-
-   @Test
-   public void setAndGetTrafficController(){
-       SprogSystemConnectionMemo m = (SprogSystemConnectionMemo)scm;
-       SprogTrafficController tc = new SprogTrafficControlScaffold(m);
-       m.setSprogTrafficController(tc);
-       Assert.assertEquals("Traffic Controller", tc, m.getSprogTrafficController());
-       tc.dispose();
-   }
-
-   @Test
-   public void configureAndGetCSTest(){
-       SprogSystemConnectionMemo m = (SprogSystemConnectionMemo)scm;
-       SprogTrafficController tc = new SprogTrafficControlScaffold(m);
-       m.setSprogTrafficController(tc);
-       m.setSprogMode(SprogMode.SERVICE);
-       m.configureCommandStation();
-       Assert.assertNotNull("Command Station",m.getCommandStation());
-       tc.dispose();
-   }
-
-   @Override
-   @Test
-   public void testProvidesConsistManager(){
-        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
-       // by default, does.
-       Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
-       // In service mode, does not.
-       memo.setSprogMode(SprogMode.SERVICE);
-       Assert.assertFalse("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
-       // In ops mode, does.
-       memo.setSprogMode(SprogMode.OPS);
-       Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
-   }
-
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
-        stcs = new SprogTrafficControlScaffold(memo);
-        memo.setSprogTrafficController(stcs);
-        memo.configureManagers();
-        scm = memo;
+    @Test
+    public void setAndGetSProgMode() {
+        scm.setSprogMode(SprogMode.SERVICE);
+        Assert.assertEquals("Sprog Mode", SprogMode.SERVICE, scm.getSprogMode());
     }
 
-    private SprogTrafficController stcs;
-    
+    @Test
+    public void setAndGetTrafficController() {
+        SprogTrafficController tc = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(tc);
+        Assert.assertEquals("Traffic Controller", tc, scm.getSprogTrafficController());
+        tc.dispose();
+    }
+
+    @Test
+    public void configureAndGetCSTest() {
+        SprogTrafficController tc = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(tc);
+        scm.setSprogMode(SprogMode.SERVICE);
+        scm.configureCommandStation();
+        Assert.assertNotNull("Command Station", scm.getCommandStation());
+        Assert.assertNotNull("Command Station", scm.get(CommandStation.class));
+        tc.dispose();
+    }
+
+    @Test
+    public void configureAndGetOPSCSTest() {
+        SprogTrafficController tc = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(tc);
+        scm.setSprogMode(SprogMode.OPS);
+        scm.configureCommandStation();
+        Assert.assertNotNull("Command Station", scm.getCommandStation());
+        Assert.assertNotNull("Command Station", scm.get(CommandStation.class));
+        tc.dispose();
+    }
+
+    @Test
+    public void whenConfigureManagersCalled_CommandStationIsInitialized() {
+        SprogTrafficController tc = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(tc);
+        scm.setSprogMode(SprogMode.OPS);
+        scm.configureManagers();
+        Assert.assertNotNull("Command Station", scm.getCommandStation());
+        Assert.assertNotNull("Command Station", scm.get(CommandStation.class));
+        tc.dispose();
+    }
+
     @Override
-    @After
+    @Test
+    public void testProvidesConsistManager() {
+        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
+        // by default, does.
+        Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
+        // In service mode, does not.
+        memo.setSprogMode(SprogMode.SERVICE);
+        Assert.assertFalse("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
+        // In ops mode, does.
+        memo.setSprogMode(SprogMode.OPS);
+        Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
+    }
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm = new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS);
+        scm.setSprogTrafficController(new SprogTrafficControlScaffold(scm));
+        scm.configureManagers();
+    }
+
+    @Override
+    @AfterEach
     public void tearDown() {
-        stcs.dispose();
+        scm.getSprogTrafficController().dispose();
         JUnitUtil.tearDown();
     }
 

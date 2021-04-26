@@ -2,8 +2,11 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for RaspberryPiSensorManager.
@@ -38,7 +41,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     private GpioProvider myProvider;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
        JUnitUtil.setUp();
        JUnitUtil.resetInstanceManager();
@@ -47,7 +50,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
        l = new RaspberryPiSensorManager(new RaspberryPiSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // unprovisionPin if it exists to allow reuse of GPIO pin in next test (without need to override test)
         RaspberryPiSensor t1 = (RaspberryPiSensor) l.getSensor(getSystemName(getNumToTest1()));

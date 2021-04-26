@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -67,6 +67,9 @@ The available definitions include:
 
 <dt><a href="BR-2003/index.shtml">BR-2003</a>
     <dd>2003 BR rule book
+
+<dt><a href="C&O-1980/index.shtml">C&amp;O-1980</a>
+    <dd>Chessie System 1980 rule book for the C&O RR.
 
 <dt><a href="CFL-2014/index.shtml">CFL-2014</a>
     <dd>Current info for Luxemburg in 2014
@@ -163,6 +166,6 @@ The available definitions include:
 
     </div>
 </div>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

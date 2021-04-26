@@ -1,10 +1,9 @@
 package jmri.jmrix.anyma;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AnymaDMX_TrafficController class.
@@ -21,13 +20,13 @@ public class AnymaDMX_TrafficControllerTest {
         atc.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

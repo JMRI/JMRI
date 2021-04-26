@@ -1,17 +1,16 @@
 package jmri.util;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Base tests for JmriJFrame derived frames.
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class JmriJFrameTestBase {
 
@@ -36,11 +35,11 @@ abstract public class JmriJFrameTestBase {
         fo.requestClose();
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp();  // set the value of frame.  
                                    // do not call initComponents.
 
-    @After
+    @AfterEach
     public void tearDown() {
         if(frame!=null) {
            JUnitUtil.dispose(frame);

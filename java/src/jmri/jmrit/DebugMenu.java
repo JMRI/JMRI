@@ -8,7 +8,9 @@ import javax.swing.JSeparator;
  * Create a "Debug" menu containing the JMRI system-independent debugging tools.
  *
  * @author Bob Jacobsen Copyright 2003
+ * @deprecated since 4.22.1; use {@link apps.jmrit.DebugMenu} instead
  */
+@Deprecated // used only by apps.Apps and apps.AppsLaunchFrame
 public class DebugMenu extends JMenu {
 
     public DebugMenu(String name, JPanel panel) {
@@ -36,14 +38,13 @@ public class DebugMenu extends JMenu {
         add(new JSeparator());
         add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));
         add(new jmri.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
-        add(new jmri.jmrit.log.LogOutputWindowAction(Bundle.getMessage("MenuItemLogOutputWindowAction")));
         add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
         JMenu vsdMenu = new JMenu(Bundle.getMessage("MenuItemVSDecoder"));
-        vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager"), true));
-        vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager"), null));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager")));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager")));
         vsdMenu.add(new jmri.jmrit.vsdecoder.swing.VSDPreferencesAction(Bundle.getMessage("MenuItemVSDecoderPreferences")));
         add(vsdMenu);
 

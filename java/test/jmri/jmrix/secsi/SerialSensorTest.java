@@ -1,12 +1,12 @@
 package jmri.jmrix.secsi;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -14,19 +14,23 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     private SecsiSystemConnectionMemo memo = null;
 
     @Override
-    public int numListeners() {return 0;}
+    public int numListeners() {
+        return 0;
+    }
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {
+    }
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {
+    }
 
     @Override
-    public void checkStatusRequestMsgSent() {}
+    public void checkStatusRequestMsgSent() {
+    }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,14 +40,13 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         t = new SerialSensor("VS1", memo);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-    	t.dispose();
+        t.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SerialSensorTest.class);
-
 }

@@ -92,7 +92,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     private void setMap() {
         if (map == null) {
-            map = new java.util.HashMap<String, NamedIcon>();
+            map = new java.util.HashMap<>();
         }
     }
 
@@ -211,9 +211,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (isEditable() && selectable) {
             popup.add(new JSeparator());
 
-            java.util.Iterator<String> iterator = map.keySet().iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
+            for (String key : map.keySet()) {
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
 
@@ -272,8 +270,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                if (!df.getNewTrainActive()) {
-                                    df.getActiveTrainFrame().initiateTrain(e, re, jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()).getBlock());
+                                jmri.jmrit.display.layoutEditor.LayoutBlock lBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
+                                if (!df.getNewTrainActive() && lBlock!=null) {
+                                    df.getActiveTrainFrame().initiateTrain(e, re, lBlock.getBlock());
                                     df.setNewTrainActive(true);
                                 } else {
                                     df.getActiveTrainFrame().showActivateFrame(re);
@@ -305,7 +304,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void flipIcon(int flip) {
-        _namedIcon.flip(flip, this);
+        if (_namedIcon != null) {
+            _namedIcon.flip(flip, this);
+        }
         updateSize();
         repaint();
     }
@@ -363,8 +364,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(str);
                     updateIcon(null);
                     if (log.isDebugEnabled()) {
-                        log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length());
-                        log.debug("  maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
+                        log.debug("String str= \"{}\" str.trim().length()= {}", str, str.trim().length());
+                        log.debug("  maxWidth()= {}, maxHeight()= {}", maxWidth(), maxHeight());
                         log.debug("  getBackground(): {}", getBackground());
                         log.debug("  _editor.getTargetPanel().getBackground(): {}", _editor.getTargetPanel().getBackground());
                         log.debug("  setAttributes to getPopupUtility({}) with", getPopupUtility());
@@ -396,7 +397,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(((Reportable)val).toReportString());
                     setIcon(null);
                 } else {
-                    log.warn("can't display current value of {}, val= {} of Class ",
+                    log.warn("can't display current value of {}, val= {} of Class {}",
                             getNameString(), val, val.getClass().getName());
                 }
             } else {
@@ -529,9 +530,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     protected void edit() {
         makeIconEditorFrame(this, "Memory", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = (ActionEvent a) -> {
-            editMemory();
-        };
+        ActionListener addIconAction = (ActionEvent a) -> editMemory();
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(getMemory());
     }

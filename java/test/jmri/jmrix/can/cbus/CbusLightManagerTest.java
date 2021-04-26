@@ -7,10 +7,8 @@ import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -93,7 +91,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("ML+7;-5;+11");
             Assert.fail("3 split Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: +7;-5;+11");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: Unable to convert Address: +7;-5;+11");
         }
     }
 
@@ -188,30 +186,31 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("S+N156E77;+N15E6");
             Assert.fail("S Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: S+N156E77;+N15E6");
-            Assert.assertEquals("Wrong number of events in address: S+N156E77;+N15E6", e.getMessage());
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"S+N156E77;+N15E6\" contains invalid character \"S\".");
+            Assert.assertEquals("System name \"S+N156E77;+N15E6\" contains invalid character \"S\".", e.getMessage());
         }
 
         try {
             l.provideLight("M+N156E77;+N15E6");
             Assert.fail("M Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: M+N156E77;+N15E6");
-            Assert.assertEquals("Wrong number of events in address: M+N156E77;+N15E6", e.getMessage());
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"M+N156E77;+N15E6\" contains invalid character \"M\".");
+            Assert.assertEquals("System name \"M+N156E77;+N15E6\" contains invalid character \"M\".", e.getMessage());
         }
 
         try {
             l.provideLight("ML++N156E77");
             Assert.fail("++ Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: ++N156E77");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"++N156E77\" contains invalid character \"++\".");
+            Assert.assertEquals("System name \"++N156E77\" contains invalid character \"++\".", e.getMessage());
         }
 
         try {
             l.provideLight("ML--N156E77");
             Assert.fail("-- Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: --N156E77");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"--N156E77\" contains invalid character \"--\".");
         }
 
         try {
@@ -232,7 +231,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("MLXLKJK;XLKJK");
             Assert.fail("LKJK Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: XLKJK;XLKJK");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"XLKJK;XLKJK\" contains invalid character \"J\".");
         }
     }
 
@@ -303,18 +302,20 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertEquals("ML100001", NameValidity.VALID, l.validSystemNameFormat("MS100001"));
         Assert.assertEquals("ML-100001", NameValidity.VALID, l.validSystemNameFormat("MS-100001"));
 
+        Assert.assertEquals("ML+1;+0", NameValidity.VALID, l.validSystemNameFormat("ML+1;+0"));
+        Assert.assertEquals("ML+1;-0", NameValidity.VALID, l.validSystemNameFormat("ML+1;-0"));
+        Assert.assertEquals("ML+0;+17", NameValidity.VALID, l.validSystemNameFormat("ML+0;+17"));
+        Assert.assertEquals("ML+0;-17", NameValidity.VALID, l.validSystemNameFormat("ML+0;-17"));
+        Assert.assertEquals("ML+0", NameValidity.VALID, l.validSystemNameFormat("ML+0"));
+        Assert.assertEquals("ML-0", NameValidity.VALID, l.validSystemNameFormat("ML-0"));
+        
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("ML", NameValidity.INVALID, l.validSystemNameFormat("ML"));
         Assert.assertEquals("ML-65536", NameValidity.INVALID, l.validSystemNameFormat("ML-65536"));
         Assert.assertEquals("ML65536", NameValidity.INVALID, l.validSystemNameFormat("ML65536"));
-        Assert.assertEquals("ML+1;+0", NameValidity.INVALID, l.validSystemNameFormat("ML+1;+0"));
-        Assert.assertEquals("ML+1;-0", NameValidity.INVALID, l.validSystemNameFormat("ML+1;-0"));
-        Assert.assertEquals("ML+0;+17", NameValidity.INVALID, l.validSystemNameFormat("ML+0;+17"));
-        Assert.assertEquals("ML+0;-17", NameValidity.INVALID, l.validSystemNameFormat("ML+0;-17"));
-        Assert.assertEquals("ML+0", NameValidity.INVALID, l.validSystemNameFormat("ML+0"));
-        Assert.assertEquals("ML-0", NameValidity.INVALID, l.validSystemNameFormat("ML-0"));
         Assert.assertEquals("ML7;0", NameValidity.INVALID, l.validSystemNameFormat("ML7;0"));
         Assert.assertEquals("ML0;7", NameValidity.INVALID, l.validSystemNameFormat("ML0;7"));
+
     }
 
     @Test
@@ -326,31 +327,21 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @Test
     public void testcreateNewLightException() {
-        CbusLightManager c = (CbusLightManager) l;
-        try {
-            c.createNewLight("", null);
-            Assert.fail("Expected exception not thrown");
-        } catch (StringIndexOutOfBoundsException ex) {
-            Assert.assertEquals("String index out of range: -2", ex.getMessage());
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> ((CbusLightManager)l).createNewLight("",null));
+        JUnitAppender.assertErrorMessageStartsWith("System name must start with \"ML\"");
+        
     }
 
     @Test
     public void testvalidSystemNameConfig() {
         Assert.assertTrue(l.validSystemNameConfig("ML+123"));
-        try {
-            boolean val = l.validSystemNameConfig("");
-            Assert.fail("Expected exception not thrown " + val);
-        } catch (StringIndexOutOfBoundsException ex) {
-            Assert.assertEquals("String index out of range: -2", ex.getMessage());
-        }
+        Assert.assertFalse(l.validSystemNameConfig(""));
     }
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tc;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -360,7 +351,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         l = new CbusLightManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         tc.terminateThreads();

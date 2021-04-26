@@ -1,11 +1,26 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+
+import javax.swing.JFrame;
+
+import jmri.InstanceManager;
+import jmri.Light;
+import jmri.LightManager;
+import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.managers.AbstractProxyManager;
+import jmri.managers.ProxyLightManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LightTableTabActionTest extends AbstractTableTabActionBase {
 
@@ -29,9 +44,96 @@ public class LightTableTabActionTest extends AbstractTableTabActionBase {
     public void testIncludeAddButton() {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
+    
+    @Test
+    public void testMultiSystemTabs(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitUtil.resetInstanceManager();
+        // Not returning null v4.23.4ish
+        // Assert.assertNull("No Manager at start",InstanceManager.getNullableDefault(LightManager.class));
+    
+        ProxyLightManager l = new ProxyLightManager(); // has 2 systems: JL, IL
+        l.addManager(new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet")));
+        l.addManager(new InternalLightManager(new InternalSystemConnectionMemo("I", "India")));
+        InstanceManager.setLightManager(l);
+        
+        // Test that Proxy Light Manager has Juliet, India, and nothing else.
+        LightManager plm = InstanceManager.getDefault(LightManager.class);
+        if (!(plm instanceof AbstractProxyManager)) {
+            Assert.fail("Instance LightManager Not a proxy Light Manager");
+        }
+        
+        try {
+            @SuppressWarnings("unchecked")
+            AbstractProxyManager<Light> proxy = (AbstractProxyManager<Light>) plm;
+            int numLm = proxy.getDisplayOrderManagerList().size();
+            Assert.assertEquals("2 Light Managers, Juliet, India",2, numLm);
+            
+            String s = proxy.getDisplayOrderManagerList().get(0).getMemo().getUserName();
+            Assert.assertEquals("Light Manager 0 , Juliet","Juliet", s);
+            
+            s = proxy.getDisplayOrderManagerList().get(1).getMemo().getUserName();
+            Assert.assertEquals("Light Manager 1, India","India", s);
+        } catch (ClassCastException e){
+            Assert.fail("catch Instance LightManager Not a proxy Light Manager");
+        }
+        
+        
+        InstanceManager.getDefault(LightManager.class).provideLight("IL1");
+        InstanceManager.getDefault(LightManager.class).provideLight("IL2");
+        InstanceManager.getDefault(LightManager.class).provideLight("IL3");
+        InstanceManager.getDefault(LightManager.class).provideLight("IL4");
+        InstanceManager.getDefault(LightManager.class).provideLight("IL5");
+        
+        InstanceManager.getDefault(LightManager.class).provideLight("JL8");
+        InstanceManager.getDefault(LightManager.class).provideLight("JL9");
+        
+        TabbedLightTableFrame sf = new TabbedLightTableFrame();
+        sf.initTables();
+        sf.initComponents();
+        sf.pack();
+        sf.setVisible(true);
+        
+        JFrame f = JFrameOperator.waitJFrame(sf.getTitle(), true, true);
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfo);
+        Assert.assertEquals("3 manager tabs",3, tabOperator.getTabCount());
+        
+        tabOperator.selectPage("All");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JTableOperator controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("All tab 7 Lights",7, controltbl.getRowCount());
+        
+        tabOperator.selectPage("Juliet");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("Juliet tab 2 Lights",2, controltbl.getRowCount());
+        
+        tabOperator.selectPage("India");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("India tab 5 Lights",5, controltbl.getRowCount());
+        
+        // jmri.util.swing.JemmyUtil.pressButton(jfo, "Not a Button, pause test");
+        jfo.requestClose();
+    
+    }
+    
+    private static class TabbedLightTableFrame extends ListedTableFrame<Light> {
+        
+        public TabbedLightTableFrame(){
+            super();
+            tabbedTableItemListArrayArray.clear(); // reset static BeanTable list
+        }
+        
+        @Override
+        public void initTables() {
+            addTable("jmri.jmrit.beantable.LightTableTabAction", Bundle.getMessage("MenuItemLightTable"), false);
+        }
+    }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,7 +144,7 @@ public class LightTableTabActionTest extends AbstractTableTabActionBase {
         a = new LightTableTabAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

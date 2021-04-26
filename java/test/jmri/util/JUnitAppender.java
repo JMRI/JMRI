@@ -1,5 +1,10 @@
 package jmri.util;
 
+import java.util.Collections;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -230,6 +235,14 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
+     * Returns the backlog.
+     * @return the backlog
+     */
+    public static List<LoggingEvent> getBacklog() {
+        return Collections.unmodifiableList(list);
+    }
+
+    /**
      * Verify that no messages were emitted, logging any that were. Does not
      * stop the logging. Clears the accumulated list.
      *
@@ -244,6 +257,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             instance().superappend(evt);
         }
         return false;
+    }
+
+    public static void assertNoErrorMessage() {
+        assertThat(list).isEmpty();
     }
 
     /**
@@ -450,6 +467,16 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     public static void suppressWarnMessage(String msg) {
         suppressMessage(Level.WARN, msg);
+    }
+    
+    /**
+     * If there's a next matching message of Warn severity, just ignore it. Not
+     * an error if not present; mismatch is an error. White space is ignored.
+     *
+     * @param msg the message to suppress
+     */
+    public static void suppressWarnMessageStartsWith(String msg) {
+        suppressMessageStartsWith(Level.WARN, msg);
     }
 
     /**

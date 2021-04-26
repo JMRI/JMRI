@@ -2,9 +2,9 @@ package jmri.jmrix.easydcc;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.easydcc.EasyDccTurnout class
@@ -16,7 +16,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     private EasyDccTrafficControlScaffold tcis = null;
     private EasyDccSystemConnectionMemo memo = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,17 +36,19 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-        Assert.assertEquals("content", "S 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+        Assert.assertEquals("content",
+                "S 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-        Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
+        Assert.assertEquals("content",
+                "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
     // reset objects
-    @After
+    @AfterEach
     public void tearDown() {
         tcis.terminateThreads();
         t.dispose();

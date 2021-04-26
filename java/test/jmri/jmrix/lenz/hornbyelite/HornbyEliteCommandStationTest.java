@@ -1,18 +1,17 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * HornbyEliteCommandStationTest.java
  *
- * Description:	tests for the
+ * Test for the
  * jmri.jmrix.lenz.hornbyelite.HornbyEliteCommandStation class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class HornbyEliteCommandStationTest {
 
@@ -23,12 +22,12 @@ public class HornbyEliteCommandStationTest {
         Assert.assertNotNull(c);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -104,7 +104,7 @@
         <label xml:lang="de">Vhigh</label>
         <tooltip xml:lang="de">Sets the maximum voltage at full throttle (only active if Back EMF enabled)</tooltip>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version No.</label>
        <label xml:lang="it">Versione Decoder: </label>

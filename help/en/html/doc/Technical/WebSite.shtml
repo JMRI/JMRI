@@ -32,12 +32,12 @@
 	    <h1>JMRI: Web Site</h1>
 
         <p>This page discusses technical aspects behind the JMRI web site
-        at <a href="http://jmri.org">jmri.org</a> and also providing
+        at <a href="https://jmri.org">jmri.org</a> and also providing
         parts of the help system in JMRI.</p>
         <p>
         If you just want to know how to make a small change to a web or
         help page, please see the
-        <a href="webupdate/UpdatingDocs.shtml">Updating JMRI Documentation instructions</a>.</p>
+        <a href="UpdatingDocs.shtml">Updating JMRI Documentation instructions</a>.</p>
 
         <h2>Structure of Information</h2>
 
@@ -121,8 +121,8 @@
         <li>contact -
         </ul>
         <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in
-        the source.  The <a href="http://jmri.org/JavaDoc/doc/">Javadoc</a> is one such section, along with some of the
-        <a href="http://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.
+        the source.  The <a href="https://jmri.org/JavaDoc/doc/">Javadoc</a> is one such section, along with some of the
+        <a href="https://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.
 
         <h2>Updating the jmri.org site</h2>
 
@@ -131,22 +131,22 @@
         and this content is updated from the JMRI repository without any additional work.</p>
         <ul>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static
+        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static
         content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a></li>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static
+        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static
         content from JMRI/website repository, e.g. website-only information</a></li>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static
+        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static
         content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a></li>
         </ul>
 
         <p>The regeneration of the Javadoc and xml content involves
         significantly more work than merely updating a directory, and so these are only done once per day, as needed,
         by the
-        <a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
+        <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
         job on the
-        <a href="http://jmri.tagadab.com/jenkins/">production Jenkins server</a>.</p>
+        <a href="https://builds.jmri.org/jenkins/">production Jenkins server</a>.</p>
 
         <a name="local"></a><h2>Local Web Site: Mac OS X</h2>
 
@@ -240,7 +240,7 @@
                 JMRI's web site uses index.shtml files as index pages.
                 To make sure that those will display by default,
                 e.g. if you use a partial URL like
-                <a href="http://jmri.org/download">http://jmri.org/download</a>,
+                <a href="https://jmri.org/download">https://jmri.org/download</a>,
                 find the line containing "DirectoryIndex" and add
                 "index.shtml" to the existing list of index-like file names.
 

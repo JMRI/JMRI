@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- This page is created from the content (not formatting) -->
-<!-- of http://jmri.org/community/index.html -->
+<!-- of https://jmri.org/community/index.html -->
 
 <html lang="fr">
 <head>
@@ -29,7 +29,7 @@
 		<p>
 			En complément un nombre important de personnes ont financé le projet. 
 			Pour plus d'information, ou pour donner, SVP voir
-		.  			<a href="http://jmri.org/donations.shtml">notre page de dons</a>.
+		.  			<a href="https://jmri.org/donations.shtml">notre page de dons</a>.
 
 		<p>
 			<a href="#A">A</a>|<a href="#B">B</a>|<a href="#C">C</a>|<a href="#D">D</a>|<a href="#E">E</a>|<a href="#F">F</a>|<a href="#G">G</a>|<a href="#H">H</a>|<a href="#I">I</a>|<a href="#J">J</a>|<a href="#K">K</a>|<a href="#L">L</a>|<a href="#M">M</a>|<a href="#N">N</a>|<a href="#O">O</a>|<a href="#P">P</a>|<a href="#Q">Q</a>|<a href="#R">R</a>|<a href="#S">S</a>|<a href="#T">T</a>|<a href="#U">U</a>|<a href="#V">V</a>|<a href="#W">W</a>|<a href="#X">X</a>|<a href="#Y">Y</a>|<a href="#Z">Z</a>
@@ -113,7 +113,7 @@
 			<li>Rodolphe Braud, who updated the French translation
 			<li>Jerry Britton, who acquired and maintained the domain registration
 				for decoderpro.com, despite Matt Katzer's
-				<a href="http://jmri.org/k/UDRP/index.shtml">despicable behavior</a>,
+				<a href="https://jmri.org/k/UDRP/index.shtml">despicable behavior</a>,
 				and wrote a scripting example page
 			<li>Egbert Broerse, who improved the signal system help
 			<li>Dick Bronson, who created the great LocoBuffer-II and worked hard
@@ -171,7 +171,7 @@
 			<li>Andrew Crosland create the SPROG implementation, SPROG programming
 				tools,
 				has generously contributed lots of time for SPROG users,
-				and worked on the CAN and CBUS support
+				and worked on the CAN and CBUS&reg; support
 				<a name="D"></a>
 			<li>Mark Dance provided train order signal icons in resources/icons/smallschematics/trainorder
 			<li>Mike Davison, who got the Linux serial connection working with Java 1.4,
@@ -207,7 +207,7 @@
 			<li>Wayne Eric, who provided the MRC AD370 decoder definition
 			<li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer
 				on Windows and wrote
-				<a href="http://jmri.org/install/qsidriver/">great instructions</a>.
+				<a href="https://jmri.org/install/qsidriver/">great instructions</a>.
 				<a name="F"></a>
 			<li>Dave Falkenburg created the original DecoderPro application (and
 				found the perfect name for it!)
@@ -303,7 +303,7 @@
 			<li>Matjaz Krajnc, who provided better code and icons for the web throttle
 			<li>Ross Kudlick, who researched options switches on Digitrax command stations
 			<li>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
-				<a href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
+				<a href="https://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
 				how to start making panels, and contributed numerous icons
 			<li>Tighe Kuykendall improved documentation.
 			<li>Bjorn Kvisli, who provided Doehler and Haass decoder definitions.
@@ -324,7 +324,7 @@
 				website <a href="http://www.lundsten.dk/us_signaling">http://www.lundsten.dk/us_signaling</a>.
 				<a name="M"></a>
 			<li>Jason M'Sadoques, who created the
-				<a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
+				<a href="https://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
 				and improved the WiThrottle support.
 			<li>Matthew Macdonald-Wallace arranged support for Linux on ARM V7 processors
 			<li>Jeffrey Machacek updated the WiThrottle server and updated LocoNet SlotMonitor.
@@ -367,7 +367,7 @@
 				improved adding text labels
 				and
 			<li>Robert Myers provided
-				<a href="http://jmri.org/install/OLPC_XO.shtml">instructions for installing JMRI on an OLPC XO laptop</a>
+				<a href="https://jmri.org/install/OLPC_XO.shtml">instructions for installing JMRI on an OLPC XO laptop</a>
 				<a name="N"></a>
 			<li>Bill Nanney, who tenaciously worked to help find a bug where certain
 				decoders wouldn't read and write all sheets
@@ -474,7 +474,7 @@
 			<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
 				for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>,
 				wrote the
-				<a href="http://jmri.org/community/connections/XtrkCadReader/">XTrkCadReader</a> tool,
+				<a href="https://jmri.org/community/connections/XtrkCadReader/">XTrkCadReader</a> tool,
 				and provided screen icons for German signals.
 			<li>Jim Thompson provided a sample script for handling messages from PM42 power controllers
 			<li>Walter Thompson, who provided the ID information for the Lionel
@@ -488,7 +488,7 @@
 				and provided the decoder definition for the Kato FL12
 				<a name="U"></a>
 			<li>Peter Ulvestad, who created some nice
-				<a href="http://jmri.org/community/clinics/">clinic presentations</a>,
+				<a href="https://jmri.org/community/clinics/">clinic presentations</a>,
 				created the
 				<a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>,
 				and has done a large amount of work on decoder definitions.
@@ -524,8 +524,8 @@
 			<li>Jim Wolters, who updated the MRC Sound Brilliance 1812 decoder definition.
 			<li>Randall Wood, who updated the fast clock support, improved
 				the XMLIO support with some fixed memory variables,
-				migrated us to Git and GitHub, and build our Travis (Linux/Mac) and
-				Appveyor (Windows) continuous integration &amp; test support.
+				migrated us to Git and GitHub, and built our
+				continuous integration &amp; test support.
 				<a name="X"></a>
 				<a name="Y"></a>
 			<li>Mike Yawn, who provided the instructions for building under Eclipse
@@ -538,10 +538,10 @@
 		</ul>
 
 		<h2>Développeur de Code Swarm</h2>
-		<p>nous avons créé un <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm du développement de JMRI
+		<p>nous avons créé un <a href="https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm du développement de JMRI
 		</a>depuis sa création à Janvier 2009.  Un Code Swarm est une représentation visuelle dynamique et passionnante 
 		des modifications que les développeurs apportent aux fichiers qui composent un projet.. Plus d'informations sont disponibles sur
-		la page <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> .</p>
+		la page <a href="https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> .</p>
 			<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>

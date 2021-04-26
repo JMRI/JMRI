@@ -1,53 +1,54 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * StandaloneSystemConnectionMemoTest.java
+ * <p>
+ * Test for the StandaloneSystemConnectionMemo class
  *
- * Description:	tests for the StandaloneSystemConnectionMemo class
- *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
+ * @deprecated since 4.21.1 test of deprecated {@link StandaloneSystemConnectionMemo}.
  */
-public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+@Deprecated
+public class StandaloneSystemConnectionMemoTest extends SystemConnectionMemoTestBase<StandaloneSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        StandaloneSystemConnectionMemo memo =new StandaloneSystemConnectionMemo();
-        StandaloneTrafficController tc = new StandaloneTrafficController(memo){
-          @Override
-          public void transmitLoop(){
-          }
-          @Override
-          public void receiveLoop(){
-          }
+        scm = new StandaloneSystemConnectionMemo();
+        StandaloneTrafficController tc = new StandaloneTrafficController(scm) {
+            @Override
+            public void transmitLoop() {
+            }
+
+            @Override
+            public void receiveLoop() {
+            }
         };
-        memo.setRfidTrafficController(tc);
-        memo.configureManagers(
-            new StandaloneSensorManager(memo),
-            new StandaloneReporterManager(memo));
-        scm=memo;
+        scm.setRfidTrafficController(tc);
+        scm.configureManagers(
+                new StandaloneSensorManager(scm),
+                new StandaloneReporterManager(scm));
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
-
     }
 
 }

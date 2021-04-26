@@ -6,9 +6,7 @@ import jmri.jmrix.can.cbus.CbusEvent;
 // import org.slf4j.LoggerFactory;
 
 /**
- * Class to represent an event stored on a node.
- * <p>
- * Custom Equals method
+ * Base Class of CbusNodeEvent
  *
  * @author Steve Young Copyright (C) 2019
  */
@@ -92,6 +90,20 @@ public class CbusBasicNodeEvent extends CbusEvent {
      */
     public final String getTempFcuNodeName(){
         return _fcuNodeName;
+    }
+    
+    /** 
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
     
     // private static final Logger log = LoggerFactory.getLogger(CbusBasicNodeEvent.class);

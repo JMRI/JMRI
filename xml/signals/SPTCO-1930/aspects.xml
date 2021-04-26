@@ -46,8 +46,8 @@
       <name>Stop</name>
       <rule>Rule 501</rule>
       <indication>Stop</indication>
-      <speed>Normal</speed>
-      <speed2>Normal</speed2>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
       <route>Normal</route>
       <dccAspect>0</dccAspect>
     </aspect>
@@ -55,8 +55,8 @@
       <name>Diverging Clear</name>
       <rule>Rule 502</rule>
       <indication>Proceed through diverging route</indication>
-      <speed>Normal</speed>
-      <speed2>Normal</speed2>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
       <dccAspect>4</dccAspect>
     </aspect>
@@ -64,8 +64,8 @@
       <name>Diverging Approach</name>
       <rule>Rule 502A</rule>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
-      <speed>Normal</speed>
-      <speed2>Normal</speed2>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
       <dccAspect>3</dccAspect>
     </aspect>
@@ -82,8 +82,8 @@
       <name>Approach</name>
       <rule>Rule 503</rule>
       <indication>Proceed preparing to stop at next signal</indication>
-      <speed>Normal</speed>
-      <speed2>Normal</speed2>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
       <route>Normal</route>
       <dccAspect>1</dccAspect>
     </aspect>

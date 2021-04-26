@@ -82,7 +82,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         try {
             return e.getAttribute("systemName").getIntValue(); // NOI18N
         } catch (DataConversionException ex) {
-            log.warn("Can't read turnout number for SE8cSignalHead because of " + ex); // NOI18N
+            log.warn("Can't read turnout number for SE8cSignalHead because of {}", ex); // NOI18N
             return 0;
         }
     }

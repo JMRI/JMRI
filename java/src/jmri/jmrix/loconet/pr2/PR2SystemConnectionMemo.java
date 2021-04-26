@@ -2,6 +2,8 @@ package jmri.jmrix.loconet.pr2;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.PowerManager;
+import jmri.ThrottleManager;
 import jmri.jmrix.loconet.LnPr2ThrottleManager;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -31,11 +33,6 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     public void configureManagers() {
         jmri.InstanceManager.store(getPowerPr2Manager(), jmri.PowerManager.class);
 
-        // jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
-
-        // jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
-
-        // jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
         jmri.InstanceManager.setThrottleManager(getPr2ThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
@@ -45,87 +42,32 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        // jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
+        register();
     }
-
-    private LnPr2PowerManager powerPr2Manager;
 
     public LnPr2PowerManager getPowerPr2Manager() {
         if (getDisabled()) {
             return null;
         }
-        if (powerPr2Manager == null) {
-            powerPr2Manager = new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this);
-        }
-        return powerPr2Manager;
+        return (LnPr2PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> new LnPr2PowerManager(this));
     }
-
-    private LnPr2ThrottleManager throttlePr2Manager;
 
     public LnPr2ThrottleManager getPr2ThrottleManager() {
         if (getDisabled()) {
             return null;
         }
-        if (throttlePr2Manager == null) {
-            throttlePr2Manager = new jmri.jmrix.loconet.LnPr2ThrottleManager(this);
-        }
-        return throttlePr2Manager;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> type) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (type.equals(jmri.PowerManager.class)) {
-            return (T) getPowerPr2Manager();
-        }
-        if (type.equals(jmri.ThrottleManager.class)) {
-            return (T) getPr2ThrottleManager();
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if(type.equals(jmri.ConsistManager.class)){
-           return (T) getConsistManager();
-        }
-        return null;
-    }
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
-        }
-        if(type.equals(jmri.ConsistManager.class)){
-           return(getConsistManager()!=null);
-        } 
-        return false;
+        return (LnPr2ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> new LnPr2ThrottleManager(this));
     }
 
     @Override
     public void dispose() {
         InstanceManager.deregister(this, PR2SystemConnectionMemo.class);
 
+        LnPr2PowerManager powerPr2Manager = get(PowerManager.class);
         if (powerPr2Manager != null) {
             powerPr2Manager.dispose();
             InstanceManager.deregister(powerPr2Manager, LnPowerManager.class);
+            deregister(powerPr2Manager,PowerManager.class);
         }
 
         super.dispose();

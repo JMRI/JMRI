@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-oblock-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"oblock\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the OBlock"
+        },
+        "userName": {
+            "type": "string",
+            "description": "If present, set the user name of the OBlock"
+        },
+        "comment": {
+            "type": "string",
+            "description": "If present, set the comment for the OBlock"
+        },
+        "status": {
+          "type": "integer",
+          "description": "If present, set the occupancy status of the oblock",
+          "enum": [0, 1, 2, 4, 8, 16, 18, 20, 24, 32, 34, 36, 40, 64, 66, 68, 72, 128, 130, 132, 136]
+        },
+        "warrant": {
+          "type": ["string", "null"],
+          "description": "If present, allocate Warrant for the OBlock"
+        },
+        "train": {
+          "type": ["string", "null"],
+          "description": "If present, set Train in Warrant for the OBlock"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

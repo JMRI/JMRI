@@ -125,7 +125,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // locomotive in the consist
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
-        log.debug("consist " + consistAddress + " obtaining direction for " + address + " Consist List Size " + consistList.size());
+        log.debug("consist {} obtaining direction for {} Consist List Size {}", consistAddress, address, consistList.size());
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
             if (address == consistAddress) {
                 return true;
@@ -268,12 +268,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     @Override
     protected synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive " // NOI18N
-                    + LocoAddress.toString()
-                    + " to advanced consist " // NOI18N
-                    + consistAddress.toString()
-                    + " With Direction Normal " // NOI18N
-                    + directionNormal + ".");
+            log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.", LocoAddress.toString(), consistAddress.toString(), directionNormal);
         }
         //set the value in the roster entry for CV19
         setRosterEntryCVValue(LocoAddress);
@@ -288,10 +283,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
-            log.debug(" Remove Locomotive " // NOI18N
-                    + LocoAddress.toString()
-                    + " from advanced consist " // NOI18N
-                    + consistAddress.toString());
+            log.debug(" Remove Locomotive {} from advanced consist {}", LocoAddress.toString(), consistAddress.toString());
         }
         //reset the value in the roster entry for CV19
         resetRosterEntryCVValue(LocoAddress);
@@ -307,12 +299,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive " // NOI18N
-                    + LocoAddress.toString()
-                    + " to Standard Consist " // NOI18N
-                    + consistAddress.toString()
-                    + " With Direction Normal " // NOI18N
-                    + directionNormal + ".");
+            log.debug("Add Locomotive {} to Standard Consist {} With Direction Normal {}.", LocoAddress.toString(), consistAddress.toString(), directionNormal);
         }
         if(consistList.size()<=1 && LocoAddress.equals(consistAddress)){
           // there is only one address in this consist, no reason to link.
@@ -330,11 +317,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
-            log.debug("Remove Locomotive " // NOI18N
-                    + LocoAddress.toString()
-                    + " from Standard Consist " // NOI18N
-                    + consistAddress.toString()
-                    + ".");
+            log.debug("Remove Locomotive {} from Standard Consist {}.", LocoAddress.toString(), consistAddress.toString());
         }
         if(consistList.size()==1 && LocoAddress.equals(consistAddress)){
           // there is only one address in this consist, no reason to link.
@@ -398,7 +381,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     private void setDirection(LocoNetThrottle t) {
-        log.debug("consist " + consistAddress + " set direction for " + t.getLocoAddress());
+        log.debug("consist {} set direction for {}", consistAddress, t.getLocoAddress());
         // send a command to set the direction
         // of the locomotive in the slot.
         Boolean directionNormal = getLocoDirection((DccLocoAddress) t.getLocoAddress());
@@ -421,10 +404,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // slot listener interface functions
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
-        log.debug("Notified slot " + s.getSlot() // NOI18N
-                + " changed with mode " + consistRequestState // NOI18N
-                + " slot consist state: " // NOI18N
-                + LnConstants.CONSIST_STAT(s.consistStatus()));
+        log.debug("Notified slot {} changed with mode {} slot consist state: {}", s.getSlot(), consistRequestState, LnConstants.CONSIST_STAT(s.consistStatus()));
         switch (consistRequestState) {
             case LEADREQUESTSTATE:
                 leadSlot = s;
@@ -457,7 +437,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // Throttle listener interface functions
     @Override
     public void notifyThrottleFound(jmri.DccThrottle t) {
-        log.debug("notified Throttle " + t.getLocoAddress() + " found with mode " + consistRequestState);
+        log.debug("notified Throttle {} found with mode {}", t.getLocoAddress(), consistRequestState);
         try {
             if (consistRequestState == LEADREQUESTSTATE) {
                 ((LocoNetThrottle) t).setIsForward(true);
@@ -508,16 +488,6 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 ConsistListener.CONSIST_ERROR);
         removeFromConsistList((DccLocoAddress) address);
         consistRequestState = IDLESTATE;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
 
     /**

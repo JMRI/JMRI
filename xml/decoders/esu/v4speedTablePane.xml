@@ -65,7 +65,7 @@
                     </row>
                 </column>
             </griditem>
-            <group include="ESU LokSound V4.0,ESU LokSound Select,ESU LokPilot V4.0,ESU LokSound 5,Essential Sound Unit">
+            <group include="ESU LokSound V4.0,ESU LokSound Select,ESU LokPilot V4.0,ESU LokSound 5,ESU LokPilot 5,Essential Sound Unit">
                 <griditem weightx="0" anchor="LINE_START">
                     <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
                         <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>

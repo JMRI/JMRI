@@ -10,7 +10,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 /**
  * Frame displaying (and logging) RPS messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         implements ReadingListener, MeasurementListener {

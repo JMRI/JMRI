@@ -1,17 +1,18 @@
 package jmri.util.zeroconf;
 
 import java.util.HashMap;
+
 import javax.jmdns.ServiceInfo;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for the ZeroConfService class
@@ -23,22 +24,22 @@ public class ZeroConfServiceTest {
 
     private static final String HTTP = "_http._tcp.local.";
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
         
@@ -104,17 +105,6 @@ public class ZeroConfServiceTest {
     }
 
     /**
-     * Test of key method, of class ZeroConfService.
-     */
-    @Test
-    public void testKey_0args() {
-        String name = "my_name";
-        ZeroConfService instance = ZeroConfService.create(HTTP, name, 9999, 0, 0, new HashMap<>());
-        String result = instance.key();
-        Assert.assertEquals(name + "." + HTTP, result);
-    }
-
-    /**
      * Test of getName method, of class ZeroConfService.
      */
     @Test
@@ -124,30 +114,12 @@ public class ZeroConfServiceTest {
     }
 
     /**
-     * Test of name method, of class ZeroConfService.
-     */
-    @Test
-    public void testName() {
-        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), instance.name());
-    }
-
-    /**
      * Test of getType method, of class ZeroConfService.
      */
     @Test
     public void testGetType() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertEquals(HTTP, instance.getType());
-    }
-
-    /**
-     * Test of type method, of class ZeroConfService.
-     */
-    @Test
-    public void testType() {
-        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(HTTP, instance.type());
     }
 
     /**
@@ -203,42 +175,4 @@ public class ZeroConfServiceTest {
         }, "Stopping ZeroConf Service");
         Assert.assertFalse(instance.isPublished());
     }
-
-    /**
-     * Test of stopAll method, of class ZeroConfService.
-     */
-    @Test
-    public void testStopAll() {
-        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertFalse(instance.isPublished());
-        // can fail if platform does not release earlier stopped service within 15 seconds
-        instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
-        Assert.assertTrue(instance.isPublished());
-        ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == false;
-        }, "Stopping ZeroConf Service");
-        Assert.assertFalse(instance.isPublished());
-    }
-
-    /**
-     * Test of allServices method, of class ZeroConfService.
-     */
-    @Test
-    public void testAllServices() {
-        Assert.assertEquals(0, ZeroConfService.allServices().size());
-        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getDefaultRailroadName(), instance.getName());
-        Assert.assertEquals(0, ZeroConfService.allServices().size());
-        // can fail if platform does not release earlier stopped service within 15 seconds
-        instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
-        Assert.assertEquals(1, ZeroConfService.allServices().size());
-    }
-
 }

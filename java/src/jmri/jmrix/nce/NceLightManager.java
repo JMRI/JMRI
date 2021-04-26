@@ -34,17 +34,18 @@ public class NceLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
+     * Method to create a new Light based on the system name
+     * Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
-        Light lgt = null;
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        Light lgt;
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return (null);
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
         // Normalize the systemName
         String sName = getSystemPrefix() + "L" + bitNum;   // removes any leading zeros

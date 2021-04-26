@@ -1,6 +1,7 @@
 package jmri.server.json;
 
 import static jmri.server.json.JsonTestServiceFactory.TEST;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -8,20 +9,18 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import java.io.DataOutputStream;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+
 import jmri.profile.NullProfile;
-import jmri.profile.Profile;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -30,20 +29,19 @@ import org.junit.rules.TemporaryFolder;
  */
 public class JsonClientHandlerTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     private Locale locale = Locale.ENGLISH;
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
         JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -60,7 +58,7 @@ public class JsonClientHandlerTest {
 
     /**
      * Test of onMessage method, of class JsonClientHandler.
-     * 
+     *
      * @throws IOException if unable to pass message
      */
     @Test
@@ -99,7 +97,7 @@ public class JsonClientHandlerTest {
 
     /**
      * Test of onMessage method, of class JsonClientHandler.
-     * 
+     *
      * @throws IOException if unable to pass message
      */
     @Test
@@ -328,7 +326,7 @@ public class JsonClientHandlerTest {
         }
         JUnitAppender.assertErrorMessage("Unable to create handler for version v4");
     }
-    
+
     private static class TestJsonClientHandler extends JsonClientHandler {
 
         public TestJsonClientHandler(JsonConnection connection) {

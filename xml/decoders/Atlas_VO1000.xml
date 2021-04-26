@@ -46,7 +46,7 @@
         <label xml:lang="de">Bremszeit (0-31)</label>
         <comment>Range 1-31</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

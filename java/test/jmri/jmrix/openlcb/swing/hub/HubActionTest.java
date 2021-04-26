@@ -1,12 +1,14 @@
 package jmri.jmrix.openlcb.swing.hub;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import jmri.jmrix.can.TestTrafficController;
 /**
  * @author Bob Jacobsen Copyright 2013
@@ -24,20 +26,23 @@ public class HubActionTest {
         Assert.assertNotNull("Action object non-null", h);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
         memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
-        TestTrafficController tc = new TestTrafficController();
+        tc = new TestTrafficController();
         memo.setTrafficController(tc);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
 
     }

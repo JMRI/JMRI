@@ -121,7 +121,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n" + ex);
+                    log.error("Error while opening port.  Did you select the right one?\n{}", ex);
                 }
             }
         });
@@ -451,10 +451,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 ostream.write(endbyte);
             }
         } catch (IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: {}", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: " + e);
+            log.error("Interrupted output: {}", e);
         }
     }
 
@@ -544,7 +544,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -556,8 +556,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -567,7 +566,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             sendBytes(new byte[]{(byte) 'L', (byte) '-', 10, 13});
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
+            log.debug("input stream shows {} bytes available", count);
             while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
@@ -575,31 +574,24 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
         } catch (java.io.IOException ex) {
-            log.error("IO error while opening port " + portName, ex);
+            log.error("IO error while opening port {}", portName, ex);
             return "IO error while opening port " + portName + ": " + ex;
         } catch (UnsupportedCommOperationException ex) {
-            log.error("Unsupported communications operation while opening port " + portName, ex);
+            log.error("Unsupported communications operation while opening port {}", portName, ex);
             return "Unsupported communications operation while opening port " + portName + ": " + ex;
         } catch (NoSuchPortException ex) {
-            log.error("No such port: " + portName, ex);
+            log.error("No such port: {}", portName, ex);
             return "No such port: " + portName + ": " + ex;
         }
         return null; // indicates OK return
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port " + p + " in use, cannot open");
+        log.error("Port {} in use, cannot open", p);
     }
 
     DataInputStream serialStream = null;
@@ -627,7 +619,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: " + e.toString());
+                    log.warn("run: Exception: {}", e.toString());
                 }
             }
         }

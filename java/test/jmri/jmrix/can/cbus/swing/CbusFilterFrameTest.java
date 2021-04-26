@@ -1,16 +1,18 @@
 package jmri.jmrix.can.cbus.swing;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -36,10 +38,10 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
     private ArrayList<String> stringOutputList;
     
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCanFrames(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.initComponents();
-        Assert.assertNotNull(frame);
+        assertThat(frame).isNotNull();
         
         frame.setVisible(true);
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
@@ -49,30 +51,30 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         CanMessage m = new CanMessage(0x12);
         m.setNumDataElements(1);
         m.setElement(0, CbusConstants.CBUS_RTON);
-        Assert.assertFalse(cff.filter(m));
+        assertThat(cff.filter(m)).isFalse();
         
         CanReply r = new CanReply(0x12);
         r.setNumDataElements(1);
         r.setElement(0, CbusConstants.CBUS_TON);
-        Assert.assertFalse(cff.filter(r));
+        assertThat(cff.filter(r)).isFalse();
         
         new JToggleButtonOperator(jfo,0).clickMouse(); // Filter Incoming
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>1); }, "Not all increments passed" + stringOutputList.size());
-        Assert.assertEquals("Filter Active sent to console","Filter Window Active \n",stringOutputList.get(0));
-        Assert.assertEquals("Filter Change sent to console","Incoming: Filter \n",stringOutputList.get(1));
+        assertEquals("Filter Window Active \n",stringOutputList.get(0),"Filter Active sent to console");
+        assertEquals("Incoming: Filter \n",stringOutputList.get(1),"Filter Change sent to console");
         
-        Assert.assertTrue(cff.filter(r));
-        Assert.assertFalse(cff.filter(m));
+        assertThat(cff.filter(r)).isTrue();
+        assertThat(cff.filter(m)).isFalse();
         
         new JToggleButtonOperator(jfo,0).clickMouse(); // Pass Incoming
         new JToggleButtonOperator(jfo,1).clickMouse(); // Filter Outgoing
         
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>3); }, "Not all increments passed" + stringOutputList.size());
-        Assert.assertEquals("Filter Active sent to console","Incoming: Pass \n",stringOutputList.get(2));
-        Assert.assertEquals("Filter Change sent to console","Outgoing: Filter \n",stringOutputList.get(3));
+        assertEquals("Incoming: Pass \n",stringOutputList.get(2),"Filter Active sent to console");
+        assertEquals("Outgoing: Filter \n",stringOutputList.get(3),"Filter Change sent to console");
                
-        Assert.assertTrue(cff.filter(m));
-        Assert.assertFalse(cff.filter(r));
+        assertThat(cff.filter(m)).isTrue();
+        assertThat(cff.filter(r)).isFalse();
         
         new JToggleButtonOperator(jfo,2).clickMouse(); // event children
         
@@ -80,30 +82,30 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>4); }, "Not all increments passed " + stringOutputList.size());
         
-        Assert.assertEquals("text says filter","Filter ( 0 / 0 ) ",
-            new JToggleButtonOperator(jfo,4).getText());
+        assertEquals("Filter ( 0 / 0 ) ",
+            new JToggleButtonOperator(jfo,4).getText(),"text says filter");
         
         new JToggleButtonOperator(jfo,3).clickMouse(); // All Events Passed
         
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>5); }, "Not all increments passed " + stringOutputList.size());
         
         
-        Assert.assertEquals("text says pass","Pass ( 0 / 0 ) ",
-            new JToggleButtonOperator(jfo,4).getText());
+        assertEquals("Pass ( 0 / 0 ) ",
+            new JToggleButtonOperator(jfo,4).getText(),"text says pass");
         
         
         JSpinnerOperator spinner = new JSpinnerOperator(jfo, 0);
             
         JTextFieldOperator jtfo = new JTextFieldOperator(spinner);
-        Assert.assertEquals("original Min Event 0", "0", jtfo.getText());
+        assertEquals( "0", jtfo.getText(),"original Min Event 0");
         
         jtfo.setText("123");
         new JToggleButtonOperator(jfo,4).clickMouse(); // Min Event Filter
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>6); }, "Not all increments passed " + stringOutputList.size());
 
         
-        Assert.assertEquals("text says mixed","Mixed ( 0 / 0 ) ",
-            new JToggleButtonOperator(jfo,3).getText());
+        assertEquals("Mixed ( 0 / 0 ) ",
+            new JToggleButtonOperator(jfo,3).getText(),"text says mixed");
         
         
         // Outgoing event
@@ -116,16 +118,16 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         mEvent.setElement(3, 0x00); // Event > 123
         mEvent.setElement(4, 0xff); // Event > 123
 
-        Assert.assertFalse(cff.filter(mEvent));
+        assertThat(cff.filter(mEvent)).isFalse();
         
-        Assert.assertEquals("text says pass","Filter ( 1 / 0 ) ",
-            new JToggleButtonOperator(jfo,4).getText());
+        assertEquals("Filter ( 1 / 0 ) ",
+            new JToggleButtonOperator(jfo,4).getText(),"text says pass");
         
         mEvent.setElement(4, 0x01); // Event < 123
         
-        Assert.assertTrue(cff.filter(mEvent));
-        Assert.assertEquals("text says pass","Filter ( 1 / 1 ) ",
-            new JToggleButtonOperator(jfo,4).getText());
+        assertThat(cff.filter(mEvent)).isTrue();
+        assertEquals("Filter ( 1 / 1 ) ",
+            new JToggleButtonOperator(jfo,4).getText(),"text says pass");
         
         frame.dispose();
         
@@ -133,7 +135,7 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         
     }
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -144,7 +146,7 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if(!GraphicsEnvironment.isHeadless() &&_testConsole !=null){

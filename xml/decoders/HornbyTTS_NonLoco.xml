@@ -12,167 +12,352 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="2" lastUpdated="20200206"/>
-	<version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="1" lastUpdated="20181208"/>	
-	<!--  Version 1 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van -->
-	<!--  Version 2 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van 2 -->
-	<decoder>
+    <version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="2" lastUpdated="20200426"/>
+    <version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="1" lastUpdated="20181208"/>
+    <!--  Version 1 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van -->
+    <!--  Version 2 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van 2 plus added function labels to both -->
+    <decoder>
         <family name="Hornby TTS Accessory Sound Decoder" mfg="Hornby" comment="">
-		<model model="Hornby TTS Vent Van" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2">
+            <model model="Hornby TTS Vent Van" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2">
                 <versionCV lowVersionID="2" highVersionID="120"/>
-           	</model>
-			
-		</family>
+                <functionlabels>
+                    <functionlabel num="0" lockable="True">Locomotive workshop sounds</functionlabel>
+                    <functionlabel num="1" lockable="True">Air spanner in operation</functionlabel>
+                    <functionlabel num="2" lockable="True">Grinder in operation</functionlabel>
+                    <functionlabel num="3" lockable="True">Multiple hammer blows</functionlabel>
+                    <functionlabel num="4" lockable="false">Riverting a boiler 1 cycle</functionlabel>
+                    <functionlabel num="5" lockable="True">People walking on concrete</functionlabel>
+                    <functionlabel num="6" lockable="True">Coach doors slamming</functionlabel>
+                    <functionlabel num="7" lockable="True">Passing wagons</functionlabel>
+                    <functionlabel num="8" lockable="False">Steam train arriving brakes and announcements</functionlabel>
+                    <functionlabel num="9" lockable="False">Steam train departing, wheel slip</functionlabel>
+                    <functionlabel num="10" lockable="False">Guard whistle 2 chips</functionlabel>
+                    <functionlabel num="11" lockable="True">Miscellaneous Rolling Stock Shunting sounds</functionlabel>
+                    <functionlabel num="12" lockable="True">Random wheel tapping and walking on gravel</functionlabel>
+                    <functionlabel num="13" lockable="True">Raking out Ash Box</functionlabel>
+                    <functionlabel num="14" lockable="True">Wagons Shunting Flange Squeal</functionlabel>
+                    <functionlabel num="15" lockable="False">Wagons Coupling</functionlabel>
+                    <functionlabel num="16" lockable="False">Whistle Double TooT</functionlabel>
+                    <functionlabel num="17" lockable="False">Wagons Clanging</functionlabel>
+                    <functionlabel num="18" lockable="True">General Stable Sounds</functionlabel>
+                    <functionlabel num="19" lockable="True">Birds at Dawn</functionlabel>
+                    <functionlabel num="20" lockable="True">Occasional Owl</functionlabel>
+                    <functionlabel num="21" lockable="True">Crowds with Random Traffic</functionlabel>
+                    <functionlabel num="22" lockable="True">Pneumatic Road Drill</functionlabel>
+                    <functionlabel num="23" lockable="False">Single Miaow</functionlabel>
+                    <functionlabel num="24" lockable="false">Dog Barks</functionlabel>
+                    <functionlabel num="25" lockable="False">Single Cock Crow</functionlabel>
+                    <functionlabel num="26" lockable="False">Signalman Switches One Point</functionlabel>
+                    <functionlabel num="27" lockable="False">Signalman using Communications System</functionlabel>
+                    <functionlabel num="28" lockable="False">Semaphore Signal Sound</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Vent Van 2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="3">
+                <versionCV lowVersionID="3" highVersionID="120"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="True">Large busy main railway station ambient sounds </functionlabel>
+                    <functionlabel num="1" lockable="False">Electric train arriving</functionlabel>
+                    <functionlabel num="2" lockable="True">Electric train Passing</functionlabel>
+                    <functionlabel num="3" lockable="false">Electric train departs</functionlabel>
+                    <functionlabel num="4" lockable="True">Steam loco taking on coal from tower/chute</functionlabel>
+                    <functionlabel num="5" lockable="True">Steam loco taking on water from water tower</functionlabel>
+                    <functionlabel num="6" lockable="True">Passing flats wagons</functionlabel>
+                    <functionlabel num="7" lockable="True">Level crossing warning</functionlabel>
+                    <functionlabel num="8" lockable="False">Signalman set multiple points</functionlabel>
+                    <functionlabel num="9" lockable="True">Diesel double decker (AEC RT) Stop-stop</functionlabel>
+                    <functionlabel num="10" lockable="False">Twin engine propeller plane fly over (DC3)</functionlabel>
+                    <functionlabel num="11" lockable="True">Cattle and sheep Auction</functionlabel>
+                    <functionlabel num="12" lockable="True">Sheep</functionlabel>
+                    <functionlabel num="13" lockable="True">Cattle</functionlabel>
+                    <functionlabel num="14" lockable="True">Old diesel tractor</functionlabel>
+                    <functionlabel num="15" lockable="True">Shepherd with his sheep dog herding sheep</functionlabel>
+                    <functionlabel num="16" lockable="True">Bin Collection (diesel lorry)</functionlabel>
+                    <functionlabel num="17" lockable="True">Milkman with electric float door-door</functionlabel>
+                    <functionlabel num="18" lockable="True">Milkman with horse drawn cart door-door</functionlabel>
+                    <functionlabel num="19" lockable="True">Ice crem van Chimes Greensleeves</functionlabel>
+                    <functionlabel num="20" lockable="True">Church bell full peal Wedding?</functionlabel>
+                    <functionlabel num="21" lockable="True">Speeding car coming and going</functionlabel>
+                    <functionlabel num="22" lockable="False">Car crash!</functionlabel>
+                    <functionlabel num="23" lockable="False">Breaking a glass window</functionlabel>
+                    <functionlabel num="24" lockable="True">Old type burglar alarm bell</functionlabel>
+                    <functionlabel num="25" lockable="True">Moderm burglar alarm </functionlabel>
+                    <functionlabel num="26" lockable="True">Emergency Vehicle Bell 1920-1970</functionlabel>
+                    <functionlabel num="27" lockable="True">Emergency Vehicle Nee-Nah 1970-2000</functionlabel>
+                    <functionlabel num="28" lockable="True">Emergency Vehicle Yelper 2000-present</functionlabel>
+                </functionlabels>
+            </model>
+        </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes"/>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-            <variable CV="7" readOnly="yes" item="Decoder Version">
+            <variable CV="7" item="Decoder Version" readOnly="yes">
                 <decVal/>
                 <label>Decoder Version: </label>
             </variable>
             <variable CV="8" readOnly="yes" item="Manufacturer" default="48">
                 <decVal/>
                 <label>Manufacturer ID: </label>
-			</variable>	
-			<variable CV="158" readOnly="yes" item="Decoder Sound Version" default="0">
+            </variable>
+            <variable CV="158" readOnly="yes" item="Decoder Sound Version" default="0">
                 <decVal/>
                 <label>Decoder sound ID: </label>
-            </variable>	
+            </variable>
             <variable CV="159" readOnly="yes" item="Product Number" default="0">
                 <decVal/>
                 <label>Decoder sound ID: </label>
             </variable>
-		<!-- HORNBY VENT VAN --> 	
-			<variable CV="160" default="4" item="Sound Setting 1" tooltip="F0 Volume" comment="Range 0-8" include="2">
+            <!-- HORNBY VENT VAN -->
+            <variable CV="160" default="4" item="Sound Setting 1" tooltip="F0 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Locomotive Workshop Sounds</label>	
+                <label>Locomotive Workshop Sounds</label>
             </variable>
-			<variable CV="161" default="4" item="Sound Setting 2" tooltip="F1 Volume" comment="Range 0-8" include="2">
+            <variable CV="161" default="4" item="Sound Setting 2" tooltip="F1 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Air Spanner in operation</label>	
+                <label>Air Spanner in operation</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 3" tooltip="F2 Volume" comment="Range 0-8" include="2">
+            <variable CV="162" default="4" item="Sound Setting 3" tooltip="F2 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Grinder in Operation</label>	
+                <label>Grinder in Operation</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 4" tooltip="F3 Volume" comment="Range 0-8" include="2">
+            <variable CV="163" default="4" item="Sound Setting 4" tooltip="F3 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Multiple Hammer Blows</label>	
+                <label>Multiple Hammer Blows</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 5" tooltip="F4 Volume" comment="Range 0-8" include="2">
+            <variable CV="164" default="4" item="Sound Setting 5" tooltip="F4 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Riveting a Boiler 1 Cycle</label>	
+                <label>Riveting a Boiler 1 Cycle</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 6" tooltip="F5 Volume" comment="Range 0-8" include="2">
+            <variable CV="165" default="4" item="Sound Setting 6" tooltip="F5 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>People Walking on concrete</label>	
+                <label>People Walking on concrete</label>
             </variable>
-			<variable CV="166" default="4" item="Sound Setting 7" tooltip="F6 Volume" comment="Range 0-8" include="2">
+            <variable CV="166" default="4" item="Sound Setting 7" tooltip="F6 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Coach Doors Slamming</label>	
+                <label>Coach Doors Slamming</label>
             </variable>
-			<variable CV="167" default="4" item="Sound Setting 8" tooltip="F7 Volume" comment="Range 0-8" include="2">
+            <variable CV="167" default="4" item="Sound Setting 8" tooltip="F7 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Passing Wagons</label>	
+                <label>Passing Wagons</label>
             </variable>
-			<variable CV="168" default="4" item="Sound Setting 9" tooltip="F8 Volume" comment="Range 0-8" include="2">
+            <variable CV="168" default="4" item="Sound Setting 9" tooltip="F8 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Steam Train Arriving, Brakes, Announcements</label>	
+                <label>Steam Train Arriving, Brakes, Announcements</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 10" tooltip="F9 Volume" comment="Range 0-8" include="2">
+            <variable CV="169" default="4" item="Sound Setting 10" tooltip="F9 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Steam Train Departing, Wheel Slip Etc</label>	
+                <label>Steam Train Departing, Wheel Slip Etc</label>
             </variable>
-			<variable CV="170" default="4" item="Sound Setting 11" tooltip="F10 Volume" comment="Range 0-8" include="2">
+            <variable CV="170" default="4" item="Sound Setting 11" tooltip="F10 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Guard Whistle 2 Chirps</label>	
+                <label>Guard Whistle 2 Chirps</label>
             </variable>
-			<variable CV="171" default="4" item="Sound Setting 12" tooltip="F11 Volume" comment="Range 0-8" include="2">
+            <variable CV="171" default="4" item="Sound Setting 12" tooltip="F11 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Miscellaneous Rolling Stock Shunting Snds</label>	
+                <label>Miscellaneous Rolling Stock Shunting Snds</label>
             </variable>
-			<variable CV="172" default="4" item="Sound Setting 13" tooltip="F12 Volume" comment="Range 0-8" include="2">
+            <variable CV="172" default="4" item="Sound Setting 13" tooltip="F12 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Random Wheel Tapping and Walking on Gravel</label>	
+                <label>Random Wheel Tapping and Walking on Gravel</label>
             </variable>
-			<variable CV="173" default="4" item="Sound Setting 14" tooltip="F13 Volume" comment="Range 0-8" include="2">
+            <variable CV="173" default="4" item="Sound Setting 14" tooltip="F13 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Raking out Ash Box</label>	
+                <label>Raking out Ash Box</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 15" tooltip="F14 Volume" comment="Range 0-8" include="2">
+            <variable CV="174" default="4" item="Sound Setting 15" tooltip="F14 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Wagons Shunting Flange Squeal</label>	
+                <label>Wagons Shunting Flange Squeal</label>
             </variable>
-			<variable CV="175" default="4" item="Sound Setting 16" tooltip="F15 Volume" comment="Range 0-8" include="2">
+            <variable CV="175" default="4" item="Sound Setting 16" tooltip="F15 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Wagons Coupling</label>	
+                <label>Wagons Coupling</label>
             </variable>
-			<variable CV="176" default="4" item="Sound Setting 17" tooltip="F16 Volume" comment="Range 0-8" include="2">
+            <variable CV="176" default="4" item="Sound Setting 17" tooltip="F16 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Single Blast Whistle</label>	
+                <label>Single Blast Whistle</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 18" tooltip="F17 Volume" comment="Range 0-8" include="2">
+            <variable CV="177" default="4" item="Sound Setting 18" tooltip="F17 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Waggons Clanging</label>	
+                <label>Waggons Clanging</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 19" tooltip="F18 Volume" comment="Range 0-8" include="2">
+            <variable CV="178" default="4" item="Sound Setting 19" tooltip="F18 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>General Stable Sounds</label>	
+                <label>General Stable Sounds</label>
             </variable>
-			<variable CV="179" default="4" item="Sound Setting 20" tooltip="F19 Volume" comment="Range 0-8" include="2">
+            <variable CV="179" default="4" item="Sound Setting 20" tooltip="F19 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Birds at Dawn</label>	
+                <label>Birds at Dawn</label>
             </variable>
-			<variable CV="180" default="4" item="Sound Setting 21" tooltip="F20 Volume" comment="Range 0-8" include="2">
+            <variable CV="180" default="4" item="Sound Setting 21" tooltip="F20 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Occasional Owl</label>	
+                <label>Occasional Owl</label>
             </variable>
-			<variable CV="181" default="4" item="Sound Setting 22" tooltip="F21 Volume" comment="Range 0-8" include="2">
+            <variable CV="181" default="4" item="Sound Setting 22" tooltip="F21 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Crowd Sounds with Random Traffic </label>	
+                <label>Crowd Sounds with Random Traffic </label>
             </variable>
-			<variable CV="182" default="4" item="Sound Setting 23" tooltip="F22 Volume" comment="Range 0-8" include="2">
+            <variable CV="182" default="4" item="Sound Setting 23" tooltip="F22 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Pneumatic Road drill</label>	
+                <label>Pneumatic Road drill</label>
             </variable>
-			<variable CV="183" default="4" item="Sound Setting 24" tooltip="F23 Volume" comment="Range 0-8" include="2">
+            <variable CV="183" default="4" item="Sound Setting 24" tooltip="F23 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Single Miaow</label>	
+                <label>Single Miaow</label>
             </variable>
-			<variable CV="184" default="4" item="Sound Setting 25" tooltip="F24 Volume" comment="Range 0-8" include="2">
+            <variable CV="184" default="4" item="Sound Setting 25" tooltip="F24 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Dog Barks</label>	
+                <label>Dog Barks</label>
             </variable>
-			<variable CV="185" default="4" item="Sound Setting 26" tooltip="F25 Volume" comment="Range 0-8" include="2">
+            <variable CV="185" default="4" item="Sound Setting 26" tooltip="F25 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Single Cock Crow</label>	
+                <label>Single Cock Crow</label>
             </variable>
-			<variable CV="186" default="4" item="Sound Setting 27" tooltip="F26 Volume" comment="Range 0-8" include="2">
+            <variable CV="186" default="4" item="Sound Setting 27" tooltip="F26 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Signalman Switches One Point</label>	
+                <label>Signalman Switches One Point</label>
             </variable>
-			<variable CV="187" default="4" item="Sound Setting 28" tooltip="F27 Volume" comment="Range 0-8" include="2">
+            <variable CV="187" default="4" item="Sound Setting 28" tooltip="F27 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Signalman Using Communications System</label>	
+                <label>Signalman Using Communications System</label>
             </variable>
-			<variable CV="188" default="4" item="Sound Setting 29" tooltip="F28 Volume" comment="Range 0-8" include="2">
+            <variable CV="188" default="4" item="Sound Setting 29" tooltip="F28 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Semaphore Signal Sound</label>	
+                <label>Semaphore Signal Sound</label>
             </variable>
-			<variable CV="189" default="4" item="Sound Setting 32" tooltip="F29 Volume" comment="Range 0-8" include="2">
+            <variable CV="189" default="4" item="Sound Setting 32" tooltip="F29 Volume" comment="Range 0-8" include="2">
                 <decVal max="8"/>
-                <label>Telephone Ring = System Channel Occupancy Warning</label>	
+                <label>Telephone Ring = System Channel Occupancy Warning</label>
             </variable>
-			<variable CV="190" default="4" item="Sound Setting 31" tooltip="Overall vol (write only)" comment="Range 0-8" include="2">
+            <!-- HORNBY VENT VAN 2 -->
+            <variable CV="160" default="4" item="Sound Setting 1" tooltip="F0 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>large Busy Main railway station ambient sounds </label>
+            </variable>
+            <variable CV="161" default="4" item="Sound Setting 2" tooltip="F1 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Electric train arrives</label>
+            </variable>
+            <variable CV="162" default="4" item="Sound Setting 3" tooltip="F2 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Electric train passing</label>
+            </variable>
+            <variable CV="163" default="4" item="Sound Setting 4" tooltip="F3 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Electric Train Departs</label>
+            </variable>
+            <variable CV="164" default="4" item="Sound Setting 5" tooltip="F4 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Steam locomotiv taking on coal from tower/chute</label>
+            </variable>
+            <variable CV="165" default="4" item="Sound Setting 6" tooltip="F5 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Steam locomotive taking on water from water tower</label>
+            </variable>
+            <variable CV="166" default="4" item="Sound Setting 7" tooltip="F6 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Passing flat wagons</label>
+            </variable>
+            <variable CV="167" default="4" item="Sound Setting 8" tooltip="F7 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Level Crossing Warning</label>
+            </variable>
+            <variable CV="168" default="4" item="Sound Setting 9" tooltip="F8 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Signalman sets multiple points</label>
+            </variable>
+            <variable CV="169" default="4" item="Sound Setting 10" tooltip="F9 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Diesel double decker bus (AEC RT) - stop to stop</label>
+            </variable>
+            <variable CV="170" default="4" item="Sound Setting 11" tooltip="F10 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Twin engine propeller palne fly over (DC3) </label>
+            </variable>
+            <variable CV="171" default="4" item="Sound Setting 12" tooltip="F11 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Cattle and Sheep Auction</label>
+            </variable>
+            <variable CV="172" default="4" item="Sound Setting 13" tooltip="F12 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Sheep</label>
+            </variable>
+            <variable CV="173" default="4" item="Sound Setting 14" tooltip="F13 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Cattle</label>
+            </variable>
+            <variable CV="174" default="4" item="Sound Setting 15" tooltip="F14 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Old Diesel Tractor</label>
+            </variable>
+            <variable CV="175" default="4" item="Sound Setting 16" tooltip="F15 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Sherperd and sheep dog herding sheep</label>
+            </variable>
+            <variable CV="176" default="4" item="Sound Setting 17" tooltip="F16 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Bin Collection (diesel lorry) </label>
+            </variable>
+            <variable CV="177" default="4" item="Sound Setting 18" tooltip="F17 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Milkman with electric float - door to door</label>
+            </variable>
+            <variable CV="178" default="4" item="Sound Setting 19" tooltip="F18 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>milkman horse drawn cart - door to door</label>
+            </variable>
+            <variable CV="179" default="4" item="Sound Setting 20" tooltip="F19 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>ice cream van(chimes Greensleeves)</label>
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 21" tooltip="F20 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Church bell (full peal)</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 22" tooltip="F21 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Speeding car coming and going </label>
+            </variable>
+            <variable CV="182" default="4" item="Sound Setting 23" tooltip="F22 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Car Crash!</label>
+            </variable>
+            <variable CV="183" default="4" item="Sound Setting 24" tooltip="F23 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Glass window breaking</label>
+            </variable>
+            <variable CV="184" default="4" item="Sound Setting 25" tooltip="F24 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>old type burgular alarm bell</label>
+            </variable>
+            <variable CV="185" default="4" item="Sound Setting 26" tooltip="F25 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Moderm Burgular alarm</label>
+            </variable>
+            <variable CV="186" default="4" item="Sound Setting 27" tooltip="F26 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Emergency vehicle bell (1920-1970)</label>
+            </variable>
+            <variable CV="187" default="4" item="Sound Setting 28" tooltip="F27 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Emergency vehicle Nee Nah (1970-2000)</label>
+            </variable>
+            <variable CV="188" default="4" item="Sound Setting 29" tooltip="F28 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Emergency vehicle yelper (2000 - present)</label>
+            </variable>
+            <variable CV="189" default="4" item="Sound Setting 32" tooltip="F29 Volume" comment="Range 0-8" include="3">
+                <decVal max="8"/>
+                <label>Telephone Ring = System Channel Occupancy Warning</label>
+            </variable>
+            <variable CV="190" default="4" item="Sound Setting 31" tooltip="Overall vol (write only)" comment="Range 0-8" include="2,3">
                 <decVal max="8"/>
                 <label>Quick Set Volume level</label>
             </variable>
-      </variables>
+        </variables>
         <resets>
             <factReset label="Reset All CVs" CV="8" default="8">
-			</factReset>
-			<factReset label="Reset sound levels only" CV="8" default="5">
-			</factReset>
+            </factReset>
+            <factReset label="Reset sound levels only" CV="8" default="5">
+            </factReset>
         </resets>
     </decoder>
 </decoder-config>

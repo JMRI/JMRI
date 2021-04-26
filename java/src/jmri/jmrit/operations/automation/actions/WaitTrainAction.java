@@ -52,7 +52,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
                     && (boolean) evt.getNewValue() == true)) {
                 Train train = getAutomationItem().getTrain();
                 RouteLocation rl = getAutomationItem().getRouteLocation();
-                if (rl != null && rl != train.getCurrentLocation()) {
+                if (rl != null && rl != train.getCurrentRouteLocation()) {
                     return; // haven't reached this location continue waiting
                 }
                 train.removePropertyChangeListener(this);

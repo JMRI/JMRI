@@ -1,19 +1,19 @@
 package jmri.jmrit.consisttool;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ConsistToolAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConsistToolActionTest {
 
@@ -31,11 +31,11 @@ public class ConsistToolActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

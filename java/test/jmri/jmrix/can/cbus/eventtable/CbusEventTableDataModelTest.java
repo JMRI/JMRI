@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.eventtable;
 
+import java.io.File;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -10,12 +12,10 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -134,7 +134,7 @@ public class CbusEventTableDataModelTest {
         m.setElement(0, 0x90); 
         m.setElement(1, 0x01);
         t.message(m);
-        Assert.assertTrue(t.getRowCount()==2);        
+        Assert.assertTrue(t.getRowCount()==2);
 
         m.setElement(1, 0x02);
         t.message(m);
@@ -146,13 +146,13 @@ public class CbusEventTableDataModelTest {
         Assert.assertEquals("editable",true,t.isCellEditable(0,CbusEventTableDataModel.COMMENT_COLUMN));
         
         
-        t.removeRow(0);
+        t.ta.removeRow(0);
         Assert.assertTrue(t.getRowCount()==2); 
         
-        t.removeRow(1);
+        t.ta.removeRow(1);
         Assert.assertTrue(t.getRowCount()==1);         
 
-        t.removeRow(0);
+        t.ta.removeRow(0);
         Assert.assertTrue(t.getRowCount()==0); 
         
         
@@ -189,7 +189,6 @@ public class CbusEventTableDataModelTest {
         Assert.assertTrue(t.getColumnName(CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN).contains("Last"));
         Assert.assertTrue(t.getColumnName(CbusEventTableDataModel.STLR_ON_COLUMN).contains("On"));
         Assert.assertTrue(t.getColumnName(CbusEventTableDataModel.STLR_OFF_COLUMN).contains("Off"));
-        Assert.assertTrue(t.getColumnName(999).contains("unknown"));
 
         t.skipSaveOnDispose();
         t.dispose();
@@ -201,29 +200,11 @@ public class CbusEventTableDataModelTest {
         
         CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
         
-        Assert.assertTrue( t.getColumnCount()== 25 );
+        Assert.assertEquals("column count", 28, t.getColumnCount() );
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusEventTableDataModel.getPreferredWidth(i) > 0 );
-            Assert.assertTrue("column has a print width", CbusEventTableDataModel.getColumnWidth(i) > -1 );
-            
         }
-        
-        Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown") );
-        Assert.assertTrue("column has NO width", CbusEventTableDataModel.getPreferredWidth(999) > 0 );
-        
-        Assert.assertTrue("column class integer",
-            t.getColumnClass(CbusEventTableDataModel.SESSION_IN_COLUMN) ==  Integer.class );
-        Assert.assertTrue("column class string",
-            t.getColumnClass(CbusEventTableDataModel.COMMENT_COLUMN) ==  String.class );
-        Assert.assertTrue("column class JButton",
-            t.getColumnClass(CbusEventTableDataModel.OFF_BUTTON_COLUMN) ==  javax.swing.JButton.class );
-        Assert.assertTrue("column class date",
-            t.getColumnClass(CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN) ==  java.util.Date.class );
-        Assert.assertTrue("column class state enum",
-            t.getColumnClass(CbusEventTableDataModel.STATE_COLUMN) ==  Enum.class );
-        Assert.assertTrue("column class null", t.getColumnClass(999) ==  null );
         
         t.skipSaveOnDispose();
         t.dispose();
@@ -262,8 +243,8 @@ public class CbusEventTableDataModelTest {
         Assert.assertFalse("DELETE_BUTTON_COLUMN",t.getValueAt(0,CbusEventTableDataModel.DELETE_BUTTON_COLUMN) == null );
         Assert.assertEquals("SESSION_OFF_COLUMN 2", 2 ,(int) t.getValueAt(0,CbusEventTableDataModel.SESSION_OFF_COLUMN));
         Assert.assertFalse("LATEST_TIMESTAMP_COLUMN",t.getValueAt(0,CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN) == null );
-        Assert.assertEquals("STLR_ON_COLUMN empty", "" ,t.getValueAt(0,CbusEventTableDataModel.STLR_ON_COLUMN));
-        Assert.assertEquals("STLR_OFF_COLUMN empty", "" ,t.getValueAt(0,CbusEventTableDataModel.STLR_OFF_COLUMN));
+        Assert.assertEquals("STLR_ON_COLUMN empty", "" ,t.getValueAt(0,CbusEventTableDataModel.STLR_ON_COLUMN).toString());
+        Assert.assertEquals("STLR_OFF_COLUMN empty", "" ,t.getValueAt(0,CbusEventTableDataModel.STLR_OFF_COLUMN).toString());
         Assert.assertNull("default column",t.getValueAt(0,999));
         Assert.assertTrue("empty event name not on table string",t.getEventName(0,2).isEmpty() );
         Assert.assertTrue("empty event name on table string",t.getEventName(0,2003).isEmpty() );
@@ -321,7 +302,10 @@ public class CbusEventTableDataModelTest {
         
         
         // create new event with no initial on / off status
-        t.addEvent(65432,12345,77,CbusTableEvent.EvState.UNKNOWN ,"The Doctor","Doctor Event Comment",0,0,0,0);
+        CbusTableEvent ev = t.provideEvent(65432,12345);
+        ev.setName("The Doctor");
+        ev.setComment("Doctor Event Comment");
+        
         Assert.assertTrue("row created",t.getRowCount()==2);
         Assert.assertTrue(( (String) t.getValueAt(1,CbusEventTableDataModel.TOGGLE_BUTTON_COLUMN) ).contains("Off"));
         Assert.assertFalse(( (String) t.getValueAt(1,CbusEventTableDataModel.TOGGLE_BUTTON_COLUMN) ).contains("On"));
@@ -358,18 +342,12 @@ public class CbusEventTableDataModelTest {
         Assert.assertEquals("table sends short request 2003 ", "[5f8] 9A 00 00 07 D3",
             tcisl.outbound.elementAt(tcisl.outbound.size() - 1).toString());
         
-        t.setValueAt("on on text",0,CbusEventTableDataModel.STLR_ON_COLUMN);
-        Assert.assertEquals("set STLR_ON_COLUMN", "on on text" ,t.getValueAt(0,CbusEventTableDataModel.STLR_ON_COLUMN));
-        
-        t.setValueAt("off off text",0,CbusEventTableDataModel.STLR_OFF_COLUMN);
-        Assert.assertEquals("set STLR_OFF_COLUMN", "off off text" ,t.getValueAt(0,CbusEventTableDataModel.STLR_OFF_COLUMN));
-        
-        
         // disable confirm popup, that's tested in the table action class
         t.ta.sessionConfirmDeleteRow = false;
         
         t.setValueAt("do button Click",0,CbusEventTableDataModel.DELETE_BUTTON_COLUMN);
-        Assert.assertTrue("row deleted 0",t.getRowCount()==1);
+        
+        JUnitUtil.waitFor(()->{ return(t.getRowCount()==1); }, "setvalueat DELETE_BUTTON_COLUMN did not delete");
         
         // row 1 is now row 0
         Assert.assertEquals("row 0 Event number 12345", 12345 , (int) t.getValueAt(0,CbusEventTableDataModel.EVENT_COLUMN));
@@ -408,24 +386,20 @@ public class CbusEventTableDataModelTest {
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
-    
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-    
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws java.io.IOException {
+
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         
         jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         tcis.terminateThreads();

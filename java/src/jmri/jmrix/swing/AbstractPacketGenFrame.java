@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 /**
  * Frame for user input of XpressNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
+ * @author Bob Jacobsen Copyright (C) 2001,2002
  */
 public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 
@@ -46,11 +46,14 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         packetTextField.setMaximumRowCount(5); // set the maximum number of items in the history.
         packetTextField.setEditable(true);
         packetPane.add(packetTextField);
-
+  
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         getContentPane().add(packetPane);
         getContentPane().add(sendButton);
         getContentPane().add(Box.createVerticalGlue());
+        
+        //set the Send Button as default for Enter press
+        this.getRootPane().setDefaultButton(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             @Override

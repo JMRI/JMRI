@@ -5,7 +5,7 @@ import java.text.MessageFormat;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -29,8 +29,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("New Load");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        // new load should appear at start of list
-        Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(0));
+        Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(2));
 
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertTrue("exists", cl.containsName("Boxcar", "New Load"));

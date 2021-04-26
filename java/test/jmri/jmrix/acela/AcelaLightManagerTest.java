@@ -2,17 +2,16 @@ package jmri.jmrix.acela;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.acela.AcelaLightManager class.
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -35,16 +34,16 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
         Light tl = l.newLight("AL21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + tl);
+            log.debug("received light value {}", tl);
         }
         Assert.assertTrue(null != (AcelaLight) tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("AL21"));
+            log.debug("by system name: {}", l.getBySystemName("AL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("AL21"));
@@ -52,8 +51,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -74,7 +72,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
         a4.initNode();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

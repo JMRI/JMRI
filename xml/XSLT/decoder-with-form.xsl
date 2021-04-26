@@ -22,7 +22,7 @@
      In batch work via running Ant, this is defined
      via the build.xml file
 -->
-<xsl:param name="JmriCopyrightYear" select="1997-2020" />
+<xsl:param name="JmriCopyrightYear" select="1997-2021" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -412,9 +412,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-<p/>Site hosted by: <br/>
-      <a href="http://www.tagadab.com/">
-          <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
   </body>
 </html>
 

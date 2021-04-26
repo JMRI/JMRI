@@ -138,6 +138,8 @@
 <!ATTLIST buildOptions aggressive					(true | false ) "false">
 <!ATTLIST buildOptions numberPasses					CDATA #IMPLIED>
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
+<!ATTLIST buildOptions allowLocalSpur				(true | false ) "false">
+<!-- next 1 for backward compatibility -->
 <!ATTLIST buildOptions allowLocalSiding				(true | false ) "false">
 <!ATTLIST buildOptions allowLocalYard				(true | false ) "false">   
 <!ATTLIST buildOptions stagingRestrictionEnabled	(true | false ) "true"> 
@@ -147,6 +149,7 @@
 <!ATTLIST buildOptions promptToStagingEnabled		(true | false ) "false">
 <!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">  
 <!ATTLIST buildOptions generateCsvSwitchList		(true | false ) "false">  
+<!ATTLIST buildOptions stagingTryNormal				(true | false ) "true">
    
 <!ATTLIST buildReport level				CDATA #IMPLIED>    
 <!ATTLIST buildReport useEditor			(true | false ) "false">   
@@ -226,7 +229,7 @@
 
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
-| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight)*>
+| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type)*>
 
 <!ELEMENT road EMPTY>
 <!ELEMENT number EMPTY>
@@ -248,6 +251,7 @@
 <!ELEMENT pickUp_msg EMPTY>
 <!ELEMENT hazardous EMPTY>
 <!ELEMENT weight EMPTY>
+<!ELEMENT load_type EMPTY>
 
 <!ATTLIST road text				CDATA #IMPLIED>
 <!ATTLIST number text			CDATA #IMPLIED>
@@ -270,6 +274,7 @@
 <!ATTLIST pickUp_msg text		CDATA #IMPLIED>
 <!ATTLIST hazardous text		CDATA #IMPLIED>
 <!ATTLIST weight text			CDATA #IMPLIED>
+<!ATTLIST load_type text		CDATA #IMPLIED>
 
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
 | workDepartureTime | workArrivalTime | noScheduledWork | noScheduledWorkRouteComment | departTime 

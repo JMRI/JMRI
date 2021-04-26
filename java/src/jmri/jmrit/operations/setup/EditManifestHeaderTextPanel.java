@@ -258,7 +258,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
             drop_comment_TextField.setText(Bundle.getMessage("SetOut_Msg"));
             pickup_comment_TextField.setText(Bundle.getMessage("PickUp_Msg"));
             kernel_TextField.setText(Bundle.getMessage("Kernel"));
-            rwe_TextField.setText(Bundle.getMessage("RWE"));
+            rwe_TextField.setText(Bundle.getMessage("RWELabel"));
             // engine attributes
             model_TextField.setText(Bundle.getMessage("Model"));
             consist_TextField.setText(Bundle.getMessage("Consist"));
@@ -319,29 +319,29 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return (!TrainManifestHeaderText.getStringHeader_Road().equals(road_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Number().equals(number_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_EngineNumber().equals(engineNumber_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Type().equals(type_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Length().equals(length_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Weight().equals(weight_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Owner().equals(owner_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Track().equals(track_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Location().equals(location_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Destination().equals(destination_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Dest_Track().equals(dest_track_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Comment().equals(comment_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Load().equals(load_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Load_Type().equals(load_type_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Hazardous().equals(hazardous_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Color().equals(color_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Final_Dest().equals(final_dest_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Final_Dest_Track().equals(final_dest_track_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Drop_Comment().equals(drop_comment_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Pickup_Comment().equals(pickup_comment_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Kernel().equals(kernel_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_RWE().equals(rwe_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Model().equals(model_TextField.getText())
-                || !TrainManifestHeaderText.getStringHeader_Consist().equals(consist_TextField.getText()));
+        return !(TrainManifestHeaderText.getStringHeader_Road().equals(road_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Number().equals(number_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_EngineNumber().equals(engineNumber_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Type().equals(type_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Length().equals(length_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Weight().equals(weight_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Owner().equals(owner_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Track().equals(track_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Location().equals(location_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Destination().equals(destination_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Dest_Track().equals(dest_track_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Comment().equals(comment_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Load().equals(load_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Load_Type().equals(load_type_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Hazardous().equals(hazardous_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Color().equals(color_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Final_Dest().equals(final_dest_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Final_Dest_Track().equals(final_dest_track_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Drop_Comment().equals(drop_comment_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Pickup_Comment().equals(pickup_comment_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Kernel().equals(kernel_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_RWE().equals(rwe_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Model().equals(model_TextField.getText())
+                && TrainManifestHeaderText.getStringHeader_Consist().equals(consist_TextField.getText()));
     }
 }

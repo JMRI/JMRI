@@ -12,10 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.FileUtil class.
@@ -326,7 +325,7 @@ public class FileUtilTest {
         Assert.assertNull(FileUtil.findExternalFilename(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -344,7 +343,7 @@ public class FileUtilTest {
         }, "Create program test file");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         this.programTestFile.delete();
         JUnitUtil.waitFor(() -> {

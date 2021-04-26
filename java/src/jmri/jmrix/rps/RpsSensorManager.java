@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System names are "RSpppp", where ppp is a CSV representation of the region.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2019
+ * @author Bob Jacobsen Copyright (C) 2007, 2019
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
@@ -29,12 +29,6 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         return (RpsSystemConnectionMemo) memo;
     }
 
-    // to free resources when no longer used
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
     /**
      * {@inheritDoc}
      * <p>
@@ -46,7 +40,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         try {
            RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);

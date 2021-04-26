@@ -2,6 +2,11 @@ package jmri.jmrit.operations.locations;
 
 import java.io.File;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -9,9 +14,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations/Xml class Last manually cross-checked on
@@ -43,7 +45,7 @@ public class XmlTest extends OperationsTestCase {
         Location l3 = manager.newLocation("Test Location 3");
 
         Track t1 = l1.addTrack("A Yard", Track.YARD);
-        Track t2 = l1.addTrack("A Siding", Track.SPUR);
+        Track t2 = l1.addTrack("A Spur", Track.SPUR);
         Track t3 = l2.addTrack("An Interchange", Track.INTERCHANGE);
         Track t4 = l3.addTrack("A Stage", Track.STAGING);
 
@@ -119,7 +121,6 @@ public class XmlTest extends OperationsTestCase {
                 .getName());
 
         manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
-        manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
         manager.getLocationByName("Test Location 1").setSwitchListEnabled(true);
         manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST);
         manager.getLocationByName("Test Location 1").addTypeName("Baggage");
@@ -129,7 +130,6 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 1").addTypeName("Engine");
         manager.getLocationByName("Test Location 1").addTypeName("Hopper");
         manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
-        manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
         manager.getLocationByName("Test Location 2").setSwitchListEnabled(false);
         manager.getLocationByName("Test Location 2").setTrainDirections(Location.WEST);
         manager.getLocationByName("Test Location 2").addTypeName("Baggage");
@@ -140,7 +140,6 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 2").addTypeName("Hopper");
         manager.getLocationByName("Test Location 2").addTypeName("Track 2 Type");
         manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-        manager.getLocationByName("Test Location 3").setLocationOps(Location.STAGING);
         manager.getLocationByName("Test Location 3").setSwitchListEnabled(true);
         manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST + Location.WEST + Location.NORTH);
         manager.getLocationByName("Test Location 3").addTypeName("Baggage");
@@ -232,25 +231,24 @@ public class XmlTest extends OperationsTestCase {
 
             if (i == 0) {
                 Assert.assertEquals("New Location by Name List 1", "Test Location 1", loc.getName());
-                Assert.assertEquals("Location 1 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 1 direction", Location.EAST, loc.getTrainDirections());
                 Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getComment());
                 Assert.assertEquals("Location 1 switchList", true, loc.isSwitchListEnabled());
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("Boxcar"));
-                List<Track> list = loc.getTrackByNameList(null);
+                List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 1 has n tracks", 1, list.size());
                 Track t = list.get(0);
                 Assert.assertEquals("Location 1 first track name", "An Interchange", t.getName());
                 Assert.assertEquals("Location 1 track road option", Track.EXCLUDE_ROADS, t.getRoadOption());
-                Assert.assertEquals("Location 1 track road", true, t.acceptsRoadName("Track 1 Road"));
-                Assert.assertEquals("Location 1 track road", false, t.acceptsRoadName("Track 3 Road"));
+                Assert.assertEquals("Location 1 track road", true, t.isRoadNameAccepted("Track 1 Road"));
+                Assert.assertEquals("Location 1 track road", false, t.isRoadNameAccepted("Track 3 Road"));
                 Assert.assertNull("Location 1 track pool", t.getPool());
             }
             if (i == 1) {
                 Assert.assertEquals("New Location by Name List 2", "Test Location 2", loc.getName());
-                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
+//                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 2 direction", Location.WEST, loc.getTrainDirections());
                 Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getComment());
                 Assert.assertEquals("Location 2 switchList", false, loc.isSwitchListEnabled());
@@ -258,15 +256,15 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
 
-                List<Track> list = loc.getTrackByNameList(null);
+                List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 2 has n tracks", 2, list.size());
                 Track t = list.get(0);
-                Assert.assertEquals("Location 2 first track name", "A Siding", t.getName());
+                Assert.assertEquals("Location 2 first track name", "A Spur", t.getName());
                 Assert.assertEquals("Location 2 track 1 road option", Track.ALL_ROADS, t.getRoadOption());
-                Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
-                Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
-                Assert.assertEquals("Location 2 track 1 type", true, t.acceptsTypeName("Track 2 Type"));
-                Assert.assertEquals("Location 2 track 1 type", false, t.acceptsTypeName("Track 4 Type"));
+                Assert.assertEquals("Location 2 track 1 road", true, t.isRoadNameAccepted("Track 1 Road"));
+                Assert.assertEquals("Location 2 track 1 road", true, t.isRoadNameAccepted("Track 3 Road"));
+                Assert.assertEquals("Location 2 track 1 type", true, t.isTypeNameAccepted("Track 2 Type"));
+                Assert.assertEquals("Location 2 track 1 type", false, t.isTypeNameAccepted("Track 4 Type"));
                 Assert.assertNotNull("Location 2 track 1 pool exists", t.getPool());
                 Assert.assertEquals("Location 2 track 1 pool name", "Test Pool", t.getPool().getName());
                 Assert.assertEquals("Location 2 track 1 pool name", "Test Pool", t.getPoolName());
@@ -284,17 +282,17 @@ public class XmlTest extends OperationsTestCase {
                 t = list.get(1);
                 Assert.assertEquals("Location 2 2nd track name", "A Yard", t.getName());
                 Assert.assertEquals("Location 2 track 2 road option", Track.INCLUDE_ROADS, t.getRoadOption());
-                Assert.assertEquals("Location 2 track 2 road", true, t.acceptsRoadName("Track 1 Road"));
-                Assert.assertEquals("Location 2 track 2 road", false, t.acceptsRoadName("Track 3 Road"));
-                Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 2 Type"));
-                Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 4 Type"));
+                Assert.assertEquals("Location 2 track 2 road", true, t.isRoadNameAccepted("Track 1 Road"));
+                Assert.assertEquals("Location 2 track 2 road", false, t.isRoadNameAccepted("Track 3 Road"));
+                Assert.assertEquals("Location 2 track 2 type", false, t.isTypeNameAccepted("Track 2 Type"));
+                Assert.assertEquals("Location 2 track 2 type", false, t.isTypeNameAccepted("Track 4 Type"));
                 Assert.assertNotNull("Location 2 track 2 pool exists", t.getPool());
                 Assert.assertEquals("Location 2 track 2 pool name", "Test Pool", t.getPool().getName());
                 Assert.assertEquals("Location 2 track 2 min track length", 321, t.getMinimumLength());
             }
             if (i == 2) {
                 Assert.assertEquals("New Location by Name List 3", "Test Location 3", loc.getName());
-                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
+//                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
                 Assert.assertEquals("Location 3 direction", Location.EAST + Location.WEST + Location.NORTH, loc
                         .getTrainDirections());
                 Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getComment());
@@ -303,15 +301,15 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("Boxcar"));
 
-                List<Track> list = loc.getTrackByNameList(null);
+                List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 3 has n tracks", 1, list.size());
                 Track t = list.get(0);
                 Assert.assertEquals("Location 3 first track name", "A Stage", t.getName());
                 Assert.assertEquals("Location 3 track 1 road option", Track.ALL_ROADS, t.getRoadOption());
-                Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
-                Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
-                Assert.assertEquals("Location 3 track type", false, t.acceptsTypeName("Track 2 Type"));
-                Assert.assertEquals("Location 3 track type", true, t.acceptsTypeName("Track 4 Type"));
+                Assert.assertEquals("Location 3 track 1 road", true, t.isRoadNameAccepted("Track 1 Road"));
+                Assert.assertEquals("Location 3 track 1 road", true, t.isRoadNameAccepted("Track 3 Road"));
+                Assert.assertEquals("Location 3 track type", false, t.isTypeNameAccepted("Track 2 Type"));
+                Assert.assertEquals("Location 3 track type", true, t.isTypeNameAccepted("Track 4 Type"));
                 Assert.assertNull("Location 3 track pool", t.getPool());
             }
         }
@@ -339,7 +337,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Item 1 road", "Schedule 1 Item 1 Road", si1.getRoadName());
         Assert.assertEquals("Item 1 count", 321, si1.getCount());
         Assert.assertEquals("Item 1 destination", "Test Location 2", si1.getDestinationName());
-        Assert.assertEquals("Item 1 track", "A Siding", si1.getDestinationTrackName());
+        Assert.assertEquals("Item 1 track", "A Spur", si1.getDestinationTrackName());
 
         ScheduleItem si2 = s1items.get(1);
         Assert.assertEquals("Item 2 type", "boxcar", si2.getTypeName());
@@ -376,7 +374,7 @@ public class XmlTest extends OperationsTestCase {
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");

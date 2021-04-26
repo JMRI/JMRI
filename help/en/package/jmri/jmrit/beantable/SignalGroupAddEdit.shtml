@@ -9,7 +9,7 @@
   <title>JMRI: Adding Signal Groups</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20181104">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

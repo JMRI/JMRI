@@ -21,12 +21,9 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     private int nibble;      /* Is this sensor in the upper or lower 
      nibble for the feedback encoder */
 
-    private int nibblebit;   /* Which bit in the nibble represents this 
-     sensor */
-
     private String systemName;
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     public XNetSensor(String systemName, String userName, XNetTrafficController controller, String prefix) {
         super(systemName, userName);
@@ -42,6 +39,8 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Common initialization for all constructors.
+     * @param id System ID
+     * @param prefix System name prefix
      */
     private void init(String id, String prefix) {
         // store address
@@ -55,22 +54,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
             nibble = 0x00;
         } else {
             nibble = 0x10;
-        }
-        switch (temp % 4) {
-            case 0:
-                nibblebit = 0x01;
-                break;
-            case 1:
-                nibblebit = 0x02;
-                break;
-            case 2:
-                nibblebit = 0x04;
-                break;
-            case 3:
-                nibblebit = 0x08;
-                break;
-            default:
-                nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
             log.debug("Created Sensor {} (Address {},  position {})",
@@ -109,6 +92,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
+     * @param l Reply message
      */
     synchronized void initmessage(XNetReply l) {
         boolean oldState = statusRequested;
@@ -117,68 +101,54 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
-     * implementing classes will typically have a function/listener to get
+     * Implementing classes will typically have a function/listener to get
      * updates from the layout, which will then call public void
      * firePropertyChange(String propertyName, Object oldValue, Object newValue)
      * _once_ if anything has changed state (or set the commanded state
      * directly)
+     * @param l Reply message
      */
     @Override
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("received message: {}", l);
         }
-        if (l.isFeedbackBroadcastMessage()) {
-            int numDataBytes = l.getElement(0) & 0x0f;
-            for (int i = 1; i < numDataBytes; i += 2) {
-                if ((l.getFeedbackMessageType(i) == 2)
-                        && baseaddress == l.getFeedbackEncoderMsgAddr(i)
-                        && nibble == (l.getElement(i + 1) & 0x10)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Message for sensor " + systemName
-                                + " (Address " + baseaddress
-                                + " position " + (address - (baseaddress * 8))
-                                + ")");
-                    }
-                    if (statusRequested && l.isUnsolicited()) {
-                        l.resetUnsolicited();
-                        statusRequested = false;
-                    }
-                    if (((l.getElement(i + 1) & nibblebit) != 0) ^ _inverted) {
-                        setOwnState(Sensor.ACTIVE);
-                    } else {
-                        setOwnState(Sensor.INACTIVE);
-                    }
-                }
+        Boolean opt = l.selectModuleFeedback(address);
+        if (opt != null) {
+            if (log.isDebugEnabled()) {
+                        log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
+            }
+            if (opt ^ _inverted) {
+                setOwnState(Sensor.ACTIVE);
+            } else {
+                setOwnState(Sensor.INACTIVE);
             }
         }
-        return;
     }
 
     /**
      * Listen for the messages to the LI100/LI101.
+     * @param l message to process
      */
     @Override
     public void message(XNetMessage l) {
+        // not currently listening for outgoing messages.
     }
 
     /**
      * Handle a timeout notification.
+     * @param msg The message that timed out
      */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message: {}", msg);
         }
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     /**
      * Package protected routine to get the Sensor Number.
+     * @return current Sensor address number
      */
     int getNumber() {
         return address;
@@ -186,6 +156,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Package protected routine to get the Sensor Base Address.
+     * @return the Sensor base address
      */
     int getBaseAddress() {
         return baseaddress;
@@ -193,6 +164,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Package protected routine to get the Sensor Nibble.
+     * @return contents of sensor nibble
      */
     int getNibble() {
         return nibble;

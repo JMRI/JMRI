@@ -1,11 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
 import jmri.*;
+
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the VSDSound class
@@ -53,13 +52,13 @@ public class VSDSoundTest {
         Assert.assertEquals("xml name", "unitUnderTest", uut.getName());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 

@@ -23,9 +23,10 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file - Mark Waters - 7 Feb 2015-->
+  <!-- v1.1,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX634 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
+      <model model="MX634 version 37+" replacementModel="MX634 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -60,7 +61,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634C version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
+      <model model="MX634C version 37+" replacementModel="MX634C version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -95,7 +96,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
+      <model model="MX634D version 37+" replacementModel="MX634D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -130,7 +131,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634F version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
+      <model model="MX634F version 37+" replacementModel="MX634F version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -165,7 +166,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
+      <model model="MX634R version 37+" replacementModel="MX634R version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -210,7 +211,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 37 -->
-      <variable CV="7" readOnly="yes" default="37">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

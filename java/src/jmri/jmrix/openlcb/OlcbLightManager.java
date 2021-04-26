@@ -34,7 +34,7 @@ public class OlcbLightManager extends AbstractLightManager {
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
-    
+
     @Override
     @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
@@ -73,7 +73,8 @@ public class OlcbLightManager extends AbstractLightManager {
      * @return never null
      */
     @Override
-    protected Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbLight l = new OlcbLight(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         l.setUserName(userName);
@@ -120,20 +121,29 @@ public class OlcbLightManager extends AbstractLightManager {
 
     @Override
     public boolean validSystemNameConfig(@Nonnull String address) throws IllegalArgumentException {
-        String withoutPrefix = address.replace("ML", "");
-        OlcbAddress a = new OlcbAddress(withoutPrefix);
-        OlcbAddress[] v = a.split();
-        switch (v.length) {
-            case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
-                    return false;
-                }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
-            case 2:
-                return true;
-            default:
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+        
+        if (address.startsWith("+") || address.startsWith("-")) {
+            return false;
         }
+        try {
+            OlcbAddress.validateSystemNameFormat(address,java.util.Locale.getDefault(),getSystemNamePrefix());
+        }
+        catch ( jmri.NamedBean.BadSystemNameException ex ){
+            throw new IllegalArgumentException(ex.getMessage());
+        }
+        return true;
+    }
+    
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
+        return name;
     }
     
     /**

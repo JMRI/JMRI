@@ -473,7 +473,7 @@
                 <comment xml:lang="cs">Meze 0-255. 0 v CV2, CV6, CV5 způsobí lineární zrychlení.</comment>
                 <tooltip xml:lang="cs">Nastavení napětí na motoru pro střední rychlostní krok. Meze 0-255.</tooltip>
             </variable>
-            <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="Decoder Version, Read Only">
+            <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="Decoder Version, Read Only">
                 <decVal/>
                 <label>Manufacturer Version No: </label>
                 <label xml:lang="it">Versione Decoder: </label>
@@ -1207,15 +1207,15 @@
                 <decVal/>
                 <label>Dither Frequency</label>
                 <label xml:lang="it">Frequenza oscillazione</label>
-                <label xml:lang="cs">Frekvence pomalé jízdy</label>
+                <label xml:lang="cs">Rozkladová frekvence</label>
                 <tooltip xml:lang="it">Valori da 1 (alto) a 10 (basso)</tooltip>
-                <tooltip xml:lang="cs">Meze od 1 (vyská) do 10 (nízká)</tooltip>
+                <tooltip xml:lang="cs">Meze od 1 (vysoká) do 10 (nízká)</tooltip>
             </variable>
             <variable CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
                 <decVal/>
                 <label>Dither Amplitude</label>
                 <label xml:lang="it">Ampiezza Oscillazione</label>
-                <label xml:lang="cs">Amplituda pomalé jízdy</label>
+                <label xml:lang="cs">Rozkladová amplituda</label>
                 <tooltip xml:lang="it">Valori pratici da 5 (basso) a 50 (alto)</tooltip>
                 <tooltip xml:lang="cs">Praktické meze jsou od 5 (nízká) do 50 (vysoká)</tooltip>
             </variable>

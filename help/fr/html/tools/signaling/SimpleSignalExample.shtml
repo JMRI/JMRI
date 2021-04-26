@@ -42,7 +42,7 @@ S'il vous pla&#238;t voir la
 <a id="example1"></a><h2>Exemple Pr&#233;d&#233;finis</h2>
 
 Un exemple pr&#233;d&#233;finie de SSL est fourni dans l'installation de JMRI ( voir la
-<a href="http://jmri.org/download"> page de t&#233;l&#233;chargement </a> ) pour plus d'informations sur le t&#233;l&#233;chargement.
+<a href="https://jmri.org/download"> page de t&#233;l&#233;chargement </a> ) pour plus d'informations sur le t&#233;l&#233;chargement.
 Pour utiliser cet exemple:
 <ul>
 <li> D&#233;marrez le programme PanelPro, et s&#233;lectionnez "Pr&#233;f&#233;rences..." dans le menu &#201;dition ( depuis le menu PanelPro sur OS X ). 

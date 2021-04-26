@@ -72,6 +72,7 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
      * <p>
      * Provide a default implementation for the MS100, etc, in which this is
      * _always_ true, as we rely on the queueing in the port itself.
+     * @return always true.
      */
     public boolean okToSend() {
         return true;
@@ -84,6 +85,7 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
 
     /**
      * Set config info from the Command Station type enum.
+     * @param value Command Station Type, can be null while switching protocols. 
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {

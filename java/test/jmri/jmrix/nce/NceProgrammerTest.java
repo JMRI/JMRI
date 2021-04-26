@@ -2,13 +2,15 @@ package jmri.jmrix.nce;
 
 import jmri.JmriException;
 import jmri.ProgrammingMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NceProgrammer class
  * <p>
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -16,25 +18,24 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                programmer.getMode());        
+                programmer.getMode());
     }
-    
+
     @Override
     @Test
     public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                ((NceProgrammer)programmer).getBestMode());        
+                ((NceProgrammer) programmer).getBestMode());
     }
 
     @Override
     @Test
     public void testGetCanWriteAddress() {
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
-    }    
-
+    }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // infrastructure objects
@@ -45,12 +46,12 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         programmer = p = null;
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-	    jmri.util.JUnitUtil.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // infrastructure objects
@@ -135,5 +136,4 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerTest.class);
-
 }

@@ -236,7 +236,7 @@ Les r&#233;f&#233;rences crois&#233;es-paquet, par exemple  entre <code>jmri.jmr
 et celles qui existent sont supprim&#233;es.
 <p>
 L'acc&#232;s se fait via une classe groupement locale pour chaque paquet. Une caract&#233;ristique est une
-<code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
+<code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 Il propose deux m&#233;thodes cl&#233;s &#225; utiliser pour acc&#233;der (traduit) &#224; la chaine ressource:<br>
 <code>
 static String <b>getMessage</b>(String&nbsp;key)

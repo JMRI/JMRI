@@ -98,4 +98,5 @@ public class JsonConnection extends JmriConnection {
     public void setVersion(String version) {
         this.version = version;
     }
+
 }

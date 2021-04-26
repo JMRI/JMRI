@@ -641,6 +641,18 @@ public class StringUtil {
         }
         return -1;
     }
+    
+    /**
+     * Increment the last number found in a string.
+     * @param str Initial string to increment.
+     * @param increment number to increment by.
+     * @return null if not possible, else incremented String.
+     */
+    @CheckForNull
+    public static String incrementLastNumberInString(@Nonnull String str, int increment){
+        int num = getLastIntFromString(str);
+        return ( (num == -1) ? null : replaceLast(str,String.valueOf(num),String.valueOf(num+increment)));
+    }
 
     /**
      * Replace the last occurance of string value within a String

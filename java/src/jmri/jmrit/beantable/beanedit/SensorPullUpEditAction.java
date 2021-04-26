@@ -19,19 +19,14 @@ public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorAddEdit";
-    } //IN18N
-
-    @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameSensor");
-    }
+    } // NOI18N
 
     @Override
     public Sensor getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }
 
-    JComboBox<Sensor.PullResistance> sensorPullUpComboBox = new JComboBox<Sensor.PullResistance>(Sensor.PullResistance.values());
+    JComboBox<Sensor.PullResistance> sensorPullUpComboBox = new JComboBox<>(Sensor.PullResistance.values());
 
     @Override
     protected void initPanels() {

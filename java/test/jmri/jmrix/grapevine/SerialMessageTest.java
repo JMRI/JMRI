@@ -1,28 +1,30 @@
 package jmri.jmrix.grapevine;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
  */
 public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private SerialMessage msg = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
-	JUnitUtil.setUp();
+        JUnitUtil.setUp();
         m = msg = new SerialMessage();
     }
 
-    @After
-    public void tearDown(){
+    @AfterEach
+    public void tearDown() {
         m = msg = null;
-	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     public void testBytesToString() {

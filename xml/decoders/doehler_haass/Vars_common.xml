@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -27,6 +27,18 @@
       <personname>
         <firstname>Alain</firstname>
         <surname>Le Marchand</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
       </personname>
     </author>
   </authorgroup>
@@ -75,6 +87,18 @@
       <date>2019-01-03</date>
       <authorinitials>ALM</authorinitials>
       <revremark>CV9 as enum</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable CV50 and CV63 for Sound-Decoder</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
     </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
@@ -898,7 +922,7 @@
     <label xml:lang="ca">Freqüència del motor </label>
   </variable>
   <!-- EMF equivalent for Doehler und Haass -->
-  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders">
+  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020)">
     <enumVal>
       <enumChoice choice="According to CV56" value="0">
         <choice>According to CV56</choice>
@@ -976,7 +1000,7 @@
     <label xml:lang="de">Kennlinie</label>
     <label xml:lang="ca">Tipus de corba de velocitat</label>
   </variable>
-  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders">
+  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020)">
     <decVal min="0" max="250"/>
     <label>Start delay for speed step 1</label>
     <label xml:lang="it">Inizio ritardo velocità step 1</label>

@@ -33,59 +33,20 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_ActualTurnoutPrompt" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton2" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="_mSaveAndClose" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="_mTUL_ActualTurnoutPrompt" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mLabelDlgTULGUIEnable" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="_mTUL_DispatcherInternalSensorLockToggle" min="-2" pref="228" max="-2" attributes="0"/>
-                  <Component id="_mTUL_DispatcherInternalSensorUnlockedIndicator" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="_mTUL_NoDispatcherControlOfSwitch" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="_mTUL_ndcos_WhenLockedSwitchStateIsClosed" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="_mTUL_AdditionalExternalTurnout3" pref="133" max="32767" attributes="0"/>
@@ -105,6 +66,25 @@
                           <Component id="_mTUL_AdditionalExternalTurnout3FeedbackDifferent" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="_mTUL_DispatcherInternalSensorLockToggle" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_DispatcherInternalSensorUnlockedIndicator" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="_mSaveAndClose" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="_mTUL_NoDispatcherControlOfSwitch" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="_mLabelDlgTULClosed" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="_mTUL_ndcos_WhenLockedSwitchStateIsClosed" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="_mTUL_GUI_IconsEnabled" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -118,7 +98,7 @@
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_DispatcherInternalSensorLockToggle" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mTUL_ActualTurnoutPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_ExternalTurnoutFeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -133,7 +113,6 @@
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_AdditionalExternalTurnout2FeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_AdditionalExternalTurnout2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -142,34 +121,35 @@
                   <Component id="_mTUL_AdditionalExternalTurnout3FeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_AdditionalExternalTurnout3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mTUL_DispatcherInternalSensorUnlockedIndicator" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_DispatcherInternalSensorUnlockedIndicator" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mTUL_NoDispatcherControlOfSwitch" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_GUI_IconsEnabled" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mLabelDlgTULGUIEnable" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="_mTUL_NoDispatcherControlOfSwitch" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mLabelDlgTULClosed" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_ndcos_WhenLockedSwitchStateIsClosed" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
-              <Component id="_mSaveAndClose" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="_mSaveAndClose" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -187,12 +167,26 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Bundle.getMessage(&quot;LabelDlgTULSensor&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="_mTUL_DispatcherInternalSensorLockToggle">
+    <Component class="javax.swing.JComboBox" name="_mTUL_DispatcherInternalSensorLockToggle">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JCheckBox" name="_mTUL_ExternalTurnoutFeedbackDifferent">
       <Properties>
@@ -208,55 +202,67 @@
     </Component>
     <Component class="javax.swing.JLabel" name="_mTUL_ActualTurnoutPrompt">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Bundle.getMessage(&quot;LabelDlgTULToName&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="_mTUL_DispatcherInternalSensorUnlockedIndicator">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Bundle.getMessage(&quot;LabelDlgTULInd&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
+    <Component class="javax.swing.JComboBox" name="_mTUL_DispatcherInternalSensorUnlockedIndicator">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
     <Component class="javax.swing.JCheckBox" name="_mTUL_NoDispatcherControlOfSwitch">
       <Properties>
         <Property name="text" type="java.lang.String" value=" "/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;TipDlgTULNoDisp&quot;)" type="code"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mTUL_NoDispatcherControlOfSwitchActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Bundle.getMessage(&quot;LabelDlgTULNoDisp&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="_mTUL_ndcos_WhenLockedSwitchStateIsClosed">
+    <Component class="javax.swing.JCheckBox" name="_mTUL_GUI_IconsEnabled">
       <Properties>
         <Property name="text" type="java.lang.String" value=" "/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;LabelDlgTULClosed&quot;)" type="code"/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;TipDlgTULGUIEnable&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
+    <Component class="javax.swing.JLabel" name="_mLabelDlgTULGUIEnable">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;InfoDlgTULChecked&quot;)" type="code"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;InfoDlgTULConfig&quot;)" type="code"/>
+          <Connection code="Bundle.getMessage(&quot;LabelDlgTULGUIEnable&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -268,16 +274,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;ButtonDlgTULJust&quot;)" type="code"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButton1">
@@ -292,6 +288,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Bundle.getMessage(&quot;InfoDlgTULLock&quot;)" type="code"/>
         </Property>
@@ -310,6 +307,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Bundle.getMessage(&quot;LabelDlgTULToOpt&quot;)" type="code"/>
         </Property>
@@ -336,6 +334,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mTUL_ExternalTurnoutActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -346,6 +347,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mTUL_AdditionalExternalTurnout1ActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -356,6 +360,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mTUL_AdditionalExternalTurnout2ActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -366,9 +373,28 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mTUL_AdditionalExternalTurnout3ActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="_mLabelDlgTULClosed">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;LabelDlgTULClosed&quot;)" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="_mTUL_ndcos_WhenLockedSwitchStateIsClosed">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=" "/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;TipDlgTULClosed&quot;)" type="code"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

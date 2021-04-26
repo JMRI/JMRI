@@ -7,12 +7,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Distributes Readings and the Measurements calculated from them.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Distributor {
 
     /**
      * Request being informed when a new Reading is available.
+     * @param l the reading listener to add.
      */
     public void addReadingListener(ReadingListener l) {
         // add only if not already registered
@@ -23,6 +24,7 @@ public class Distributor {
 
     /**
      * Request to no longer be informed when new Readings arrive.
+     * @param l the reading listener to remove.
      */
     public void removeReadingListener(ReadingListener l) {
         if (readingListeners.contains(l)) {
@@ -32,6 +34,7 @@ public class Distributor {
 
     /**
      * Invoked when a new Reading is created.
+     * @param s the reading.
      */
     @SuppressWarnings("unchecked")
     public void submitReading(Reading s) {
@@ -51,6 +54,7 @@ public class Distributor {
 
     /**
      * Request being informed when a new Measurement is available.
+     * @param l the listener to add.
      */
     public void addMeasurementListener(MeasurementListener l) {
         // add only if not already registered
@@ -61,6 +65,7 @@ public class Distributor {
 
     /**
      * Request to no longer be informed when new Measurements arrive.
+     * @param l the listener to remove.
      */
     public void removeMeasurementListener(MeasurementListener l) {
         if (measurementListeners.contains(l)) {
@@ -70,6 +75,7 @@ public class Distributor {
 
     /**
      * Invoked when a new Measurement is created.
+     * @param s the measurement.
      */
     @SuppressWarnings("unchecked")
     public void submitMeasurement(Measurement s) {

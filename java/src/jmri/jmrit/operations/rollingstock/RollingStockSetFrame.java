@@ -1,20 +1,17 @@
 package jmri.jmrit.operations.rollingstock;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -27,8 +24,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user to place RollingStock on the layout
@@ -85,10 +80,6 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     private static boolean autoDestinationTrackCheckBoxSelected = false;
     private static boolean autoFinalDestTrackCheckBoxSelected = false;
     private static boolean autoTrainCheckBoxSelected = false;
-
-    public RollingStockSetFrame() {
-        super();
-    }
 
     public RollingStockSetFrame(String title) {
         super(title);
@@ -337,7 +328,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
             Train train = rs.getTrain();
             if (train != null) {
                 // determine if train services this rs's type
-                if (!train.acceptsTypeName(rs.getTypeName())) {
+                if (!train.isTypeNameAccepted(rs.getTypeName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServType"), new Object[]{rs.getTypeName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -347,7 +338,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's road
-                if (!train.acceptsRoadName(rs.getRoadName())) {
+                if (!train.isRoadNameAccepted(rs.getRoadName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -357,7 +348,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's built date
-                if (!train.acceptsBuiltDate(rs.getBuilt())) {
+                if (!train.isBuiltDateAccepted(rs.getBuilt())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -367,7 +358,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's owner
-                if (!train.acceptsOwnerName(rs.getOwner())) {
+                if (!train.isOwnerNameAccepted(rs.getOwner())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -410,11 +401,10 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                         boolean foundDes = false;
                         for (RouteLocation rlocation : routeSequence) {
                             if (train.isTrainEnRoute() && !foundTrainLoc) {
-                                if (train.getCurrentLocation() == rlocation) {
-                                    foundTrainLoc = true;
-                                } else {
+                                if (train.getCurrentRouteLocation() != rlocation) {
                                     continue;
                                 }
+                                foundTrainLoc = true;
                             }
                             if (rs.getLocationName().equals(rlocation.getName())) {
                                 rl = rlocation;

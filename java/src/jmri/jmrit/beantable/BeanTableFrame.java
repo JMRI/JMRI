@@ -92,7 +92,7 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
                     dataTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });

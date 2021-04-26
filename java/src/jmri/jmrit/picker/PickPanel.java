@@ -134,8 +134,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("ListSelectionEvent from " + e.getSource().getClass().getName()
-                    + " idx= " + e.getFirstIndex());
+            log.debug("ListSelectionEvent from {} idx= {}", e.getSource().getClass().getName(), e.getFirstIndex());
         }
     }
 

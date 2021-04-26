@@ -92,7 +92,8 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     /**
      * Can provide some mechanism to prompt for user for one last chance to
      * change his/her mind
-     *
+     * @param entry Which roster entry?
+     * @param group In which roster group?
      * @return true if user says to continue
      */
     boolean userOK(String entry, String group) {
@@ -105,11 +106,11 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
 
     public void okPressed() {
         String group = rosterBox.getSelectedRosterGroup();
-        log.info("Selected " + group);
+        log.info("Selected {}", group);
         if (group != null && !group.equals(Roster.ALLENTRIES)) {
             if (rosterBox.getSelectedRosterEntries().length != 0) {
                 RosterEntry re = rosterBox.getSelectedRosterEntries()[0];
-                log.info("Preparing to remove " + re.getId() + " from " + group);
+                log.info("Preparing to remove {} from {}", re.getId(), group);
                 if (userOK(re.getId(), group)) {
                     re.deleteAttribute(Roster.getRosterGroupProperty(group));
                     re.updateFile();

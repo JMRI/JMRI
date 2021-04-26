@@ -3,7 +3,7 @@ package jmri.jmrix.rps;
 /**
  * Basic constants for the RPS package and subpackages.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public interface Constants {
 

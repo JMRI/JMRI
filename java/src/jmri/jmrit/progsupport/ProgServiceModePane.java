@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a JPanel to configure the service mode programmer.
+ * Provide a JPanel to configure the service mode (Global) programmer.
  * <p>
  * The using code should get a configured programmer with getProgrammer. Since
  * there's only one service mode programmer, maybe this isn't critical, but it's
@@ -96,8 +96,10 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     }
 
     /**
+     * Create a new Programmer Service Mode Pane.
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
+     * @param group     mode button group.
      */
     public ProgServiceModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
@@ -108,10 +110,11 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         // create the programmer display combo box
         java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
-            if (pm != null && pm.getGlobalProgrammer() != null) {
+            Programmer progrmr = pm.getGlobalProgrammer();
+            if (progrmr!=null) {
                 v.add(pm);
                 // listen for changes
-                pm.getGlobalProgrammer().addPropertyChangeListener(this);
+                progrmr.addPropertyChangeListener(this);
             }
         }
 

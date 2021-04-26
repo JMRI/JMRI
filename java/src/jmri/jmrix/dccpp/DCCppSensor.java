@@ -5,6 +5,8 @@ import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * Extend jmri.AbstractSensor for DCC++ layouts.
  *
@@ -20,8 +22,10 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private int address; // NOTE: For DCC++ this is the Base Station index #
     //private int baseaddress; /* The result of integer division of the 
     // sensor address by 8 */
-    
+
+    @GuardedBy("this")
     private int pin;
+    @GuardedBy("this")
     private boolean pullup;
 
     //private int nibble;      /* Is this sensor in the upper or lower 
@@ -29,7 +33,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     private String systemName;
 
-    protected DCCppTrafficController tc = null;
+    protected DCCppTrafficController tc;
     
     public DCCppSensor(String systemName, String userName, DCCppTrafficController controller) {
         super(systemName, userName);
@@ -43,8 +47,8 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         init(systemName);
     }
     
-    public boolean getPullup() { return(pullup); }
-    public int getPin() { return(pin); }
+    public synchronized boolean getPullup() { return(pullup); }
+    public synchronized int getPin() { return(pin); }
     public int getIndex() { return(address); }
 
     /**
@@ -54,11 +58,9 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         // store address
         systemName = id;
         //prefix = jmri.InstanceManager.getDefault(jmri.jmrix.dccpp.DCCppSensorManager.class).getSystemPrefix();
-        address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
+        address = Integer.parseInt(id.substring(id.lastIndexOf('S') + 1));
         log.debug("New sensor system name {} address {}", this.getSystemName(), address);
-        if (log.isDebugEnabled()) {
-            log.debug("Created Sensor " + systemName);
-        }
+        log.debug("Created Sensor {}", systemName);
         // Finally, request the current state from the layout.
         //this.requestUpdateFromLayout();
         //tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
@@ -96,6 +98,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
+     * @param l Init message
      */
     synchronized void initmessage(DCCppReply l) {
         boolean oldState = statusRequested;
@@ -113,16 +116,10 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      */
     @Override
     public synchronized void message(DCCppReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
-        }
-
-        if (l.isSensorDefReply()) {
+         if (l.isSensorDefReply()) {
+            log.debug("Sensor Def Reply received: '{}'", l);
             if (l.getSensorDefNumInt() == address) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Def Message for sensor " + systemName
-                              + " (Pin " + address + ")");
-                }
+                log.debug("Def Message for sensor {} (Pin {})", systemName, address);
                 pin = l.getSensorDefPinInt();
                 pullup = l.getSensorDefPullupBool();
                 setOwnState(Sensor.UNKNOWN);
@@ -140,7 +137,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
                 setOwnState(Sensor.UNKNOWN);
             }
         }
-        return;
     }
 
     /**
@@ -156,9 +152,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     @Override

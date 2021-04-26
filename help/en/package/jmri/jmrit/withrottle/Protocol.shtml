@@ -18,9 +18,15 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <style type="text/css">
-  table.data {
+  	table.data, pre.code {
         margin: initial;
-        margin-left: 2em;
+        margin-left: 12px;
+        width: fit-content;
+        padding-right: 1em;
+    }
+    pre.code {
+    	color: darkred;
+    	border: solid 0.5px black;
     }
     .delimiter1 {
         color: red;
@@ -30,6 +36,23 @@
         color: rgb(145, 188, 122);
         font-weight: bold;
     }
+    a.to-top {
+      float: right;
+      font-size: 0.8em;
+      font-variant: small-caps;
+    }
+    h3 { 
+      font-style: italic;
+      background-color: #f0f0f0;
+    }
+    code {
+      font-size: 1.5em;
+      color: darkred;
+    }
+    table.data, table.data th, table.data td {
+ 		border: 0.5px solid black;
+ 		font-size: 90%;
+	}	
   </style>
     <!-- /Style -->
 </head>
@@ -39,12 +62,27 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+	  <a name="top" id="top"></a>
       <h1>JMRI: WiThrottle Protocol</h1>
 
       <p>This page describes the protocol provided by the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
       jmri.jmrit.withrottle</a> package for controlling trains,
       turnouts, and more through JMRI via a TCP/IP socket.</p>
+
+      <p>
+      <a href="#StringParsing">String Parsing</a><br>
+      <a href="#InitialConnection">Initial Connection (Server to Client)</a><br>
+      <a href="#ThrottleChangeNotification">Throttle Change Notification</a><br>
+      <a href="#OtherServertoClientMessages">Other Server to Client Messages</a><br>
+      <a href="#Commands">Commands (Client to Server)</a><br>
+      <a href="#ThrottleCommands">Throttle Commands</a><br>
+      <a href="#ConsistCommands">Consist Commands</a><br>
+      <a href="#TurnoutCommands">Turnout Commands</a><br>
+      <a href="#RouteCommands">Route Commands</a><br>
+      <a href="#UnknownCommands">Unknown Commands</a><br>
+      <a href="#Observations">Observations</a><br>
+      </p>
 
       <p>JMRI uses a fairly simple text-based client-server
       protocol over TCP/IP sockets. Throttles (or other
@@ -72,7 +110,10 @@
       will be added to your JMRI System Console and the session.log file.
       </p>
 
-      <h2>String Parsing</h2>
+	  <a name="StringParsing" id="StringParsing"></a>
+      <h2>String Parsing
+	    <a class="to-top" href="#top">^Top</a>
+	  </h2>
 
       <p>JMRI commands and results are very often arrays of values,
       and sometimes arrays of arrays. The array elements are
@@ -96,7 +137,10 @@ RL2<span class="delimiter1">]\[</span>RGS 41<span class=
       described in sections below for each command and
       response.</p>
 
-      <h2>Initial Connection</h2>
+	  <a name="InitialConnection" id="InitialConnection"></a>
+      <h2>Initial Connection (Server to Client)
+	    <a class="to-top" href="#top">^Top</a>
+	  </h2>
 
       <p>When you first open a socket to JMRI, you may get a
       response that will look something like the following:</p>
@@ -112,10 +156,8 @@ PW12080
 </pre>
 
       <p class="note">Some implementations will not send these initial
-      lines until a command has been sent by the client.  The Digitrax LnWI
-      will send <code>VN2.0</code> in response to an <code>N</code>
-      command, while a more complete block is sent in response to
-      the <code>H</code> command.</p>
+      lines until a command has been sent by the client, typically the N or HU
+      commands identifying the client device.</p>
 
       <p>Each line contains information for part of JMRI, as
       described below, so your application can show things like
@@ -125,7 +167,8 @@ PW12080
 
       <p>The first string, <code>VN2.0</code>, provides the version
       number of the WiThrottle protocol. In this case the version
-      number is 2.0.</p>
+      number is 2.0. Clients use this to determine WiThrottle syntax. EngineDriver
+      now requires at least 2.0 to connect.</p>
 
       <h3>Roster List</h3>
 
@@ -180,7 +223,7 @@ RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 
       <h3>Track Power</h3>
 
-      <p>Returns information about the curent state of track power.
+      <p>Returns information about the current state of track power.
       This can be one of the following:</p>
 
       <table class="data">
@@ -203,6 +246,7 @@ RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
         </tr>
       </table>
 
+      <a name="TurnoutList" id="TurnoutList"></a>
       <h3>Turnout List</h3>
 
       <p>JMRI returns either zero, one, or two strings for this
@@ -247,7 +291,7 @@ PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
       caption in the reply.</p>
 
       <p>The second string appears when you have turnouts defined
-      in JMRI, and contains an array of turnouts, and will look
+      in JMRI, and contains the array of defined turnouts, and will look
       something like this:</p>
       <pre class="code">
 PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
@@ -269,7 +313,7 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
 
           <td>LT12</td>
 
-          <td>The internal name used for this turnout</td>
+          <td>The system name used to define this turnout</td>
         </tr>
 
         <tr>
@@ -277,7 +321,7 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
 
           <td>Rico Station N</td>
 
-          <td>The name entered into JMRI for this turnout</td>
+          <td>The user name entered into JMRI for this turnout</td>
         </tr>
 
         <tr>
@@ -289,6 +333,7 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
         </tr>
       </table>
 
+	  <a name="RouteList" id="RouteList"></a>
       <h3>Route List</h3>
 
       <p>Like for turnouts, JMRI will reply with zero, one or two
@@ -299,7 +344,7 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
 PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
 </pre>
 
-      <p>The second string contains an array of routes. For
+      <p>The second string contains an array of defined routes. For
       example:</p>
       <pre class="code">
 PRL]\[IR:AUTO:0001}|{Rico Main}|{
@@ -319,7 +364,7 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
 
           <td>IR:AUTO:0001</td>
 
-          <td>The internal name used for this route. The name in
+          <td>The system name defined for this route. The name in
           this example was auto-generated</td>
         </tr>
 
@@ -328,13 +373,13 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
 
           <td>Rico Main</td>
 
-          <td>The name entered into JMRI for this turnout</td>
+          <td>The name user entered into JMRI for this route</td>
         </tr>
       </table>
 
       <h3>Consist List</h3>
 
-      <p>The consist list is somewhat similiar in concept to the roster
+      <p>The consist list is somewhat similar in concept to the roster
       list. However, there is a separate line for each consist entry.
       Here is an example of a consist list that contains two entries:</p>
 
@@ -353,7 +398,7 @@ RCD}|{123(S)}|{123(S)]\[3374(L)}|{true
       pattern as roster entries. Here is a summary of the Format
       for each consist entry (with spaces added for readability):</p>
 
-      <pre>
+<pre class="code">
   RCD }|{ consistAddress }|{ consistId
     Array: ]\[  loco DCC Address }|{ locoDirection
 </pre>
@@ -407,34 +452,114 @@ PW12080
 
       <p>indicates that the web server port is set to 12080.</p>
 
-      <h2>Property Change Notification</h2>
+	  <a name="ThrottleChangeNotification" id="ThrottleChangeNotification"></a>
+      <h2>Throttle Change Notification
+      	    <a class="to-top" href="#top">^Top</a>
+	  </h2>
 
-      <p>There are cases where property changes in JMRI cause a
+      <p>There are cases where throttle property changes in JMRI cause a
       message to be sent. These messages are not a response to a
       command, but rather are sent at any time (from the perspective
       of your WiThrottle protocol client). For example, if you have a Throttle
-      window open in JMRI and you turn on the light, a property
+      window open in JMRI and you turn on the headlight (F0), a property
       change message will be sent with the function information:</p>
 
       <pre class="code">
-MTAL341&lt;;&gt;F10
+M0AL341&lt;;&gt;F10
 </pre>
 
-      <p>All property change messages begin with MTA (where 'T' could
-      be a different throttle letter) and then the DCC address of the
+      <p>All property change messages begin with M0A (where '0' could
+      be a different throttle character) and then the DCC address of the
       locomotive. The part after the &lt;;&gt; separator uses the
       format described below, under the 'F' Function.</p>
 
       <p>Here is a list of property notifications that can be sent</p>
 
       <ul>
-        <li>Function state changed</li>
-        <li>Speed</li>
-        <li>Direction</li>
-        <li>Speed step mode</li>
+        <li>Function state <code>Fsnn</code> where 's' is state ('0'=Off, '1'=On) and 'nn' is function number ('0'-'28')</li>
+        <li>Speed <code>Vnnnn</code> where 'nnnn' is a speed value between 0 and 126, or -1 for eStop</li>
+        <li>Direction <code>Rd</code> where 'd' is '0'=Reverse and '1'=Forward</li>
+        <li>Speed step mode <code>sn</code> where 'n' is '1'=128step, '2'=28step, '4'=27step or '8'=14step</li>
       </ul>
+<pre class="code">
+M0AL341&lt;;&gt;F10
+M0AL341&lt;;&gt;V23
+M0AL341&lt;;&gt;R1
+M0AL341&lt;;&gt;s1
+</pre>
 
-      <h2>Commands</h2>
+    <a name="OtherServertoClientMessages" id="OtherServertoClientMessages"></a>
+    <h2>Other Server to Client Messages
+	    <a class="to-top" href="#top">^Top</a>
+    </h2>
+
+    <h3>Fast Clock Message</h3>
+
+    <p>The 'PFT' command is used to synchronize the fast clock time.  It is
+    sent from the server when time or rate change, indicating the "now" time
+    and the current time ratio (or 0 when clock stopped). Examples include:</p>
+
+    <pre class="code">
+PFT65871&lt;;&gt;4
+PFT1550686525&lt;;&gt;4.0
+PFT1550681224&lt;;&gt;0.0
+</pre>
+
+    <p>The first number is an integer number of seconds since 12:00 midnight,
+    January 1st, 1970 fast clock time. This zero date is very close to the
+    Unix time epoch, which is 12:00 midnight, January 1st, 1970 UTC, only
+    differing in the time zone offset, where applicable.
+    In fact, this makes it easy to convert this value using the standard time
+    libraries, as long as any time zone conversions are omitted. JMRI sends a
+    value based on the system date when the fast clock was started, so it will
+    return a value near the calendar date. Since the JMRI fast clock does not
+    really support calendar dates, only the hour, minute and second are useful.
+    The Digitrax LNWI returns values within the range 0-86400, which translates
+    to times on January 1st, 1970, when the day, month and year are 
+    calculated.<br/>
+    To give an example: A JMRI instance started on Dec 13, 2020 with a fast clock
+    time set to 10:23:45 am will return 1607855025, which can be converted back
+    to hours, minutes and seconds by "modulo dividing" by 86400
+    (number of seconds in a day) and calculating further as follows:<br/>
+    1607855025 mod 86400 = 37425 seconds since midnight.<br/>
+    37425 seconds since midnight = 10 hours 1425 seconds since midnight = 
+    10 hours 23 minutes 45 seconds since midnight = 10:23:45 am.<br/>
+    The second number is the current fast time ratio.  It
+    may be an integer value (4) or a floating point value (4.0).  If this
+    value is 0 (or 0.0), the clock is stopped.<br/>
+    Updates are sent on each change in time or rate, and when clock stopped 
+    or started, so expect one message every fast clock minute.</p>
+
+    <a name="AlertandInfoMessage" id="AlertandInfoMessage"></a>
+    <h3>Alert and Info Message</h3>
+
+    <p>The server can send a message string that the client can display. These cannot have 
+      newlines in message. Two types:<br />
+      Alert message: 'HM' + message text. Normally used to return errors to be shown to user.<br /> 
+      Info message: 'Hm' + message text. Same as HM, but informational only.
+      </p>
+    <p>Example returned after client requests invalid address (say <code>M0+L23&lt;;&gt;L23</code>) the
+    response is:</p>
+
+    <pre class="code">
+HMJMRI: address 'L23' not allowed as Long
+</pre>
+
+    <h3>Server Type Message</h3>
+
+    <p>The server can send a "type" to identify itself to clients, useful to enable specific behaviors. Two types:<br />
+      'HT' + type. Known types: 'Digitrax', 'MRC', 'JMRI'<br /> 
+      'Ht' + description. Longer informational text string, cannot contain newlines</p>
+
+    <pre class="code">
+HTJMRI
+HtJMRI v4.19.8 My JMRI Railroad
+</pre>
+
+      <a name="Commands" id="Commands"></a>
+      <h2>Commands (Client to Server)
+	    <a class="to-top" href="#top">^Top</a>
+	  </h2>
 
       <p>Once you've established a connection as outlined above,
       you can start sending commands to JMRI. The first letter of
@@ -466,7 +591,7 @@ MTAL341&lt;;&gt;F10
         <li>'R' sends a roster command</li>
 
         <li>'Q' indicates the device has quit, close its
-        window.</li>
+        connection and release any resources.</li>
       </ul>
 
       <h3>'H' Hardware Information</h3>
@@ -477,8 +602,7 @@ MTAL341&lt;;&gt;F10
       is different for each connected device.
       This needs to be unique for each device connected to the server, it is
       used to prevent duplicate connections from the same client.
-      Engine Driver sends device name (see 'N'), so it may or may not be
-      unique. WiThrottle app uses a generated unique identifier.</p>
+      Engine Driver and WiThrottle app use a generated unique identifier.</p>
 
       <h3>'N' Device Name</h3>
 
@@ -615,7 +739,7 @@ MT+L341&lt;;&gt;ED&amp;RGW 341
 
       <p>The second element will be passed onto the
       ThrottleController instance for further processing, and the
-      details are described below in the Throttle Controller
+      details are described below in the <a href="#ThrottleCommands">Throttle&nbsp;Commands</a>
       section.</p>
 
       <h5>'+' -- Add Locomotive</h5>The following command is a
@@ -692,7 +816,7 @@ MTAL341&lt;;&gt;s1
       <p>For all except the function labels, see the appropriate
       throttle commands, such as 'V' below, for details.</p>
 
-      <p>The function labels are an array of strings, with ]\[ used
+      <p>The function labels are an ordered array of strings, with ]\[ used
       as the array delimiter. So in the example above, F0 is called
       Headlight, F1 Bell, etc. Note that, unlike with other arrays,
       the array delimiter appears at the start and end of the
@@ -730,7 +854,10 @@ MTA*&lt;;&gt;qR
       Engine Driver is sending a "qR" command to all of the
       locomotives on the 'T' throttle.</p>
 
-      <h2>Throttle Controller Commands</h2>
+      <a name="ThrottleCommands" id="ThrottleCommands"></a>
+      <h2>Throttle Commands
+	    <a class="to-top" href="#top">^Top</a>
+	  </h2>
 
       <p>This section describes throttle commands, which are
       the second element of 'Mx' commands (as described above). After
@@ -748,13 +875,13 @@ MTA*&lt;;&gt;qR
 
         <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
-        <li>'f' force function</li>
+        <li>'f' force function. Format f<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'I' idle, which sets the speed to 0</li>
 
         <li>'L' sets a long DCC address.</li>
 
-        <li>'m' momentary</li>
+        <li>'m' momentary. Format m<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'q' ask for current settings, such as speed or
         direction</li>
@@ -840,6 +967,49 @@ MTA*&lt;;&gt;F012
       both the push (1) and release (0) and JMRI will map that into
       the correct DCC command or commands, as appropriate.</p>
 
+      <h3>'f' Force Function</h3>
+
+      <p>This command will set the function state regardless of
+      the state before this command. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;f112
+</pre>
+
+      <p>will activate Function 12 if it was off before and will
+      keep F12 active if it was on before. If Function 12 is
+      a momentary function, it will still be activated by this
+      command and stay active.</p>
+      
+      <p>The server will respond with a property change
+      notification only if this command changes the function state.
+      </p>
+
+      <h3>'m' momentary: Set Function to momentary or locking</h3>
+      
+      <p>A function can either be momentary, i.e. active as long as
+      the function key is pushed, or locking, i.e. active until the
+      function key is pushed a second time. By default, JMRI uses the
+      roster information to determine whether a function is momentary
+      or locking for each loco.</p>
+      
+      <p>This command allows a wiThrottle client to override the
+      setting from the roster. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;m112
+</pre>
+      <p>will set function 12 to be momentary from now on, and</p>
+      <pre class="code">
+MTA*&lt;;&gt;m012
+</pre>
+      <p>will set function 12 to be locking from now on. Actually, any
+      value other than '1' will set the function to locking. Although 
+      this example sets/resets the function to momentary on all 'T'
+      throttles, you can set this individually on a per-engine basis
+      by providing the key you used when you added an engine.</p>
+      
+      <p class="note">The global wiThrottle preference "F2 always 
+      momentary" will override this setting for F2</p>
+
       <h3>'R' Set Direction</h3>
 
       <p>Used to change between forward and reverse:</p>
@@ -912,7 +1082,34 @@ MTA*&lt;;&gt;V30
 
     <p><b>Note:</b> Steal requires JMRI 4.10 or later</p>
 
-    <h2>Consist Controller Commands</h2>
+      <h3>'q' Query Speed or Direction</h3>
+      <p>Used to request the current values of speed (V) or direction (R)</p>
+      <table class="data">
+        <tr>
+          <td>qR</td>
+          <td>Query current direction</td>
+        </tr>
+        <tr>
+          <td>qV</td>
+          <td>Query current speed</td>
+        </tr>
+      </table>
+	<p>Example requesting current speed and direction for all locos on throttle '0':
+      <pre class="code">
+M0A*&lt;;&gt;qV
+M0A*&lt;;&gt;qR
+</pre>
+	<p>The server responds with the Throttle Change Notification as described <a href="#ThrottleChangeNotification">[here]</a>. 
+	Example responses for address 3(S) on throttle '0':
+      <pre class="code">
+M0AS3&lt;;&gt;V25
+M0AS3&lt;;&gt;R1
+</pre>
+
+    <a name="ConsistCommands" id="ConsistCommands"></a>
+    <h2>Consist Commands
+	    <a class="to-top" href="#top">^Top</a>
+    </h2>
 
     <p>The commands in this section are used to work with consists.
     All the consist commands start with "RC", which stands for
@@ -934,8 +1131,8 @@ MTA*&lt;;&gt;V30
 
     <p>Either creates a consist or adds a locomotive to an existing
     consist. As an example, let's say that consist S74 does <b>not</b>
-    exist. The following commands will create a consist with named
-    "My consist" with two locos:</p>
+    exist. The following commands will create a consist with address
+    "S74" and name "My consist" with two locos:</p>
 
     <pre class="code">
 RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L341&lt;;&gt;true
@@ -983,7 +1180,7 @@ RC-&lt;;&gt;S74&lt;:&gt;L341
 RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
 </pre>
 
-    <p>Notice that this has no direction infromation--it just has a
+    <p>Notice that this has no direction information--it just has a
     list of locomotive DCC addresses. For example:</p>
 
     <pre class="code">
@@ -999,65 +1196,138 @@ RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
     <p>Deletes a consist. For example, the following command deletes
     the consist with DCC address S74.</p>
 
-    <pre class="code">
+<pre class="code">
 RCR&lt;;&gt;S74
-    </pre>
-
-    <h3>Fast Clock Commands</h3>
-
-    <p>The 'PFT' command is used to synchronize the fast clock time.  It is
-    sent from the server when time or rate change, indicating the "now" time
-    and the current time ratio (or 0 when clock stopped). Examples include:</p>
-
-    <pre class="code">
-PFT65871&lt;;&gt;4
-PFT1550686525&lt;;&gt;4.0
-PFT1550681224&lt;;&gt;0.0
 </pre>
 
-    <p>The first number is an integer number of seconds since 12:00
-    midnight, January 1st, 1970. This start date is the Unix time epoch,
-    and makes it easy to convert this value using the standard time
-    libraries. Only the hours and minutes are useful. JMRI sends a value
-    based on the system time when the fast clock was started, so will
-    return a value near the calendar date. The Digitrax LnWi returns
-    values within the range 0-86400 (all the values for January 1,
-    1970).</p>
+    <a name="TurnoutCommands" id="TurnoutCommands"></a>
+    <h2>Turnout Commands
+	    <a class="to-top" href="#top">^Top</a>
+    </h2>
+    <p>There are three types of turnout commands:</p>
+    <p><a href="#TurnoutList">Turnout List</a> sent when a client connects. This was described <a href="#TurnoutList">[here]</a></p>
+    <p><b>Turnout Request</b> sent from client to server, requesting a new state for a turnout. Can (optionally) create the 
+    turnout in JMRI if "Turnout Creation" is allowed in WiThrottle Preferences. Will return 
+    <a href="#AlertandInfoMessage">HM alert message</a> if error setting
+    requested state.</p>
 
-    <p>The second number is the current fast time ratio.  It
-    may be an integer value (4) or a floating point value (4.0).  If this
-    value is 0 (or 0.0), the clock is stopped.</p>
+<pre class="code">
+PTACLT92
+</pre>
 
-    <p>Updates are sent on each change in time or rate, and when clock stopped 
-    or started.</p>
+    <p>The parts of this command are as follows:</p>
 
+    <table class="data">
+      <tr>
+        <td>PTA</td>
+        <td>Prefix used for turnout commands</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>Requested state, can be 'C'losed, 'T'hrown or '2'Toggle current state</td>
+      </tr>
+      <tr>
+        <td>LT92</td>
+        <td>Name of turnout, can be a system name or a number. If number, server will use default connection.</td>
+      </tr>
+    </table>
 
-    <h3>Unknown commands</h3>
+    <p><b>Turnout Notification</b> sent from server to client, advising the new state of a turnout. This is 
+    sent for all changes to known turnouts, whether requested by this client or elsewhere.</p>
+
+<pre class="code">
+PTA2LT92
+</pre>
+
+    <p>The parts of this response are:</p>
+
+    <table class="data">
+      <tr>
+        <td>PTA</td>
+        <td>Prefix used for turnout commands</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Current state, can be '2'=Closed, '4'=Thrown, '1'=Unknown or '8'=Inconsistent</td>
+      </tr>
+      <tr>
+        <td>LT92</td>
+        <td>Always returns system name of turnout.</td>
+      </tr>
+    </table>
+   
+    <a name="RouteCommands" id="RouteCommands"></a>
+    <h2>Route Commands
+	    <a class="to-top" href="#top">^Top</a>
+    </h2>
+    <p>There are three types of Route commands:</p>
+    <p><a href="#RouteList">Route List</a> sent when a client connects. This was described <a href="#RouteList">[here]</a></p>
+    <p><b>Route Request</b> sent from client to server, requesting the route be "set". Will return 
+    <a href="#AlertandInfoMessage">HM alert message</a> if error setting route.</p>
+
+<pre class="code">
+PRA2IO_RESET_LAYOUT
+</pre>
+
+    <p>The parts of this command are as follows:</p>
+
+    <table class="data">
+      <tr>
+        <td>PRA</td>
+        <td>Prefix used for route commands</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Always '2'=Set route</td>
+      </tr>
+      <tr>
+        <td>IO_RESET_LAYOUT</td>
+        <td>System name of route to set.</td>
+      </tr>
+    </table>
+
+    <p><b>Route Notification</b> sent from server to client, advising the new state of a route. This is 
+    sent for all changes to known routes, whether requested by this client or elsewhere.</p>
+
+<pre class="code">
+PRA2IO_RESET_LAYOUT
+</pre>
+
+    <p>The parts of this response are:</p>
+
+    <table class="data">
+      <tr>
+        <td>PRA</td>
+        <td>Prefix used for route commands</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Current state, can be '2'=Active, '4'=Inactive or '8'=Inconsistent</td>
+      </tr>
+      <tr>
+        <td>IO_RESET_LAYOUT</td>
+        <td>System name of route.</td>
+      </tr>
+    </table>
+   
+    <a name="UnknownCommands" id="UnknownCommands"></a>
+    <h2>Unknown Commands
+	    <a class="to-top" href="#top">^Top</a>
+    </h2>
 
     <p>Any command that is not recognized by a client should be ignored,
     with processing continuing after the next newlines.</p>
-
-    <h3>Observations</h3>
-
-    <p>The Digitrax LnWi sends multiple instances of the H command as part
-    of the initial information sent after the first command the client sends:</p>
-
-    <pre class="code">
-HTDigitrax
-HtDigitrax LnWi 1.0 Unit=7,Wifi Chnl= 1,Command Station= DCS100
-</pre>
-
-    <p>and after a selection attempt when using a long address for what
-    would be a short address values (say <code>MT+L23&lt;;&gt;L23</code>) the
-    response is:</p>
-
-    <pre class="code">
-HM error - long address &lt; 127 S23
-</pre>
-
-    <p>The LnWI also sends a <code>PFC</code> command.  Its purpose is
+    
+    <a name="Observations" id="Observations"></a>
+    <h2>Observations
+	    <a class="to-top" href="#top">^Top</a>
+    </h2>
+    
+    <p>The LnWI sends a <code>PFC</code> command after connecting.  Its purpose is
     unknown at this time.</p>
 
+	<hr>
+	
     <p>This is the package/jmri/jmrit/withrottle/Protocol help
       page</p><!--#include virtual="/Footer.shtml" -->
     </div>

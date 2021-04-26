@@ -5,8 +5,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import javax.swing.BorderFactory;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -16,7 +15,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +23,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    public ClockItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
-        super(parentFrame, type, editor);
+    public ClockItemPanel(DisplayFrame parentFrame, String type) {
+        super(parentFrame, type);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
 
@@ -43,43 +41,44 @@ public class ClockItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        if (_iconPanel == null) {
-            _iconPanel = new ImagePanel();            
-            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        } else {
-            _iconPanel.removeAll();
+    public void init() {
+        if (!_initialized) {
+            initIconFamiliesPanel();
+            initLinkPanel();
+            add(Box.createVerticalGlue());
         }
+        _previewPanel.invalidate();
+        hideIcons();
+    }
 
-        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
-            NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
-            JPanel panel = new JPanel();
-            panel.setOpaque(false);
-            String borderName = ItemPalette.convertText(entry.getKey());
-            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
+    @Override
+    protected JPanel makeIconDisplayPanel(String key, HashMap<String, NamedIcon> iconMap, boolean dropIcon) {
+        NamedIcon icon = iconMap.get(key);
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        JLabel label;
+        if (dropIcon) {
             try {
-                JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-                if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
-                    label.setText(Bundle.getMessage("invisibleIcon"));
-                    label.setForeground(Color.lightGray);
-                } else {
-                    icon.reduceTo(100, 100, 0.2);
-                }
-                label.setIcon(icon);
-                label.setName(borderName);
-                panel.add(label);
+            label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
             } catch (ClassNotFoundException cnfe) {
+                label = new JLabel(cnfe.toString());
                 log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
-            _iconPanel.add(panel);
+        } else {
+            label = new JLabel(icon);
         }
-        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
+        if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
+            label.setText(Bundle.getMessage("invisibleIcon"));
+            label.setForeground(Color.lightGray);
+        }
+        wrapIconImage(icon, label, panel, key);
+        return panel;
     }
 
     public class ClockDragJLabel extends DragJLabel {
 
-        public ClockDragJLabel(DataFlavor flavor) {
-            super(flavor);
+        public ClockDragJLabel(DataFlavor flavor, NamedIcon icon) {
+            super(flavor, icon);
         }
 
         @Override
@@ -93,20 +92,16 @@ public class ClockItemPanel extends IconItemPanel {
                 AnalogClock2Display c;
                 String link = _linkName.getText().trim();
                 if (link.length() == 0) {
-                    c = new AnalogClock2Display(_editor);
+                    c = new AnalogClock2Display(_frame.getEditor());
                 } else {
-                    c = new AnalogClock2Display(_editor, link);
+                    c = new AnalogClock2Display(_frame.getEditor(), link);
                 }
                 c.setOpaque(false);
                 c.update();
                 c.setLevel(Editor.CLOCK);
                 return c;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icon \"");
-                sb.append(url);
-                sb.append("\"");
-                return sb.toString();
+                return _itemType + " icon \"" + url + "\"";
             }
             return null;
         }

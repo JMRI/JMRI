@@ -33,7 +33,12 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
      */
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        tc.sendDCCppMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
+        DCCppMessage msg = createPacket(packetTextField.getSelectedItem().toString());
+        if (msg != null) {
+            tc.sendDCCppMessage(msg, null);
+        } else {
+            log.error("Frame packet '{}' not valid", packetTextField.getSelectedItem().toString());
+        }
     }
 
     DCCppMessage createPacket(String s) {
@@ -48,8 +53,8 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         if (s.lastIndexOf('>') != -1) {
             s = s.substring(0, s.lastIndexOf('>'));
         }
-        DCCppMessage m = DCCppMessage.parseDCCppMessage(s);
-        log.debug("Sending: {}", m);
+        DCCppMessage m = new DCCppMessage(s);
+        log.debug("Sending: '{}'", m);
         return(m);
     }
 

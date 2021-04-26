@@ -1,19 +1,16 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
- * SRCPTurnoutTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPTurnout class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -27,18 +24,18 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     @Override
     public void checkThrownMsgSent() {
        Assert.assertTrue("message sent", stc.outbound.size()>0);
-       Assert.assertEquals("content", "SET 1 GA 1 0 1 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
+       Assert.assertEquals("content", "SET 1 GA 1 0 1 -1\n", stc.outbound.elementAt(stc.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
        Assert.assertTrue("message sent", stc.outbound.size()>0);
-       Assert.assertEquals("content", "SET 1 GA 1 0 0 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
+       Assert.assertEquals("content", "SET 1 GA 1 0 0 -1\n", stc.outbound.elementAt(stc.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Test
     public void testGetNumber(){
-        Assert.assertEquals("Number",1,((SRCPTurnout) t).getNumber());
+        Assert.assertEquals("Number", 1, ((SRCPTurnout) t).getNumber());
     }
 
     @Override
@@ -51,8 +48,7 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -62,9 +58,10 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t = new SRCPTurnout(1, memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
+
 }

@@ -23,6 +23,7 @@ import jmri.jmrit.display.MemoryComboIcon;
 import jmri.jmrit.display.MemoryIcon;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;
+import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,41 +34,42 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         READONLY, READWRITE, SPINNER, COMBO
     }
     JSpinner _spinner;
+    String[] list = {"Item1", "Item2", "Item3"};
 
-    public MemoryItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Memory> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public MemoryItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Memory> model) {
+        super(parentFrame, type, family, model);
     }
 
     @Override
     public void init() {
         if (!_initialized) {
-            add(initTablePanel(_model, _editor));
+            add(initTablePanel(_model));
             initIconFamiliesPanel();
             add(_iconFamilyPanel);
-            add(makeBgButtonPanel(_dragIconPanel, _iconPanel));
+            _previewPanel = new PreviewPanel(_frame, _dragIconPanel, _iconPanel, true);
+            add(_previewPanel);
             _initialized = true;
         }
     }
 
+    @Override
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddMemoryToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("MemoryDragStart")));
+        blurb.add(new JLabel(Bundle.getMessage("MemoryDragFix")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("nullMemoryIcon"),
-                NamedIcon.getIconByName("resources/icons/misc/X-red.gif"),
-                javax.swing.SwingConstants.TRAILING));
-        blurb.add(new JLabel(Bundle.getMessage("emptyMemoryIcon")));
-        blurb.add(new JLabel(Bundle.getMessage("emptyMemoryFix")));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("comboMemory1")));
-        blurb.add(new JLabel(Bundle.getMessage("comboMemory2", Bundle.getMessage("EditItem", Bundle.getMessage("BeanNameMemory")))));
+        blurb.add(new JLabel(Bundle.getMessage("DecorateMemory")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
         return panel;
+    }
+
+    @Override
+    protected void hideIcons() {
     }
 
     /**
@@ -87,19 +89,20 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
             _iconFamilyPanel.add(instructions());
         }
 
-        makeDragIconPanel(1);
-        makeDndIconPanel(null, null);
+        makeDragIconPanel();
+        makeDndIcon(null);
         log.debug("initIconFamiliesPanel done");
     }
 
     @Override
-    protected void makeDndIconPanel(java.util.HashMap<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIcon(java.util.HashMap<String, NamedIcon> iconMap) {
         if (_update) {
             return;
         }
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new java.awt.GridBagLayout());
+        Editor editor = _frame.getEditor();
         java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
         c.gridwidth = 1;
         c.gridheight = 1;
@@ -112,23 +115,8 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
-        _writeMem = new MemoryInputIcon(5, _editor);
+        _writeMem = new MemoryInputIcon(5, editor);
         panel.add(makeDragIcon(_writeMem, Type.READWRITE), c);
-
-        _spinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
-        JTextField field = ((JSpinner.DefaultEditor) _spinner.getEditor()).getTextField();
-        field.setColumns(2);
-        field.setText("5");
-        _spinner.setMaximumSize(_spinner.getPreferredSize());
-        _spinner.addChangeListener(this);
-        c.gridy = 2;
-        panel.add(_spinner, c);
-
-        c.gridy = 3;
-        c.anchor = java.awt.GridBagConstraints.NORTH;
-        label = new JLabel(Bundle.getMessage("NumColsLabel"));
-        label.setOpaque(false);
-        panel.add(label, c);
 
         c.gridx = 1;
         c.gridy = 0;
@@ -137,7 +125,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
-        _readMem = new MemoryIcon(NamedIcon.getIconByName("resources/icons/misc/X-red.gif"), _editor);
+        _readMem = new MemoryIcon("_____", editor);
         panel.add(makeDragIcon(_readMem, Type.READONLY), c);
 
         c.gridx = 2;
@@ -146,18 +134,36 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
-        _spinMem = new MemorySpinnerIcon(_editor);
+        _spinMem = new MemorySpinnerIcon(editor);
         panel.add(makeDragIcon(_spinMem, Type.SPINNER), c);
 
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 4;
+        c.gridx = 3;
+        c.gridy = 0;
         label = new JLabel(Bundle.getMessage("ComboMemory"));
         label.setOpaque(false);
         panel.add(label, c);
-        c.gridy = 3;
-        _comboMem = new MemoryComboIcon(_editor, null);
+        c.gridy = 1;
+        String[] list = {"item1", "Item2", "Item3"};
+        _comboMem = new MemoryComboIcon(editor, list);
         panel.add(makeDragIcon(_comboMem, Type.COMBO), c);
+
+        _spinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        JTextField field = ((JSpinner.DefaultEditor) _spinner.getEditor()).getTextField();
+        field.setColumns(2);
+        field.setText("5");
+        _spinner.setMaximumSize(_spinner.getPreferredSize());
+        _spinner.addChangeListener(this);
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 2;
+        c.anchor = java.awt.GridBagConstraints.CENTER;
+        panel.add(_spinner, c);
+
+        c.gridy = 3;
+        c.anchor = java.awt.GridBagConstraints.NORTH;
+        label = new JLabel(Bundle.getMessage("MemoryWidth"));
+        label.setOpaque(false);
+        panel.add(label, c);
 
         _dragIconPanel.add(panel);
         _dragIconPanel.invalidate();
@@ -189,7 +195,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     _spinner.getValue());
         }
         Integer nCols = (Integer) _spinner.getValue();
-        _writeMem.setNumColumns(nCols.intValue());
+        _writeMem.setNumColumns(nCols);
     }
 
     /**
@@ -207,31 +213,16 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                 _updateButton.setEnabled(true);
                 _updateButton.setToolTipText(null);
             }
-            Memory bean = getDeviceNamedBean();
-            _readMem.setMemory(bean.getDisplayName());
-            _writeMem.setMemory(bean.getDisplayName());
-            _spinMem.setMemory(bean.getDisplayName());
-            _comboMem.setMemory(bean.getDisplayName());
         } else {
             if (_updateButton != null) {
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
             _dragIconPanel.removeAll();
-            makeDragIconPanel(1);
-            makeDndIconPanel(null, null);
+            makeDragIconPanel();
+            makeDndIcon(null); // use override
         }
         validate();
-    }
-
-    @Override
-    protected void setEditor(Editor ed) {
-        updateBackgrounds(ed);    // editor change may change panel background
-        if (_initialized) {
-            _dragIconPanel.removeAll();
-            makeDragIconPanel(1);
-            makeDndIconPanel(null, null);
-        }
     }
 
     protected IconDragJComponent getDragger(DataFlavor flavor, Type type, JComponent comp) {
@@ -269,40 +260,41 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                 return null;
             }
 
+            Editor editor = _frame.getEditor();
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                int numCols = 5;
+                try {
+                    ((JSpinner.DefaultEditor) _spinner.getEditor()).commitEdit();
+                    SpinnerNumberModel spinModel = (SpinnerNumberModel) _spinner.getModel();
+                    if (log.isDebugEnabled()) {
+                        log.debug("MemoryDnD.createTransferable: spinCols= {}", spinModel.getNumber().intValue());
+                    }
+                    numCols = spinModel.getNumber().intValue();
+                } catch (java.text.ParseException pe) {
+                    log.error("MemoryDnD.createTransferable: ", pe);
+                }
                 switch (_memType) {
                     case READONLY:
-                        MemoryIcon m = new MemoryIcon("", _editor);
+                        MemoryIcon m = new MemoryIcon("", editor);
                         m.setMemory(bean.getDisplayName());
-                        m.setSize(m.getPreferredSize().width, m.getPreferredSize().height);
+//                        m.setSize(m.getPreferredSize().width, m.getPreferredSize().height);
+                        m.getPopupUtility().setFixedWidth(numCols*10);
                         m.setLevel(Editor.MEMORIES);
                         return m;
                     case READWRITE:
-                        int numCols = 5;
-                        try {
-                            ((JSpinner.DefaultEditor) _spinner.getEditor()).commitEdit();
-                            SpinnerNumberModel spinModel = (SpinnerNumberModel) _spinner.getModel();
-                            if (log.isDebugEnabled()) {
-                                log.debug("MemoryDnD.createTransferable: spinCols= "
-                                        + spinModel.getNumber().intValue());
-                            }
-                            numCols = spinModel.getNumber().intValue();
-                        } catch (java.text.ParseException pe) {
-                            log.error("MemoryDnD.createTransferable: " + pe);
-                        }
-                        MemoryInputIcon mi = new MemoryInputIcon(numCols, _editor);
+                        MemoryInputIcon mi = new MemoryInputIcon(numCols, editor);
                         mi.setMemory(bean.getDisplayName());
                         mi.setSize(mi.getPreferredSize().width, mi.getPreferredSize().height);
                         mi.setLevel(Editor.MEMORIES);
                         return mi;
                     case SPINNER:
-                        MemorySpinnerIcon ms = new MemorySpinnerIcon(_editor);
+                        MemorySpinnerIcon ms = new MemorySpinnerIcon(editor);
                         ms.setMemory(bean.getDisplayName());
                         ms.setSize(ms.getPreferredSize().width, ms.getPreferredSize().height);
                         ms.setLevel(Editor.MEMORIES);
                         return ms;
                     case COMBO:
-                        MemoryComboIcon mc = new MemoryComboIcon(_editor, null);
+                        MemoryComboIcon mc = new MemoryComboIcon(editor, list);
                         mc.setMemory(bean.getDisplayName());
                         mc.setSize(mc.getPreferredSize().width, mc.getPreferredSize().height);
                         mc.setLevel(Editor.MEMORIES);
@@ -312,11 +304,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                         break;
                 }
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icons for \"");
-                sb.append(bean.getDisplayName());
-                sb.append("\"");
-                return sb.toString();
+                return _itemType + " icons for \"" + bean.getDisplayName() + "\"";
             }
             return null;
         }

@@ -102,6 +102,13 @@ public class CbusEventHighlightFrame extends JmriJFrame {
 
     /**
      * Enable Highlighter.
+     * @param index highlighter index.
+     * @param nn node number.
+     * @param nnEn node number enabled.
+     * @param ev event number.
+     * @param evEn event number enabled.
+     * @param ty event type.
+     * @param dr event direction.
      */
     public void enable(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty, int dr) {
         

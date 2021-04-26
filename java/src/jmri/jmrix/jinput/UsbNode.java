@@ -71,7 +71,7 @@ public class UsbNode extends DefaultMutableTreeNode {
                         val > 0.0 ? Sensor.ACTIVE : Sensor.INACTIVE);
             }
         } catch (IllegalArgumentException | JmriException e1) {
-            log.error("Can't set sensor: " + e1);
+            log.error("Can't set sensor: {}", e1);
         }
         try {
             if ((attachedMemory != null) && (!attachedMemory.equals(""))) {
@@ -79,7 +79,7 @@ public class UsbNode extends DefaultMutableTreeNode {
                         .provideMemory(attachedMemory).setValue("" + val);
             }
         } catch (IllegalArgumentException e2) {
-            log.error("Can't set memory: " + e2);
+            log.error("Can't set memory: {}", e2);
         }
     }
 

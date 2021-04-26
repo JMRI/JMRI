@@ -1,9 +1,8 @@
 package jmri.jmrix.loconet.downloader;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
@@ -12,7 +11,7 @@ import jmri.jmrix.loconet.SlotManager;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -33,8 +32,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         ((LoaderPane)panel).initContext(memo);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -46,7 +44,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         title="Firmware Downloader";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

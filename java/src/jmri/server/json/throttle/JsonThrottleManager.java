@@ -75,7 +75,21 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     public boolean requestThrottle(DccLocoAddress address, ThrottleListener listener) {
         return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener, false);
     }
+    
+    public boolean requestThrottle(jmri.BasicRosterEntry rosterEntry, ThrottleListener listener) {
+        return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(rosterEntry, listener, false);
+    }
 
+    /**
+     * Make the JsonThrottle listen to the given address.
+     *
+     * @param address  the address to listen to
+     * @param throttle the throttle that should listen
+     * @deprecated since 4.19.5 without direct replacement; JsonThrottles
+     * already attach themselves as listeners to the throttle in
+     * {@link JsonThrottle#notifyThrottleFound(jmri.DccThrottle)}
+     */
+    @Deprecated
     public void attachListener(DccLocoAddress address, JsonThrottle throttle) {
         InstanceManager.getDefault(ThrottleManager.class).attachListener(address, throttle);
     }

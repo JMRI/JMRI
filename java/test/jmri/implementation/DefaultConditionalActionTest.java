@@ -26,7 +26,9 @@ import jmri.Turnout;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 /**
  * Test the DefaultConditionalAction implementation class
  *
@@ -916,8 +918,7 @@ public class DefaultConditionalActionTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -932,7 +933,7 @@ public class DefaultConditionalActionTest {
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Sound Decoder 2020 1.12 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <name>Conditions for Outputs</name>
+  <name xml:lang="it">Condizioni per Uscite</name>
+  <name xml:lang="de">Bedingungen für Ausgänge</name>
+  <name xml:lang="fr">Conditions pour Sorties</name>
+  <name xml:lang="nl">Bedingingen voor uitgangen</name>
+  <column>
+    <row>
+      <column>
+        <row>
+          <grid ipadx="10" ipady="5" weightx="1">
+            <!-- Line 0 -->
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+              <label>
+                <text>CV value</text>
+                <text xml:lang="de">CV Wert</text>
+                <text xml:lang="fr">Valeur CV</text>
+                <text xml:lang="nl">CV warde</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <label>
+                <text>&lt;html&gt;Only in Fwd/Rev&lt;br&gt;group A&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Nur bei Vor/Rück&lt;br&gt;gruppe A&lt;/html&gt;</text>
+                <text xml:lang="fr">&lt;html&gt;Seulem. Av/Ar&lt;br&gt;groupe A&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;alleen voor/achter&lt;br&gt;groep A&lt;/html&gt;</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <label>
+                <text>&lt;html&gt;Only when Stop/Drive&lt;br&gt;group B&lt;/html&gt;</text>
+                <text xml:lang="de">Nur im Stand/Fahrt&lt;br&gt;gruppe B&lt;/html&gt;</text>
+                <text xml:lang="fr">Seulem. Arrêt/Marche&lt;br&gt;groupe B&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;alleen stop/rijden&lt;br&gt;groep B&lt;/html&gt;</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <label>
+                <text>&lt;html&gt;Only F0 (light) Off/On&lt;br&gt;group C&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Nur F0 (Licht) Aus/An&lt;br&gt;gruppe C&lt;/html&gt;</text>
+                <text xml:lang="fr">&lt;html&gt;Seulem. F0 (lumière) Off/On&lt;br&gt;groupe C&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;alleen (licht) uit/aan&lt;br&gt;groep C&lt;/html&gt;</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="" anchor="CENTER">
+              <label>
+                <text>&lt;html&gt;In Shunting Mode&lt;br&gt;group D&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Im Rangiergang&lt;br&gt;gruppe D&lt;/html&gt;</text>
+                <text xml:lang="fr">&lt;html&gt;En mode Manoeuvre&lt;br&gt;groupe D&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;In rangeergang&lt;br&gt;groep D&lt;/html&gt;</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="LINE_END">
+                <column>
+                    <separator/>
+                </column>
+            </griditem>
+            <!-- Line 1 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition LV"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LV A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LV B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LV C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LV D" label=""></display>
+            </griditem>
+            <!-- Line 2 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition LR"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LR A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LR B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LR C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition LR D" label=""></display>
+            </griditem>
+            <!-- Line 3 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition AUX1"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX1 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX1 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX1 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX1 D" label=""></display>
+            </griditem>
+            <!-- Line 4 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+                <display item="Condition AUX2"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX2 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX2 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX2 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX2 D" label=""></display>
+            </griditem>
+            <!-- Line 5 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition AUX3"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX3 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX3 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX3 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX3 D" label=""></display>
+            </griditem>
+            <!-- Line 6 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition AUX4"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX4 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX4 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX4 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX4 D" label=""></display>
+            </griditem>
+            <!-- Line 7 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition AUX5"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX5 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX5 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX5 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX5 D" label=""></display>
+            </griditem>
+            <!-- Line 8 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition AUX6"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX6 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX6 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX6 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition AUX6 D" label=""></display>
+            </griditem>
+          <!-- Line 9 -->
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Condition Dimmer"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition Dimmer A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition Dimmer B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition Dimmer C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <display item="Condition Dimmer D" label=""></display>
+            </griditem>
+          </grid>
+        </row>
+      </column>
+      <separator/>
+      <column> 
+        <row>
+          <column>
+            <row>
+              <column>
+                <label>
+                  <text>&lt;html&gt;Settings &lt;i&gt;(See manual for further details) &lt;/i&gt;&lt;/html&gt;</text>
+                  <text xml:lang="it">&lt;html&gt;Programma &lt;i&gt;(Vedere Manuale per ulteriori dettagli) &lt;/i&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;Einstellungen &lt;i&gt;(Beachten Sie die Bedienungsanleitung für weitere Details) &lt;/i&gt;&lt;/html&gt;</text>
+                  <text xml:lang="ca">&lt;html&gt;Estableix &lt;i&gt;(Veure el manual per a més detalls) &lt;/i&gt;&lt;/html&gt;</text>
+                  <text xml:lang="fr">&lt;html&gt;Paramètres &lt;i&gt;(Voir le manuel pour plus de détails) &lt;/i&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;Instellingen&lt;i&gt;(kijk in de handleiding voor meer details) &lt;/i&gt;&lt;/html&gt;</text>
+                </label>
+              </column>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>             0 = Default (Always ON when function key ON)</text>
+              <text xml:lang="it">             0 = Default</text>
+              <text xml:lang="de">             0 = Grundzustand (immer AN wenn F-Taste AN)</text>
+              <text xml:lang="ca">             0 = Per defecte</text>
+              <text xml:lang="fr">             0 = Par défaut (toujours ON si fonction ON</text>
+              <text xml:lang="nl">             0 = Standaard (altijd AAN wanneer F-key aan)</text>
+            </label>
+            <separator/>
+            <label>
+              <text>  Group A</text>
+              <text xml:lang="de">  Gruppe A</text>
+              <text xml:lang="ca">  Grup A</text>
+              <text xml:lang="fr">  Groupe A</text>
+              <text xml:lang="nl">  Groep A</text>
+            </label>
+            <label>
+              <text>             1 = Only in forward</text>
+              <text xml:lang="de">             1 = Nur bei vorwärts</text>
+              <text xml:lang="ca">             1 = Momés endavant</text>
+              <text xml:lang="fr">             1 = Seulement en marche avant</text>
+              <text xml:lang="nl">             1 = Alleen bij voorwaarts</text>
+            </label>
+            <label>
+              <text>             2 = Only in reverse</text>
+              <text xml:lang="de">             2 = Nur bei rückwärts</text>
+              <text xml:lang="ca">             2 = Només enrere</text>
+              <text xml:lang="fr">             2 = Seulement en marche arrière</text>
+              <text xml:lang="nl">             2 = Alleen in achteruit</text>
+            </label>
+            <separator/>
+            <label>
+              <text>  Group B</text>
+              <text xml:lang="de">  Gruppe B</text>
+              <text xml:lang="ca">  Grup B</text>
+              <text xml:lang="fr">  Groupe B</text>
+              <text xml:lang="nl">  Groep B</text>
+            </label>
+            <label>
+              <text>             3 = Only while stopped</text>
+              <text xml:lang="de">             3 = Nur im Stand</text>
+              <text xml:lang="ca">             3 = Només per parada</text>
+              <text xml:lang="fr">             3 = Seulement à l'arrêt</text>
+              <text xml:lang="nl">             3 = Alleen in stand</text>
+            </label>
+            <label>
+              <text>             6 = Only while driving</text>
+              <text xml:lang="de">             6 = Nur bei Fahrt</text>
+              <text xml:lang="ca">             6 = Només en viatge</text>
+              <text xml:lang="fr">             6 = Seulement en marche</text>
+              <text xml:lang="nl">             6 = Alleen tijdens het rijden</text>
+            </label>
+            <separator/>
+            <label>
+              <text>  Group C</text>
+              <text xml:lang="de">  Gruppe C</text>
+              <text xml:lang="ca">  Grup C</text>
+              <text xml:lang="fr">  Groupe C</text>
+              <text xml:lang="nl">  Groep C</text>
+            </label>
+            <label>
+              <text>             9 = Only when F0 (Light) OFF</text>
+              <text xml:lang="de">             9 = nur bei F0 (Licht) AUS</text>
+              <text xml:lang="ca">             9 = Només amb F0 (llum) apagada</text>
+              <text xml:lang="fr">             9 = Seulement avec F0 (lumières) éteint (OFF)</text>
+              <text xml:lang="nl">             9 = alleen wanneer F0 (Licht) uit is</text>
+            </label>
+            <label>
+              <text>           18 = Only when F0 (Light) ON</text>
+              <text xml:lang="de">           18 = nur bei F0 (Licht) AN</text>
+              <text xml:lang="ca">           18 = Només amb F0 (llum) engegada</text>
+              <text xml:lang="fr">           18 = Seulement avec F0 (lumières) allumé (ON)</text>
+              <text xml:lang="nl">           18 = alleen wanneer F0 (Licht) aan is</text>
+            </label>
+            <separator/>
+            <label>
+              <text>  Group D</text>
+              <text xml:lang="de">  Gruppe D</text>
+              <text xml:lang="ca">  Grup D</text>
+              <text xml:lang="fr">  Groupe D</text>
+              <text xml:lang="nl">  Groep D</text>
+            </label>
+            <label>
+              <text>           27 = Not in shunting mode</text>
+              <text xml:lang="de">           27 = Nicht im Rangiergang</text>
+              <text xml:lang="ca">           27 = No en maniobres</text>
+              <text xml:lang="fr">           27 = Pas en mode manoeuvre</text>
+              <text xml:lang="nl">           27 = Niet in rangeergang</text>
+            </label>
+            <label>
+              <text>           54 = Only in shunting mode</text>
+              <text xml:lang="de">           54 = nur im Rangiergang</text>
+              <text xml:lang="ca">           54 = Només en maniobres</text>
+              <text xml:lang="fr">           54 = Seulement en mode manoeuvre</text>
+              <text xml:lang="nl">           54 = Alleen in rangeergang</text>
+            </label>
+            <label>
+              <text>           81 = Ignore direction when shunting</text>
+              <text xml:lang="de">           81 = Im Rangiergang Richtung ignorieren</text>
+              <text xml:lang="ca">           81 = Ignora el sentit en maniobres</text>
+              <text xml:lang="fr">           81 = Ignorer direction en mode manoeuvre</text>
+              <text xml:lang="nl">           81 = In rangeergang richting negeren</text>
+            </label>
+            <label>
+              <text>         108 = Ignore drive/stop when shunting</text>
+              <text xml:lang="de">         108 = Im Rangiergang Fahrt/Stand ignorieren</text>
+              <text xml:lang="ca">         108 = Ignora conducció/parada en maniobres</text>
+              <text xml:lang="fr">         108 = Ignorer marche/arrêt en mode manoeuvre</text>
+              <text xml:lang="nl">         108 = In rangeergang rijden/stop negeren</text>
+            </label>
+            <label>
+              <text>         135 = Ignore direction and drive/stop when shunting   </text>
+              <text xml:lang="de">         135 = Im Rangiergang Richtung und Fahrt/Stand ignorieren   </text>
+              <text xml:lang="ca">        135 = Ignora conducció/parada en maniobres   </text>
+              <text xml:lang="fr">         135 = Ignorer direction et marche/arrêt en mode manoeuvre   </text>
+              <text xml:lang="nl">         135 = In rangeergang richting en rijden/stop negeren   </text>
+            </label>
+            <separator/>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <label>
+                <text>&lt;html&gt;&lt;i&gt;Select only one number from each group and then add them up! &lt;/i&gt;&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;&lt;i&gt;Wählen Sie aus jeder Gruppe nur eine Nummer aus und addieren Sie diese! &lt;/i&gt;&lt;/html&gt;</text>
+                <text xml:lang="fr">&lt;html&gt;&lt;i&gt;Sélectionner seulement une valeur de chaque groupe et additionnez les! &lt;/i&gt;&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;&lt;i&gt;Selecteer slechts één nummer uit elke groep en tel die op! &lt;/i&gt;&lt;/html&gt;</text>
+              </label>
+            </row>
+          </column>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <grid ipadx="10" ipady="5" weightx="1">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+              <display item="Effect for AUX3"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <row>
+                <display item="Parameter for AUX3" label=""></display>
+                <display item="Parameter for AUX3" label="" format="hslider"></display>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Effect for AUX4"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <row>
+                <display item="Parameter for AUX4" label=""></display>
+                <display item="Parameter for AUX4" label="" format="hslider"></display>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Effect for AUX5"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <row>
+                <display item="Parameter for AUX5" label=""></display>
+                <display item="Parameter for AUX5" label="" format="hslider"></display>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+              <display item="Effect for AUX6"></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+              <row>
+                <display item="Parameter for AUX6" label=""></display>
+                <display item="Parameter for AUX6" label="" format="hslider"></display>
+              </row>
+            </griditem>
+          </grid>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+  </column>
+</pane>

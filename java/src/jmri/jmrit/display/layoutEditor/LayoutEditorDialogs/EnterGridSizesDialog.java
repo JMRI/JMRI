@@ -1,12 +1,12 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.text.MessageFormat;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -31,13 +31,13 @@ public class EnterGridSizesDialog {
     |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
-    private transient JmriJFrame enterGridSizesFrame = null;
+    private JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
     private boolean gridSizesChange = false;
-    private transient JTextField primaryGridSizeField = new JTextField(6);
-    private transient JTextField secondaryGridSizeField = new JTextField(6);
-    private transient JButton gridSizesDone;
-    private transient JButton gridSizesCancel;
+    private final JTextField primaryGridSizeField = new JTextField(6);
+    private final JTextField secondaryGridSizeField = new JTextField(6);
+    private JButton gridSizesDone;
+    private JButton gridSizesCancel;
 
     //display dialog for entering grid sizes
     @InvokeOnGuiThread
@@ -80,16 +80,12 @@ public class EnterGridSizesDialog {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(gridSizesDone = new JButton(Bundle.getMessage("ButtonDone")));
-            gridSizesDone.addActionListener((ActionEvent event) -> {
-                gridSizesDonePressed(event);
-            });
+            gridSizesDone.addActionListener(this::gridSizesDonePressed);
             gridSizesDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             //Cancel
             panel5.add(gridSizesCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            gridSizesCancel.addActionListener((ActionEvent event) -> {
-                gridSizesCancelPressed(event);
-            });
+            gridSizesCancel.addActionListener(this::gridSizesCancelPressed);
             gridSizesCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 
@@ -99,8 +95,8 @@ public class EnterGridSizesDialog {
         }
 
         //Set up for Entry of Track Widths
-        primaryGridSizeField.setText(Integer.toString(layoutEditor.getGridSize()));
-        secondaryGridSizeField.setText(Integer.toString(layoutEditor.getGridSize2nd()));
+        primaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize()));
+        secondaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize2nd()));
         enterGridSizesFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -128,16 +124,15 @@ public class EnterGridSizesDialog {
 
         if ((siz < 5.0) || (siz > 100.0)) {
             JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", siz)}),
+                    MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", siz)),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
 
             return;
         }
 
-        if (!MathUtil.equals(layoutEditor.getGridSize2nd(), siz)) {
-            layoutEditor.setGridSize2nd((int) siz);
+        if (!MathUtil.equals(layoutEditor.gContext.getGridSize2nd(), siz)) {
+            layoutEditor.gContext.setGridSize2nd((int) siz);
             gridSizesChange = true;
         }
 
@@ -152,13 +147,12 @@ public class EnterGridSizesDialog {
 
         if ((siz < 5) || (siz > 100.0)) {
             JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", siz)}),
+                    MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", siz)),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            if (!MathUtil.equals(layoutEditor.getGridSize(), siz)) {
-                layoutEditor.setGridSize((int) siz);
+            if (!MathUtil.equals(layoutEditor.gContext.getGridSize(), siz)) {
+                layoutEditor.gContext.setGridSize((int) siz);
                 gridSizesChange = true;
             }
             gridSizesCancelPressed(null);
@@ -198,6 +192,6 @@ public class EnterGridSizesDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
 //            EnterGridSizesDialog.class);
 }

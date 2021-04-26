@@ -69,7 +69,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("Save file: " + file.getPath());
+            log.debug("Save file: {}", file.getPath());
         }
         // check for possible overwrite
         if (file.exists()) {

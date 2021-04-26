@@ -6,6 +6,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - CAN Network</title>
+  <meta name="author" content="Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -68,33 +69,23 @@
       Layout Command Control (LCC, formerly
       NMRAnet)</a>.</p>
 
-      <h3><a href="cbus/index.shtml">MERG CBUS</a></h3>
+      <h3><a href="cbus/index.shtml">CBUS&reg;</a></h3>
 
-        <img src="http://mergcbus.sourceforge.net/cbus.png" align=
-      "right" alt="MERG CBUS logo" height="45" width="90">
+      <p>Originally named CBUS by co-founder Gil Fuchs, CBUS is an 'open' protocol for Model Railway
+            use. The protocol and other useful information is hosted on the MERG public website 
+            (see further support links). CBUS is not owned or controlled by MERG but the co-founders 
+            Gil Fuchs and Mike Bolton are active members. MERG members are able to purchase a range 
+            of CBUS kits.</p>
       
-        <img src=
-      "https://www.merg.org.uk/merg_images/merg_logo.png" align=
-      "right" alt="MERG logo" height="50" width="106">
-
-      <p>
-      MERG CBUS is an 'open source' or public domain project hosted by the
-      Model Electronic Railway Group (<a href=
-      "https://www.merg.org.uk/">MERG</a>), following years of 
-      development by MERG members Mike Bolton and Gil Fuchs.
-      <br >
-      Their intention was to develop a system for comprehensive 
-      layout control based on a general purpose Layout Control Bus (LCB).
-      </p>
-
-      
-      <p>They adopted the Gridconnect scheme but with a slight modification. 
+      <p>CBUS adopted the Gridconnect scheme but with a slight modification. 
       <br>The header is always HEX bytes and maps directly to the PIC CAN registers, left justified.</p>
       
       <p>
-      JMRI <a href="cbus/index.shtml">MERG CBUS</a> support is available for linking JMRI with MERG CBUS, aimed at
+      JMRI <a href="cbus/index.shtml">CBUS</a> support is available for linking JMRI with CBUS, aimed at
           users.
-      <br>Extensive details of the MERG CBUS protocol are available to developers, see the <a href="cbus/index.shtml#thirdparty">MERG CBUS Wiki</a>.
+      <br>Extensive details of the CBUS protocol are available to developers, 
+      see the <a href="cbus/index.shtml#thirdparty">CBUS Wiki</a> hosted on 
+      the MERG public website.
       
       <p>There are many MERG module kits available to help running a layout.
       <br>
@@ -117,21 +108,21 @@
       <p>
       The 3,000+ MERG members are encouraged to to build and design their 
       own modules, and with MERG being over 50 years old, 
-      there is a strong peer review process behind MERG CBUS.
+      there is a strong peer review process behind CBUS.
       <br>
-      Module firmware updates can be performed over the MERG CBUS network 
+      Module firmware updates can be performed over the CBUS network 
       </p>
       
       <p>JMRI includes support for
-      <a href="cbus/index.shtml#cbusevents">MERG CBUS events</a>, also <a 
+      <a href="cbus/index.shtml#cbusevents">CBUS events</a>, also <a 
       href="cbus/index.shtml#dcc">DCC 
-      over MERG CBUS</a> via a CANCMD kit 
+      over CBUS</a> via a CANCMD kit 
       (a fully featured DCC Command Station, mini booster and
       track programmer). This interfaces to JMRI and / or MERG
-      handheld controllers over a MERG CBUS network.
+      handheld controllers over a CBUS network.
       </p>
       
-      <p>MERG CBUS events are sent as one-to-many, enabling multiple modules to listen and change status on 1 single event. eg.</p>
+      <p>CBUS events are sent as one-to-many, enabling multiple modules to listen and change status on 1 single event. eg.</p>
       <ul>
         <li>Event sent from a turnout ( UK - point ) switch monitoring module, sending an "off event" when the point is thrown, an "on event" when closed.</li>
         <li>This event is received by a Relay module, switching the frog polarity of the physical point.</li>
@@ -162,10 +153,15 @@
         <dd><a href="http://canusb.com/">LAWICEL AB</a> CANUSB and
         CAN232 adapters.</dd>
         
-        <dt>MERG CANUSB4</dt>
+        <dt>MERG</dt>
         
-        <dd><a href="https://www.merg.org.uk/kits.php">MERG CANUSB4</a>
-        A MERG CBUS to USB interface, available in kit form to MERG members.</dd>
+        <dd><a href="https://www.merg.org.uk/kits.php">CANUSB4</a>
+        A CBUS to USB interface, available in kit form to MERG members.</dd>
+        
+        <dt>SPROG DCC Ltd</dt>
+        
+        <dd><a href="https://www.sprog-dcc.co.uk">CANISB</a>
+        A galvanically isolated CBUS to USB interface.</dd>
         
       </dl>
       
@@ -179,19 +175,26 @@
             </dl>
       
             <dl>
-            <dt>MERG CANPiCap</dt>        
+            <dt>MERG</dt>        
             <dd>The <a href="https://www.merg.org.uk/kits.php">CANPICAP</a>
-            enables direct MERG CBUS connection to a Raspberry Pi via its 
+            enables direct CBUS connection to a Raspberry Pi via its 
             40 pin I/O connector, available in kit form to MERG members.</dd>
-            </dl>
-            
-            <dl>
-            <dt>MERG CANPiWi/CANPiZero</dt>
+
             <dd>The <a href="https://www.merg.org.uk/kits.php">CANPiWi</a> is based
             on the Raspberry Pi Zero W, and is an interface
-            between Engine Driver / WiThrottle and MERG CBUS.</dd>
+            between Engine Driver / WiThrottle and CBUS.</dd>
             </dl>
 
+            <dl>
+            <dt>SPROG DCC Ltd</dt>
+            <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC Pi-SPROG 3 Plus</a>
+            CBUS DCC Command Station for direct attachment to a Raspberry-Pi via
+            its 40-pin I/O connector.</dd>
+
+            <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC SPROG 3 Plus</a>
+            CBUS DCC Command Station with integrated USB interface.</dd>
+            </dl>
+        
       <h2><a name="connect" id="connect">Connecting</a></h2>
 
       <p>JMRI can provide the usual Sensor and Turnout features,
@@ -215,7 +218,7 @@
       <td></td>
       </tr>
       <tr>
-      <td>MERG CBUS</td>
+      <td>CBUS</td>
       <td><code>MS18</code>
       <br>( Event 18 Active / Inactive )</td>
       <td><code>MT+N2E18;-N2E18</code>
@@ -277,25 +280,24 @@
         <li>Click Save, and restart.</li>
       </ul>
       
-     <h4>MERG CBUS</h4> 
+     <h4>MERG via CBUS</h4> 
       <ul>
       <li>Select as system manufacturer MERG.</li>
       <li>For system connection, select CAN via MERG Network Interface</li>
       <li>Under settings, enter the IP address or hostname of the device with
-      the physical connection to your MERG CBUS network, eg "192.168.0.5" or "localhost"
+      the physical connection to your CBUS network, eg "192.168.0.5" or "localhost"
       <br>The CANPi has a default IP of 192.168.45.1 .
       </li>
-      <li>The TCP port is 5550 ( TCP 5550 is reserved for MERG CBUS use by the IANA ).</li>
-      <li>Connection protocol - MERG CBUS</li>
-      <li>Connection prefix is normally "M" for MERG CBUS.</li>
+      <li>The TCP port is 5550 ( TCP 5550 is reserved for CBUS use by the IANA ).</li>
+      <li>Connection protocol - CBUS</li>
+      <li>Connection prefix is normally "M" for CBUS.</li>
       <li>Click Save, and restart.</li>
       </ul>
       
       <p>
-        <a href="cbus/index.shtml#thirdparty">MERG CBUS 
-        Server</a> is
-        a <a href="https://nodejs.org/en/">Node.js</a> 
-        program, licensed under MIT to allow multiple network connections to a MERG CANUSB4.
+        <a href="cbus/index.shtml#thirdparty">CBUS Server</a> is a 
+        <a href="https://nodejs.org/en/">Node.js</a> program, licensed under MIT 
+        to allow multiple network connections to a MERG CANUSB4.
         </p>
 
       <h2><a name="tools" id="tools">JMRI CAN Tools</a></h2>
@@ -317,23 +319,30 @@
         </li>
         
         
-        <li><img src=
-      "images/MERG_Menu.png" alt="MERG menu" align="right"
-      height="134" width="188">The MERG menu contains 5 tools:
+        <li>A CBUS connection provides a number of tools, depending on the features of the connected hardware, e.g.:
         <ul>
-        <li>Console</li>
-        <li>Send Frame</li>
-        <li>Event Capture Tool</li>
-        <li>Event Table</li>
-        <li>Node Config Tool</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+                    Console</a> - Tool for viewing and sending CAN frames / events.</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
+                    Event Table</a> - Monitors events and presents them in a table full of statistics.</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
+                    Node Manager</a> - Node Table and node configuration tools</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
+                    Command Station Monitor</a> - Loco session monitoring and Command Station Tools.</li>
+            <li><a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">
+                    Send Frame</a> - Send CAN frames or CBUS events</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
+                   >Event Capture Tool</a> - Capture CBUS events</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml"
+                   >Event Request Monitor</a> - Request Event status monitoring tool</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+                   >Network Item simulation</a> - Simulates Cbus Command stations and responds to event requests</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml"> 
+                    CBUS bootloader </a> - to update CBUS module firmware</li>
         </ul>
         </li>
         
-        <li>MERG CBUS <a href=
-        "../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">
-        Send Frame tool</a> can be used for sending CAN events both manually and repeatedly, great for testing.</li>
-        
-      </ul>
+       </ul>
       
       <a name="documentation" id="documentation"></a>
 
@@ -343,7 +352,7 @@
 
       <p><a href="../openlcb/index.shtml">OpenLCB</a> Help</p>
 
-      <p><a href="cbus/index.shtml">MERG CBUS</a> Support</p>
+      <p><a href="cbus/index.shtml">CBUS</a> Support</p>
       
       <p><a href="scripting.shtml">JMRI Scripting</a> for CAN frames.</p>
       
@@ -352,7 +361,11 @@
 
       <p><a href="http://www.openlcb.org">OpenLCB.org</a></p>
       <p><a href="https://www.merg.org.uk">merg.org.uk</a></p>
+      <p><a href="https://www.sprog-dcc.co.uk">SPROG DCC Ltd</a></p>
       <p><a href="https://en.wikipedia.org/wiki/CAN_bus">wikipedia.org/wiki/CAN_bus</a></p>
+      
+      <h2></h2>
+      <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
       
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

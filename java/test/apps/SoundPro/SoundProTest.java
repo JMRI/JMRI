@@ -1,11 +1,12 @@
 package apps.SoundPro;
 
+import java.io.File;
 import java.io.IOException;
 
 import jmri.util.JUnitAppender;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * This is more of an acceptance test than a unit test, loading a series
@@ -22,7 +23,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017
  * @author Bob Jacobsen Copyright (C) 2017
  */
-@Ignore("Replaced with a Cucumber test")
+@Disabled("Replaced with a Cucumber test")
 public class SoundProTest extends apps.LaunchJmriAppBase {
 
     @Override
@@ -31,39 +32,38 @@ public class SoundProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
-    public void testLaunchEasyDcc() throws IOException {
-        runOne("EasyDcc_Simulator", "SoundPro", "SoundPro version");
-        // param 1 is profile folder name, param 2 and 3 must match Console output
+    public void testLaunchEasyDcc(@TempDir File tempFolder) throws IOException {
+        runOne(tempFolder, "EasyDcc_Simulator", "SoundPro", "SoundPro version");
     }
 
     @Test
-    public void testLaunchGrapevine() throws IOException {
-        runOne("Grapevine_Simulator", "SoundPro", "SoundPro version");
+    public void testLaunchGrapevine(@TempDir File tempFolder) throws IOException {
+        runOne(tempFolder, "Grapevine_Simulator", "SoundPro", "SoundPro version");
         JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
         JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
     }
 
     @Test
-    public void testLaunchLocoNet() throws IOException {
-        runOne("LocoNet_Simulator", "SoundPro", "SoundPro version");
+    public void testLaunchLocoNet(@TempDir File tempFolder) throws IOException {
+        runOne(tempFolder, "LocoNet_Simulator", "SoundPro", "SoundPro version");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
     }
 
     @Test
-    public void testLaunchSprog() throws IOException {
-        runOne("Sprog_Simulator", "SoundPro", "SoundPro version");
+    public void testLaunchSprog(@TempDir File tempFolder) throws IOException {
+        runOne(tempFolder, "Sprog_Simulator", "SoundPro", "SoundPro version");
     }
 
     @Test
-    public void testLaunchTmcc() throws IOException {
-        runOne("TMCC_Simulator", "SoundPro", "SoundPro version");
+    public void testLaunchTmcc(@TempDir File tempFolder) throws IOException {
+        runOne(tempFolder, "TMCC_Simulator", "SoundPro", "SoundPro version");
     }
 
     @Test
-    public void testLaunchInitLoop() throws IOException {
-        runOne("Prevent_Init_Loop", "SoundPro", "SoundPro version");
+    public void testLaunchInitLoop(@TempDir File tempFolder) throws IOException {
+        runOne(tempFolder, "Prevent_Init_Loop", "SoundPro", "SoundPro version");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
     }

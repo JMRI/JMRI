@@ -176,6 +176,6 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
     }
 
     @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(XBeeEditNodeFrame.class);
 
 }

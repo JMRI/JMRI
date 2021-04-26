@@ -3,17 +3,19 @@ package jmri.configurexml;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.JDOMException;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.provider.Arguments;
 
 /**
  * Base for XML schema testing
@@ -21,18 +23,10 @@ import org.junit.runners.Parameterized;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 3.9.2
  */
-@RunWith(Parameterized.class)
 public class SchemaTestBase {
 
     private XmlFile.Validate validate;
-    private final File file;
-    private final boolean pass;
 
-    public SchemaTestBase(File file, boolean pass) {
-        this.file = file;
-        this.pass = pass;
-    }
-    
     /**
      * Configure for handling I/O checks:
      * <ul>
@@ -41,32 +35,31 @@ public class SchemaTestBase {
      * <li> Files in the invalid subdirectory will be checked for schema _in_validity
      * </ul>
      * @param path the path to this directory
-     * @return the list of files to process
+     * @return the stream of files to process
      */
-    static protected Iterable<Object[]> setTestFilesBelowThisPath(String path) {
-        ArrayList<Object[]> files = new ArrayList<>();
+    static protected Stream<Arguments> setTestFilesBelowThisPath(String path) {
+        ArrayList<Arguments> files = new ArrayList<>();
         // the following are just tested for schema pass/fail, not load/store
-        files.addAll(getFiles(new File(path+"/valid"), true, true));
-        files.addAll(getFiles(new File(path+"/invalid"), true, false));
+        files.addAll(getFiles(new File(path+"/valid"), true, true).collect(Collectors.toList()));
+        files.addAll(getFiles(new File(path+"/invalid"), true, false).collect(Collectors.toList()));
         // also tested for load/store
-        files.addAll(getFiles(new File(path+"/load"), true, true));
+        files.addAll(getFiles(new File(path+"/load"), true, true).collect(Collectors.toList()));
 
-        Assert.assertTrue("There should be something here; misconfigured?", files.size() > 0);
-        return files;    
+        Assert.assertFalse("There should be something here; misconfigured?", files.isEmpty());
+        return files.stream();
     }
 
-    @Test
-    public void validate() {
+    public void validate(File file, boolean pass) {
         Assume.assumeFalse("Ignoring schema validation.", Boolean.getBoolean("jmri.skipschematests"));
         XmlFile.setDefaultValidate(XmlFile.Validate.CheckDtdThenSchema);
         XmlFile xf = new XmlFileImpl();
         try {
             xf.rootFromFile(file);
-            if (!this.pass) {
+            if (!pass) {
                 Assert.fail("Validation of \"" + file.getPath() + "\" should have failed");
             }
         } catch (IOException | JDOMException ex) { // throw unexpected errors
-            if (this.pass) {
+            if (pass) {
                 Assert.fail("Failed to validate \"" + file.getPath() + "\" due to: " + ex);
             }
         }
@@ -79,26 +72,26 @@ public class SchemaTestBase {
      * @param recurse   if true, will recurse into subdirectories
      * @param pass      if true, successful validation will pass; if false,
      *                  successful validation will fail
-     * @return a collection of Object arrays, where each array contains the
+     * @return a stream of {@link Arguments}, where each Argument contains the
      *         {@link java.io.File} with a filename ending in {@literal .xml} to
      *         validate and a boolean matching the pass parameter
      */
-    public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
-        ArrayList<Object[]> files = new ArrayList<>();
+    public static Stream<Arguments> getFiles(File directory, boolean recurse, boolean pass) {
+        ArrayList<Arguments> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
                 if (file.isDirectory()) {
                     if (recurse) {
-                        files.addAll(getFiles(file, recurse, pass));
+                        files.addAll(getFiles(file, recurse, pass).collect(Collectors.toList()));
                     }
                 } else {
-                    files.addAll(getFiles(file, recurse, pass));
+                    files.addAll(getFiles(file, recurse, pass).collect(Collectors.toList()));
                 }
             }
         } else if (directory.getName().endsWith(".xml")) {
-            files.add(new Object[]{directory, pass});
+            files.add(Arguments.of(directory, pass));
         }
-        return files;
+        return files.stream();
     }
 
     /**
@@ -110,37 +103,39 @@ public class SchemaTestBase {
      * @param recurse   if true, will recurse into subdirectories
      * @param pass      if true, successful validation will pass; if false,
      *                  successful validation will fail
-     * @return a collection of Object arrays, where each array contains the
+     * @return a stream of {@link Arguments}, where each Argument contains the
      *         {@link java.io.File} with a filename ending in {@literal .xml} to
      *         validate and a boolean matching the pass parameter
      * @throws IllegalArgumentException if directory is a file
      */
-    public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
-        ArrayList<Object[]> files = new ArrayList<>();
+    public static Stream<Arguments> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
+        ArrayList<Arguments> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
                 if (file.isDirectory()) {
-                    files.addAll(getFiles(file, recurse, pass));
+                    files.addAll(getFiles(file, recurse, pass).collect(Collectors.toList()));
                 }
             }
         } else {
             throw new IllegalArgumentException("directory must be a directory, not a file");
         }
-        return files;
+        return files.stream();
     }
 
-    @Before
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @BeforeEach
+    @OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         this.validate = XmlFile.getDefaultValidate();
     }
 
-    @After
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @AfterEach
+    @OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

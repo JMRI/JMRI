@@ -1,203 +1,215 @@
 package jmri.jmrit.whereused;
 
-import java.awt.GraphicsEnvironment;
+import java.nio.file.Path;
+
 import jmri.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import jmri.swing.NamedBeanComboBox;
+import jmri.managers.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import jmri.util.junit.annotations.ToDo;
+import jmri.util.swing.JemmyUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
+
+import javax.swing.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the WhereUsedFrame Class
  * @author Dave Sand Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class WhereUsedFrameTest {
 
+    private WhereUsedFrame frame;
+
     @Test
-    public void testFrame() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WhereUsedFrame frame = new WhereUsedFrame();
-        Assert.assertNotNull(frame);
+    public void testTypeSelection() {
         frame.setVisible(true);
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleWhereUsed"));  // NOI18N
-        Assert.assertNotNull(jfo);
 
         // For each item type, create the bean combo box and verify it.  Build the report using a direct call.
-        JComboBoxOperator jcoType = new JComboBoxOperator(jfo, 0);
+        String typeComboBoxLabel = Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"));
+        JLabelOperator typeLabelOperator = new JLabelOperator(jfo, typeComboBoxLabel);
+        JComboBoxOperator jcoType = new JComboBoxOperator((JComboBox) typeLabelOperator.getLabelFor());
 
         // Turnout
-        jcoType.selectItem(1);
-        String mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "ProxyTurnoutManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.TURNOUT);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(ProxyTurnoutManager.class);
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("LE Left");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.TURNOUT, turnout);
 
         // Sensor
-        jcoType.selectItem(2);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "ProxySensorManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.SENSOR);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(ProxySensorManager.class);
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("S-Main");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SENSOR, sensor);
 
         // Light
-        jcoType.selectItem(3);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "ProxyLightManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.LIGHT);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(ProxyLightManager.class);
         Light light = InstanceManager.getDefault(LightManager.class).getLight("L-Sensor Control");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.LIGHT, light);
 
         // Signal Head
-        jcoType.selectItem(4);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "AbstractSignalHeadManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.SIGNALHEAD);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(AbstractSignalHeadManager.class);
         SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("Left-AU");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SIGNALHEAD, signalHead);
 
         // Signal Mast
-        jcoType.selectItem(5);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "DefaultSignalMastManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.SIGNALMAST);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(DefaultSignalMastManager.class);
         SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("Left-B");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SIGNALMAST, signalMast);
 
         // Reporter
-        jcoType.selectItem(6);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "ProxyReporterManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.REPORTER);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(ProxyReporterManager.class);
         Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter("Test Reporter");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.REPORTER, reporter);
 
         // Memory
-        jcoType.selectItem(7);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "DefaultMemoryManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.MEMORY);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(DefaultMemoryManager.class);
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory("BlockMemory");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.MEMORY, memory);
 
         // Route
-        jcoType.selectItem(8);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "DefaultRouteManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.ROUTE);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(DefaultRouteManager.class);
         Route route = InstanceManager.getDefault(RouteManager.class).getRoute("Sensors");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.ROUTE, route);
 
         // OBlock
-        jcoType.selectItem(9);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "OBlockManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.OBLOCK);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(OBlockManager.class);
         OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.OBLOCK, oblock);
 
         // Block
-        jcoType.selectItem(10);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "BlockManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.BLOCK);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(BlockManager.class);
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock("B-Main");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.BLOCK, block);
 
         // Section
-        jcoType.selectItem(11);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "SectionManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.SECTION);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(SectionManager.class);
         Section section = InstanceManager.getDefault(SectionManager.class).getSection("LeftTO to Main");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SECTION, section);
 
         // Warrant
-        jcoType.selectItem(12);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "WarrantManager");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.WARRANT);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(WarrantManager.class);
         Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("IW::TestWarrant");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.WARRANT, warrant);
 
         // EntryExit
-        jcoType.selectItem(13);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "EntryExitPairs");
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.ENTRYEXIT);
+        assertThat(frame._itemNameBox.getManager()).isInstanceOf(EntryExitPairs.class);
         DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean("NX-LeftTO-A (Left-A) to NX-RIghtTO-B (Right-B)");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.ENTRYEXIT, dp);
+    }
 
-        // Test setItemNameBox --
-        frame.setItemNameBox(WhereUsedFrame.ItemType.NONE);
+    @Test
+    @ToDo("Add appropriate assertions for thee result of creating the report.")
+    public void testCreateReportForTurnoutObject() {
+        frame.setVisible(true);
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("LE Left");
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleWhereUsed"));  // NOI18N
 
-        frame.setItemNameBox(WhereUsedFrame.ItemType.TURNOUT);
-        JComboBoxOperator jcoName = new JComboBoxOperator(jfo, 1);
-        jcoName.selectItem(1);
+        String typeComboBoxLabel = Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"));
+        JLabelOperator typeLabelOperator = new JLabelOperator(jfo, typeComboBoxLabel);
+        JComboBoxOperator jcoType = new JComboBoxOperator((JComboBox) typeLabelOperator.getLabelFor());
+        jcoType.setSelectedItem(WhereUsedFrame.ItemType.TURNOUT);
 
-        JUnitUtil.dispose(frame);
+        String nameComboBoxLabel = Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName"));
+        JLabelOperator nameLabelOperator = new JLabelOperator(jfo, nameComboBoxLabel);
+        JComboBoxOperator jcoName = new JComboBoxOperator((JComboBox) nameLabelOperator.getLabelFor());
+        jcoName.setSelectedItem(turnout);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonCreate"));
     }
 
     @Test
     public void testSave() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WhereUsedFrame frame = new WhereUsedFrame();
-        Assert.assertNotNull(frame);
         frame.setVisible(true);
 
         // Cancel save request
-        Thread cancelFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonCancel"), "cancelFile");  // NOI18N
+        Thread cancelFile = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonCancel"));  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(cancelFile.isAlive());}, "cancelFile finished");  // NOI18N
+        JUnitUtil.waitFor(()-> !(cancelFile.isAlive()), "cancelFile finished");  // NOI18N
 
         // Complete save request
-        Thread saveFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile");  // NOI18N
+        Thread saveFile = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"));  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(saveFile.isAlive());}, "saveFile finished");  // NOI18N
+        JUnitUtil.waitFor(()-> !(saveFile.isAlive()), "saveFile finished");  // NOI18N
 
         // Replace duplicate file
-        Thread saveFile2 = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile2");  // NOI18N
-        Thread replaceFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage("SaveDuplicateReplace"), "replaceFile");  // NOI18N
-        frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(saveFile2.isAlive());}, "saveFile2 finished");  // NOI18N
-        JUnitUtil.waitFor(()->{return !(replaceFile.isAlive());}, "replaceFile finished");  // NOI18N
+        checkDuplicateFileOperation("SaveDuplicateReplace");
 
         // Append duplicate file
-        Thread saveFile3 = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile3");  // NOI18N
-        Thread appendFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage("SaveDuplicateAppend"), "appendFile");  // NOI18N
-        frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(saveFile3.isAlive());}, "saveFile3 finished");  // NOI18N
-        JUnitUtil.waitFor(()->{return !(appendFile.isAlive());}, "appendFile finished");  // NOI18N
+        checkDuplicateFileOperation("SaveDuplicateAppend");
 
         // Cancel duplicate file
-        Thread saveFile4 = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile4");  // NOI18N
-        Thread cancelFile2 = createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage("ButtonCancel"), "cancelFile2");  // NOI18N
+        checkDuplicateFileOperation("ButtonCancel");
+    }
+
+    private void checkDuplicateFileOperation(String operation) {
+        Thread saveFile4 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"));  // NOI18N
+        Thread cancelFile2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage(operation));  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(saveFile4.isAlive());}, "saveFile4 finished");  // NOI18N
-        JUnitUtil.waitFor(()->{return !(cancelFile2.isAlive());}, "cancelFile2 finished");  // NOI18N
-
-        JUnitUtil.dispose(frame);
+        JUnitUtil.waitFor(() -> !(saveFile4.isAlive()), "save " + operation + " finished");  // NOI18N
+        JUnitUtil.waitFor(() -> !(cancelFile2.isAlive()), "cancel " + operation + " finished");  // NOI18N
     }
 
-    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(dialogTitle);
-            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
-        });
-        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
-        t.start();
-        return t;
-    }
+    @TempDir
+    protected Path tempDir;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initReporterManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initRouteManager();
+        JUnitUtil.initWarrantManager();
+        JUnitUtil.initSectionManager();
+        JUnitUtil.clearBlockBossLogic();
+
         java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
-        cm.load(f);
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        frame = new WhereUsedFrame();
    }
 
-    @After
+    @AfterEach
     public  void tearDown() {
+        JUnitUtil.dispose(frame);
+        frame = null;
+        new EditorFrameOperator("LE Panel").closeFrameWithConfirmations();
+        new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
+        new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 

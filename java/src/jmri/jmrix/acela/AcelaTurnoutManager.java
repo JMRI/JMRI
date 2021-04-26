@@ -37,21 +37,20 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * <p>
      * Assumes calling method has checked that a Turnout with this
      * system name does not already exist.
-     *
-     * @return null if the system name is not in a valid format
+     * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Turnout trn = null;
         // check if the output bit is available
-        int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
+        int nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Node Address from System Name " + systemName);
         }
         int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit Number from System Name " + systemName);
         }
 
         // Validate the systemName
@@ -94,6 +93,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * Public method to validate system name for configuration.
      *
+     * @param systemName system name to validate
      * @return 'true' if system name has a valid meaning in the current
      * configuration, else return 'false'
      */
@@ -102,10 +102,11 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to convert system name to its alternate format
+     * Public method to convert system name to its alternate format.
      * <p>
-     * Returns a normalized system name if system name is valid and has a valid
-     * alternate representation, else return "".
+     * @param systemName system name to convert
+     * @return a normalized system name if system name is valid and has a valid
+     * alternate representation, else return ""
      */
     public String convertSystemNameToAlternate(String systemName) {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));

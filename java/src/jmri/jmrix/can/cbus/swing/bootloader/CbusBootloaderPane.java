@@ -5,6 +5,7 @@ import static javax.swing.SwingUtilities.getWindowAncestor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -360,7 +361,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             nodeNumber = Integer.parseInt(nodeNumberField.getText());
         } catch (NumberFormatException e1) {
             addToLog(Bundle.getMessage("BootInvalidNode"));
-            log.error("Invalid node number {}", e1);
+            log.error("Invalid node number {}");
             return;
         }
         // Read the parameters from the chosen node
@@ -388,7 +389,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             hexFile = new HexFile(hexFileChooser.getSelectedFile().getPath());
             log.debug("hex file chosen: {}", hexFile.getName());
             addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), hexFile.getName()));
-            if (hexFile.openRd()) {
+            try {
+                hexFile.openRd();
                 hexFile.read();
                 fileParams = new CbusParameters().validate(hexFile, hardwareParams);
                 if (fileParams.areValid()) {
@@ -404,7 +406,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     hexForBootloader = true;
                     programButton.setEnabled(true);
                 }
-            } else {
+            } catch (IOException ex) {
+                log.error("Error opening hex file");
                 addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
             }
         }

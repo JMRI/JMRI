@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -95,7 +95,7 @@ public class CbusOpCodesTest {
         Assert.assertTrue("m known",CbusOpCodes.isKnownOpc(m));
         m.setExtended(true);
         Assert.assertFalse("m not known when extended",CbusOpCodes.isKnownOpc(m));
-        Assert.assertEquals("CBUS_CMDERR true","Bootloader Message Type: 18",CbusOpCodes.decode(m));
+        Assert.assertEquals("CBUS_CMDERR true",Bundle.getMessage("decodeUnknownExtended"),CbusOpCodes.decode(m));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class CbusOpCodesTest {
         Assert.assertEquals("decodeopc 1","Reserved opcode",CbusOpCodes.decodeopc(m));
         Assert.assertEquals("decodeopc 2","Reserved opcode",CbusOpCodes.decodeopc(m));
         m.setExtended(true);
-        Assert.assertEquals("decodeopc 3","Bootloader Message Type: 18",CbusOpCodes.decodeopc(m));
+        Assert.assertTrue("decodeopc 3",CbusOpCodes.decodeopc(m).isEmpty());
     }
     
     @Test
@@ -118,6 +118,64 @@ public class CbusOpCodesTest {
                 Assert.assertEquals("opc short text "+i,Bundle.getMessage("OPC_RESERVED"),CbusOpCodes.decodeopc(m));
             }
         }
+    }
+    
+    @Test
+    public void testextendedFrameTranslation(){
+    
+        CanMessage m = new CanMessage( new int[]{5,1,2,3,0x0d,0,6,7},0x04  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 4  0","Bootloader: Do nothing",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 1);
+        Assert.assertEquals("extended 4  1","Bootloader: Issue soft reset, leave boot mode",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 2);
+        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum to 131,333 and verify",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 3);
+        Assert.assertEquals("extended 4  3","Bootloader: Boot Check with checksum 1,798",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 4);
+        Assert.assertEquals("extended 4  4","Bootloader: Verify boot mode",CbusOpCodes.decode(m));
+    
+        m.setElement(5, 5);
+        Assert.assertEquals("extended 4  5","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m.setHeader(5);
+        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 05 06 07",CbusOpCodes.decode(m));
+        
+        
+        m = new CanMessage( new int[]{0},0x10000004 );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Error",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 1);
+        Assert.assertEquals("extended 10000004 1","Bootloader: Boot OK",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 2);
+        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 3);
+        Assert.assertEquals("extended 10000004 1","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+    }
+    
+    @Test
+    public void testGlocTranslate(){
+    
+        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_GLOC,02,03,00},123 );
+        Assert.assertEquals("GLOC 0","Addr: 515(S) Flags: 0 Standard Request",CbusOpCodes.decode(m));
+    
+        m.setElement(3, 1);
+        Assert.assertEquals("GLOC 1","Addr: 515(S) Flags: 1 Steal Request",CbusOpCodes.decode(m));
+        
+        m.setElement(3, 2);
+        Assert.assertEquals("GLOC 2","Addr: 515(S) Flags: 2 Share Request",CbusOpCodes.decode(m));
+        
+        m.setElement(3, 3);
+        Assert.assertEquals("GLOC 3","Addr: 515(S) Flags: 3 Invalid Flags",CbusOpCodes.decode(m));
+        
     }
     
     @Test
@@ -224,6 +282,7 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_EXTC3, "EXTC3"); // NOI18N
         result.put(CbusConstants.CBUS_RDCC4, "RDCC4"); // NOI18N
         result.put(CbusConstants.CBUS_WCVS, "WCVS"); // NOI18N
+        result.put(CbusConstants.CBUS_VCVS, "VCVS"); // NOI18N
         result.put(CbusConstants.CBUS_CABDAT, "CABDAT"); // NOI18N
         result.put(CbusConstants.CBUS_ACON1, "ACON1"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF1, "ACOF1"); // NOI18N
@@ -476,6 +535,7 @@ public class CbusOpCodesTest {
         
         result.add(CbusConstants.CBUS_RDCC4);
         result.add(CbusConstants.CBUS_WCVS);
+        result.add(CbusConstants.CBUS_VCVS);
         
         result.add(CbusConstants.CBUS_RDCC5);
         result.add(CbusConstants.CBUS_WCVOA);
@@ -562,13 +622,12 @@ public class CbusOpCodesTest {
         return Collections.unmodifiableSet(result);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

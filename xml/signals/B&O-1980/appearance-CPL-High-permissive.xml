@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,20 +23,14 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
-    <revision>
-        <revnumber>1.1</revnumber>
-        <date>2019-12-30</date>
-        <authorinitials>BM</authorinitials>
-        <revremark>Correct 'held' specific appearance</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
   <name>Color Position Light Permissive High Signals</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
   <description>Appearances for B&amp;O permissive color position light mast signals.</description>
-  
+
   <appearances>
 
    <appearance>
@@ -57,7 +51,7 @@
 	  <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-282.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
@@ -91,44 +85,37 @@
       <show>red</show>
       <show>dark</show>
       <reference>Page 138</reference>
-      <comment>Normal speed route appearance</comment>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-291.gif</imagelink>
     </appearance>
 
-    <appearance>
-      <aspectname>Stop and Proceed Medium</aspectname>
-      <show>dark</show>
-      <show>red</show>
-      <show>green</show>
-      <reference>Page 138</reference>
-      <comment>Unofficial Rule and Aspect Name to allow for medium speed route appearance.  This signal was not likely used in any ABS or CTC territory.  Was likely used in special locations and situations such as manual block making Logix a candidate for control.</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-291-medium.gif</imagelink>
-    </appearance>
-	
 	<appearance>
-	  <aspectname>unlit</aspectname>
+	  <aspectname>Unlit</aspectname>
 	  <show>dark</show>
 	  <show>dark</show>
 	  <show>dark</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/dark.gif</imagelink>
-    </appearance>	  
+	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/unlit.gif</imagelink>
+    </appearance>
 
   </appearances>
 
   <specificappearances>
-    
+
 	<danger>
       <aspect>Stop and Proceed</aspect>
     </danger>
-	
+
+	<permissive>
+	   <aspect>Stop and Proceed</aspect>
+	</permissive>
+
     <held>
       <aspect>Stop and Proceed</aspect>
     </held>
-	
+
 	<dark>
-	  <aspect>unlit</aspect>
+	  <aspect>Unlit</aspect>
 	</dark>
-	
+
   </specificappearances>
 
   <aspectMappings>
@@ -141,7 +128,7 @@
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -151,7 +138,7 @@
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -161,7 +148,7 @@
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -201,7 +188,7 @@
       <advancedAspect>Stop and Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
@@ -213,5 +200,5 @@
     </aspectMapping>
 
   </aspectMappings>
-  
-</appearancetable>  
+
+</appearancetable>

@@ -10,21 +10,28 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import jmri.util.JUnitUtil;
+import jmri.DccThrottle;
 import jmri.InstanceManager;
-import org.junit.After;
+import jmri.LocoAddress;
+import jmri.SpeedStepMode;
+import jmri.ThrottleListener;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+
 
 /**
  * Test simple functioning of ControlPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ControlPanelTest {
     ControlPanel panel;
     JFrame frame;
+    DccThrottle throttle;
 
     private void setupControlPanel() {
         panel = new ControlPanel();
@@ -90,62 +97,86 @@ public class ControlPanelTest {
     @Test
     public void testExtendedThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(false);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(false);
         setupControlPanel();
-        //checkFrameOverlap(panel.getContentPane());
 
-        try {
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.STEPDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-        } catch (InterruptedException e) {
-            // Ignore.
-        }
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.STEPDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
+        checkFrameOverlap(panel.getContentPane());
     }
 
     @Test
     public void testIconThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(true);
+        InstanceManager.throttleManagerInstance().supportedSpeedModes();
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
+
         checkFrameOverlap(panel.getContentPane());
 
-        try {
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.STEPDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-        } catch (InterruptedException e) {
-            // Ignore.
-        }
+        panel.setSpeedController(ControlPanel.STEPDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
+        checkFrameOverlap(panel.getContentPane());
     }
 
-    @Before
+    @ParameterizedTest
+    @EnumSource(SpeedStepMode.class)
+    public void testSpeedStepModes(SpeedStepMode mode) {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
+        setupControlPanel();
+        throttle = null;
+        InstanceManager.throttleManagerInstance().requestThrottle(3,
+            new ThrottleListener(){
+              @Override
+              public void notifyThrottleFound(DccThrottle t) {
+                throttle = t;
+                throttle.setSpeedStepMode(mode);
+                panel.notifyAddressThrottleFound(t);
+              }
+
+              @Override
+              public void notifyFailedThrottleRequest(LocoAddress address,
+                  String reason) {
+              }
+              @Override
+              public void notifyDecisionRequired(LocoAddress address,
+                  DecisionType question) {
+              }
+            });
+
+        Assert.assertTrue(throttle != null);
+        Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
+        Assert.assertEquals(throttle.getSpeedStepMode(), mode);
+
+    }
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUseExThrottle(true);
+            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {         
+                jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+            }        
+            InstanceManager.getDefault(ThrottlesPreferences.class).setUseExThrottle(true);
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if( frame != null ) {
             JUnitUtil.dispose(frame);

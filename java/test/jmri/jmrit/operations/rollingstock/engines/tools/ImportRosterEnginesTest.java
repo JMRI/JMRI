@@ -2,11 +2,11 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ImportRosterEnginesTest extends OperationsTestCase {
 

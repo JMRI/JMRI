@@ -43,7 +43,7 @@ public class PacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
 

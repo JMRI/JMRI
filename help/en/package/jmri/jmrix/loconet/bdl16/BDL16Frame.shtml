@@ -22,12 +22,13 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
+    <a href="BDL16xConfigTool.png"><img src="BDL16xConfigTool.png"
+    alt="BDL16x Configuration Tool Screen" width="386" height="423" 
+    style="float:right; margin: 5px;"></a>
+
     <div id="mainContent">
 
       <h1>Configure Digitrax BDL16x</h1>
-      <a href="BDL16xConfigTool.png"><img src="BDL16xConfigTool.png"
-      alt="BDL16x Configuration Tool Screen" width="386" height="423" align="right"></a>
-
       <p>The JMRI BDL16x programming tool lets you configure the
       internal options of a BDL16, BDL162, or BDL168 directly from
       your computer, when the board is connected to a JMRI LocoNet 
@@ -49,6 +50,12 @@
       
       <p>Any time that a Board ID number is typed into the Board ID text entry space,
       the number will be added to the list if it is not already present in the list.</p>
+      
+      <p>While it is possible to change the Board ID number using JMRI, it cannot
+          be done using this tool due to limitations of the BDL16x design.  Instead, 
+          follow the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
+          here</a>.  Those instructions are for programming a BDL168 board, but 
+          they are believed to apply also to BDL16 and BDL162 boards.</p>
       
       <h2>Reading and writing the OpSw settings</h2>
        
@@ -95,7 +102,7 @@
         Full Sheet" operation will write all OpSw values.</li>
 
         <li>This tool is able to access BDL16x boards with
-        addresses between 1 and 256. Users are advised to avoid
+        addresses between 1 and 128. Users are advised to avoid
         using the factory default board address (board address 1)
         as it will be difficult to program new boards with unique
         data if any in-service board is using the factory default
@@ -104,7 +111,10 @@
         <li>Because of the way the BDL16x board works, this tool
         can't change the basic address of the unit. The BDL16x
         documentation describes how to change the board
-        address.</li>
+        address.  It is possible to change the Board ID number using JMRI by 
+        following the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
+        here</a>. Those instructions are for programming a BDL168 board, but 
+        they are believed to apply also to BDL16 and BDL162 boards.</li>
       </ul>
 
       <h2>See Also</h2>

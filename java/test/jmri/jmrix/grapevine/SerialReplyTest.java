@@ -1,14 +1,14 @@
 package jmri.jmrix.grapevine;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialReply class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008
  */
 public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -58,13 +58,13 @@ public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        m = msg = new SerialReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        m = msg = null;
        JUnitUtil.tearDown();

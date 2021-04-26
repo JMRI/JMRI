@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+    <choice>0 – Standard on/off function output</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>1 – FRED – flashing rear end device</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>2 – Mars light</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>3 – Rotary beacon</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>4 – Gyralight</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>5 – Double strobe</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>6 – Single strobe</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>7 – Dimmed when on, off when off</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>8 – Dim in forward, bright in reverse</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>9 – Dim in reverse, bright in forward</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>10 – Type A Ditch light phase A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>11 – Type A Ditch light phase B,</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>12 – Type B Ditch light phase A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>13 – Type B Ditch light phase B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>14 – F0 Dimmed when F4 on, bright when F4 off</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>15 – Output is always off</choice>
+  </enumChoice>
+</enumVal>

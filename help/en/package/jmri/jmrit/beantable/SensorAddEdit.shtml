@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Sensor Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -245,12 +245,12 @@
       <p><a href="../../../../html/hardware/XPressNet/XNetAddressing.shtml">More
       on XPressNet sensor naming</a>.</p>
 
-      <h3>MERG CBUS to JMRI Sensor Mapping</h3>
+      <h3>CBUS&reg; to JMRI Sensor Mapping</h3>
       <p>Short event 18 on and off : "+18".</p>
       <p>Short event 18 on, short event 21 off : "+18;-21".</p> 
       <p>Long event Node 2 Event 18 on and off : "+N2E18".</p>
       <p>CAN frame hex string : "X9000020012;X91FFFFFFFE".</p>
-      <p><a href="../../../../html/hardware/can/cbus/Names.shtml">Full details for MERG CBUS sensor naming</a>.</p>
+      <p><a href="../../../../html/hardware/can/cbus/Names.shtml">Full details for CBUS sensor naming</a>.</p>
 
       <h3>Maple and C/MRI Sensor to JMRI Sensor Mapping</h3>
 
@@ -348,6 +348,10 @@
 
       <p>Back to the <a href="SensorTable.shtml">Sensor Table help
       page</a>.</p>
+
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

@@ -2,14 +2,13 @@ package jmri.jmrix.loconet.pr4;
 
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PR4AdapterTest {
 
@@ -24,24 +23,27 @@ public class PR4AdapterTest {
         PR4Adapter t = new PR4Adapter();
         String[] cmdStns = t.commandStationOptions();
         boolean foundPR4StandaloneProgrammer = false;
+        boolean foundPR4StandaloneLocoNet = false;
         for (int i=0; i < cmdStns.length; i++) {
-            Assert.assertNotEquals("should not find 'Stand-alone LocoNet", 
-                    LnCommandStationType.COMMAND_STATION_STANDALONE.getName(), cmdStns[i]);
             if (cmdStns[i].equals(LnCommandStationType.COMMAND_STATION_PR4_ALONE.getName())) {
                 foundPR4StandaloneProgrammer = true;
             }
+            if (cmdStns[i].compareTo(
+                    LnCommandStationType.COMMAND_STATION_STANDALONE.getName().toString() +
+                    " (using external LocoNet Data Termination!)") == 0) {
+                foundPR4StandaloneLocoNet = true;
+            }
         }
         Assert.assertTrue("Found PR4 in standalone programmer mode", foundPR4StandaloneProgrammer);
-            
+        Assert.assertTrue("Should have found 'Stand-alone LocoNet but did not!", foundPR4StandaloneLocoNet);            
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

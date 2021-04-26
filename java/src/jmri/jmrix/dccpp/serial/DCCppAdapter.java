@@ -11,6 +11,7 @@ import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -20,8 +21,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Com Port. Normally controlled by
- * the lenz.liusb.LIUSBFrame class.
+ * Provide access to DCC++ via a FTDI Virtual Com Port.
  *
  * @author Mark Underwood Copyright (C) 2015
  *
@@ -62,7 +62,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: {}", et);
             }
 
             // get and save stream
@@ -72,24 +72,15 @@ public class DCCppAdapter extends DCCppSerialPortController {
             purgeStream(serialStream);
 
             // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info(portName + " port opened at "
-                         + activeSerialPort.getBaudRate() + " baud with"
-                         + " DTR: " + activeSerialPort.isDTR()
-                         + " RTS: " + activeSerialPort.isRTS()
-                         + " DSR: " + activeSerialPort.isDSR()
-                         + " CTS: " + activeSerialPort.isCTS()
-                         + "  CD: " + activeSerialPort.isCD()
-                         );
-            }
+            log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
+
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
+
             }
 
             opened = true;
@@ -141,7 +132,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
         try {
             return new DataInputStream(activeSerialPort.getInputStream());
         } catch (java.io.IOException e) {
-            log.error("getInputStream exception: " + e.getMessage());
+            log.error("getInputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -154,7 +145,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -166,6 +157,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     /**
      * Local method to do specific configuration.
+     * @throws UnsupportedCommOperationException if the underlying port cannot comply
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

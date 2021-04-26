@@ -1,6 +1,5 @@
 package jmri.jmrix.acela;
 
-import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +19,9 @@ public class AcelaTurnout extends AbstractTurnout {
     private AcelaSystemConnectionMemo _memo = null;
 
     /**
-     * Create a Light object, with only system name.
+     * Create a Turnout object, with only system name.
      * <p>
-     * 'SystemName' was previously validated in AcelaLightManager
+     * 'SystemName' was previously validated in AcelaTurnoutManager
      *
      * @param systemName the system name for this Turnout
      * @param memo       the memo for the system connection
@@ -34,9 +33,9 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     /**
-     * Create a Light object, with both system and user names.
+     * Create a Turnout object, with both system and user names.
      * <p>
-     * 'systemName' was previously validated in AcelaLightManager
+     * 'systemName' was previously validated in AcelaTurnoutManager
      *
      * @param systemName the system name for this Turnout
      * @param userName   the user name for this Turnout
@@ -68,21 +67,15 @@ public class AcelaTurnout extends AbstractTurnout {
     protected int mState = UNKNOWN;  // current state of this turnout
     int mBit = -1;                // global address from 0
 
-    // Handle a request to change state by sending a turnout command
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
-            } else {
-                // send a CLOSED command
-                sendMessage(true ^ getInverted());
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false ^ getInverted());
+    protected void forwardCommandChangeToLayout(int newState) {
+        try {
+            sendMessage(stateChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 
@@ -106,10 +99,9 @@ public class AcelaTurnout extends AbstractTurnout {
         return true;
     }
 
-    //method which takes a turnout state as a parameter and adjusts it  as necessary
-    //to reflect the turnout invert property
+    // method which takes a turnout state as a parameter and adjusts it as necessary
+    // to reflect the turnout invert property
     private int adjustStateForInversion(int rawState) {
-
         if (getInverted() && (rawState == CLOSED || rawState == THROWN)) {
             if (rawState == CLOSED) {
                 return THROWN;

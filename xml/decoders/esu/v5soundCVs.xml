@@ -15,21 +15,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- Volumes -->
-    <variable CV="57" default="143" item="Sound Steam Chuffs Step 1" tooltip="Set to zero for cam input">
-        <decVal/>
-        <label>Chuff spacing speed step 1</label>
-        <label xml:lang="it">Velocità distanza Chuff step 1</label>
-        <label xml:lang="de">Dampfstöße bei FS=1</label>
-        <label xml:lang="ca">Espaiat entre xufs pas 1</label>
-        <tooltip xml:lang="de">Setzen Sie den Wert auf 0 wenn ein externer Radsensor verwendet wird.</tooltip>
-    </variable>
-    <variable CV="58" default="43" item="Sound Steam Chuffs Decrease Rate">
-        <decVal/>
-        <label>Chuff spacing decrease rate</label>
-        <label xml:lang="it">Decremento distanza Chuff</label>
-        <label xml:lang="de">Anpassung bei höheren FS</label>
-        <label xml:lang="ca">Taxa decreiement xuf</label>
-    </variable>
     <variable CV="63" default="180" item="Sound Volume Master" comment="Range 0-192">
         <decVal max="192"/>
         <comment>Range 0-192</comment>
@@ -76,29 +61,6 @@
             <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
         </variable>
     </variables>
-    <variable CV="141" default="20" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 2">
-        <decVal/>
-        <label>Smoke Unit Minimum Steam Chuff Duration</label>
-        <label xml:lang="it">Durata Min.Chuff per Gener.Fumo</label>
-        <label xml:lang="de">Minimale Dauer</label>
-        <label xml:lang="ca">Unitat mínima de duració de xuf</label>
-        <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
-    </variable>
-    <variable CV="142" default="122" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 3">
-        <decVal/>
-        <label>Smoke Unit Maximum Steam Chuff Duration</label>
-        <label xml:lang="it">Durata Max.Chuff per Gener.Fumo</label>
-        <label xml:lang="de">Maximale Dauer</label>
-        <label xml:lang="ca">Unitat màxima de duració de xuf</label>
-        <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
-    </variable>
-    <variable CV="143" default="102" item="ESU V4 Function Settings Smoke Chuffs Slider 1">
-        <decVal/>
-        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
-        <label xml:lang="it">Durata Suono per Gener.Fumo in funz.dist.Trigger</label>
-        <label xml:lang="de">Dauer der Dampfstöße (relativ zu Trigger-Impulsen)</label>
-        <label xml:lang="ca">Unitat de xuf en relació a distància</label>
-    </variable>
     <variable CV="155" default="0" item="SoundCV1">
         <decVal/>
         <label>Sound CV1</label>
@@ -163,23 +125,9 @@
         <decVal/>
         <label>Sound CV16</label>
     </variable>
-    <variable CV="249" default="0" item="Sound Steam Chuffs Min Distance">
-        <decVal/>
-        <label>Chuff minimum spacing</label>
-        <label xml:lang="it">Durata Min.distanza Chuff</label>
-        <label xml:lang="de">Minimaler Abstand der Dampfstöße</label>
-        <label xml:lang="ca">Temps mínim entre xufs</label>
-    </variable>
-    <variable CV="250" default="0" item="Sound Steam Chuffs Secondary Trigger">
-        <decVal/>
-        <label>Chuff secondary trigger</label>
-        <label xml:lang="it">Trigger secondario Chuff</label>
-        <label xml:lang="de">Sekundärer Trigger</label>
-        <label xml:lang="ca">Disparador secundari</label>
-    </variable>
     <!-- Indexed variables -->
     <variable CV="16.1.259" default="128" item="Sound Volume 1">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 1 Volume</label>
         <label xml:lang="it">Volume Suono Slot 1</label>
         <label xml:lang="de">Soundslot 1 Lautstärke</label>
@@ -213,7 +161,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.267" default="128" item="Sound Volume 2">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 2 Volume</label>
         <label xml:lang="it">Volume Suono Slot 2</label>
         <label xml:lang="de">Soundslot 2 Lautstärke</label>
@@ -247,7 +195,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.275" default="128" item="Sound Volume 3">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 3 Volume</label>
         <label xml:lang="it">Volume Suono Slot 3</label>
         <label xml:lang="de">Soundslot 3 Lautstärke</label>
@@ -281,7 +229,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.283" default="128" item="Sound Volume 4">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 4 Volume</label>
         <label xml:lang="it">Volume Suono Slot 4</label>
         <label xml:lang="de">Soundslot 4 Lautstärke</label>
@@ -315,7 +263,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.291" default="128" item="Sound Volume 5">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 5 Volume</label>
         <label xml:lang="it">Volume Suono Slot 5</label>
         <label xml:lang="de">Soundslot 5 Lautstärke</label>
@@ -349,7 +297,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.299" default="128" item="Sound Volume 6">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 6 Volume</label>
         <label xml:lang="it">Volume Suono Slot 6</label>
         <label xml:lang="de">Soundslot 6 Lautstärke</label>
@@ -383,7 +331,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.307" default="128" item="Sound Volume 7">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 7 Volume</label>
         <label xml:lang="it">Volume Suono Slot 7</label>
         <label xml:lang="de">Soundslot 7 Lautstärke</label>
@@ -417,7 +365,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.1.315" default="128" item="Sound Volume 8">
-        <decVal max="128"/>
+        <decVal/>
         <label>Sound Slot 8 Volume</label>
         <label xml:lang="it">Volume Suono Slot 8</label>
         <label xml:lang="de">Soundslot 8 Lautstärke</label>
@@ -452,7 +400,7 @@
     </variable>
     <variables exclude="Essential Sound Unit">
         <variable CV="16.1.323" default="128" item="Sound Volume 9">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 9 Volume</label>
             <label xml:lang="it">Volume Suono Slot 9</label>
             <label xml:lang="de">Soundslot 9 Lautstärke</label>
@@ -486,7 +434,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.331" default="128" item="Sound Volume 10">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 10 Volume</label>
             <label xml:lang="it">Volume Suono Slot 10</label>
             <label xml:lang="de">Soundslot 10 Lautstärke</label>
@@ -520,7 +468,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.339" default="128" item="Sound Volume 11">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 11 Volume</label>
             <label xml:lang="it">Volume Suono Slot 11</label>
             <label xml:lang="de">Soundslot 11 Lautstärke</label>
@@ -554,7 +502,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.347" default="128" item="Sound Volume 12">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 12 Volume</label>
             <label xml:lang="it">Volume Suono Slot 12</label>
             <label xml:lang="de">Soundslot 12 Lautstärke</label>
@@ -588,7 +536,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.355" default="128" item="Sound Volume 13">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 13 Volume</label>
             <label xml:lang="it">Volume Suono Slot 13</label>
             <label xml:lang="de">Soundslot 13 Lautstärke</label>
@@ -622,7 +570,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.363" default="128" item="Sound Volume 14">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 14 Volume</label>
             <label xml:lang="it">Volume Suono Slot 14</label>
             <label xml:lang="de">Soundslot 14 Lautstärke</label>
@@ -656,7 +604,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.371" default="128" item="Sound Volume 15">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 15 Volume</label>
             <label xml:lang="it">Volume Suono Slot 15</label>
             <label xml:lang="de">Soundslot 15 Lautstärke</label>
@@ -690,7 +638,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.379" default="128" item="Sound Volume 16">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 16 Volume</label>
             <label xml:lang="it">Volume Suono Slot 16</label>
             <label xml:lang="de">Soundslot 16 Lautstärke</label>
@@ -724,7 +672,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.387" default="128" item="Sound Volume 17">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 17 Volume</label>
             <label xml:lang="it">Volume Suono Slot 17</label>
             <label xml:lang="de">Soundslot 17 Lautstärke</label>
@@ -758,7 +706,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.395" default="128" item="Sound Volume 18">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 18 Volume</label>
             <label xml:lang="it">Volume Suono Slot 18</label>
             <label xml:lang="de">Soundslot 18 Lautstärke</label>
@@ -792,7 +740,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.403" default="128" item="Sound Volume 19">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 19 Volume</label>
             <label xml:lang="it">Volume Suono Slot 19</label>
             <label xml:lang="de">Soundslot 19 Lautstärke</label>
@@ -826,7 +774,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.411" default="128" item="Sound Volume 20">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 20 Volume</label>
             <label xml:lang="it">Volume Suono Slot 20</label>
             <label xml:lang="de">Soundslot 20 Lautstärke</label>
@@ -860,7 +808,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.419" default="128" item="Sound Volume 21">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 21 Volume</label>
             <label xml:lang="it">Volume Suono Slot 21</label>
             <label xml:lang="de">Soundslot 21 Lautstärke</label>
@@ -894,7 +842,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.427" default="128" item="Sound Volume 22">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 22 Volume</label>
             <label xml:lang="it">Volume Suono Slot 22</label>
             <label xml:lang="de">Soundslot 22 Lautstärke</label>
@@ -928,7 +876,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.435" default="128" item="Sound Volume 23">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 23 Volume</label>
             <label xml:lang="it">Volume Suono Slot 23</label>
             <label xml:lang="de">Soundslot 23 Lautstärke</label>
@@ -962,7 +910,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.443" default="128" item="Sound Volume 24">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 24 Volume</label>
             <label xml:lang="it">Volume Suono Slot 24</label>
             <label xml:lang="de">Soundslot 24 Lautstärke</label>
@@ -996,7 +944,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.451" default="128" item="Sound Volume 25">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 25 Volume</label>
             <label xml:lang="it">Volume Suono Slot 25</label>
             <label xml:lang="de">Soundslot 25 Lautstärke</label>
@@ -1030,7 +978,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.459" default="128" item="Sound Volume 26">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 26 Volume</label>
             <label xml:lang="it">Volume Suono Slot 26</label>
             <label xml:lang="de">Soundslot 26 Lautstärke</label>
@@ -1064,7 +1012,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.467" default="128" item="Sound Volume 27">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 27 Volume</label>
             <label xml:lang="it">Volume Suono Slot 27</label>
             <label xml:lang="de">Soundslot 27 Lautstärke</label>
@@ -1098,7 +1046,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.475" default="128" item="Sound Volume 28">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 28 Volume</label>
             <label xml:lang="it">Volume Suono Slot 28</label>
             <label xml:lang="de">Soundslot 28 Lautstärke</label>
@@ -1132,7 +1080,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.483" default="128" item="Sound Volume 29">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 29 Volume</label>
             <label xml:lang="it">Volume Suono Slot 29</label>
             <label xml:lang="de">Soundslot 29 Lautstärke</label>
@@ -1166,7 +1114,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.491" default="128" item="Sound Volume 30">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 30 Volume</label>
             <label xml:lang="it">Volume Suono Slot 30</label>
             <label xml:lang="de">Soundslot 30 Lautstärke</label>
@@ -1200,7 +1148,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.499" default="128" item="Sound Volume 31">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 31 Volume</label>
             <label xml:lang="it">Volume Suono Slot 31</label>
             <label xml:lang="de">Soundslot 31 Lautstärke</label>
@@ -1234,7 +1182,7 @@
             <label xml:lang="ca">Configurqació de so</label>
         </variable>
         <variable CV="16.1.507" default="128" item="Sound Volume 32">
-            <decVal max="128"/>
+            <decVal/>
             <label>Sound Slot 32 Volume</label>
             <label xml:lang="it">Volume Suono Slot 32</label>
             <label xml:lang="de">Soundslot 32 Lautstärke</label>
@@ -1269,7 +1217,7 @@
         </variable>
     </variables>
     <variable CV="16.2.259" default="128" item="Sound Volume 33">
-        <decVal max="128"/>
+        <decVal/>
         <label>Brake Sound volume</label>
         <label xml:lang="it">Volume Freni</label>
         <label xml:lang="de">Bremsgeräusch Lautstärke</label>
@@ -1303,7 +1251,7 @@
         <label xml:lang="ca">Configurqació de so</label>
     </variable>
     <variable CV="16.2.267" default="128" item="Sound Volume 34">
-        <decVal max="128"/>
+        <decVal/>
         <label>Gear Shift Sound volume</label>
         <label xml:lang="it">Volume Cambio Marcia</label>
         <label xml:lang="de">Schaltgeräusch Lautstärke</label>

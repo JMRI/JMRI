@@ -1,41 +1,17 @@
 package apps;
 
-import apps.startup.AbstractStartupModel;
-import java.io.File;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * A PerformFileModel object loads an xml file when the program is started.
  *
  * @author Bob Jacobsen Copyright 2003
  * @author Randall Wood (c) 2016
- * @see apps.startup.PerformFileModelFactory
+ * @see jmri.util.startup.PerformFileModelFactory
+ * @author Randall Wood Copyright 2020
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.PerformFileModel} instead
  */
-public class PerformFileModel extends AbstractStartupModel {
-
-    private final static Logger log = LoggerFactory.getLogger(PerformFileModel.class);
-
-    public String getFileName() {
-        return this.getName();
-    }
-
-    public void setFileName(String n) {
-        this.setName(n);
-    }
-
-    @Override
-    public void performAction() throws JmriException {
-        log.info("Loading file {}", this.getFileName());
-
-        // load the file
-        File file = new File(this.getFileName());
-        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
-        if (cm != null) {
-            cm.load(file);
-        }
-    }
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public class PerformFileModel extends jmri.util.startup.PerformFileModel {
 }

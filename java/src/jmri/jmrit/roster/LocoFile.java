@@ -31,19 +31,21 @@ import org.slf4j.LoggerFactory;
 public class LocoFile extends XmlFile {
 
     /**
-     * Convert to a canonical text form for ComboBoxes, etc
+     * Convert to a canonical text form for ComboBoxes, etc.
+     * @return loco title.
      */
     public String titleString() {
         return "no title form yet";
     }
 
     /**
-     * Load a CvTableModel from the locomotive element in the File
+     * Load a CvTableModel from the locomotive element in the File.
      *
      * @param loco    A JDOM Element containing the locomotive definition
      * @param cvModel An existing CvTableModel object which will have the CVs
      *                from the loco Element appended. It is intended, but not
      *                required, that this be empty.
+     * @param family  unused.
      */
     public static void loadCvModel(Element loco, CvTableModel cvModel, String family) {
         CvValue cvObject;
@@ -64,20 +66,20 @@ public class LocoFile extends XmlFile {
         if (values != null) {
             // get the CV values and load
             if (log.isDebugEnabled()) {
-                log.debug("Found " + values.getChildren("CVvalue").size() + " CVvalues");
+                log.debug("Found {} CVvalues", values.getChildren("CVvalue").size());
             }
 
             for (Element element : values.getChildren("CVvalue")) {
                 // locate the row
                 if (element.getAttribute("name") == null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("unexpected null in name " + element + " " + element.getAttributes());
+                        log.debug("unexpected null in name {} {}", element, element.getAttributes());
                     }
                     break;
                 }
                 if (element.getAttribute("value") == null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("unexpected null in value " + element + " " + element.getAttributes());
+                        log.debug("unexpected null in value {} {}", element, element.getAttributes());
                     }
                     break;
                 }
@@ -134,7 +136,7 @@ public class LocoFile extends XmlFile {
 
         // get the Variable values and load
         if (log.isDebugEnabled()) {
-            log.debug("Found " + decoderDef.getChildren("varValue").size() + " varValue elements");
+            log.debug("Found {} varValue elements", decoderDef.getChildren("varValue").size());
         }
 
         // preload an index
@@ -203,7 +205,7 @@ public class LocoFile extends XmlFile {
      */
     public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile to " + file.getAbsolutePath() + " " + file.getName());
+            log.debug("writeFile to {} {}", file.getAbsolutePath(), file.getName());
         }
         try {
             // This is taken in large part from "Java and XML" page 368
@@ -282,7 +284,7 @@ public class LocoFile extends XmlFile {
      */
     public void writeFile(File pFile, Element pRootElement, RosterEntry pEntry) {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile to " + pFile.getAbsolutePath() + " " + pFile.getName());
+            log.debug("writeFile to {} {}", pFile.getAbsolutePath(), pFile.getName());
         }
         try {
             // This is taken in large part from "Java and XML" page 368
@@ -292,7 +294,7 @@ public class LocoFile extends XmlFile {
 
             // Update the locomotive.id element
             if (log.isDebugEnabled()) {
-                log.debug("pEntry: " + pEntry);
+                log.debug("pEntry: {}", pEntry);
             }
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
 
@@ -319,7 +321,7 @@ public class LocoFile extends XmlFile {
      */
     public void writeFile(File pFile, Element existingElement, Element newLocomotive) {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile to " + pFile.getAbsolutePath() + " " + pFile.getName());
+            log.debug("writeFile to {} {}", pFile.getAbsolutePath(), pFile.getName());
         }
         try {
             // This is taken in large part from "Java and XML" page 368

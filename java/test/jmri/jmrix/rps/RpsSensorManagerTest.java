@@ -5,15 +5,13 @@ import jmri.util.JUnitUtil;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the RPS SensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  * @author Paul Bender Copyright (C) 2016
  */
 public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -21,6 +19,11 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @Override
     public String getSystemName(int i) {
         return "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
     }
 
     @Test
@@ -93,14 +96,14 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
         l = new RpsSensorManager(new RpsSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.tearDown();

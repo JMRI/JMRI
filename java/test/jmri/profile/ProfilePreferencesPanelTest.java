@@ -1,33 +1,25 @@
 package jmri.profile;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class ProfilePreferencesPanelTest {
+public class ProfilePreferencesPanelTest extends PreferencesPanelTestBase<ProfilePreferencesPanel> {
 
-    @Test
-    public void testCTor() {
-        ProfilePreferencesPanel t = new ProfilePreferencesPanel();
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
+    @Override
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        prefsPanel = new ProfilePreferencesPanel();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ProfilePreferencesPanelTest.class);

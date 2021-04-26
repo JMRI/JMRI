@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
@@ -23,7 +24,7 @@ public class FrmFleeting extends javax.swing.JFrame {
     private boolean _mDefaultFleetingEnabledOrig;
 
     private void initOrig(OtherData otherData) {
-        _mFleetingToggleInternalSensorOrig = otherData._mFleetingToggleInternalSensor;
+        _mFleetingToggleInternalSensorOrig = otherData._mFleetingToggleInternalSensor.getHandleName();
         _mDefaultFleetingEnabledOrig = otherData._mDefaultFleetingEnabled;
     }
     private boolean dataChanged() {
@@ -38,7 +39,7 @@ public class FrmFleeting extends javax.swing.JFrame {
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgFlt", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
-        _mFleetingToggleInternalSensor.setText(otherData._mFleetingToggleInternalSensor);
+        _mFleetingToggleInternalSensor.setText(otherData._mFleetingToggleInternalSensor.getHandleName());
         _mDefaultFleetingEnabled.setSelected(otherData._mDefaultFleetingEnabled);
         initOrig(otherData);
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
@@ -137,8 +138,13 @@ public class FrmFleeting extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
-        _mOtherData._mFleetingToggleInternalSensor = _mFleetingToggleInternalSensor.getText();
-        _mOtherData._mDefaultFleetingEnabled = _mDefaultFleetingEnabled.isSelected();
+        if (dataChanged()) {
+
+            NBHSensor newSensor = CommonSubs.getNBHSensor(_mFleetingToggleInternalSensor.getText(), true);
+            if (newSensor != null) _mOtherData._mFleetingToggleInternalSensor = newSensor;
+
+            _mOtherData._mDefaultFleetingEnabled = _mDefaultFleetingEnabled.isSelected();
+        }
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();

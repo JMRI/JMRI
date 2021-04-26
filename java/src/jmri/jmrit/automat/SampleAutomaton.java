@@ -53,8 +53,7 @@ public class SampleAutomaton extends AbstractAutomaton {
     @Override
     protected void init() {
 
-        log.info("SampleAutomaton monitors sensor " + sensorName
-                + " and controls turnout " + turnoutName);
+        log.info("SampleAutomaton monitors sensor {} and controls turnout {}", sensorName, turnoutName);
 
         // get references to sample layout objects
         turnout = InstanceManager.turnoutManagerInstance().
@@ -84,7 +83,7 @@ public class SampleAutomaton extends AbstractAutomaton {
 
         // get new value
         now = sensor.getKnownState();
-        log.debug("Found new state: " + now);
+        log.debug("Found new state: {}", now);
 
         // match the turnout to the conditions
         setTurnout(now);

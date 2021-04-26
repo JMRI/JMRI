@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,19 +12,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableRowSorter;
-import javax.swing.text.DefaultFormatter;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.swing.CbusNewEventPane;
+import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.util.swing.StayOpenCheckBoxItem;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.table.JTableWithColumnToolTips;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,18 +38,12 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel implements TableModelListener {
 
-    protected CbusEventRequestDataModel eventModel=null;
-    protected JTable eventTable=null;
-    protected JScrollPane eventScroll;
-    protected JSplitPane split;
-    protected JPanel pane1;
-    protected JPanel toppanelcontainer;
-    protected JPanel neweventcontainer = new JPanel();
-    private JSpinner newnodenumberSpinner;
-    private JSpinner newevnumberSpinner;
-    private JButton newevbutton;
-    public String currentRowCount;
-    protected JPanel filterpanel = new JPanel();
+    protected CbusEventRequestDataModel eventModel;
+    protected JTable eventTable;
+    private JScrollPane eventScroll;
+    private JSplitPane split;
+    
+    private CbusNewEventPane neweventcontainer;
     
     private final double _splitratio = 0.95;
 
@@ -78,43 +69,15 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
 
     public void init() {
         
-        JTable _evReqTable = new JTable(eventModel) {
-            // Override JTable Header to implement table header tool tips.
-            @Override
-            protected JTableHeader createDefaultTableHeader() {
-                return new JTableHeader(columnModel) {
-                    @Override
-                    public String getToolTipText(MouseEvent e) {
-                        try {
-                           // log.debug("131 gettttext");
-                            java.awt.Point p = e.getPoint();
-                            int index = columnModel.getColumnIndexAtX(p.x);
-                            int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return CbusEventRequestDataModel.columnToolTips[realIndex];    
-                        } catch (RuntimeException e1) {
-                            //catch null pointer exception if mouse is over an empty line
-                        }
-                        return null;
-                    }
-                };
-            }
-        };
+        JTable _evReqTable = new JTableWithColumnToolTips(eventModel,CbusEventRequestDataModel.columnToolTips);
 
         // Use XTableColumnModel so we can control which columns are visible
         final  XTableColumnModel tcm = new XTableColumnModel();
         _evReqTable.setColumnModel(tcm);
-        _evReqTable.createDefaultColumnsFromModel();
-        
-        _evReqTable.setAutoCreateRowSorter(true);
-        
-        final TableRowSorter<CbusEventRequestDataModel> sorter = new TableRowSorter<>(eventModel);
-        _evReqTable.setRowSorter(sorter);
         
         scrolltablefeedback = new JScrollPane (eventModel.tablefeedback());
         
-        _evReqTable.setRowSelectionAllowed(true);
-        _evReqTable.setColumnSelectionAllowed(false);
-        _evReqTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        CbusCommonSwing.configureTable(_evReqTable);
         
         tcm.getColumn(CbusEventRequestDataModel.FEEDBACKREQUIRED_COLUMN).setCellRenderer(new OsRenderer());        
         tcm.getColumn(CbusEventRequestDataModel.FEEDBACKOUTSTANDING_COLUMN).setCellRenderer(new OsRenderer());
@@ -130,10 +93,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         
         TableColumn rqStatColumn = tcm.getColumn(CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         rqStatColumn.setCellEditor(new ButtonEditor(new JButton()));
-        rqStatColumn.setCellRenderer(new ButtonRenderer());   
-
-        // configure items for GUI
-        eventModel.configureTable(_evReqTable);
+        rqStatColumn.setCellRenderer(new ButtonRenderer());
 
         for (int i = 0; i < tcm.getColumnCount(); i++) {
             int colnumber=i;
@@ -172,7 +132,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         }
                 
         eventModel.addTableModelListener(this);
-        	
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
         // main pane
@@ -186,56 +146,8 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         eventScroll.setPreferredSize(new Dimension(450, 200));
 
         // add new event
-        neweventcontainer.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), (Bundle.getMessage("NewEvent"))));
         
-        JPanel newnode = new JPanel();
-        JPanel newev = new JPanel();
-
-        newnode.add(new JLabel(Bundle.getMessage("CbusNode")));
-        newnodenumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65535, 1));
-        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(newnodenumberSpinner, "#");
-        newnodenumberSpinner.setEditor(editor);
-        JFormattedTextField field = (JFormattedTextField) editor.getComponent(0);
-        DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
-        formatter.setCommitsOnValidEdit(true);
-        newnodenumberSpinner.addChangeListener((ChangeEvent e) -> {
-            checkNewevent();
-        });
-        newnode.add(newnodenumberSpinner);
-        newnode.setToolTipText(Bundle.getMessage("NewNodeTip"));
-        newnodenumberSpinner.setToolTipText(Bundle.getMessage("NewNodeTip"));
-        
-        newev.add(new JLabel(Bundle.getMessage("CbusEvent")));
-        newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 65535, 1));
-        JSpinner.NumberEditor neditor = new JSpinner.NumberEditor(newevnumberSpinner, "#");
-        newevnumberSpinner.setEditor(neditor);
-        JFormattedTextField fielde = (JFormattedTextField) neditor.getComponent(0);
-        DefaultFormatter formattere = (DefaultFormatter) fielde.getFormatter();
-        formattere.setCommitsOnValidEdit(true);
-        newevnumberSpinner.addChangeListener((ChangeEvent e) -> {
-            checkNewevent();
-        });
-        
-        newev.add(newevnumberSpinner);
-        
-        newevbutton = new JButton((Bundle.getMessage("NewEvent")));
-        
-        ActionListener newEventaction = ae -> {
-            int ev = (Integer) newevnumberSpinner.getValue();
-            int nd = (Integer) newnodenumberSpinner.getValue();
-            
-            int existingRow = eventModel.eventRow(nd,ev);
-            if ( existingRow < 0 ) {
-                eventModel.addEvent(nd,ev,CbusEventRequestMonitorEvent.EvState.UNKNOWN,null);
-            }
-        };
-        
-        newevbutton.addActionListener(newEventaction);
-        
-        neweventcontainer.add(newnode);
-        neweventcontainer.add(newev);
-        neweventcontainer.add(newevbutton);
+        neweventcontainer = new CbusNewEventPane(this);
         
         _toppanelcontainer.add(neweventcontainer);
         _pane1.add(_toppanelcontainer, BorderLayout.PAGE_START);
@@ -250,15 +162,11 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         _pane1.setVisible(true);
     }
     
-    private void checkNewevent() {
-        int newno = (Integer) newnodenumberSpinner.getValue();
-        int newev = (Integer) newevnumberSpinner.getValue();
-        
-        if (eventModel.eventRow( newno, newev ) > -1 ) {
-            newevbutton.setEnabled(false);
-        } else {
-            newevbutton.setEnabled(true);
+    public void addEvent(int nn,int en){
+        if ( eventModel.eventRow(nn,en) < 0 ) {
+            eventModel.addEvent(nn,en,CbusEventRequestMonitorEvent.EvState.UNKNOWN,null);
         }
+        tableChanged(null);
     }
     
     /**
@@ -266,7 +174,8 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
      */
     @Override
     public void tableChanged(TableModelEvent e) {
-        checkNewevent();
+        neweventcontainer.setNewButtonActive(
+            eventModel.eventRow( neweventcontainer.getNn(),neweventcontainer.getEn())<0) ;
     }
   
     /**
@@ -292,18 +201,14 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         JCheckBoxMenuItem shownewevent = new JCheckBoxMenuItem((Bundle.getMessage("NewEvent")));
         // shownewevent.setMnemonic(KeyEvent.VK_C);
         shownewevent.setSelected(true);
-        shownewevent.addActionListener((ActionEvent e) -> {
-            boolean newEvShow = shownewevent.isSelected();
-            neweventcontainer.setVisible(newEvShow);
-        });
+        shownewevent.addActionListener((ActionEvent e) -> 
+            neweventcontainer.setVisible(shownewevent.isSelected()));
         
         JCheckBoxMenuItem showinfopanel = new JCheckBoxMenuItem(Bundle.getMessage("ShowInfoPanel"));
         // shownewevent.setMnemonic(KeyEvent.VK_C);
         showinfopanel.setSelected(true);
         showinfopanel.addActionListener((ActionEvent e) -> {
-            boolean infoShow = showinfopanel.isSelected();
-            
-            scrolltablefeedback.setVisible(infoShow);
+            scrolltablefeedback.setVisible(showinfopanel.isSelected());
             validate();
             repaint();
             split.setDividerLocation(_splitratio);

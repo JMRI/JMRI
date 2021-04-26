@@ -6,13 +6,15 @@ import jmri.util.ThreadingUtil;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
- * Tests Logix in detail by loading a set of 
- * configurations from a file (to simplify setup), 
+ * Tests Logix in detail by loading a set of
+ * configurations from a file (to simplify setup),
  * then changing inputs and checking
- * outputs.  
+ * outputs.
  * <p>
  * Because the load is slow, it's done once
  * for this entire test class.
@@ -21,7 +23,7 @@ import org.junit.*;
  */
 public class ActiveLogixTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -34,30 +36,30 @@ public class ActiveLogixTest {
         cm.load(f);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
     }
-    
+
     private void setSensor(Sensor s, int state) {
         try {
             s.setState(state);
         } catch (JmriException e) {
         }
     }
-    
+
     @Test
     public void testTurnoutDrivesSensor() {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("IT101");
         Assert.assertNotNull(turnout);
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("IS101");
         Assert.assertNotNull(sensor);
-        
+
         ThreadingUtil.runOnLayout(()->{turnout.setCommandedState(Turnout.THROWN);});
         JUnitUtil.waitFor(()->{return sensor.getState()==Sensor.ACTIVE;},"sensor ACTIVE");
-        
+
         ThreadingUtil.runOnLayout(()->{turnout.setCommandedState(Turnout.CLOSED);});
         JUnitUtil.waitFor(()->{return sensor.getState()==Sensor.INACTIVE;},"sensor INACTIVE");
 
         ThreadingUtil.runOnLayout(()->{turnout.setCommandedState(Turnout.THROWN);});
         JUnitUtil.waitFor(()->{return sensor.getState()==Sensor.ACTIVE;},"sensor ACTIVE");
-        
+
     }
 
     @Test
@@ -76,7 +78,7 @@ public class ActiveLogixTest {
         Assert.assertNotNull(sensor5);
         Sensor sensor6 = InstanceManager.getDefault(SensorManager.class).getSensor("IS206");
         Assert.assertNotNull(sensor6);
-        
+
         // start all inactive
         ThreadingUtil.runOnLayout(()->{setSensor(sensor1, Sensor.INACTIVE);});
         ThreadingUtil.runOnLayout(()->{setSensor(sensor2, Sensor.INACTIVE);});
@@ -84,9 +86,9 @@ public class ActiveLogixTest {
         ThreadingUtil.runOnLayout(()->{setSensor(sensor4, Sensor.INACTIVE);});
         ThreadingUtil.runOnLayout(()->{setSensor(sensor5, Sensor.INACTIVE);});
         ThreadingUtil.runOnLayout(()->{setSensor(sensor6, Sensor.INACTIVE);});
-        
+
         JUnitUtil.waitFor(()->{return turnout.getCommandedState()==Turnout.CLOSED;},"turnout CLOSED");
-        
+
         ThreadingUtil.runOnLayout(()->{setSensor(sensor1, Sensor.ACTIVE);});
         ThreadingUtil.runOnLayout(()->{setSensor(sensor2, Sensor.ACTIVE);});
         JUnitUtil.waitFor(()->{return turnout.getCommandedState()==Turnout.THROWN;},"turnout THROWN");
@@ -110,19 +112,19 @@ public class ActiveLogixTest {
         Calendar cal = new GregorianCalendar();
         cal.set(2018, 1, 12, 2, 00, 00); // 02:00:00
         timebase.setTime(cal.getTime());
-        
+
         // turnout change sets time
         ThreadingUtil.runOnLayout(()->{turnout1.setCommandedState(Turnout.THROWN);});
         ThreadingUtil.runOnLayout(()->{turnout2.setCommandedState(Turnout.CLOSED);});
-        
+
         cal.set(2018, 1, 12, 4, 01, 00); // 04:01:00
         JUnitUtil.waitFor(()->{return timebase.getTime().equals(cal.getTime());},"date 04:01:00");
         JUnitUtil.waitFor(()->{return sensor.getState()==Sensor.ACTIVE;},"sensor ACTIVE");
-        
+
         // turnout change sets time
         ThreadingUtil.runOnLayout(()->{turnout1.setCommandedState(Turnout.CLOSED);});
         ThreadingUtil.runOnLayout(()->{turnout2.setCommandedState(Turnout.THROWN);});
-        
+
         cal.set(2018, 1, 12, 14, 02, 00); // 14:02:00
         JUnitUtil.waitFor(()->{return sensor.getState()==Sensor.INACTIVE;},"sensor INACTIVE");
         JUnitUtil.waitFor(()->{return timebase.getTime().equals(cal.getTime());},"date 14:02:00");
@@ -138,7 +140,7 @@ public class ActiveLogixTest {
         Assert.assertNotNull(memory3);
         Memory memory4 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM404");
         Assert.assertNotNull(memory4);
-   
+
         // test the IM401 to IM402 conditional
         ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
         ThreadingUtil.runOnLayout(()->{memory1.setValue("aaa");});
@@ -147,7 +149,7 @@ public class ActiveLogixTest {
         ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
         ThreadingUtil.runOnLayout(()->{memory1.setValue("aatta");});
         JUnitUtil.waitFor(()->{return memory2.getValue().equals("bbb");},"Value bbb after aatta");
-        
+
         ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
         ThreadingUtil.runOnLayout(()->{memory1.setValue("aAa");});
         JUnitUtil.waitFor(()->{return memory2.getValue().equals("aAa");},"Value aAa after aAa");
@@ -158,9 +160,9 @@ public class ActiveLogixTest {
 
         ThreadingUtil.runOnLayout(()->{memory3.setValue("200");});
         JUnitUtil.waitFor(()->{return memory4.getValue().equals("No");},"No after 200");
-        
+
         ThreadingUtil.runOnLayout(()->{memory3.setValue("50");});
-        JUnitUtil.waitFor(()->{return memory4.getValue().equals("OK");},"OK after 50");        
+        JUnitUtil.waitFor(()->{return memory4.getValue().equals("OK");},"OK after 50");
     }
 
     @Test
@@ -172,17 +174,19 @@ public class ActiveLogixTest {
 
         ThreadingUtil.runOnLayout(()->{light1.setState(Light.ON);});
         JUnitUtil.waitFor(()->{return light2.getState()==Light.OFF;},"light Off");
-        
+
         ThreadingUtil.runOnLayout(()->{light1.setState(Light.OFF);});
         JUnitUtil.waitFor(()->{return light2.getState()==Light.ON;},"light On");
-        
+
         ThreadingUtil.runOnLayout(()->{light1.setState(Light.ON);});
         JUnitUtil.waitFor(()->{return light2.getState()==Light.OFF;},"light Off");
-        
+
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

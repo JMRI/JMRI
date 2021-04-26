@@ -68,7 +68,7 @@ public abstract class Jynstrument extends JPanel {
 
     public void exit() {
         Container cnt = getParent();
-        log.debug("getParent() is " + cnt);
+        log.debug("getParent() is {}", cnt);
         if (cnt != null) {
             cnt.remove(this);
             cnt.repaint();

@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -22,7 +22,7 @@ import jmri.util.swing.JemmyUtil;
 /**
  * Tests for the Operations EnginesTableFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EnginesTableFrameTest extends OperationsTestCase {
@@ -185,8 +185,8 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         Location westford = lManager.newLocation("Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
-        Track westfordSiding = westford.addTrack("Siding", Track.SPUR);
-        westfordSiding.setLength(300);
+        Track westfordSpur = westford.addTrack("Spur", Track.SPUR);
+        westfordSpur.setLength(300);
         Track westfordAble = westford.addTrack("Able", Track.SPUR);
         westfordAble.setLength(300);
         Location boxford = lManager.newLocation("Boxford");
@@ -236,7 +236,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         e4.setOwner("AAA");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
         e4.setRfid("RFID 4");
-        Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
+        Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSpur));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
 
         Engine e5 = eManager.newRS("NH", "5");

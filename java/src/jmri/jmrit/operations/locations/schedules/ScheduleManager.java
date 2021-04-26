@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -16,9 +23,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages schedules.
@@ -26,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2013
  */
-public class ScheduleManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class ScheduleManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; // NOI18N
 
@@ -305,9 +309,9 @@ public class ScheduleManager implements InstanceManagerAutoDefault, InstanceMana
         JComboBox<LocationTrackPair> box = new JComboBox<>();
         // search all spurs for that use schedule
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-            for (Track spur : location.getTrackByNameList(Track.SPUR)) {
+            for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 if (spur.getScheduleId().equals(schedule.getId())) {
-                    LocationTrackPair ltp = new LocationTrackPair(location, spur);
+                    LocationTrackPair ltp = new LocationTrackPair(spur);
                     box.addItem(ltp);
                 }
             }
@@ -351,20 +355,10 @@ public class ScheduleManager implements InstanceManagerAutoDefault, InstanceMana
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class);

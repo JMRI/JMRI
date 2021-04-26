@@ -3,7 +3,8 @@ package jmri.util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.DateUtil class.
@@ -49,13 +50,12 @@ public class DateUtilTest {
         Assert.assertEquals("Julian Day", 2440588, DateUtil.julianDayFromCalendar(testCal));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

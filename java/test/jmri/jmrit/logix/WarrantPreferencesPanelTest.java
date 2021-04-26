@@ -1,33 +1,30 @@
 package jmri.jmrit.logix;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class WarrantPreferencesPanelTest {
+public class WarrantPreferencesPanelTest extends PreferencesPanelTestBase<WarrantPreferencesPanel> {
 
-    @Test
-    public void testCTor() {
-        WarrantPreferencesPanel t = new WarrantPreferencesPanel();
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
+    @Override
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        prefsPanel = new WarrantPreferencesPanel();
     }
 
-    @After
+    @Override
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        prefsPanel = null;
         JUnitUtil.tearDown();
     }
 

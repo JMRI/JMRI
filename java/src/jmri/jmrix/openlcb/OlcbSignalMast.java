@@ -4,11 +4,13 @@ import java.util.*;
 import javax.annotation.*;
 
 import jmri.implementation.AbstractSignalMast;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 import org.openlcb.Connection;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
+import org.openlcb.IdentifyEventsAddressedMessage;
+import org.openlcb.IdentifyEventsGlobalMessage;
 import org.openlcb.Message;
 import org.openlcb.MessageDecoder;
 import org.openlcb.NodeID;
@@ -18,7 +20,6 @@ import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
 import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.ProducerIdentifiedMessage;
-import org.openlcb.IdentifyEventsMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,13 +89,13 @@ public class OlcbSignalMast extends AbstractSignalMast {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
-            log.error("SignalMast system name needs at least three parts: " + systemName);
+            log.error("SignalMast system name needs at least three parts: {}",systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect {} : {}",systemName,mastType);
         } else {
-            String systemPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
+            String systemPrefix = parts[0].substring(0, parts[0].indexOf('$') - 1);
             java.util.List<SystemConnectionMemo> memoList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
 
             for (SystemConnectionMemo memo : memoList) {
@@ -102,22 +103,24 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     if (memo instanceof jmri.jmrix.can.CanSystemConnectionMemo) {
                         systemMemo = (jmri.jmrix.can.CanSystemConnectionMemo) memo;
                     } else {
-                        log.error("Can't create mast \""+systemName+"\" because system \"" + systemPrefix + "\" is not CanSystemConnectionMemo but rather "+memo.getClass());
+                        log.error("Can't create mast \"{}\" because system \"{}\" is not CanSystemConnectionMemo but rather {}"
+                                ,systemName,systemPrefix,memo.getClass());
                     }
                     break;
                 }
             }
 
             if (systemMemo == null) {
-                log.error("No OpenLCB connection found for system prefix \"" + systemPrefix + "\", so mast \""+systemName+"\" will not function");
+                log.error("No OpenLCB connection found for system prefix \"{}\", so mast \"{}\" will not function",
+                        systemPrefix,systemName);
             }
         }
         String system = parts[1];
         String mast = parts[2];
 
-        mast = mast.substring(0, mast.indexOf("("));
+        mast = mast.substring(0, mast.indexOf('('));
         setMastType(mast);
-        String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")")); // +2 because we're looking for 2 characters
+        String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(')')); // +2 because we're looking for 2 characters
         
         try {
             mastNumber = Integer.parseInt(tmp);
@@ -134,9 +137,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
             node = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getNodeId();
             connection = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getOutputConnection();
  
-            litMachine = new StateMachine<Boolean>(connection, node, Boolean.TRUE);
-            heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
-            aspectMachine = new StateMachine<String>(connection, node, getAspect());
+            litMachine = new StateMachine<>(connection, node, Boolean.TRUE);
+            heldMachine = new StateMachine<>(connection, node, Boolean.FALSE);
+            aspectMachine = new StateMachine<>(connection, node, getAspect());
         
             ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
                 @Override
@@ -161,7 +164,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public String getOutputForAppearance(String appearance) {
         String retval = aspectMachine.getEventStringForState(appearance);
         if (retval == null) {
-            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            log.error("Trying to get appearance {} but it has not been configured",appearance);
             return "";
         }
         return retval;
@@ -174,8 +177,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     /**
-     * Handle incoming messages
+     * Handle incoming messages.
      * 
+     * @param msg the message to handle.
      */
     public void handleMessage(Message msg) {
         // gather before state
@@ -235,6 +239,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     /**
      * Provide the last used sequence number of all OlcbSignalMasts in use.
+     * @return last used OlcbSignalMasts sequence number
      */
     public static int getLastRef() {
         return lastRef;
@@ -267,13 +272,13 @@ public class OlcbSignalMast extends AbstractSignalMast {
             this.state = start;
         }
         
-        Connection connection;
-        NodeID node;
+        final Connection connection;
+        final NodeID node;
         T state;
         boolean initizalized = false;
-        protected HashMap<T, String> stateToEventString = new HashMap<>();
-        protected HashMap<T, EventID> stateToEventID = new HashMap<>();
-        protected HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
+        protected final HashMap<T, String> stateToEventString = new HashMap<>();
+        protected final HashMap<T, EventID> stateToEventID = new HashMap<>();
+        protected final HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
         
         public void setState(@Nonnull T newState) {
             log.debug("sending PCER to {}", getEventStringForState(newState));
@@ -282,7 +287,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     null);
         }
         
-        private final static EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
+        private static final EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
         
         @Nonnull
         public T getState() { return state; }
@@ -334,6 +339,8 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * Internal method to determine the EventState for a reply
          * to an Identify* method
+         * @param event Method returns the underlying state for this EventID
+         * @return State corresponding to the given EventID
          */
         EventState getEventIDState(EventID event) {
             T value = eventToState.get(event);
@@ -385,12 +392,22 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyEvents(@Nonnull IdentifyEventsMessage msg, Connection sender){
+        public void handleIdentifyEventsAddressed(@Nonnull IdentifyEventsAddressedMessage msg,
+                                                  Connection sender){
             // ours?
             if (! node.equals(msg.getDestNodeID())) return;  // not to us
             sendAllIdentifiedMessages();
-        }            
-        
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void handleIdentifyEventsGlobal(@Nonnull IdentifyEventsGlobalMessage msg,
+                                               Connection sender){
+            sendAllIdentifiedMessages();
+        }
+
         /**
          * Used at start up to emit the required messages, and in response to a IdentifyEvents message
          */
@@ -436,7 +453,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         
     }
     
-    private final static Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
 
 }
 

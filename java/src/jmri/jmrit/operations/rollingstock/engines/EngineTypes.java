@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.jdom2.Element;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import org.jdom2.Element;
 
 /**
  * Represents the types of engines a railroad can have.
@@ -52,7 +53,7 @@ public class EngineTypes extends RollingStockAttribute implements InstanceManage
      *
      */
     public void store(Element root) {
-        store(root, Xml.TYPES, Xml.TYPE, Xml.ENGINE_TYPES);
+        store(root, Xml.TYPES, Xml.TYPE);
     }
 
     public void load(Element root) {

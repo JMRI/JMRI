@@ -4,20 +4,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 
 /**
  * RfidStreamPortControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidStreamPortController class
+ * Test for the jmri.jmrix.rfid.RfidStreamPortController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
@@ -26,9 +26,8 @@ public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
         Assert.assertNotNull("exists", apc);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         try {
@@ -45,7 +44,7 @@ public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

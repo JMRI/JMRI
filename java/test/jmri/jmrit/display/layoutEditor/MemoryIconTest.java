@@ -1,9 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of MemoryIcon.
@@ -14,19 +16,19 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
 
     @Test
     @Override
-    @Ignore("Superclass method assumes graphical icon (red X)")
+    @Disabled("Superclass method assumes graphical icon (red X)")
     @ToDo("rewrite superclass test so it works in this case.")
     public void testShowEmpty() {
     }
 
     @Test
     @Override
-    @Ignore("When test from superclass is run, Scale is not set")
+    @Disabled("When test from superclass is run, Scale is not set")
     @ToDo("rewrite superclass test so it works in this case.")
     public void testGetAndSetScale(){
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -38,7 +40,7 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (to != null) {
@@ -47,6 +49,8 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
            p = null;
         }
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

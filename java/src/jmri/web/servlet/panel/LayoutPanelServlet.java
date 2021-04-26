@@ -16,9 +16,12 @@ import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.*;
 
 /**
- * Return xml (for specified LayoutPanel) suitable for use by external clients
+ * Return xml (for specified LayoutPanel) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
- * @author mstevetodd -- based on PanelServlet.java by rhwood
+ * @author mstevetodd -- based on PanelServlet.java by Randall Wood
  */
 @WebServlet(name = "LayoutPanelServlet",
         urlPatterns = {"/panel/Layout"})
@@ -37,23 +40,25 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         LayoutEditor editor = (LayoutEditor) getEditor(name);
         if (editor == null) {
-            log.warn("Requested LayoutPanel [" + name + "] does not exist.");
+            log.warn("Requested LayoutPanel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
         Element panel = new Element("panel");
 
         panel.setAttribute("name", name);
         panel.setAttribute("paneltype", getPanelType());
-        panel.setAttribute("height", Integer.toString(editor.getLayoutHeight()));
-        panel.setAttribute("width", Integer.toString(editor.getLayoutWidth()));
-        panel.setAttribute("panelheight", Integer.toString(editor.getLayoutHeight()));
-        panel.setAttribute("panelwidth", Integer.toString(editor.getLayoutWidth()));
+        panel.setAttribute("height", Integer.toString(editor.gContext.getLayoutHeight()));
+        panel.setAttribute("width", Integer.toString(editor.gContext.getLayoutWidth()));
+        panel.setAttribute("panelheight", Integer.toString(editor.gContext.getLayoutHeight()));
+        panel.setAttribute("panelwidth", Integer.toString(editor.gContext.getLayoutWidth()));
         panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
         panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
-        panel.setAttribute("xscale", Float.toString((float) editor.getXScale()));
-        panel.setAttribute("yscale", Float.toString((float) editor.getYScale()));
-        panel.setAttribute("mainlinetrackwidth", Integer.toString(editor.getMainlineTrackWidth()));
-        panel.setAttribute("sidetrackwidth", Integer.toString(editor.getSidelineTrackWidth()));
+        panel.setAttribute("xscale", Float.toString((float) editor.gContext.getXScale()));
+        panel.setAttribute("yscale", Float.toString((float) editor.gContext.getYScale()));
+        panel.setAttribute("mainlinetrackwidth", Integer.toString(editor.gContext.getMainlineTrackWidth()));
+        panel.setAttribute("sidelinetrackwidth", Integer.toString(editor.gContext.getSidelineTrackWidth()));
+        panel.setAttribute("mainlineblockwidth", Integer.toString(editor.gContext.getMainlineBlockWidth()));
+        panel.setAttribute("sidelineblockwidth", Integer.toString(editor.gContext.getSidelineBlockWidth()));
         panel.setAttribute("turnoutcircles", (editor.getTurnoutCircles()) ? "yes" : "no");
         panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
         panel.setAttribute("turnoutdrawunselectedleg", (editor.isTurnoutDrawUnselectedLeg()) ? "yes" : "no");
@@ -134,24 +139,31 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         }
         log.debug("Number of layoutblock elements: {}", num);
 
-        // include LayoutTracks
-        List<LayoutTrack> layoutTracks = editor.getLayoutTracks();
-        log.debug("Number of LayoutTrack elements: {}", layoutTracks.size());
-        for (Object sub : layoutTracks) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    replaceUserNames(e);
-                    if (sub instanceof LayoutTurntable) {
-                        List<Element> raytracks = e.getChildren("raytrack");
-                        for (Element raytrack : raytracks) {
-                            replaceUserNameAttribute(raytrack, "turnout", "turnout");
+        // include LayoutTrackViews
+        List<LayoutTrackView> layoutTrackViews = editor.getLayoutTrackViews();
+        log.debug("Number of LayoutTrack elements: {}", layoutTrackViews.size());
+
+        // 1st pass send everything but track segment views; 2nd send track segment views
+        for (int pass = 0; pass < 2; pass++) {
+            for (Object sub : layoutTrackViews) {
+                boolean isTSV = sub instanceof TrackSegmentView;
+                if (pass == (isTSV ? 1 : 0)) {
+                    try {
+                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                        if (e != null) {
+                            replaceUserNames(e);
+                            if (sub instanceof LayoutTurntable) {
+                                List<Element> raytracks = e.getChildren("raytrack");
+                                for (Element raytrack : raytracks) {
+                                    replaceUserNameAttribute(raytrack, "turnout", "turnout");
+                                }
+                            }
+                            panel.addContent(e);
                         }
+                    } catch (Exception e) {
+                        log.error("Error storing panel LayoutTrack element: {}", e);
                     }
-                    panel.addContent(e);
                 }
-            } catch (Exception e) {
-                log.error("Error storing panel LayoutTrack element: " + e);
             }
         }
 
@@ -164,7 +176,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing panel LayoutShape element: " + e);
+                log.error("Error storing panel LayoutShape element: {}", e);
             }
         }
         log.debug("Number of LayoutShape elements: {}", layoutShapes.size());
@@ -180,7 +192,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     }
 
     /**
-     * replace userName value of attrName with systemName for type attrType
+     * Replace userName value of attrName with systemName for type attrType.
      *
      * @param e        element to be updated
      * @param beanType bean type to use for userName lookup
@@ -221,7 +233,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     }
 
     /**
-     * replace child element value of attrName with systemName for type attrType
+     * Replace child element value of attrName with systemName for type attrType.
      *
      * @param e         element to be updated
      * @param beanType  bean type to use for userName lookup
@@ -255,8 +267,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     }
 
     /**
-     * update the element replacing username with systemname for known
-     * attributes and children
+     * Update the element replacing username with systemname for known
+     * attributes and children.
      *
      * @param e element to be updated
      */
@@ -283,4 +295,5 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
 }

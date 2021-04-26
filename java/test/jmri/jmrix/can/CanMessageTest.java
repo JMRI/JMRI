@@ -1,10 +1,9 @@
 package jmri.jmrix.can;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.CanMessage class
@@ -226,15 +225,14 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("translated flag set",m.isTranslated());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         m = new CanMessage(0x12);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         m = null;

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
+    <minor>19</minor>
     <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
@@ -52,6 +58,14 @@
       <userName>Turnout:9</userName>
     </turnout>
   </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="4:00 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0001)</systemName>
@@ -295,8 +309,8 @@
       <systemName>IB7</systemName>
       <userName>AUTOBLK:7</userName>
       <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB6" />
       <path todir="64" fromdir="128" block="IB1" />
+      <path todir="128" fromdir="64" block="IB6" />
     </block>
     <block systemName="IB8" length="0.0" curve="0">
       <systemName>IB8</systemName>
@@ -548,11 +562,12 @@
       </destinationMast>
     </signalmastlogic>
   </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun May 17 07:35:57 PDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed Oct 30 07:22:06 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockAndSignalMastTest.xml</filename>
+      <date>Thu May 14 13:29:32 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/configurexml/load/BlockAndSignalMastTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
@@ -617,8 +632,8 @@
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Wed Oct 30 07:22:06 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockAndSignalMastTest.xml</filename>
+      <date>Thu May 14 13:29:33 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/configurexml/load/BlockAndSignalMastTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
@@ -683,9 +698,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Oct 30 07:22:06 PDT 2019</date>
+      <date>Thu May 14 13:29:33 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.5ish+jake+20191030T0612Z+R8c99e77554 on Wed Oct 30 07:22:06 PDT 2019-->
+  <!--Written by JMRI version 4.19.5ish+jake+20200514T2026Z+R6ede87265b on Thu May 14 13:29:33 PDT 2020-->
 </layout-config>

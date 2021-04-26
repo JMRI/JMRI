@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  * <p>
  * This uses the {@link Z21Adapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2011
+ * @author Paul Bender Copyright (C) 2011
  *
  * @see Z21Adapter
  */
@@ -16,6 +16,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p network port adapter.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);

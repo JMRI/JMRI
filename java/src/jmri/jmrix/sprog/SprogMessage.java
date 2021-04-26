@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The {@link SprogReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -269,6 +269,29 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
         addSpace(m, 1);
         addIntAsFour(cv, m, 2);
+        return m;
+    }
+
+    /*
+     * CV reads can pass a hint by using different commands. The hint will first
+     * be verified, potentially speeding up the read process.
+     * 
+     * @param cv        CV address
+     * @param mode      Programming mode
+     * @param startVal  Hint
+     * @return 
+     */
+    static public SprogMessage getReadCV(int cv, ProgrammingMode mode, int startVal) {
+        SprogMessage m = new SprogMessage(10);
+        if (mode == ProgrammingMode.PAGEMODE) {
+            m.setOpCode('U');
+        } else { // Bit direct mode
+            m.setOpCode('D');
+        }
+        addSpace(m, 1);
+        addIntAsFour(cv, m, 2);
+        addSpace(m, 6);
+        addIntAsThree(startVal, m, 7);
         return m;
     }
 

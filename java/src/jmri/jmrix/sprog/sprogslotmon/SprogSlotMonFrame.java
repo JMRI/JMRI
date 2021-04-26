@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Jan-18 Moved status request generation here, based on a timer.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 
- * @author  Andrew Crosland (C) 2006 ported to SPROG 2008
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland (C) 2006 ported to SPROG 2008
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogListener {
 
@@ -49,18 +49,18 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
 
     SprogSystemConnectionMemo _memo = null;
     private SprogTrafficController tc = null;
-    
+
     private static final int STATUS_PERIOD = 500;
     javax.swing.Timer timer = null;
 
     public SprogSlotMonFrame(SprogSystemConnectionMemo memo) {
         super();
         _memo = memo;
-        
+
         tc = memo.getSprogTrafficController();
         tc.addSprogListener(this);
-        
-        slotModel = new SprogSlotMonDataModel(SprogSlotMonDataModel.getSlotCount(), 8,_memo);
+
+        slotModel = new SprogSlotMonDataModel(memo.getNumSlots(), 8, _memo);
 
         slotTable = new JTable(slotModel);
         slotTable.setRowSorter(new TableRowSorter<>(slotModel));
@@ -134,11 +134,11 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         getContentPane().add(slotScroll);
 
         setHelp();
-        
+
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();
-        
+
         startTimer(STATUS_PERIOD);
     }
 
@@ -147,15 +147,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
      */
     protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);  // NOI18N
-    }
-
-    /**
-     * Find the existing SprogSlotMonFrame object.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public final SprogSlotMonFrame instance() {
-        return null;
     }
 
     public void update() {
@@ -180,12 +171,12 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
 
     /**
      * Listen for status replies.
-     * 
+     *
      * @param m The SprogReply to be handled
      */
     @Override
     public void notifyReply(SprogReply m) {
-        int [] statusA = new int[4];
+        int[] statusA = new int[4];
         String s = m.toString();
         log.debug("Reply received: {}", s);
         if (s.indexOf('S') > -1) {
@@ -194,8 +185,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
             int i = s.indexOf('h');
             // Double Check that "h" was found in the reply
             if (i > -1) {
-                int milliAmps = (int) ((Integer.decode("0x" + s.substring(i + 7, i + 11))) * 
-                            tc.getAdapterMemo().getSprogType().getCurrentMultiplier());
+                int milliAmps = (int) ((Integer.decode("0x" + s.substring(i + 7, i + 11)))
+                        * tc.getAdapterMemo().getSprogType().getCurrentMultiplier());
                 statusA[0] = milliAmps;
                 String ampString;
                 ampString = Float.toString((float) statusA[0] / 1000);
@@ -203,7 +194,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
             }
         }
     }
-    
+
     @Override
     public void addNotify() {
         super.addNotify();
@@ -227,15 +218,15 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     public void dispose() {
         // deregister with the command station.
         stopTimer();
-	if(slotModel!=null) {
-           slotModel.dispose();
-	}
+        if (slotModel != null) {
+            slotModel.dispose();
+        }
         slotModel = null;
         slotTable = null;
         slotScroll = null;
-	if(tc!=null) {
-           tc.removeSprogListener(this);
-	}
+        if (tc != null) {
+            tc.removeSprogListener(this);
+        }
         super.dispose();
     }
 
@@ -252,8 +243,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
-     * 
+     * Internal routine to handle timer starts and restarts
+     *
      * @param delay timer delay
      */
     protected void startTimer(int delay) {

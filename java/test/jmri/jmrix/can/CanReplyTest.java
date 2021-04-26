@@ -1,10 +1,9 @@
 package jmri.jmrix.can;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.CanReply class
@@ -205,18 +204,17 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new CanReply();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 }

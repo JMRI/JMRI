@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -81,8 +81,7 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
         Location northIndustries = lmanager.getLocationByName("North Industries");
         
         // confirm print preview window is showing
-        ResourceBundle rb = ResourceBundle
-                .getBundle("jmri.util.UtilBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.util.UtilBundle");
         JmriJFrame printPreviewFrame =
                 JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + northEndStaging.getName());
         Assert.assertNotNull("exists", printPreviewFrame);

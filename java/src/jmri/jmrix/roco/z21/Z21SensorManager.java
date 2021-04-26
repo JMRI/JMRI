@@ -68,7 +68,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
         if (systemName.contains(":")) {
             // check for CAN format.
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
@@ -167,8 +167,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     @Nonnull
     public synchronized String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        int encoderAddress = 0;
-        int input = 0;
+        int encoderAddress;
+        int input;
 
         if (curAddress.contains(":")) {
             // This is a CAN Bus sensor address passed in the form of encoderAddress:input
@@ -184,8 +184,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                     input = Integer.parseInt(curAddress.substring(seperator + 1));
                     return Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),encoderAddress,input);
                 } catch (NumberFormatException ex1) {
-                    log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
-                    throw new JmriException("Hardware Address passed should be a number");
+                    throw new JmriException("Unable to convert "+curAddress+" into the cab and input format of nn:xx");
                 }
             }
         } else {
@@ -194,8 +193,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 iName = Integer.parseInt(curAddress);
                 return getSystemPrefix() + typeLetter() + iName;
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} Hardware Address to a number", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Hardware Address "+curAddress+" passed should be a number or the cab and input format of nn:xx");
             }
         }
     }
@@ -206,23 +204,13 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    public synchronized String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public synchronized String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException{
 
-        String tmpSName = "";
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
-
+        String tmpSName = createSystemName(curAddress, prefix);
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
+        if (s != null || ignoreInitialExisting) {
             for (int x = 1; x < 10; x++) {
                 iName = iName + 1;
                 s = getBySystemName(prefix + typeLetter() + iName);
@@ -230,7 +218,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                     return Integer.toString(iName);
                 }
             }
-            return null;
+            log.warn(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
         } else {
             return Integer.toString(iName);
         }

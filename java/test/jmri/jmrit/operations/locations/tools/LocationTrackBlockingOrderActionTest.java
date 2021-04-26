@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -29,7 +29,7 @@ public class LocationTrackBlockingOrderActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", ni);
         LocationTrackBlockingOrderAction ltb = new LocationTrackBlockingOrderAction(ni);
         Assert.assertNotNull("exists", ltb);
-        ltb.actionPerformed(new ActionEvent("Test Action", 0, null));
+        ltb.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         // confirm window exists
         JmriJFrame bof = JmriJFrame.getFrame(Bundle.getMessage("TitleTrackBlockingOrder"));
         Assert.assertNotNull("exists", bof);

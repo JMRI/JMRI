@@ -86,15 +86,13 @@ public class ConditionalEditBase {
     ConditionalManager _conditionalManager = null;
     LogixManager _logixManager = null;
     Logix _curLogix = null;
+    JmriJFrame _editLogixFrame = null;
 
-    int _numConditionals = 0;
     boolean _inEditMode = false;
 
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
-
-    NamedBeanComboBox<?> _comboNameBox = null;
 
     /**
      * Input selection names.
@@ -228,7 +226,7 @@ public class ConditionalEditBase {
     String makeAntecedent(List<ConditionalVariable> variableList) {
         StringBuilder antecedent = new StringBuilder(64);
         if (variableList.size() != 0) {
-            String row = "R"; //NOI18N
+            String row = "R"; // NOI18N
             if (variableList.get(0).isNegated()) {
                 antecedent.append("not ");
             }
@@ -288,7 +286,7 @@ public class ConditionalEditBase {
      */
     boolean validateAntecedent(Conditional.AntecedentOperator logicType, String antecedentText, List<ConditionalVariable> variableList, Conditional curConditional) {
         if (logicType != Conditional.AntecedentOperator.MIXED
-                || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
+                || LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())
                 || antecedentText == null
                 || antecedentText.trim().length() == 0) {
             return true;
@@ -298,7 +296,7 @@ public class ConditionalEditBase {
         if (antecedent.length() > 0) {
             String message = curConditional.validateAntecedent(antecedent, variableList);
             if (message != null) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(_editLogixFrame,
                         message + Bundle.getMessage("ParseError8"), // NOI18N
                         Bundle.getMessage("ErrorTitle"),            // NOI18N
                         JOptionPane.ERROR_MESSAGE);
@@ -363,9 +361,8 @@ public class ConditionalEditBase {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
-                JOptionPane.showMessageDialog(null,
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
+                JOptionPane.showMessageDialog(_editLogixFrame,
                         Bundle.getMessage("Error10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
@@ -770,7 +767,7 @@ public class ConditionalEditBase {
                     Conditional cRef = xRef.getConditional(refName);
                     Object[] msgs = new Object[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Error11", msgs), // NOI18N
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                     return false;
@@ -859,7 +856,7 @@ public class ConditionalEditBase {
                     }
                     validateIntensity(Integer.parseInt((String) m.getValue()));
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Error24", intReference),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE); // NOI18N
                 }
@@ -879,7 +876,7 @@ public class ConditionalEditBase {
      */
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error38", time, Bundle.getMessage("Error42")),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
             return false;
@@ -925,7 +922,7 @@ public class ConditionalEditBase {
                     }
                     validateTime(actionType, Float.parseFloat((String) m.getValue()));
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Error24", memRef),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);   // NOI18N
                 }
@@ -968,7 +965,7 @@ public class ConditionalEditBase {
                 default:
                     break;
             }
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error38", time, Bundle.getMessage(errorNum)),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
             return false;
@@ -999,7 +996,7 @@ public class ConditionalEditBase {
                 errorNum = "Error27";       // NOI18N
                 break;
             case SET_LIGHT_INTENSITY:
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(_editLogixFrame,
                         Bundle.getMessage("Error43"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
                 return;
@@ -1009,7 +1006,7 @@ public class ConditionalEditBase {
             default:
                 log.warn("Unexpected action type {} in displayBadNumberReference", actionType);  // NOI18N
         }
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(_editLogixFrame,
                 Bundle.getMessage("Error9", Bundle.getMessage(errorNum)),
                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
     }
@@ -1049,7 +1046,7 @@ public class ConditionalEditBase {
      */
     boolean confirmIndirectMemory(String memName) {
         if (!_suppressIndirectRef) {
-            int response = JOptionPane.showConfirmDialog(null,
+            int response = JOptionPane.showConfirmDialog(_editLogixFrame,
                     Bundle.getMessage("ConfirmIndirectReference", memName,
                             Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                             Bundle.getMessage("ButtonCancel")), // NOI18N
@@ -1060,6 +1057,25 @@ public class ConditionalEditBase {
             } else if (response == JOptionPane.CANCEL_OPTION) {
                 _suppressIndirectRef = true;
             }
+        }
+        return true;
+    }
+
+    /**
+     * Check if user OK's the use of an item as both an action and
+     * a state variable.
+     *
+     * @param actionName name of ConditionalAction
+     * @param variableName name of ConditionalVariable
+     * @return false if user replies No
+     */
+    boolean confirmActionAsVariable(String actionName, String variableName) {
+        int response = JOptionPane.showConfirmDialog(_editLogixFrame,
+                Bundle.getMessage("ConfirmActionAsVariable", actionName, variableName),
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, // NOI18N
+                JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            return false;
         }
         return true;
     }
@@ -1409,7 +1425,7 @@ public class ConditionalEditBase {
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
-            messageInvalidActionItemName(name, "Light"); //NOI18N
+            messageInvalidActionItemName(name, "Light"); // NOI18N
         }
         return l;
     }
@@ -1455,7 +1471,7 @@ public class ConditionalEditBase {
         }
         if (error) {
             // if unsuccessful, print error message
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error26", s),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
@@ -1502,7 +1518,7 @@ public class ConditionalEditBase {
      * @param appearance to compare to
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(_editLogixFrame,
                 Bundle.getMessage("Error21", name, appearance),
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
@@ -1515,7 +1531,7 @@ public class ConditionalEditBase {
      * @param itemType type of Bean to look for
      */
     void messageInvalidActionItemName(String name, String itemType) {
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(_editLogixFrame,
                 Bundle.getMessage("Error22", name, Bundle.getMessage("BeanName" + itemType)),
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
@@ -1527,10 +1543,19 @@ public class ConditionalEditBase {
      * @param svName proposed name that duplicates an existing name
      */
     void messageDuplicateConditionalUserName(String svName) {
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(_editLogixFrame,
                 Bundle.getMessage("Error30", svName),
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void bringToFront() {
+        _editLogixFrame.toFront();
+    }
+
+    public void locateAt(Component c) {
+        _editLogixFrame.setLocationRelativeTo(c);
+        _editLogixFrame.toFront();
     }
 
     protected String getClassName() {

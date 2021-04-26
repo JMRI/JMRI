@@ -2,11 +2,13 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import javax.annotation.*;
@@ -25,7 +27,7 @@ import javax.annotation.*;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
@@ -59,12 +61,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     @Nonnull
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
     @Override
     @Nonnull
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public java.util.List<Turnout> getNamedBeanList() {
         return null;
     }
@@ -124,6 +128,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return null;
+    }
+
+    @Override
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean muted) {
+        // do nothing
     }
 
     @Override
@@ -203,8 +212,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return NameValidity.VALID;
     }
 
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        return curAddress;
+    }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         return curAddress;
     }
 
@@ -278,5 +293,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public SystemConnectionMemo getMemo() {
         return new InternalSystemConnectionMemo("J", "Juliet");
     }
+
+    @Override
+    public int getOutputInterval() {
+        return 0;
+    }
+
+    @Override
+    public void setOutputInterval(int newInterval) {}
+
+    @Override
+    @Nonnull
+    public LocalDateTime outputIntervalEnds() { return LocalDateTime.now(); }
 
 }

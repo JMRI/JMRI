@@ -2,6 +2,8 @@ package jmri.jmrit.catalog;
 
 import java.util.Set;
 import jmri.CatalogTree;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -27,6 +29,7 @@ import javax.annotation.Nonnull;
 public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> implements CatalogTreeManager {
 
     private boolean _indexChanged = false;
+    private boolean _indexLoaded = false;
     private ShutDownTask _shutDownTask;
 
     public DefaultCatalogTreeManager() {
@@ -206,9 +209,26 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
     }
 
+    /**
+     * Load the index file, one time per session.
+     */
+    @Override
+    public void loadImageIndex() {
+        if (!isIndexLoaded()) {
+            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+            _indexLoaded = true;
+            log.debug("loadImageIndex: catalog file loaded");
+        }
+    }
+
     @Override
     public boolean isIndexChanged() {
         return _indexChanged;
+    }
+
+    @Override
+    public boolean isIndexLoaded() {
+        return _indexLoaded;
     }
 
     @Override
@@ -226,9 +246,8 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
                     }
 
                     @Override
-                    public boolean doPrompt() {
+                    public void didPrompt() {
                         storeImageIndex();
-                        return true;
                     }
                 };
                 sdm.register(_shutDownTask);

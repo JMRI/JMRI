@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.node;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanReply;
@@ -9,11 +11,12 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
@@ -29,16 +32,15 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testCTor() {
         
-        Assert.assertEquals("node model listening",1,tcis.numListeners());
+        assertThat(tcis.numListeners()).isEqualTo(1);
         
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         
-        Assert.assertNotNull("exists",t);
-        Assert.assertEquals("listening",2,tcis.numListeners());
-        
+        assertThat(t).isNotNull();
+        assertThat(tcis.numListeners()).isEqualTo(2);
         t.dispose();
         
-        Assert.assertEquals("not listening",1,tcis.numListeners());
+        assertThat(tcis.numListeners()).isEqualTo(1);
         
     }
     
@@ -47,7 +49,7 @@ public class CbusAllocateNodeNumberTest {
         
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull();
         
         // create a thread that waits to close the dialog box opened later
         Thread dialog_thread = new Thread(() -> {
@@ -55,7 +57,7 @@ public class CbusAllocateNodeNumberTest {
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrNumTitle",String.valueOf(1234)));
             
             JLabelOperator labelOper = new JLabelOperator(jdo, Bundle.getMessage("NdRqNdDetails"));
-            Assert.assertNotNull("labelOper exists",labelOper);
+            assertThat(labelOper).isNotNull();
             
             CanReply rs = new CanReply();
             rs.setNumDataElements(7);
@@ -70,7 +72,7 @@ public class CbusAllocateNodeNumberTest {
             t.reply(rs);
             
             JLabelOperator labelOper2 = new JLabelOperator(jdo, CbusNodeConstants.getManu(1));
-            Assert.assertNotNull("labelOper2 exists",labelOper2);
+            assertThat(labelOper2).isNotNull();
             
             CanReply rsn = new CanReply();
             rsn.setNumDataElements(7);
@@ -85,22 +87,22 @@ public class CbusAllocateNodeNumberTest {
             t.reply(rsn);
             
             JLabelOperator labelOper3 = new JLabelOperator(jdo, "Manufacturer 1 CANCATFLAP");
-            Assert.assertNotNull("labelOper3 exists",labelOper3);
+            assertThat(labelOper3).isNotNull();
             
             JSpinnerOperator spinner = new JSpinnerOperator(jdo, 0);
             
             JTextFieldOperator jtfo = new JTextFieldOperator(spinner);
-            Assert.assertEquals("originalFieldValue", "1234", jtfo.getText());
+            assertThat(jtfo.getText()).isEqualTo("1234");
             
             jtfo.setText("123");
             JLabelOperator labelOper4 = new JLabelOperator(jdo, CbusNodeConstants.getReservedModule(123));
-            Assert.assertNotNull("labelOper4 exists",labelOper4);
+            assertThat(labelOper4).isNotNull();
             
-            Assert.assertNotNull(nodeModel.provideNodeByNodeNum(789));
+            assertThat(nodeModel.provideNodeByNodeNum(789)).isNotNull();
             jtfo.setText("789");
             JLabelOperator labelOper5 = new JLabelOperator(jdo, 
                 Bundle.getMessage("NdNumInUse",nodeModel.getNodeNumberName(789)));
-            Assert.assertNotNull("labelOper5 exists",labelOper5);
+            assertThat(labelOper5).isNotNull();
             
             CanMessage rmes = new CanMessage(tcis.getCanid());
             rmes.setNumDataElements(1);
@@ -134,15 +136,10 @@ public class CbusAllocateNodeNumberTest {
         
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
         
-        Assert.assertEquals("1st Message sent is request params", "[5f8] 10",
-            tcis.outbound.elementAt(0).toString());
-            
-        Assert.assertEquals("2nd Message sent is name request", "[5f8] 11",
-            tcis.outbound.elementAt(1).toString());
-            
-        Assert.assertEquals("3rd Message sent is new node num", "[5f8] 42 FF 98",
-            tcis.outbound.elementAt(2).toString());
-            
+        assertThat(tcis.outbound.elementAt(0).toString()).isEqualTo("[5f8] 10");
+        assertThat(tcis.outbound.elementAt(1).toString()).isEqualTo("[5f8] 11");
+        assertThat(tcis.outbound.elementAt(2).toString()).isEqualTo("[5f8] 42 FF 98");
+        
         jmri.jmrix.can.cbus.CbusPreferences pref = new jmri.jmrix.can.cbus.CbusPreferences();
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,pref );
         pref.setAddNodes(true);
@@ -154,8 +151,12 @@ public class CbusAllocateNodeNumberTest {
         rsna.setElement(2, 0x98); // 65432
         t.reply(rsna);
         
-        Assert.assertTrue("Node 65432 is in Node Model",null != nodeModel.getNodeByNodeNum(65432));
-
+        // check that RTSTAT sent to command stations
+        JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >3); }, "TCIS count did not increase");
+        assertThat(tcis.outbound.elementAt(3).toString()).isEqualTo("[5f8] 0C");
+        
+        assertThat(nodeModel.getNodeByNodeNum(65432)).isNotNull();
+        
         t.dispose();
         
     }
@@ -170,19 +171,17 @@ public class CbusAllocateNodeNumberTest {
         r.setNumDataElements(1);
         r.setElement(0, CbusConstants.CBUS_HLT); // Bus Halt Command, to be ignored.
         t.message(r); // ignored as not interested in this OPC
-        Assert.assertEquals("has sent 0", 0 ,tcis.outbound.size() );
-        
+        assertThat(tcis.outbound.size()).isEqualTo(0);
         r.setElement(0, CbusConstants.CBUS_QNN); // All Modules respond to Query Node Numbers
         r.setExtended(true);
         t.message(r); // ignored as Extended
-        Assert.assertEquals("has sent 0", 0 ,tcis.outbound.size() );
+        assertThat(tcis.outbound.size()).isEqualTo(0);
         
         r.setExtended(false);
         t.message(r); // output expected to be a Request Params Setup
         
-        Assert.assertEquals("has sent 1", 1 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is request params", "[5f8] 10",
-            tcis.outbound.elementAt(0).toString());
+        assertThat(tcis.outbound.size()).isEqualTo(1);
+        assertThat(tcis.outbound.elementAt(0).toString()).isEqualTo("[5f8] 10");
         
         t.dispose();
         
@@ -249,8 +248,7 @@ public class CbusAllocateNodeNumberTest {
     private CbusAllocateNodeNumber t;
     private CbusNodeTableDataModel nodeModel;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -262,7 +260,7 @@ public class CbusAllocateNodeNumberTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
         nodeModel.dispose();

@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.*;
-import java.util.MissingResourceException;
 import java.util.stream.IntStream;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -241,7 +240,7 @@ public final class FnMapPanelESU extends JPanel {
             numItems = maxItems;
         }
         if (numItems > maxItems) {
-            log.error("numItems=" + numItems + " exceeds the maximum number of items (" + maxItems + ") defined in the code");
+            log.error("numItems={} exceeds the maximum number of items ({}) defined in the code", numItems, maxItems);
             numItems = Math.min(numItems, maxItems);
         }
 

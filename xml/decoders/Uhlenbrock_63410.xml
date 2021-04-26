@@ -1,0 +1,2132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2020 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
+The DigiBoost DR5033 has an Article number 5033, which was registered with Uhlenbrock.
+Older LNCV devices may not have their own address, or even no article. They can be programmed using
+Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20210101"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+
+    <decoder>
+        <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="63410" productID="6341" formFactor="Stationary" comment="LocoNet General Purpose 20 Outputs Switch">
+              <versionCV />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6341.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
+              <decVal min="0" max="65534"/>
+              <label xml:lang="it">Indirizzo Primario: </label>
+              <label xml:lang="fr">Adresse décodeur: </label>
+              <label xml:lang="de">Decoderadresse: </label>
+              <label xml:lang="nl">Decoderadres: </label>
+              <label>Decoder Address: </label>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
+            </variable>
+            <variable CV="6341.20" item="Decoder Version" readOnly="yes">
+              <decVal/>
+              <label xml:lang="it">Versione: </label>
+              <label xml:lang="fr">Version: </label>
+              <label xml:lang="de">Version: </label>
+              <label xml:lang="nl">Firmware-versie: </label>
+              <label>Firmware Version: </label>
+            </variable>
+
+          <variable CV="6341.17" item="Restart Wait" readOnly="yes" default="32">
+            <decVal/>
+            <label xml:lang="de">Einschaltzeit nach Kurzschluss: </label>
+            <label xml:lang="fr">Activation d'après court-circuit: </label>
+            <label xml:lang="nl">Wachttijd na kortsluiting: </label>
+            <label>Restart Wait after Short: </label>
+            <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivalent to approx. 3/4 of a second (750 ms)</tooltip>
+            <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im drei Ms Takt. Der Standardwert entspricht ca. einer 3/4 Sekunde (750 ms)</tooltip>
+            <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 3 ms. La valeur standard équivaut à env. 3⁄4 de seconde (750 ms)</tooltip>
+            <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (Het instellen gebeurt in drie milliseconde stappen.)</tooltip>
+          </variable>
+          <variable CV="6341.18" item="Short Threshold" readOnly="yes" default="25">
+            <decVal/>
+            <label xml:lang="de">Kurzschlussverzögerung: </label>
+            <label xml:lang="fr">Retard de réaction court-circuit: </label>
+            <label xml:lang="nl">Kortsluitmelding vertr.: </label>
+            <label>Short Detect Delay: </label>
+            <tooltip>Short detection delay in 0.6 sec steps</tooltip>
+            <tooltip xml:lang="de">Einschaltreaktionszeit im 0,6 s Takt</tooltip>
+            <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,6 s.</tooltip>
+            <tooltip xml:lang="nl">Inschakelvertraging (stappen van 0,6 s)</tooltip>
+          </variable>
+          <variable CV="6341.19" item="Delay" default="1">
+            <decVal min="1" max="255"/>
+            <label xml:lang="de">Schaltverzögerung: </label>
+            <label xml:lang="nl">Inschakelvertraging: </label>
+            <label>Switch On Delay: </label>
+            <tooltip>Switch on delay in 0.5 sec steps</tooltip>
+            <tooltip xml:lang="de">Einschaltreaktionszeit im 0,5 s Takt</tooltip>
+            <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,5 s.</tooltip>
+            <tooltip xml:lang="nl">Inschakelvertraging (in stappen van 0,5 s)</tooltip>
+          </variable>
+
+            <variable CV="6341.1" item="ProgramAssist" mask="XXXXXXXXVVVV" default="0">
+              <enumVal>
+                <enumChoice choice="1" value="0">
+                  <choice>Choose and write...</choice>
+                  <choice xml:lang="nl">Kies optie en schrijf...</choice>
+                </enumChoice>
+                <enumChoice choice="2" value="1">
+                  <choice>Paired for turnout control</choice>
+                  <choice xml:lang="nl">2-Positie Servo's</choice>
+                </enumChoice>
+                <enumChoice choice="3" value="2">
+                  <choice>Paired alternating outputs on/off</choice>
+                  <choice xml:lang="nl">Per 2 wisselend aan/uit</choice>
+                </enumChoice>
+                <enumChoice choice="4" value="3">
+                  <choice>Separate on/off outputs</choice>
+                  <choice xml:lang="nl">Individueel aan/uit</choice>
+                </enumChoice>
+                <enumChoice choice="5" value="8">
+                  <choice>Factory Reset</choice>
+                  <choice xml:lang="nl">Zet terug naar fabrieksinstelling</choice>
+                  <choice xml:lang="de">Zurück nach Werkseinstellungen</choice>
+                </enumChoice>
+                <enumChoice choice="6" value="9">
+                  <choice>All Outputs Deactivated</choice>
+                  <choice xml:lang="nl">Alle uitgangen inactief</choice>
+                  <choice xml:lang="de">Alle Ausgänge Inaktiv</choice>
+                </enumChoice>
+              </enumVal>
+              <label>All outputs choice:</label>
+              <label xml:lang="de">Wahl für alle Ausgänge:</label>
+              <label xml:lang="nl">Instelling alle uitgangen:</label>
+              <tooltip>Sets all outputs (from start address) or Module Reset</tooltip>
+              <tooltip xml:lang="de">Setz Modul für alle Ausgänge (von Anfangsadresse):</tooltip>
+              <tooltip xml:lang="nl">Kies instelling voor alle uitgangen (vanaf startadres):</tooltip>
+            </variable>
+
+            <variable CV="6341.1" mask="VVVVVVVVXXXX" item="Start Address" default="1">
+              <decVal min="1" max="2028"/>
+              <label xml:lang="de">Anfangsadresse:</label>
+              <label xml:lang="nl">Beginadres:</label>
+              <label>Start Address:</label>
+              <tooltip>Start Address for Module Setting (1-2028)</tooltip>
+            </variable>
+
+            <variable CV="6341.2" item="Blink Rate 1.1" default="10" >
+              <decVal/>
+              <label xml:lang="de">Blinkgeschw. 1 (Ausg. 1-8):</label>
+              <label xml:lang="nl">Knippertempo 1 (uitg. 1-8):</label>
+              <label>Blink Rate Generator #1 (1-8): </label>
+              <tooltip>Blink rate Generator #1 for outputs 1-8</tooltip>
+            </variable>
+            <variable CV="6341.3" item="Blink Rate 1.2" default="10" >
+              <decVal/>
+              <label xml:lang="de">Blinkgeschw. #1 (Ausg. 9-16):</label>
+              <label xml:lang="nl">Knippertempo #1 (uitg. 9-16):</label>
+              <label>Blink Rate Generator #1 (9-16): </label>
+              <tooltip>Blink rate generator #1 for outputs 9-16</tooltip>
+            </variable>
+            <variable CV="6341.4" item="Blink Rate 1.3" default="10" >
+              <decVal/>
+              <label xml:lang="de">Blinkgeschw. #1 (Ausg. 17-20):</label>
+              <label xml:lang="nl">Knippertempo #1 (uitg. 17-20):</label>
+              <label>Blink Rate Generator #1 (17-20): </label>
+              <tooltip>Blink rate Generator #1 for outputs 17-20</tooltip>
+            </variable>
+            <variable CV="6341.5" item="Blink Rate 2.1" default="10" >
+              <decVal/>
+              <label xml:lang="de">Blinkgeschw. #2 (Ausg. 1-8):</label>
+              <label xml:lang="nl">Knippertempo #2 (uitg. 1-8):</label>
+              <label>Blink Rate Generator #2 (1-8): </label>
+              <tooltip>Blink rate Generator #2 for outputs 1-8</tooltip>
+            </variable>
+            <variable CV="6341.6" item="Blink Rate 2.2" default="10" >
+              <decVal/>
+              <label xml:lang="de">Blinkgeschw. #2 (Ausg. 9-16):</label>
+              <label xml:lang="nl">Knippertempo #2 (uitg. 9-16):</label>
+              <label>Blink Rate Generator #2 (9-16): </label>
+              <tooltip>Blink rate Generator #2 for outputs 9-16</tooltip>
+            </variable>
+            <variable CV="6341.7" item="Blink Rate 2.3" default="10" >
+              <decVal/>
+              <label xml:lang="de">Blinkgeschw. #2 (Ausg. 17-20):</label>
+              <label xml:lang="nl">Knippertempo #2 (uitg. 17-20):</label>
+              <label>Blink Rate Generator #2 (17-20): </label>
+              <tooltip>Blink rate Generator #2 for outputs 17-20</tooltip>
+            </variable>
+
+            <variable CV="6341.8" mask="VVVVVVVVVVVVVVVV" item="Damped 1" default="0">
+              <decVal max="65535"/>
+              <label>Combined LNCV8 Value: </label>
+              <tooltip>Intended for verification only, set options under each output.</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXXXXXXXV" item="Damped 1.1" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXXXXXXVX" item="Damped 1.2" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXXXXXVXX" item="Damped 1.3" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXXXXVXXX" item="Damped 1.4" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXXXVXXXX" item="Damped 1.5" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXXVXXXXX" item="Damped 1.6" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXXVXXXXXX" item="Damped 1.7" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXXVXXXXXXX" item="Damped 1.8" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXXVXXXXXXXX" item="Damped 1.9" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXXVXXXXXXXXX" item="Damped 1.10" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXXVXXXXXXXXXX" item="Damped 1.11" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXXVXXXXXXXXXXX" item="Damped 1.12" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXXVXXXXXXXXXXXX" item="Damped 1.13" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XXVXXXXXXXXXXXXX" item="Damped 1.14" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="XVXXXXXXXXXXXXXX" item="Damped 1.15" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.8" mask="VXXXXXXXXXXXXXXX" item="Damped 1.16" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+
+            <variable CV="6341.9" item="Damped 2" default="0">
+              <decVal/>
+              <label>Combined LNCV9 Value: </label>
+              <tooltip>Intended for verification only, set options under each output.</tooltip>
+            </variable>
+            <variable CV="6341.9" mask="XXXXXXXV" item="Damped 2.17" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.9" mask="XXXXXXVX" item="Damped 2.18" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.9" mask="XXXXXVXX" item="Damped 2.19" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+            <variable CV="6341.9" mask="XXXXVXXX" item="Damped 2.20" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Damped</label>
+              <label xml:lang="de">Langsam</label>
+              <label xml:lang="nl">Vertraagd</label>
+              <tooltip>Damped (slow) on/off transition</tooltip>
+            </variable>
+
+            <variable CV="6341.10" item="Overlap" default="16" >
+              <decVal/>
+              <label xml:lang="nl">Overlaptijd:</label>
+              <label>Overlap time: </label>
+              <tooltip>Damped switching Overlap in 32 ms increments</tooltip>
+            </variable>
+
+            <!-- Signal settings CV 11-15 as per docs: -->
+            <!--0 = Normal Outputs-->
+            <!--1 = Main signal with 3 states-->
+            <!--2 = Main signal with 4 states-->
+            <!--3 = Freestanding warning signal-->
+            <!--4 = Warning signal on main signal mast-->
+            <!--5 = Main signal with 3 states. Märklin style-->
+            <!--6 = Main signal with 4 states. Märklin style-->
+            <!--7 = Warning signal. Märklin style-->
+            <variable CV="6341.11" mask="XXXXXXXXVVVV" item="Signal Group 1 Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
+              <label xml:lang="de">Signalgruppe 1 Modell: </label>
+              <label xml:lang="nl">Seingroep 1 Type: </label>
+              <label>Signal Group 1 Type: </label>
+              <tooltip>Type of signal head connected to this group of outputs</tooltip>
+            </variable>
+            <variable CV="6341.11" mask="VVVVVVVVXXXX" item="Signal Group 1 Address" default="0">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Signaladresse:</label>
+              <label xml:lang="nl">Seinadres:</label>
+              <label>Address:</label>
+              <tooltip>Address of searchlight signal (1-2048)</tooltip>
+            </variable>
+            <!-- test -->
+            <variable CV="6341.11" mask="VVVVVVVVVVVV" item="Signal Group 1" default="0">
+              <decVal min="0" max="20487"/>
+              <label>Signal Group 1</label>
+            </variable>
+          
+            <variable CV="6341.12" mask="XXXXXXXXVVVV" item="Signal Group 2 Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
+              <label xml:lang="de">Signalgruppe 1 Modell: </label>
+              <label xml:lang="nl">Seingroep 1 Type: </label>
+              <label>Signal Group 2 Type: </label>
+              <tooltip>Type of signal head connected to this group of outputs</tooltip>
+            </variable>
+            <variable CV="6341.12" mask="VVVVVVVVXXXX" item="Signal Group 2 Address" default="0">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Signaladresse:</label>
+              <label xml:lang="nl">Seinadres:</label>
+              <label>Address:</label>
+              <tooltip>Address of searchlight signal (1-2048)</tooltip>
+            </variable>
+            <!-- test -->
+            <variable CV="6341.12" mask="VVVVVVVVVVVV" item="Signal Group 2" default="0">
+              <decVal min="0" max="20487"/>
+              <label>Signal Group 2</label>
+            </variable>
+
+            <variable CV="6341.13" mask="XXXXXXXXVVVV" item="Signal Group 3 Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
+              <label xml:lang="de">Signalgruppe 3 Modell: </label>
+              <label xml:lang="nl">Seingroep 3 Type: </label>
+              <label>Signal Group 3 Type: </label>
+              <tooltip>Type of signal head connected to this group of outputs</tooltip>
+            </variable>
+            <variable CV="6341.13" mask="VVVVVVVVXXXX" item="Signal Group 3 Address" default="0">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Signaladresse:</label>
+              <label xml:lang="nl">Seinadres:</label>
+              <label>Address:</label>
+              <tooltip>Address of searchlight signal (1-2048)</tooltip>
+            </variable>
+            <!-- test -->
+            <variable CV="6341.13" mask="VVVVVVVVVVVV" item="Signal Group 3" default="0">
+              <decVal min="0" max="20487"/>
+              <label>Signal Group 3</label>
+            </variable>
+
+            <variable CV="6341.14" mask="XXXXXXXXVVVV" item="Signal Group 4 Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
+              <label xml:lang="de">Signalgruppe 4 Modell: </label>
+              <label xml:lang="nl">Seingroep 4 Type: </label>
+              <label>Signal Group 4 Type: </label>
+              <tooltip>Type of signal head connected to this group of outputs</tooltip>
+            </variable>
+            <variable CV="6341.14" mask="VVVVVVVVXXXX" item="Signal Group 4 Address" default="0">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Signaladresse:</label>
+              <label xml:lang="nl">Seinadres:</label>
+              <label>Address:</label>
+              <tooltip>Address of searchlight signal (1-2048)</tooltip>
+            </variable>
+            <!-- test -->
+            <variable CV="6341.14" mask="VVVVVVVVVVVV" item="Signal Group 4" default="0">
+              <decVal min="0" max="20487"/>
+              <label>Signal Group 4</label>
+            </variable>
+
+            <variable CV="6341.15" mask="XXXXXXXXVVVV" item="Signal Group 5 Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
+              <label xml:lang="de">Signalgruppe 5 Modell: </label>
+              <label xml:lang="nl">Seingroep 5 Type: </label>
+              <label>Signal Group 5 Type: </label>
+              <tooltip>Type of signal head connected to this group of outputs</tooltip>
+            </variable>
+            <variable CV="6341.15" mask="VVVVVVVVXXXX" item="Signal Group 5 Address" default="0">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Signaladresse:</label>
+              <label xml:lang="nl">Seinadres:</label>
+              <label>Address:</label>
+              <tooltip>Address of searchlight signal (1-2048)</tooltip>
+            </variable>
+            <!-- test -->
+            <variable CV="6341.15" mask="VVVVVVVVVVVV" item="Signal Group 5" default="0">
+              <decVal min="0" max="20487"/>
+              <label>Signal Group 5</label>
+            </variable>
+
+            <!-- CV 21-40: Settings outputs 1-20 On -->
+
+            <variable CV="6341.21" mask="XXXXXXXXVVVV" item="Output 1 On Type" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Ein: </label>
+              <label xml:lang="nl">Instructie Aan: </label>
+              <label>On Command: </label>
+              <tooltip>Command to turn output 1 On</tooltip>
+            </variable>
+            <variable CV="6341.21" mask="VVVVVVVVXXXX" item="Output 1 On Address" default="1">
+              <decVal min="1" max="2048"/>
+              <label xml:lang="de">Adresse Ein:</label>
+              <label xml:lang="nl">Adres Aan:</label>
+              <label>On Address:</label>
+              <tooltip>Address to switch output 1 On (1-2048)</tooltip>
+            </variable>
+          <!-- test -->
+            <variable CV="6341.21" mask="VVVVVVVVVVVV" item="Output 1" >
+              <decVal max="20483"/>
+              <label>Output 1 On</label>
+            </variable>
+
+          <variable CV="6341.22" mask="XXXXXXXXVVVV" item="Output 2 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 2 On</tooltip>
+          </variable>
+          <variable CV="6341.22" mask="VVVVVVVVXXXX" item="Output 2 On Address" default="2">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 2 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.22" mask="VVVVVVVVVVVV" item="Output 2">
+            <decVal max="20483"/>
+            <label>Output 2 On</label>
+          </variable>
+
+          <variable CV="6341.23" mask="XXXXXXXXVVVV" item="Output 3 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 3 On</tooltip>
+          </variable>
+          <variable CV="6341.23" mask="VVVVVVVVXXXX" item="Output 3 On Address" default="3">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 3 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.23" mask="VVVVVVVVVVVV" item="Output 3">
+            <decVal max="20483"/>
+            <label>Output 3 On</label>
+          </variable>
+
+          <variable CV="6341.24" mask="XXXXXXXXVVVV" item="Output 4 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 4 On</tooltip>
+          </variable>
+          <variable CV="6341.24" mask="VVVVVVVVXXXX" item="Output 4 On Address" default="4">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 4 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.24" mask="VVVVVVVVVVVV" item="Output 4">
+            <decVal max="20483"/>
+            <label>Output 4 On</label>
+          </variable>
+
+          <variable CV="6341.25" mask="XXXXXXXXVVVV" item="Output 5 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 5 On</tooltip>
+          </variable>
+          <variable CV="6341.25" mask="VVVVVVVVXXXX" item="Output 5 On Address" default="5">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 5 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.25" mask="VVVVVVVVVVVV" item="Output 5">
+            <decVal max="20483"/>
+            <label>Output 5 On</label>
+          </variable>
+
+          <variable CV="6341.26" mask="XXXXXXXXVVVV" item="Output 6 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 6 On</tooltip>
+          </variable>
+          <variable CV="6341.26" mask="VVVVVVVVXXXX" item="Output 6 On Address" default="6">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 6 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.26" mask="VVVVVVVVVVVV" item="Output 6">
+            <decVal max="20483"/>
+            <label>Output 6 On</label>
+          </variable>
+
+          <variable CV="6341.27" mask="XXXXXXXXVVVV" item="Output 7 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 7 On</tooltip>
+          </variable>
+          <variable CV="6341.27" mask="VVVVVVVVXXXX" item="Output 7 On Address" default="7">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 7 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.27" mask="VVVVVVVVVVVV" item="Output 7">
+            <decVal max="20483"/>
+            <label>Output 7 On</label>
+          </variable>
+
+          <variable CV="6341.28" mask="XXXXXXXXVVVV" item="Output 8 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 8 On</tooltip>
+          </variable>
+          <variable CV="6341.28" mask="VVVVVVVVXXXX" item="Output 8 On Address" default="8">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 8 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.28" mask="VVVVVVVVVVVV" item="Output 8">
+            <decVal max="20483"/>
+            <label>Output 8 On</label>
+          </variable>
+
+          <variable CV="6341.29" mask="XXXXXXXXVVVV" item="Output 9 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 9 On</tooltip>
+          </variable>
+          <variable CV="6341.29" mask="VVVVVVVVXXXX" item="Output 9 On Address" default="9">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 9 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.29" mask="VVVVVVVVVVVV" item="Output 9">
+            <decVal max="20483"/>
+            <label>Output 9 On</label>
+          </variable>
+
+          <variable CV="6341.30" mask="XXXXXXXXVVVV" item="Output 10 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 10 On</tooltip>
+          </variable>
+          <variable CV="6341.30" mask="VVVVVVVVXXXX" item="Output 10 On Address" default="10">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 10 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.30" mask="VVVVVVVVVVVV" item="Output 10">
+            <decVal max="20483"/>
+            <label>Output 10 On</label>
+          </variable>
+
+          <variable CV="6341.31" mask="XXXXXXXXVVVV" item="Output 11 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 11 On</tooltip>
+          </variable>
+          <variable CV="6341.31" mask="VVVVVVVVXXXX" item="Output 11 On Address" default="11">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 11 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.31" mask="VVVVVVVVVVVV" item="Output 11">
+            <decVal max="20483"/>
+            <label>Output 11 On</label>
+          </variable>
+
+          <variable CV="6341.32" mask="XXXXXXXXVVVV" item="Output 12 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 12 On</tooltip>
+          </variable>
+          <variable CV="6341.32" mask="VVVVVVVVXXXX" item="Output 12 On Address" default="12">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 12 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.32" mask="VVVVVVVVVVVV" item="Output 12">
+            <decVal max="20483"/>
+            <label>Output 12 On</label>
+          </variable>
+
+          <variable CV="6341.33" mask="XXXXXXXXVVVV" item="Output 13 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 13 On</tooltip>
+          </variable>
+          <variable CV="6341.33" mask="VVVVVVVVXXXX" item="Output 13 On Address" default="13">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 13 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.33" mask="VVVVVVVVVVVV" item="Output 13">
+            <decVal max="20483"/>
+            <label>Output 13 On</label>
+          </variable>
+
+          <variable CV="6341.34" mask="XXXXXXXXVVVV" item="Output 14 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 14 On</tooltip>
+          </variable>
+          <variable CV="6341.34" mask="VVVVVVVVXXXX" item="Output 14 On Address" default="14">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 14 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.34" mask="VVVVVVVVVVVV" item="Output 14">
+            <decVal max="20483"/>
+            <label>Output 14 On</label>
+          </variable>
+
+          <variable CV="6341.35" mask="XXXXXXXXVVVV" item="Output 15 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 15 On</tooltip>
+          </variable>
+          <variable CV="6341.35" mask="VVVVVVVVXXXX" item="Output 15 On Address" default="15">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 15 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.35" mask="VVVVVVVVVVVV" item="Output 15">
+            <decVal max="20483"/>
+            <label>Output 15 On</label>
+          </variable>
+
+          <variable CV="6341.36" mask="XXXXXXXXVVVV" item="Output 16 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 16 On</tooltip>
+          </variable>
+          <variable CV="6341.36" mask="VVVVVVVVXXXX" item="Output 16 On Address" default="16">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 16 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.36" mask="VVVVVVVVVVVV" item="Output 16">
+            <decVal max="20483"/>
+            <label>Output 16 On</label>
+          </variable>
+
+          <variable CV="6341.37" mask="XXXXXXXXVVVV" item="Output 17 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 17 On</tooltip>
+          </variable>
+          <variable CV="6341.37" mask="VVVVVVVVXXXX" item="Output 17 On Address" default="17">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 17 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.37" mask="VVVVVVVVVVVV" item="Output 17">
+            <decVal max="20483"/>
+            <label>Output 17 On</label>
+          </variable>
+
+          <variable CV="6341.38" mask="XXXXXXXXVVVV" item="Output 18 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 18 On</tooltip>
+          </variable>
+          <variable CV="6341.38" mask="VVVVVVVVXXXX" item="Output 18 On Address" default="18">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 18 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.38" mask="VVVVVVVVVVVV" item="Output 18">
+            <decVal max="20483"/>
+            <label>Output 18 On</label>
+          </variable>
+
+          <variable CV="6341.39" mask="XXXXXXXXVVVV" item="Output 19 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 19 On</tooltip>
+          </variable>
+          <variable CV="6341.39" mask="VVVVVVVVXXXX" item="Output 19 On Address" default="19">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 19 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.39" mask="VVVVVVVVVVVV" item="Output 19">
+            <decVal max="20483"/>
+            <label>Output 19 On</label>
+          </variable>
+
+          <variable CV="6341.40" mask="XXXXXXXXVVVV" item="Output 20 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <label xml:lang="de">Bericht Ein: </label>
+            <label xml:lang="nl">Instructie Aan: </label>
+            <label>On Command: </label>
+            <tooltip>Command to turn output 20 On</tooltip>
+          </variable>
+          <variable CV="6341.40" mask="VVVVVVVVXXXX" item="Output 20 On Address" default="20">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Adresse Ein:</label>
+            <label xml:lang="nl">Adres Aan:</label>
+            <label>On Address:</label>
+            <tooltip>Address to switch output 20 On (1-2048)</tooltip>
+          </variable>
+          <!-- test -->
+          <variable CV="6341.40" mask="VVVVVVVVVVVV" item="Output 20">
+            <decVal max="20483"/>
+            <label>Output 20 On</label>
+          </variable>
+
+            <!-- CV 41-60: Settings outputs 1-20 Off -->
+
+            <variable CV="6341.41" mask="XXXXXXXXVVVV" item="Output 1 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 1 Off</tooltip>
+            </variable>
+            <variable CV="6341.41" mask="VVVVVVVVXXXX" item="Output 1 Off Address" default="1">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 1 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.42" mask="XXXXXXXXVVVV" item="Output 2 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 2 Off</tooltip>
+            </variable>
+            <variable CV="6341.42" mask="VVVVVVVVXXXX" item="Output 2 Off Address" default="2">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 2 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.43" mask="XXXXXXXXVVVV" item="Output 3 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 3 Off</tooltip>
+            </variable>
+            <variable CV="6341.43" mask="VVVVVVVVXXXX" item="Output 3 Off Address" default="3">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 3 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.44" mask="XXXXXXXXVVVV" item="Output 4 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 4 Off</tooltip>
+            </variable>
+            <variable CV="6341.44" mask="VVVVVVVVXXXX" item="Output 4 Off Address" default="4">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 4 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.45" mask="XXXXXXXXVVVV" item="Output 5 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 5 Off</tooltip>
+            </variable>
+            <variable CV="6341.45" mask="VVVVVVVVXXXX" item="Output 5 Off Address" default="5">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 5 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.46" mask="XXXXXXXXVVVV" item="Output 6 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 6 Off</tooltip>
+            </variable>
+            <variable CV="6341.46" mask="VVVVVVVVXXXX" item="Output 6 Off Address" default="6">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 6 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.47" mask="XXXXXXXXVVVV" item="Output 7 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 7 Off</tooltip>
+            </variable>
+            <variable CV="6341.47" mask="VVVVVVVVXXXX" item="Output 7 Off Address" default="7">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 7 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.48" mask="XXXXXXXXVVVV" item="Output 8 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 8 Off</tooltip>
+            </variable>
+            <variable CV="6341.48" mask="VVVVVVVVXXXX" item="Output 8 Off Address" default="8">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 8 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.49" mask="XXXXXXXXVVVV" item="Output 9 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 9 Off</tooltip>
+            </variable>
+            <variable CV="6341.49" mask="VVVVVVVVXXXX" item="Output 9 Off Address" default="9">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 9 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.50" mask="XXXXXXXXVVVV" item="Output 10 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn Output 10 Off</tooltip>
+            </variable>
+            <variable CV="6341.50" mask="VVVVVVVVXXXX" item="Output 10 Off Address" default="10">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 10 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.51" mask="XXXXXXXXVVVV" item="Output 11 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 11 Off</tooltip>
+            </variable>
+            <variable CV="6341.51" mask="VVVVVVVVXXXX" item="Output 11 Off Address" default="11">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 11 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.52" mask="XXXXXXXXVVVV" item="Output 12 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 12 Off</tooltip>
+            </variable>
+            <variable CV="6341.52" mask="VVVVVVVVXXXX" item="Output 12 Off Address" default="12">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 12 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.53" mask="XXXXXXXXVVVV" item="Output 13 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 13 Off</tooltip>
+            </variable>
+            <variable CV="6341.53" mask="VVVVVVVVXXXX" item="Output 13 Off Address" default="13">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 13 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.54" mask="XXXXXXXXVVVV" item="Output 14 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 14 Off</tooltip>
+            </variable>
+            <variable CV="6341.54" mask="VVVVVVVVXXXX" item="Output 14 Off Address" default="14">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 14 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.55" mask="XXXXXXXXVVVV" item="Output 15 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 15 Off</tooltip>
+            </variable>
+            <variable CV="6341.55" mask="VVVVVVVVXXXX" item="Output 15 Off Address" default="15">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 15 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.56" mask="XXXXXXXXVVVV" item="Output 16 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 16 Off</tooltip>
+            </variable>
+            <variable CV="6341.56" mask="VVVVVVVVXXXX" item="Output 16 Off Address" default="16">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 16 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.57" mask="XXXXXXXXVVVV" item="Output 17 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 17 Off</tooltip>
+            </variable>
+            <variable CV="6341.57" mask="VVVVVVVVXXXX" item="Output 17 Off Address" default="17">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 17 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.58" mask="XXXXXXXXVVVV" item="Output 18 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 18 Off</tooltip>
+            </variable>
+            <variable CV="6341.58" mask="VVVVVVVVXXXX" item="Output 18 Off Address" default="18">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 18 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.59" mask="XXXXXXXXVVVV" item="Output 19 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 19 Off</tooltip>
+            </variable>
+            <variable CV="6341.59" mask="VVVVVVVVXXXX" item="Output 19 Off Address" default="19">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 19 Off (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.60" mask="XXXXXXXXVVVV" item="Output 20 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <label xml:lang="de">Bericht Aus:</label>
+              <label xml:lang="nl">Instructie Uit:</label>
+              <label>Off Command:</label>
+              <tooltip>Command to turn output 20 Off</tooltip>
+            </variable>
+            <variable CV="6341.60" mask="VVVVVVVVXXXX" item="Output 20 Off Address" default="20">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse Aus:</label>
+              <label xml:lang="nl">Adres Uit:</label>
+              <label>Off Address:</label>
+              <tooltip>Address to switch output 20 Off (1-2048)</tooltip>
+            </variable>
+
+            <!-- CV 61-80: Settings outputs 1-20 Switch Mode -->
+
+            <variable CV="6341.61" mask="XXXXXXXXXXVV" item="Output 1 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 1</tooltip>
+            </variable>
+            <variable CV="6341.61" mask="VVVVVVVVXXXX" item="Output 1 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 1 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.62" mask="XXXXXXXXXXVV" item="Output 2 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 2</tooltip>
+            </variable>
+            <variable CV="6341.62" mask="VVVVVVVVXXXX" item="Output 2 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 2 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.63" mask="XXXXXXXXXXVV" item="Output 3 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 3</tooltip>
+            </variable>
+            <variable CV="6341.63" mask="VVVVVVVVXXXX" item="Output 3 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 3 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.64" mask="XXXXXXXXXXVV" item="Output 4 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 4</tooltip>
+            </variable>
+            <variable CV="6341.64" mask="VVVVVVVVXXXX" item="Output 4 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 4 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.65" mask="XXXXXXXXXXVV" item="Output 5 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 5</tooltip>
+            </variable>
+            <variable CV="6341.65" mask="VVVVVVVVXXXX" item="Output 5 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 5 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.66" mask="XXXXXXXXXXVV" item="Output 6 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 6</tooltip>
+            </variable>
+            <variable CV="6341.66" mask="VVVVVVVVXXXX" item="Output 6 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 6 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.67" mask="XXXXXXXXXXVV" item="Output 7 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 7</tooltip>
+            </variable>
+            <variable CV="6341.67" mask="VVVVVVVVXXXX" item="Output 7 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 7 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.68" mask="XXXXXXXXXXVV" item="Output 8 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 8</tooltip>
+            </variable>
+            <variable CV="6341.68" mask="VVVVVVVVXXXX" item="Output 8 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 8 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.69" mask="XXXXXXXXXXVV" item="Output 9 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 9</tooltip>
+            </variable>
+            <variable CV="6341.69" mask="VVVVVVVVXXXX" item="Output 9 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 9 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.70" mask="XXXXXXXXXXVV" item="Output 10 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 10</tooltip>
+            </variable>
+            <variable CV="6341.70" mask="VVVVVVVVXXXX" item="Output 10 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 10 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.71" mask="XXXXXXXXXXVV" item="Output 11 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 11</tooltip>
+            </variable>
+            <variable CV="6341.71" mask="VVVVVVVVXXXX" item="Output 11 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 11 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.72" mask="XXXXXXXXXXVV" item="Output 12 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 12</tooltip>
+            </variable>
+            <variable CV="6341.72" mask="VVVVVVVVXXXX" item="Output 12 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 12 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.73" mask="XXXXXXXXXXVV" item="Output 13 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 13</tooltip>
+            </variable>
+            <variable CV="6341.73" mask="VVVVVVVVXXXX" item="Output 13 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 13 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.74" mask="XXXXXXXXXXVV" item="Output 14 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 14</tooltip>
+            </variable>
+            <variable CV="6341.74" mask="VVVVVVVVXXXX" item="Output 14 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 14 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.75" mask="XXXXXXXXXXVV" item="Output 15 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 15</tooltip>
+            </variable>
+            <variable CV="6341.75" mask="VVVVVVVVXXXX" item="Output 15 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 15 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.76" mask="XXXXXXXXXXVV" item="Output 16 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 16</tooltip>
+            </variable>
+            <variable CV="6341.76" mask="VVVVVVVVXXXX" item="Output 16 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 16 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.77" mask="XXXXXXXXXXVV" item="Output 17 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 17</tooltip>
+            </variable>
+            <variable CV="6341.77" mask="VVVVVVVVXXXX" item="Output 17 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 17 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.78" mask="XXXXXXXXXXVV" item="Output 18 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 18</tooltip>
+            </variable>
+            <variable CV="6341.78" mask="VVVVVVVVXXXX" item="Output 18 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 18 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.79" mask="XXXXXXXXXXVV" item="Output 19 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 19</tooltip>
+            </variable>
+            <variable CV="6341.79" mask="VVVVVVVVXXXX" item="Output 19 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 19 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+            <variable CV="6341.80" mask="XXXXXXXXXXVV" item="Output 20 Switch Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
+              <label xml:lang="de">Art:</label>
+              <label xml:lang="nl">Modus:</label>
+              <label>Mode:</label>
+              <tooltip>Switching mode of output 20</tooltip>
+            </variable>
+            <variable CV="6341.80" mask="VVVVVVVVXXXX" item="Output 20 Switch Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Impulslänge:</label>
+              <label xml:lang="nl">Pulslengte:</label>
+              <label>Duration:</label>
+              <tooltip>Duration of momentary output 20 in 50 ms steps (1-255, 0=continuous)</tooltip>
+            </variable>
+
+          </variables>
+      </decoder>
+
+      <!-- Programming tabbed panes layout -->
+      <pane>
+        <name>LNCV Module</name>
+        <name xml:lang="de">LNCV Modul</name>
+        <name xml:lang="nl">LNCV Module</name>
+
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Module Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Module Instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Moduleingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration Modules&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+
+          <separator/>
+
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Module-wide Programming Assistance&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Modulkonfigurationshilfe&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Configuratie-assistent Module&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <row>
+            <display item="ProgramAssist" />
+            <display item="Start Address" />
+          </row>
+
+          <label>
+            <text>  </text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Signal Groups&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Seingroepen&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Signalgruppen&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <separator/>
+          <row>
+            <display item="Signal Group 1 Type"/>
+            <display item="Signal Group 1 Address"/>
+            <!-- for testing <display item="Signal Group 1"/>-->
+          </row>
+          <row>
+            <display item="Signal Group 2 Type"/>
+            <display item="Signal Group 2 Address"/>
+            <!-- for testing <display item="Signal Group 2"/>-->
+          </row>
+          <row>
+            <display item="Signal Group 3 Type"/>
+            <display item="Signal Group 3 Address"/>
+            <!-- for testing <display item="Signal Group 3"/>-->
+          </row>
+          <row>
+            <display item="Signal Group 4 Type"/>
+            <display item="Signal Group 4 Address"/>
+            <!-- for testing <display item="Signal Group 4"/>-->
+          </row>
+          <row>
+            <display item="Signal Group 5 Type"/>
+            <display item="Signal Group 5 Address"/>
+            <!-- for testing <display item="Signal Group 5"/>-->
+          </row>
+        </column>
+
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Blink Rates&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Knippertemp&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Blinkgeschwindigkeit&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <separator/>
+          <display item="Blink Rate 1.1"/>
+          <display item="Blink Rate 1.2"/>
+          <display item="Blink Rate 1.3"/>
+          <display item="Blink Rate 2.1"/>
+          <display item="Blink Rate 2.2"/>
+          <display item="Blink Rate 2.3"/>
+
+          <label>
+            <text>  </text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Time Settings&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Tijdinstellingen&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Zeiteinstellungen&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Configuration Temporelle&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <separator/>
+          <display item="Restart Wait"/>
+          <display item="Short Threshold"/>
+          <display item="Delay"/>
+          <display item="Overlap"/>
+        </column>
+      </pane>
+
+      <pane>
+          <name>LNCV Output Configuration</name>
+          <name xml:lang="de">LNCV Ausgangskonfiguration</name>
+          <name xml:lang="nl">LNCV Uitgangen Instellen</name>
+          <row>
+              <column>
+                  <label>
+                    <text>&lt;html&gt;&lt;h1&gt;Output Configuration&lt;/h1&gt;&lt;/html&gt;</text>
+                    <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Instelling Uitgangen&lt;/h1&gt;&lt;/html&gt;</text>
+                    <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Ausgangskonfiguration&lt;/h1&gt;&lt;/html&gt;</text>
+                    <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration Sorties&lt;/h1&gt;&lt;/html&gt;</text>
+                  </label>
+                  <label>
+                    <text>Before writing, open a Programming</text>
+                    <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                    <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                  </label>
+                  <label>
+                    <text>session using the LocoNet LNCV Tool.</text>
+                    <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                    <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                  </label>
+                  <label>
+                    <text> </text>
+                  </label>
+
+                  <!-- per output setting -->
+                <separator/>
+                  <label>
+                    <text>&lt;html&gt;&lt;strong&gt;Output 1&lt;/strong&gt;&lt;/html&gt;</text>
+                    <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 1&lt;/strong&gt;&lt;/html&gt;</text>
+                    <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 1&lt;/strong&gt;&lt;/html&gt;</text>
+                  </label>
+                  <row>
+                    <column>
+                    <row>
+                      <display item="Output 1 On Address"/>
+                      <display item="Output 1 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 1 Off Address"/>
+                      <display item="Output 1 Off Type"/>
+                    </row>
+                    </column>
+                    <column>
+                      <row>
+                      <display item="Output 1 Switch Mode"/>
+                      <display item="Output 1 Switch Time"/>
+                      </row>
+                      <display item="Damped 1.1" format="checkbox"/>
+                      <!-- for testing: <display item="Output 1"/> -->
+                    </column>
+                  </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 2&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 2&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 2&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 2 On Address"/>
+                      <display item="Output 2 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 2 Off Address"/>
+                      <display item="Output 2 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 2 Switch Mode"/>
+                      <display item="Output 2 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.2" format="checkbox"/>
+                    <!-- for testing: <display item="Output 2"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 3&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 3&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 3&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 3 On Address"/>
+                      <display item="Output 3 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 3 Off Address"/>
+                      <display item="Output 3 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 3 Switch Mode"/>
+                      <display item="Output 3 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.3" format="checkbox"/>
+                    <!-- for testing: <display item="Output 3"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 4&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 4&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 4&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 4 On Address"/>
+                      <display item="Output 4 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 4 Off Address"/>
+                      <display item="Output 4 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 4 Switch Mode"/>
+                      <display item="Output 4 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.4" format="checkbox"/>
+                    <!-- for testing: <display item="Output 4"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 5&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 5&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 5&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 5 On Address"/>
+                      <display item="Output 5 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 5 Off Address"/>
+                      <display item="Output 5 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 5 Switch Mode"/>
+                      <display item="Output 5 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.5" format="checkbox"/>
+                    <!-- for testing: <display item="Output 5"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 6&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 6&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 6&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 6 On Address"/>
+                      <display item="Output 6 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 6 Off Address"/>
+                      <display item="Output 6 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 6 Switch Mode"/>
+                      <display item="Output 6 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.6" format="checkbox"/>
+                    <!-- for testing: <display item="Output 6"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 7&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 7&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 7&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 7 On Address"/>
+                      <display item="Output 7 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 7 Off Address"/>
+                      <display item="Output 7 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 7 Switch Mode"/>
+                      <display item="Output 7 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.7" format="checkbox"/>
+                    <!-- for testing: <display item="Output 7"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 8&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 8&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 8&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 8 On Address"/>
+                      <display item="Output 8 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 8 Off Address"/>
+                      <display item="Output 8 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 8 Switch Mode"/>
+                      <display item="Output 8 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.8" format="checkbox"/>
+                    <!-- for testing: <display item="Output 8"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 9&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 9&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 9&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 9 On Address"/>
+                      <display item="Output 9 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 9 Off Address"/>
+                      <display item="Output 9 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 9 Switch Mode"/>
+                      <display item="Output 9 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.9" format="checkbox"/>
+                    <!-- for testing: <display item="Output 9"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 10&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 10&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 10&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 10 On Address"/>
+                      <display item="Output 10 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 10 Off Address"/>
+                      <display item="Output 10 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 10 Switch Mode"/>
+                      <display item="Output 10 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.10" format="checkbox"/>
+                    <!-- for testing: <display item="Output 10"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 11&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 11&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 11&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 11 On Address"/>
+                      <display item="Output 11 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 11 Off Address"/>
+                      <display item="Output 11 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 11 Switch Mode"/>
+                      <display item="Output 11 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.11" format="checkbox"/>
+                    <!-- for testing: <display item="Output 11"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 12&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 12&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 12&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 12 On Address"/>
+                      <display item="Output 12 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 12 Off Address"/>
+                      <display item="Output 12 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 12 Switch Mode"/>
+                      <display item="Output 12 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.12" format="checkbox"/>
+                    <!-- for testing: <display item="Output 12"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 13&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 13&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 13&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 13 On Address"/>
+                      <display item="Output 13 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 13 Off Address"/>
+                      <display item="Output 13 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 13 Switch Mode"/>
+                      <display item="Output 13 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.13" format="checkbox"/>
+                    <!-- for testing: <display item="Output 13"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 14&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 14&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 14&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 14 On Address"/>
+                      <display item="Output 14 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 14 Off Address"/>
+                      <display item="Output 14 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 14 Switch Mode"/>
+                      <display item="Output 14 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.14" format="checkbox"/>
+                    <!-- for testing: <display item="Output 14"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 15&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 15&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 15&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 15 On Address"/>
+                      <display item="Output 15 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 15 Off Address"/>
+                      <display item="Output 15 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 15 Switch Mode"/>
+                      <display item="Output 15 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.15" format="checkbox"/>
+                    <!-- for testing: <display item="Output 15"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 16&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 16&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 16&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 16 On Address"/>
+                      <display item="Output 16 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 16 Off Address"/>
+                      <display item="Output 16 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 16 Switch Mode"/>
+                      <display item="Output 16 Switch Time"/>
+                    </row>
+                    <display item="Damped 1.16" format="checkbox"/>
+                    <!-- for testing: <display item="Output 16"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 17&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 17&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 17&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 17 On Address"/>
+                      <display item="Output 17 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 17 Off Address"/>
+                      <display item="Output 17 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 17 Switch Mode"/>
+                      <display item="Output 17 Switch Time"/>
+                    </row>
+                    <display item="Damped 2.17" format="checkbox"/>
+                    <!-- for testing: <display item="Output 17"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 18&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 18&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 18&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 18 On Address"/>
+                      <display item="Output 18 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 18 Off Address"/>
+                      <display item="Output 18 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 18 Switch Mode"/>
+                      <display item="Output 18 Switch Time"/>
+                    </row>
+                    <display item="Damped 2.18" format="checkbox"/>
+                    <!-- for testing: <display item="Output 18"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 19&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 19&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 19&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 19 On Address"/>
+                      <display item="Output 19 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 19 Off Address"/>
+                      <display item="Output 19 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 19 Switch Mode"/>
+                      <display item="Output 19 Switch Time"/>
+                    </row>
+                    <display item="Damped 2.19" format="checkbox"/>
+                    <!-- for testing: <display item="Output 19"/> -->
+                  </column>
+                </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Output 20&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang 20&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgang 20&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+                <row>
+                  <column>
+                    <row>
+                      <display item="Output 20 On Address"/>
+                      <display item="Output 20 On Type"/>
+                    </row>
+                    <row>
+                      <display item="Output 20 Off Address"/>
+                      <display item="Output 20 Off Type"/>
+                    </row>
+                  </column>
+                  <column>
+                    <row>
+                      <display item="Output 20 Switch Mode"/>
+                      <display item="Output 20 Switch Time"/>
+                    </row>
+                    <display item="Damped 2.20" format="checkbox"/>
+                    <!-- for testing: <display item="Output 20"/> -->
+                  </column>
+                </row>
+                  <!--end of output blocks-->
+
+                <separator/>
+                <display item="Damped 1"/>
+                <display item="Damped 2"/>
+              </column>
+          </row>
+      </pane>
+
+  </decoder-config>

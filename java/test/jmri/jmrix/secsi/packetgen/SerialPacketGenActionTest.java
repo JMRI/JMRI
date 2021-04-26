@@ -1,18 +1,19 @@
 package jmri.jmrix.secsi.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Test simple functioning of SerialPacketGenAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialPacketGenActionTest {
 
@@ -32,12 +33,12 @@ public class SerialPacketGenActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SecsiSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

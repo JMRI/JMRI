@@ -1,11 +1,13 @@
 package jmri.jmrit.display.configurexml;
 
 import java.util.List;
+
 import jmri.Memory;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.MemoryIcon;
+import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -59,10 +61,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         java.util.HashMap<String, NamedIcon> map = p.getMap();
         if (map != null) {
 
-            java.util.Iterator<java.util.Map.Entry<String, NamedIcon>> iterator = map.entrySet().iterator();
-
-            while (iterator.hasNext()) {
-                java.util.Map.Entry<String, NamedIcon> mi = iterator.next();
+            for (java.util.Map.Entry<String, NamedIcon> mi : map.entrySet()) {
                 String key = mi.getKey();
                 String value = mi.getValue().getName();
 
@@ -80,9 +79,11 @@ public class MemoryIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
 
         Editor ed = null;
         MemoryIcon l;
@@ -93,7 +94,7 @@ public class MemoryIconXml extends PositionableLabelXml {
             ed = (Editor) o;
             l = new MemoryIcon("", ed);
         } else {
-            log.error("Unrecognizable class - " + o.getClass().getName());
+            log.error("Unrecognizable class - {}", o.getClass().getName());
             return;
         }
 
@@ -113,7 +114,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setMemory(name);
         } else {
-            log.error("Memory named '" + attr.getValue() + "' not found.");
+            log.error("Memory named '{}' not found.", attr.getValue());
             ed.loadFailed();
         }
 
@@ -136,15 +137,14 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         // get the icon pairs
         List<Element> items = element.getChildren("memorystate");
-        for (int i = 0; i < items.size(); i++) {
+        for (Element item : items) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String iconName = item.getAttribute("icon").getValue();
             NamedIcon icon = NamedIcon.getIconByName(iconName);
             if (icon == null) {
                 icon = ed.loadFailed("Memory " + name, iconName);
                 if (icon == null) {
-                    log.info("Memory \"" + name + "\" icon removed for url= " + iconName);
+                    log.info("Memory \"{}\" icon removed for url= {}", name, iconName);
                 }
             }
             if (icon != null) {
@@ -152,7 +152,11 @@ public class MemoryIconXml extends PositionableLabelXml {
                 l.addKeyAndIcon(icon, keyValue);
             }
         }
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
         int x = 0;

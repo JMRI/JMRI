@@ -17,7 +17,7 @@ import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.openide.util.lookup.ServiceProvider;
@@ -38,7 +38,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean loading = false;
     private boolean storeState = false;
     private boolean useFastClock = false;
-    private ShutDownTask shutDownTask = null;
+    private Runnable shutDownTask = null;
 
     public DefaultIdTagManager(SystemConnectionMemo memo) {
         super(memo);
@@ -76,19 +76,13 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         // Create shutdown task to save
         log.debug("Register ShutDown task");
         if (this.shutDownTask == null) {
-            this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                @Override
-                public boolean execute() {
-                    // Save IdTag details prior to exit, if necessary
-                    log.debug("Start writing IdTag details...");
-                    try {
-                        writeIdTagDetails();
-                    } catch (java.io.IOException ioe) {
-                        log.error("Exception writing IdTags: {}", (Object) ioe);
-                    }
-
-                    // continue shutdown
-                    return true;
+            this.shutDownTask = () -> {
+                // Save IdTag details prior to exit, if necessary
+                log.debug("Start writing IdTag details...");
+                try {
+                    writeIdTagDetails();
+                } catch (java.io.IOException ioe) {
+                    log.error("Exception writing IdTags: {}", (Object) ioe);
                 }
             };
             InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
@@ -257,7 +251,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  //NOI18N
+            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  // NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
@@ -265,7 +259,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void readIdTagDetails() {
         log.debug("reading idTag Details");
-        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  //NOI18N
+        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  // NOI18N
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }

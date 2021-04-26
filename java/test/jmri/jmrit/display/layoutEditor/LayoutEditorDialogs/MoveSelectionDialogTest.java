@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of moveSelectionDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class MoveSelectionDialogTest {
 
@@ -56,6 +56,8 @@ public class MoveSelectionDialogTest {
             layoutEditor = null;
             moveSelectionDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

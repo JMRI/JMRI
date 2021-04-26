@@ -5,12 +5,14 @@ import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
- * Unit tests for the DefaultCabSignal 
+ * Unit tests for the DefaultCabSignal
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class DefaultCabSignalTest {
 
@@ -49,8 +51,7 @@ public class DefaultCabSignalTest {
         acs.dispose(); // verify no exceptions
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -61,10 +62,12 @@ public class DefaultCabSignalTest {
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

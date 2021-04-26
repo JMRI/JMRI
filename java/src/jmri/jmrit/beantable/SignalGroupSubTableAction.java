@@ -10,18 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SortOrder;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -105,7 +94,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
 
         if (result < 0) {
-            log.warn("unexpected mode string in Signal Head Appearance Mode: " + mode);
+            log.warn("unexpected mode string in Signal Head Appearance Mode: {}", mode);
             throw new IllegalArgumentException();
         }
         if (result == 0) {
@@ -138,7 +127,7 @@ public class SignalGroupSubTableAction {
         }
 
         if (result < 0) {
-            log.warn("unexpected mode string in signalHeadMode: " + mode);
+            log.warn("unexpected mode string in signalHeadMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -173,7 +162,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in Signal Head Appearance: " + mode);
+            log.warn("unexpected mode string in Signal Head Appearance: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -207,7 +196,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -270,43 +259,28 @@ public class SignalGroupSubTableAction {
      * @param g Parent Signal Head
      * @param headName System or User Name of this Signal Head
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     void editHead(SignalGroup g, String headName) {
         curSignalGroup = g;
         curHeadName = headName;
         curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
         if (curSignalHead != null) {
-            _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames()); // shows i18n strings from signal head definition
-            _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
+            _OnAppearance = new JComboBox<>(curSignalHead.getValidStateNames()); // shows i18n strings from signal head definition
+            _OffAppearance = new JComboBox<>(curSignalHead.getValidStateNames());
         }
         _systemName = new JLabel(headName);
         _systemName.setVisible(true);
 
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List<String> systemNameList = tm.getSystemNameList();
-        _turnoutList = new ArrayList<SignalGroupTurnout>(systemNameList.size());
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            Turnout turn = tm.getBySystemName(systemName);
-            if (turn != null) {
-                String userName = turn.getUserName();
-                _turnoutList.add(new SignalGroupTurnout(systemName, userName));
-            }
-        }
+         _turnoutList = new ArrayList<>(tm.getNamedBeanSet().size());
+         tm.getNamedBeanSet().stream().filter(turn -> (turn != null)).forEachOrdered(turn -> {
+             _turnoutList.add(new SignalGroupTurnout(turn.getSystemName(), turn.getUserName()));
+        });
 
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
-        systemNameList = sm.getSystemNameList();
-        _sensorList = new ArrayList<SignalGroupSensor>(systemNameList.size());
-        iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            Sensor sen = sm.getBySystemName(systemName);
-            if (sen != null) {
-                String userName = sen.getUserName();
-                _sensorList.add(new SignalGroupSensor(systemName, userName));
-            }
-        }
+        _sensorList = new ArrayList<>(sm.getNamedBeanSet().size());
+        sm.getNamedBeanSet().stream().filter(sen -> (sen != null)).forEachOrdered(sen -> {
+            _sensorList.add(new SignalGroupSensor(sen.getSystemName(), sen.getUserName()));
+        });
         initializeIncludedList();
 
         // Set up sub panel for editing of a Signal Group Signal Head item

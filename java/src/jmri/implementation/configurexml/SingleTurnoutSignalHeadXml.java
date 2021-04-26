@@ -153,11 +153,6 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         }
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private int getIntFromColour(String colour) {
         switch (colour.toLowerCase()) {
             case "red":

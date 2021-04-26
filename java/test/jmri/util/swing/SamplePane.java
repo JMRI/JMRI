@@ -9,7 +9,7 @@ import javax.swing.JMenu;
 /**
  * Sample Pane class for tests
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 // sample class
 public class SamplePane extends jmri.util.swing.JmriPanel {

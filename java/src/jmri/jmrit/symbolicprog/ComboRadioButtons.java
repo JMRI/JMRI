@@ -72,6 +72,8 @@ public class ComboRadioButtons extends JPanel {
     /**
      * Add a button to the panel if desired. In this class, its always added,
      * but in the On and Off subclasses, its only added for certain ones
+     * @param b Radio button to add
+     * @param i (Not used)
      */
     void addToPanel(JRadioButton b, int i) {
         add(b);

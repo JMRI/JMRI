@@ -3,16 +3,15 @@ package jmri.jmrix.cmri.serial;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialNode class
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003
+ * @author Dave Duchamp multi-node extensions 2003
  */
 public class SerialNodeTest {
 
@@ -362,7 +361,7 @@ public class SerialNodeTest {
         Assert.assertEquals("poll4 s4", Sensor.INACTIVE, s4.getKnownState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // replace the SerialTrafficController
@@ -371,13 +370,13 @@ public class SerialNodeTest {
         memo.setTrafficController(stcs);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
         
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

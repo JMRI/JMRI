@@ -327,7 +327,7 @@ class TcpPeripheral_ShutDown(jmri.implementation.AbstractShutDownTask):
 
 #---------------------------------------------------------------------------------
 # this is the code to be invoked when the program is shutting down
-    def execute(self):
+    def run(self):
         auxList = []
         for alias in TcpPeripheral_sockets:
             auxList.append(alias)
@@ -335,7 +335,7 @@ class TcpPeripheral_ShutDown(jmri.implementation.AbstractShutDownTask):
             TcpPeripheral_removeDevice(alias)
         TcpPeripheral_log.info("Shutting down 'TcpPeripheral'.")
         time.sleep(3) # wait 3 seconds for all sockets to close
-        return True # True to shutdown, False to abort shutdown
+        return
 
 #*********************************************************************************
 

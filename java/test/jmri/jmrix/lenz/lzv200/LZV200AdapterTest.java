@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.lzv200;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * LZV200AdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.lzv200.LZV200Adapter class
+ * Test for the jmri.jmrix.lenz.lzv200.LZV200Adapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZV200AdapterTest {
 
@@ -21,12 +20,12 @@ public class LZV200AdapterTest {
         Assert.assertNotNull(a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

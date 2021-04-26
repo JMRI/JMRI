@@ -28,6 +28,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * A simulated connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
+     * @param o object to store
      * @return formatted element containing no attributes except the class name
      */
     @Override
@@ -55,6 +56,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
 
         saveOptions(e, adapter);
+        
+        setOutputInterval(adapter, e);
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -94,7 +97,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         if (shared.getAttribute("disabled") != null) {
             String yesno = shared.getAttribute("disabled").getValue();
-            if ((yesno != null) && (!yesno.equals(""))) {
+            if ((yesno != null) && (!yesno.isEmpty())) {
                 if (yesno.equals("no")) {
                     adapter.setDisabled(false);
                 } else if (yesno.equals("yes")) {
@@ -111,6 +114,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             return result;
         }
         adapter.configure();
+        
+        if (perNode.getAttribute("turnoutInterval") != null) {
+            adapter.getSystemConnectionMemo().setOutputInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));
+        }
 
         return result;
     }

@@ -58,7 +58,7 @@
           automation for your layout using JMRI.</p>
 
           <p>The key class is <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
           AbstractAutomaton</a>, which provides threading support
           to simplify custom automation code.</p>
 
@@ -174,8 +174,9 @@ classes/jmri/jmrit/automat/SampleAutomaton.class
 </pre>as an example of how code in a specific package gets stored.
 
           <p>The easiest way to invoke your code is to use JMRI's
-          scripting support. Open a Script Output window (so you
-          can see errors) from the Panels menu, then a Script Entry
+          scripting support. Open a <strong>Script Output</strong> window (so you
+          can see errors) from the <strong>Scripting</strong> {<em>Old:
+          <strong>Panels</strong></em>} menu, then in a <strong>Script Entry</strong>
           window, enter:</p>
           <pre style="font-family: monospace;">
 MyCode().start()

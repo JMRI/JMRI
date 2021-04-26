@@ -30,6 +30,9 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     }
 
     public static ComponentUI createUI(JComponent x) {
+        if (!(x instanceof JHelpContentViewer)){
+            throw new IllegalArgumentException("Not a JHelpContentViewer");
+        }
         return new ExternalLinkContentViewerUI((JHelpContentViewer) x);
     }
 
@@ -40,7 +43,8 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             try {
                 log.debug("event has URL {}", he.getURL());
                 URL u = he.getURL();
-                activateURL(u);
+                if (! activateURL(u) ) super.hyperlinkUpdate(he);
+                return;
             } catch (IOException | URISyntaxException t) {
                 log.error("Error processing request", t);
             }
@@ -48,24 +52,34 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
         super.hyperlinkUpdate(he);
     }
 
-    public static void activateURL(URL u) throws IOException, URISyntaxException {
+    /**
+     * @param u URL that JavaHelp is trying to display
+     * @throws IOException if an error occurs fetching the URL
+     * @throws URISyntaxException if given an ill-formatted URL
+     * @return true if the URL was handled as a special case
+     */
+    public static boolean activateURL(URL u) throws IOException, URISyntaxException {
         if (u.getProtocol().equalsIgnoreCase("mailto") || u.getProtocol().equalsIgnoreCase("http")
+                || u.getProtocol().equalsIgnoreCase("https")
                 || u.getProtocol().equalsIgnoreCase("ftp")) {
-            URI uri = new URI(u.toString());
+            URI uri = u.toURI();
             log.debug("defer protocol {} to browser via {}", u.getProtocol(), uri);
             Desktop.getDesktop().browse(uri);
+            return true;
         } else if (u.getProtocol().equalsIgnoreCase("file") && (u.getFile().endsWith("jpg")
                 || u.getFile().endsWith("png")
                 || u.getFile().endsWith("xml")
+                || u.getFile().endsWith("pdf")
                 || u.getFile().endsWith("gif"))) {
 
             // following was 
             // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
             // but that duplicated the path information; JavaHelp seems to provide
             // full pathnames here.
-            URI uri = new URI(u.toString());
+            URI uri = u.toURI();
             log.debug("defer content of {} to browser with {}", u.getFile(), uri);
             Desktop.getDesktop().browse(uri);
+            return true;
         } else if (u.getProtocol().equalsIgnoreCase("file")) {
             // if file not present, fall back to web browser
             // first, get file name
@@ -77,11 +91,14 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             }
             File file = new File(pathName);
             if (!file.exists()) {
-                URI uri = new URI("http://jmri.org/" + u.getFile());
+                URI uri = new URI("https://jmri.org/" + u.getFile());
                 log.debug("fallback to browser with {}", uri);
                 Desktop.getDesktop().browse(uri);
+                return true;
             }
         }
+        return false;
     }
+    
     private final static Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUI.class);
 }

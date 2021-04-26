@@ -32,7 +32,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <!-- CV 3-4 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version   </label>
         <label xml:lang="it">Versione Decoder: </label>

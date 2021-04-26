@@ -57,7 +57,7 @@
         <label xml:lang="ca">VMitjana</label>
         <tooltip xml:lang="de">Festlegung der Geschwindigkeit der Lok bei mittlerer Fahrstufe</tooltip>
     </variable>
-    <variable CV="7" readOnly="yes" item="Decoder Version">
+    <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version</label>
         <label xml:lang="cs">Verze dekodéru: </label>
@@ -541,7 +541,7 @@
         <label>Enable Output Driver on AUX3 and AUX4</label>
         <label xml:lang="ca">Activa Sortides en AUX3 i AUX4</label>
     </variable>
-    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 E-Stop on Seed Step 0">
+    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 E-Stop on Speed Step 0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stop immediately on speed step 0</label>
         <label xml:lang="de">Sofortiger Stop bei FS 0</label>
@@ -602,19 +602,19 @@
     <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
         <label>Temperature Trim</label>
-        <label xml:lang="de">            Temperaturregelung            </label>
+        <label xml:lang="de">Temperaturregelung</label>
         <label xml:lang="ca">Ajust de temperatura</label>
     </variable>
     <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
-        <label>Smoke Unit Automatic Power Off Time</label>
-        <label xml:lang="de"> automatische Abschaltung Rauchentwickler </label>
+        <label>Automatic Power Off Time</label>
+        <label xml:lang="de">automatische Abschaltung</label>
         <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
-        <label xml:lang="ca">TEmps apagat del fumigen</label>
+        <label xml:lang="ca">Temps apagat del fumigen</label>
     </variable>
     <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
-        <label>Preheating Temperature for Secondary Smoke Unit</label>
+        <label>Preheat Temp. for Secondary Unit</label>
         <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
         <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
         <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
@@ -629,27 +629,27 @@
         <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
     </variable>
-    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 E-Stop on Seed Step 0" include="LokSound Micro V4.0,LokSound XL V4.0">
+    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 E-Stop on Speed Step 0" include="LokSound Micro V4.0,LokSound XL V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stop immediately on speed step 0</label>
         <label xml:lang="de">Sofortiger Stop bei FS=0</label>
         <label xml:lang="ca">Para inmeditament en pas =</label>
     </variable>
     <!-- E nicht beschrieben -->
-    <variable CV="246" default="0" item="ESU V4 Function Settings Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
+    <variable CV="246" default="0" item="ESU Auto Uncoupling Speed" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Auto Uncoupling Speed</label>
         <label xml:lang="de">Entkuppeln - Fahrtgeschwindigkeit</label>
         <label xml:lang="ca">Velociat de desenganxat automàtic</label>
     </variable>
-    <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
+    <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU Auto Uncoupling Remove Time" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Auto Uncoupling Remove Time</label>
         <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
         <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
         <label xml:lang="ca">Temps d'autodesacoblament d'un tren</label>
     </variable>
-    <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
+    <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU Auto Uncoupling Push Time" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Auto Uncoupling Push Time</label>
         <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
@@ -705,7 +705,7 @@
         <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
-    <variables include="ESU LokSound V4.0">
+    <variables include="ESU LokSound V4.0,LokSound Select direct / micro">
         <xi:include href="http://jmri.org/xml/decoders/esu/susiMapCVs.xml"/>
     </variables>
 </variables>

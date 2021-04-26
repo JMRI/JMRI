@@ -26,4 +26,6 @@
  * <!-- Put @see and @since tags down here. -->
  * @since 4.19
  */
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrix.can.adapters.gridconnect.sproggen5;

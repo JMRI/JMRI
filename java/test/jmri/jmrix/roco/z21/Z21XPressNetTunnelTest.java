@@ -1,15 +1,14 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21XPressNetTunnel class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21XPressNetTunnelTest {
 
@@ -29,7 +28,7 @@ public class Z21XPressNetTunnelTest {
 
     jmri.jmrix.lenz.XNetTrafficController packets;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -59,7 +58,7 @@ public class Z21XPressNetTunnelTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         packets.terminateThreads();
         tunnel.dispose();

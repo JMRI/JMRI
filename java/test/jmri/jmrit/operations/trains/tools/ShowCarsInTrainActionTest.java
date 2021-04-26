@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -24,7 +24,7 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        ShowCarsInTrainAction t = new ShowCarsInTrainAction("Test Action", train1);
+        ShowCarsInTrainAction t = new ShowCarsInTrainAction(train1);
         Assert.assertNotNull("exists", t);
     }
 
@@ -41,12 +41,12 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         Assert.assertTrue(train1.build());
         Assert.assertTrue(train1.isBuilt());
         
-        ShowCarsInTrainAction pa = new ShowCarsInTrainAction("Test Action", train1);
+        ShowCarsInTrainAction pa = new ShowCarsInTrainAction(train1);
         
         Thread performAction = new Thread(new Runnable() {
             @Override
             public void run() {
-                pa.actionPerformed(new ActionEvent("test event", 0, null));
+                pa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         performAction.setName("Test Action"); // NOI18N

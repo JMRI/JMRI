@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import jmri.util.FileUtil;
 import jmri.util.XmlFilenameFilter;
 import org.jdom2.Document;
@@ -84,18 +86,18 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         // there is a transit name selected
                         tInfo.setTransitName(traininfo.getAttribute("transitname").getValue());
                     } else {
-                        log.error("Transit name missing when reading TrainInfoFile " + name);
+                        log.error("Transit name missing when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("trainname") != null) {
                         // there is a transit name selected
                         tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
                     } else {
-                        log.error("Train name missing when reading TrainInfoFile " + name);
+                        log.error("Train name missing when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("dccaddress") != null) {
                         tInfo.setDccAddress(traininfo.getAttribute("dccaddress").getValue());
                     } else {
-                        log.error("DCC Address missing when reading TrainInfoFile " + name);
+                        log.error("DCC Address missing when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("trainintransit") != null) {
                         tInfo.setTrainInTransit(true);
@@ -103,19 +105,19 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setTrainInTransit(false);
                         }
                     } else {
-                        log.error("Train in Transit check box missing  when reading TrainInfoFile " + name);
+                        log.error("Train in Transit check box missing  when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("startblockname") != null) {
                         // there is a transit name selected
                         tInfo.setStartBlockName(traininfo.getAttribute("startblockname").getValue());
                     } else {
-                        log.error("Start block name missing when reading TrainInfoFile " + name);
+                        log.error("Start block name missing when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("endblockname") != null) {
                         // there is a transit name selected
                         tInfo.setDestinationBlockName(traininfo.getAttribute("endblockname").getValue());
                     } else {
-                        log.error("Destination block name missing when reading TrainInfoFile " + name);
+                        log.error("Destination block name missing when reading TrainInfoFile {}", name);
                     }
 
                     if (traininfo.getAttribute("trainfromroster") != null) {
@@ -139,7 +141,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("priority") != null) {
                         tInfo.setPriority(Integer.parseInt(traininfo.getAttribute("priority").getValue()));
                     } else {
-                        log.error("Priority missing when reading TrainInfoFile " + name);
+                        log.error("Priority missing when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("allocatealltheway") != null) {
                         if (traininfo.getAttribute("allocatealltheway").getValue().equals("yes")) {
@@ -163,7 +165,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                                     tInfo.setDelayedRestart(ActiveTrain.SENSORDELAY);
                                     if (traininfo.getAttribute("delayedrestartsensor") != null) {
                                         tInfo.setRestartSensorName(traininfo.getAttribute("delayedrestartsensor").getValue());
-                                    }   
+                                    }
                                     if (traininfo.getAttribute("resetrestartsensor") != null) {
                                         tInfo.setResetRestartSensor(traininfo.getAttribute("resetrestartsensor").getValue().equals("yes"));
                                     }
@@ -310,25 +312,26 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                         // Transit we need the whole thing or the bit before the first open bracket
                         tInfo.setTransitId(tInfo.getTransitName().split("\\(")[0]);
+                        log.debug("v1: t = {}, bs = {}, be = {}", tInfo.getTransitName(), tInfo.getStartBlockName(), tInfo.getDestinationBlockName());
                     }
-                    if ( version == 2 ) {
+                    if ( version == 2 || version == 3) {
                         if (traininfo.getAttribute("transitid") != null) {
                             // there is a transit name selected
                             tInfo.setTransitId(traininfo.getAttribute("transitid").getValue());
                         } else {
-                            log.error("Transit id missing when reading TrainInfoFile " + name);
+                            log.error("Transit id missing when reading TrainInfoFile {}", name);
                         }
                         if (traininfo.getAttribute("startblockid") != null) {
                             // there is a transit name selected
                             tInfo.setStartBlockId(traininfo.getAttribute("startblockid").getValue());
                         } else {
-                            log.error("Start block Id missing when reading TrainInfoFile " + name);
+                            log.error("Start block Id missing when reading TrainInfoFile {}", name);
                         }
                         if (traininfo.getAttribute("endblockid") != null) {
                             // there is a transit name selected
                             tInfo.setDestinationBlockId(traininfo.getAttribute("endblockid").getValue());
                         } else {
-                            log.error("Destination block Id missing when reading TrainInfoFile " + name);
+                            log.error("Destination block Id missing when reading TrainInfoFile {}", name);
                         }
                         if (traininfo.getAttribute("startblockseq") != null) {
                             // there is a transit name selected
@@ -339,7 +342,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                                 log.error("Start block sequence invalid when reading TrainInfoFile");
                             }
                         } else {
-                            log.error("Start block sequence missing when reading TrainInfoFile " + name);
+                            log.error("Start block sequence missing when reading TrainInfoFile {}", name);
                         }
                         if (traininfo.getAttribute("endblockseq") != null) {
                             // there is a transit name selected
@@ -347,16 +350,42 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                                 tInfo.setDestinationBlockSeq(traininfo.getAttribute("endblockseq").getIntValue());
                             }
                             catch (Exception ex) {
-                                log.error("Destination block sequence invalid when reading TrainInfoFile " + name);
+                                log.error("Destination block sequence invalid when reading TrainInfoFile {}", name);
                             }
                         } else {
-                            log.error("Destination block sequence missing when reading TrainInfoFile " + name);
+                            log.error("Destination block sequence missing when reading TrainInfoFile {}", name);
                         }
                     }
-                }
+                    if ( version == 1 || version == 2) {
+                        // Change transit and block names from sysName(userName) to displayName
+                        tInfo.setTransitName(convertName(tInfo.getTransitName()));
+                        tInfo.setStartBlockName(convertName(tInfo.getStartBlockName()));
+                        tInfo.setDestinationBlockName(convertName(tInfo.getDestinationBlockName()));
+                    }
+               }
             }
         }
         return tInfo;
+    }
+
+    public String convertName(String name) {
+        // transit: sys(user), block: sys(user)-n
+        String newName = name;
+
+        Pattern p = Pattern.compile(".+\\((.+)\\)(-\\d+)*");
+        Matcher m = p.matcher(name);
+        if (m.matches()) {
+            log.debug("regex: name = '{}', group 1 = '{}', group 2 = '{}'", name, m.group(1), m.group(2));
+            if (m.group(1) != null) {
+                newName = m.group(1).trim();
+                if (m.group(2) != null) {
+                    newName = newName + m.group(2).trim();
+                }
+            }
+        }
+
+        log.debug("convertName: old = '{}', new = '{}'", name, newName);
+        return newName;
     }
 
     /*
@@ -377,7 +406,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "2");
+        traininfo.setAttribute("version", "3");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());
@@ -455,7 +484,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             // write content to file
             writeXML(findFile(fileLocation + name), doc);
         } catch (java.io.IOException ioe) {
-            log.error("IO Exception " + ioe);
+            log.error("IO Exception {}", ioe);
             throw (ioe);
         }
     }
@@ -476,7 +505,10 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         log.debug("directory of TrainInfoFiles is {}", fileLocation);
         File fp = new File(fileLocation);
         if (fp.exists()) {
-            names.addAll(Arrays.asList(fp.list(new XmlFilenameFilter())));
+            String[] xmlList = fp.list(new XmlFilenameFilter());
+            if (xmlList!=null) {
+                names.addAll(Arrays.asList(xmlList));
+            }
         }
         // Sort the resulting array
         names.sort((s1, s2) -> {
@@ -494,7 +526,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // locate the file and delete it if it exists
         File f = new File(fileLocation + name);
         if (!f.delete()) { // delete file and check success
-            log.error("failed to delete TrainInfo file - " + name);
+            log.error("failed to delete TrainInfo file - {}", name);
         }
     }
 

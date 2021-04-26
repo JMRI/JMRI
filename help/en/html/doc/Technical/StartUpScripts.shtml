@@ -207,9 +207,8 @@
 
         <dt><code>--serial-ports=<em>SERIAL_PORTS</em></code></dt>
 
-        <dd>Set the names of usable serial ports to the comma
-        separated list of ports in <em>SERIAL_PORTS</em>. This is
-        ignored on macOS.</dd>
+        <dd>Set the names of (not the paths to) usable serial ports to the comma
+        separated list of ports in <em>SERIAL_PORTS</em>.</dd>
 
         <dt><code>--settingsdir=<em>SETTINGS_DIR</em></code></dt>
 

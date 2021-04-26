@@ -1,24 +1,25 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import java.awt.GraphicsEnvironment;
+
+import javax.annotation.Nonnull;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.*;
+import jmri.jmrit.beantable.light.LightTableDataModel;
+import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
@@ -130,7 +131,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         new QueueTool().waitEmpty();
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
         new QueueTool().waitEmpty();
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
@@ -140,7 +141,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
     @Override
     public String getEditFrameName() {
-        return Bundle.getMessage("TitleEditLight");
+        return Bundle.getMessage("TitleEditLight") + " IL1";
     }
 
     @Test
@@ -201,11 +202,13 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // now we find the Light in the table and edit it
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
 
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL1234", true, true);
         JFrameOperator jfoce = new JFrameOperator(f2);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
+        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
         JTableOperator controltbl = new JTableOperator(jfoce, 0);
         // find the "Edit" button and press it.  This is in the table body.
         controltbl.clickOnCell(0, 2); // click edit button in column 2.
@@ -229,7 +232,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
         sOne.setState(Sensor.OFF);
         Assert.assertEquals("Light still ON", Light.ON, created.getState());
-        JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonUpdate"));
+        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonOK"));
         // light edit frame closes
 
         // light should now be updaed to S1
@@ -298,12 +301,15 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // now we find the Light in the table and edit it
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
 
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL4321", true, true);
 
         JFrameOperator jfoce = new JFrameOperator(f2);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
+        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
+        
         JTableOperator controltbl = new JTableOperator(jfoce, 0);
         // find the "Edit" button and press it.  This is in the table body.
 
@@ -329,7 +335,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
 
-        JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonUpdate"));
+        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonOK"));
         // light edit frame closes
 
         Assert.assertEquals("Correct Light Control Type and Times", "ON at 21:22, OFF at 23:24.",
@@ -337,11 +343,13 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                         created.getLightControlList().get(0).getControlType()));
 
         // now we edit the control then cancel the edit
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
         new QueueTool().waitEmpty();
-        JFrame f4 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrame f4 = JFrameOperator.waitJFrame("Edit Light IL4321", true, true);
 
         JFrameOperator jfocef4 = new JFrameOperator(f4);
+        JTabbedPaneOperator tabOperator4 = new JTabbedPaneOperator(jfocef4);
+        tabOperator4.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
         new JTableOperator(jfocef4, 0).clickOnCell(0, 2); // click edit button in column 2.
         // find the "Edit" Control button and press it.  This is in the table body.
 
@@ -363,7 +371,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfof5, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame does not close as the on and off times are the same
         
-        checkEditLightFeedback( Bundle.getMessage("LightWarn11"), jfocef4);
+        JLabelOperator lblFeedback = new JLabelOperator(jfof5, 5);
+        Assert.assertEquals("Message did not appear", Bundle.getMessage("LightWarn11"), lblFeedback.getText());
         
         new JTextFieldOperator(jfof5, 2).setText("03");
         new JTextFieldOperator(jfof5, 3).setText("04");
@@ -387,7 +396,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
         // light control edit frame does not close as the on and off times are the same
         
-        checkEditLightFeedback( Bundle.getMessage("LightWarn12"), jfocef4);
+        lblFeedback = new JLabelOperator(jfoc, 5);
+        Assert.assertEquals("Message did not appear", Bundle.getMessage("LightWarn12"), lblFeedback.getText());
         
         new JTextFieldOperator(jfoc, 0).setText("05");
         new JTextFieldOperator(jfoc, 1).setText("06");
@@ -395,11 +405,9 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         new JTextFieldOperator(jfoc, 3).setText("08");
         
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
-        
-        checkEditLightFeedback( Bundle.getMessage("LightUpdateInst"), jfocef4);
 
         // now we click cancel on the edit light and ensure changes from the edited control are not passed
-        JemmyUtil.pressButton(new JFrameOperator(f4), Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(jfocef4, Bundle.getMessage("ButtonCancel"));
 
         Assert.assertEquals("Unchanged Light Control Type and Times", "ON at 21:22, OFF at 23:24.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
@@ -456,12 +464,16 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // now we find the Light in the table and edit it
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
 
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL333", true, true);
         // JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        
         JFrameOperator jfoce = new JFrameOperator(f2);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
+        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
+        
         JTableOperator controltbl = new JTableOperator(jfoce, 0);
         // find the "Edit" button and press it.  This is in the table body.
         controltbl.clickOnCell(0, 2); // click edit button in column 2.
@@ -483,7 +495,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
         // light new control frame closes
 
-        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonUpdate"));
+        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonOK"));
         // light edit frame closes
 
         // confirm light has been created with correct control        
@@ -533,19 +545,22 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
         Light created = lightManager.provideLight("IL444");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
-        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 msec. when ISS2 goes Active.",
+        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 ms when ISS2 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
 
         // now we find the Light in the table and edit it
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
 
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL444", true, true);
 
         JFrameOperator jfoce = new JFrameOperator(f2);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
+        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
+        
         JTableOperator controltbl = new JTableOperator(jfoce, 0);
         // find the "Edit" button and press it.  This is in the table body.
 
@@ -568,11 +583,11 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
 
-        JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonUpdate"));
+        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonOK"));
         // light edit frame closes
 
         // light should now be updaed to S1
-        Assert.assertEquals("Correct Light Control Type", "ON for 777 msec. when ISS1 goes Active.",
+        Assert.assertEquals("Correct Light Control Type", "ON for 777 ms when ISS1 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
     }
@@ -633,12 +648,16 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // now we find the Light in the table and edit it
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
+        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
 
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL555", true, true);
 
         JFrameOperator jfoce = new JFrameOperator(f2);
+        
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
+        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
+        
         JTableOperator controltbl = new JTableOperator(jfoce, 0);
         // find the "Edit" button and press it.  This is in the table body.
         controltbl.clickOnCell(0, 2); // click edit button in column 2.
@@ -666,7 +685,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
 
-        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonUpdate"));
+        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonOK"));
         // light edit frame closes
 
         // light should now be updaed
@@ -727,23 +746,59 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
     }
+    
+    @Test
+    public void testAddFailureCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        InstanceManager.setDefault(LightManager.class, new CreateNewLightAlwaysException());
+        
+        a = new LightTableAction();
+        Assume.assumeTrue(a.includeAddButton());
+        
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        // find the "Add... " button and press it.
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).setText("1");
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("ErrorBeanCreateFailed", "Light","IL1"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        
+        //and press create
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
+        
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCancel")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+    
+    private class CreateNewLightAlwaysException extends InternalLightManager {
 
-    // test the feedback message displayed in-pane for an Edit / New Light pane WITH variable intensity
-    private void checkEditLightFeedback( String toTest, JFrameOperator jfo){
-        JLabelOperator lblFeedback = new JLabelOperator(jfo, 11);
-        Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
+        public CreateNewLightAlwaysException() {
+            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+            throw new IllegalArgumentException("createNewLight Exception Text");
+        }
+        
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.LightTable";
         a = new LightTableAction();
@@ -752,7 +807,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JFrame f = a.getFrame();

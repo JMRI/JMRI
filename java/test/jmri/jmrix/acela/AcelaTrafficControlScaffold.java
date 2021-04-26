@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the AcelaTrafficController class.
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 
@@ -40,17 +40,15 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
      * forward a message to the listeners, e.g. test receipt
      */
     protected void sendTestMessage(AcelaMessage m, AcelaListener l) {
-        // forward a test message to NceListeners
+        // forward a test message to AcelaListeners
         log.debug("sendTestMessage  [{}]", m);
         notifyMessage(m, l);
-        return;
     }
 
     protected void sendTestMessage(AcelaReply m) {
-        // forward a test message to NceListeners
+        // forward a test message to AcelaListeners
         log.debug("sendTestMessage  [{}]", m);
         //notifyMessage(m, l);
-        return;
     }
 
     /*

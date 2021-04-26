@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
@@ -11,7 +10,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Turnout Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -28,10 +27,17 @@
       "columns"></a></p>
 
       <h2>Turnout Table Columns</h2>
-      (You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a column title)
+      <p class="im">
+      <img src="images/TurnoutTableColumnList.jpg" alt="Turnout Table Columns (Rel 4.20)" style="float:right" height="438" width="150">
+      Contents of the Turnout Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>.
+      As with all JMRI tool tables, you can add or remove columns from the display by right-clicking anywhere
+      in the column header and selecting or deselecting the desired columns from the menu that appears (see picture at right).
+      You can change the order of the columns by dragging their titles, change the width of columns by dragging the vertical line
+      between columns, and sort the rows by clicking the column title (a triangle will appear indicating the direction of the sort).
+      </p>
+            
       <dl>
-        <dt>System Name</dt>
+        <dt><strong>System Name</strong></dt>
 
         <dd>The System Name cannot be changed once entered into the
         table. The <a href="TurnoutAddEdit.shtml">"Add..."</a>
@@ -43,24 +49,26 @@
         "../../../../html/doc/Technical/Names.shtml">Names</a> for
         more info about the format.</dd>
 
-        <dt>User Name</dt>
+        <dt><strong>User Name</strong></dt>
 
         <dd>You can directly enter or change the "User Name" for an
         existing Turnout (double click in the cell). This can be
         pretty much anything you wish to describe the Turnout.</dd>
 
-        <dt>State</dt>
-        <dd><img src="images/TurnoutTableGraphic.png" height="96" width="399"
-        align="right" alt="Graphic Turnout state column">
-        <img src="images/TurnoutTableText.png" height="140" width="406"
-        align="right" alt="Textual Turnout state column">
-        <dd>Pushing one of the buttons/icons in the "State" column
+        <dt><strong>State</strong></dt>
+        <dd>
+        Pushing one of the buttons/icons in the "State" column
         will change the state of that particular Turnout.<br>
         Choose between textual and graphic display of the Turnout state
         in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display
-        preferences</a>.</dd>
-
-        <dt>Delete</dt>
+        preferences</a>.<br>
+        <img src="images/TurnoutTableText.png" height="140" width="406"
+        alt="Textual Turnout state column">
+       <img src="images/TurnoutTableGraphic.png" height="96" width="399"
+        alt="Graphic Turnout state column">
+        </dd>
+ 
+        <dt><strong>Delete</strong></dt>
 
         <dd>
           Pushing the "Delete" button will remove that Turnout from
@@ -74,7 +82,7 @@
           of any files that contain this Turnout.</p>
         </dd>
 
-        <dt>Inverted</dt>
+        <dt><strong>Inverted</strong></dt>
 
         <dd>When checked, the Turnout command and status to and
         from the layout is inverted. For example, an inverted
@@ -83,7 +91,7 @@
         can not be inverted have grayed out boxes and can not be
         checked.</dd>
 
-        <dt>Locked</dt>
+        <dt><strong>Locked</strong></dt>
 
         <dd>When checked, the Turnout is locked. There are two
         types of locks supported by JMRI: Cab lockout and
@@ -100,50 +108,50 @@
         "#Turnout_lock_feature">Turnout Lock feature</a>
         below.</dd>
 
-        <dt>Edit</dt>
+        <dt><strong>Edit</strong></dt>
 
         <dd>Click this button to inspect and set Basic settings,
         Feedback, Lock, Speed, Usage and (custom) Properties of a
         particular Turnout in a tabbed pane.</dd>
 
-        <dt>Feedback</dt>
+        <dt><strong>Feedback</strong></dt>
 
         <dd>This shows the known state of a turnout on the layout,
         which may differ from the last Cmd sent.</dd>
 
-        <dt>Mode</dt>
+        <dt><strong>Mode</strong></dt>
 
         <dd>The pull down boxes allow you to select the method of
         operation for a Turnout. See <a href=
         "#Turnout_Feedback">Turnout Feedback</a> below.</dd>
 
-        <dt>Sensor 1</dt>
+        <dt><strong>Sensor 1</strong></dt>
 
         <dd>Shows the System Name of the optional Sensor that
         provides the feedback for a Turnout. You can also directly
         enter or change the System Name of Sensor 1 for a
         Turnout.</dd>
 
-        <dt>Sensor 2</dt>
+        <dt><strong>Sensor 2</strong></dt>
 
         <dd>Shows the System Name of the optional Sensor that
         provides the feedback for a Turnout. You can also directly
         enter or change the System Name of Sensor 2 for a
         Turnout.</dd>
 
-        <dt>Automation</dt>
+        <dt><strong>Automation</strong></dt>
 
         <dd>Shows what specific retry method has been configured
         for this Turnout. See the section on <a href=
         "#automation">Turnout Automation</a> below.</dd>
 
-        <dt>Edit Auto</dt>
+        <dt><strong>Edit Auto</strong></dt>
 
         <dd>Click this button to set custom retry values for a
         specific turnout. This button is inactive when Automate is
         set to Off or Use Global.</dd>
 
-        <dt><a name="Lock_Mode"></a>Lock Mode</dt>
+        <dt><a name="Lock_Mode" id="Lock_Mode"><strong>Lock Mode</strong></a></dt>
 
         <dd>Shows which lockouts, if any, are active for this
         Turnout. "Both" means that cabs and pushbuttons will be
@@ -160,7 +168,7 @@
         shut down. For more information on this, see <a href=
         "#Turnout_lock_feature">Turnout Lock</a> below.</dd>
 
-        <dt><a name="decodercol" id="decodercol">Decoder</a></dt>
+        <dt><a name="decodercol" id="decodercol"><strong>Decoder</strong></a></dt>
 
         <dd>
           When you're using the lock feature, the program needs to
@@ -182,8 +190,8 @@
           do not support pushbutton lockout.</p>
         </dd>
 
-        <dt><a name="speeds" id="speeds">Closed and Thrown
-        Speed</a></dt>
+        <dt><a name="speeds" id="speeds"><strong>Closed and Thrown
+        Speed</strong></a></dt>
 
         <dd>
           The closed and thrown speed is used with certain
@@ -209,7 +217,9 @@
           speeds that are set on <a href=
           "BlockTable.shtml#BlockSpeed">Blocks</a>.</p>
         </dd>
-      </dl><a name="controls" id="controls"></a>
+      </dl>
+      
+      <a name="controls" id="controls"></a>
 
       <h2>Turnout Table Controls</h2>
       <p>Along the bottom of the Turnout Table pane are buttons and
@@ -345,21 +355,177 @@
 
         <dt>ONESENSOR</dt>
 
-        <dd>The Turnout watches the Sensor defined by the "Sensor
-        1" column, which is probably hooked to a microswitch on the
-        turnout or similar. When the Sensor is "Active", the
+        <dd>The Turnout monitors the Sensor defined by the "Sensor
+        1" column, which could be the input from a microswitch on the
+        turnout or similar.
+        <br>When the Sensor is "Active", the
         turnout is known to be in the "Thrown" position. When it's
         "Inactive", the turnout is known to be in the "Closed"
-        position.</dd>
+        position.
+        
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Sensor 1</th>
+        <th>Feedback (known) State</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr>
+        <td>Active</td>
+        <td>Thrown</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Closed</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inconsistent <span class="since">since 4.21.5</span></td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inconsistent <span class="since">since 4.21.5</span></td>
+        </tr>
+        
+        </tbody>
+        </table>
+        </dd>
 
         <dt>TWOSENSOR</dt>
 
-        <dd>The Turnout watches two Sensors defined by the "Sensor
-        1" and "Sensor 2" columns, which are probably hooked to
-        microswitches at either end of the turnout's throw bar.
-        When Sensor 1 is "Active", the turnout is known to be
-        "Thrown". When Sensor 2 is "Active", the turnout is known
-        to be "Closed" (normal).</dd>
+        <dd>The Turnout monitors two Sensors defined by the "Sensor
+        1" and "Sensor 2" columns, which could be inputs from
+        microswitches at either end of the turnout's throw bar
+        or from servo travel events.<br>
+        
+        The Turnout feedback state is determined by both Sensors:
+        
+        <-- Table in same order as 2 Sensor Feedback Unit Tests within AbstractTurnoutTestBase -->
+        
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Sensor 1</th>
+        <th>Sensor 2</th>
+        <th>Feedback (known) State</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        
+        <tr>
+        <td>Active</td>
+        <td>Inactive</td>
+        <td>Thrown</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Active</td>
+        <td>Closed</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        <td>Typical condition for a Turnout mid-throw</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        <td>Typical startup condition</td>
+        </tr>
+        
+        <tr>
+        <td>Active</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        
+        
+        <tr>
+        <td>Active</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        
+        </tbody>
+        </table>
+        
+        </dd>
 
         <dt>DELAYED</dt>
 

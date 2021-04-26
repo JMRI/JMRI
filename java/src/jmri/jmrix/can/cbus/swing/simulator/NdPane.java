@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
-import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -121,6 +120,6 @@ public class NdPane extends JPanel {
         updateNode();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    private final static Logger log = LoggerFactory.getLogger(NdPane.class);
     
 }

@@ -2,21 +2,20 @@ package jmri.managers;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import jmri.InstanceManager;
 import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.managers.DefaultSignalSystemManager class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri.SignalSystemManager,jmri.SignalSystem> {
 
@@ -51,6 +50,7 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLoad() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
 
@@ -59,9 +59,14 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
         set.forEach((b) -> {
             d.deregister(b);
         });
+        
+        Assert.assertTrue(d.getNamedBeanSet().isEmpty());
 
         d.load();
         Assert.assertTrue(d.getSystemNameList().size() >= 2);
+        Assert.assertTrue(d.getNamedBeanSet().size() >= 2);
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
     }
 
     @Test
@@ -106,14 +111,24 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
             }
         }
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultSignalSystemManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         JUnitUtil.tearDown();

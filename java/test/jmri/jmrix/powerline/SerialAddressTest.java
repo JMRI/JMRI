@@ -3,15 +3,14 @@ package jmri.jmrix.powerline;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
  */
 public class SerialAddressTest {
@@ -80,7 +79,7 @@ public class SerialAddressTest {
         Assert.assertEquals("normalize PLB7", "PLB7", tc.getAdapterMemo().getSerialAddress().normalizeSystemName("PLB7"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
@@ -91,7 +90,7 @@ public class SerialAddressTest {
         memo.setSerialAddress(new SerialAddress(memo));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

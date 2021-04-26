@@ -32,15 +32,15 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
-    private static final String CONSIST = "consist"; //NOI18N
-    private static final String CONSISTID = "id"; //NOI18N
-    private static final String CONSISTNUMBER = "consistNumber"; //NOI18N
-    private static final String DCCLOCOADDRESS = "dccLocoAddress"; //NOI18N
-    private static final String LONGADDRESS = "longAddress"; //NOI18N
+    private static final String CONSIST = "consist"; // NOI18N
+    private static final String CONSISTID = "id"; // NOI18N
+    private static final String CONSISTNUMBER = "consistNumber"; // NOI18N
+    private static final String DCCLOCOADDRESS = "dccLocoAddress"; // NOI18N
+    private static final String LONGADDRESS = "longAddress"; // NOI18N
     private static final String LOCODIR = "locoDir"; // NOI18N
-    private static final String LOCONAME = "locoName"; //NOI18N
+    private static final String LOCONAME = "locoName"; // NOI18N
     private static final String LOCOROSTERID = "locoRosterId"; // NOI18N
-    private static final String NORMAL = "normal"; //NOI18N
+    private static final String NORMAL = "normal"; // NOI18N
     private static final String REVERSE = "reverse"; // NOI18N
 
     protected ConsistManager consistMan = null;
@@ -325,7 +325,9 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
     }
 
     /**
-     * Returns the preferences subdirectory in which Consist Files are kept 
+     * GetFile Location.
+     * 
+     * @return the preferences subdirectory in which Consist Files are kept 
      * this is relative to the roster files location. 
      */
     public static String getFileLocation() {
@@ -333,6 +335,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
     }
 
     /**
+     * @param loc location.
      * @deprecated since 4.17.3 file location is determined by roster location.
      */
     @Deprecated

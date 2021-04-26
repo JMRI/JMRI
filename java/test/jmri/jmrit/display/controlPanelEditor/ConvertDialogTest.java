@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
-import jmri.jmrit.display.palette.Bundle;
 //import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -15,23 +14,21 @@ import jmri.util.JUnitUtil;
 import java.util.ArrayList;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 //import org.netbeans.jemmy.operators.JComponentOperator;
 //import org.netbeans.jemmy.*;
 /**
  *
- * @author Pete Cressman Copyright (C) 2019   
+ * @author Pete Cressman Copyright (C) 2019
  */
 public class ConvertDialogTest {
 
     @Test
-    public void testCTorConvert() {
+    public void testCTorConvert() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("ConvertDialogTest");
         OBlock ob1 = InstanceManager.getDefault(OBlockManager.class).createNewOBlock("OB1", "a");
@@ -48,31 +45,21 @@ public class ConvertDialogTest {
 
         new Thread(() -> {
             // constructor for d will wait until the dialog is visible
-//            System.out.println(" thread running!");
-            String title = Bundle.getMessage("IndicatorTrack");
-            JDialogOperator d = new JDialogOperator(title);
-//            System.out.println(" JDialogOperator found \""+title+"\"!");
-//            new org.netbeans.jemmy.QueueTool().waitEmpty(200);
-            String label = Bundle.getMessage("updateButton");
-            JButtonOperator bo = new JButtonOperator(d, label);
-//            System.out.println(" JButtonOperator bo made for \""+label+"\"!");
-//            new org.netbeans.jemmy.QueueTool().waitEmpty(200);
+//            String title = Bundle.getMessage("IndicatorTrack");
+            JDialogOperator d = new JDialogOperator("Indicator Track");
+//            String label = Bundle.getMessage("convert");
+            JButtonOperator bo = new JButtonOperator(d, "Convert Icon");
             bo.doClick();
-//            System.out.println(" JButtonOperator bo Done!");
         }).start();
 
-//        System.out.println(" Open ConvertDialog!");
         ConvertDialog dialog = new ConvertDialog(cb, pos, ob1);
         Assert.assertNotNull("exists",dialog);
-//        System.out.println(" ConvertDialog Opened!");
 
         dialog.dispose();
         frame.dispose();
-        if (frame.makeCatalogWorker != null) JUnitUtil.waitFor(() -> {return frame.makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -80,8 +67,10 @@ public class ConvertDialogTest {
         JUnitUtil.initOBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

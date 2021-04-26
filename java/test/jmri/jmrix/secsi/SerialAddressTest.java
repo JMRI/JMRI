@@ -3,15 +3,14 @@ package jmri.jmrix.secsi;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007
  */
 public class SerialAddressTest {
@@ -202,7 +201,7 @@ public class SerialAddressTest {
         //JUnitAppender.assertWarnMessage("node address field out of range in system name: VL128B7");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -210,7 +209,7 @@ public class SerialAddressTest {
         tcis = new SerialTrafficControlScaffold(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

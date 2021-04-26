@@ -6,12 +6,16 @@ import java.beans.PropertyVetoException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.annotation.Nonnull;
+
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,29 +27,31 @@ import org.slf4j.LoggerFactory;
  * <p>
  * As trains move around the layout, a set of Block objects that are attached to
  * sensors can interact to keep track of which train is where, going in which
- * direction. As a result of this, the set of Block objects pass around "token"
- * (value) Objects representing the trains. This could be e.g. a Throttle to
- * control the train, or something else.
+ * direction.
+ * As a result of this, the set of Block objects pass around "token"
+ * (value) Objects representing the trains.
+ * This could be e.g. a Throttle to control the train, or something else.
  * <p>
  * A block maintains a "direction" flag that is set from the direction of the
- * incoming train. When an arriving train is detected via the connected sensor
+ * incoming train.
+ * When an arriving train is detected via the connected sensor
  * and the Block's status information is sufficient to determine that it is
- * arriving via a particular Path, that Path's getFromBlockDirection becomes the
- * direction of the train in this Block. This only works
+ * arriving via a particular Path, that Path's getFromBlockDirection
+ * becomes the direction of the train in this Block.
  * <p>
- * Optionally, a Block can be associated with a Reporter. In this case, the
- * Reporter will provide the Block with the "token" (value). This could be e.g
- * an RFID reader reading an ID tag attached to a locomotive. Depending on the
- * specific Reporter implementation, either the current reported value or the
- * last reported value will be relevant - this can be configured
+ * Optionally, a Block can be associated with a Reporter.
+ * In this case, the Reporter will provide the Block with the "token" (value).
+ * This could be e.g an RFID reader reading an ID tag attached to a locomotive.
+ * Depending on the specific Reporter implementation,
+ * either the current reported value or the last reported value will be relevant,
+ * this can be configured.
  * <p>
  * Objects of this class are Named Beans, so can be manipulated through tables,
  * have listeners, etc.
  * <p>
- * There is no functional requirement for a type letter in the System Name, but
- * by convention we use 'B' for 'Block'. The default implementation is not
- * system-specific, so a system letter of 'I' is appropriate. This leads to
- * system names like "IB201".
+ * The type letter used in the System Name is 'B' for 'Block'.
+ * The default implementation is not system-specific, so a system letter 
+ * of 'I' is appropriate. This leads to system names like "IB201".
  * <p>
  * Issues:
  * <ul>
@@ -56,22 +62,25 @@ import org.slf4j.LoggerFactory;
  * <li>When the 1st train leaves, the Sensor stays active, so the value remains
  * that of the 1st train
  * </ul>
- * <li> The assumption is that a train will only go through a set turnout. For
- * example, a train could come into the turnout block from the main even if the
+ * <li> The assumption is that a train will only go through a set turnout.
+ * For example, a train could come into the turnout block from the main even if the
  * turnout is set to the siding. (Ignoring those layouts where this would cause
  * a short; it doesn't do so on all layouts)
  * <li> Does not handle closely-following trains where there is only one
- * electrical block per signal. To do this, it probably needs some type of
- * "assume a train doesn't back up" logic. A better solution is to have multiple
+ * electrical block per signal.
+ * To do this, it probably needs some type of "assume a train doesn't back up" logic.
+ * A better solution is to have multiple
  * sensors and Block objects between each signal head.
- * <li> If a train reverses in a block and goes back the way it came (e.g. b1 to
- * b2 to b1), the block that's re-entered will get an updated direction, but the
- * direction of this block (b2 in the example) is not updated. In other words,
+ * <li> If a train reverses in a block and goes back the way it came
+ * (e.g. b1 to b2 to b1),
+ * the block that's re-entered will get an updated direction,
+ * but the direction of this block (b2 in the example) is not updated.
+ * In other words,
  * we're not noticing that the train must have reversed to go back out.
  * </ul>
  * <p>
- * Do not assume that a Block object uniquely represents a piece of track. To
- * allow independent development, it must be possible for multiple Block objects
+ * Do not assume that a Block object uniquely represents a piece of track.
+ * To allow independent development, it must be possible for multiple Block objects
  * to take care of a particular section of track.
  * <p>
  * Possible state values:
@@ -87,9 +96,9 @@ import org.slf4j.LoggerFactory;
  * <li>UNDETECTED - No sensor configured.
  * </ul>
  * <p>
- * Possible Curvature attributes (optional) User can set the curvature if
- * desired. For use in automatic running of trains, to indicate where slow down
- * is required.
+ * Possible Curvature attributes (optional)
+ * User can set the curvature if desired for use in automatic running of trains,
+ * to indicate where slow down is required.
  * <ul>
  * <li>NONE - No curvature in Block track, or Not entered.
  * <li>GRADUAL - Gradual curve - no action by engineer is warranted - full speed
@@ -98,37 +107,74 @@ import org.slf4j.LoggerFactory;
  * <li>SEVERE - Severe curve in Block track - Train should slow down a lot
  * </ul>
  * <p>
- * The length of the block may also optionally be entered if desired. This
- * attribute is for use in automatic running of trains. Length should be the
- * actual length of model railroad track in the block. It is always stored here
- * in millimeter units. A length of 0.0 indicates no entry of length by the
- * user.
+ * The length of the block may also optionally be entered if desired.
+ * This attribute is for use in automatic running of trains.
+ * Length should be the actual length of model railroad track in the block.
+ * It is always stored here in millimeter units.
+ * A length of 0.0 indicates no entry of length by the user.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
+    /**
+     * Create a new Block.
+     * @param systemName Block System Name.
+     */
     public Block(String systemName) {
         super(systemName);
     }
 
+    /**
+     * Create a new Block.
+     * @param systemName system name.
+     * @param userName user name.
+     */
     public Block(String systemName, String userName) {
         super(systemName, userName);
     }
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
-    // why isn't UNDETECTED == NamedBean.UNKNOWN?
+    
+    /**
+     * Undetected status, i.e a "Dark" block.
+     * A Block with unknown status could be waiting on feedback from a Sensor,
+     * hence undetected may be more appropriate if no Sensor.
+     * <p>
+     * OBlocks use this constant in combination with other OBlock status flags.
+     * Block uses this constant as initial status, also when a Sensor is unset
+     * from the block.
+     * 
+     */
     static final public int UNDETECTED = 0x100;  // bit coded, just in case; really should be enum
 
-    // Curvature attributes
+    /**
+     * No Curvature.
+     */
     static final public int NONE = 0x00;
+    
+    /**
+     * Gradual Curvature.
+     */
     static final public int GRADUAL = 0x01;
+    
+    /**
+     * Tight Curvature.
+     */
     static final public int TIGHT = 0x02;
+    
+    /**
+     * Severe Curvature.
+     */
     static final public int SEVERE = 0x04;
 
-    // this should only be used for debugging...
+    /**
+     * Create a Debug String,
+     * this should only be used for debugging...
+     * @return Block User name, System name, current state as string value.
+     */
     public String toDebugString() {
         String result = getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME) + " ";
         switch (getState()) {
@@ -151,25 +197,42 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
         return result;
     }
+    
+    /**
+     * Property name change fired when a Sensor is set to / removed from a Block.
+     * The fired event includes
+     * old value: Sensor Bean Object if previously set, else null
+     * new value: Sensor Bean Object if being set, may be null if Sensor removed.
+     */
+    public final static String OCC_SENSOR_CHANGE = "OccupancySensorChange"; // NOI18N
 
     /**
      * Set the sensor by name.
-     *
+     * Fires propertyChange "OccupancySensorChange" when changed.
      * @param pName the name of the Sensor to set
      * @return true if a Sensor is set and is not null; false otherwise
      */
     public boolean setSensor(String pName) {
-        if (pName == null || pName.equals("")) {
-            setNamedSensor(null);
-            return false;
+        Sensor oldSensor = getSensor();
+        if ((pName == null || pName.isEmpty())) {
+                if (oldSensor!=null) {
+                    setNamedSensor(null);
+                    firePropertyChange(OCC_SENSOR_CHANGE, oldSensor, null);
+                }
+                return false;
         }
         if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+                if (sensor.equals(oldSensor)) {
+                    return false;
+                }
                 setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
+                firePropertyChange(OCC_SENSOR_CHANGE, oldSensor, sensor);
                 return true;
             } catch (IllegalArgumentException ex) {
                 setNamedSensor(null);
+                firePropertyChange(OCC_SENSOR_CHANGE, oldSensor, null);
                 log.error("Sensor '{}' not available", pName);
             }
         } else {
@@ -178,25 +241,38 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return false;
     }
 
+    /**
+     * Set Block Occupancy Sensor.
+     * If Sensor set, Adds PCL, sets Block Occupancy Status to Sensor.
+     * Block State PropertyChange Event will fire. 
+     * Does NOT route initial Sensor Status via goingUnknown() / goingActive() etc.
+     * <p>
+     * If Sensor null, removes PCL on previous Sensor, sets Block status to UNDETECTED.
+     * @param s Handle for Sensor.
+     */
     public void setNamedSensor(NamedBeanHandle<Sensor> s) {
         if (_namedSensor != null) {
             if (_sensorListener != null) {
-                getSensor().removePropertyChangeListener(_sensorListener);
+                _namedSensor.getBean().removePropertyChangeListener(_sensorListener);
                 _sensorListener = null;
             }
         }
         _namedSensor = s;
 
         if (_namedSensor != null) {
-            getSensor().addPropertyChangeListener(_sensorListener = (PropertyChangeEvent e) -> {
+            _namedSensor.getBean().addPropertyChangeListener(_sensorListener = (PropertyChangeEvent e) -> {
                 handleSensorChange(e);
             }, s.getName(), "Block Sensor " + getDisplayName());
-            _current = getSensor().getState();
+            setState(_namedSensor.getBean().getState()); // At present does NOT route via goingUnknown() / goingActive() etc.
         } else {
-            _current = UNDETECTED;
+            setState(UNDETECTED); // Does NOT route via goingUnknown() / goingActive() etc.
         }
     }
 
+    /**
+     * Get the Block Occupancy Sensor.
+     * @return Sensor if one attached to Block, may be null.
+     */
     public Sensor getSensor() {
         if (_namedSensor != null) {
             return _namedSensor.getBean();
@@ -209,12 +285,23 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
+     * Property name change fired when a Sensor is set to / removed from a Block.
+     * The fired event includes
+     * old value: Sensor Bean Object if previously set, else null
+     * new value: Sensor Bean Object if being set, may be null if Sensor removed.
+     */
+    public final static String BLOCK_REPORTER_CHANGE = "BlockReporterChange"; // NOI18N
+    
+    /**
      * Set the Reporter that should provide the data value for this block.
-     *
+     * Fires propertyChange "BlockReporterChange" when changed.
      * @see Reporter
      * @param reporter Reporter object to link, or null to clear
      */
     public void setReporter(Reporter reporter) {
+        if (Objects.equals(reporter,_reporter)) {
+            return;
+        }
         if (_reporter != null) {
             // remove reporter listener
             if (_reporterListener != null) {
@@ -222,6 +309,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 _reporterListener = null;
             }
         }
+        Reporter oldReporter = _reporter;
         _reporter = reporter;
         if (_reporter != null) {
             // attach listener
@@ -229,6 +317,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 handleReporterChange(e);
             });
         }
+        firePropertyChange(BLOCK_REPORTER_CHANGE, oldReporter, reporter);
     }
 
     /**
@@ -240,18 +329,29 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public Reporter getReporter() {
         return _reporter;
     }
+    
+    /**
+     * Property name change fired when the Block reporting Current flag changes.
+     * The fired event includes
+     * old value: previous value, Boolean.
+     * new value: new value, Boolean.
+     */
+    public final static String BLOCK_REPORTING_CURRENT = "BlockReportingCurrent"; // NOI18N
 
     /**
      * Define if the Block's value should be populated from the
      * {@link Reporter#getCurrentReport() current report} or from the
      * {@link Reporter#getLastReport() last report}.
-     *
+     * Fires propertyChange "BlockReportingCurrent" when changed.
      * @see Reporter
      * @param reportingCurrent true if to use current report; false if to use
      *                         last report
      */
     public void setReportingCurrent(boolean reportingCurrent) {
-        _reportingCurrent = reportingCurrent;
+        if (_reportingCurrent != reportingCurrent) {
+            _reportingCurrent = reportingCurrent;
+            firePropertyChange(BLOCK_REPORTING_CURRENT, !reportingCurrent, reportingCurrent);
+        }
     }
 
     /**
@@ -268,20 +368,34 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return _reportingCurrent;
     }
 
+    /**
+     * Get the Block State.
+     * OBlocks may well return a combination of states,
+     * Blocks will return a single State.
+     * @return Block state.
+     */
     @Override
     public int getState() {
         return _current;
     }
 
-    ArrayList<Path> paths = new ArrayList<>();
+    private final ArrayList<Path> paths = new ArrayList<>();
 
-    public void addPath(Path p) {
+    /**
+     * Add a Path to List of Paths.
+     * @param p Path to add, not null.
+     */
+    public void addPath(@Nonnull Path p) {
         if (p == null) {
             throw new IllegalArgumentException("Can't add null path");
         }
         paths.add(p);
     }
 
+    /**
+     * Remove a Path from the Block.
+     * @param p Path to remove.
+     */
     public void removePath(Path p) {
         int j = -1;
         for (int i = 0; i < paths.size(); i++) {
@@ -294,6 +408,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
     }
 
+    /**
+     * Check if Block has a particular Path.
+     * @param p Path to test against.
+     * @return true if Block has the Path, else false.
+     */
     public boolean hasPath(Path p) {
         return paths.stream().anyMatch((t) -> (t.equals(p)));
     }
@@ -303,12 +422,14 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      *
      * @return the paths or an empty list
      */
+    @Nonnull
     public List<Path> getPaths() {
         return new ArrayList<>(paths);
     }
 
     /**
      * Provide a general method for updating the report.
+     * Fires propertyChange "state" when called.
      *
      * @param v the new state
      */
@@ -328,12 +449,14 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Set the value retained by this Block. Also used when the Block itself
-     * gathers a value from an adjacent Block. This can be overridden in a
-     * subclass if e.g. you want to keep track of Blocks elsewhere, but make
-     * sure you also eventually invoke the super.setValue() here.
-     * <p>
-     * @param value The new Object resident in this block, or null if none.
+     * Set the value retained by this Block.
+     * Also used when the Block itself gathers a value from an adjacent Block.
+     * This can be overridden in a subclass if
+     * e.g. you want to keep track of Blocks elsewhere,
+     * but make sure you also eventually invoke the super.setValue() here.
+     * Fires propertyChange "value" when changed.
+     *
+     * @param value The new Object resident in this block, or null if none
      */
     public void setValue(Object value) {
         //ignore if unchanged
@@ -341,14 +464,23 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             log.debug("Block {} value changed from '{}' to '{}'", getDisplayName(), _value, value);
             _previousValue = _value;
             _value = value;
-            firePropertyChange("value", _previousValue, _value);
+            firePropertyChange("value", _previousValue, _value); // NOI18N
         }
     }
 
+    /**
+     * Get the Block Contents Value.
+     * @return object with current value, could be null.
+     */
     public Object getValue() {
         return _value;
     }
 
+    /**
+     * Set Block Direction of Travel.
+     * Fires propertyChange "direction" when changed.
+     * @param direction Path Constant form, see {@link Path Path.java}
+     */
     public void setDirection(int direction) {
         //ignore if unchanged
         if (direction != _direction) {
@@ -356,25 +488,31 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             int oldDirection = _direction;
             _direction = direction;
             // this is a bound parameter
-            firePropertyChange("direction", oldDirection, direction);
+            firePropertyChange("direction", oldDirection, direction); // NOI18N
         }
     }
 
+    /**
+     * Get Block Direction of Travel.
+     * @return direction in Path Constant form, see {@link Path Path.java}
+     */
     public int getDirection() {
         return _direction;
     }
 
     //Deny traffic entering from this block
-    ArrayList<NamedBeanHandle<Block>> blockDenyList = new ArrayList<>(1);
+    private final ArrayList<NamedBeanHandle<Block>> blockDenyList = new ArrayList<>(1);
 
     /**
+     * Add to the Block Deny List.
+     * 
      * The block deny list, is used by higher level code, to determine if
      * traffic/trains should be allowed to enter from an attached block, the
-     * list only deals with blocks that access should be denied from. If we want
-     * to prevent traffic from following from this block to another then this
-     * block must be added to the deny list of the other block. By default no
-     * block is barred, so traffic flow is bi-directional.
-     *
+     * list only deals with blocks that access should be denied from.
+     * <p>
+     * If we want to prevent traffic from following from this Block to another,
+     * then this Block must be added to the deny list of the other Block.
+     * By default no Block is barred, so traffic flow is bi-directional.
      * @param pName name of the block to add, which must exist
      */
     public void addBlockDenyList(@Nonnull String pName) {
@@ -435,17 +573,39 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return blockDenyList.stream().anyMatch((bean) -> (bean.getBean() == deny));
     }
 
+    /**
+     * Get if Block can have permissive working.
+     * Blocks default to non-permissive, i.e. false.
+     * @return true if permissive, else false.
+     */
     public boolean getPermissiveWorking() {
         return _permissiveWorking;
     }
 
+    /**
+     * Property name change fired when the Block Permissive Status changes.
+     * The fired event includes
+     * old value: previous permissive status.
+     * new value: new permissive status.
+     */
+    public final static String BLOCK_PERMISSIVE_CHANGE = "BlockPermissiveWorking"; // NOI18N
+    
+    /**
+     * Set Block as permissive.
+     * Fires propertyChange "BlockPermissiveWorking" when changed.
+     * @param w true permissive, false NOT permissive
+     */
     public void setPermissiveWorking(boolean w) {
-        _permissiveWorking = w;
+        if (_permissiveWorking != w) {
+            _permissiveWorking = w;
+            firePropertyChange(BLOCK_PERMISSIVE_CHANGE, !w, w); // NOI18N
+        }
     }
+    
     private boolean _permissiveWorking = false;
 
     public float getSpeedLimit() {
-        if ((_blockSpeed == null) || (_blockSpeed.equals(""))) {
+        if ((_blockSpeed == null) || (_blockSpeed.isEmpty())) {
             return -1;
         }
         String speed = _blockSpeed;
@@ -454,7 +614,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
 
         try {
-            return Float.valueOf(speed);
+            return Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
@@ -475,6 +635,21 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return _blockSpeed;
     }
 
+    /**
+     * Property name change fired when the Block Speed changes.
+     * The fired event includes
+     * old value: previous speed String.
+     * new value: new speed String.
+     */
+    public final static String BLOCK_SPEED_CHANGE = "BlockSpeedChange"; // NOI18N
+    
+    /**
+     * Set the Block Speed Name.
+     * <p>
+     * Does not perform name validity checking.
+     * Does not send Property Change Event.
+     * @param s new Speed Name String.
+     */
     public void setBlockSpeedName(String s) {
         if (s == null) {
             _blockSpeed = "";
@@ -483,6 +658,13 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
     }
 
+    /**
+     * Set the Block Speed, preferred method.
+     * <p>
+     * Fires propertyChange "BlockSpeedChange" when changed.
+     * @param s Speed String
+     * @throws JmriException if Value of requested block speed is not valid.
+     */
     public void setBlockSpeed(String s) throws JmriException {
         if ((s == null) || (_blockSpeed.equals(s))) {
             return;
@@ -502,46 +684,97 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
         String oldSpeed = _blockSpeed;
         _blockSpeed = s;
-        firePropertyChange("BlockSpeedChange", oldSpeed, s);
-    }
-
-    public void setCurvature(int c) {
-        _curvature = c;
-    }
-
-    public int getCurvature() {
-        return _curvature;
+        firePropertyChange(BLOCK_SPEED_CHANGE, oldSpeed, s);
     }
 
     /**
+     * Property name change fired when the Block Curvature changes.
+     * The fired event includes
+     * old value: previous Block Curvature Constant.
+     * new value: new Block Curvature Constant.
+     */
+    public final static String BLOCK_CURVATURE_CHANGE = "BlockCurvatureChange"; // NOI18N
+    
+    /**
+     * Set Block Curvature Constant.
+     * Valid values :
+     * Block.NONE, Block.GRADUAL, Block.TIGHT, Block.SEVERE
+     * Fires propertyChange "BlockCurvatureChange"  when changed.
+     * @param c Constant, e.g. Block.GRADUAL
+     */
+    public void setCurvature(int c) {
+        if (_curvature!=c) {
+            int oldCurve = _curvature;
+            _curvature = c;
+            firePropertyChange(BLOCK_CURVATURE_CHANGE, oldCurve, c);
+        }
+    }
+
+    /**
+     * Get Block Curvature Constant.
+     * Defaults to Block.NONE
+     * @return constant, e.g. Block.TIGHT
+     */
+    public int getCurvature() {
+        return _curvature;
+    }
+    
+    /**
+     * Property name change fired when the Block Length changes.
+     * The fired event includes
+     * old value: previous float length (mm).
+     * new value: new float length (mm).
+     */
+    public final static String BLOCK_LENGTH_CHANGE = "BlockLengthChange"; // NOI18N
+
+    /**
      * Set length in millimeters.
-     * <p>
      * Paths will inherit this length, if their length is not specifically set.
-     * This length is the maximum length of any Path in the block. Path lengths
-     * exceeding this will be set to the default length.
-     *
+     * This length is the maximum length of any Path in the block.
+     * Path lengths exceeding this will be set to the default length.
+     * <p>
+     * Fires propertyChange "BlockLengthChange"  when changed, float values in mm.
      * @param l length in millimeters
      */
     public void setLength(float l) {
-        _length = l;
-        getPaths().stream().forEach(p -> {
-            if (p.getLength() > l) {
-                p.setLength(0); // set to default
-            }
-        });
+        float oldLen = getLengthMm();
+        if (Math.abs(oldLen - l) > 0.0001){ // length value is different
+            _length = l;
+            getPaths().stream().forEach(p -> {
+                if (p.getLength() > l) {
+                    p.setLength(0); // set to default
+                }
+            });
+            firePropertyChange(BLOCK_LENGTH_CHANGE, oldLen, l);
+        }
     }
 
+    /**
+     * Get Block Length in Millimetres.
+     * Default 0.0f.
+     * @return length in mm.
+     */
     public float getLengthMm() {
         return _length;
-    } // return length in millimeters
+    }
 
+    /**
+     * Get Block Length in Centimetres.
+     * Courtesy method using result from getLengthMm.
+     * @return length in centimetres.
+     */
     public float getLengthCm() {
         return (_length / 10.0f);
-    }  // return length in centimeters
+    }
 
+    /**
+     * Get Block Length in Inches.
+     * Courtesy method using result from getLengthMm.
+     * @return length in inches.
+     */
     public float getLengthIn() {
         return (_length / 25.4f);
-    }  // return length in inches
+    }
 
     /**
      * Note: this has to make choices about identity values (always the same)
@@ -615,8 +848,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * @param e the event
      */
     void handleSensorChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState")) {
-            int state = getSensor().getState();
+        Sensor s = getSensor();
+        if (e.getPropertyName().equals("KnownState") && s!=null) {
+            int state = s.getState();
             switch (state) {
                 case Sensor.ACTIVE:
                     goingActive();
@@ -657,6 +891,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     private Instant _timeLastInactive;
+    
     /**
      * Handles Block sensor going INACTIVE: this block is empty
      */
@@ -731,13 +966,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                         }
                     } else if (log.isDebugEnabled()) {
                         if (null != _timeLastInactive) {
-                            log.debug("not restoring previous value, block {} has been inactive for too long ("
-                                    + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
-                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                            log.debug("not restoring previous value, block {} has been inactive for too long ({}ms) and layout power has not just been restored ({}ms ago)", getDisplayName(), tn.toEpochMilli() - _timeLastInactive.toEpochMilli(), bm.timeSinceLastLayoutPowerOn());
                         } else {
-                            log.debug("not restoring previous value, block {} has been inactive since the start " +
-                                    "of this session and layout power has not just been restored ("
-                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                            log.debug("not restoring previous value, block {} has been inactive since the start of this session and layout power has not just been restored ({}ms ago)", getDisplayName(), bm.timeSinceLastLayoutPowerOn());
                         }
                     }
                 } else {
@@ -887,10 +1118,13 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return (next);
     }
 
-    /*
-     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an
-     * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
-     * trigger a propertyChangeEvent.
+    /**
+     * This allows the layout block to inform any listeners to the block 
+     * that the higher level layout block has been set to "useExtraColor" which is an
+     * indication that it has been allocated to a section by the AutoDispatcher.
+     * The value set is not retained in any form by the block,
+     * it is purely to trigger a propertyChangeEvent.
+     * @param boo Allocation status
      */
     public void setAllocated(Boolean boo) {
         firePropertyChange("allocated", !boo, boo);
@@ -901,6 +1135,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     // If we have a Reporter that is also a PhysicalLocationReporter,
     // we will defer to that Reporter's methods.
     // Else we will assume a LocoNet style message to be parsed.
+    
     /**
      * Parse a given string and return the LocoAddress value that is presumed
      * stored within it based on this object's protocol. The Class Block
@@ -924,7 +1159,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             // Assume a LocoNet-style report.  This is (nascent) support for handling of Faller cars
             // for Dave Merrill's project.
             log.debug("report string: {}", rep);
-            // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+            // NOTE: This pattern is based on the one defined in LocoNet-specific LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
@@ -939,7 +1174,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     /**
      * Parses out a (possibly old) LnReporter-generated report string to extract
      * the direction from within it based on this object's protocol. The Class
-     * Block implementationd defers to its associated Reporter, if it exists.
+     * Block implementation defers to its associated Reporter, if it exists.
      *
      * @param rep String to be parsed
      * @return PhysicalLocationReporter.Direction direction parsed from string,
@@ -958,7 +1193,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return (((PhysicalLocationReporter) this.getReporter()).getDirection(rep));
         } else {
             log.debug("report string: {}", rep);
-            // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+            // NOTE: This pattern is based on the one defined in LocoNet-specific LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
@@ -980,8 +1215,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Return this Block's physical location, if it exists. Defers actual work
-     * to the helper methods in class PhysicalLocation
+     * Return this Block's physical location, if it exists.
+     * Defers actual work to the helper methods in class PhysicalLocation.
      *
      * @return PhysicalLocation : this Block's location.
      */
@@ -992,9 +1227,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Return this Block's physical location, if it exists. Does not use the
-     * parameter s Defers actual work to the helper methods in class
-     * PhysicalLocation
+     * Return this Block's physical location, if it exists.
+     * Does not use the parameter s.
+     * Defers actual work to the helper methods in class PhysicalLocation
      *
      * @param s (this parameter is ignored)
      * @return PhysicalLocation : this Block's location.

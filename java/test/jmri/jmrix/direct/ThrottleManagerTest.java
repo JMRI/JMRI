@@ -1,14 +1,13 @@
 package jmri.jmrix.direct;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,8 +16,7 @@ public class ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTe
         Assert.assertNotNull("exists", tm);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -27,7 +25,7 @@ public class ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTe
         tm = new ThrottleManager(m);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

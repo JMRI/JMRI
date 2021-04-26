@@ -1,13 +1,13 @@
 package jmri.jmrix.maple;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialSensor class
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -15,16 +15,15 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +32,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         t = new SerialSensor("KS1"); // does not need the _memo
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();

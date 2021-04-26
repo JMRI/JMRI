@@ -19,31 +19,32 @@ public class Z21XNetTurnout extends XNetTurnout {
     }
 
     /**
-     * Handle a request to change state by sending an XpressNet command.
+     * {@inheritDoc}
+     * Sends an XpressNet command.
      */
     @Override
-    synchronized protected void forwardCommandChangeToLayout(int s) {
+    protected synchronized void forwardCommandChangeToLayout(int s) {
         if (s != _mClosed && s != _mThrown) {
-            log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
+            log.warn("Turnout {}: state {} not forwarded to layout.", mNumber, s);
             return;
         }
+        log.debug("Turnout {}: forwarding state  {} to layout.", mNumber, s);
         // get the right packet
         XNetMessage msg = Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (s & _mThrown) != 0,
                 true, false ); // for now always active and not queued.
         if (getFeedbackMode() == SIGNAL) {
             msg.setTimeout(0); // Set the timeout to 0, so the off message can
-            // be sent imediately.
+            // be sent immediately.
             // leave the next line commented out for now.
             // it may be enabled later to allow SIGNAL mode to ignore
             // directed replies, which lets the traffic controller move on
             // to the next message without waiting.
             //msg.setBroadcastReply();
             tc.sendXNetMessage(msg, null);
-            sendOffMessage();
+            sendOffMessage(s);
         } else {
-            tc.sendXNetMessage(msg, this);
-            internalState = COMMANDSENT;
+            queueMessage(msg,COMMANDSENT,this);
         }
     }
 
@@ -52,28 +53,25 @@ public class Z21XNetTurnout extends XNetTurnout {
      */
     @Override
     public void requestUpdateFromLayout() {
+        log.debug("Turnout {} requesting update from layout",mNumber);
         // This will handle ONESENSOR and TWOSENSOR feedback modes.
         super.requestUpdateFromLayout();
 
         // On the z21, we send a LAN_X_GET_TURNOUT_INFO message
         // (see section 5.1 of the protocol documenation ).
         XNetMessage msg = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(mNumber);
-        synchronized (this) {
-            internalState = STATUSREQUESTSENT;
-        }
-        tc.sendXNetMessage(msg, null); //status is returned via the manager.
+        msg.setBroadcastReply();
+        queueMessage(msg,IDLE,null); //status is returned via the manager.
     }
 
     // Handle a timeout notification.
     @Override
-    public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+    public synchronized void notifyTimeout(XNetMessage msg) {
+        log.debug("Notified of timeout on message {}",msg);
         // If we're in the OFFSENT state, we need to send another OFF message.
         synchronized (this) {
             if (internalState == OFFSENT) {
-               sendOffMessage();
+               sendOffMessage(getCommandedState());
             }
         }
     }
@@ -83,6 +81,7 @@ public class Z21XNetTurnout extends XNetTurnout {
      * a feedback message at initialization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent.
      * This is used only when the turnout is created by on layout feedback.
+     * @param l Init message
      */
     synchronized void initMessageZ21(XNetReply l) {
         int oldState = internalState;
@@ -91,10 +90,8 @@ public class Z21XNetTurnout extends XNetTurnout {
     }
 
     @Override
-    synchronized public void message(XNetReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
-        }
+    public synchronized void message(XNetReply l) {
+        log.debug("received message: {}",l);
         if (l.getElement(0)==Z21Constants.LAN_X_TURNOUT_INFO) {
           // bytes 2 and 3 are the address.
           int address = (l.getElement(1) << 8) + l.getElement(2);
@@ -106,28 +103,17 @@ public class Z21XNetTurnout extends XNetTurnout {
           }
           // if this is for this turnout, check the turnout state.
           if(mNumber==address) {
+              int messageState = decodeZ21FeedbackMessageState(l);
               if(getFeedbackMode() == MONITORING ) {
-                  switch (l.getElement(3)) {
-                      case 0x03:
-                          newKnownState(INCONSISTENT);
-                          break;
-                      case 0x02:
-                          newKnownState(_inverted ? CLOSED : THROWN);
-                          break;
-                      case 0x01:
-                          newKnownState(_inverted ? THROWN : CLOSED);
-                          break;
-                      case 0x00:
-                      default:
-                          newKnownState(UNKNOWN);
-                  }
+                  newKnownState(messageState);
               } else if(getFeedbackMode()==DIRECT) {
                   newKnownState(getCommandedState());
               }
               if(internalState == COMMANDSENT) {
                 /* the command was successfully received */
-                internalState = IDLE;
-                sendOffMessage();  // turn off the repition on the track.
+                sendOffMessage(messageState);  // turn off the repetition on the track.
+                // and check to see if there are any more queued messages.
+                sendQueuedMessage();
              }
           }
         } else {
@@ -136,13 +122,51 @@ public class Z21XNetTurnout extends XNetTurnout {
         }
     }
 
-    @Override
-    synchronized protected XNetMessage getOffMessage() {
-        return Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
-                (getCommandedState() ==  _mThrown),
-                false, false );// for now always not active and not queued.
+    private int decodeZ21FeedbackMessageState(XNetReply l){
+        int state;
+        switch (l.getElement(3)) {
+            case 0x03:
+                state = INCONSISTENT;
+                break;
+            case 0x02:
+                state = _inverted ? CLOSED : THROWN;
+                break;
+            case 0x01:
+                state = _inverted ? THROWN : CLOSED;
+                break;
+            case 0x00:
+            default:
+                state = UNKNOWN;
+        }
+        return state;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnout.class);
+    @Override
+    protected synchronized void sendOffMessage() {
+       sendOffMessage(getCommandedState());
+    }
+
+    protected synchronized void sendOffMessage(int state) {
+        // We need to tell the turnout to shut off the output.
+        if (log.isDebugEnabled()) {
+            log.debug("Sending off message for turnout {} commanded state={}", mNumber, getCommandedState());
+            log.debug("Current Thread ID: {} Thread Name {}", java.lang.Thread.currentThread().getId(), java.lang.Thread.currentThread().getName());
+        }
+        XNetMessage msg = getOffMessage(state == _mThrown);
+        // Set the known state to the commanded state.
+        newKnownState(getCommandedState());
+        internalState = IDLE;
+        // Then send the message.
+        tc.sendXNetMessage(msg, this);  // reply sent through loconet
+    }
+
+    protected synchronized XNetMessage getOffMessage(boolean state) {
+        XNetMessage msg = Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
+                 state, false, false );// for now always not active and not queued.
+        msg.setBroadcastReply(); // reply comes through loconet
+        return msg;
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnout.class);
 
 }

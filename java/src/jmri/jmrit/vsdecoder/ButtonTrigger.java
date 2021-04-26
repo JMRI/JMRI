@@ -54,21 +54,21 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
 
     // Button action functions called directly from the enclosing SoundEvent.
     public void mouseDown() {
-        log.debug("buttonTrigger " + getName() + " mouseDown() called.");
+        log.debug("buttonTrigger {} mouseDown() called.", getName());
         if (match_value) {
             this.callback.takeAction();
         }
     }
 
     public void mouseUp() {
-        log.debug("buttonTrigger " + getName() + " mouseUp() called.");
+        log.debug("buttonTrigger {} mouseUp() called.", getName());
         if (!match_value) {
             this.callback.takeAction();
         }
     }
 
     public void click(boolean v) {
-        log.debug("buttonTrigger " + getName() + " click( " + v + ") called.");
+        log.debug("buttonTrigger {} click( {}) called.", getName(), v);
         if (v == match_value) {
             this.callback.takeAction();
         }
@@ -84,20 +84,20 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
     // ActionListener function(s)
     @Override
     public void actionPerformed(ActionEvent e) {
-        log.debug("ButtonTrigger.actionPerformed() " + this.getName());
+        log.debug("ButtonTrigger.actionPerformed() {}", this.getName());
         this.click(((AbstractButton) e.getSource()).isSelected());
     }
 
     // MouseListener functions
     @Override
     public void mousePressed(MouseEvent e) {
-        log.debug("MouseListener.mousePressed() " + this.getName());
+        log.debug("MouseListener.mousePressed() {}", this.getName());
         this.mouseDown();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        log.debug("MouseListener.mouseReleased() " + this.getName());
+        log.debug("MouseListener.mouseReleased() {}", this.getName());
         this.mouseUp();
     }
 
@@ -118,11 +118,11 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
         Element me = new Element("Trigger");
 
         log.debug("Bool Trigger getXml():");
-        log.debug("  trigger_name = " + this.getName());
-        log.debug("  event_name = " + this.event_name);
-        log.debug("  target_name = " + target.getName());
-        log.debug("  match = " + Boolean.valueOf(match_value).toString());
-        log.debug("  action = " + this.getTriggerType().toString());
+        log.debug("  trigger_name = {}", this.getName());
+        log.debug("  event_name = {}", this.event_name);
+        log.debug("  target_name = {}", target.getName());
+        log.debug("  match = {}", Boolean.valueOf(match_value).toString());
+        log.debug("  action = {}", this.getTriggerType().toString());
 
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "BOOLEAN");

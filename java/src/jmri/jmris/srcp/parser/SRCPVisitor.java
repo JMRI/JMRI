@@ -24,10 +24,10 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
         // get the system memo coresponding to the bus.
         // and ask it what is supported
         try {
-            jmri.jmrix.SystemConnectionMemo memo
-                    = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+            jmri.SystemConnectionMemo memo
+                    = InstanceManager.getList(jmri.SystemConnectionMemo.class).get(bus - 1);
             if (memo != null) {
-                log.debug("devicegroup " + devicegroup);
+                log.debug("devicegroup {}", devicegroup);
                 if (devicegroup.equals("FB")) {
                     if (memo.provides(jmri.SensorManager.class)) {
                         return true;
@@ -80,7 +80,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTgo node, Object data) {
-        log.debug("Go " + node.jjtGetValue());
+        log.debug("Go {}", node.jjtGetValue());
         jmri.jmris.srcp.JmriSRCPServiceHandler handle = (jmri.jmris.srcp.JmriSRCPServiceHandler) data;
         // The GO command should switch the server into runmode, but
         // only if the client has set the protocol version.  (if no mode
@@ -124,7 +124,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTget node, Object data) {
-        log.debug("Get " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
+        log.debug("Get {}", ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("POWER")
                 && isSupported(bus, "POWER")) {
@@ -132,10 +132,8 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             try {
                 ((jmri.jmris.ServiceHandler) data).getPowerServer().sendStatus(
                         InstanceManager.getDefault(jmri.PowerManager.class).getPower());
-            } catch (jmri.JmriException je) {
-                // We shouldn't have any errors here.
-                // If we do, something is horibly wrong.
             } catch (java.io.IOException ie) {
+                // silently ignore
             }
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("GA")
                 && isSupported(bus, "GA")) {
@@ -210,8 +208,8 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                     // get the system memo coresponding to the bus.
                     // and ask it what is supported
                     try {
-                        jmri.jmrix.SystemConnectionMemo memo
-                                = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                        jmri.SystemConnectionMemo memo
+                                = InstanceManager.getList(jmri.SystemConnectionMemo.class).get(bus - 1);
                         if (memo != null) {
                             outputString = outputString + " DESCRIPTION";
                             if (memo.provides(jmri.SensorManager.class)) {
@@ -242,7 +240,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                 // that have no addresses.
                 String devicegroup = (String) ((SimpleNode) descriptionnode.jjtGetChild(0)).jjtGetValue();
                 outputString = "100 INFO " + bus;
-                log.debug("devicegroup " + devicegroup);
+                log.debug("devicegroup {}", devicegroup);
                 if (devicegroup.equals("FB") && isSupported(bus, devicegroup)) {
                     outputString = "419 ERROR list too short";
                 } else if (devicegroup.equals("GA") && isSupported(bus, devicegroup)) {
@@ -265,8 +263,8 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                 // get the system memo coresponding to the bus.
                 // and ask it what is supported
                 // with 2 arguments, we send a description of a specific device.
-                jmri.jmrix.SystemConnectionMemo memo
-                        = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                jmri.SystemConnectionMemo memo
+                        = InstanceManager.getList(jmri.SystemConnectionMemo.class).get(bus - 1);
                 if (memo != null) {
                     String devicegroup = (String) ((SimpleNode) descriptionnode.jjtGetChild(0)).jjtGetValue();
                     String address = (String) ((SimpleNode) descriptionnode.jjtGetChild(1)).jjtGetValue();
@@ -342,7 +340,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
     public Object visit(ASTset node, Object data) {
         SimpleNode target = (SimpleNode) node.jjtGetChild(1);
 
-        log.debug("Set " + target.jjtGetValue());
+        log.debug("Set {}", target.jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
 
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("POWER")
@@ -379,9 +377,6 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             int value = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue()));
             try {
                 ((jmri.jmris.srcp.JmriSRCPSensorServer) ((jmri.jmris.ServiceHandler) data).getSensorServer()).parseStatus(bus, address, value);
-            } catch (jmri.JmriException je) {
-                // We shouldn't have any errors here.
-                // If we do, something is horibly wrong.
             } catch (java.io.IOException ie) {
             }
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SM")
@@ -414,7 +409,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             // setup the array list of function values.
 
             int numFunctions = node.jjtGetNumChildren() - 6;
-            java.util.ArrayList<Boolean> functionList = new java.util.ArrayList<Boolean>();
+            java.util.ArrayList<Boolean> functionList = new java.util.ArrayList<>();
             for(int i = 0; i < numFunctions;i++){
                 // the functions start at the 7th child (index 6) of the node.
                 String functionMode = (String) ((SimpleNode) node.jjtGetChild(i+6)).jjtGetValue();
@@ -448,7 +443,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
     public Object visit(ASTterm node, Object data) {
         SimpleNode target = (SimpleNode) node.jjtGetChild(1);
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
-        log.debug("TERM " + bus + " " + target.jjtGetValue());
+        log.debug("TERM {} {}", bus, target.jjtGetValue());
         if (target.jjtGetValue().equals("SERVER")) {
             // for the TERM <bus> SERVER request, the protocol requries that
             // we terminate all connections and reset the state to the initial
@@ -481,7 +476,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTreset node, java.lang.Object data) {
-        log.debug("RESET " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
+        log.debug("RESET {}", ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SERVER")) {
             // for the RESET <bus> SERVER request, the protocol requries that
             // we re-initialize the server.  Since we may have a local GUI
@@ -498,7 +493,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
     @Override
     public Object visit(ASTinit node, java.lang.Object data) {
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
-        log.debug("INIT " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
+        log.debug("INIT {}", ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("POWER")
                 && isSupported(bus, "POWER")) {
             /* Power really has nothing to do in JMRI */
@@ -575,7 +570,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTwait_cmd node, Object data) {
-        log.debug("Received WAIT CMD " + node.jjtGetValue());
+        log.debug("Received WAIT CMD {}", node.jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             long julday = Long.parseLong((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue());
             int Hour = Integer.parseInt((String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue());

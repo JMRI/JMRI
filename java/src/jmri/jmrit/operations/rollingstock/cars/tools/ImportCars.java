@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -22,20 +23,21 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * This routine will import cars into the operation database.
- *
- * Each field is space or comma delimited. Field order: Number Road Type Length
- * Weight Color Owner Built Location - Track. If a CSV file, the import will
- * accept these additional fields: Load Kernel Moves Value Comment Miscellaneous
- * Extensions
+ * This routine will import cars into the operation database. Each field is
+ * space or comma delimited. Field order: Number Road Type Length Weight Color
+ * Owner Built Location - Track. If a CSV file, the import will accept these
+ * additional fields: Load Kernel Moves Value Comment Miscellaneous Extensions
  *
  * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016
  */
 public class ImportCars extends ImportRollingStock {
 
-    CarManager manager = InstanceManager.getDefault(CarManager.class);
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
-    private int weightResults = JOptionPane.NO_OPTION; // Automatically calculate weight for car if weight entry is not
+    private int weightResults = JOptionPane.NO_OPTION; // Automatically
+                                                       // calculate weight for
+                                                       // car if weight entry is
+                                                       // not
     // found
     private boolean autoCalculate = true;
     private boolean askAutoCreateTypes = true;
@@ -67,7 +69,7 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_BUILT = 7;
     private static final int CAR_LOCATION = 8;
     private static final int CAR_LOCATION_TRACK_SEPARATOR = 9;
-    //    private static final int CAR_TRACK = 10;
+    private static final int CAR_TRACK = 10;
 
     // only for CSV files
     private static final int CAR_LOAD = 11;
@@ -75,10 +77,9 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_MOVES = 13;
     private static final int CAR_VALUE = 14;
     private static final int CAR_COMMENT = 15;
-    //    private static final int CAR_MISCELLANEOUS = 16;
+    // private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
-
-    private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS + 1;
+    private static final int CAR_RFID_TAG = 32;
 
     // we use a thread so the status frame will work!
     @Override
@@ -161,7 +162,7 @@ public class ImportCars extends ImportRollingStock {
             }
             // use comma as delimiter if found otherwise use spaces
             if (comma) {
-                inputLine = parseCommaLine(line, MAXIMUM_NUMBER_FIELDS);
+                inputLine = parseCommaLine(line);
             } else {
                 inputLine = line.split("\\s+"); // NOI18N
             }
@@ -202,7 +203,7 @@ public class ImportCars extends ImportRollingStock {
 
                 log.debug("Checking car number ({}) road ({}) type ({}) length ({}) weight ({}) color ({})", carNumber,
                         carRoad, carType, carLength, carWeight, carColor); // NOI18N
-                
+
                 if (carNumber.trim().isEmpty()) {
                     log.info("Import line {} missing car number", lineNum);
                     break;
@@ -223,7 +224,8 @@ public class ImportCars extends ImportRollingStock {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNumberTooLong"),
                             new Object[]{(carRoad + " " + carNumber), carNumber}),
                             MessageFormat.format(Bundle
-                                    .getMessage("RoadNumMustBeLess"), new Object[]{Control.max_len_string_road_number + 1}),
+                                    .getMessage("RoadNumMustBeLess"),
+                                    new Object[]{Control.max_len_string_road_number + 1}),
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
@@ -324,15 +326,16 @@ public class ImportCars extends ImportRollingStock {
                                 (Setup.getInitalWeight() + doubleCarLength * Setup.getAddWeight()) / 1000;
                         NumberFormat nf = NumberFormat.getNumberInstance();
                         nf.setMaximumFractionDigits(1);
-                        carWeight = nf.format(doubleCarWeight); // car weight in ounces.
+                        carWeight = nf.format(doubleCarWeight); // car weight in
+                                                                // ounces.
                     } catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
                                 .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                Car existingCar = manager.getByRoadAndNumber(carRoad, carNumber);
+                Car existingCar = carManager.getByRoadAndNumber(carRoad, carNumber);
                 if (existingCar != null) {
-                    log.info("Can not add, car number (" + carNumber + ") road (" + carRoad + ") already exists!"); // NOI18N
+                    log.info("Can not add, car number ({}) road ({}) already exists!", carNumber, carRoad); // NOI18N
                 } else {
                     if (inputLine.length > base + CAR_OWNER) {
                         carOwner = inputLine[base + CAR_OWNER];
@@ -362,38 +365,35 @@ public class ImportCars extends ImportRollingStock {
                     }
                     if (inputLine.length > base + CAR_LOCATION) {
                         carLocationName = inputLine[base + CAR_LOCATION];
-
                     }
-                    // Location name can be one to three words
-                    if (inputLine.length > base + CAR_LOCATION_TRACK_SEPARATOR) {
-                        if (!inputLine[base + CAR_LOCATION_TRACK_SEPARATOR].equals(LOCATION_TRACK_SEPARATOR)) {
-                            carLocationName = carLocationName + " " + inputLine[base + CAR_LOCATION + 1];
-                            if (inputLine.length > base + CAR_LOCATION + 2 &&
-                                    !inputLine[base + CAR_LOCATION + 2].equals(LOCATION_TRACK_SEPARATOR)) {
-                                carLocationName = carLocationName + " " + inputLine[base + CAR_LOCATION + 2];
-                            }
-                        }
-                        log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
-                        // now get the track name, no more than 3 words to describe track name when importing a space delimited file
-                        boolean foundLocationTrackSeparator = false;
-                        for (int i =
-                                base + CAR_LOCATION_TRACK_SEPARATOR; i < base + CAR_LOCATION_TRACK_SEPARATOR + 6; i++) {
+                    if (comma && inputLine.length > base + CAR_TRACK) {
+                        carTrackName = inputLine[base + CAR_TRACK];
+                    }
+                    // Location and track name can be one or more words in a
+                    // space delimited file
+                    if (!comma) {
+                        int j = 0;
+                        StringBuffer name = new StringBuffer(carLocationName);
+                        for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
                             if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
-                                foundLocationTrackSeparator = true;
-                                if (inputLine.length > i + 1) {
-                                    carTrackName = inputLine[++i];
-                                    if (comma) {
-                                        break;
-                                    }
-                                }
-                            } else if (foundLocationTrackSeparator && inputLine.length > i) {
-                                carTrackName = carTrackName + " " + inputLine[i];
+                                j = i + 1;
+                                break;
+                            } else {
+                                name.append(" " + inputLine[i]);
                             }
                         }
-                        if (carTrackName == null) {
-                            carTrackName = "";
+                        carLocationName = name.toString();
+                        log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
+                        // now get the track name
+                        name = new StringBuffer();
+                        if (j != 0 && j < inputLine.length) {
+                            name.append(inputLine[j]);
+                            for (int i = j + 1; i < inputLine.length; i++) {
+                                name.append(" " + inputLine[i]);
+                            }
+                            log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrackName);
                         }
-                        log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrackName);
+                        carTrackName = name.toString();
                     }
 
                     // is there a load name?
@@ -408,11 +408,13 @@ public class ImportCars extends ImportRollingStock {
                     }
                     // is the a move count?
                     if (comma && inputLine.length > base + CAR_MOVES) {
-                        try {
-                            carMoves = Integer.parseInt(inputLine[CAR_MOVES]);
-                            log.debug("Car ({} {}) has move count ({})", carRoad, carNumber, carMoves);
-                        } catch (NumberFormatException e) {
-                            log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
+                        if (!inputLine[CAR_MOVES].trim().isEmpty()) {
+                            try {
+                                carMoves = Integer.parseInt(inputLine[CAR_MOVES]);
+                                log.debug("Car ({} {}) has move count ({})", carRoad, carNumber, carMoves);
+                            } catch (NumberFormatException e) {
+                                log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
+                            }
                         }
                     }
                     // is there a car value?
@@ -483,7 +485,7 @@ public class ImportCars extends ImportRollingStock {
                         track = location.getTrackByName(carTrackName, null);
                         if (track == null) {
                             if (autoCreateTracks) {
-                                if (location.getLocationOps() == Location.NORMAL) {
+                                if (!location.isStaging()) {
                                     log.debug("Create 1000 foot yard track ({})", carTrackName);
                                     track = location.addTrack(carTrackName, Track.YARD);
                                 } else {
@@ -503,7 +505,7 @@ public class ImportCars extends ImportRollingStock {
                                         new Object[]{carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.YES_NO_OPTION);
                                 if (results == JOptionPane.YES_OPTION) {
-                                    if (location.getLocationOps() == Location.NORMAL) {
+                                    if (!location.isStaging()) {
                                         log.debug("Create 1000 foot yard track ({})", carTrackName);
                                         track = location.addTrack(carTrackName, Track.YARD);
                                     } else {
@@ -531,7 +533,7 @@ public class ImportCars extends ImportRollingStock {
 
                     log.debug("Add car ({} {}) owner ({}) built ({}) location ({}, {})", carRoad, carNumber, carOwner,
                             carBuilt, carLocationName, carTrackName);
-                    Car car = manager.newRS(carRoad, carNumber);
+                    Car car = carManager.newRS(carRoad, carNumber);
                     car.setTypeName(carType);
                     car.setLength(carLength);
                     car.setWeight(carWeight);
@@ -539,13 +541,14 @@ public class ImportCars extends ImportRollingStock {
                     car.setOwner(carOwner);
                     car.setBuilt(carBuilt);
                     car.setLoadName(carLoadName);
-                    car.setKernel(manager.newKernel(carKernelName));
+                    car.setKernel(carManager.newKernel(carKernelName));
                     car.setMoves(carMoves);
                     car.setValue(carValue);
                     car.setComment(carComment);
                     carsAdded++;
 
-                    // if the car's type name is "Caboose" then make it a caboose
+                    // if the car's type name is "Caboose" then make it a
+                    // caboose
                     car.setCaboose(carType.equals("Caboose"));
                     // determine if there are any car extensions
                     if (comma && inputLine.length > base + CAR_EXTENSIONS) {
@@ -571,7 +574,14 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     }
-
+                    if (comma && inputLine.length > base + CAR_RFID_TAG) {
+                        String newTag = inputLine[CAR_RFID_TAG];
+                        if (!newTag.trim().isEmpty()) {
+                            InstanceManager.getDefault(IdTagManager.class).provideIdTag(newTag);
+                            log.debug("New ID tag added - {}", newTag);
+                            car.setRfid(newTag);
+                        }
+                    }
                     // add new roads
                     if (!InstanceManager.getDefault(CarRoads.class).containsName(carRoad)) {
                         if (autoCreateRoads) {
@@ -627,11 +637,13 @@ public class ImportCars extends ImportRollingStock {
                                 double carWght = (Setup.getInitalWeight() + carLen * Setup.getAddWeight()) / 1000;
                                 NumberFormat nf = NumberFormat.getNumberInstance();
                                 nf.setMaximumFractionDigits(1);
-                                car.setWeight(nf.format(carWght)); // car weight in ounces.
+                                car.setWeight(nf.format(carWght)); // car weight
+                                                                   // in ounces.
                                 int tons = (int) (carWght * Setup.getScaleTonRatio());
                                 // adjust weight for caboose
                                 if (car.isCaboose()) {
-                                    tons = (int) (Double.parseDouble(car.getLength()) * .9); // .9 tons/foot
+                                    tons = (int) (Double.parseDouble(car.getLength()) * .9); // .9
+                                                                                             // tons/foot
                                 }
                                 car.setWeightTons(Integer.toString(tons));
                             } catch (NumberFormatException e) {
@@ -722,7 +734,8 @@ public class ImportCars extends ImportRollingStock {
                             }
                             if (!status.equals(Track.OKAY)) {
                                 if (autoForceCar) {
-                                    car.setLocation(location, track, RollingStock.FORCE); // force car
+                                    car.setLocation(location, track, RollingStock.FORCE); // force
+                                                                                          // car
                                 } else {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
@@ -738,7 +751,8 @@ public class ImportCars extends ImportRollingStock {
                                                     .getMessage("OverRide"),
                                             JOptionPane.YES_NO_OPTION);
                                     if (results == JOptionPane.YES_OPTION) {
-                                        car.setLocation(location, track, true); // force car
+                                        car.setLocation(location, track, true); // force
+                                                                                // car
                                         if (askAutoForceCar) {
                                             results = JOptionPane.showConfirmDialog(null, Bundle
                                                     .getMessage("DoYouWantToAutoForceCar"),
@@ -757,24 +771,25 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     } else {
-                        // log.debug("No location for car ("+carRoad+" "+carNumber+")");
+                        // log.debug("No location for car ("+carRoad+"
+                        // "+carNumber+")");
                     }
                 }
             } else if (importKernel && inputLine.length == base + 3) {
                 carNumber = inputLine[base + 0];
                 carRoad = inputLine[base + 1];
                 String kernelName = inputLine[base + 2];
-                Car car = manager.getByRoadAndNumber(carRoad, carNumber);
+                Car car = carManager.getByRoadAndNumber(carRoad, carNumber);
                 if (car != null) {
-                    Kernel kernel = manager.newKernel(kernelName);
+                    Kernel kernel = carManager.newKernel(kernelName);
                     car.setKernel(kernel);
                     carsAdded++;
                 } else {
-                    log.info("Car number (" + carNumber + ") road (" + carRoad + ") does not exist!"); // NOI18N
+                    log.info("Car number ({}) road ({}) does not exist!", carNumber, carRoad); // NOI18N
                     break;
                 }
             } else if (!line.isEmpty()) {
-                log.info("Car import line " + lineNum + " missing attributes: " + line);
+                log.info("Car import line {} missing attributes: {}", lineNum, line);
                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
                         new Object[]{lineNum}) +
                         NEW_LINE +
@@ -786,7 +801,8 @@ public class ImportCars extends ImportRollingStock {
                         JOptionPane.ERROR_MESSAGE);
                 break;
             }
-        } try {
+        }
+        try {
             in.close();
         } catch (IOException e) {
         }
@@ -800,7 +816,7 @@ public class ImportCars extends ImportRollingStock {
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
                     new Object[]{carsAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
         }
-        
+
         // kill status panel
         fstatus.dispose();
     }

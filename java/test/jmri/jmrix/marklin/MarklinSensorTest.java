@@ -1,12 +1,12 @@
 package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MarklinSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -14,26 +14,25 @@ public class MarklinSensorTest extends jmri.implementation.AbstractSensorTestBas
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new MarklinSensor("MCS1:2");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	t.dispose();
+        t.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -26,11 +26,13 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
   <!-- v1.1,  change to refer to PaneAltFunctionMap4.xml and highVersionID changed to 41. Mark Waters 27 july 2016 -->
+  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.2" lastUpdated="20200502"/>
   <!-- v1.2,  german translation. Ronald Kuhn 18 September 2017 -->
   <!-- v1.3,  include CV's for v37. Ronald Kuhn 25 April 2019, tested with MX600R with FW 37.8 -->
+  <!-- v1.4,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model  model="MX600 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model  model="MX600 version 37+" replacementModel="MX600 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -45,7 +47,7 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
-      <model  model="MX600P12 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model  model="MX600P12 version 37+" replacementModel="MX600P12 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -60,7 +62,7 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
-      <model  model="MX600R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model  model="MX600R version 37+" replacementModel="MX600R version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -85,7 +87,7 @@
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
      <!-- CV7 set to default 37 -->
-      <variable CV="7" readOnly="yes" default="37">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

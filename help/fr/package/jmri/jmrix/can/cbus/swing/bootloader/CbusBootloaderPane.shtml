@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: CBUS&reg; Bootloader Tool</title>
+  <meta name="author" content="Andrew Crosland">
+  <meta name="keywords" content="JMRI CBUS Bootloader">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+    <h1>JMRI : Outil bootloader CBUS&reg;</h1>
+
+    <p>L'outil bootloader vous permet de mettre &#224; jour le firmware dans un n&#339;ud CBUS connect&#233;.</p>
+    
+    <p>Pour mettre &#224; jour le firmware, vous aurez besoin d'un fichier de programmation du firmware (.hex 
+        ) enregistr&#233; sur votre ordinateur</p>
+    <p>D&#233;marrez l'outil de mise &#224; jour du firmware &#224; partir du menu de la g&#233;n&#233;ration 5 de SPROG.<br><br></p>.
+    <img src="images/FirmwareMenu.png" alt="Entr&#233;e du menu CBUS pour le client bootloader">.
+    <p></p>
+    
+    <p>Entrez le num&#233;ro de n&#339;ud (la valeur par d&#233;faut est 65534) et cliquez sur Lire les param&#232;tres du n&#339;ud. 
+      .<br><br></p>
+    <img src="images/UpdateNN.png" alt="S&#233;lectionnez le num&#233;ro de n&#339;ud &#224; mettre &#224; jour">.
+    <p></p>
+    
+    <p>Naviguez jusqu'&#224; l'endroit o&#249; vous avez enregistr&#233; le fichier .hex et cliquez sur Ouvrir.<br><br></p> <p>Dans ce cas, il est possible d'ouvrir le fichier.
+    <img src="images/BrowseToHexFile.png" alt="Naviguer vers le nouveau fichier hex du firmware">.
+    <p></p>
+    
+    <p>S&#233;lectionnez l'option de m&#233;moire EEPROM pour pr&#233;server le contenu de l'EEPROM (variables de n&#339;ud).<br><br></p> <p>.
+    <img src="images/SelectEEPROM.png" alt="S&#233;lectionnez pr&#233;server l'EEPROM">.
+    <p></p>
+    
+    <p>Cliquez sur le bouton D&#233;marrer la programmation.<br><br></p> <p>Cliquez sur le bouton D&#233;marrer la programmation.
+    <img src="images/StartProgramming.png" alt="D&#233;marrer la programmation">.
+    <p></p>
+    
+    <p>Le nouveau firmware sera &#233;crit sur le n&#339;ud. Attendez que la programmation soit 
+      termin&#233;e, ce qui peut prendre un peu de temps, indiqu&#233; par le message "Bootloading 
+        complete..." dans la console.<br><br></p>La programmation est termin&#233;e.
+    <img src="images/Wait.png" alt="Attendre la fin de la programmation">.
+    <p></p>
+    
+    <h2></h2>
+    <p>CBUS est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
+     <p>Traduction 2021-03-23</p> 
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

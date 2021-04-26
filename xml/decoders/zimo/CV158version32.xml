@@ -19,7 +19,7 @@
     <label>RailCom speed reporting method</label>
     <label xml:lang="de">RailCom Geschwindigkeits-Rückmeldung</label>
   </variable>
-  <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0" exclude="130,195,197,199,211,218,240">
+  <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0" exclude="130,177,195,197,199,211,218,240">
     <enumVal>
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
@@ -39,7 +39,7 @@
     <label xml:lang="cs">Zvuk stání při předčasném vypnutí</label>
     <label xml:lang="de">Standgeräusch vorzeitig abbrechen</label>
   </variable>
-  <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0" exclude="130,195,197,199,211,218,240">
+  <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0" exclude="130,177,195,197,199,211,218,240">
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
@@ -59,7 +59,7 @@
     <label xml:lang="cs">Frekvence výfuků páry při vyšších rychlostech</label>
     <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
   </variable>
-  <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0" exclude="130,195,197,199,211,218,240">
+  <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0" exclude="130,177,195,197,199,211,218,240">
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>

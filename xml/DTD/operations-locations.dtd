@@ -52,6 +52,7 @@
 <!ATTLIST track id				CDATA #IMPLIED>          
 <!ATTLIST track name			CDATA #IMPLIED>
 <!ATTLIST track locType			CDATA #IMPLIED>       
+<!ATTLIST track trackType		CDATA #IMPLIED>
 <!ATTLIST track dir				CDATA #IMPLIED> 
 <!ATTLIST track carTypes		CDATA #IMPLIED> 
 <!ATTLIST track carRoadOperation	CDATA #IMPLIED> 
@@ -85,13 +86,14 @@
 <!ATTLIST track holdCustomLoads	(true | false) "false">
 <!ATTLIST track onlyCarWithFD	(true | false) "false">
 
-
 <!ATTLIST destination id			CDATA #REQUIRED>          
 <!ATTLIST destination name			CDATA #IMPLIED>
 
 <!ATTLIST both comment			CDATA #IMPLIED>
 <!ATTLIST pickup comment		CDATA #IMPLIED>
 <!ATTLIST setout comment		CDATA #IMPLIED>
+<!ATTLIST printManifest comment		(true | false) "true">
+<!ATTLIST printSwitchLists comment	(true | false) "false">
 
 <!ATTLIST schedule id			CDATA #REQUIRED>      
 <!ATTLIST schedule name			CDATA #IMPLIED>
@@ -143,8 +145,9 @@
 <!ELEMENT pickupId EMPTY>
 <!ATTLIST pickupId id					CDATA #IMPLIED> 
 
-<!ELEMENT comments (track | both | pickup | setout)*>
+<!ELEMENT comments (track | both | pickup | setout | printManifest | printSwitchLists)*>
 <!ELEMENT both EMPTY>
 <!ELEMENT pickup EMPTY>
 <!ELEMENT setout EMPTY>
-
+<!ELEMENT printManifest EMPTY>
+<!ELEMENT printSwitchLists EMPTY>

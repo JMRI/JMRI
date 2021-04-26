@@ -2,14 +2,13 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     
@@ -121,8 +120,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -133,8 +131,18 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
         l = getManager();
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         l = null;

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the QsiTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class QsiTrafficControlScaffold extends QsiTrafficController {
 
@@ -28,7 +28,7 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
     @Override
     public void sendQsiMessage(QsiMessage m, QsiListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendQsiMessage [" + m + "]");
+            log.debug("sendQsiMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -43,7 +43,7 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
     protected void sendTestMessage(QsiMessage m, QsiListener l) {
         // forward a test message to QsiListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
     }

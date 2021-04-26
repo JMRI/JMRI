@@ -2,8 +2,10 @@ package jmri.jmrix.lenz.liusbserver.configurexml;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 import org.jdom2.Element;
+
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 
 /**
@@ -13,8 +15,7 @@ import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +23,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         xmlAdapter = null;

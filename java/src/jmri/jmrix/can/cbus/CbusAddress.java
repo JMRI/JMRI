@@ -1,9 +1,12 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.annotation.CheckForNull;
+
 import javax.annotation.Nonnull;
+
+import jmri.JmriException;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.StringUtil;
@@ -44,9 +47,9 @@ public class CbusAddress {
 
     private final Matcher hCode = Pattern.compile("^" + SINGLE_ADDRESS_PATTERN + "$").matcher("");
 
-    String aString = null;
-    int[] aFrame = null;
-    boolean match = false;
+    private String aString = null;
+    protected int[] aFrame = null;
+    private boolean match = false;
 
     static final int NODEFACTOR = 100000;
 
@@ -265,11 +268,13 @@ public class CbusAddress {
      * Increments a CBUS address by 1 eg +123 to +124 eg -N123E456 to -N123E457
      *
      * @param testAddr initial CbusAddress String, eg -N123E456
-     * @return null if unable to make the address
+     * @return incremented address. 
+     * @throws jmri.JmriException if unable to make the address
      */
-    @CheckForNull
-    public static String getIncrement(@Nonnull String testAddr) {
+    @Nonnull
+    public static String getIncrement(@Nonnull String testAddr) throws JmriException{
         log.debug("testing address {}", testAddr);
+        validateSysName(testAddr);
         CbusAddress a = new CbusAddress(testAddr);
         CbusAddress[] v = a.split();
         String newString;
@@ -283,35 +288,46 @@ public class CbusAddress {
                 sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb + 1)));
                 newString = sb.toString();
                 break;
-            default:
+            case 1:
                 // get last part and increment
                 int last = StringUtil.getLastIntFromString(v[0].toString());
                 newString = StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last + 1));
                 break;
+            default:
+                throw new JmriException("Unable to increment " + testAddr);
         }
         try {
             return validateSysName(newString);
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            throw new JmriException("Unable to increment " + testAddr + " " + e.getMessage());
         }
-        return null;
     }
 
+    // not A-F, N or X
+    private final static String[] invalidChars = {
+        "G","H","I","J","K","L","M","S","T","U","V","W","Y","Z",
+        "?",":","++","--",",","*","NN","XX"};
+    
     /**
-     * Work out the details for CBUS hardware address validation.
-     * Logging of handled cases no higher than WARN.
+     * Validate a CBUS hardware address validation.
      *
-     * @param address the hardware address to check
-     * @return same address if all OK
-     * @throws IllegalArgumentException when delimiter is not found 
+     * @param address the hardware address to check, excluding both system prefix and type letter.
+     * @return same address if all OK.
+     * @throws IllegalArgumentException when address is not validated.
      * or contains too many parts
      */
     public static String validateSysName(String address) throws IllegalArgumentException {
 
-        if (address == null) {
-            throw new IllegalArgumentException("No address Passed ");
+        if (address == null || address.isEmpty()) {
+            throw new IllegalArgumentException("No Address passed ");
         }
-
+        // address=address.toUpperCase().trim();
+        for (String s : invalidChars) {
+            if (address.contains(s)) {
+                throw new jmri.NamedBean.BadSystemNameException(Locale.getDefault(), "InvalidSystemNameCharacter",address,s);
+            }
+        }
+        
         if (address.endsWith(";")) {
             throw new IllegalArgumentException("Should not end with ; " + address);
         }
@@ -328,7 +344,7 @@ public class CbusAddress {
                 break;
             default:
                 log.debug("validateSysName switch 1 found > 2 events");
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+                throw new IllegalArgumentException("Unable to convert Address: " + address);
         }
 
         CbusAddress a = new CbusAddress(address);
@@ -371,9 +387,6 @@ public class CbusAddress {
         try {
             unsigned = Integer.parseInt(part);
             log.debug("part {} is integer {}", part, unsigned);
-            if (unsigned == 0) {
-                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
-            }
             if ((part.charAt(0) != '+') && (part.charAt(0) != '-')) {
                 if (unsigned > 0 && unsigned < 65536) {
                     part = plusOrMinus + part;
@@ -399,9 +412,6 @@ public class CbusAddress {
                     // it's got a string in somewhere, start by checking event number
                     int lasta = StringUtil.getLastIntFromString(part);
                     log.debug("last string {}", lasta);
-                    if (lasta == 0) {
-                        throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
-                    }
                     if (lasta > 65535) {
                         throw new IllegalArgumentException("Event Too Large in address: " + part);
                     }
@@ -433,7 +443,7 @@ public class CbusAddress {
     }
 
     int[] elements() {
-        return aFrame;
+        return java.util.Arrays.copyOf(aFrame, aFrame.length);
     }
 
     /**

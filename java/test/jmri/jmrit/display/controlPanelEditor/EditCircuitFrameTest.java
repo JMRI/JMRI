@@ -1,15 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -28,13 +27,13 @@ public class EditCircuitFrameTest {
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
         EditCircuitFrame cFrame = new EditCircuitFrame("Edit Circuit Frame", cb, ob1);
         Assert.assertNotNull("exists", cFrame);
-        
+
         JUnitUtil.dispose(cFrame);
         JUnitUtil.dispose(fr);
     }
 
-    
-    @Before
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -43,8 +42,11 @@ public class EditCircuitFrameTest {
     }
 
 
-    @After
+    @AfterEach
     public void tearDown() {
+        blkMgr.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

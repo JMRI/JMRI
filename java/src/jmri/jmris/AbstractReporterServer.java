@@ -23,7 +23,7 @@ abstract public class AbstractReporterServer {
     private static final Logger log = LoggerFactory.getLogger(AbstractReporterServer.class);
 
     public AbstractReporterServer() {
-        reporters = new HashMap<String, ReporterListener>();
+        reporters = new HashMap<>();
     }
 
     /*

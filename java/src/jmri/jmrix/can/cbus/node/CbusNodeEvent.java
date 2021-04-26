@@ -186,10 +186,10 @@ public class CbusNodeEvent extends CbusBasicNodeEvent implements Comparable<Cbus
     }
     
     /** 
-    * {@inheritDoc} 
-    * <p>
-    * Custom method to compare Node Num, Ev Num, Parent Node Num, Event Variables
-    */
+     * {@inheritDoc} 
+     * <p>
+     * Custom method to compare Node Num, Ev Num, Parent Node Num, Event Variables
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof CbusNodeEvent)) {

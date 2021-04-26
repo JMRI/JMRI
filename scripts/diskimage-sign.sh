@@ -201,8 +201,8 @@ signJarMember $tmpoutdir/JMRI/lib/bluecove-2.1.1-SNAPSHOT.jar libbluecove.jnilib
 signJarMember $tmpoutdir/JMRI/lib/jna-4.4.0.jar com/sun/jna/darwin/libjnidispatch.jnilib
 signJarMember $tmpoutdir/JMRI/lib/hid4java-0.5.0.jar darwin/libhidapi.dylib
 # signJarMember $tmpoutdir/JMRI/lib/selenium-server-standalone-3.6.0.jar com/sun/jna/darwin/libjnidispatch.jnilib # OMITTED DUE TO TOC ISSUE
-signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.1.jar META-INF/native/osx/libjansi.jnilib
-signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.1.jar jni/Darwin/libjffi-1.2.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.2.jar META-INF/native/osx/libjansi.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.2.jar jni/Darwin/libjffi-1.2.jnilib
 
 # add an Applications icon
 $SUDO ln -s /Applications "$tmpoutdir"

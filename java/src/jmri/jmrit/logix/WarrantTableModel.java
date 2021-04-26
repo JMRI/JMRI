@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -61,7 +62,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         _frame = frame;
         _manager = InstanceManager
                 .getDefault(jmri.jmrit.logix.WarrantManager.class);
-        // _manager.addPropertyChangeListener(this); // for adds and deletes
+        _manager.addPropertyChangeListener(this); // for adds and deletes
         _warList = new ArrayList<>();
         _warNX = new ArrayList<>();
     }
@@ -77,7 +78,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     @Override
-    public Warrant getBySystemName(String name) {
+    public Warrant getBySystemName(@Nonnull String name) {
         return _manager.getBySystemName(name);
     }
 
@@ -91,7 +92,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     @Override
-    public Warrant getByUserName(String name) {
+    public Warrant getByUserName(@Nonnull String name) {
         return _manager.getByUserName(name);
     }
 
@@ -209,14 +210,14 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
      
     protected String checkAddressInUse(Warrant warrant) {
-        String address = warrant.getSpeedUtil().getAddress();
+        jmri.DccLocoAddress address = warrant.getSpeedUtil().getDccAddress();
 
         if (address ==null) {
             return Bundle.getMessage("NoLoco");
         }
         for (Warrant w :_warList) {
             if (w._runMode != Warrant.MODE_NONE) {
-                if (address.equals(w.getSpeedUtil().getAddress())) {
+                if (address.equals(w.getSpeedUtil().getDccAddress())) {
                     return Bundle.getMessage("AddressInUse", address, w.getDisplayName(), w.getTrainName());
                 }
             }
@@ -363,11 +364,13 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         return new JTextField(10).getPreferredSize().width;
     }
 
+    static String GREEN_LED = "resources/icons/smallschematics/tracksegments/circuit-green.gif";
+    static String YELLOW_LED = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
+    static String OFF_LED = "resources/icons/smallschematics/tracksegments/circuit-empty.gif";
+    static String RED_LED = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
+
     @Override
     public Object getValueAt(int row, int col) {
-//        if (log.isTraceEnabled()) {
-//            log.debug("getValueAt: row= "+row+", column= "+col);
-//        }
         Warrant w = getWarrantAt(row);
         // some error checking
         if (w == null) {
@@ -393,56 +396,42 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case ADDRESS_COLUMN:
             return w.getSpeedUtil().getAddress();
         case ALLOCATE_COLUMN:
+            NamedIcon icon;
             if (w.isTotalAllocated()) {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-green.gif",
-                        "occupied");
+                icon = new NamedIcon(GREEN_LED, "green");
             } else if (w.isAllocated()) {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
-                        "occupied");
+                icon = new NamedIcon(YELLOW_LED, "yellow");
             } else {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                        "off");
+                icon = new NamedIcon(OFF_LED, "off");
             }
+            return icon;
         case DEALLOC_COLUMN:
             if (w.isAllocated()) {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                        "off");
+                icon = new NamedIcon(OFF_LED, "off");
+            } else {
+                icon = new NamedIcon(YELLOW_LED, "occupied");
             }
-            return new NamedIcon(
-                    "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
-                    "occupied");
+            return icon;
         case SET_COLUMN:
             if (w.hasRouteSet()) {
                 if (w.isTotalAllocated()) {
-                    return new NamedIcon(
-                            "resources/icons/smallschematics/tracksegments/circuit-green.gif",
-                            "off");
+                    icon = new NamedIcon(GREEN_LED, "green");
                 } else if (w.isAllocated()) {
-                    return new NamedIcon(
-                            "resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                            "occupied");
+                    icon = new NamedIcon(YELLOW_LED, "yellow");
+                } else {
+                    icon = new NamedIcon(RED_LED, "error");
                 }
-            } else if (w.isAllocated()) {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
-                        "occupied");
+            } else {
+                icon = new NamedIcon(OFF_LED, "off");
             }
-            return new NamedIcon(
-                    "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                    "occupied");
+            return icon;
         case AUTO_RUN_COLUMN:
             if (w.getRunMode() == Warrant.MODE_RUN) {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                        "red");
+                icon = new NamedIcon(RED_LED, "red");
+            } else {
+                icon = new NamedIcon(OFF_LED, "off");
             }
-            return new NamedIcon(
-                    "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                    "off");
+            return icon;
         case MANUAL_RUN_COLUMN:
             if (w.getRunMode() == Warrant.MODE_MANUAL) {
                 return new NamedIcon(
@@ -454,7 +443,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     "off");
         case CONTROL_COLUMN:
             String msg = w.getRunningMessage();
-//            log.debug("getValueAt: warrant= {}, getRunningMessage= \"{}\"", w.getDisplayName(), msg);
             return msg;
         case EDIT_COLUMN:
             if (w.isNXWarrant()) {
@@ -473,9 +461,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-//        if (log.isTraceEnabled())
-//            log.debug("setValueAt: row= " + row + ", column= " + col
-//                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
         Warrant w = getWarrantAt(row);
         if (w == null) {
             log.warn("setValueAt row= {}, Warrant is null!", row);
@@ -492,7 +477,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case ADDRESS_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
                 String addr = (String) value;
-                if (!w.getSpeedUtil().setDccAddress(addr)) {
+                if (!w.getSpeedUtil().setAddress(addr)) {
                     msg = Bundle.getMessage("BadDccAddress", addr);                
                 }
             } else {
@@ -508,34 +493,35 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                             Bundle.getMessage("completeAllocate",
                                     w.getDisplayName()), myGreen, false);
                 } else {
-//                    w.deAllocate();
                     _frame.setStatusText(Bundle.getMessage("UnableToAllocate",
                             w.getDisplayName()) + msg, myGold, false);
                     msg = null;
                 }
+                this.fireTableRowsUpdated(row, row);
             }
             break;
         case DEALLOC_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
                 w.deAllocate();
                 _frame.setStatusText("", myGreen, false);
+                this.fireTableRowsUpdated(row, row);
             } else {
                 _frame.setStatusText(w.getRunModeMessage(), myGold, false);
             }
             break;
         case SET_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                msg = w.setRoute(true, null);
+                msg = w.setRoute(false, null);
                 if (msg == null) {
                     _frame.setStatusText(
                             Bundle.getMessage("pathsSet",
                                     w.getDisplayName()), myGreen, false);
                 } else {
-//                    w.deAllocate();
                     _frame.setStatusText(Bundle.getMessage("UnableToAllocate",
                             w.getDisplayName()) + msg, myGold, false);
                     msg = null;
                 }
+                this.fireTableRowsUpdated(row, row);
             }
             break;
         case AUTO_RUN_COLUMN:
@@ -543,12 +529,14 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             if (msg != null) {
                 w.deAllocate();
             }
+            this.fireTableRowsUpdated(row, row);
             break;
         case MANUAL_RUN_COLUMN:
             msg = _frame.runTrain(w, Warrant.MODE_MANUAL);
             if (msg != null) {
                 w.deAllocate();
             }
+            this.fireTableRowsUpdated(row, row);
             break;
         case CONTROL_COLUMN:
             // Message is set when propertyChangeEvent (below) is received from
@@ -603,7 +591,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             }
             break;
         default:
-           log.error("Invalid Column " + col + " requested.");
+            log.error("Invalid Column {} requested.", col);
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
         if (msg != null) {
@@ -653,6 +641,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         SpeedUtil copySU = w.getSpeedUtil();
         SpeedUtil su = warrant.getSpeedUtil();
         copySU.setDccAddress(su.getDccAddress());
+        copySU.setRosterId(su.getRosterId());
         return w;
     }
 
@@ -661,7 +650,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-//        log.debug("propertyChange "+property);
         long time = _propertyTime;
         _propertyTime = System.currentTimeMillis();
         if ((_propertyTime-time)<20 && property.equals(_lastProperty) && !property.equals("length")) {
@@ -676,7 +664,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         } else if (e.getSource() instanceof Warrant) {
             // a value changed. Find it, to avoid complete redraw
             Warrant bean = (Warrant) e.getSource();
-            log.debug("source is warrant "+bean.getDisplayName());
+            log.debug("source is warrant {}", bean.getDisplayName());
             for (int i = 0; i < _warList.size(); i++) {
                 if (bean.equals(_warList.get(i))) {
 
@@ -692,8 +680,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 }
             }
             int row = getRow(bean);
-            if (row < 0) {	// warrant deleted
-            	return;
+            if (row < 0) { // warrant deleted
+                return;
             }
             if (property.equals("blockChange")) {
                 OBlock oldBlock = (OBlock) e.getOldValue();
@@ -723,9 +711,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                         bean.getTrainName(), speed, name),
                         Color.red, true);
             } else if (property.equals("SpeedChange")) {
-            	fireTableCellUpdated(row, CONTROL_COLUMN);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("WaitForSync")) {
-            	fireTableCellUpdated(row, CONTROL_COLUMN);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();

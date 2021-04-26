@@ -2,16 +2,15 @@ package jmri.jmrit.automat;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AbstractAutomatonTest {
 
@@ -247,13 +246,12 @@ public class AbstractAutomatonTest {
         jmri.util.JUnitAppender.assertWarnMessage("Precheck ignored because of mismatch in bean 0");
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

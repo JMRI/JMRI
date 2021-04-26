@@ -77,7 +77,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
             } else if (newState == OFF) {
                 trafficController.setChannelValue(mChannel, (byte) 0x00);
             } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+                log.warn("illegal state requested for Light: {}", getSystemName());
             }
         }
     }
@@ -108,7 +108,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
             } else if (newState == OFF) {
                 trafficController.setChannelValue(mChannel, (byte) 0x00);
             } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+                log.warn("illegal state requested for Light: {}", getSystemName());
             }
         }
     }

@@ -1,15 +1,18 @@
 package jmri;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
+import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -36,14 +39,31 @@ import jmri.managers.AbstractManager;
 public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
     private final String powerManagerChangeName;
-
+    public final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
+        @Override
+        public void run() {
+            try {
+                new BlockValueFile().writeBlockValues();
+            } catch (IOException ex) {
+                log.error("Exception writing blocks", ex);
+            }
+        }
+    };
+    
     public BlockManager() {
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        super();
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
         InstanceManager.getList(PowerManager.class).forEach(pm -> pm.addPropertyChangeListener(this));
         powerManagerChangeName = InstanceManager.getListPropertyName(PowerManager.class);
         InstanceManager.addPropertyChangeListener(this);
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
     @Override
@@ -116,7 +136,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      * Create a new Block using an automatically incrementing system
      * name.
      *
-     * @param userName the user name for the new block
+     * @param userName the user name for the new Block
      * @return null if a Block with the same systemName or userName already
      *         exists, or if there is trouble creating a new Block.
      */
@@ -235,12 +255,12 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      */
     @CheckReturnValue
     @Nonnull
-    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
+    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull BasicRosterEntry re) {
         List<Block> blockList = new ArrayList<>();
         getNamedBeanSet().stream().forEach(b -> {
             if (b != null) {
                 Object obj = b.getValue();
-                if ((obj instanceof RosterEntry && obj == re) ||
+                if ((obj instanceof BasicRosterEntry && obj == re) ||
                         obj.toString().equals(re.getId()) ||
                         obj.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
@@ -273,7 +293,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
                 if (pm.getPower() == jmri.PowerManager.ON) {
                     lastTimeLayoutPowerOn = Instant.now();
                 }
-            } catch (JmriException | NoSuchMethodError xe) {
+            } catch (NoSuchMethodError xe) {
                 // do nothing
             }
         }

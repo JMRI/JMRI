@@ -14,13 +14,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
@@ -31,6 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EditCircuitFrame extends EditFrame implements PropertyChangeListener {
 
+    private JTextField _systemName;
     private JTextField _blockName;
     private JTextField _detectorSensorName;
     private JTextField _errorSensorName;
@@ -38,13 +43,16 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
     private JTextField _numTrackSeg;
     private JTextField _numTurnouts;
     private LengthPanel _lengthPanel;
+    private JPanel _namePanel;
+    private boolean _create;
 
     // Sensor list
     OpenPickListButton<Sensor> _pickTable;
 
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
-        updateContentPanel();
+        _create = (block == null);
+        updateContentPanel(_create);
         _homeBlock.addPropertyChangeListener("deleted", this);
         pack();
     }
@@ -71,16 +79,18 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         _blockState.setPreferredSize(new Dimension(150, _blockState.getPreferredSize().height));
         contentPane.add(panel);
 
+        _namePanel = new JPanel();
+        _namePanel.setLayout(new BoxLayout(_namePanel, BoxLayout.Y_AXIS));
+        contentPane.add(_namePanel);
+
         panel = new JPanel();
-        _blockName.setText(_homeBlock.getDisplayName());
-        panel.add(CircuitBuilder.makeTextBoxPanel(
-                false, _blockName, "blockName", true, "TooltipBlockName"));
-        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel _buttonPanel = new JPanel();
+        _buttonPanel.setLayout(new FlowLayout());
+        panel.add(_buttonPanel);
         contentPane.add(panel);
-
-        contentPane.add(makeButtonPanel());
+        
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-
         p = new JPanel();
         p.add(new JLabel(Bundle.getMessage("numTrackElements")));
         contentPane.add(p);
@@ -118,12 +128,12 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
 
         String[] blurbLines = { Bundle.getMessage("DragOccupancySensor", Bundle.getMessage("DetectionSensor")),
                                 Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))};
-        _pickTable = new OpenPickListButton<Sensor>(blurbLines, PickListModel.sensorPickModelInstance(), this);
+        _pickTable = new OpenPickListButton<>(blurbLines, PickListModel.sensorPickModelInstance(),
+                this, Bundle.getMessage("OpenPicklist", Bundle.getMessage("BeanNameSensor")));
         contentPane.add(_pickTable.getButtonPanel());
-//        contentPane.add(makePickListPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        _lengthPanel = new LengthPanel(_homeBlock, "blockLength");
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.BLOCK_LENGTH, "TooltipPathLength");
         _lengthPanel.changeUnits();
         _lengthPanel.setLength(_homeBlock.getLengthMm());
         contentPane.add(_lengthPanel);
@@ -132,29 +142,56 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         contentPane.add(makeDoneButtonPanel());
         return contentPane;
     }
-    private JPanel makeButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+    private JPanel makeCreateBlockPanel() {
+        _systemName = new JTextField();
+        _systemName.setText(_homeBlock.getSystemName());
+        _blockName.setText(_homeBlock.getUserName());
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                false, _systemName, "ColumnSystemName", true, "TooltipBlockName"));
+        _systemName.setPreferredSize(new Dimension(300, _systemName.getPreferredSize().height));
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                false, _blockName, "blockName", true, "TooltipBlockName"));
+        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        JButton createButton = new JButton(Bundle.getMessage("buttonCreate"));
+        createButton.addActionListener((ActionEvent a) -> createBlock());
+        createButton.setToolTipText(Bundle.getMessage("createOBlock"));
+        buttonPanel.add(createButton);
+        
+        panel.add(buttonPanel);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        return panel;
+    }
+
+    private JPanel makeEditBlockPanel() {
+        _blockName.setText(_homeBlock.getUserName());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                false, _blockName, "blockName", true, "TooltipBlockName"));
+        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener((ActionEvent a) -> {
-            changeBlockName();
-        });
+        changeButton.addActionListener((ActionEvent a) -> changeBlockName());
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
-        panel.add(changeButton);
+        buttonPanel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        deleteButton.addActionListener((ActionEvent a) -> {
-            deleteCircuit();
-        });
+        deleteButton.addActionListener((ActionEvent a) -> deleteCircuit());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteCircuit"));
-        panel.add(deleteButton);
-        buttonPanel.add(panel);
+        buttonPanel.add(deleteButton);
 
-        return buttonPanel;
-    }
+        panel.add(buttonPanel);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        return panel;
+     }
 
     @Override
     protected JPanel makeDoneButtonPanel() {
@@ -164,15 +201,17 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         panel.setLayout(new FlowLayout());
 
         JButton convertButton = new JButton(Bundle.getMessage("ButtonConvertIcon"));
-        convertButton.addActionListener((ActionEvent a) -> {
-            convertIcons();
-        });
+        convertButton.addActionListener((ActionEvent a) -> convertIcons());
         convertButton.setToolTipText(Bundle.getMessage("ToolTipConvertIcon"));
         panel.add(convertButton);
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener((ActionEvent a) -> {
-            closingEvent(false);
+            if (_create) {
+                closeCreate();
+            } else {
+                closingEvent(false);
+            }
         });
         panel.add(doneButton);
         buttonPanel.add(panel);
@@ -190,12 +229,54 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
      * *********************** end setup *************************
      */
 
+    private void createBlock() {
+        String userName = _blockName.getText().trim();
+        String systemName = _systemName.getText().trim();
+        OBlockManager mgr = InstanceManager.getDefault(OBlockManager.class);
+        StringBuilder  sb = new StringBuilder ();
+        if (userName.length() > 0) {
+             OBlock block = mgr.getByUserName(userName);
+            if (block != null) {
+                sb.append(Bundle.getMessage("duplicateName", userName, block.getSystemName()));
+                sb.append("\n");
+            }
+        }
+        if (!mgr.isValidSystemNameFormat(systemName)) {
+            sb.append(Bundle.getMessage("sysnameOBlock"));
+            sb.append("\n");
+        } else {
+            OBlock block = mgr.getBySystemName(systemName);
+            if (block != null) {
+                sb.append(Bundle.getMessage("duplicateName", systemName, block.getUserName()));
+                sb.append("\n");
+            }
+        }
+        if (sb.toString().length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(),
+                    Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+            _systemName.setText(_homeBlock.getSystemName());
+            return;
+        }
+        _homeBlock = mgr.createNewOBlock(systemName, userName);
+        updateContentPanel(false);
+    }
+
     private void changeBlockName() {
-        String name = _blockName.getText();
-        if (name == null || name.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changeBlockName"),
+        String name = _blockName.getText().trim();
+        String msg = null;
+        if (name.length() == 0) {
+            msg = Bundle.getMessage("TooltipBlockName");
+        } else {
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getByUserName(name);
+            if (block != null) {
+                msg = Bundle.getMessage("duplicateName", name, block.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME));
+            }
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
             return;
+            
         }
         _homeBlock.setUserName(name);
         // block user name change will change portal names.  Change PortalIcon names to match
@@ -215,26 +296,24 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             _parent.removeBlock(_homeBlock);
-            closingEvent(true);
+            closingEvent(true, null);   // No Messages, just close
         }
     }
 
-    private void updateContentPanel() {
+    private void updateContentPanel(boolean create) {
         updateIconList(_parent._editor.getSelectionGroup());
         String name = "";
         Sensor sensor = _homeBlock.getSensor();
         if (sensor != null) {
             name = sensor.getDisplayName();
+            _detectorSensorName.setText(name);
         }
-        _detectorSensorName.setText(name);
 
         sensor = _homeBlock.getErrorSensor();
         if (sensor != null) {
             name = sensor.getDisplayName();
-        } else {
-            name = "";
+            _errorSensorName.setText(name);
         }
-        _errorSensorName.setText(name);
 
         int state = _homeBlock.getState();
         StringBuilder stateText = new StringBuilder();
@@ -272,20 +351,81 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
             log.debug("updateContentPanel: state= {}", stateText);
         }
         _blockState.setText(stateText.toString());
+
+        JPanel panel;
+        if (create) {
+            panel = makeCreateBlockPanel();
+        } else {
+            panel = makeEditBlockPanel();
+            _create = false;
+        }
+        _namePanel.removeAll();
+        _namePanel.add(panel);
+        _namePanel.invalidate();
+        pack();
+    }
+
+    private void closeCreate() {
+        StringBuilder  sb = new StringBuilder ();
+        String sysName = _homeBlock.getSystemName();
+        OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+        if (block == null) {
+            // get rid of icon selections
+            for (Positionable pos : _parent.getCircuitIcons(_homeBlock)) {
+                if (pos instanceof IndicatorTrack) {
+                    ((IndicatorTrack) pos).setOccBlockHandle(null);
+                }
+            }
+            _parent._editor.getSelectionGroup().clear();
+            sb.append( Bundle.getMessage("notCreated", _systemName.getText().trim()));
+            closingEvent(false, sb.toString());
+            if (_pickTable != null) {
+                _pickTable.closePickList();
+            }
+        } else {
+            closingEvent(false);
+        }
     }
 
     @Override
     protected void closingEvent(boolean close) {
+        StringBuffer sb = new StringBuffer();
+        String msg = checkForSensors();
+        if (msg != null) {
+            sb.append(msg);
+            sb.append("\n");
+        }
+        String name = _blockName.getText().trim();
+        if (name.length() == 0) {
+            msg = Bundle.getMessage("blankUserName");
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
+        } else if (!name.equals(_homeBlock.getUserName())) {
+            msg = Bundle.getMessage("changeBlockName", name, _homeBlock.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME));
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
+        }
         _parent.setIconGroup(_homeBlock);
-        String msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
-        if(msg == null) {
+        msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
+        if (msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
+        }
+        if (_lengthPanel.getLength() <= 0.001) {
+            msg = Bundle.getMessage("noBlockLength");
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
+        } else {
             _homeBlock.setLength(_lengthPanel.getLength());
         }
-        // check Sensors
-        if (msg == null) {
-            msg = checkForSensors();
-        }
-        closingEvent(close, msg);
+
+        closingEvent(close, sb.toString());
         if (_pickTable != null) {
             _pickTable.closePickList();
         }
@@ -294,39 +434,47 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
     private String checkForSensors() {
         String name = _detectorSensorName.getText();
         String errName = _errorSensorName.getText();
-        String msg = null;
         if (!_homeBlock.setSensor(name)) {
-            msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), name);
+           return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), name);
         }
-        if (msg == null) {
-            if (errName.length() > 0) {
-                if (_homeBlock.getSensor() == null) {
-                    int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("mixedSensors"),
-                            Bundle.getMessage("noSensor"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
-                        if (!_homeBlock.setSensor(errName)) {
-                            msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
-                        } else {
-                            _homeBlock.setErrorSensor(null);
-                            _detectorSensorName.setText(_homeBlock.getSensor().getDisplayName());
-                        }
+        if (errName.length() > 2) {
+            if (_homeBlock.getSensor() == null) {
+                int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("mixedSensors"),
+                        Bundle.getMessage("noSensor"), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    if (!_homeBlock.setSensor(errName)) {
+                        return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
                     } else {
-                        if (!_homeBlock.setErrorSensor(errName)) {
-                            msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
-                        }
+                        _homeBlock.setErrorSensor(null);
+                        _detectorSensorName.setText(_homeBlock.getSensor().getDisplayName());
+                        _errorSensorName.setText(null);
                     }
                 } else {
                     if (!_homeBlock.setErrorSensor(errName)) {
-                        msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
+                        return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
                     }
                 }
+            } else {
+                if (!_homeBlock.setErrorSensor(errName)) {
+                    return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
+                }
             }
+        } else if (errName.trim().length() == 0){ {
+            _homeBlock.setErrorSensor(null);
         }
-        if (msg == null && _homeBlock.getSensor() == null) {
-            msg = Bundle.getMessage("noDetecterSensor");
+            
         }
-        return msg;
+        Sensor sensor = _homeBlock.getSensor();
+        if (sensor == null) {
+            return Bundle.getMessage("noDetecterSensor");
+        } else if (sensor.equals(_homeBlock.getErrorSensor())) {
+            _homeBlock.setErrorSensor(null);
+            _errorSensorName.setText(null);
+            return java.text.MessageFormat.format(Bundle.getMessage("DuplSensorRemoved"),
+                    sensor.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME));
+        }
+        return null;
     }
 
     protected void updateIconList(java.util.List<Positionable> icons) {
@@ -337,8 +485,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
             if (log.isDebugEnabled()) {
                 log.debug("updateIconList: icons.size()= {}", icons.size());
             }
-            for (int i = 0; i < icons.size(); i++) {
-                Positionable pos = icons.get(i);
+            for (Positionable pos : icons) {
                 if (pos instanceof IndicatorTurnoutIcon) {
                     turnouts++;
                 } else if (pos instanceof IndicatorTrackIcon) {
@@ -354,9 +501,10 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         _numTurnouts.setText(String.valueOf(turnouts));
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("deleted")) {
-            closingEvent(true);
+            closingEvent(true, null);   // No Messages, just close
         }
     }
 

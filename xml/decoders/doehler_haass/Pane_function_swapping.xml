@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Ronald Kuhn - initial version -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Swapping</name>
+  <name xml:lang="de">Funktionsvertauschung</name>
+  <column>
+    <row>
+      <column>
+        <display item="Function Swapping F1">
+        </display>
+        <display item="Function Swapping F2">
+        </display>
+        <display item="Function Swapping F3">
+        </display>
+        <display item="Function Swapping F4">
+        </display>
+        <display item="Function Swapping F5">
+        </display>
+        <display item="Function Swapping F6">
+        </display>
+        <display item="Function Swapping F7">
+        </display>
+        <display item="Function Swapping F8">
+        </display>
+        <display item="Function Swapping F9">
+        </display>
+        <display item="Function Swapping F10">
+        </display>
+        <display item="Function Swapping F11">
+        </display>
+        <display item="Function Swapping F12">
+        </display>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label>
+          <text>     </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>                  SETTINGS</text>
+          <text xml:lang="it">                  PROGRAMMA</text>
+          <text xml:lang="cs">                  Nastavení</text>
+          <text xml:lang="de">              EINSTELLUNGEN</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>       0   = deactivated</text>
+          <text xml:lang="it">       0  = disabile</text>
+          <text xml:lang="cs">       0  = deaktivováno</text>
+          <text xml:lang="de">              0 = deaktiviert</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> 1 - 28 = F1 - F28</text>
+          <text xml:lang="it"> 1 - 28 = F1 - F28</text>
+          <text xml:lang="cs"> 1 - 28 = F1 - F28</text>
+          <text xml:lang="de">      1 - 28 = F1 - F28</text>
+        </label>
+        <label>
+          <text>       29 =      F0</text>
+          <text xml:lang="it">       29 =      F0</text>
+          <text xml:lang="cs">       29 =      F0</text>
+          <text xml:lang="de">            29 = F0</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>        30 = deactivated</text>
+          <text xml:lang="it">         30 = disabile</text>
+          <text xml:lang="cs">         30 = deaktivováno</text>
+          <text xml:lang="de">            30 = deaktiviert</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>        31 = Switching noise</text>
+          <text xml:lang="it">         31 = Commutazione del rumore</text>
+          <text xml:lang="cs">         31 = Spínací šum</text>
+          <text xml:lang="de">            31 = Schaltgeräusch</text>
+        </label>
+        <label>
+          <text>        32 = Braking noise</text>
+          <text xml:lang="it">         32 = Rumore di frenata</text>
+          <text xml:lang="cs">         32 = Brzdný hluk</text>
+          <text xml:lang="de">            32 = Bremsgeräusch</text>
+        </label>
+        <label>
+          <text>   33 - 46 = Soundslot 3 - 16</text>
+          <!-- text xml:lang="it">33 - 46 = Soundslot 3 - 16</text -->
+          <!-- text xml:lang="cs">33 - 46 = Soundslot 3 - 16</text -->
+          <text xml:lang="de">    33 - 46 = Soundablauf 3 - 16</text>
+        </label>
+      </column>
+    </row>
+  </column>
+</pane>

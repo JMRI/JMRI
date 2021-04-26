@@ -53,7 +53,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         //int ports = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         return new EcosSensor(systemName, userName);
     }
@@ -122,7 +122,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 start = lines[i].indexOf('[') + 1;
                                 end = lines[i].indexOf(']');
                                 int ports = Integer.parseInt(lines[i].substring(start, end));
-                                log.debug("Found sensor object " + object + " ports " + ports);
+                                log.debug("Found sensor object {} ports {}", object, ports);
 
                                 if ((ports == 8) || (ports == 16)) {
                                     Sensor s;
@@ -171,7 +171,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                     em = new EcosMessage("get(" + object + ",state)");
                                     tc.sendEcosMessage(em, this);
                                 } else {
-                                    log.debug("Invalid number of ports returned for Module " + object);
+                                    log.debug("Invalid number of ports returned for Module {}", object);
                                 }
                             }
                         }
@@ -217,6 +217,18 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
          view each individual sensor*/
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);
+    }
+    
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: Custom validation for EcosSensorManager could be improved.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);

@@ -1,18 +1,17 @@
 package jmri.jmrix.loconet.soundloader;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EditorPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new EditorPane();
@@ -21,7 +20,7 @@ public class EditorPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -68,13 +68,13 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tlef.addRoadButton);
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
 
-        Assert.assertTrue(track.acceptsRoadName("AA"));
+        Assert.assertTrue(track.isRoadNameAccepted("AA"));
 
         for (String roadName : InstanceManager.getDefault(CarRoads.class).getNames()) {
             if (roadName.equals("AA")) {
                 continue; // the only road name accepted by this track
             }
-            Assert.assertFalse("confirm road name not accepted", track.acceptsRoadName(roadName));
+            Assert.assertFalse("confirm road name not accepted", track.isRoadNameAccepted(roadName));
         }
 
         JUnitUtil.dispose(tlef);

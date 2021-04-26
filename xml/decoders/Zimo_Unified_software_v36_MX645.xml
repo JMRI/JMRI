@@ -33,10 +33,11 @@
   <!-- v1.6,  version 36 Firmware based on hidden v34, no other changes, as no updated documents from ZIMO updated to allow FW version up to 40, Alain Carasso, 29 Jul 2017 -->
   <!-- v1.6.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
   <!-- v1.6.2,  disable highVersion="40" , Roanld Kuhn, 25 Apr 2019 -->
+  <!-- v1.6.3,  added replacementModel for v37,  Ronald Kuhn, 02 May 2020 -->
 
   <decoder>
     <family name="Zimo Unified software (version 36+)" mfg="Zimo">
-      <model  model="MX645 version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645 version 36+" replacementModel="MX645 version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -49,7 +50,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model  model="MX645R version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645R version 36+" replacementModel="MX645R version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -62,7 +63,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model  model="MX645F version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645F version 36+" replacementModel="MX645F version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -75,7 +76,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model  model="MX645P22 version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645P22 version 36+" replacementModel="MX645P22 version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -98,7 +99,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 36 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
-      <variable CV="7" readOnly="yes" default="36">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="36">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

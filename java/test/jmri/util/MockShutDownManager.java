@@ -31,7 +31,7 @@ public class MockShutDownManager extends DefaultShutDownManager {
      */
     @Override
     public boolean restart() {
-        return shutdown(0, false);
+        return shutdown(100, false);
     }
 
     /**
@@ -42,7 +42,7 @@ public class MockShutDownManager extends DefaultShutDownManager {
      */
     @Override
     public boolean shutdown() {
-        return shutdown(100, false);
+        return shutdown(0, false);
     }
 
     public void resetShuttingDown() {

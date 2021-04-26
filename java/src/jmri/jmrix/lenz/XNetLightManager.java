@@ -18,7 +18,7 @@ import jmri.managers.AbstractLightManager;
  */
 public class XNetLightManager extends AbstractLightManager {
 
-    private XNetTrafficController tc = null;
+    private XNetTrafficController tc;
 
     public XNetLightManager(XNetSystemConnectionMemo memo) {
         super(memo);
@@ -44,18 +44,17 @@ public class XNetLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
-        Light lgt = null;
         // Normalize the System Name
         String sName = getSystemNamePrefix() + bitNum; // removes any leading zeros
         // create the new Light object
-        lgt = new XNetLight(tc, this, sName, userName);
-        return lgt;
+        return new XNetLight(tc, this, sName, userName);
     }
 
     /**

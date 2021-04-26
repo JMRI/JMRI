@@ -60,7 +60,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
      */
     @Override
     public synchronized void message(XNetMessage l) {
-	logMessage("","packet:",l);
+        logMessage("", "packet:", l);
     }
 
     /**

@@ -1,10 +1,9 @@
 package jmri.util;
 
 import java.util.concurrent.*;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * This class serves as a demonstration of some good
@@ -19,7 +18,7 @@ import org.junit.Before;
  * examples in their associated JUnit test classes:
  * {@link ThreadingUtilTest} and {@lnk WaitHandlerTest}.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class ThreadingDemoAndTest {
 
@@ -358,12 +357,12 @@ public class ThreadingDemoAndTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

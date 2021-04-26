@@ -42,7 +42,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"; //NOI18N
+        return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"; // NOI18N
     }
 
     /**
@@ -54,10 +54,10 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         if (memo != null) {
             x.append(memo.getUserName());
         } else {
-            x.append("MRC_");//IN18N
+            x.append("MRC_");// NOI18N
         }
         x.append(": ");
-        x.append(Bundle.getMessage("Title"));//NOI18N
+        x.append(Bundle.getMessage("Title"));// NOI18N
         return x.toString();
     }
 
@@ -70,15 +70,15 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         this.tc = m.getMrcTrafficController();
 
         // the following code sets the frame's initial state
-        jLabel1.setText(Bundle.getMessage("MrcPacketGenLabelCommand"));//NOI18N
+        jLabel1.setText(Bundle.getMessage("MrcPacketGenLabelCommand"));// NOI18N
         jLabel1.setVisible(true);
 
-        sendButton.setText(Bundle.getMessage("MrcPacketGenButtonSend"));//NOI18N
+        sendButton.setText(Bundle.getMessage("MrcPacketGenButtonSend"));// NOI18N
         sendButton.setVisible(true);
-        sendButton.setToolTipText(Bundle.getMessage("MrcPacketGenTipSend"));//NOI18N
+        sendButton.setToolTipText(Bundle.getMessage("MrcPacketGenTipSend"));// NOI18N
 
         packetTextField.setText("");
-        packetTextField.setToolTipText(Bundle.getMessage("MrcPacketGenTipText")); //NOI18N
+        packetTextField.setToolTipText(Bundle.getMessage("MrcPacketGenTipText")); // NOI18N
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
@@ -98,10 +98,11 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-
-        MrcMessage m = new MrcMessage(packetTextField.getText().length());
-        for (int i = 0; i < packetTextField.getText().length(); i++) {
-            m.setElement(i, packetTextField.getText().charAt(i));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        MrcMessage m = new MrcMessage(input.length());
+        for (int i = 0; i < input.length(); i++) {
+            m.setElement(i, input.charAt(i));
         }
 
         tc.sendMrcMessage(m);
@@ -133,7 +134,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
             super("Open MRC Send Binary Command",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     MrcPacketGenPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));//IN18N
+                    jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));// NOI18N
         }
     }
 }

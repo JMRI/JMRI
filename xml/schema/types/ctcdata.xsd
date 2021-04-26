@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+  <xs:complexType name="CtcDataType">
+    <xs:annotation>
+      <xs:documentation>
+        Define the XML structure for storing the CTC tool data.
+      </xs:documentation>
+      <xs:appinfo>
+          <jmri:usingclass configurexml="true">jmri.jmrit.jmrit.ctc/configurexml.CtcManagerXml</jmri:usingclass>
+      </xs:appinfo>
+    </xs:annotation>
+      <xs:sequence>
+        <xs:element name="ctcProperties">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="CodeButtonInternalSensorPattern"/>
+              <xs:element type="xs:integer" name="SIDI_CodingTimeInMilliseconds"/>
+              <xs:element type="xs:string" name="SIDI_LeftInternalSensorPattern"/>
+              <xs:element type="xs:string" name="SIDI_NormalInternalSensorPattern"/>
+              <xs:element type="xs:string" name="SIDI_RightInternalSensorPattern"/>
+              <xs:element type="xs:integer" name="SIDI_TimeLockingTimeInMilliseconds"/>
+              <xs:element type="xs:string" name="SIDL_LeftInternalSensorPattern"/>
+              <xs:element type="xs:string" name="SIDL_NormalInternalSensorPattern"/>
+              <xs:element type="xs:string" name="SIDL_RightInternalSensorPattern"/>
+              <xs:element type="xs:integer" name="SWDI_CodingTimeInMilliseconds"/>
+              <xs:element type="xs:string" name="SWDI_NormalInternalSensorPattern"/>
+              <xs:element type="xs:string" name="SWDI_ReversedInternalSensorPattern"/>
+              <xs:element type="xs:string" name="SWDL_InternalSensorPattern"/>
+              <xs:element type="xs:string" name="CO_CallOnToggleInternalSensorPattern"/>
+              <xs:element type="xs:string" name="TUL_DispatcherInternalSensorLockTogglePattern"/>
+              <xs:element type="xs:string" name="TUL_DispatcherInternalSensorUnlockedIndicatorPattern"/>
+              <xs:element type="xs:integer" name="CodeButtonDelayTime"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ctcOtherData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="CtcVersion" minOccurs="0"/>
+              <xs:element type="xs:integer" name="FileVersion"  minOccurs="0"/>
+              <xs:element type="xs:string" name="FleetingToggleInternalSensor"/>
+              <xs:element type="xs:string" name="DefaultFleetingEnabled"/>
+              <xs:element type="xs:string" name="TUL_EnabledAtStartup"/>
+              <xs:element type="xs:integer" name="SignalSystemType"/>
+              <xs:element type="xs:integer" name="TUL_SecondsToLockTurnouts"/>
+              <xs:element type="xs:integer" name="NextUniqueNumber"/>
+              <xs:element type="xs:string" name="CTCDebugSystemReloadInternalSensor"/>
+              <xs:element type="xs:string" name="CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor"/>
+              <xs:element type="xs:integer" name="GUIDesign_NumberOfEmptyColumnsAtEnd"/>
+              <xs:element type="xs:integer" name="GUIDesign_CTCPanelType"/>
+              <xs:element type="xs:string" name="GUIDesign_BuilderPlate"/>
+              <xs:element type="xs:integer" name="GUIDesign_SignalsOnPanel"/>
+              <xs:element type="xs:string" name="GUIDesign_FleetingToggleSwitch"/>
+              <xs:element type="xs:string" name="GUIDesign_AnalogClockEtc"/>
+              <xs:element type="xs:string" name="GUIDesign_ReloadCTCSystemButton"/>
+              <xs:element type="xs:string" name="GUIDesign_CTCDebugOnToggle"/>
+              <xs:element type="xs:string" name="GUIDesign_CreateTrackPieces"/>
+              <xs:element type="xs:integer" name="GUIDesign_VerticalSize"/>
+              <xs:element type="xs:string" name="GUIDesign_OSSectionUnknownInconsistentRedBlink"/>
+              <xs:element type="xs:string" name="GUIDesign_TurnoutsOnPanel"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ctcCodeButtonData" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:integer" name="UniqueID"/>
+              <xs:element type="xs:integer" name="SwitchNumber"/>
+              <xs:element type="xs:integer" name="SignalEtcNumber"/>
+              <xs:element type="xs:integer" name="FileVersion" minOccurs="0"/>
+              <xs:element type="xs:integer" name="GUIColumnNumber"/>
+              <xs:element type="xs:string" name="CodeButtonInternalSensor"/>
+              <xs:element type="xs:string" name="OSSectionOccupiedExternalSensor"/>
+              <xs:element type="xs:string" name="OSSectionOccupiedExternalSensor2"/>
+              <xs:element type="xs:integer" name="OSSectionSwitchSlavedToUniqueID"/>
+              <xs:element type="xs:string" name="GUIGeneratedAtLeastOnceAlready"/>
+              <xs:element type="xs:integer" name="CodeButtonDelayTime"/>
+              <xs:element type="xs:string" name="SIDI_Enabled"/>
+              <xs:element type="xs:string" name="SIDI_LeftInternalSensor"/>
+              <xs:element type="xs:string" name="SIDI_NormalInternalSensor"/>
+              <xs:element type="xs:string" name="SIDI_RightInternalSensor"/>
+              <xs:element type="xs:integer" name="SIDI_CodingTimeInMilliseconds"/>
+              <xs:element type="xs:integer" name="SIDI_TimeLockingTimeInMilliseconds"/>
+              <xs:element type="xs:string" name="SIDI_TrafficDirection"/>
+              <xs:element name="SIDI_LeftRightTrafficSignals">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="signal" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="SIDI_RightLeftTrafficSignals">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="signal" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="SIDL_Enabled"/>
+              <xs:element type="xs:string" name="SIDL_LeftInternalSensor"/>
+              <xs:element type="xs:string" name="SIDL_NormalInternalSensor"/>
+              <xs:element type="xs:string" name="SIDL_RightInternalSensor"/>
+              <xs:element type="xs:string" name="SWDI_Enabled"/>
+              <xs:element type="xs:string" name="SWDI_NormalInternalSensor"/>
+              <xs:element type="xs:string" name="SWDI_ReversedInternalSensor"/>
+              <xs:element type="xs:string" name="SWDI_ExternalTurnout"/>
+              <xs:element type="xs:integer" name="SWDI_CodingTimeInMilliseconds"/>
+              <xs:element type="xs:string" name="SWDI_FeedbackDifferent"/>
+              <xs:element type="xs:integer" name="SWDI_GUITurnoutType"/>
+              <xs:element type="xs:string" name="SWDI_GUITurnoutLeftHand"/>
+              <xs:element type="xs:string" name="SWDI_GUICrossoverLeftHand"/>
+              <xs:element type="xs:string" name="SWDL_Enabled"/>
+              <xs:element type="xs:string" name="SWDL_InternalSensor"/>
+              <xs:element type="xs:string" name="CO_Enabled"/>
+              <xs:element type="xs:string" name="CO_CallOnToggleInternalSensor"/>
+              <xs:element name="CO_GroupingsList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="CO_GroupEntry" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="ExternalSignal"/>
+                          <xs:element type="xs:string" name="SignalFacingDirection"/>
+                          <xs:element type="xs:string" name="SignalAspectToDisplay"/>
+                          <xs:element type="xs:string" name="CalledOnExternalSensor"/>
+                          <xs:element type="xs:string" name="ExternalBlock"/>
+                          <xs:element name="SwitchIndicators">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="sensor" maxOccurs="6" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="TRL_Enabled"/>
+              <xs:element name="TRL_LeftRules">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="TRL_TrafficLockingRule" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="UserRuleNumber"/>
+                          <xs:element type="xs:string" name="RuleEnabled"/>
+                          <xs:element type="xs:string" name="DestinationSignalOrComment"/>
+                          <xs:element name="switches" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="switch" maxOccurs="5" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="UserText"/>
+                                      <xs:element type="xs:string" name="SwitchAlignment"/>
+                                      <xs:element type="xs:string" name="UniqueID"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="OccupancyExternalSensors" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="sensor" maxOccurs="9" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="OptionalExternalSensors" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="sensor" maxOccurs="2" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="TRL_RightRules">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="TRL_TrafficLockingRule" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="UserRuleNumber"/>
+                          <xs:element type="xs:string" name="RuleEnabled"/>
+                          <xs:element type="xs:string" name="DestinationSignalOrComment"/>
+                          <xs:element name="switches" maxOccurs="5" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="switch" maxOccurs="5" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="UserText"/>
+                                      <xs:element type="xs:string" name="SwitchAlignment"/>
+                                      <xs:element type="xs:string" name="UniqueID"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="OccupancyExternalSensors" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="sensor" maxOccurs="9" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="OptionalExternalSensors" minOccurs="0">
+                            <xs:complexType mixed="true">
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="sensor" maxOccurs="2" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="TUL_Enabled"/>
+              <xs:element type="xs:string" name="TUL_DispatcherInternalSensorLockToggle"/>
+              <xs:element type="xs:string" name="TUL_ExternalTurnout"/>
+              <xs:element type="xs:string" name="TUL_ExternalTurnoutFeedbackDifferent"/>
+              <xs:element type="xs:string" name="TUL_DispatcherInternalSensorUnlockedIndicator"/>
+              <xs:element type="xs:string" name="TUL_NoDispatcherControlOfSwitch"/>
+              <xs:element type="xs:string" name="TUL_ndcos_WhenLockedSwitchStateIsClosed"/>
+              <xs:element type="xs:string" name="TUL_GUI_IconsEnabled" minOccurs="0"/>
+              <xs:element type="xs:string" name="TUL_LockImplementation"/>
+              <xs:element name="TUL_AdditionalExternalTurnouts">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="TUL_AdditionalExternalTurnoutEntry" maxOccurs="3" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="TUL_AdditionalExternalTurnout"/>
+                          <xs:element type="xs:string" name="TUL_AdditionalExternalTurnoutFeedbackDifferent"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="IL_Enabled"/>
+              <xs:element name="IL_Signals">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="signal" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="class"/>
+  </xs:complexType>
+</xs:schema>

@@ -3,11 +3,13 @@ package jmri.managers;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<jmri.SignalMastLogicManager,jmri.SignalMastLogic> {
 
@@ -18,24 +20,39 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
 
     @Test
     @Override
-    @Ignore("makeSystemName is not currently supported")
+    @Disabled("makeSystemName is not currently supported")
     public void testMakeSystemName() {
     }
 
-    @Ignore("This managers doesn't support auto system names")
+    @Disabled("This managers doesn't support auto system names")
     @Test
     @Override
     public void testAutoSystemNames() {
     }
+    
+    @Disabled("This manager doesn't support auto system names")
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefix() {
+    }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultSignalMastLogicManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         JUnitUtil.tearDown();

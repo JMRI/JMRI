@@ -268,7 +268,7 @@
       more advanced function controls.<br>
       <br>
       At the moment <a href=
-      "http://jmri.org/jython/Jynstruments/ThrottleFrame/">3 sample
+      "https://jmri.org/jython/Jynstruments/ThrottleFrame/">3 sample
       Jynstruments are delivered</a>, one for Light, one for Horn
       and one for Whistle (function 0, 1 and 2). But this is only a
       sample, have a look at the code and customize at will for

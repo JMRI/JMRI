@@ -1,10 +1,8 @@
 package jmri.implementation.swing;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,12 +10,12 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SwingShutDownTaskTest {
 
     private boolean modalDialogStopsTest = false;
-    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskDemo.class);
+    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
 
     @Test
     public void testCTor() {
@@ -44,13 +42,13 @@ public class SwingShutDownTaskTest {
                 null) {
                     @Override
                     public boolean checkPromptNeeded() {
-                        log.debug("mDST " + modalDialogStopsTest);
+                        log.debug("mDST {}", modalDialogStopsTest);
                         return !modalDialogStopsTest;
                     }
                 };
 
         // and display
-        t.execute();
+        t.run();
     }
 
     @Test
@@ -63,7 +61,7 @@ public class SwingShutDownTaskTest {
                 null) {
                     @Override
                     public boolean checkPromptNeeded() {
-                        log.debug("mDST " + modalDialogStopsTest);
+                        log.debug("mDST {}", modalDialogStopsTest);
                         return !modalDialogStopsTest;
                     }
 
@@ -74,17 +72,16 @@ public class SwingShutDownTaskTest {
                 };
 
         // and display
-        t.execute();
+        t.run();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         this.modalDialogStopsTest = System.getProperty("modalDialogStopsTest", "false").equals("true");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -12,7 +12,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help Route Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -27,7 +27,7 @@
       <p>After clicking <strong>Add...</strong> below the Route
       table, the following panel appears:</p><a href=
       "images/RouteAddEdit.png"><img src="images/RouteAddEdit.png" width="518"
-      height="394"></a>
+      height="394" alt="route add"></a>
 
       <p>The first thing you must do when creating a route is name
       it. In the box labeled "System Name" enter a unique name for
@@ -96,9 +96,7 @@
       "#Turnout_lock_feature">Locked</a>.</p>
 
       <p>Once you are satisfied with your Route, use the "Add"
-      button to create the new Route. To save your Route in your configuration, you must
-      then use the "Store Panel" command which can be found under
-      the "Panels" main menu. If you decide that you need to change
+      button to create the new Route. If you decide that you need to change
       your Route, use the "Edit" and "Update Route" buttons to
       modify it.</p>
 

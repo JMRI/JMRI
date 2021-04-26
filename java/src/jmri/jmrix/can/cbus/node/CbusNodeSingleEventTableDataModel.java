@@ -167,6 +167,8 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case EV_SELECT_COLUMN:
+            case EV_SELECT_HEX_COLUMN:
+            case EV_SELECT_BIT_COLUMN:
                 return true;
             default:
                 return false;
@@ -235,14 +237,32 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     @Override
     public void setValueAt(Object value, int row, int col) {
         log.debug("set value {} row {} col {}",value,row,col);
-        if (col == EV_SELECT_COLUMN) {
-            newEVs[(row)] = (int) value;
-            updateFromNode(row,col);
+        switch (col) {
+            case EV_SELECT_COLUMN:
+                newEVs[(row)] = (int) value;
+                updateFromNode(row,col);
+                break;
+            case EV_SELECT_HEX_COLUMN:
+                newEVs[(row)] = jmri.util.StringUtil.getByte(0, ((String) value).trim());
+                ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
+                break;
+            case EV_SELECT_BIT_COLUMN:
+                try {
+                    int newInt = Integer.parseInt(((String) value).replaceAll("\\s+",""), 2);
+                    if (newInt > -1 && newInt < 256) {
+                        newEVs[(row)] = newInt;
+                        ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
+                    }
+                }
+                catch ( NumberFormatException e ){}
+                break;
+            default:
+                break;
         }
     }
     
     public void updateFromNode( int arrayid, int col){
-        ThreadingUtil.runOnGUI( ()->{
+        ThreadingUtil.runOnGUIEventually( ()->{
             // fireTableCellUpdated(arrayid, col);
             fireTableDataChanged();
         });

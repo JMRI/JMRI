@@ -9,11 +9,11 @@
                <dt><h3 style="padding-left: 1em;"><a href="../index.shtml">Controller Area Networks (CAN)</a></h3></dt>
 		  <dd>
 		     <ul>
-                    <li><a href="../../openlcb/index.shtml">OpenLCB</a></li>
-		    <li><a href="../scripting.shtml">CAN Scripting</a></li>
-		    <li><a href="index.shtml">MERG CBUS</a></li>
-		    <li><a href="Names.shtml">MERG CBUS Naming</a></li>
-		    <li><a href="Details.shtml">MERG CBUS Connection Details</a></li>
+                    
+		    <li><a href="index.shtml">CBUS&reg;</a></li>
+		    <li><a href="Names.shtml">CBUS Naming</a></li>
+            <li><a href="CbusFastClock.shtml">CBUS Fast Clock</a></li>
+            <li><a href="../scripting.shtml">CAN Scripting</a></li>
 		      </ul>
 		  </dd>      
         

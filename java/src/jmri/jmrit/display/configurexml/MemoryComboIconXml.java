@@ -1,10 +1,13 @@
 package jmri.jmrit.display.configurexml;
 
 import java.util.List;
+
 import javax.swing.DefaultComboBoxModel;
+
 import jmri.Memory;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.MemoryComboIcon;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.display.*;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -58,9 +61,11 @@ public class MemoryComboIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor p = (Editor) o;
 
@@ -99,12 +104,16 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setMemory(name);
         } else {
-            log.error("Memory named '" + attr.getValue() + "' not found.");
+            log.error("Memory named '{}' not found.", attr.getValue());
             p.loadFailed();
             return;
         }
 
-        p.putItem(l);
+        try {
+            p.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }

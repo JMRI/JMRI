@@ -4,15 +4,8 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
-import jmri.CommandStation;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.MultiMeter;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.SensorManager;
-import jmri.ThrottleManager;
-import jmri.TurnoutManager;
+import jmri.*;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -29,13 +22,12 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
  */
-public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public DCCppSystemConnectionMemo(@Nonnull DCCppTrafficController xt) {
         super("D", "DCC++");
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
-        register(); // registers general type
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 
         // create and register the DCCppComponentFactory
@@ -47,7 +39,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public DCCppSystemConnectionMemo() {
         super("D", "DCC++");
-        register(); // registers general type
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 
         // create and register the DCCppComponentFactory
@@ -61,6 +52,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller, one is provided if null.
      */
     public DCCppTrafficController getDCCppTrafficController() {
         if (xt == null) {
@@ -85,195 +77,101 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the Programmer for this particular connection. NOTE:
-     * Programmer defaults to null
+     * Provides access to the Programmer for this particular connection.
+     * NOTE: Programmer defaults to null
+     * @return programmer manager.
      */
     public DCCppProgrammerManager getProgrammerManager() {
-        return programmerManager;
+        return get(DCCppProgrammerManager.class);
     }
 
     public void setProgrammerManager(DCCppProgrammerManager p) {
-        programmerManager = p;
+        store(p,DCCppProgrammerManager.class);
+        store(p,GlobalProgrammerManager.class);
+        store(p,AddressedProgrammerManager.class);
     }
-
-    private DCCppProgrammerManager programmerManager = null;
 
     /*
      * Provides access to the Throttle Manager for this particular connection.
      */
     public ThrottleManager getThrottleManager() {
-        if (throttleManager == null) {
-            throttleManager = new DCCppThrottleManager(this); // TODO: Create this throttle manager
-        }
-        return throttleManager;
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,
+                (Class c) -> new DCCppThrottleManager(this));
     }
 
     public void setThrottleManager(ThrottleManager t) {
-        throttleManager = t;
+        store(t,ThrottleManager.class);
     }
-
-    private ThrottleManager throttleManager;
 
     /*
      * Provides access to the PowerManager for this particular connection.
      */
     @Nonnull
     public PowerManager getPowerManager() {
-        if (powerManager == null) {
-            powerManager = new DCCppPowerManager(this);
-        }
-        log.debug("power manager created: {}", powerManager);
-        return powerManager;
-
+        return (PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> {
+            PowerManager powerManager = new DCCppPowerManager(this);
+            log.debug("power manager created: {}", powerManager);
+            return powerManager;
+        });
     }
 
     public void setPowerManager(@Nonnull PowerManager p) {
-        powerManager = p;
+        store(p,PowerManager.class);
     }
-
-    private PowerManager powerManager;
 
     /*
      * Provides access to the SensorManager for this particular connection.
      * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
-        return sensorManager;
+        return get(SensorManager.class);
 
     }
 
     public void setSensorManager(SensorManager s) {
-        sensorManager = s;
+        store(s,SensorManager.class);
     }
-
-    private SensorManager sensorManager = null;
 
     /*
      * Provides access to the TurnoutManager for this particular connection.
      * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
-        return turnoutManager;
+        return get(TurnoutManager.class);
 
     }
 
     public void setTurnoutManager(TurnoutManager t) {
-        turnoutManager = t;
+        store(t,TurnoutManager.class);
     }
-
-    private TurnoutManager turnoutManager = null;
 
     /*
      * Provides access to the LightManager for this particular connection.
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager() {
-        return lightManager;
+        return get(LightManager.class);
 
     }
 
     public void setLightManager(LightManager l) {
-        lightManager = l;
+        store(l,LightManager.class);
     }
-
-    private LightManager lightManager = null;
 
     /*
      * Provides access to the Command Station for this particular connection.
      * NOTE: Command Station defaults to NULL
      */
     public CommandStation getCommandStation() {
-        return commandStation;
+        return get(CommandStation.class);
     }
 
     public void setCommandStation(@Nonnull CommandStation c) {
-        commandStation = c;
-        ((DCCppCommandStation) c).setTrafficController(xt);
-        ((DCCppCommandStation) c).setSystemConnectionMemo(this);
-    }
-
-    private CommandStation commandStation = null;
-
-    private MultiMeter multiMeter = null;
-
-    public MultiMeter getMultiMeter() {
-        return(multiMeter);
-    }
-
-    public void setMultiMeter(MultiMeter m) {
-        multiMeter = m;
-    }
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            DCCppProgrammerManager p = getProgrammerManager();
-            if (p == null) {
-                return false;
-            }
-            return p.isGlobalProgrammerAvailable();
-        } else if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            DCCppProgrammerManager p = getProgrammerManager();
-            if (p == null) {
-                return false;
-            }
-            return p.isAddressedModePossible();
-            //TODO: Update return value of the following as Managers are brought online.
-        } else if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        } else if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return true;
-        } else if (type.equals(jmri.CommandStation.class)) {
-            return true;
-        } else if (type.equals(jmri.MultiMeter.class)) {
-            return true;
-        } else {
-            return super.provides(type);
+        store(c,CommandStation.class);
+        if ( c instanceof DCCppCommandStation ) {
+            ((DCCppCommandStation) c).setTrafficController(xt);
+            ((DCCppCommandStation) c).setSystemConnectionMemo(this);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        if (T.equals(jmri.CommandStation.class)) {
-            return (T) getCommandStation();
-        }
-        if (T.equals(jmri.MultiMeter.class)) {
-            return (T) getMultiMeter();
-        }
-        return super.get(T);
     }
 
     @Override

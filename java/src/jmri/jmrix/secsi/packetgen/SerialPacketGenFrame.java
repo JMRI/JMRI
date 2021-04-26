@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of serial messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.secsi.SerialListener {
 
@@ -99,7 +99,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        memo.getTrafficController().sendSerialMessage(createPacket(input), this);
     }
 
     SerialMessage createPacket(String s) {

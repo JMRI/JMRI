@@ -70,7 +70,7 @@
       <p>In the short term, we've created several programs based on
       the JMRI libraries to move the project along and demonstrate
       its capabilities. (<a href=
-      "http://jmri.org/releasenotes/history.html">Why so many
+      "https://jmri.org/releasenotes/history.html">Why so many
       programs?...</a>)</p>
 
       <p>The most popular is <a href=
@@ -210,7 +210,7 @@
       unlimited-duration license to redistribute it consistent with
       the <a href="#use">JMRI licensing</a>. (We regret this
       paperwork, but <a href=
-      "http://jmri.org/k/copycomparison.html">Matt Katzer's misuse
+      "https://jmri.org/k/copycomparison.html">Matt Katzer's misuse
       of copyright</a> makes it necessary). If other people also
       helped with the contribution, please let us know so we can
       add them to the <a href=
@@ -269,7 +269,7 @@
         form, but you must give JMRI credit for their content.</li>
       </ul>
       <p>If you have any questions about this, please <a href=
-      "mailto:jmri@jmri.net">contact us</a> directly.</p>
+      "mailto:jmri@jmri.org">contact us</a> directly.</p>
 
       <h2>Visualizations of JMRI Development Activity</h2>
 
@@ -292,13 +292,13 @@
       <a href="https://www.openhub.net/p/jmri/commits/summary">commits</a>.
       
       <p>Dennis Miller created a <a href=
-      "http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm of
+      "https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm of
       JMRI development</a> that represents activity from inception to January 2009. A
       Code Swarm is a fascinating and dynamic visual representation
       of change as developers come and go and make changes to the
       files that make up a project. More information is available
       on the <a href=
-      "http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a>
+      "https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a>
       page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

@@ -22,6 +22,7 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
     /**
      * Create the config JPanel, if there is one, to configure this operation
      * type.
+     * @param op turnout operation.
      */
     public CommonTurnoutOperationConfig(TurnoutOperation op) {
         super(op);

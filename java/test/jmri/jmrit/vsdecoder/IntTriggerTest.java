@@ -1,8 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
+
 import org.jdom2.Element;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the IntTrigger class
@@ -16,7 +18,7 @@ public class IntTriggerTest {
         // Maybe check the enums here?
     }
 
-    // Note: Trigger is abstract.  Using BoolTrigger as test vehicle.
+    // Note: Trigger is abstract.  Using IntTrigger as test vehicle.
     @Test
     public void testCreateSimple() {
         IntTrigger uut = new IntTrigger("unitUnderTest");
@@ -137,16 +139,15 @@ public class IntTriggerTest {
         Element e = new Element("Trigger");
         e.setAttribute("name", "test_trigger");
         e.setAttribute("type", "INT");
-        e.addContent(new Element("event_name").addContent("test_event"));
-        e.addContent(new Element("target_name").addContent("test_target"));
-        e.addContent(new Element("compare_type").addContent("GT"));
+        e.addContent(new Element("event-name").addContent("test_event"));
+        e.addContent(new Element("target-name").addContent("test_target"));
+        e.addContent(new Element("compare-type").addContent("GT"));
         e.addContent(new Element("match").addContent("2"));
         e.addContent(new Element("action").addContent("PLAY"));
-        return (e);
+        return e;
     }
 
     @Test
-    @Ignore("Causes NPE")
     public void testSetXML() {
         IntTrigger uut = new IntTrigger("unitUnderTest", 3, Trigger.CompareType.EQ);
         Element e = buildTestXML();
@@ -158,15 +159,14 @@ public class IntTriggerTest {
         Assert.assertEquals("xml compare type", Trigger.CompareType.GT, uut.getCompareType());
         Assert.assertEquals("xml match value", 2, uut.getMatchValue());
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
-
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

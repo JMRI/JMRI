@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.IndicatorTrackIcon;
+import jmri.jmrit.display.*;
 import jmri.jmrit.logix.OBlock;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -45,17 +47,13 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b != null) {
             element.addContent(storeNamedBean("occupancyblock", b));
+            // additional OBlock information for web server is extracted by ControlPanelServlet at runtime, not stored
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
         if (b == null && s != null) {  // only write sensor if no OBlock, don't write double sensing
             element.addContent(storeNamedBean("occupancysensor", s));
         }
-        /*
-         s = p.getErrSensor();
-         if (s!=null) {
-         element.addContent(storeBean("errorsensor", s));
-         }
-         */
+
         Element elem = new Element("showTrainName");
         String show = "no";
         if (p.showTrain()) {
@@ -81,9 +79,9 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         elem = new Element("paths");
         ArrayList<String> paths = p.getPaths();
         if (paths != null) {
-            for (int i = 0; i < paths.size(); i++) {
+            for (String path : paths) {
                 Element e = new Element("path");
-                e.addContent(paths.get(i));
+                e.addContent(path);
                 elem.addContent(e);
 
             }
@@ -95,11 +93,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         return element;
     }
 
-    /*Element storeBean(String elemName, NamedBean nb) {
-     Element elem = new Element(elemName);
-     elem.addContent(nb.getSystemName());
-     return elem;
-     }*/
     static Element storeNamedBean(String elemName, NamedBeanHandle<?> nb) {
         Element elem = new Element(elemName);
         elem.addContent(nb.getName());
@@ -111,9 +104,11 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor p = (Editor) o;
 
@@ -123,14 +118,13 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         if (elem != null) {
             List<Element> status = elem.getChildren();
             if (status.size() > 0) {
-                for (int i = 0; i < status.size(); i++) {
-                    String msg = "IndicatorTrack \"" + l.getNameString() + "\" icon \"" + status.get(i).getName() + "\" ";
-                    NamedIcon icon = loadIcon(l, status.get(i).getName(), elem,
-                            msg, p);
+                for (Element value : status) {
+                    String msg = "IndicatorTrack \"" + l.getNameString() + "\" icon \"" + value.getName() + "\" ";
+                    NamedIcon icon = loadIcon(l, value.getName(), elem, msg, p);
                     if (icon != null) {
-                        l.setIcon(status.get(i).getName(), icon);
+                        l.setIcon(value.getName(), icon);
                     } else {
-                        log.info(msg + " removed for url= " + status.get(i).getName());
+                        log.info("{} removed for url= {}", msg, value.getName());
                         return;
                     }
                 }
@@ -160,17 +154,21 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
 
         elem = element.getChild("paths");
         if (elem != null) {
-            ArrayList<String> paths = new ArrayList<String>();
+            ArrayList<String> paths = new ArrayList<>();
             List<Element> pth = elem.getChildren();
-            for (int i = 0; i < pth.size(); i++) {
-                paths.add(pth.get(i).getText());
+            for (Element value : pth) {
+                paths.add(value.getText());
             }
             l.setPaths(paths);
         }
 
         l.displayState(l.getStatus());
         l.updateSize();
-        p.putItem(l);
+        try {
+            p.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }

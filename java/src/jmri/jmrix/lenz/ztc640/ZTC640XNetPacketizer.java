@@ -1,6 +1,3 @@
-/**
- * ZTC640XNetPacketizer.java
- */
 package jmri.jmrix.lenz.ztc640;
 
 import jmri.jmrix.lenz.XNetPacketizer;

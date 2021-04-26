@@ -130,9 +130,9 @@ the serial/network refactoring.
 
       <p>To make startup actions work with more than one connection of their type, 
         they should implement the 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/swing/SystemConnectionAction.html">jmri.jmrix.SystemConnectionAction</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/swing/SystemConnectionAction.html">jmri.jmrix.SystemConnectionAction</a>
         interface. This will connected them to their specific 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a>.
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a>.
         
       <!--#include virtual="/Footer.shtml" -->
     </div>

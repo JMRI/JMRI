@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.awt.GraphicsEnvironment;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.server.json.JsonServerPreferences;
@@ -16,47 +16,43 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;
-import jmri.profile.Profile;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author rhwood
+ * @author Randall Wood
  */
 public class JsonUtilSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
         // list open windows when running tests
         JUnitUtil.resetWindows(true, false);
         JUnitUtil.resetNodeIdentity();
         JUnitUtil.resetProfileManager(
-                new NullProfile("JsonUtilHttpServiceTest", "12345678", folder.newFolder(Profile.PROFILE)));
+                new NullProfile("JsonUtilHttpServiceTest", "12345678", folder));
         JUnitUtil.initConfigureManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false, false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -69,7 +65,6 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnMessage() throws Exception {
-        Locale locale = Locale.ENGLISH;
         JsonNode message;
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -166,7 +161,6 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnList() throws Exception {
-        Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
@@ -190,7 +184,6 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnListConfigProfile() throws Exception {
-        Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
@@ -278,7 +271,7 @@ public class JsonUtilSocketServiceTest {
      * Test of onClose method, of class JsonUtilSocketService. This tests that
      * listeners are removed after a message triggering the addition of a
      * listener is sent.
-     * 
+     *
      * @throws JsonException if an exception unexpected in the context of these
      *                       tests occurs
      * @throws JmriException if an exception unexpected in the context of these

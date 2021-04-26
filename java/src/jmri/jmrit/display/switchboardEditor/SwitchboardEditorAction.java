@@ -3,12 +3,12 @@ package jmri.jmrit.display.switchboardEditor;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.InstanceManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 
 /**
  * Start a SwitchboardEditor.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.switchboardEditor.SwitchboardEditor
  */
 public class SwitchboardEditorAction extends AbstractAction {
@@ -25,12 +25,13 @@ public class SwitchboardEditorAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         String name = Bundle.getMessage("SwitchboardDefaultName", "");
         for (int i = 2; i < 100; i++) {
-            if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+            if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
                 name = Bundle.getMessage("SwitchboardDefaultName", " " + i);
             }
         }
         SwitchboardEditor frame = new SwitchboardEditor(name);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(frame);
+        InstanceManager.getDefault(EditorManager.class).add(frame);
+        InstanceManager.getDefault(EditorManager.class).setChanged(true);
         frame.setLocation(570, 20); // position Editor
 
         frame.setTitle();

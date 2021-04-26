@@ -293,7 +293,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     /**
      * Can provide some mechanism to prompt for user for one last chance to
      * change his/her mind
-     *
+     * @param currentMode current programming mode
+     * @param resetModes representation of reset modes available
+     * @param availableModes representation of available modes
      * @return true if user says to continue
      */
     boolean badModeOk(String currentMode, String resetModes, String availableModes) {

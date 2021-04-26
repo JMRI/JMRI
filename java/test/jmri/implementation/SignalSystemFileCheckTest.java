@@ -1,27 +1,30 @@
 package jmri.implementation;
 
 import java.io.File;
+import java.util.stream.Stream;
+
 import jmri.configurexml.SchemaTestBase;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests of the signal system definition files.
  * <p>
  * Checks all files in the distribution directory
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
-@RunWith(Parameterized.class)
 public class SignalSystemFileCheckTest extends SchemaTestBase {
 
-    @Parameters(name = "{0} (pass={1})")
-    public static Iterable<Object[]> data() {
+    public static Stream<Arguments> data() {
         return getFiles(new File("xml/signals"), true, true);
     }
 
-    public SignalSystemFileCheckTest(File file, boolean pass) {
-        super(file, pass);
+    @ParameterizedTest
+    @MethodSource("data")
+    public void schemaTest(File file, boolean pass) {
+        super.validate(file, pass);
     }
 }

@@ -25,13 +25,13 @@ import jmri.util.JmriJFrame;
  */
 public class MultiSensorIconFrame extends JmriJFrame {
 
-    private JPanel content = new JPanel();
+    private final JPanel content = new JPanel();
     private JmriJFrame defaultsFrame;
     private MultiIconEditor defaultIcons;
     private LayoutEditor layoutEditor = null;
-    private JRadioButton updown = new JRadioButton(Bundle.getMessage("UpDown"));
-    private JRadioButton rightleft = new JRadioButton(Bundle.getMessage("RightLeft"));
-    private ButtonGroup group = new ButtonGroup();
+    private final JRadioButton updown = new JRadioButton(Bundle.getMessage("UpDown"));
+    private final JRadioButton rightleft = new JRadioButton(Bundle.getMessage("RightLeft"));
+    private final ButtonGroup group = new ButtonGroup();
 
     MultiSensorIconFrame(LayoutEditor p) {
         super("Enter MultiSensor");
@@ -101,23 +101,15 @@ public class MultiSensorIconFrame extends JmriJFrame {
         defaultsFrame.getContentPane().add(defaultIcons);
         defaultsFrame.pack();
         defaultsFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconDefaultsFrame", true);
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                defaultsFrame.setVisible(true);
-            }
-        });
+        b.addActionListener(a12 -> defaultsFrame.setVisible(true));
         this.getContentPane().add(b);
 
         this.getContentPane().add(new JSeparator());
         b = new JButton(Bundle.getMessage("ButtonCreateIcon"));
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                make();
-                if (isEmpty != 1){
-                    removeWindows();
-                }
+        b.addActionListener(a1 -> {
+            make();
+            if (isEmpty != 1){
+                removeWindows();
             }
         });
         this.getContentPane().add(b);
@@ -189,9 +181,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
             edf.pack();
 
             JButton b = new JButton(Bundle.getMessage("SetIconButton"));
-            b.addActionListener((ActionEvent a) -> {
-                edf.setVisible(true);
-            });
+            b.addActionListener((ActionEvent a) -> edf.setVisible(true));
             this.add(b);
 
             // button to remove this entry from its parent

@@ -9,18 +9,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for ConnectionConfigManager.
@@ -39,22 +39,22 @@ public class ConnectionConfigManagerTest {
     public final static String TYPE_D = "TypeD";
     // private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
         JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();

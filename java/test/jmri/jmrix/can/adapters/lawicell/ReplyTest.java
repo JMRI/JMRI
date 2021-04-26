@@ -2,10 +2,9 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.lawicell.Reply class
@@ -64,18 +63,17 @@ public class ReplyTest extends jmri.jmrix.AbstractMessageTest {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new Reply("t123412345678\r");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 }

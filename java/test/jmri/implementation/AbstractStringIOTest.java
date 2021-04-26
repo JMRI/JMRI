@@ -1,8 +1,11 @@
 package jmri.implementation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.JmriException;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractStringIO
@@ -80,12 +83,12 @@ public class AbstractStringIOTest {
         Assert.assertTrue("getBeanType() matches", "String I/O".equals(myStringIO.getBeanType()));
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -19,14 +19,13 @@ public class JmriServerActionTest {
         assertThat(a).isNotNull();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

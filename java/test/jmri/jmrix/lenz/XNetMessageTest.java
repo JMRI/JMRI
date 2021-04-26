@@ -1,15 +1,14 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetMessage class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -65,7 +64,7 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testStringCtorEmptyString() {
         msg = new XNetMessage("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
-        Assert.assertTrue("empty reply",msg.toString().equals(""));
+        Assert.assertEquals("empty reply", "", msg.toString());
     }
 
     @Test
@@ -114,40 +113,40 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setElement(1, 0x21);
         msg.setParity();
         Assert.assertEquals("parity set test 1", 0, msg.getElement(2));
-        Assert.assertEquals("parity check test 1", true, msg.checkParity());
+        Assert.assertTrue("parity check test 1", msg.checkParity());
 
         msg = new XNetMessage(3);
         msg.setElement(0, 0x21);
         msg.setElement(1, ~0x21);
         msg.setParity();
         Assert.assertEquals("parity set test 2", 0xFF, msg.getElement(2));
-        Assert.assertEquals("parity check test 2", true, msg.checkParity());
+        Assert.assertTrue("parity check test 2", msg.checkParity());
 
         msg = new XNetMessage(3);
         msg.setElement(0, 0x18);
         msg.setElement(1, 0x36);
         msg.setParity();
         Assert.assertEquals("parity set test 3", 0x2E, msg.getElement(2));
-        Assert.assertEquals("parity check test 3", true, msg.checkParity());
+        Assert.assertTrue("parity check test 3", msg.checkParity());
 
         msg = new XNetMessage(3);
         msg.setElement(0, 0x87);
         msg.setElement(1, 0x31);
         msg.setParity();
         Assert.assertEquals("parity set test 4", 0xB6, msg.getElement(2));
-        Assert.assertEquals("parity check test 4", true, msg.checkParity());
+        Assert.assertTrue("parity check test 4", msg.checkParity());
 
         msg = new XNetMessage(3);
         msg.setElement(0, 0x18);
         msg.setElement(1, 0x36);
         msg.setElement(2, 0x0e);
-        Assert.assertEquals("parity check test 5", false, msg.checkParity());
+        Assert.assertFalse("parity check test 5", msg.checkParity());
 
         msg = new XNetMessage(3);
         msg.setElement(0, 0x18);
         msg.setElement(1, 0x36);
         msg.setElement(2, 0x8e);
-        Assert.assertEquals("parity check test 6", false, msg.checkParity());
+        Assert.assertFalse("parity check test 6", msg.checkParity());
     }
 
     @Test
@@ -1535,15 +1534,14 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new XNetMessage(3);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

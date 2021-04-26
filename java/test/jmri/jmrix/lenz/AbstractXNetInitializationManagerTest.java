@@ -1,38 +1,54 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.mockito.Mockito;
+
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class AbstractXNetInitializationManagerTest {
 
+    private XNetTrafficController tc;
+    private XNetSystemConnectionMemo memo;
+
     @Test
+    @Timeout(value=5)
     public void testCTor() {
-        jmri.jmrix.lenz.XNetInterfaceScaffold tc = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
-        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(tc);
         AbstractXNetInitializationManager t = new AbstractXNetInitializationManager(memo){
             @Override
             public void init(){
             }
+
+            @Override
+            protected int getInitTimeout() {
+                return 500;
+            }
         };
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        tc = Mockito.mock(XNetTrafficController.class);
+        memo = Mockito.mock(XNetSystemConnectionMemo.class);
+        Mockito.when(memo.getXNetTrafficController()).thenReturn(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

@@ -926,11 +926,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 freq = 1500000 / count;
                 sampleSpeed = (freq / 24) * circ * thisScale * 3600 / 1000000 * speedTestScaleFactor;
             } catch (ArithmeticException ae) {
-                log.error("Exception calculating sampleSpeed " + ae);
+                log.error("Exception calculating sampleSpeed {}", ae);
             }
             avFn(sampleSpeed);
-            log.debug("New sample: " + sampleSpeed + " Average: " + avSpeed);
-            log.debug("Acc: " + acc + " range: " + range);
+            log.debug("New sample: {} Average: {}", sampleSpeed, avSpeed);
+            log.debug("Acc: {} range: {}", acc, range);
             switchRange();
         }
     }
@@ -1016,7 +1016,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
         if (series > 0) {
             if ((currentSpeed < 0) || (currentSpeed > 999)) {
-                log.error("Calculated speed out of range: " + currentSpeed);
+                log.error("Calculated speed out of range: {}", currentSpeed);
                 speedTextField.setText("999");
             } else {
                 // Final smoothing as applied by Bachrus Console. Don't update display
@@ -1149,15 +1149,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (pm == null) {
             return;
         }
-        try {
-            if (pm.getPower() == PowerManager.ON) {
-                trackPowerButton.setText(Bundle.getMessage("PowerDown"));
-                //statusLabel.setText(Bundle.getMessage("StatTOn"));
-            } else if (pm.getPower() == PowerManager.OFF) {
-                trackPowerButton.setText(Bundle.getMessage("PowerUp"));
-                //statusLabel.setText(Bundle.getMessage("StatTOff"));
-            }
-        } catch (JmriException ex) {
+        if (pm.getPower() == PowerManager.ON) {
+            trackPowerButton.setText(Bundle.getMessage("PowerDown"));
+            //statusLabel.setText(Bundle.getMessage("StatTOn"));
+        } else if (pm.getPower() == PowerManager.OFF) {
+            trackPowerButton.setText(Bundle.getMessage("PowerUp"));
+            //statusLabel.setText(Bundle.getMessage("StatTOff"));
         }
     }
 
@@ -1175,7 +1172,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 pm.setPower(PowerManager.OFF);
             }
         } catch (JmriException e) {
-            log.error("Exception during power on: " + e.toString());
+            log.error("Exception during power on: {}", e.toString());
         }
     }
     //</editor-fold>
@@ -1741,7 +1738,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         try {
             pm.setPower(PowerManager.ON);
         } catch (JmriException e) {
-            log.error("Exception during power on: " + e.toString());
+            log.error("Exception during power on: {}", e.toString());
         }
 
         throttleIncrement = throttle.getSpeedIncrement();
@@ -1784,18 +1781,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     @Override
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-    }
-          
-    /**
-     * Called when a throttle must be stolen for the requested address. Since this is a 
-     * an automatically stealing implementation, the throttle will be automatically stolen.
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
 
     /**
@@ -2006,7 +1991,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         try {
             ops_mode_prog.writeCV(cv, value, this);
         } catch (ProgrammerException e) {
-            log.error("Exception writing CV " + cv + " " + e);
+            log.error("Exception writing CV {} {}", cv, e);
         }
     }
 
@@ -2019,7 +2004,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         try {
             prog.readCV(String.valueOf(cv), this);
         } catch (ProgrammerException e) {
-            log.error("Exception reading CV " + cv + " " + e);
+            log.error("Exception reading CV {} {}", cv, e);
         }
     }
 
@@ -2113,7 +2098,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
         } else {
             // Error during programming
-            log.error("Status not OK during " + progState.toString() + ": " + status);
+            log.error("Status not OK during {}: {}", progState.toString(), status);
             //profileAddressField.setText("Error");
             statusLabel.setText(Bundle.getMessage("ProgError"));
             progState = ProgState.IDLE;

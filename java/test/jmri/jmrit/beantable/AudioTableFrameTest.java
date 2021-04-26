@@ -1,30 +1,31 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        if(!GraphicsEnvironment.isHeadless()){
-           AudioTableAction a = new AudioTableAction();
-           AudioTablePanel p = (AudioTablePanel) a.getPanel();
-           frame = new AudioTableFrame(p,"Audio Table Frame Test");
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            AudioTableAction a = new AudioTableAction();
+            AudioTablePanel p = (AudioTablePanel) a.getPanel();
+            frame = new AudioTableFrame(p, "Audio Table Frame Test");
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
 

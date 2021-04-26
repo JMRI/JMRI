@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -44,7 +44,7 @@ Signal Mast definitions:
 </ul>
     </div>
 </div>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>
 

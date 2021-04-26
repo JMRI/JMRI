@@ -1,17 +1,17 @@
 package jmri.jmrix.can.cbus.swing.configtool;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 /**
  *
@@ -93,7 +93,7 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     private TrafficControllerScaffold tcis;
  
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         title = Bundle.getMessage("CapConfigTitle");
@@ -106,7 +106,7 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         panel.dispose();

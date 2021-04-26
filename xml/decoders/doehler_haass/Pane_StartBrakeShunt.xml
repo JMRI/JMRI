@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - 2020-04-30 - RK - Add CV160 to CV165, CV390, Cv391  -->
 <!-- version 2 - 2019-07-28 - ALM - Add CV144 bits 3 & 4, CV154 and CV155"  -->
 <!-- version 2 - 2018-02-04 - ALM - Add CV65 "Max Speed Braking Section 2"  -->
 <!-- version 1 - 2015-03-05 - PB - Created  -->
@@ -64,8 +65,8 @@
     		</label>
 		</griditem>
 	</grid>
-	<grid gridy="NEXT" weightx="1" ipadx="10">
-		<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+        <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
 			<row>
 			  	<display item="Reduced speed in braking zones"/>
 			  	<label>
@@ -74,7 +75,7 @@
 			  	<display item="Reduced speed in braking zones" label="" format="hslider"/>
 			</row>
 		</griditem>
-		<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
 			<row>
 			  	<display item="Threshold for asymmetric behavior"/>
 			  	<label>
@@ -83,7 +84,7 @@
 			  	<display item="Threshold for asymmetric behavior" label="" format="hslider"/>
 			</row>
 		</griditem>
-		<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
 			<row>
 			  	<display item="Deceleration forward backward"/>
 			  	<label>
@@ -92,7 +93,7 @@
 			  	<display item="Deceleration forward backward" label="" format="hslider"/>
 			</row>
 		</griditem>
-		<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
 			<row>
 			  	<display item="Deceleration backward"/>
 			  	<label>
@@ -108,7 +109,7 @@
 			  	</label>
 			</row>
 		</griditem>
-		<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
 			<row>
 			  	<display item="Brake Section Output"/>
 			  	<label>
@@ -117,13 +118,13 @@
 			  	<display item="Brake with GPIO"/>
 			</row>
 		</griditem>
-		<group>
-		  <qualifier>
+        <group>
+          <qualifier>
 			  <variableref>Nbr of braking sections</variableref>
 			  <relation>eq</relation>
 			  <value>1</value>
 			</qualifier>
-      <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+           <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
         <row>
             <display item="Max Speed Braking Section 2"/>
             <label>
@@ -132,7 +133,22 @@
             <display item="Max Speed Braking Section 2" label="" format="hslider"/>
         </row>
       </griditem>
-    </group>
+        </group>
+        <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+             <row>
+              <display item="Brake key"/>
+               <label>
+                <text>     </text>
+               </label>
+               <row>
+                 <display item="Brake time"/>
+                  <label>
+                   <text> </text>
+                  </label>
+                 <display item="Brake time" label="" format="hslider"/>
+               </row>
+            </row>
+        </griditem>
 	</grid>
 	<label>
       <text> </text>
@@ -218,6 +234,66 @@
       <text> </text>
     </label>
 	<!-- END Decoupling grid(s)  -->
+    <separator/>
+    <!-- BEGIN ZIMO HLU  -->
+    <label>
+      <text> </text>
+    </label>
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+        <group>
+          <qualifier>
+              <variableref>ZIMO HLU 1/6</variableref>
+              <relation>ge</relation>
+              <value>1</value>
+          </qualifier>
+          <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="ZIMO HLU 1/6"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="ZIMO HLU 1/6" label="" format="hslider"/>
+            </row>
+        </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="ZIMO HLU 1/3 (U)"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="ZIMO HLU 1/3 (U)" label="" format="hslider"/>
+            </row>
+        </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="ZIMO HLU 1/2"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="ZIMO HLU 1/2" label="" format="hslider"/>
+            </row>
+        </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="ZIMO HLU 2/3 (L)"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="ZIMO HLU 2/3 (L)" label="" format="hslider"/>
+            </row>
+        </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="ZIMO HLU 5/6"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="ZIMO HLU 5/6" label="" format="hslider"/>
+            </row>
+        </griditem>
+        </group>
+    </grid>
+    <!-- END ZIMO HLU  -->
   </column>
   <name>Start/Brake/Shunt</name>
   <name xml:lang="fr">Dém/Frein./Rangt.</name>

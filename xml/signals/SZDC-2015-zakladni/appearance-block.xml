@@ -30,6 +30,18 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-05-12</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Speed map</revremark>
+    </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2020-08-10</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators JOP</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -44,6 +56,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/300_stuj_2h.gif</imagelink>
       <imagelink type="AŽD zč">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_gr.png</imagelink>
       <imagelink type="ESP zč">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_gr.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_grey.png</imagelink>
     </appearance>
 
     <appearance>
@@ -51,6 +64,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/301_volno_2h.gif</imagelink>
       <imagelink type="AŽD zč">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_gr.png</imagelink>
       <imagelink type="ESP zč">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gr.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
   </appearances>
@@ -60,5 +74,26 @@
           <aspect>Stůj</aspect>
       </danger>
   </specificappearances>    
+  
+  <aspectMappings>
+  
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 40</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 60</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    
+  </aspectMappings>
   
 </appearancetable>  

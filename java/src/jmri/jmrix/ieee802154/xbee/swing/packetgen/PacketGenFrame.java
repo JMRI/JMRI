@@ -41,7 +41,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         try {
             tc.getXBee().sendPacketAsync(packet);
         } catch (XBeeException xbe) {
-            log.error("Error Sending message to XBee: " + xbe);
+            log.error("Error Sending message to XBee: {}", xbe);
         }
     }
 

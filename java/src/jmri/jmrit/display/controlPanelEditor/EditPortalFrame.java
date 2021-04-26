@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,38 +42,43 @@ import org.slf4j.LoggerFactory;
  */
 public class EditPortalFrame extends EditFrame implements ListSelectionListener {
 
-    private OBlock _adjacentBlock;
     private PortalList _portalList;
     private JTextField _portalName;
-    private JPanel _dndPanel;
+    private Portal _currentPortal;
 
     /* Ctor for fix a portal error  */
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, Portal portal, PortalIcon icon) {
         this(title, parent, block);
         String name = portal.getName();
         _portalName.setText(name);
-        _adjacentBlock = portal.getOpposingBlock(block);
 
-        String msg = null;
+        StringBuilder sb = new StringBuilder();
         if (icon != null) {
             setSelected(icon);
         } else {
-            msg = Bundle.getMessage("portalHasNoIcon", name); 
+            sb.append(Bundle.getMessage("portalHasNoIcon", name)); 
+            sb.append("\n");
         }
         if (_canEdit) {
-            msg = _parent.checkForPortals(block, "BlockPaths");
-            if (msg != null) {
-                StringBuilder sb = new StringBuilder(msg);
+            String msg = _parent.checkForPortals(block, "BlockPaths");
+            if (msg.length() > 0) {
+                sb.append(msg);
                 sb.append("\n");
-                sb.append(Bundle.getMessage("portalIconPosition"));
-                msg = sb.toString();
+                sb.append(Bundle.getMessage("portIconPosition1"));
+                sb.append("\n");
+                sb.append(Bundle.getMessage("portIconPosition2"));
+                sb.append("\n");
+            } else {
+                msg = _parent.checkForPortalIcons(block, "DirectionArrow");
+                if (msg.length() > 0) {
+                    sb.append(msg);
+                    sb.append("\n");
+                }
             }
         }
-        if (_canEdit && msg == null) {
-            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
-        }
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+        if (sb.toString().length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), 
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -83,10 +86,8 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         super(title, parent, block);
         pack();
         String msg = _parent.checkForTrackIcons(block, "BlockPortals");
-        if (msg != null) {
+        if (msg.length() > 0) {
             _canEdit = false;
-        }
-        if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
         }
@@ -106,12 +107,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         portalPanel.add(new JScrollPane(_portalList));
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                clearListSelection();
-            }
-        });
+        clearButton.addActionListener(a -> clearListSelection());
         panel = new JPanel();
         panel.add(clearButton);
         portalPanel.add(panel);
@@ -121,27 +117,17 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _portalName, "portalName", true, null));
         _portalName.setPreferredSize(new Dimension(300, _portalName.getPreferredSize().height));
-        _portalName.setToolTipText(Bundle.getMessage("TooltipPortalName", _homeBlock.getDisplayName()));
+        _portalName.setToolTipText(Bundle.getMessage("TooltipPortalName"));
         portalPanel.add(panel);
 
         panel = new JPanel();
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                changePortalName();
-            }
-        });
+        changeButton.addActionListener(a -> changePortalName());
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         panel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePortal"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                deletePortal();
-            }
-        });
+        deleteButton.addActionListener(a -> deletePortal());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePortal"));
         panel.add(deleteButton);
         portalPanel.add(panel);
@@ -159,7 +145,11 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         l = new JLabel(Bundle.getMessage("selectPortal"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        l = new JLabel(Bundle.getMessage("dragIcon"));
+        panel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
+        l = new JLabel(Bundle.getMessage("portIconPosition1"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        l = new JLabel(Bundle.getMessage("portIconPosition2"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         JPanel p = new JPanel();
@@ -181,20 +171,41 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+        if (askForNameChange()) {
+            return;
+        }
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
             _portalName.setText(portal.getName());
-            List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
-            if (piArray.isEmpty()) {
-                _parent._editor.highlight(null);
-            } else {
-                PortalIcon icon = piArray.get(0);
-                icon.setStatus(PortalIcon.VISIBLE);
-                _parent._editor.highlight(icon);
-            }
+            hightLightIcon(portal);
+            _currentPortal = portal;
         } else {
             _portalName.setText(null);
         }
+    }
+
+    private void hightLightIcon(Portal portal) {
+        _parent._editor.highlight(null);
+        List<PortalIcon> piArray = _parent.getPortalIcons(portal);
+        for (PortalIcon pi : piArray) {
+            _parent._editor.highlight(pi);
+        }
+    }
+
+    private boolean askForNameChange() {
+        String name = _portalName.getText();
+        if (_currentPortal != null && !_currentPortal.getName().equals(name)) {
+            if (name.length() > 0) {
+                int answer = JOptionPane.showConfirmDialog(this, Bundle.getMessage("changeOrCancel", 
+                        _currentPortal.getName(), name, Bundle.getMessage("BeanNamePortal")),
+                        Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (answer == JOptionPane.YES_OPTION) {
+                    setName(_currentPortal, name);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     protected void setSelected(PortalIcon icon) {
@@ -202,9 +213,16 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             return;
         }
         Portal portal = icon.getPortal();
+        if (portal != null ) {
+            if (!portal.equals(_portalList.getSelectedValue())) {
+                _parent._editor.highlight(null);
+            }
+            List<PortalIcon> piArray = _parent.getPortalIcons(portal);
+            for (PortalIcon pi : piArray) {
+                _parent._editor.highlight(pi);
+            }
+        }
         _portalList.setSelectedValue(portal, true);
-        _parent._editor.highlight(icon);
-        
     }
 
     /*
@@ -219,15 +237,19 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                     Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        setName(portal, name);
+    }
+
+    private void setName(Portal portal, String name) {
         String msg = portal.setName(name);
         if (msg == null) {
             _portalList.dataChange();
+            hightLightIcon(portal);
         } else {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
     private void deletePortal() {
         String name = _portalName.getText();
         if (name == null || name.length() == 0) {
@@ -260,7 +282,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             _portalList.dataChange();
             _portalName.setText(null);
             OBlock oppBlock = portal.getOpposingBlock(_homeBlock);
-            ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIconMap(portal));
+            ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIcons(portal));
             for (PortalIcon icon : removeList) {
                 _parent.getCircuitIcons(oppBlock).remove(icon);
                 icon.remove();  // will call _parent.deletePortalIcon(icon)
@@ -272,13 +294,13 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     protected void closingEvent(boolean close) {
         StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if(msg != null) {
+        if(msg.length() > 0) {
             sb.append(msg);
             sb.append("\n");
         }
         if (_canEdit) {
             msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
-            if(msg != null) {
+            if(msg.length() > 0) {
                 sb.append(msg);
                 sb.append("\n");
             }
@@ -286,114 +308,118 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         closingEvent(close, sb.toString());
     }
 
-    /**
-     * Called after click on portal icon moved recheck block connections.
-     *
-     * @param icon  the icon to check
-     * @param moved true if moved; false otherwise
-     * @return true if no changes to connections; false otherwise
-     */
-    protected String checkPortalIconForUpdate(PortalIcon icon, boolean moved) {
-        Portal portal = icon.getPortal();
-        if (portal == null) {
-            _parent.deletePortalIcon(icon);
-            log.error("Removed PortalIcon without Portal");
-            return null;
+    protected String checkPortalIcons(Portal portal, boolean moved, String key) {
+        List<PortalIcon> iconMap = _parent.getPortalIcons(portal);
+        if (iconMap.isEmpty()) {
+            return Bundle.getMessage("noPortalIcon", portal.getName(), Bundle.getMessage(key));
         }
+
         String name = portal.getName();
-        String msg = null;
-        OBlock fromBlock = portal.getFromBlock();
-        OBlock toBlock = portal.getToBlock();
-        if (!_homeBlock.equals(fromBlock) && !_homeBlock.equals(toBlock)) {
-            _adjacentBlock = null;
-           return showIntersectMessage(null, icon, moved); 
-        }
-
-        if (_homeBlock.equals(fromBlock)) {
-            _adjacentBlock = toBlock;
-        } else {
-            _adjacentBlock = fromBlock;
-        }
-
-        OBlock block = findAdjacentBlock(icon);
-        if (log.isDebugEnabled()) {
-            log.debug("checkPortalIconForUpdate({}): _homeBlock= \"{}\" _adjacentBlock= \"{}\" findAdjacentBlock= \"{}\"",
-                    moved, _homeBlock.getDisplayName(),  (_adjacentBlock==null?"null":_adjacentBlock.getDisplayName()),
-                            (block==null?"null":block.getDisplayName()));
-        }
-        if (_adjacentBlock == null) { // maybe first time
-            if (block != null) {
-                boolean valid;
-                if (_homeBlock.equals(fromBlock)) {
-                    valid = portal.setToBlock(block, true);
-                } else {
-                    valid = portal.setFromBlock(block, true);
+        boolean homeBlockCovered = false;
+        boolean adjacentBlockCovered = false;
+        OBlock adjacentBlock = null;
+        for (PortalIcon icon : iconMap) {
+            Portal p = icon.getPortal();
+            if (p == null) {
+                _parent.deletePortalIcon(icon);
+                log.error("Removed PortalIcon without Portal");
+            } else {
+                OBlock fromBlock = portal.getFromBlock();
+                OBlock toBlock = portal.getToBlock();
+                if (!_homeBlock.equals(fromBlock) && !_homeBlock.equals(toBlock)) {
+                    log.error("HomeBlock \"{}\" does not know {}", _homeBlock.getDisplayName(), portal.getDescription());
+                    return showIntersectMessage(_homeBlock, portal, moved); 
                 }
-                log.debug("Adjacent block change of null to {} is {} valid.",
-                        block.getDisplayName(), (valid?"":"NOT"));
-                _adjacentBlock = block;
-            }
-        } else {
-            if (moved && block != null) {
-                if (!block.equals(_adjacentBlock)) {
-                    int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("repositionPortal",
-                            name, _homeBlock.getDisplayName(), block.getDisplayName()),
-                            Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
+                boolean homeCovered = _parent.iconIntersectsBlock(icon, _homeBlock);
+
+                if (_homeBlock.equals(fromBlock)) {
+                    adjacentBlock = toBlock;
+                } else {
+                    adjacentBlock = fromBlock;
+                }
+                boolean adjacentCovered = adjacentBlock != null &&_parent.iconIntersectsBlock(icon, adjacentBlock);
+
+                OBlock block = findAdjacentBlock(icon);
+                if (adjacentBlock == null) { // maybe first time
+                    if (block != null) {
                         boolean valid;
                         if (_homeBlock.equals(fromBlock)) {
                             valid = portal.setToBlock(block, true);
                         } else {
                             valid = portal.setFromBlock(block, true);
                         }
-                        log.debug("Adjacent block change of {} to {} is {} valid.",
-                                _adjacentBlock.getDisplayName(), block.getDisplayName(), (valid?"":"NOT"));
-                        _adjacentBlock = block;
+                        _portalList.dataChange();
+                        log.debug("Adjacent block change of null to {} is {} valid.",
+                                block.getDisplayName(), (valid?"":"NOT"));
+                        adjacentBlock = block;
+                        if (homeCovered) {
+                            return null;    // home and adjacent covered by icon
+                        }
+                        adjacentCovered = true;
+                    }
+                } else {
+                    if (block != null) {
+                        if (moved) {
+                            if (!block.equals(adjacentBlock)) {
+                                int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("repositionPortal",
+                                        name, _homeBlock.getDisplayName(), block.getDisplayName()),
+                                        Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE);
+                                if (result == JOptionPane.YES_OPTION) {
+                                    boolean valid;
+                                    if (_homeBlock.equals(fromBlock)) {
+                                        valid = portal.setToBlock(block, true);
+                                    } else {
+                                        valid = portal.setFromBlock(block, true);
+                                    }
+                                    _portalList.dataChange();
+                                    log.debug("Adjacent block change of {} to {} is {} valid.",
+                                            adjacentBlock.getDisplayName(), block.getDisplayName(), (valid?"":"NOT"));
+                                    adjacentBlock = block;
+                                    if (homeCovered) {
+                                        return null;    // home and adjacent covered by icon
+                                    }
+                                }
+                            }
+                        } else {
+                            if (!block.equals(adjacentBlock)) {
+                                log.error("Icon NOT moved, but Adjacent block change of {} to {}!",
+                                         adjacentBlock.getDisplayName(), block.getDisplayName());
+                            }
+                        }
+                        adjacentCovered = true;
+                    } else {
+                        adjacentCovered = false;
                     }
                 }
-            }
-        }
-
-        List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
-        boolean checkHomeBlock = true;
-        if (piArray.size() > 0) {
-            if (_parent.iconIntersectsBlock(icon, _homeBlock)) {
-                block = _adjacentBlock;
-            } else {
-                block = _homeBlock;
-            }
-            for (PortalIcon ic : piArray) {
-                if (!ic.equals(icon) && _parent.iconIntersectsBlock(ic, block)) {
-                    if (_parent.iconIntersectsBlock(ic, fromBlock) && _parent.iconIntersectsBlock(ic, toBlock)) {
-                        _parent.deletePortalIcon(icon);
-//                       _parent._editor.highlight(ic);
-                       return Bundle.getMessage("duplicatePortalIcon", name);
-                    }
-                    // ic is a companion icon for non-contiguous blocks and it covers _homeBlock
-                    checkHomeBlock = false; 
+                if (homeCovered) {
+                    homeBlockCovered = true;
                 }
+                if (adjacentCovered) {
+                    adjacentBlockCovered = true;
+                }
+                log.debug("checkPortalIcons for {} homeCovered= {} adjacentCovered= {}", name, homeBlockCovered, adjacentBlockCovered);
             }
         }
-        
-        if (checkHomeBlock && !_parent.iconIntersectsBlock(icon, _homeBlock)) {
-            return showIntersectMessage(_homeBlock, icon, moved); 
+        if (!homeBlockCovered) {
+            return showIntersectMessage(_homeBlock, portal, moved); 
         }
-
-        setSelected(icon);
-        return msg;
+        if (!adjacentBlockCovered) {
+            return showIntersectMessage(adjacentBlock, portal, moved); 
+        }
+        return null;
     }
 
-    private String showIntersectMessage(OBlock block, PortalIcon icon, boolean moved) {
+    private String showIntersectMessage(OBlock block, Portal portal, boolean moved) {
         String msg = null;
         if (block == null) {
-            msg = Bundle.getMessage("iconNotOnBlock", _homeBlock.getDisplayName(), icon.getNameString());
+            msg = Bundle.getMessage("icondNeedsAdjacent", portal.getDescription());
         } else {
             List<Positionable> list = _parent.getCircuitIcons(block);
             if (list.isEmpty()) {
                 msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("BlockPortals"));
             } else {
-                msg = Bundle.getMessage("iconNotOnBlock", block.getDisplayName(), icon.getNameString());
+                msg = Bundle.getMessage("iconNotOnBlock", block.getDisplayName(), portal.getDescription());
             }
         }
         if (moved) {
@@ -443,19 +469,24 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                 }
             }
         }
-        if (log.isDebugEnabled()) {
+/*        if (log.isDebugEnabled()) {
             log.debug("findAdjacentBlock: neighbors.size()= {} return {}",
                     neighbors.size(), (block == null ? "null" : block.getDisplayName()));
-        }
+        }*/
         return block;
     }
 
     //////////////////////////// DnD ////////////////////////////
     protected JPanel makeDndIconPanel() {
-        _dndPanel = new JPanel();
+        JPanel dndPanel = new JPanel();
+        dndPanel.setLayout(new BoxLayout(dndPanel, BoxLayout.Y_AXIS));
 
-        String fileName = "resources/icons/throttles/RoundRedCircle20.png";
-        NamedIcon icon = new NamedIcon(fileName, fileName);
+        JPanel p = new JPanel();
+        JLabel l = new JLabel(Bundle.getMessage("dragIcon"));
+        p.add(l);
+        dndPanel.add(p);
+
+        NamedIcon icon = _parent._editor.getPortalIconMap().get(PortalIcon.VISIBLE);
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 Bundle.getMessage("BeanNamePortal")));
@@ -467,8 +498,8 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         } catch (java.lang.ClassNotFoundException cnfe) {
             log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
         }
-        _dndPanel.add(panel);
-        return _dndPanel;
+        dndPanel.add(panel);
+        return dndPanel;
     }
 
     public class IconDragJLabel extends DragJLabel {
@@ -499,7 +530,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
-            List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
+            List<PortalIcon> piArray = _parent.getPortalIcons(portal);
             for (PortalIcon pi : piArray) {
                 _parent._editor.highlight(pi);
             }
@@ -550,7 +581,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             PortalIcon icon = new PortalIcon(_parent._editor, portal);
             ArrayList<Positionable> group = _parent.getCircuitIcons(_homeBlock);
             group.add(icon);
-            _parent.getPortalIconMap(portal).add(icon);
+            _parent.getPortalIcons(portal).add(icon);
             _parent._editor.setSelectionGroup(group);
             icon.setLevel(Editor.MARKERS);
             icon.setStatus(PortalIcon.VISIBLE);

@@ -44,7 +44,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was {}",
                     (userName == null ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was {}"
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
         }
     }
@@ -89,7 +89,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
     @Override
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new DefaultIdTagManagerXml(this,"RailComIdTags.xml").store();  //NOI18N
+            new DefaultIdTagManagerXml(this,"RailComIdTags.xml").store();  // NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
@@ -98,7 +98,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
     @Override
     public void readIdTagDetails() {
         log.debug("reading idTag Details");
-        new DefaultIdTagManagerXml(this,"RailComIdTags.xml").load();  //NOI18N
+        new DefaultIdTagManagerXml(this,"RailComIdTags.xml").load();  // NOI18N
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }

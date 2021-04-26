@@ -3,12 +3,15 @@ package jmri.jmrit.operations.setup;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import jmri.jmrit.operations.OperationsXml;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.OperationsXml;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -20,8 +23,8 @@ public class BackupFilesAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class);
 
-    public BackupFilesAction(String s) {
-        super(s);
+    public BackupFilesAction() {
+        super(Bundle.getMessage("Backup"));
     }
 
     @Override
@@ -49,10 +52,7 @@ public class BackupFilesAction extends AbstractAction {
         fc.setSelectedFile(fs);
 
         int retVal = fc.showSaveDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return; // Canceled
-        }
-        if (fc.getSelectedFile() == null) {
+        if (retVal != JFileChooser.APPROVE_OPTION || fc.getSelectedFile() == null) {
             return; // Canceled
         }
         File directory = fc.getSelectedFile();

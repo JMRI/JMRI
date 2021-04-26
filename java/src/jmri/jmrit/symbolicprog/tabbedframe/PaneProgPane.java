@@ -254,7 +254,7 @@ public class PaneProgPane extends javax.swing.JPanel
         boolean showItem = false;
         Attribute nameFmt = pane.getAttribute("nameFmt");
         if (nameFmt != null && nameFmt.getValue().equals("item")) {
-            log.debug("Pane " + name + " will show items, not labels, from decoder file");
+            log.debug("Pane {} will show items, not labels, from decoder file", name);
             showItem = true;
         }
         // put the columns left to right in a panel
@@ -610,7 +610,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read changes on sheet" button, this sets in motion a
-     * continuing sequence of "read" operations on the variables {@literal &}
+     * continuing sequence of "read" operations on the variables and
      * CVs in the Pane. Only variables in states marked as "changed" will be
      * read.
      *
@@ -618,9 +618,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public boolean readPaneChanges() {
         if (log.isDebugEnabled()) {
-            log.debug("readPane starts with "
-                    + varList.size() + " vars, "
-                    + cvList.size() + " cvs ");
+            log.debug("readPane starts with {} vars, {} cvs ", varList.size(), cvList.size());
         }
         prepReadPane(true);
         return nextRead();
@@ -663,7 +661,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read Full Sheet" button, this sets in motion a continuing
-     * sequence of "read" operations on the variables {@literal &} CVs in the
+     * sequence of "read" operations on the variables and CVs in the
      * Pane. The read mechanism only reads variables in certain states (and
      * needs to do that to handle error processing right now), so this is
      * implemented by first setting all variables and CVs on this pane to TOREAD
@@ -673,9 +671,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public boolean readPaneAll() {
         if (log.isDebugEnabled()) {
-            log.debug("readAllPane starts with "
-                    + varList.size() + " vars, "
-                    + cvList.size() + " cvs ");
+            log.debug("readAllPane starts with {} vars, {} cvs ", varList.size(), cvList.size());
         }
         prepReadPane(false);
         // start operation
@@ -734,7 +730,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     void setToWrite(boolean justChanges, boolean startProcess) {
         if (log.isDebugEnabled()) {
-            log.debug("start setToWrite method with " + justChanges + "," + startProcess);
+            log.debug("start setToWrite method with {},{}", justChanges, startProcess);
         }
         if (!container.isBusy()
                 || // the frame has already setToWrite
@@ -823,19 +819,19 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextRead() {
         // look for possible variables
         if (log.isDebugEnabled()) {
-            log.debug("nextRead scans " + varList.size() + " variables");
+            log.debug("nextRead scans {} variables", varList.size());
         }
         while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex);
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextRead var index " + varNum + " state " + VariableValue.stateNameFromValue(vState) + " isToRead: " + var.isToRead() + " label: " + var.label());
+                log.debug("nextRead var index {} state {} isToRead: {} label: {}", varNum, VariableValue.stateNameFromValue(vState), var.isToRead(), var.label());
             }
             varListIndex++;
             if (var.isToRead()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("start read of variable " + _varModel.getLabel(varNum));
+                    log.debug("start read of variable {}", _varModel.getLabel(varNum));
                 }
                 executeRead(var);
 
@@ -848,18 +844,18 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // found no variables needing read, try CVs
         if (log.isDebugEnabled()) {
-            log.debug("nextRead scans " + cvList.size() + " CVs");
+            log.debug("nextRead scans {} CVs", cvList.size());
         }
         while (cvListIterator != null && cvListIterator.hasNext()) {
             int cvNum = cvListIterator.next();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextRead cv index " + cvNum + " state " + cv.getState());
+                log.debug("nextRead cv index {} state {}", cvNum, cv.getState());
             }
 
             if (cv.isToRead()) {  // always read UNKNOWN state
                 if (log.isDebugEnabled()) {
-                    log.debug("start read of cv " + cvNum);
+                    log.debug("start read of cv {}", cvNum);
                 }
                 setBusy(true);
                 if (_programmingCV != null) {
@@ -880,9 +876,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // nothing to program, end politely
-        if (log.isDebugEnabled()) {
-            log.debug("nextRead found nothing to do");
-        }
+        log.debug("nextRead found nothing to do");
         readChangesButton.setSelected(false);
         readAllButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
@@ -894,10 +888,10 @@ public class PaneProgPane extends javax.swing.JPanel
      * If there are any more compare operations to be done on this pane, do the
      * next one.
      * <p>
-     * Each invocation of this method compare one CV; completion of that request
+     * Each invocation of this method compares one CV; completion of that request
      * will cause it to happen again, reading the next one, until there's
      * nothing left to read.
-     * <p>
+     *
      * @return true is a compare has been started, false if the pane is
      *         complete.
      */
@@ -907,12 +901,12 @@ public class PaneProgPane extends javax.swing.JPanel
             int cvNum = cvListIterator.next();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextConfirm cv index " + cvNum + " state " + cv.getState());
+                log.debug("nextConfirm cv index {} state {}", cvNum, cv.getState());
             }
 
             if (cv.isToRead()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("start confirm of cv " + cvNum);
+                    log.debug("start confirm of cv {}", cvNum);
                 }
                 setBusy(true);
                 if (_programmingCV != null) {
@@ -957,7 +951,7 @@ public class PaneProgPane extends javax.swing.JPanel
         prepWritePane(true);
         boolean val = nextWrite();
         if (log.isDebugEnabled()) {
-            log.debug("writePaneChanges returns " + val);
+            log.debug("writePaneChanges returns {}", val);
         }
         return val;
     }
@@ -979,7 +973,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public void prepWritePane(boolean onlyChanges) {
         if (log.isDebugEnabled()) {
-            log.debug("start prepWritePane with " + onlyChanges);
+            log.debug("start prepWritePane with {}", onlyChanges);
         }
         justChanges = onlyChanges;
         enableButtons(false);
@@ -994,7 +988,7 @@ public class PaneProgPane extends javax.swing.JPanel
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
-        if (container.isBusy() == false) {
+        if (!container.isBusy()) {
             container.enableButtons(false);
         }
         setToWrite(justChanges, true);
@@ -1012,12 +1006,11 @@ public class PaneProgPane extends javax.swing.JPanel
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextWrite var index " + varNum + " state " + VariableValue.stateNameFromValue(vState)
-                        + " isToWrite: " + var.isToWrite() + " label:" + var.label());
+                log.debug("nextWrite var index {} state {} isToWrite: {} label:{}", varNum, VariableValue.stateNameFromValue(vState), var.isToWrite(), var.label());
             }
             varListIndex++;
             if (var.isToWrite()) {
-                log.debug("start write of variable " + _varModel.getLabel(varNum));
+                log.debug("start write of variable {}", _varModel.getLabel(varNum));
 
                 executeWrite(var);
 
@@ -1032,12 +1025,12 @@ public class PaneProgPane extends javax.swing.JPanel
             int cvNum = cvListIterator.next();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextWrite cv index " + cvNum + " state " + cv.getState());
+                log.debug("nextWrite cv index {} state {}", cvNum, cv.getState());
             }
 
             if (cv.isToWrite()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("start write of cv index " + cvNum);
+                    log.debug("start write of cv index {}", cvNum);
                 }
                 setBusy(true);
                 if (_programmingCV != null) {
@@ -1081,7 +1074,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public void prepConfirmPane(boolean onlyChanges) {
         if (log.isDebugEnabled()) {
-            log.debug("start prepReadPane with onlyChanges=" + onlyChanges);
+            log.debug("start prepReadPane with onlyChanges={}", onlyChanges);
         }
         justChanges = onlyChanges;
         enableButtons(false);
@@ -1108,7 +1101,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare changes on sheet" button, this sets in motion a
-     * continuing sequence of "confirm" operations on the variables {@literal &}
+     * continuing sequence of "confirm" operations on the variables and
      * CVs in the Pane. Only variables in states marked as "changed" will be
      * checked.
      *
@@ -1117,9 +1110,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public boolean confirmPaneChanges() {
         if (log.isDebugEnabled()) {
-            log.debug("confirmPane starts with "
-                    + varList.size() + " vars, "
-                    + cvList.size() + " cvs ");
+            log.debug("confirmPane starts with {} vars, {} cvs ", varList.size(), cvList.size());
         }
         prepConfirmPane(true);
         return nextConfirm();
@@ -1127,7 +1118,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare Full Sheet" button, this sets in motion a continuing
-     * sequence of "confirm" operations on the variables {@literal &} CVs in the
+     * sequence of "confirm" operations on the variables and CVs in the
      * Pane. The read mechanism only reads variables in certain states (and
      * needs to do that to handle error processing right now), so this is
      * implemented by first setting all variables and CVs on this pane to TOREAD
@@ -1138,9 +1129,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public boolean confirmPaneAll() {
         if (log.isDebugEnabled()) {
-            log.debug("confirmAllPane starts with "
-                    + varList.size() + " vars, "
-                    + cvList.size() + " cvs ");
+            log.debug("confirmAllPane starts with {} vars, {} cvs ", varList.size(), cvList.size());
         }
         prepConfirmPane(false);
         // start operation
@@ -1184,11 +1173,10 @@ public class PaneProgPane extends javax.swing.JPanel
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event & condition
         if (_programmingVar == null && _programmingCV == null ) {
-            log.warn("unexpected propertChange: " + e);
+            log.warn("unexpected propertChange: {}", e);
             return;
         } else if (log.isDebugEnabled()) {
-            log.debug("property changed: " + e.getPropertyName()
-                    + " new value: " + e.getNewValue());
+            log.debug("property changed: {} new value: {}", e.getPropertyName(), e.getNewValue());
         }
 
         // find the right way to handle this
@@ -1230,8 +1218,7 @@ public class PaneProgPane extends javax.swing.JPanel
             replyWhileProgrammingCV();
         } else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy")) {
-                log.debug("ignoring change of Busy " + e.getNewValue()
-                        + " " + (((Boolean) e.getNewValue()).equals(Boolean.FALSE)));
+                log.debug("ignoring change of Busy {} {}", e.getNewValue(), ((Boolean) e.getNewValue()).equals(Boolean.FALSE));
             }
         }
     }
@@ -1394,7 +1381,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     c.add(l);
                 }
             } else if (!name.equals("qualifier")) { // its a mistake
-                log.error("No code to handle element of type " + e.getName() + " in newColumn");
+                log.error("No code to handle element of type {} in newColumn", e.getName());
             }
         }
         // add glue to the bottom to allow resize
@@ -1473,7 +1460,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // nested "group" elements ...
                 newGridGroup(e, c, g, globs, showStdName, modelElem);
             } else if (!name.equals("qualifier")) { // its a mistake
-                log.error("No code to handle element of type " + e.getName() + " in newColumn");
+                log.error("No code to handle element of type {} in newColumn", e.getName());
             }
         }
         // add glue to the bottom to allow resize
@@ -1582,7 +1569,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     c.add(l);
                 }
             } else if (!name.equals("qualifier")) { // its a mistake
-                log.error("No code to handle element of type " + e.getName() + " in newColumn");
+                log.error("No code to handle element of type {} in newColumn", e.getName());
             }
         }
         // add glue to the bottom to allow resize
@@ -1707,7 +1694,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     c.add(l);
                 }
             } else if (!name.equals("qualifier")) { // its a mistake
-                log.error("No code to handle element of type " + e.getName() + " in newRow");
+                log.error("No code to handle element of type {} in newRow", e.getName());
             }
         }
         // add glue to the bottom to allow resize
@@ -1774,7 +1761,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // nested "group" elements ...
                 newGridGroup(e, c, g, globs, showStdName, modelElem);
             } else if (!name.equals("qualifier")) { // its a mistake
-                log.error("No code to handle element of type " + e.getName() + " in newGrid");
+                log.error("No code to handle element of type {} in newGrid", e.getName());
             }
         }
 
@@ -1884,7 +1871,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 constraintType = constraint.getType().toString();
                 constraint.setAccessible(true);
             } catch (NoSuchFieldException ex) {
-                log.error("Unrecognised attribute \"" + attribName + "\", skipping");
+                log.error("Unrecognised attribute \"{}\", skipping", attribName);
                 continue;
             }
             switch (constraintType) {
@@ -1894,7 +1881,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         attribValue = Integer.parseInt(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
                     } catch (IllegalAccessException ey) {
-                        log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                        log.error("Unable to set constraint \"{}. IllegalAccessException error thrown.", attribName);
                     } catch (NumberFormatException ex) {
                         try {
                             Field constant = globs.gridConstraints.getClass().getDeclaredField(attribRawValue);
@@ -1902,9 +1889,9 @@ public class PaneProgPane extends javax.swing.JPanel
                             attribValue = (Integer) GridBagConstraints.class.getField(attribRawValue).get(constant);
                             constraint.set(globs.gridConstraints, attribValue);
                         } catch (NoSuchFieldException ey) {
-                            log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                            log.error("Invalid value \"{}\" for attribute \"{}\"", attribRawValue, attribName);
                         } catch (IllegalAccessException ey) {
-                            log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                            log.error("Unable to set constraint \"{}. IllegalAccessException error thrown.", attribName);
                         }
                     }
                     break;
@@ -1912,12 +1899,12 @@ public class PaneProgPane extends javax.swing.JPanel
                 case "double": {
                     double attribValue;
                     try {
-                        attribValue = Double.valueOf(attribRawValue);
+                        attribValue = Double.parseDouble(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
                     } catch (IllegalAccessException ey) {
-                        log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                        log.error("Unable to set constraint \"{}. IllegalAccessException error thrown.", attribName);
                     } catch (NumberFormatException ex) {
-                        log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                        log.error("Invalid value \"{}\" for attribute \"{}\"", attribRawValue, attribName);
                     }
                     break;
                 }
@@ -1928,18 +1915,18 @@ public class PaneProgPane extends javax.swing.JPanel
                             Insets attribValue = new Insets(Integer.parseInt(insetStrings[0]), Integer.parseInt(insetStrings[1]), Integer.parseInt(insetStrings[2]), Integer.parseInt(insetStrings[3]));
                             constraint.set(globs.gridConstraints, attribValue);
                         } else {
-                            log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                            log.error("Invalid value \"{}\" for attribute \"{}\"", attribRawValue, attribName);
                             log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                         }
                     } catch (IllegalAccessException ey) {
-                        log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                        log.error("Unable to set constraint \"{}. IllegalAccessException error thrown.", attribName);
                     } catch (NumberFormatException ex) {
-                        log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                        log.error("Invalid value \"{}\" for attribute \"{}\"", attribRawValue, attribName);
                         log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                     }
                     break;
                 default:
-                    log.error("Required \"" + constraintType + "\" handler for attribute \"" + attribName + "\" not defined in JMRI code");
+                    log.error("Required \"{}\" handler for attribute \"{}\" not defined in JMRI code", constraintType, attribName);
                     log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
                     break;
             }
@@ -2035,7 +2022,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     c.add(l);
                 }
             } else if (!name.equals("qualifier")) { // its a mistake
-                log.error("No code to handle element of type " + e.getName() + " in newGridItem");
+                log.error("No code to handle element of type {} in newGridItem", e.getName());
             }
         }
 
@@ -2119,9 +2106,7 @@ public class PaneProgPane extends javax.swing.JPanel
         l.setAlignmentX(1.0f);
         cs.fill = GridBagConstraints.BOTH;
         if (log.isDebugEnabled()) {
-            log.debug("Add soundlabel: " + l.getText() + " cs: "
-                    + cs.gridwidth + " " + cs.fill + " "
-                    + cs.gridx + " " + cs.gridy);
+            log.debug("Add soundlabel: {} cs: {} {} {} {}", l.getText(), cs.gridwidth, cs.fill, cs.gridx, cs.gridy);
         }
         g.setConstraints(l, cs);
         c.add(l);
@@ -2342,7 +2327,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 col.add(rep);
                 break;
             default:
-                log.error("layout internally inconsistent: " + layout);
+                log.error("layout internally inconsistent: {}", layout);
         }
     }
 
@@ -2433,9 +2418,7 @@ public class PaneProgPane extends javax.swing.JPanel
     ArrayList<JPanel> panelList = new ArrayList<>();
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove components
         removeAll();
@@ -2637,7 +2620,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Java 1.5 has a known bug, #6328248, that prevents printing of progress
                 //  bars using old style printing classes.  It results in blank bars on Windows,
                 //  but hangs Macs. The version check is a workaround.
-                float v = Float.valueOf(java.lang.System.getProperty("java.version").substring(0, 3));
+                float v = Float.parseFloat(System.getProperty("java.version").substring(0, 3));
                 if (originalName.equals("Speed Table") && v < 1.5) {
                     // set the height of the speed table graph in lines
                     int speedFrameLineHeight = 11;
@@ -2810,7 +2793,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // handle special cases
         } catch (IOException e) {
-            log.warn("error during printing: " + e);
+            log.warn("error during printing: {}", e);
         }
 
     }

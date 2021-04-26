@@ -47,19 +47,19 @@ in the language Java has defined as the default for that computer.
 <p>
 Locales are specified by a Language, and optionally a Country. The
 Language is a two letter lower-case code; the Country is a two letter
-upper case code.  "en" is English, "fr" is French, "de" is German, 
+upper case code.  "en" is English, "fr" is French, "de" is German,
 and "de_CH" is German as spoken in Switzerland.
 <p>
 When Java looks for resources (see <a href="#resourcebundles">below</a>), it searches first for
-a file with the complete current Locale at the end of it's name 
+a file with the complete current Locale at the end of it's name
 (e.g. foo_de_CH.properties). If that fails, it tries for a file
 ending in just the current Locale's language:  foo_de.properties.
 And if that fails, it goes to the defaults with no suffix:  foo.properties.
 A similar mechanism is used within XML files.
 <p>
-By installing appropriate files and allowing the user to select 
-a default Locale (as part of the 
-<a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced Preferences</a>), 
+By installing appropriate files and allowing the user to select
+a default Locale (as part of the
+<a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced Preferences</a>),
 we can customize the JMRI&reg; program to different countries and languages.
 
 <a name="resourcebundles"></a><h2>Use of Resource Bundles</h2>
@@ -103,26 +103,26 @@ The primary steps to adapt JMRI to a new language are:
     </ol>
 <p>
 Get a clean copy of the source code from the JMRI code repository.
-(For more info on doing that, please see the 
+(For more info on doing that, please see the
 <a href="getgitcode.shtml">page on getting a copy of the code</a>.)
 
 <h3>Translating Properties Files</h3>
-If they don't exist already, 
+If they don't exist already,
 start by making copies of the properties files with suffix for your
 new locale.  On a Mac OS X or a Unix machine, this would be:
 <pre>
   cd java/src/apps
   cp AppsBundle.properties AppsBundle_xy.properties
 </pre>
-and so on.  
+and so on.
 The easiest way to find the proper suffix letters for a Language and Country is to set the
-JMRI module to your particular Language via the 
-<a href="../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> &gt; Display &gt; Language tab, 
+JMRI module to your particular Language via the
+<a href="../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> &gt; Display &gt; Language tab,
 quit and restart the program,
 and then look at the suffix that the JMRI module displays on the startup screen/main window (in the bottom line, between the brackets after the Java version).
-You can also check the official 
+You can also check the official
 <a href="http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt">list of languages</a>
-(first part of the suffix) and 
+(first part of the suffix) and
 <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">list of countries/regions</a>
 (optional second part of the suffix).
 <p>
@@ -163,38 +163,38 @@ To check your work:
     </ol>
 <p>
 If there's a problem at this point, check to see what language is
-listed on the application startup screen.  
-Is it showing the same suffix (e.g. _fr or _cs_CZ) as you 
+listed on the application startup screen.
+Is it showing the same suffix (e.g. _fr or _cs_CZ) as you
 gave to your files?  The suffix JMRI&reg; uses is determined
 by the Locale you selected in the preferences above.
 <p>
-To make your work available to other JMRI users, please 
+To make your work available to other JMRI users, please
 share it with us <a href="index.shtml#contributing">contributing via GitHub</a>.
 By using a GitHub Pull Request, it's easy for us to merge your new and/or changed
-files into the code repository. If anything goes wrong, please don't hesitate to 
+files into the code repository. If anything goes wrong, please don't hesitate to
 ask for help with this.
 
 <h4>Non-Roman characters</h4>
 <p>Languages that involve non-roman letters require some
 extra care. The .properties files must contain only
-ISO 8859-1 characters.  If you want to use Unicode characters, 
-these must be manually escaped.  
-Please see the 
+ISO 8859-1 characters.  If you want to use Unicode characters,
+these must be manually escaped.
+Please see the
 <a href="https://web.archive.org/web/20030217222249/http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Java internationalization FAQ</a>
 for more info on how to include those characters in your .properties files, particularly the
 question on "How do I specify non-ASCII strings in a properties file?".
-<p>An example is the 
-<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs.properties">java/src/apps/AppsBundle_cs.properties</a> 
-file, which contains diacritical letters for the Czech translation. 
+<p>An example is the
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs.properties">java/src/apps/AppsBundle_cs.properties</a>
+file, which contains diacritical letters for the Czech translation.
 <p>The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this
 by converting special characters to the right sequences, but you must run your files through it before submitting them to JMRI.
 Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
 ISO 8859-1 sequences on your computer before submission.
 
 <a name="xml"></a><h3>Translating XML files</h3>
-XML files can also be internationalized.  There are examples in the 
+XML files can also be internationalized.  There are examples in the
 decoder definition directories.  Look for elements with an xml:lang
-attribute. Basically, you create additional elements with that attribute to 
+attribute. Basically, you create additional elements with that attribute to
 specify the language used:
 <pre style="font-family: monospace;">
       &lt;variable CV="6" default="22" item="Vmid"&gt;
@@ -204,15 +204,15 @@ specify the language used:
       &lt;/variable&gt;
 </pre>
 <p>
-In the XML files, the 'item' attributes have to stay untranslated, as 
+In the XML files, the 'item' attributes have to stay untranslated, as
 does the entire xml/names.xml file.
 
 <p>
 There are XSLT transforms that can insert default language elements
-into the files.  They still have English content, but 
-it's perhaps easier to just translate English text than to 
+into the files.  They still have English content, but
+it's perhaps easier to just translate English text than to
 edit in new XML elements, make sure the structure is correct, etc.
-For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
+For more information, see the <a href="https://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
 or ask on the jmri-developers list.
 
 <a id="help"></a><h3>Translating Help files</h3>
@@ -233,27 +233,27 @@ are automatically produced.
 </ul>
 
 <a name="dev"></a><h2>Internationalization for Developers</h2>
-For internationalization to work, you have to do a few things in the code 
+For internationalization to work, you have to do a few things in the code
 you write. Some web references on how to do this:
 <ul>
 <li><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a></li>
 <li><a href="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a> (highly
 recommended)</li>
 </ul>
-<strong>Note: Those are Java 6 links.  There are useful advanced features in 
+<strong>Note: Those are Java 6 links.  There are useful advanced features in
 <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/intl/enhancements.7.html">Java 7</a> and
 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/enhancements.8.html">Java 8</a>.</strong>
 <p>
 JMRI is moving toward a set of conventions on how to structure and
-use the large amount of I18N information required.  
-You'll still find code with older approaches, but you 
+use the large amount of I18N information required.
+You'll still find code with older approaches, but you
 should write new code using the new conventions described below.
 
 <p>
 JMRI resource bundles are organized in a hierarchical tree.
 For example, code in the <code>jmri.jmrit.display</code> package
 may find a resource within a bundle in the <code>jmri.jmrit.display</code> package, the <code>jmri.jmrit</code> package
-or finally the <code>jmri</code> package. As a special case in this, the <code>apps</code> package is 
+or finally the <code>jmri</code> package. As a special case in this, the <code>apps</code> package is
 viewed as being below the <code>jmri</code> package itself, so code in the <code>apps.</code> tree also
 can reference the <code>jmri.</code> package.
 <p>
@@ -261,7 +261,7 @@ Cross-package references, e.g. between <code>jmri.jmrit</code> and <code>jmri.jm
 and existing ones are being removed.
 <p>
 Access is via a Bundle class local to each package.  A typical one is
-<code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
+<code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 It provides two key methods you use to access (translated) resource
 strings:<br>
 <code>
@@ -275,7 +275,7 @@ static String <b>getMessage</b>(String&nbsp;key, Object...&nbsp;subs)</code>
 Here "LT1" can't be in the .properties file, because it's only known
 which name to display when the program is running.  Different languages
 may put that part of the message in different places, and supporting that
-is important.  
+is important.
 That's handled by putting a placeholder in the message definition:
 <pre style="font-family: monospace;">
 Error123 = System name {0} is already in use
@@ -289,20 +289,20 @@ Next, format the final message by inserting the content into it:
 <p>
 The first argument is the message key
 followed by one or more strings to be inserted into the message.
-(This is better than 
+(This is better than
 creating your own output string using e.g. String.format() because it allows
 the inserted terms to appear in different orders in different languages.)
 <p>
 Different languages may need a different number of lines to express
-a message, or may need to break it before or after a particular 
+a message, or may need to break it before or after a particular
 value is inserted.  It's therefore better to use "\n" within a
 single message from the properties file to create line breaks, rather
 than providing multiple lines in the code itself.
 <p>
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
-English, as should messages sent to the logging system. Keys for 
-the translation bundles should also stay in English. 
+English, as should messages sent to the logging system. Keys for
+the translation bundles should also stay in English.
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
 comment at the end of the line. If needed, put that after another comment:
 <pre style="font-family: monospace;">
@@ -351,8 +351,8 @@ Older code typically references the bundles directly:
 
 <p>
 The getBundle argument is the complete package name (not file name)
-for the properties file this class will be using.  You can 
-reference more than one of these objects if you'd like to look up 
+for the properties file this class will be using.  You can
+reference more than one of these objects if you'd like to look up
 strings in more than one properties file.
 
 <p>
@@ -361,10 +361,10 @@ You can then retrieve particular strings like this:
 java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle").getString("ButtonNew");
 </pre>
 <p>
-We no longer recommend defining a class-static variable to hold the 
-reference to the Bundle object, as this ends up consuming a lot 
+We no longer recommend defining a class-static variable to hold the
+reference to the Bundle object, as this ends up consuming a lot
 of permanent memory in a program the size of JMRI.<br>
-Go ahead and 
+Go ahead and
 call the <code>getBundle()</code> each time, it's fast because it works through
 a weakly-referenced and garbage-collected cache.
 
@@ -372,7 +372,7 @@ a weakly-referenced and garbage-collected cache.
 <h3>XML Access</h3>
 <p>Second, you have to retrieve XML elements and attributes properly.
 The jmri.util.jdom.LocaleSelector provides a getAttribute(...) method
-that replaces the JDOM getAttribute element when the content of the 
+that replaces the JDOM getAttribute element when the content of the
 attribute might have been internationalized. You use it like this:
 
 <pre style="font-family: monospace;">
@@ -385,7 +385,7 @@ where "choiceElement" is a JDOM Element object containing a (possibly translated
 <h3>Numbers</h3>
 <p>The number "10*10*10+2+3/10" is written in different ways in different places:
 "1002.3",
-"1,002.3", 
+"1,002.3",
 "1.002,3" and perhaps other ways.
 <p>
 JMRI provides a helpful utility for handling this on input:
@@ -395,7 +395,7 @@ JMRI provides a helpful utility for handling this on input:
    float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
 </pre>
 
-Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so 
+Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so
 handling that is part of your user-error handling.
 
 <p>
@@ -410,10 +410,10 @@ from one user to another without worrying about whether they are using the same 
 
 <a name="testing"></a>
 <h3>Testing</h3>
-You should check that you've properly internationalized 
+You should check that you've properly internationalized
 your code.  We provide a tool for doing this which creates
 an automatically translated version of your properties files,
-following the ideas of Harry Robinson and Arne Thormodsen 
+following the ideas of Harry Robinson and Arne Thormodsen
 (Their
 <a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!).
 To use it:
@@ -425,7 +425,7 @@ We'll be modifying the compiled version.
 every time the classes/ tree is removed by e.g. "ant clean" or a clean <a href="index.shtml#buildyourcopy">IDE</a> build.
 <li>Delete the JMRI Preference file, or edit it to remove the GUI definition line.
 <li>Run DecoderPro via "ant locale", which starts the DecoderPro program
-using the new .properties files.  
+using the new .properties files.
 </ul>
 <p>If all is well, all the message text will have been translated to UPPER CASE.
 Anything you wrote that remains in lower case has not been completely internationalized.
@@ -434,8 +434,9 @@ Anything you wrote that remains in lower case has not been completely internatio
 <h3>Bundle Keys Report</h3>
 <p><strong>BundleKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython) directory,
 is used to analyse the bundle keys within a property file.  The primary function is
-to identify unused keys.  The script is run using <strong><em>PanelPro Panels >>
-Run Script...</em></strong>  The output from the script is written to the Script
+to identify unused keys.  The script is run using PanelPro
+<strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>}<strong> &rArr;
+Run Script...</strong>.  The output from the script is written to the Script
 Output window.  The run time will vary based on the number of keys to be checked
 along with the position in the source hierarchy.  It will range from several to many
 seconds.</p>
@@ -456,7 +457,7 @@ directory is also scanned for external references.</p>
 desired, the list will be written with the selected location and name.
 The default location will be the User Files Location.</p>
 
-<p>The final dialog box asks if the property files should be updated.  If Yes is 
+<p>The final dialog box asks if the property files should be updated.  If Yes is
 selected, all of the property files in the bundle set are backed up.  Each file is
 then scanned for the unused keys.  When one is found, the line is updated with
 <strong>#NotUsed</strong> as a comment.  If testing reveals that the key is
@@ -468,15 +469,15 @@ branch.  Either move the backups or don't select them when doing a commit</em>.
 <h3>Class Keys Report</h3>
 <p><strong>ClassKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython) directory,
 is used to identify the bundle keys used by a class. The script is run using
-<strong><em>PanelPro Panels >> Run Script...</em></strong>  The output from the
-script is written to the Script Output window.</p>
+PanelPro <strong>Scripting </strong>{<em>Old: <strong>Panels</strong></em>}<strong> &rArr; Run Script...</strong>.
+The output from the script is written to the Script Output window.</p>
 
 <p>When the script is started, a file selection dialog is displayed.  Select either
 a Java class file or a Java package directory.  If a directory is selected, all
 of the *.java files within the directory will be processed.  The Bundle.java file
 is excluded.</p>
 
-<p>For each file, the script scans for <strong>Bundle.getMessage(</strong> and 
+<p>For each file, the script scans for <strong>Bundle.getMessage(</strong> and
 <strong>getString(</strong>.  The first <strong><em>word</em></strong> after the
 parenthesis is returned as the bundle key.  A word is defined as the characters
 a-z, A-Z, 0-9 and underscore.  If the first word is a Locale reference, the

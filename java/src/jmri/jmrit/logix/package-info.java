@@ -26,5 +26,6 @@
 // See https://jmri.org/help/en/html/doc//Technical/Javadoc.shtml
 
 //@annotations for the entire package go here
-
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrit.logix;

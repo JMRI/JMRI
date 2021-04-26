@@ -9,6 +9,7 @@ import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.AbstractInstanceInitializer;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -23,9 +24,9 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.GlobalProgrammerManager
  * @see jmri.AddressedProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
-public class DeferringProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
+public class DeferringProgrammerManager extends PropertyChangeSupport implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     public DeferringProgrammerManager() {
     }

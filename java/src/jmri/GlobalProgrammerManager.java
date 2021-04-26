@@ -2,6 +2,7 @@ package jmri;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.beans.PropertyChangeProvider;
 
 /**
  * Get access to available {@link Programmer} objects.
@@ -33,7 +34,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 3.9.6
  */
-public interface GlobalProgrammerManager {
+public interface GlobalProgrammerManager extends PropertyChangeProvider {
 
     /**
      * Gain access to the Global Mode Programmer without reservation.

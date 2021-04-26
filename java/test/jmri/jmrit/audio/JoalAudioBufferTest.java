@@ -3,16 +3,15 @@ package jmri.jmrit.audio;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of JoalAudioBuffer
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JoalAudioBufferTest {
 
@@ -37,7 +36,7 @@ public class JoalAudioBufferTest {
         Assert.assertEquals(0, l.getLength());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.AudioManager am = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
@@ -45,7 +44,7 @@ public class JoalAudioBufferTest {
         am.init();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();

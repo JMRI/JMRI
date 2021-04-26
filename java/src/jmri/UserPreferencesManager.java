@@ -56,6 +56,37 @@ public interface UserPreferencesManager {
     void setSimplePreferenceState(String name, boolean state);
 
     /**
+     * Enquire as to the state of a user preference.
+     * <p>
+     * Preferences that have not been set will be considered to be defaultState.
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should start with the
+     * package name (package.Class) for the primary using class.
+     *
+     * @param name the name of the preference
+     * @param defaultState the default state if not set
+     * @return the state or defaultState if never set
+     */
+    boolean getCheckboxPreferenceState(String name, boolean defaultState);
+
+    /**
+     * This is used to remember the last selected state of a checkBox and thus
+     * allow that checkBox to be set to a true state when it is next
+     * initialized. This can also be used anywhere else that a simple yes/no,
+     * true/false type preference needs to be stored.
+     * <p>
+     * It should not be used for remembering if a user wants to suppress a
+     * message as there is no means in the GUI for the user to reset the flag.
+     * setPreferenceState() should be used in this instance The name is
+     * free-form, but to avoid ambiguity it should start with the package name
+     * (package.Class) for the primary using class.
+     *
+     * @param name  A unique name to identify the state being stored
+     * @param state simple boolean
+     */
+    void setCheckboxPreferenceState(String name, boolean state);
+
+    /**
      * Returns an ArrayList of the check box states set as true.
      *
      * @return list of simple preferences names
@@ -181,7 +212,7 @@ public interface UserPreferencesManager {
      * Show an error message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString {@literal &} item
+     * suppressed JMRI session only. The classString and item
      * parameters should form a unique value
      *
      * @param title          Message Box title
@@ -199,7 +230,7 @@ public interface UserPreferencesManager {
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString {@literal &} item
+     * suppressed JMRI session only. The classString and item
      * parameters should form a unique value
      *
      * @param title          Message Box title
@@ -217,7 +248,7 @@ public interface UserPreferencesManager {
      * Show a warning message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString {@literal &} item
+     * suppressed JMRI session only. The classString and item
      * parameters should form a unique value
      *
      * @param title          Message Box title

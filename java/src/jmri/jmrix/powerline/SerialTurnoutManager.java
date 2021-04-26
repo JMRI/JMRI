@@ -2,6 +2,8 @@ package jmri.jmrix.powerline;
 
 import java.util.Locale;
 import javax.annotation.Nonnull;
+
+import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -40,13 +42,18 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return false;
     }
 
+    /**
+     * TODO : Get this method working then enable multiple additions
+     * {@inheritDoc}
+     */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    @Nonnull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Turnout s = getBySystemName(prefix + typeLetter() + curAddress);
-        if (s == null) {
+        if (s == null && !ignoreInitialExisting) {
             return curAddress;
         }
 
@@ -57,11 +64,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         try {
             iName = Integer.parseInt(curAddress.substring(1));
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
+            throw new JmriException(Bundle.getMessage("ErrorConvertNumberX",curAddress));
         }
 
         // Check to determine if the systemName is in use, return null if it is,
@@ -75,24 +78,28 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                     return houseCode + iName;
                 }
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,houseCode + (iName)));
         } else {
             return houseCode + iName;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
-            return null;
+            throw new IllegalArgumentException("Cannot create Turnout System Name from " + systemName);
         }
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
         if (t != null) {
-            return null;
+            return t;
         }
 
         // create the turnout

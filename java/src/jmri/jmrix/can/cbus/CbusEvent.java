@@ -11,7 +11,7 @@ public class CbusEvent extends CbusEventDataElements {
     private int _en;
     protected EvState _state;
     protected String _name;
-    private CanSystemConnectionMemo _memo;
+    private final CanSystemConnectionMemo _memo;
     
     /**
      * Create a new event
@@ -27,6 +27,7 @@ public class CbusEvent extends CbusEventDataElements {
         this._en = en;
         this._state = EvState.UNKNOWN;
         this._name = "";
+        this._memo = null;
     }
     
     /**
@@ -144,6 +145,22 @@ public class CbusEvent extends CbusEventDataElements {
      */
     public boolean matches(int nn, int en) {
         return (nn == _nn) && (en == _en);
+    }
+    
+    /** 
+     * {@inheritDoc} 
+     * <p>
+     * Custom method to compare Node Number and Event Number.
+     */
+    @Override
+    public boolean equals(Object o) {
+        return ((o instanceof CbusEvent) && matches(((CbusEvent) o).getNn(),((CbusEvent) o).getEn()));
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(getEn(), getNn());
     }
     
     /**

@@ -28,9 +28,7 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -148,7 +146,7 @@ public class JmriScriptEngineManagerTest {
         assertNotNull(engine);
         assertEquals(engine, jsem.getEngineByName("jython"));
     }
-    
+
     @Test
     public void testGetEngineInvalidName() {
         assertNull(jsem.getEngine("invalid"));
@@ -277,7 +275,7 @@ public class JmriScriptEngineManagerTest {
         factories.keySet().forEach(name -> assertNotNull("factory " + name + " has engine", engines.get(name)));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -290,9 +288,11 @@ public class JmriScriptEngineManagerTest {
         jsem = new JmriScriptEngineManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jsem = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

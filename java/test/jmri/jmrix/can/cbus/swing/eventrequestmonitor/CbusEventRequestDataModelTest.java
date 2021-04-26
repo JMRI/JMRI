@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusEventRequestDataModel
@@ -53,11 +52,9 @@ public class CbusEventRequestDataModelTest {
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusEventRequestDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown") );
-        Assert.assertTrue("column has NO width", CbusEventRequestDataModel.getPreferredWidth(999) > 0 );
         Assert.assertTrue("column class integer",
             t.getColumnClass(CbusEventRequestDataModel.FEEDBACKTIMEOUT_COLUMN) ==  Integer.class );
         Assert.assertTrue("column class string",
@@ -204,17 +201,17 @@ public class CbusEventRequestDataModelTest {
     private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
+        memo.configureManagers();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        
         tcis.terminateThreads();
         memo.dispose();

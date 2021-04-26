@@ -382,12 +382,12 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress),
                 null, null, null, null);
         if (log.isDebugEnabled()) {
-            log.debug("selectLoco found " + l.size() + " matches");
+            log.debug("selectLoco found {} matches", l.size());
         }
         if (l.size() > 0) {
             RosterEntry r = l.get(0);
             if (log.isDebugEnabled()) {
-                log.debug("Loco id is " + r.getId());
+                log.debug("Loco id is {}", r.getId());
             }
             locoBox.setSelectedItem(r);
         } else {
@@ -425,7 +425,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (temp == null) {  // i.e. if no match previously
             temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             if (log.isDebugEnabled()) {
-                log.debug("selectDecoder without productID found " + temp.size() + " matches");
+                log.debug("selectDecoder without productID found {} matches", temp.size());
             }
         }
 
@@ -479,7 +479,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(Integer.toString(mfgID));
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromID(Integer.toString(mfgID));
             if (mfg == null) {
                 updateForDecoderNotID(mfgID, modelID);
             } else {
@@ -515,7 +515,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // try to select all decoders from that MFG
         JComboBox<String> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) {
-            log.debug("mfg-only selectDecoder found " + temp.getItemCount() + " matches");
+            log.debug("mfg-only selectDecoder found {} matches", temp.getItemCount());
         }
         // install all those in the JComboBox in place of the longer, original list
         if (temp.getItemCount() > 0) {
@@ -579,7 +579,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (locoBox.getSelectedRosterEntries().length != 0) {
             RosterEntry re = locoBox.getSelectedRosterEntries()[0];
             if (log.isDebugEnabled()) {
-                log.debug("loco file: " + re.getFileName());
+                log.debug("loco file: {}", re.getFileName());
             }
 
             startProgrammer(null, re, (String) programmerBox.getSelectedItem());
@@ -596,7 +596,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // find the decoderFile object
         DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         if (log.isDebugEnabled()) {
-            log.debug("decoder file: " + decoderFile.getFileName());
+            log.debug("decoder file: {}", decoderFile.getFileName());
         }
 
         // create a dummy RosterEntry with the decoder info

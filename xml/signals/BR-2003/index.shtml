@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 <h1> JMRI: BR 2003 Signalling Definition</h1>
@@ -347,6 +347,6 @@
     
         </div>
     </div>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

@@ -23,7 +23,7 @@ abstract public class AbstractLightServer {
     private final static Logger log = LoggerFactory.getLogger(AbstractLightServer.class);
 
     public AbstractLightServer() {
-        lights = new HashMap<String, LightListener>();
+        lights = new HashMap<>();
     }
 
     /*

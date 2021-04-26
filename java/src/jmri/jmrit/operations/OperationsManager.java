@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
-import jmri.implementation.QuietShutDownTask;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -96,16 +96,15 @@ public final class OperationsManager implements InstanceManagerAutoDefault, Inst
      * @return A new ShutDownTask
      */
     public static ShutDownTask getDefaultShutDownTask() {
-        return new QuietShutDownTask("Save Operations State") { // NOI18N
+        return new AbstractShutDownTask("Save Operations State") { // NOI18N
             @Override
-            public boolean execute() {
+            public void run() {
                 try {
                     OperationsXml.save();
                 } catch (Exception ex) {
                     log.warn("Error saving operations state: {}", ex.getMessage());
                     log.debug("Details follow: ", ex);
                 }
-                return true;
             }
         };
     }

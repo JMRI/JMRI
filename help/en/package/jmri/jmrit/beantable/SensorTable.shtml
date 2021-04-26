@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
@@ -10,8 +9,9 @@
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Jerry Grochow">
   <meta name="keywords" content="JMRI help Sensor Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -25,25 +25,90 @@
       for this Panel.</p>
 
       <h2>Sensor Table Columns</h2>
-      (You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a column title)
+
+      <p class="im">
+      <img src="images/SensorTableColumnList.jpg" alt="Sensor Table Columns (Rel 4.20)" align="right" height="260" width="180">
+      Contents of the Sensor Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>.
+      As with all JMRI tool tables, you can add or remove columns from the display by right-clicking anywhere
+      in the column header and selecting or deselecting the desired columns from the menu that appears (see picture at right;
+      some columns can also be selected by checkboxes at bottom of the main Sensor Table window).
+      You can change the order of the columns by dragging their titles, change the width of columns by dragging the vertical line
+      between columns, and sort the rows by clicking the column title (a triangle will appear indicating the direction of the sort).
+      </p>
+       
+      <p>The Sensor Table window will display two types of columns: sensor information (information about an individual sensor)
+      and button columns (clickable buttons to affect the sensor or the sensor table entry). 
+
+      <h3>Sensor Information</h3>      
+       
       <dl>
-        <dt>User Name</dt>
+        <dt><strong>System Name</strong></dt>
 
-        <dd>You can directly enter or change the "User Name" for an
-        existing Sensor (double click in the cell).</dd>
-
-        <dt>State</dt>
-
-        <dd>Pushing the "State" button/icon will change the
-        state of an existing Sensor.
-        <img src="images/SensorTableGraphic.png" height="187" width="307"
-        align="right" alt="Graphic Sensor state column">
-        Choose between textual and graphic display of the Sensor state
-        in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+        <dd>
+        Prefix corresponding to hardware type with suffix you assign when sensor is created. Cannot be changed once created.
         </dd>
 
-        <dt>Delete</dt>
+        <dt><strong>User Name</strong></dt>
+
+        <dd>
+        You can directly enter or change the "User Name" for an existing Sensor (double click in the cell).
+        </dd>
+        
+        <dt><strong>State</strong></dt>
+
+        <dd>
+        Clicking the "State" text or icon will change the state of an existing Sensor. Choose between textual and graphic
+        display of the Sensor state in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+        Note thae value of State is not stored when you close JMRI, even when you use one of the "Store to file" options.
+        <br><img src="images/SensorTableGraphic.png" height="187" width="307" align="right" alt="Graphic Sensor state column">
+        </dd>
+
+        <dt><strong>Comment</strong></dt>
+
+        <dd>
+        Any additional information you want to provide.
+        </dd>
+
+        <dt><strong>Inverted</strong></dt>
+
+        <dd>When checked, the Sensor command and status is
+        inverted. For example, an inverted Sensor means that when
+        the layout sends an "Active" Sensor command, the Sensor
+        becomes "Inactive" to JMRI.</dd>
+
+        <dt><strong>Use Global Delays</strong></dt>
+
+        <dd>
+          When checked, the Sensor will use the system values
+          specified in the "Defaults &gt; Global Debounce Delays..."
+          menu option for the duration which the system waits
+          before it registers the change of state.
+          <br>See <a href="#Debounce">Sensor Debounce Delay</a> below.
+        </dd>
+
+        <dt><strong>Delay to Active/to Inactive</strong></dt>
+
+        <dd>
+          Specify the amount of time in milliseconds that the
+          system waits before registering the state change of a
+          Sensor to either state.  See <a href="#Debounce">Sensor Debounce Delay</a> below.
+        </dd>
+
+        <dt><strong>Pull-Up/-Down</strong></dt>
+
+        <dd>Some hardware connections (such as <a href="../../../../html/hardware/XBee/index.shtml">Digi XBee</a>) allow the user to choose whether
+        sensor inputs are set by that hardware as electrically "pulled down (low)" or "pulled up (high)" or neither. If you are using such a connection
+        and want JMRI to tell the hardware to set its pull up/pull down, select <strong>Edit</strong> to set this field. If your hardware doesn't have
+        this capability (or you don't know), leave the default (<strong>No Pull-up/Pull-down</strong>).  More information may be available in help pages
+        for specific <a href="../../../../html/hardware/index.shtml">hardware</a> or on manufacturers' web sites.
+        </dd>
+      </dl>
+
+
+      <h3>Button Columns</h3>
+       
+      <dl>
+        <dt><strong>Delete</strong></dt>
 
         <dd>
           Pushing the "Delete" button will remove the Sensor from
@@ -56,94 +121,93 @@
           any files that contain this Sensor.
         </dd>
 
-        <dt>Inverted</dt>
-
-        <dd>When checked, the Sensor command and status is
-        inverted. For example, an inverted Sensor means that when
-        the layout sends an "Active" Sensor command, the Sensor
-        becomes "Inactive" to JMRI.</dd>
-
-        <dt>Use Global Delays</dt>
+        <dt><strong>Edit</strong></dt>
 
         <dd>
-          When checked, the Sensor will use the system values
-          specified in the "Defaults &gt; Global Debounce Delays..."
-          menu option for the duration which the system waits
-          before it registers the change of state.
-          <br>See <a href="#Debounce">Sensor Debounce Delay</a> below.
+          Pushing the "Edit" button will bring up an edit window where you can change any of the information
+          about this particular sensor. Clicking "Apply" or "Ok" save this information as long as JMRI remains
+          open.  You must use one of the "Store to file" options in the "File" menu to save this new information
+          in a file to be used after JMRI is closed.
         </dd>
 
-        <dt>Delay to Active/to Inactive</dt>
+        <dt><strong>Query</strong></dt>
 
         <dd>
-          Specify the amount of time in milliseconds that the
-          system waits before registering the state change of a
-          Sensor to either state.
-          <br>See <a href="#Debounce">Sensor Debounce Delay</a> below.</br>
+          Pushing the "Query" button will query the hardware "known state" and put that in the 
+          Sensor state column.         
         </dd>
-      </dl>
 
-      <h2>Sensor Table Controls</h2>
-      <p>Along the bottom of the Sensor Table pane are buttons and checkboxes
-      that control its operation.</p>
+        <dt><strong>Forget</strong></dt>
+
+        <dd>
+          Pushing the "Forget" button will reset the Sensor state to "Unknown."
+        </dd>
+
+
+
+      </dl>  
+
+      
+      <h3>Sensor Table Display Controls</h3>
+      <p>Along the bottom of the Sensor Table pane are buttons and checkboxes that control the display of
+      the indicated columns.  Note that the display of these columns can also be changed by right-clicking 
+      on the column headers and selecting or deselecting columns.
+      </p>
 
       <dl>
-        <dt>Add...</dt>
+        <dt><strong>Add...</strong></dt>
 
-        <dd>Push this button to add a new Sensor. For more
-        information see <a href=
-        "SensorAddEdit.shtml">Adding/Editing Sensors</a>.</dd>
+        <dd>A window to add a new Sensor will open when you press this button. For more information see 
+        <a href="SensorAddEdit.shtml">Adding/Editing Sensors</a>.</dd>
 
-        <dt>Show Debounce Delay Information</dt>
+        <dt><strong>Show Debounce Delay Information</strong></dt>
 
         <dd>When checked, the optional <a href=
         "#Debounce">Delay</a> columns are shown.</dd>
 
-        <dt>Show Pull-Up/-Down Information</dt>
+        <dt><strong>Show Pull-Up/Down Information</strong></dt>
 
-        <dd>When checked, the optional <a href=
-        "SensorAddEdit.shtml#pullup">Pull-Up/-Down</a> columns are shown.</dd>
+        <dd>When checked, the optional <a href="SensorAddEdit.shtml#pullup">Pull-Up/Down</a> columns are shown.</dd>
 
-        <dt>Show State Query actions</dt>
+        <dt><strong>Show State Query actions</strong></dt>
 
-        <dd>When checked, an optional Sensor State "Query" and "Forget"
-        button is shown for each Sensor.</dd>
+        <dd>When checked, an optional Sensor State "Query" and "Forget" button is shown for each Sensor.</dd>
+        
+       </dl>
 
-        <dt>Defaults menu</dt>
+       <p>The word <strong>Defaults</Strong> appears on the window's menu bar.  Clicking it brings up two options:       
 
-        <dd><p>The "<a href="#Debounce">Global Debounce Delays...</a>" menu
-        lets item you configure default values for both delays.</p>
-        <p>The "Initial Sensor State" menu item lets you choose what state
-        Internal Sensors will display after startup.</p>
-        </dd>
+      <dl>
+      <dt><strong>Global Debouce</strong><dt> 
 
+       <dd>The "<a href="#Debounce">Global Debounce Delays...</a>" menu
+        lets item you configure default values for both delays.  See below.</dd>
+        
+       <dt><strong>Initial Sensor State</strong> (for Internal Sensors ONLY)
+       <dd>The "Initial Sensor State" menu item lets you choose what state Internal Sensors (system name beginning with
+       "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI, 
+       although you can use a <a href="../../../../html/tools/scripting/index.shtml">script</a> to set them.
+       </dd>
       </dl>
+      
+      <p>There is another sensor table display default available from the <strong>Edit&rArr;Preferences&rArr;Display</strong>
+      available on the main window. Check to display icons for sensor state instead of text.
+      
 
-      <a name="Debounce" id="Debounce"></a><h2>Sensor Debounce Delays</h2>
+      <h2><a name="Debounce" id="Debounce">Sensor Debounce Delays</a></h2>
 
       <a href="images/SensorGlobalDelayPane.png"><img
       src="images/SensorGlobalDelayPane.png" height="100" width="317"
       align="right" alt="Sensor Global Debounce Delays edit pane"></a>
-      <p>The Debounce Delay facility is there to help prevent
-      false triggers of a Sensor being passed into the system and
-      triggering other events in the system.<br>
-      Such false triggers could be due to a dirty piece of track or
-      electrical interference.</p>
-
+      
+      <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the system and
+      triggering other events in the system.</p>
+        
       <p>Debounce Delays, activated from the Sensor Table "Defaults
       &gt; Global Debounce Delays..."
       menu, allows you to assign a period in milliseconds
-      before the change is registered with the rest of the system.
-      If within that period the state has not changed, the Sensor
-      state will be passed on to the rest the of the system.<br>
-      However if the Sensors state is different after the timer has
-      finished, then the system will restart the process. This
-      time, after the timer has finished it will check to see if
-      the Sensor is in the same state as it was before it restarted
-      the process. If not, the process is re-started again until
-      the state is the same before and after the timer is run.<br>
-      You can set different delays for a change to Inactive and a
-      change to Active.</p>
+      before any sensor change is registered with the rest of the system.
+      See <a href="../../../../html/tools/Sensors.shtml#Debounce"> for general info on debounce.</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

@@ -34,7 +34,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * each address up to the max receiver, even if some are missing (0 in that
  * case)
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
@@ -113,14 +113,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -138,6 +131,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     /**
      * Send output bytes, e.g. characters controlling operation, with small
      * delays between the characters. This is used to reduce overrrun problems.
+     * @param bytes Array of characters to be sent one at a time
      */
     synchronized void sendBytes(byte[] bytes) {
         try {
@@ -360,6 +354,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     /**
      * Handle the message which lists the receiver numbers. Just makes an array
      * of those, which is not actually used.
+     * @param s Input line
      */
     void setReceivers(String s) {
         try {
@@ -375,12 +370,12 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
             log.debug("Found {} receivers", n);
 
             // find max receiver number
-            int max = Integer.valueOf(r.get(r.size() - 1));
+            int max = Integer.parseInt(r.get(r.size() - 1));
             log.debug("Highest receiver address is {}", max);
 
             offsetArray = new int[n];
             for (int i = 0; i < n; i++) {
-                offsetArray[i] = Integer.valueOf(r.get(i + 2));
+                offsetArray[i] = Integer.parseInt(r.get(i + 2));
             }
 
         } catch (IOException e) {
@@ -393,6 +388,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     /**
      * Convert input line to Reading object.
+     * @param s The line of input
+     * @return A Reading object with content parsed from the input line
+     * @throws IOException from underlying I/O
      */
     Reading makeReading(String s) throws IOException {
         if (first) {

@@ -90,7 +90,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
          * Create a default length queue
          */
         slots = new LinkedList<>();
-        numSlots = SprogSlotMonDataModel.getSlotCount();
+        numSlots = controller.getAdapterMemo().getNumSlots();
         for (int i = 0; i < numSlots; i++) {
             slots.add(new SprogSlot(i));
         }
@@ -252,6 +252,30 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         return (null);
     }
 
+    private SprogSlot findF13to20Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF13to20Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF21to28Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF21to28Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
     public void forwardCommandChangeToLayout(int address, boolean closed) {
 
         SprogSlot s = this.findFree();
@@ -296,14 +320,52 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         notifySlotListeners(s);
     }
 
+    public void function13Through20Packet(DccLocoAddress address,
+            boolean f13, boolean f13Momentary,
+            boolean f14, boolean f14Momentary,
+            boolean f15, boolean f15Momentary,
+            boolean f16, boolean f16Momentary,
+            boolean f17, boolean f17Momentary,
+            boolean f18, boolean f18Momentary,
+            boolean f19, boolean f19Momentary,
+            boolean f20, boolean f20Momentary) {
+        SprogSlot s = this.findF13to20Packet(address);
+        s.f13to20packet(address.getNumber(), address.isLongAddress(),
+                f13, f13Momentary, f14, f14Momentary, f15, f15Momentary, f16, f16Momentary,
+                f17, f17Momentary, f18, f18Momentary, f19, f19Momentary, f20, f20Momentary);
+        notifySlotListeners(s);
+    }
+
+    public void function21Through28Packet(DccLocoAddress address,
+            boolean f21, boolean f21Momentary,
+            boolean f22, boolean f22Momentary,
+            boolean f23, boolean f23Momentary,
+            boolean f24, boolean f24Momentary,
+            boolean f25, boolean f25Momentary,
+            boolean f26, boolean f26Momentary,
+            boolean f27, boolean f27Momentary,
+            boolean f28, boolean f28Momentary) {
+        SprogSlot s = this.findF21to28Packet(address);
+        s.f21to28packet(address.getNumber(), address.isLongAddress(),
+                f21, f21Momentary, f22, f22Momentary, f23, f23Momentary, f24, f24Momentary,
+                f25, f25Momentary, f26, f26Momentary, f27, f27Momentary, f28, f28Momentary);
+        notifySlotListeners(s);
+    }
+
     /**
-     * Handle speed changes from throttle. As well as updating an existing slot,
+     * Handle speed changes from throttle.
+     * <p>
+     * As well as updating an existing slot,
      * or creating a new on where necessary, the speed command is added to the
-     * queue of packets to be sent immediately. This ensures minimum latency
+     * queue of packets to be sent immediately.This ensures minimum latency
      * between the user adjusting the throttle and a loco responding, rather
      * than possibly waiting for a complete traversal of all slots before the
      * new speed is actually sent to the hardware.
      *
+     * @param mode speed step mode.
+     * @param address loco address.
+     * @param spd speed to send.
+     * @param isForward true if forward, else false.
      */
     public void setSpeed(jmri.SpeedStepMode mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
@@ -559,13 +621,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
-        log.debug("propertyChange " + evt.getPropertyName() + " = " + evt.getNewValue());
-        if (evt.getPropertyName().equals("Power")) {
-            try {
-                powerState = powerMgr.getPower();
-            } catch (JmriException ex) {
-                log.error("Exception getting power state {}", ex);
-            }
+        log.debug("propertyChange {} = {}", evt.getPropertyName(), evt.getNewValue());
+        if (evt.getPropertyName().equals(PowerManager.POWER)) {
+            powerState = powerMgr.getPower();
             powerChanged = true;
         }
     }

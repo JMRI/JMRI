@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.Color;
 import java.util.List;
@@ -51,6 +52,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "check here for null is complexity for a situation that should not be possible")
     public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), name, type, request);
     }
@@ -182,7 +184,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     @Override
     public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
-        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, request);
+        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), LAYOUTBLOCK, data, request);
     }
 
     @Override

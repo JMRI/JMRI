@@ -9,7 +9,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 /**
  * Swing action to create and register a SoundSetFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class SoundSetAction extends AbstractAction {
 
@@ -31,7 +31,7 @@ public class SoundSetAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("starting frame: Exception: " + ex.toString());
+            log.warn("starting frame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
 

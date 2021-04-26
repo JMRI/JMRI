@@ -1,11 +1,26 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+
+import javax.swing.JFrame;
+
+import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import jmri.jmrix.internal.InternalTurnoutManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.managers.AbstractProxyManager;
+import jmri.managers.ProxyTurnoutManager;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
 
@@ -29,9 +44,116 @@ public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
     public void testIncludeAddButton() {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
+    
+    /**
+     * Tests working in matching form for 
+     * ReporterTableTabActionTest
+     * SensorTableTabActionTest
+     * LightTableTabAtionTest
+     * 
+     * Issue with Proxy Manager?, only creates 1 Manager
+     * 
+     */
+    @Disabled("4.23.4ish Only 1 Manager visible to proxy, not 2?")
+    @Test
+    public void testMultiSystemTabs(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitUtil.resetInstanceManager();
+        // Not returning null v4.23.4ish
+        Assert.assertNull("No Manager at start",InstanceManager.getNullableDefault(TurnoutManager.class));
+        
+        ProxyTurnoutManager l = new ProxyTurnoutManager(); // has 2 systems: IT, JT
+        l.addManager(new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet")));
+        l.addManager(new InternalTurnoutManager(new InternalSystemConnectionMemo("I", "India")));
+        InstanceManager.setTurnoutManager(l);
+        
+        // Test that Proxy TurnoutManager Manager has Juliet, India, and nothing else.
+        TurnoutManager plm = InstanceManager.getDefault(TurnoutManager.class);
+        if (!(plm instanceof AbstractProxyManager)) {
+            Assert.fail("Instance TurnoutManager Not a proxy Turnout Manager");
+        }
+        
+        try {
+            @SuppressWarnings("unchecked")
+            AbstractProxyManager<Turnout> proxy = (AbstractProxyManager<Turnout>) plm;
+            int numLm = proxy.getDisplayOrderManagerList().size();
+            Assert.assertEquals("2 Turnout Managers, Juliet, India",2, numLm);
+            
+            String s = proxy.getDisplayOrderManagerList().get(0).getMemo().getUserName();
+            Assert.assertEquals("Turnout Manager 0 , Juliet","Juliet", s);
+            
+            s = proxy.getDisplayOrderManagerList().get(1).getMemo().getUserName();
+            Assert.assertEquals("Turnout Manager 1, India","India", s);
+        } catch (ClassCastException e){
+            Assert.fail("catch Instance TurnoutManager Not a proxy Turnout Manager");
+        }
+        
+        
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT3");
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT4");
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT5");
+        
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JT8");
+        InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JT9");
+        
+        TabbedTurnoutTableFrame sf = new TabbedTurnoutTableFrame();
+        sf.initTables();
+        sf.initComponents();
+        sf.pack();
+        sf.setVisible(true);
+        
+        JFrame f = JFrameOperator.waitJFrame(sf.getTitle(), true, true);
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfo);
+        
+        
+        // will fail here as only 2 tabs present.
+        Assert.assertEquals("3 manager tabs",3, tabOperator.getTabCount());
+        
+        
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfo, "Not a Button, pause test");
+        
+        
+        
+        tabOperator.selectPage("All");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JTableOperator controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("All tab 7 Turnouts",7, controltbl.getRowCount());
+        
+        tabOperator.selectPage("Juliet");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("Juliet tab 2 Turnouts",2, controltbl.getRowCount());
+        
+        tabOperator.selectPage("India");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("India tab 5 Turnouts",5, controltbl.getRowCount());
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfo, "Not a Button, pause test");
+        jfo.requestClose();
+    
+    }
+    
+    
+    private static class TabbedTurnoutTableFrame extends ListedTableFrame<Turnout> {
+        
+        public TabbedTurnoutTableFrame(){
+            super();
+            tabbedTableItemListArrayArray.clear(); // reset static BeanTable list
+        }
+        
+        @Override
+        public void initTables() {
+            addTable("jmri.jmrit.beantable.TurnoutTableTabAction", Bundle.getMessage("MenuItemTurnoutTable"), false);
+        }
+    }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,7 +164,7 @@ public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
         a = new TurnoutTableTabAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

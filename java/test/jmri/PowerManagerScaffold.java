@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.DefaultPowerManager;
 
 /**
@@ -16,12 +17,11 @@ import jmri.managers.DefaultPowerManager;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class PowerManagerScaffold extends DefaultPowerManager {
 
-    @Override
-    public String getUserName() {
-        return "test";
+    public PowerManagerScaffold() {
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 }

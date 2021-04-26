@@ -1,10 +1,11 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to encapsulate a hex record as used by Microchip tools
+ * Class to encapsulate a hex record as used by Microchip tools.
  * 
  * @author Andrew Crosland Copyright (C) 2020
  */
@@ -31,7 +32,7 @@ public class HexRecord {
     
     
     /**
-     * Create an empty record with invalid status
+     * Create an empty record with invalid status.
      */
     public HexRecord() {
         len = 0;
@@ -46,20 +47,21 @@ public class HexRecord {
     
     
     /**
-     * Read a new record from a file
+     * Read a new record from a file.
      * 
      * @param f hex file to read from
+     * @throws IOException from underlying read operations
      */
-    public HexRecord(HexFile f) {
+    public HexRecord(HexFile f) throws IOException {
         this();
         readRecord(f);
     }
     
     
     /**
-     * Set the line number where the record was found in the file
+     * Set the line number where the record was found in the file.
      * 
-     * @param l 
+     * @param l the line number
      */
     protected void setLineNo(int l) {
         lineNo = l;
@@ -67,7 +69,7 @@ public class HexRecord {
     
     
     /**
-     * Get the data array from a hex record
+     * Get the data array from a hex record.
      * 
      * @return the data
      */
@@ -77,7 +79,7 @@ public class HexRecord {
     
     
     /**
-     * Get a data element from a hex record
+     * Get a data element from a hex record.
      * 
      * @param i index of the element to get
      * @return the data
@@ -88,7 +90,7 @@ public class HexRecord {
     
     
     /**
-     * Get current address from a hex record
+     * Get current address from a hex record.
      * <p>
      * Returns 16 bit address from a normal hex record. Extended address records
      * are handled elsewhere.
@@ -101,32 +103,30 @@ public class HexRecord {
     
     
     /**
-     * Look for the start of a new record
+     * Look for the start of a new record.
      * 
      * @param f Input hex file
      */
-    private void startRecord(HexFile f) {
+    private void startRecord(HexFile f) throws IOException {
         int c;
         
         checksum = 0;
-        // Read ":"
-        while (((c = f.readChar()) == 0xd)
-                || (c == 0xa)) {
-            // skip
-        }
+        // Skip newline and look for ':'
+        while (((c = f.readChar()) == 0xd) || (c == 0xa)) {  }
         if (c != ':') {
-            valid = false;
             log.error("No colon at start of line {}", f.getLineNo());
+            throw new IOException("No colon at start of line "+f.getLineNo());
         }
     }
     
     
     /**
-     * Read hex record header
+     * Read hex record header.
      * 
      * @param f Input hex file
+     * @throws IOException 
      */
-    private void readHeader(HexFile f) {
+    private void readHeader(HexFile f) throws IOException {
         // length of data
         len = f.rdHexByte();
         checksum += len;
@@ -147,11 +147,12 @@ public class HexRecord {
     
     
     /**
-     * Read the data bytes
+     * Read the data bytes.
      * 
      * @param f Input hex file
+     * @throws IOException from underlying read operations
      */
-    void readData(HexFile f) {
+    void readData(HexFile f) throws IOException {
         if (type != END) {
             for (int i = 0; i < len; i++) {
                 data[i] = (byte)(f.rdHexByte() & 0xFF);
@@ -162,33 +163,39 @@ public class HexRecord {
     
     
     /**
-     * Verify the record checksum
+     * Verify the record checksum.
      * 
      * @param f Input hex file
+     * @throws IOException 
      */
-    private void checkRecord(HexFile f) {
-        valid = true;
-        
+    private void checkRecord(HexFile f) throws IOException {
         int fileCheck = f.rdHexByte();
         if (((checksum + fileCheck) & 0xff) != 0) {
             log.error("Bad checksum at {}", Integer.toHexString(address));
-            valid = false;
+            throw new IOException("Bad checksum");
         }
     }
     
     
     /**
      * Read a record from a hex file and verify the checksum.
-     *
+     * 
+     * @param f the hex file
+     * @throws IOException 
      */
-    private void readRecord(HexFile f) {
-        startRecord(f);
-        readHeader(f);
-        readData(f);
-        checkRecord(f);
+    private void readRecord(HexFile f) throws IOException {
+        try {
+            startRecord(f);
+            readHeader(f);
+            readData(f);
+            checkRecord(f);
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+        valid = true;
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(HexRecord.class);
+    private static final Logger log = LoggerFactory.getLogger(HexRecord.class);
     
 }

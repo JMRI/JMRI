@@ -1,8 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.SignalMast;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.SignalMastIcon;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.display.*;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -49,9 +50,11 @@ public class SignalMastIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor ed = (Editor) o;
         SignalMastIcon l = new SignalMastIcon(ed);
@@ -83,8 +86,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             }
             l.setScale(scale);
             if (log.isDebugEnabled()) {
-                log.debug("Load SignalMast rotation= " + rotation
-                        + " scale= " + scale + " attr text= " + text);
+                log.debug("Load SignalMast rotation= {} scale= {} attr text= {}", rotation, scale, text);
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert rotation or scale attribute");
@@ -97,7 +99,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         } else {
             name = attr.getValue();
             if (log.isDebugEnabled()) {
-                log.debug("Load SignalMast " + name);
+                log.debug("Load SignalMast {}", name);
             }
         }
 
@@ -106,7 +108,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         if (sh != null) {
             l.setSignalMast(name);
         } else {
-            log.error("SignalMast named '" + attr.getValue() + "' not found.");
+            log.error("SignalMast named '{}' not found.", attr.getValue());
             ed.loadFailed();
             //    return;
         }
@@ -127,7 +129,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 l.setClickMode(attr.getIntValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Failed on clickmode attribute: " + e);
+            log.error("Failed on clickmode attribute: {}", e);
         }
 
         try {
@@ -136,10 +138,14 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 l.setLitMode(attr.getBooleanValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Failed on litmode attribute: " + e);
+            log.error("Failed on litmode attribute: {}", e);
         }
 
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
 
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SIGNALS, element);

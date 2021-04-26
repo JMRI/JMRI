@@ -1,39 +1,39 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Swing tests for the TurnoutIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class TurnoutIconWindowTest {
-    
+
     @Test
     public void testPanelEditor() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("TurnoutIconWindowTest.testPanelEditor");
-        
+
         panel.getTargetPanel();
-        
+
         TurnoutIcon icon = new TurnoutIcon(panel);
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         icon.setTurnout(new NamedBeanHandle<Turnout>("IT1", sn));
-        
+
         icon.setDisplayLevel(Editor.TURNOUTS);
-        
+
         icon.setIcon("TurnoutStateClosed",
                 new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
@@ -46,10 +46,10 @@ public class TurnoutIconWindowTest {
         icon.setIcon("BeanStateUnknown",
                 new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif"));
-        
+
         panel.putItem(icon);
         panel.setVisible(true);
-        
+
         Assert.assertEquals("initial state", Turnout.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
@@ -80,20 +80,20 @@ public class TurnoutIconWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    @Test    
+    @Test
     public void testLayoutEditor() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("TurnoutIconWindowTest.testLayoutEditor");
-        
+
         panel.getTargetPanel();
-        
+
         TurnoutIcon icon = new TurnoutIcon(panel);
         icon.setDisplayLevel(Editor.TURNOUTS);
-        
+
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         icon.setTurnout("IT1");
-        
+
         icon.setIcon("TurnoutStateClosed",
                 new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
@@ -106,10 +106,10 @@ public class TurnoutIconWindowTest {
         icon.setIcon("BeanStateUnknown",
                 new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif"));
-        
+
         panel.putItem(icon);
         panel.setVisible(true);
-        
+
         Assert.assertEquals("initial state", Turnout.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
@@ -117,18 +117,18 @@ public class TurnoutIconWindowTest {
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
         co.clickMouse(xloc,yloc,1);
-        
+
         JUnitUtil.waitFor(() -> {
             return sn.getState() != Turnout.UNKNOWN;
         }, "Not initial state");
-        
+
         JUnitUtil.waitFor(() -> {
             return sn.getState() == Turnout.CLOSED;
         }, "state after one click");
 
         // Click icon change state to inactive
         co.clickMouse(xloc,yloc,1);
-        
+
         JUnitUtil.waitFor(() -> {
             return sn.getState() == Turnout.THROWN;
         }, "state after two clicks");
@@ -138,18 +138,19 @@ public class TurnoutIconWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
     }
-    
-    @After
+
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

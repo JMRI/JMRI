@@ -1,10 +1,9 @@
 package jmri.jmrix.tams.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SerialDriverAdapter class.
@@ -19,14 +18,14 @@ public class SerialDriverAdapterTest {
       Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }

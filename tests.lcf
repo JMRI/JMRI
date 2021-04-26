@@ -9,18 +9,7 @@
 # or jmri.org/help/en/html/doc/Technical/Logging.shtml
 
 # This configures three appenders:  J, R and A1.  J and R 
-# are used routinely; A1 is for debugging use.
-
-# The default level for test logging is WARN:  All the specific
-# class loggers are initially set to ignore everything below that.
-# You can set a specific class to e.g. debug so that it does
-# log its information instead of ignoring it, see examples
-# at the bottom.  Then the logging level on each appender (see
-# below) is used to decide if the data is actually logged.
-
-# Add A1 in the next line to turn it on
-log4j.rootCategory= WARN, R, J
-log4j.category.jmri=WARN
+# are used routinely; A is for debugging use.
 
 # The R appender writes all logging output to the tests.log
 # file. This includes messages that the tests have intentionally
@@ -30,8 +19,47 @@ log4j.category.jmri=WARN
 # can examine their output. Changing the levels or 
 # format of J can result in obscure test failures. 
 
-# The conversion patterns use format specifiers. For details, see
-# the org.apache.log4j.PatternLayout Javadocs. To summarize:
+# The A appender, if used, is configured to send output
+# to stderr. This is typically used when debugging to make
+# it easier to see the output during running.  The level
+# can be set in the 'log4j.appender.A.Threshold' line below.
+
+# Add A in the next line to turn it on
+log4j.rootCategory= WARN, R, J
+
+# The default level for test logging is WARN:  All the specific
+# class loggers are initially set to ignore everything below that.
+# You can set a specific class to e.g. debug so that it does
+# log its information instead of ignoring it, see examples
+# at the bottom.  Then the logging level on each appender (see
+# below) is used to decide if the data is actually logged.
+
+log4j.category.jmri=WARN
+
+# J is a jmri.util.JUnitAppender which provides hooks used to test 
+# whether a given log message is expected or not, and whether ERROR messages 
+# have been logged.
+log4j.appender.J=jmri.util.JUnitAppender
+# J writes to system.err to synchronize with e.g. exception traces
+log4j.appender.J.target=System.err
+# always limit output to INFO; various tests require that
+log4j.appender.J.Threshold=INFO
+ 
+# R is set to output all enabled logging to the tests.log file in the CWD
+log4j.appender.R=org.apache.log4j.FileAppender
+log4j.appender.R.File=tests.log
+log4j.appender.R.Append=false
+log4j.appender.R.Threshold=TRACE
+
+# A is set to be a ConsoleAppender which outputs to System.err.
+log4j.appender.A=org.apache.log4j.ConsoleAppender
+log4j.appender.A.target=System.err
+log4j.appender.A.Threshold=TRACE
+
+# All three appenders use PatternLayout to control their output format.
+# Note that the default output formats are not the same across the three appenders.
+# The conversion patterns use the following format specifiers. For details, 
+# see the org.apache.log4j.PatternLayout Javadocs. To summarize:
 #
 # c category, e.g. %c{2} for right-most two tokens
 # C classname of call (slow)
@@ -51,35 +79,18 @@ log4j.category.jmri=WARN
 # Justification, padding and truncation can be controlled e.g. %-5.10p 
 # is left justified, at least 5 and no more than 10 characters wide
 
-# J is a jmri.util.JUnitAppender which provides hooks used to test 
-# whether a given log message is expected or not, and whether ERROR messages 
-# have been logged.
-log4j.appender.J=jmri.util.JUnitAppender
-# J writes to system.err to synchronize with e.g. exception traces
-log4j.appender.J.target=System.err
-# J uses PatternLayout to control the format of the log messages.
 log4j.appender.J.layout=org.apache.log4j.PatternLayout
 log4j.appender.J.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
-# always limit output to INFO; various tests require that
-log4j.appender.J.Threshold=INFO
 
-# R is set to output all enabled logging to the tests.log file in the CWD
-log4j.appender.R=org.apache.log4j.FileAppender
-log4j.appender.R.File=tests.log
-log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
-log4j.appender.R.Threshold=TRACE
 
-# A1 is set to be a ConsoleAppender which outputs to System.err.
-log4j.appender.A1=org.apache.log4j.ConsoleAppender
-log4j.appender.A1.target=System.err
-log4j.appender.A1.layout=org.apache.log4j.PatternLayout
-log4j.appender.A1.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
-log4j.appender.A1.Threshold=TRACE
+log4j.appender.A.layout=org.apache.log4j.PatternLayout
+log4j.appender.A.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
+
 
 # ###################################################################
-#   Configure some verbose components
+#   Configure some components that are overly verbose 
 # ###################################################################
 
 # Default Jetty server to only logging WARN since INFO can be verbose at points
@@ -114,7 +125,7 @@ log4j.category.org.junit.vintage.engine.discovery=OFF
 # log4j.category.jmri.jmrit.symbolicprog=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=DEBUG
-# log4j.category.jmri.server.json=TRACE
+# log4j.category.jmri.jmrit.display.layoutEditor.configurexml=TRACE
 
 # ###################################################################
 #    Settings needed for specific tests (last so not accidentally overridden)

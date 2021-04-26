@@ -8,8 +8,10 @@ import jmri.util.swing.WindowInterface;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
+ * @deprecated since 4.21.1; use {@link apps.swing.AboutAction} instead
  */
+@Deprecated
 public class AboutAction extends JmriAbstractAction {
 
     public AboutAction(String s, WindowInterface wi) {
@@ -25,6 +27,7 @@ public class AboutAction extends JmriAbstractAction {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void actionPerformed(ActionEvent e) {
         new AboutDialog(null, true).setVisible(true);
     }

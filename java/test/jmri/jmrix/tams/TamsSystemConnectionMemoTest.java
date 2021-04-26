@@ -1,31 +1,31 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the TamsSystemConnectionMemo class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-     
+public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase<TamsSystemConnectionMemo> {
+
     @Override
-    @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(new TamsInterfaceScaffold());
-       memo.configureManagers();
-       scm = memo;
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm = new TamsSystemConnectionMemo(new TamsInterfaceScaffold());
+        scm.configureManagers();
     }
 
     @Override
-    @After
-    public void tearDown(){
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-       JUnitUtil.tearDown();
+    @AfterEach
+    public void tearDown() {
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

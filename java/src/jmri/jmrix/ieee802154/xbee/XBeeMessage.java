@@ -84,12 +84,12 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @Override
     public String toString() {
         String s = "";
-	if(xbm != null) {
-           byte packet[] = xbm.getPacketData();
-           for (int i = 0; i < packet.length; i++) {
-               s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
-           }
-	}
+        if (xbm != null) {
+            byte packet[] = xbm.getPacketData();
+            for (int i = 0; i < packet.length; i++) {
+                s = jmri.util.StringUtil.appendTwoHexFromInt(packet[i], s);
+            }
+        }
         return s;
     }
 

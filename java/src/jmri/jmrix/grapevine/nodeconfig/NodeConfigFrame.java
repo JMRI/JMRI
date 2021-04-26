@@ -63,7 +63,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected String editStatus3 = Bundle.getMessage("NotesEdit3");
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param _memo system connection.
      */
     public NodeConfigFrame(GrapevineSystemConnectionMemo _memo) {
         super();
@@ -223,6 +224,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     /**
      * Set the node number.
+     * @param node node address.
      */
     public void setNodeAddress(int node) {
         nodeAddrSpinner.setValue(node);

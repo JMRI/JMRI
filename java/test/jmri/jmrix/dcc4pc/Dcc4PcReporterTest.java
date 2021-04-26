@@ -1,23 +1,23 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Dcc4PcReporterTest extends jmri.implementation.AbstractRailComReporterTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         r = new Dcc4PcReporter("DR1","test");
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

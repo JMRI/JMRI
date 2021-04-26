@@ -94,7 +94,9 @@ public class OBlockManagerXml // extends XmlFile
 
                 List<Path> paths = block.getPaths();
                 for (Path op : paths) {
-                    elem.addContent(storePath((OPath) op));
+                    if ( op instanceof OPath ) {
+                        elem.addContent(storePath((OPath) op));
+                    }
                 }
                 List<Portal> portals = block.getPortals();
                 for (Portal po : portals) {
@@ -128,7 +130,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal != null) {
             Element fromElem = new Element("fromSignal");
             fromElem.setAttribute("signalName", signal.getSystemName());
-            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset());
+            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset()); // actually a Distance/Offset
             elem.addContent(fromElem);
         }
         block = portal.getToBlock();
@@ -277,7 +279,7 @@ public class OBlockManagerXml // extends XmlFile
             block.setMetricUnits(false);
         }
         if (elem.getAttribute("length") != null) {
-            block.setLength(Float.valueOf(elem.getAttribute("length").getValue()).floatValue());
+            block.setLength(Float.parseFloat(elem.getAttribute("length").getValue()));
         }
         if (elem.getAttribute("curve") != null) {
             block.setCurvature(Integer.parseInt((elem.getAttribute("curve")).getValue()));
@@ -430,7 +432,7 @@ public class OBlockManagerXml // extends XmlFile
             String name = eSignal.getAttribute("signalName").getValue();
             float length = 0.0f;
             try {
-                Attribute attr = eSignal.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay"); // actually a Distance/Offset
                 if (attr != null) {
                     length = attr.getFloatValue();
                 }
@@ -444,7 +446,7 @@ public class OBlockManagerXml // extends XmlFile
             String name = eSignal.getAttribute("signalName").getValue();
             float length = 0.0f;
             try {
-                Attribute attr = eSignal.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay"); // actually a Distance/Offset
                 if (attr != null) {
                     length = attr.getFloatValue();
                 }

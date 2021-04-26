@@ -56,22 +56,49 @@ body {
     line-height: 20px;
 }
 
-.beanswitch.text {
+.beanswitch { /* SwitchBoard (Panel) interactive button/symbols */
     position: static;
     float: left;
-    padding: 4px;
-    /* border: 5px; */
-    /* color: white; */
-    /* background: grey; */
-    margin: 6px;
-    text-align: center;
-    /* width: 20%; /* later changed by beanswitch using column count */
-    /* add more BeanSwitch stuff */
+    margin: 2px;
+    padding: 1px;
+    border: 1px solid lightGray;
+    overflow: hidden;
 }
 
-div.button {
-    float: left;
-    background: red;
+.beanswitch.button { /* SwitchBoard (Panel) interactive button default */
+    border: 2px solid white; /* border changes colors with state */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* mimick JButtons */
+    box-shadow: 1px 1px gray;
+}
+
+.beanswitch:hover { /* on Switchboard */
+    margin: 2px;
+}
+
+.bscanvas { /* Switchboard beanswitch */
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.bscanvas:hover {
+    margin: -1px;
+}
+
+span.lightswitch { /* All On/All Off on Switchboard */
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1px;
+    background-color: white;
+    box-shadow: 1px 1px gray;
+}
+
+span.lightswitch:hover { /* Switchboard */
+    background-color: yellow;
+    cursor: pointer;
 }
 
 #panel-area {

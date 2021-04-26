@@ -3,17 +3,16 @@ package jmri.jmrix.openlcb.swing;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.openlcb.OlcbConfigurationManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.can.CanInterface;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ClientActionsTest {
 
@@ -34,14 +33,13 @@ public class ClientActionsTest {
         jmri.util.JUnitAppender.suppressWarnMessage("ool did not terminate");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

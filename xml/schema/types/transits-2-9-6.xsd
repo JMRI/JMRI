@@ -30,7 +30,7 @@
     <xs:complexType name="TransitManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a TransitManager implementation.
+          Define the XML structure for storing the contents of a TransitManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.configurexml.TransitManagerXml</jmri:usingclass>

@@ -147,10 +147,10 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
             String sz_productID = Integer.toString(productID);
             temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
             if (temp.getItemCount() == 0) {
-                log.debug("selectDecoder found no items with product ID " + productID);
+                log.debug("selectDecoder found no items with product ID {}", productID);
                 temp = null;
             } else {
-                log.debug("selectDecoder found " + temp.getItemCount() + " matches with productID " + productID);
+                log.debug("selectDecoder found {} matches with productID {}", temp.getItemCount(), productID);
             }
         }
 
@@ -158,7 +158,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         if (temp == null) {  // i.e. if no match previously
             temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             if (log.isDebugEnabled()) {
-                log.debug("selectDecoder without productID found " + temp.getItemCount() + " matches");
+                log.debug("selectDecoder without productID found {} matches", temp.getItemCount());
             }
         }
 
@@ -167,7 +167,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
             decoderBox.setModel(temp.getModel());
             decoderBox.setSelectedIndex(0);
         } else {
-            log.warn("Decoder says " + mfgID + " " + modelID + " decoder, but no such decoder defined");
+            log.warn("Decoder says {} {} decoder, but no such decoder defined", mfgID, modelID);
         }
     }
 
@@ -179,18 +179,18 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) {
-            log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
+            log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
         }
         // locate a decoder like that.
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) {
-            log.debug("found " + l.size() + " matches");
+            log.debug("found {} matches", l.size());
         }
         if (l.size() > 0) {
             DecoderFile d = l.get(0);
             String title = d.titleString();
             if (log.isDebugEnabled()) {
-                log.debug("Decoder file title " + title);
+                log.debug("Decoder file title {}", title);
             }
             for (int i = 0; i < decoderBox.getItemCount(); i++) {
                 if (title.equals(decoderBox.getItemAt(i))) {
@@ -198,7 +198,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
                 }
             }
         } else {
-            log.warn("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+            log.warn("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
         }
     }
 
@@ -214,7 +214,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         // find the decoderFile object
         DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle((String) decoderBox.getSelectedItem());
         if (log.isDebugEnabled()) {
-            log.debug("decoder file: " + decoderFile.getFileName());
+            log.debug("decoder file: {}", decoderFile.getFileName());
         }
 
         // create a dummy RosterEntry with the decoder info

@@ -1,43 +1,43 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorReplyTest.java
+ * <p>
+ * Test for the jmri.jmrix.rfid.merg.concentrator.ConcentratorReply class
  *
- * Description:	tests for the jmri.jmrix.rfid.merg.concentrator.ConcentratorReply class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     ConcentratorTrafficController tc = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
-           @Override
-           public void sendInitString(){
-           }
+        tc = new ConcentratorTrafficController(new RfidSystemConnectionMemo(), "A-H") {
+            @Override
+            public void sendInitString() {
+            }
         };
         tc.getAdapterMemo().setProtocol(new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol());
-            m = new ConcentratorReply(tc){
+        m = new ConcentratorReply(tc) {
             @Override
-            public String toMonitorString(){
-               return "";
+            public String toMonitorString() {
+                return "";
             }
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
-	m = null;
+        m = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

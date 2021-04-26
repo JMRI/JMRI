@@ -56,11 +56,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
             throw new IllegalArgumentException("Invalid Oaktree Sensor system name - " +  // NOI18N
                     systemName);
@@ -142,28 +142,21 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Method to register any orphan Sensors when a new Serial Node is created.
+     * @param node node to register.
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
-        // get list containing all Sensors
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
         // Iterate through the sensors
-        SerialNode tNode = null;
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during register Sensor");
-            } else {
-                log.debug("system name is {}", sName);
-                if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
-                    // This is a Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
-                    if (tNode == node) {
-                        // This sensor is for this new Serial Node - register it
-                        node.registerSensor(getBySystemName(sName),
-                                (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
-                    }
+        SerialNode tNode;
+        for (Sensor s : getNamedBeanSet()) {
+            String sName = s.getSystemName();
+            log.debug("system name is {}", sName);
+            if (sName.startsWith(getSystemNamePrefix())) { // multichar prefix
+                // This is a Sensor
+                tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
+                if (tNode == node) {
+                    // This sensor is for this new Serial Node - register it
+                    node.registerSensor(s,
+                            (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
                 }
             }
         }

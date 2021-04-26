@@ -1,10 +1,12 @@
 package jmri.jmrix.tmcc;
 
 import java.util.Locale;
+
 import javax.annotation.Nonnull;
-import jmri.JmriException;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * System names are "TTnnn", where T is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 
@@ -33,15 +35,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         return (TmccSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name
         String sName = validateSystemNameFormat(systemName);
         // does this turnout already exist?
         Turnout t = getBySystemName(sName);
         if (t != null) {
             log.debug("Turnout already exists");
-            return null;
+            return t;
         }
         // create the turnout
         log.debug("new SerialTurnout with addr = {}", systemName.substring(getSystemPrefix().length() + 1));
@@ -70,15 +76,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
-    }
-
-    @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        try {
-            return makeSystemName(curAddress);
-        } catch (IllegalArgumentException ex) {
-            throw new JmriException(ex);
-        }
     }
 
     /**

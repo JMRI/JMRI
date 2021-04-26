@@ -1,6 +1,7 @@
 package jmri.server.json.reporter;
 
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -8,6 +9,7 @@ import static org.junit.Assert.fail;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -27,9 +29,8 @@ import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -130,8 +131,9 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         // create a default reporter manager that overrides provide() to require valid system name
         // this allows testing that invalid names are reported to clients correctly
         InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+            @Nonnull
             @Override
-            public Reporter provide(String name) {
+            public Reporter provide(@Nonnull String name) {
                 return this.newReporter(name, null);
             }
         });
@@ -204,8 +206,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         assertEquals(2, result.size());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -215,7 +216,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

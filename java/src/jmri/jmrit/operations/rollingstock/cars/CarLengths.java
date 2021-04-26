@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.util.Comparator;
+
 import org.jdom2.Element;
 
 import jmri.InstanceManager;
@@ -54,6 +56,11 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
     }
     
     @Override
+    public void sort() {
+        list.sort(Comparator.comparingInt(Integer::parseInt));
+    }
+    
+    @Override
     protected int getMinNameLength() {
         return MIN_NAME_LENGTH;
     }
@@ -65,7 +72,7 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
      *
      */
     public void store(Element root) {
-        store(root, Xml.LENGTHS, Xml.LENGTH, Xml.CAR_LENGTHS);
+        store(root, Xml.LENGTHS, Xml.LENGTH);
     }
 
     public void load(Element root) {

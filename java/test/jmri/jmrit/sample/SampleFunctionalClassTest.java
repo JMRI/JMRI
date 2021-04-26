@@ -1,11 +1,11 @@
 package jmri.jmrit.sample;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SampleFunctionalClass class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SampleFunctionalClassTest {
 
@@ -15,7 +15,7 @@ public class SampleFunctionalClassTest {
         new SampleFunctionalClass("foo");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -23,7 +23,7 @@ public class SampleFunctionalClassTest {
         jmri.util.JUnitUtil.initConfigureManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

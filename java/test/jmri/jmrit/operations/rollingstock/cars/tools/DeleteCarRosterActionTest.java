@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -17,7 +17,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DeleteCarRosterActionTest extends OperationsTestCase {
 
@@ -44,7 +44,7 @@ public class DeleteCarRosterActionTest extends OperationsTestCase {
         Thread delete = new Thread(new Runnable() {
             @Override
             public void run() {
-                deleteRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
+                deleteRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         delete.setName("Delete Cars"); // NOI18N

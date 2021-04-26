@@ -2,7 +2,6 @@ package jmri.jmrit.automat.monitor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -28,8 +27,6 @@ public class AutomatTableDataModel extends AbstractTableModel {
     static final int KILLCOL = 2;  //
 
     static final int NUMCOLUMN = 3;
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle");
 
     AutomatSummary summary = AutomatSummary.instance();
 
@@ -77,14 +74,14 @@ public class AutomatTableDataModel extends AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case NAMECOL:
-                return "Name";
+                return Bundle.getMessage("ColName");
             case TURNSCOL:
-                return "Cycles";
+                return Bundle.getMessage("ColCycles");
             case KILLCOL:
-                return "Kill";  // problem if this is blank?
+                return Bundle.getMessage("ColKill");  // problem if this is blank?
 
             default:
-                return "unknown";
+                return Bundle.getMessage("ColUnknown");
         }
     }
 
@@ -123,9 +120,9 @@ public class AutomatTableDataModel extends AbstractTableModel {
             case TURNSCOL:
                 return summary.get(row).getCount();
             case KILLCOL:  // return button text here
-                return rb.getString("ButtonKill");
+                return Bundle.getMessage("ButtonKill");
             default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                log.error("internal state inconsistent with table requst for {} {}", row, col);
                 return null;
         }
     }
@@ -137,9 +134,9 @@ public class AutomatTableDataModel extends AbstractTableModel {
             case TURNSCOL:
                 return new JTextField(5).getPreferredSize().width;
             case KILLCOL:
-                return new JButton(rb.getString("ButtonKill")).getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonKill")).getPreferredSize().width;
             default:
-                log.warn("Unexpected column in getPreferredWidth: " + col);
+                log.warn("Unexpected column in getPreferredWidth: {}", col);
                 return new JTextField(5).getPreferredSize().width;
         }
     }
@@ -174,7 +171,7 @@ public class AutomatTableDataModel extends AbstractTableModel {
         table.sizeColumnsToFit(-1);
 
         // have the value column hold a button
-        setColumnToHoldButton(table, KILLCOL, new JButton(rb.getString("ButtonKill")));
+        setColumnToHoldButton(table, KILLCOL, new JButton(Bundle.getMessage("ButtonKill")));
     }
 
     /**

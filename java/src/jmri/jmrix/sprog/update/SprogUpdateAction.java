@@ -6,7 +6,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 /**
  * Swing action to create and register a SprogIIUpdateFrame object
  *
- * @author	Andrew crosland Copyright (C) 2004
+ * @author Andrew crosland Copyright (C) 2004
  */
 abstract public class SprogUpdateAction extends AbstractAction {
 

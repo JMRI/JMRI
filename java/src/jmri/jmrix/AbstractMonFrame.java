@@ -47,7 +47,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
-        if(p!=null) {
+        if (p!=null) {
            p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
            p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
            p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
@@ -83,7 +83,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     AbstractMonFrame self;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    public final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonFrame() {
         super();
@@ -341,7 +341,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (java.io.FileNotFoundException ex) {
-                log.error("exception " + ex);
+                log.error("exception {}", ex);
             }
         }
     }
@@ -382,8 +382,10 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     }
 
     /** 
-     * Get access to the main text area. This is intended
-     * for use in e.g. scripting to extend the behavior of the window.
+     * Get access to the main text area.
+     * This is intended for use in e.g. scripting 
+     * to extend the behaviour of the window.
+     * @return the text area.
      */
     public final synchronized JTextArea getTextArea() {
         return monTextPane;

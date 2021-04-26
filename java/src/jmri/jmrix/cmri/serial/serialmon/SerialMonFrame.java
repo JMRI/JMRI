@@ -95,43 +95,41 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     /**
      * Initialize packet type filters.
      */  
-    public void initializePacketFilters()
-    {
+    public void initializePacketFilters() {
         // get all configured nodes
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1,
+                pktTypeIndex = 0;
+
+        while (node != null) {
+            // Set all nodes and packet types to be monitored
+            //-----------------------------------------------
+            do {
+                node.setMonitorPacketBit(pktTypeIndex, true);
+                pktTypeIndex++;
+            } while (pktTypeIndex < SerialFilterFrame.numMonPkts);
+
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
+            index++;
             pktTypeIndex = 0;
-        
-        while (node != null)
-        {
-         // Set all nodes and packet types to be monitored
-         //-----------------------------------------------
-	 do
-         {
-            node.setMonitorPacketBit(pktTypeIndex, true);
-            pktTypeIndex++;
-         } while ( pktTypeIndex < SerialFilterFrame.numMonPkts);
-
-
-         node = (SerialNode) _memo.getTrafficController().getNode(index);
-         index ++;
-         pktTypeIndex = 0;
-	}
+        }
     }
+
     /**
-    * Open the node/packet filter window.
-    */
+     * Open the node/packet filter window.
+     * @param e unused.
+     */
     public void openPacketFilterPerformed(ActionEvent e) {
-		// create a SerialFilterFrame
-		SerialFilterFrame f = new SerialFilterFrame(_memo);
-		try {
-			f.initComponents();
-			}
-		catch (Exception ex) {
-			log.warn("SerialMonFrame starting SerialFilterFrame: Exception: "+ex.toString());
-			}
-		f.setVisible(true);
-	}
+        // create a SerialFilterFrame
+        SerialFilterFrame f = new SerialFilterFrame(_memo);
+        try {
+            f.initComponents();
+        }
+        catch (Exception ex) {
+            log.warn("SerialMonFrame starting SerialFilterFrame: Exception: {}", ex.toString());
+        }
+        f.setVisible(true);
+    }
     
     //-------------------
     //  Transmit Packets
@@ -153,7 +151,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             nextLine("Truncated message of length "+l.getNumDataElements()+"\n",l.toString());
             return;
         }
-        		
+        
         switch(aPacketTypeID) {
             case 0x50:        // (P) Poll
                 if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktPoll))
@@ -255,64 +253,62 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     //  Receive Packets
     //-------------------
     @Override
-    public synchronized void reply(SerialReply l) 
-    { 
-       int aPacketTypeID = 0;
-       
-     // Test for node and packets being monitored 
-     //------------------------------------------
-       SerialNode monitorNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(l.getUA());
-       
-       if (monitorNode == null) return;
-       if (!monitorNode.getMonitorNodePackets()) return; 
-		
-	aPacketTypeID = l.getElement(1);
+    public synchronized void reply(SerialReply l) {
+        int aPacketTypeID = 0;
+
+        // Test for node and packets being monitored 
+        //------------------------------------------
+        SerialNode monitorNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(l.getUA());
+
+        if (monitorNode == null) {
+            return;
+        }
+        if (!monitorNode.getMonitorNodePackets()) {
+            return;
+        }
+
+        aPacketTypeID = l.getElement(1);
 
         // check for valid length
-        if (l.getNumDataElements() < 2) 
-        {
-            nextLine("Truncated reply of length "+l.getNumDataElements()+"\n",l.toString());
+        if (l.getNumDataElements() < 2) {
+            nextLine("Truncated reply of length " + l.getNumDataElements() + "\n", l.toString());
             // CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricTruncReply );
-		    return;
-        }		
-	switch(aPacketTypeID)
-	{
-        case 0x52:  // (R) Receive (poll reply)
-            if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktRead))
-            {
-                StringBuilder sb = new StringBuilder("Receive ua=");
-                sb.append(l.getUA());
-                sb.append(" IB=");
-                for (int i=2; i<l.getNumDataElements(); i++)
-                {
-                    if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE))  //c2
-                    {
-                        sb.append("<dle>");
-                        i++;
+            return;
+        }
+        switch (aPacketTypeID) {
+            case 0x52:  // (R) Receive (poll reply)
+                if (monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktRead)) {
+                    StringBuilder sb = new StringBuilder("Receive ua=");
+                    sb.append(l.getUA());
+                    sb.append(" IB=");
+                    for (int i = 2; i < l.getNumDataElements(); i++) {
+                        if ((rawCheckBox.isSelected()) && (l.getElement(i) == _DLE)) //c2
+                        {
+                            sb.append("<dle>");
+                            i++;
+                        }
+                        sb.append(Integer.toHexString(l.getElement(i) & 0x000000ff).toUpperCase());  //c2
+                        sb.append(" ");
                     }
-                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
-                    sb.append(" ");
+                    sb.append("\n");
+                    nextLine(new String(sb), l.toString());
                 }
-                sb.append("\n");
-                nextLine(new String(sb), l.toString());
-            }
-            break; 
-				
-        case 0x45:  // (E) EOT c2
-            if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktEOT))
-            {
-                StringBuilder sb = new StringBuilder("Receive ua=");
-                sb.append(l.getUA());
-                sb.append(" eot");
-                sb.append("\n");
-                nextLine(new String(sb), l.toString());
-            }
-            break; 
-				
-        default:
-            // CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricUnrecResponse );
-            nextLine("Unrecognized response: \""+l.toString()+"\"\n", "");
-            break;
+                break;
+
+            case 0x45:  // (E) EOT c2
+                if (monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktEOT)) {
+                    StringBuilder sb = new StringBuilder("Receive ua=");
+                    sb.append(l.getUA());
+                    sb.append(" eot");
+                    sb.append("\n");
+                    nextLine(new String(sb), l.toString());
+                }
+                break;
+
+            default:
+                // CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricUnrecResponse );
+                nextLine("Unrecognized response: \"" + l.toString() + "\"\n", "");
+                break;
         }
     }
 

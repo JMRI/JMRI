@@ -3,10 +3,9 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -313,30 +312,12 @@ public class CbusAddressTest {
     }
     
     @Test
-    public void testgetIncrement() {
+    public void testgetIncrement() throws jmri.JmriException {
         
         Assert.assertEquals("+N34E17;-N34E17","+N34E18;-N34E18",CbusAddress.getIncrement("+N34E17;-N34E17"));
         Assert.assertEquals("+N34E456;+N34E17","+N34E457;+N34E18",CbusAddress.getIncrement("+N34E456;+N34E17"));
         Assert.assertEquals("-N34E456;-N34E17","-N34E457;-N34E18",CbusAddress.getIncrement("-N34E456;-N34E17"));
         Assert.assertEquals("-N34E456;+N34E17","-N34E457;+N34E18",CbusAddress.getIncrement("-N34E456;+N34E17"));
-    }
-    
-    @Test
-    public void testvalidateSysName() {
-        try {
-            CbusAddress.validateSysName("+0");
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Event cannot be 0 in address: +0", ex.getMessage());
-        }
-
-        try {
-            Assert.assertEquals("-0",null,CbusAddress.validateSysName("-0"));
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Event cannot be 0 in address: -0", ex.getMessage());
-        }   
-
     }
     
     @Test
@@ -372,13 +353,12 @@ public class CbusAddressTest {
     }
     
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

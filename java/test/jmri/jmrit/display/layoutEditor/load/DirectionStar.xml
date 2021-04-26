@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>19</minor>
+    <test>7</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="7:35 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 22 19:30:54 PDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="23" windowheight="956" windowwidth="1603" panelheight="415" panelwidth="495" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="yes" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="My Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <tracksegment ident="T1" connect1name="EB1" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" connect1name="EB2" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_2" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" connect1name="EB3" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_3" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" connect1name="EB4" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" connect1name="EB5" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_5" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" connect1name="EB6" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_6" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" connect1name="EB7" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_7" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" connect1name="EB8" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_0" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="400.0" y="200.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="400.0" y="300.0" connect1name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="END_BUMPER" x="400.0" y="400.0" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="END_BUMPER" x="300.0" y="400.0" connect1name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="END_BUMPER" x="200.0" y="400.0" connect1name="T5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="END_BUMPER" x="200.0" y="300.0" connect1name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB7" type="END_BUMPER" x="200.0" y="200.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB8" type="END_BUMPER" x="300.0" y="200.0" connect1name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <layoutturntable ident="TUR1" radius="25.0" xcen="300.0" ycen="300.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+      <raytrack angle="0.0" connectname="T8" index="0" />
+      <raytrack angle="45.0" connectname="T1" index="1" />
+      <raytrack angle="90.0" connectname="T2" index="2" />
+      <raytrack angle="135.0" connectname="T3" index="3" />
+      <raytrack angle="180.0" connectname="T4" index="4" />
+      <raytrack angle="225.0" connectname="T5" index="5" />
+      <raytrack angle="270.0" connectname="T6" index="6" />
+      <raytrack angle="315.0" connectname="T7" index="7" />
+    </layoutturntable>
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Fri May 22 19:30:53 PDT 2020</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri May 22 19:35:57 PDT 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.19.7ish+jake+20200523T0230Z+Raecbde0538 on Fri May 22 19:35:57 PDT 2020-->
+</layout-config>

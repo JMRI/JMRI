@@ -1,12 +1,14 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Lock class in the jmri.jmrit.ussctc package
  *
- * @author	Paul Bender Copyright 2018
+ * @author Paul Bender Copyright 2018
  */
 public class LockTest {
 
@@ -17,13 +19,12 @@ public class LockTest {
         Assert.assertNotEquals(Lock.Valid.FIELD_TURNOUT,Lock.Valid.FIELD_SIGNAL);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

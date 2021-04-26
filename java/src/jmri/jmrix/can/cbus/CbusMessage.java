@@ -120,13 +120,16 @@ public class CbusMessage {
 
     /**
      * Tests if a CanMessage or CanReply is an Event.
-     *
-     * Adheres to cbus spec, ie on off responses to an AREQ are events
+     * Performs Extended and RTR check.
+     * Adheres to cbus spec, ie on off responses to an AREQ are events.
      *
      * @param am CanMessage or CanReply
      * @return True if event, else False.
      */
     public static boolean isEvent(AbstractMessage am) {
+        if ( am instanceof CanFrame && ((CanFrame)am).extendedOrRtr()){
+            return false;
+        }
         return CbusOpCodes.isEvent(am.getElement(0));
     }
     
@@ -149,17 +152,13 @@ public class CbusMessage {
     public static void setId(AbstractMessage am, int id) throws IllegalArgumentException {
         if (am instanceof CanMutableFrame){
             CanMutableFrame m = (CanMutableFrame) am;
+            int update = m.getHeader();
             if (m.isExtended()) {
-                if ((id & ~0x1fffff) != 0) {
-                    throw new IllegalArgumentException("invalid extended ID value: " + id);
-                }
-                int update = m.getHeader();
-                m.setHeader((update & ~0x01ffffff) | id);
+                throw new IllegalArgumentException("No CAN ID Concept on Extended CBUS CAN Frame.");
             } else {
                 if ((id & ~0x7f) != 0) {
                     throw new IllegalArgumentException("invalid standard ID value: " + id);
                 }
-                int update = m.getHeader();
                 m.setHeader((update & ~0x07f) | id);
             }
         }
@@ -180,11 +179,10 @@ public class CbusMessage {
             if ((pri & ~0x0F) != 0) {
                 throw new IllegalArgumentException("Invalid CBUS Priority value: " + pri);
             }
-            int update = m.getHeader();
             if (m.isExtended()) {
-                m.setHeader((update & ~0x1e000000) | (pri << 25));
+                throw new IllegalArgumentException("Extended CBUS CAN Frames do not have a priority concept.");
             } else {
-                m.setHeader((update & ~0x780) | (pri << 7));
+                m.setHeader((m.getHeader() & ~0x780) | (pri << 7));
             }
         }
         else {
@@ -333,6 +331,39 @@ public class CbusMessage {
             m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
         }
         setPri(m, 0xb);
+        return m;
+    }
+
+    /**
+     * CBUS programmer commands
+     * 
+     * CBUS VCVS works like a QCVS read but the programmer will first check if
+     * the CV contents are equal to the startVal. This can speed up CV reads by
+     * skipping reading of other values.
+     * 
+     * @param cv CV to read
+     * @param mode Programming Mode
+     * @param startVal Hint of current CV value
+     * @param header CAN ID
+     * @return CanMessage ready to send
+     */
+    static public CanMessage getVerifyCV(int cv, ProgrammingMode mode, int startVal, int header) {
+        CanMessage m = new CanMessage(6, header);
+        m.setElement(0, CbusConstants.CBUS_VCVS);
+        m.setElement(1, CbusConstants.SERVICE_HANDLE);
+        m.setElement(2, (cv / 256) & 0xff);
+        m.setElement(3, cv & 0xff);
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
+            m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
+        } else if (mode.equals(ProgrammingMode.DIRECTBITMODE)) {
+            m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
+        } else if (mode.equals(ProgrammingMode.DIRECTBYTEMODE)) {
+            m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
+        } else {
+            m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
+        }
+        m.setElement(5, startVal & 0xff);
+         setPri(m, 0xb);
         return m;
     }
 

@@ -4,7 +4,11 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
+import javax.annotation.Nonnull;
 
 /**
  * JUnit tests for the AbstractProgrammer class
@@ -61,14 +65,14 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
 
         programmer = new AbstractProgrammer() {
 
+            @Nonnull
             @Override
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
@@ -97,7 +101,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

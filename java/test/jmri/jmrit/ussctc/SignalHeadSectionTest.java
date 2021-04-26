@@ -2,14 +2,17 @@ package jmri.jmrit.ussctc;
 
 import java.beans.*;
 import java.util.*;
+
 import jmri.*;
 import jmri.util.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SignalHeadSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class SignalHeadSectionTest {
 
@@ -317,8 +320,7 @@ public class SignalHeadSectionTest {
     SignalHead ih3;
     SignalHead ih4;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -348,7 +350,7 @@ public class SignalHeadSectionTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

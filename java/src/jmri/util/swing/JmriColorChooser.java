@@ -25,6 +25,7 @@ public class JmriColorChooser {
      * subsequent activity will add new colors.
      */
     static private ArrayList<Color> recentColors = new ArrayList<>();
+    static private boolean _suppressAdd = false;
 
     /**
      * Add a new color to the recent list.
@@ -32,13 +33,23 @@ public class JmriColorChooser {
      * @param color The color object to be added.
      */
     static public void addRecentColor(Color color) {
-        if (color == null || !color.toString().contains("java.awt.Color")) {
+        if (color == null || _suppressAdd || !color.toString().contains("java.awt.Color")) {
             // Ignore null or default system colors
             return;
         }
         if (!recentColors.contains(color)) {
             recentColors.add(color);
         }
+    }
+
+    /**
+     * Suppress adding colors while temporarily displaying colors to
+     * wysiwyg applications of JmriColorChooser - e.g. use of RGB
+     * tab while editing colors on CPE panels.
+     * @param set if true, previewed color is not added.
+     */
+    static public void suppressAddRecentColor(boolean set) {
+        _suppressAdd = set;
     }
 
     /**
@@ -100,6 +111,7 @@ public class JmriColorChooser {
             }
         }
         chooser.setChooserPanels(newPanels);
+        _suppressAdd = false;   // reset to default
         return chooser;
     }
 }

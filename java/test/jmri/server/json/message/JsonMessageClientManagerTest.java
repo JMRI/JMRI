@@ -2,13 +2,13 @@ package jmri.server.json.message;
 
 import java.io.DataOutputStream;
 import java.util.Locale;
+
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -20,13 +20,13 @@ public class JsonMessageClientManagerTest {
 
     private Locale locale = Locale.ENGLISH;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

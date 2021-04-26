@@ -12,8 +12,8 @@ import jmri.DccLocoAddress;
  * numeric data is sent in little endian format.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Paul Bender Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21Reply extends AbstractMRReply {
 
@@ -30,7 +30,8 @@ public class Z21Reply extends AbstractMRReply {
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
      *
-     * @param a Array of bytes to send
+     * @param a Array of bytes to send.
+     * @param l length of reply.
      */
     public Z21Reply(byte[] a, int l) {
         super();
@@ -166,7 +167,7 @@ public class Z21Reply extends AbstractMRReply {
                int value1 = (getElement(10)&0xFF) + ((getElement(11)&0xFF) << 8);
                int value2 = (getElement(12)&0xFF) + ((getElement(13)&0xFF) << 8);
                String typeString = "";
-               String value1String = "";
+               String value1String;
                String value2String = "";
                switch(type){
                     case 0x01:

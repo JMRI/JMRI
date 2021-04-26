@@ -105,7 +105,7 @@
     <h2>JMRI Pattern for Swing Window Creation</h2>
       <a id="life" name="life"/>
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
       jmri.util.swing</a> package contains the support code.</p>
 
       <h3>Life Cycle of a JmriPanel</h3>
@@ -153,7 +153,7 @@
       saves a bunch of time at startup for large menus.
       </ul>
       See the 
-      <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriNamedPaneAction.html">JmriNamedPaneAction Javadoc</a> for more information.
+      <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JmriNamedPaneAction.html">JmriNamedPaneAction Javadoc</a> for more information.
       
       <p>If you need specialized initialization that can't be built into the
       JmriPanel itself via it's <code>initComponents</code> 
@@ -179,9 +179,9 @@
       <p>
     Generic creation of menus, toolbars and navigation trees from XML definition
     files are provided by the 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JMenuUtil.html">jmri.util.swing.JMenuUtil</a>,
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JToolBarUtil.html">jmri.util.swing.JToolBarUtil</a>, and
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JTreeUtil.html">jmri.util.swing.JTreeUtil</a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JMenuUtil.html">jmri.util.swing.JMenuUtil</a>,
+    <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JToolBarUtil.html">jmri.util.swing.JToolBarUtil</a>, and
+    <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JTreeUtil.html">jmri.util.swing.JTreeUtil</a>
     classes
        
       <p>I18N of those menus, toolbars and trees is then done via the XML content
@@ -204,7 +204,7 @@
       panels in the right place.</p>
 
       <p>(See the
-      <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing package Javadocs</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing package Javadocs</a>
       for more information</p>
 
       <a id="misc" name="misc"/>

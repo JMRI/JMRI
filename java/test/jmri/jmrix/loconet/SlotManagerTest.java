@@ -2,11 +2,13 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
+import jmri.jmrix.loconet.SlotManager.SlotMapEntry;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -1185,37 +1187,28 @@ public class SlotManagerTest {
     public void testOpCode8a() {
 
         LocoNetMessage m = new LocoNetMessage(new int[] {0x8a, 0x75});
-        
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS100;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS100", 0, lnis.outbound.size());
-        
-        
+
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS051;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS051", 0, lnis.outbound.size());
-        
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS050;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS050", 0, lnis.outbound.size());
-        
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DB150;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DB150", 0, lnis.outbound.size());
 
-        slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS240;
-        slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
-        JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
-        for (int i = 0; i < 127; ++i) {
-            Assert.assertEquals("testOpCode8a: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
-            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
-            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
-
-        }
     }
 
     @Test
@@ -1246,7 +1239,76 @@ public class SlotManagerTest {
         }
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testYetMoreOpCode8a() {
+
+        slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS240;
+        slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
+        for (int i = 0; i < 127; ++i) {
+            Assert.assertEquals("testOpCode8a: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
+            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
+            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
+
+        }
+    }
+    
+    @Test
+    public void testSetCommon() {
+        // Set slot 5 common, request slot 5
+        slotmanager.message(new LocoNetMessage(new int[]{0xB5, 0x05, 0x17, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 5 after delay");
+        Assert.assertEquals("Request read slot 5",
+                "BB 05 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
+    @Test
+    public void testMove_NullMove() {
+        // slot move 4 > 4 read nothing after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xba, 0x01, 0x01, 0x00}));
+        JUnitUtil.waitFor(200);
+        Assert.assertEquals("No Outbound Data", 0, lnis.outbound.size());
+    }
+
+   @Test
+    public void testMove_TrueMove() {
+        // slot move 1 > 2 read 1 after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xba, 0x01, 0x02, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 1 after delay");
+        Assert.assertEquals("Request read slot 1",
+                "BB 01 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
+    @Test
+    public void testLink() {
+        // slot Link 3 > 4 read 4 after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xb8, 0x03, 0x04, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 4 after delay");
+        Assert.assertEquals("Request read slot 4",
+                "BB 04 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
+    @Test
+    public void testUnLink() {
+        // slot unLink 6 from 7 read 7 after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xb9, 0x06, 0x07, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 7 after delay");
+        Assert.assertEquals("Request read slot 7",
+                "BB 07 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
     LocoNetInterfaceScaffold lnis;
     SlotManager slotmanager;
     int status;
@@ -1258,7 +1320,7 @@ public class SlotManagerTest {
     ProgListener lstn;
     int releaseTestDelay = 150; // probably needs to be at least 150, see SlotManager.postProgDelay
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -1282,7 +1344,8 @@ public class SlotManagerTest {
                 stoppedTimer = true;
             }
         };
-
+        slotmanager.slotMap = Arrays.asList(new SlotMapEntry(0,127)); // still all slots
+        slotmanager.slotScanInterval = 5;  // 5ms instead of 50
         status = -999;
         value = -999;
         startedShortTimer = false;
@@ -1298,12 +1361,12 @@ public class SlotManagerTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         slotmanager.dispose();
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManagerTest.class);
 
 }

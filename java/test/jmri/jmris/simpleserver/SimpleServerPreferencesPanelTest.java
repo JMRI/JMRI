@@ -1,5 +1,6 @@
 package jmri.jmris.simpleserver;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,20 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class SimpleServerPreferencesPanelTest {
+public class SimpleServerPreferencesPanelTest extends PreferencesPanelTestBase<SimpleServerPreferencesPanel> {
 
-    @Test public void testCtor() {
-        SimpleServerPreferencesPanel a = new SimpleServerPreferencesPanel();
-        assertThat(a).isNotNull();
-    }
-
-    @BeforeEach public void setUp() {
+    @Override
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-    }
-
-    @AfterEach public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+        prefsPanel = new SimpleServerPreferencesPanel();
     }
 
 }

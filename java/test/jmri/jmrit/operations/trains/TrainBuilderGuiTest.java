@@ -3,10 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -32,7 +29,7 @@ import jmri.util.swing.JemmyUtil;
 public class TrainBuilderGuiTest extends OperationsTestCase {
 
     // allow 2 retries of intermittent tests
-    @org.junit.Rule
+    @Rule
     public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(2);
 
     private TrainManager tmanager;
@@ -48,7 +45,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        Setup.setPromptFromStagingEnabled(true);
+        Setup.setStagingPromptFromEnabled(true);
 
         // two sets of cars in staging
         JUnitOperationsUtil.initOperationsData();
@@ -113,7 +110,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        Setup.setPromptToStagingEnabled(true);
+        Setup.setStagingPromptToEnabled(true);
         
         Train train2 = tmanager.getTrainById("2");
 

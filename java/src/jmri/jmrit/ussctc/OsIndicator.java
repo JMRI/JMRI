@@ -23,7 +23,7 @@ import jmri.implementation.DefaultConditionalAction;
 public class OsIndicator implements Constants {
 
     static String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
-    final static String namePrefix = logixPrefix + ":" + commonNamePrefix + "OsIndicator" + commonNameSuffix; //NOI18N
+    final static String namePrefix = logixPrefix + ":" + commonNamePrefix + "OsIndicator" + commonNameSuffix; // NOI18N
 
     /**
      * Nobody can build anonymous object
@@ -52,16 +52,16 @@ public class OsIndicator implements Constants {
                 getLogix(nameP);
         if (l == null) {
             l = InstanceManager.getDefault(jmri.LogixManager.class).
-                    createNewLogix(nameP, ""); //NOI18N
+                    createNewLogix(nameP, ""); // NOI18N
         }
         l.deActivateLogix();
         // Find/create conditional and add
         Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class)
-                .getConditional(l, nameP + "C1"); //NOI18N
+                .getConditional(l, nameP + "C1"); // NOI18N
         if (c == null) {
             c = InstanceManager.getDefault(jmri.ConditionalManager.class)
-                    .createNewConditional(nameP + "C1", ""); //NOI18N
-            l.addConditional(nameP + "C1", -1); //NOI18N
+                    .createNewConditional(nameP + "C1", ""); // NOI18N
+            l.addConditional(nameP + "C1", -1); // NOI18N
         }
 
         // Load variable into the Conditional
@@ -79,10 +79,10 @@ public class OsIndicator implements Constants {
         List<ConditionalAction> actionList = c.getCopyOfActions();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                 Conditional.Action.SET_TURNOUT, output,
-                Turnout.CLOSED, " ")); //NOI18N
+                Turnout.CLOSED, " ")); // NOI18N
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                 Conditional.Action.SET_TURNOUT, output,
-                Turnout.THROWN, " ")); //NOI18N
+                Turnout.THROWN, " ")); // NOI18N
         c.setAction(actionList);          // string data
 
         // and put it back in operation
@@ -105,14 +105,14 @@ public class OsIndicator implements Constants {
         Logix l = InstanceManager.getDefault(jmri.LogixManager.class).
                 getLogix(nameP);
         if (l == null) {
-            throw new jmri.JmriException("Logix does not exist"); //NOI18N
+            throw new jmri.JmriException("Logix does not exist"); // NOI18N
         }
 
         // Find/create conditional and add
         Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class)
-                .getConditional(l, nameP + "C1"); //NOI18N
+                .getConditional(l, nameP + "C1"); // NOI18N
         if (c == null) {
-            throw new jmri.JmriException("Conditional does not exist"); //NOI18N
+            throw new jmri.JmriException("Conditional does not exist"); // NOI18N
         }
 
         // Load variables from the Conditional

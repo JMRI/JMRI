@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.GraphicsEnvironment;
+
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
@@ -16,18 +17,18 @@ import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.rules.TemporaryFolder;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test simple functioning of ConsistToolFrame
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class ConsistToolFrameTest {
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void testCtor() {
@@ -41,7 +42,7 @@ public class ConsistToolFrameTest {
     public void testCtorWithCSpossible() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // overwrite the default consist manager set in setUp for this test
-        // so that we can check initilization with CSConsists possible.
+        // so that we can check initialization with CSConsists possible.
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager() {
             @Override
             public boolean isCommandStationConsistPossible() {
@@ -74,7 +75,7 @@ public class ConsistToolFrameTest {
         cs.pushDeleteWithDismiss();
         Assert.assertFalse("Consists removed after delete", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -103,7 +104,7 @@ public class ConsistToolFrameTest {
         cs.pushDeleteWithDismiss();
         Assert.assertFalse("Consists removed after delete", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -130,7 +131,7 @@ public class ConsistToolFrameTest {
         // delete the consist
         cs.pushDeleteWithDismiss();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -154,12 +155,15 @@ public class ConsistToolFrameTest {
         Assert.assertEquals("Throttle has right consist address",
                 new DccLocoAddress(1, false),
                 to.getConsistAddressValue());
+        
         to.pushReleaseButton();
+        to.getQueueTool().waitEmpty();  // pause for Throttle to release
+        
         to.requestClose();
-
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        to.getQueueTool().waitEmpty();  // pause for frame to close
+        
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -173,7 +177,7 @@ public class ConsistToolFrameTest {
         // this should trigger a warning dialog, which we want to dismiss.
         JemmyUtil.pressDialogButton("Message", "OK");
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -186,7 +190,7 @@ public class ConsistToolFrameTest {
         int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
         cs.startRosterScan();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
         Assert.assertEquals("No New Consists after scan", numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
@@ -203,7 +207,7 @@ public class ConsistToolFrameTest {
         int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
         cs.startRosterScan();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
         Assert.assertEquals("No New Consists after scan", numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
@@ -236,14 +240,14 @@ public class ConsistToolFrameTest {
         int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
         cs.startRosterScan();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
         Assert.assertEquals("1 New Consists after scan", numConsists + 1, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
-    @Before
-    public void setUp() throws java.io.IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
-        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE));
+        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder);
         JUnitUtil.resetProfileManager(profile);
         JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
@@ -251,7 +255,7 @@ public class ConsistToolFrameTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

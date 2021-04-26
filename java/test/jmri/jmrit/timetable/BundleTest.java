@@ -1,7 +1,9 @@
 package jmri.jmrit.timetable;
 
 import java.util.Locale;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle Class
@@ -14,9 +16,9 @@ public class BundleTest {
         Assert.assertEquals("Open Timetable", Bundle.getMessage("TimeTableAction"));  // NOI18N
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessage() {
-            Bundle.getMessage("FFFFFTTTTTTT");  // NOI18N
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));  // NOI18N
     }
 
     @Test
@@ -25,9 +27,9 @@ public class BundleTest {
         Assert.assertEquals("One -- Two", Bundle.getMessage("LabelTrain", "One", "Two"));  // NOI18N
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessageArg() {
-            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});  // NOI18N
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));  // NOI18N
     }
 
     @Test public void testLocaleMessage() {
@@ -40,12 +42,12 @@ public class BundleTest {
         Assert.assertEquals("ID-Nummer 1", Bundle.getMessage(Locale.GERMANY, "IDnumber", 1));  // NOI18N
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

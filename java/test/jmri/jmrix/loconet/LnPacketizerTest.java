@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +32,7 @@ public class LnPacketizerTest {
     }
 
     @Test
-    @Ignore("may be causing hang on travis and appveyor")
+    @Disabled("may be causing hang on travis and appveyor")
     public void testStartThreads() {
        lnp.connectPort(new LnPortController(memo){
             @Override
@@ -51,8 +53,7 @@ public class LnPacketizerTest {
 
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -69,14 +70,14 @@ public class LnPacketizerTest {
        memo.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
         lnp = new LnPacketizer(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         lnp = null;
         memo = null;

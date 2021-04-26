@@ -12,7 +12,7 @@
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20160602">
   <meta name="keywords" content="JMRI help Signal Mast Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,7 +24,7 @@
       <a href=
       "images/SignalMasts-num.png"><img src=
       "images/SignalMasts-num.png" width="619" height="166" align=
-      "right"></a>
+      "right" alt="Signal mast table"></a>
 
       <p>JMRI Signals Masts are managed in the Signal Mast Table.
       You access this tool from the <b>Tools &gt; Tables &gt;
@@ -59,7 +59,7 @@
         driver cannot be changed once a Signal Mast has been
         created. <a href="images/VirtMastPanelApply.png"><img src=
         "images/VirtMastPanelApply.png" width="239" height="159"
-        align="right"></a></li>
+        align="right" alt="Add signal mast"></a></li>
 
         <li>Edit Logic, this button opens the Signaling Pairs panel
         showing the lines for this Signal Mast, from which you can
@@ -90,12 +90,8 @@
       to open the Edit window.</p>
 
       <p>Use the <b>Store</b> item in the File menu to save signal
-      information to disk. This information is saved with the
-      configuration in an XML file, along with control panel setup
-      and similar stuff. To store your panels in the same file
-      (recommended), select <b>File &gt; Store &gt; Store
-      Configuration and Panels To File...</b> or select <b>Panels
-      &gt; Store panels...</b> in the main JMRI window.</p>
+      information to disk. See <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <p>For more information on creating and displaying panels,
       including how to show signals on your panels, please see the

@@ -1,12 +1,12 @@
 package apps.gui3.dp3;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -22,7 +22,7 @@ public class DecoderPro3WindowTest {
         JUnitUtil.dispose(t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -33,7 +33,7 @@ public class DecoderPro3WindowTest {
         jmri.InstanceManager.setDefault(jmri.jmrit.symbolicprog.ProgrammerConfigManager.class,new jmri.jmrit.symbolicprog.ProgrammerConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

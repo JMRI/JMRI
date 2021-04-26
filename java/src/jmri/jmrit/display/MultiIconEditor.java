@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -72,13 +70,7 @@ public class MultiIconEditor extends JPanel {
         IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
             super(init);
             savedIndex = index;
-            addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    pickIcon();
-                }
-            }
-            );
+            addActionListener(a -> pickIcon());
         }
 
         int savedIndex;

@@ -1,14 +1,17 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
@@ -20,13 +23,9 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Exports the location roster into a comma delimitated file (CSV).
+ * Exports the location roster into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2018
  *
@@ -36,17 +35,6 @@ public class ExportLocations extends XmlFile {
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
-
-    /**
-     * Does nothing.
-     *
-     * @param delimiter the new delimiter for the CSV file
-     * @deprecated since 4.19.4 without direct replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
-        // does nothing; maintained to prevent API breakage
-    }
 
     public void writeOperationsLocationFile() {
         makeBackupFile(defaultOperationsFilename());
@@ -66,7 +54,7 @@ public class ExportLocations extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -120,7 +108,7 @@ public class ExportLocations extends XmlFile {
 
             List<Location> locations = locationManager.getLocationsByNameList();
             for (Location location : locations) {
-                for (Track track : location.getTrackByNameList(null)) {
+                for (Track track : location.getTracksByNameList(null)) {
 
                     StringBuilder trainDirections = new StringBuilder();
                     String[] directions = Setup.getDirectionStrings(
@@ -265,7 +253,7 @@ public class ExportLocations extends XmlFile {
                             pickUpRestriction,
                             pickUpRestrictions.toString(),
                             track.getScheduleName(),
-                            Bundle.getMessage(track.getScheduleMode() == Track.MATCH ? "Match" : "Sequential"),
+                            track.getScheduleModeName(),
                             alternateTrackName,
                             track.getPoolName(),
                             track.getMinimumLength(),

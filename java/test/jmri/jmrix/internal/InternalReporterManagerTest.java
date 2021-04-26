@@ -2,15 +2,14 @@ package jmri.jmrix.internal;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the InternalReporterManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
- * @author	Mark Underwood 2012
- * @author	Paul Bender 2016
+ * @author Bob Jacobsen 2003, 2006, 2008
+ * @author Mark Underwood 2012
+ * @author Paul Bender 2016
  */
 public class InternalReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -18,9 +17,29 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     public String getSystemName(String i) {
         return "IR" + i;
     }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "My Reporter 6";
+    }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
+    
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -29,7 +48,7 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
         l = new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

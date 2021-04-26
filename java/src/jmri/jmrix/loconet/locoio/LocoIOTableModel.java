@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Configurer for LocoIO hardware.
+ * Marked Legacy/Deprecated since 2017 version 4.12.
  * <p>
- * This code derves the SV values from the user-selected mode and address; this
+ * This code derives the SV values from the user-selected mode and address; this
  * is different from earlier versions where the user was expected to do the
  * derivation manually. This derivation is complicated by the fact that the
  * "mode" SV[port.0] in the LocoIO doesn't fully specify the operation being
@@ -59,20 +60,21 @@ public class LocoIOTableModel
     public static final int WRITECOLUMN = 8;   // "write" button
     public static final int HIGHESTCOLUMN = WRITECOLUMN + 1;
 
-    private String[] msg = new String[_numRows];
+    private final String[] msg = new String[_numRows];
 
     /**
      * Reference to the JTextField which should receive status info.
      */
     private JTextField status = null;
 
-    /**
+    /*
      * Reference to JLabel for firmware version.
      */
     //private JLabel     firmware = null;
     //private JLabel     locobuffer = null;
     /**
      * Primary constructor. Initializes all the arrays.
+     * @param ldata the data.
      */
     public LocoIOTableModel(LocoIOData ldata) {
         super();
@@ -88,7 +90,7 @@ public class LocoIOTableModel
         // String s = "LocoIOTableModel: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
         if (evt.getPropertyName().equals("PortChange")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
-            int v = i.intValue();
+            int v = i;
             // log.debug("{} ROW = {}", i, v);
             fireTableRowsUpdated(v, v);
         }
@@ -256,10 +258,10 @@ public class LocoIOTableModel
         } else if (col == ADDRCOLUMN) {
             int a;
             if (((String) (value)).startsWith("0x")) {
-                a = Integer.valueOf(((String) value).substring(2), 16).intValue();
+                a = Integer.valueOf(((String) value).substring(2), 16);
             } else {
                 try {
-                    a = Integer.valueOf((String) value, 10).intValue();
+                    a = Integer.valueOf((String) value, 10);
                 } catch (NumberFormatException ne) {
                     log.warn("Enter a hex or decimal number for the Port Address first");
                     return;

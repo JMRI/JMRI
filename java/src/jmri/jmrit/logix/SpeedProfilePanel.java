@@ -97,6 +97,7 @@ public class SpeedProfilePanel extends JPanel {
             if (editable) {
                 _table.setTransferHandler(new ImportEntryTranferHandler());                    
                 _table.setDragEnabled(true);
+                _scrollPane.setTransferHandler(new ImportEntryTranferHandler());
             } else {
                 _table.setTransferHandler(new ExportEntryTranferHandler());                    
                 _table.setDragEnabled(true);
@@ -299,7 +300,6 @@ public class SpeedProfilePanel extends JPanel {
                 case REVERSE_SPEED_COL:
                     return new JTextField(8).getPreferredSize().width;
                 default:
-                    // fall out
                     break;
             }
             return new JTextField(8).getPreferredSize().width;
@@ -317,7 +317,7 @@ public class SpeedProfilePanel extends JPanel {
                 case STEP_COL:
                     return Math.round((float)(entry.getKey()*126)/1000);
                 case THROTTLE_COL:
-                    return (float)(entry.getKey())/1000;
+                    return threeDigit.format((float)(entry.getKey())/1000);
                 case FORWARD_SPEED_COL:
                     float speed = entry.getValue().getForwardSpeed();
                     return threeDigit.format(speed);
@@ -340,10 +340,10 @@ public class SpeedProfilePanel extends JPanel {
             try {
             switch (col) {
                 case FORWARD_SPEED_COL:
-                    entry.getValue().setForwardSpeed(Float.parseFloat((String)value));
+                    entry.getValue().setForwardSpeed(Float.parseFloat(((String)value).replace(',', '.')));
                     return;
                 case REVERSE_SPEED_COL:
-                    entry.getValue().setReverseSpeed(Float.parseFloat((String)value));
+                    entry.getValue().setReverseSpeed(Float.parseFloat(((String)value).replace(',', '.')));
                     return;
                 default:
                     // fall out
@@ -364,6 +364,9 @@ public class SpeedProfilePanel extends JPanel {
 
         @Override
         public Transferable createTransferable(JComponent c) {
+            if (!(c instanceof JTable )){
+                return null;
+            }
             JTable table = (JTable) c;
             int row = table.getSelectedRow();
             if (row < 0) {
@@ -399,7 +402,7 @@ public class SpeedProfilePanel extends JPanel {
             if (!support.isDrop()) {
                 return false;            
             }
-            TransferHandler.DropLocation loc = support.getDropLocation();
+/*            TransferHandler.DropLocation loc = support.getDropLocation();
             if (!(loc instanceof JTable.DropLocation)) {
                 return false;
             }
@@ -407,7 +410,8 @@ public class SpeedProfilePanel extends JPanel {
             if (!(comp instanceof JTable)) {
                 return false;            
             }       
-            JTable table = (JTable)comp;
+            JTable table = (JTable)comp;*/
+            JTable table = _table;
             try {
                 Transferable trans = support.getTransferable();
                 Object obj = trans.getTransferData(_entryFlavor);

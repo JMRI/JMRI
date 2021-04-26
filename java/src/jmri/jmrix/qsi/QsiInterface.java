@@ -4,7 +4,7 @@ package jmri.jmrix.qsi;
  * Define interface for sending and receiving messages to the QSI command
  * station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface QsiInterface {
 

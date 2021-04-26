@@ -1,14 +1,18 @@
 package jmri.jmrix.openlcb;
 
+import java.beans.PropertyVetoException;
+
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -20,6 +24,11 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     public String getSystemName(int i) {
         return "MTX010203040506070" + i + ";X010203040506070" + (i - 1);
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "X0102030405060702;X0102030405060701";
     }
 
     @Test
@@ -33,8 +42,8 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -50,23 +59,43 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+    
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
+        String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
+        testRegisterDuplicateSystemName(l, s1, s2);
+    }
+    
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 100, l.getOutputInterval());
+        l.getMemo().setOutputInterval(21);
+        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set & get in memo
+        Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
+        l.setOutputInterval(50);
+        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // interval stored in AbstractTurnoutManager
+        Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         l = new OlcbTurnoutManager(memo);
     }
  
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -89,17 +118,18 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             }
         });
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @AfterClass
-    public static void postClassTearDown() throws Exception {
+    @AfterAll
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
+            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

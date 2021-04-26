@@ -2,6 +2,11 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -10,13 +15,10 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainSwitchListEditFrameTest extends OperationsTestCase {
 
@@ -70,6 +72,9 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         // test the two check box options
         JemmyUtil.enterClickAndLeave(f.switchListRealTimeCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        // clear dialogue box
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ResetSwitchLists"), Bundle.getMessage("ButtonNo"));
 
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));

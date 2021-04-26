@@ -12,10 +12,8 @@ import jmri.util.JUnitUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test handling of null, or non-existent Named Beans. Testing of existent, or
@@ -28,7 +26,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
     public JsonNamedBeanHttpServiceTest() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -36,7 +34,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

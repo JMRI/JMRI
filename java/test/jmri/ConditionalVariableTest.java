@@ -7,12 +7,14 @@ import jmri.util.JUnitUtil;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariableTest {
 
@@ -940,8 +942,7 @@ public class ConditionalVariableTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -955,8 +956,10 @@ public class ConditionalVariableTest {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

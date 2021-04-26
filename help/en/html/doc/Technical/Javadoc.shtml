@@ -62,15 +62,26 @@
       <code>package-info.java</code></a> file 
       to contain any needed
       package-level documentation. 
-      (It can also contain any 
+      It can also contain any 
       <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a>
-      you want to apply to all classes in the package)
+      you want to apply to all classes in the package.
+      If you don't have any annotations you want to include, please include
+
+<pre style="font-family: monospace;">      
+      @edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
+</pre>
+
+      which helps some of our build systems minimize recompilation.
+      (For more on that annotation, see 
+      <a href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/edu/umd/cs/findbugs/annotations/DefaultAnnotation.html">here</a>)
+      
+      <p>
       Previously, we used <code>package.html</code> files 
       for this. It's not a
       high priority to replace existing <code>package.html</code>
       files, but new packages should include a
       <code>package-info.java</code> copied from
-      <code>java/package-info.java</code>.</p>
+      <code>java/package-info.java</code> instead, see above.</p>
 
       <p>A nice discussion of how to use the "deprecated" label in
       documentation is available on the <a href=
@@ -212,7 +223,7 @@ should include explanatory text:
 
       <p>For a summary of current Javadoc errors in the code, see
       <a href=
-      "http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
+      "https://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
       Builds Jenkins job</a>.</p>
 
       <h2>UML and UmlGraph for Developers</h2>UML is a broad and
@@ -231,15 +242,15 @@ should include explanatory text:
 
       <p>Our Ant Javadoc processing makes basic UML class diagrams
       automatically. For an example, see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor
+      "https://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor
       interface Javadoc</a>, then click the "Show UML Class Diagram
       link" to see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram
+      "https://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram
       embedded in it</a>. For a more complex example see <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
       ProgModeSelector class Javadoc</a> then click the "Show UML
       Class Diagram link" to see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
       class diagram embedded in it</a>.</p>
 
       <p>You can also define custom UML diagrams using <a href=
@@ -249,7 +260,7 @@ should include explanatory text:
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">
       java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file. The
       resulting diagrams are visible in the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
       Javadoc output</a>.
       <p>PlantUml can also be used for standalone diagrams, c.f.
       <a href="SystemStructure.shtml">the connection sequence diagram</a>.

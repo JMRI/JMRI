@@ -3,6 +3,8 @@ package jmri;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
+import org.apiguardian.api.API;
+
 /**
  * Method for invoking user code at startup time.
  * <p>
@@ -10,7 +12,10 @@ import javax.swing.JMenuBar;
  * implementation, the user can update configuration, etc at startup time.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2012
+ * @deprecated since 4.22.1 without replacement
  */
+@Deprecated
+@API(status = API.Status.DEPRECATED)
 public class JmriPlugin {
 
     public static void start(JFrame mainFrame, JMenuBar menuBar) {

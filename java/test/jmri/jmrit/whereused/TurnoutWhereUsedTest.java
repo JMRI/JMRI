@@ -1,7 +1,9 @@
 package jmri.jmrit.whereused;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the TurnoutWhereUsed Class
@@ -16,12 +18,12 @@ public class TurnoutWhereUsedTest {
         Assert.assertNotNull("exists", ctor);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

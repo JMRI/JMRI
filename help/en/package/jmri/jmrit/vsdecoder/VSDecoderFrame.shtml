@@ -27,6 +27,25 @@
       This is the quick reference page for the Decoder window
       (old GUI) in the JMRI Virtual Sound Decoder tool.<br>
       <br>
+      <strong>Note:</strong>
+      The old GUI represents the first version of VSD (2011).
+      The old GUI was not available to VSD users since about 2013.
+      In favour of an easier maintenance the programs of the
+      old GUI were removed in JMRI 4.19.5 Test Release.
+      <br>
+      For users who call VSD from JMRI PanelPro, nothing changes.
+      For users who call VSD from a Jython script, theoretically
+      an error message could occur. In this case please report
+      about the error via
+      <a href="https://groups.io/g/jmriusers/topics">JMRI users</a>
+      or via 
+      <a href="https://github.com/JMRI/JMRI/issues">Github</a>.
+      Thank you.
+      <br>
+      Here is an example for the old GUI: VSDecoderPane. In the
+      new GUI it's called VSDManagerFrame.<br>
+      <br>
+      <hr>
       What is this thing? The Virtual Sound Decoder ("VSDecoder"
       for short) sits on your computer, listening to its assigned
       decoder address. When you do things to the throttle (change
@@ -41,10 +60,10 @@
       speakers on your computer, of course!<br>
       You must also have the OpenAL or JavaSound audio system
       installed on your computer. See the <a href=
-      "http://jmri.org/help/en/html/tools/Audio.shtml">JMRI
+      "https://jmri.org/help/en/html/tools/Audio.shtml">JMRI
       Audio Help Pages</a> for details.<br>
       <br>See the <a href=
-      "http://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml">
+      "https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml">
       DecoderPro Manual Pages</a> for more details on Virtual
       Sound Decoder.<br>
       <br>

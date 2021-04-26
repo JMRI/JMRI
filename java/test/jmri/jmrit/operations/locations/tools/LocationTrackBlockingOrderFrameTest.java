@@ -10,8 +10,8 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -39,7 +39,7 @@ public class LocationTrackBlockingOrderFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", bof);
         
         // confirm default track block order
-        for (Track t : westford.getTrackList()) {
+        for (Track t : westford.getTracksList()) {
             Assert.assertEquals("Track blocking order", 0 , t.getBlockingOrder());
         }
         
@@ -52,7 +52,7 @@ public class LocationTrackBlockingOrderFrameTest extends OperationsTestCase {
         
         // test reset button
         JemmyUtil.enterClickAndLeave(ltbo.resetButton);
-        for (Track t : westford.getTrackList()) {
+        for (Track t : westford.getTracksList()) {
             Assert.assertEquals("Track blocking order", 0 , t.getBlockingOrder());
         }
         

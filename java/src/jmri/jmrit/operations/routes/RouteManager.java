@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
  */
-public class RouteManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class RouteManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged"; // NOI18N
 
@@ -289,19 +290,9 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteManager.class);

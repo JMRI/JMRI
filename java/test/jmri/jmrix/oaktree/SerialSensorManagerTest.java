@@ -1,15 +1,14 @@
 package jmri.jmrix.oaktree;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -53,9 +52,8 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue("3rd UA 2", n0.getSensorsActive());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
@@ -76,7 +74,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         l = new SerialSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

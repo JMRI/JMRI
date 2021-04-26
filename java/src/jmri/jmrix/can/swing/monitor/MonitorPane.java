@@ -52,7 +52,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
-            log.debug("Message: " + l.toString());
+            log.debug("Message: {}", l.toString());
         }
         logMessage("M: ",l);
     }
@@ -60,7 +60,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
-            log.debug("Reply: " + l.toString());
+            log.debug("Reply: {}", l.toString());
         }
         logMessage("R: ",l);
     }

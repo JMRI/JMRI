@@ -15,7 +15,8 @@
 
            <!--#include virtual="../../../parts/SidebarLayoutAutomation.shtml" -->
              
-           <dt><h3 style="padding-left: 1em;"><a href="../../hardware/">Supported Hardware</a></h3></dt>
+           <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
+           <!-- ABOVE LINE IS AN ABSOLUTE ADDRESS LINK TO ALLOW FILES IN LOWER LEVEL DIRECTORIES TO REFERENCE THIS SIDEBAR FILE -->
            <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>    
            <!-- If someday we want to show the whole list, use #include virtual="../../../parts/SidebarSupportedHardware.shtml" -->    
 

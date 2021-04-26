@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.io.File;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -8,12 +10,10 @@ import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -160,16 +160,16 @@ public class CbusNodeTableDataModelTest {
         t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         
+        
         Assert.assertEquals("tcis empty to start", 0 ,tcis.outbound.size() );
+        
+        t.provideNodeByNodeNum(123);
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeTableDataModel.getPreferredWidth(999) > 0 );
-        Assert.assertNull("column class null", t.getColumnClass(999));
         
         Assert.assertTrue("cell not editable", 
             t.isCellEditable(0,CbusNodeTableDataModel.NODE_NUMBER_COLUMN) == false );
@@ -359,26 +359,22 @@ public class CbusNodeTableDataModelTest {
         t.dispose();
     
     }
-    
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     private CbusNodeTableDataModel t;
     
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws java.io.IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         tcis.terminateThreads();

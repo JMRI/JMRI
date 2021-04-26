@@ -1,21 +1,21 @@
 package jmri.jmrix.lenz.xnetsimulator.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.lenz.xnetsimulator.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
  *
- * Description: tests for the ConnectionConfigXml class
+ * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +23,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         xmlAdapter = null;

@@ -354,12 +354,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } catch (java.io.FileNotFoundException ex3) {
             storingErrorEncountered(null, "storing to file " + file.getName(),
                     "File not found " + file.getName(), null, null, ex3);
-            log.error("FileNotFound error writing file: " + ex3.getLocalizedMessage());
+            log.error("FileNotFound error writing file: {}", ex3.getLocalizedMessage());
             return false;
         } catch (java.io.IOException ex2) {
             storingErrorEncountered(null, "storing to file " + file.getName(),
                     "IO error writing file " + file.getName(), null, null, ex2);
-            log.error("IO error writing file: " + ex2.getLocalizedMessage());
+            log.error("IO error writing file: {}", ex2.getLocalizedMessage());
             return false;
         }
         return true;
@@ -825,6 +825,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             String userName,
             Throwable exception) {
         // format and log a message (note reordered from arguments)
+//        System.out.format("creationErrorEncountered: %s%n", exception.getMessage());
+//        System.out.format("creationErrorEncountered: %s, %s, %s, %s, %s, %s%n", adapter, operation, description, systemName, userName, exception == null ? null : exception.getMessage());
         ErrorMemo e = new ErrorMemo(
                 adapter, operation, description,
                 systemName, userName, exception, "loading");

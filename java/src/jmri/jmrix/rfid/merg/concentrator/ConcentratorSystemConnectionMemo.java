@@ -25,7 +25,9 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  *
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
+ * @deprecated since 4.21.1 use {@link RfidSystemConnectionMemo} directly.
  */
+@Deprecated
 public class ConcentratorSystemConnectionMemo extends RfidSystemConnectionMemo {
 
     public ConcentratorSystemConnectionMemo() {
@@ -38,15 +40,11 @@ public class ConcentratorSystemConnectionMemo extends RfidSystemConnectionMemo {
      */
     @Override
     public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
-        this.sensorManager = new ConcentratorSensorManager(this);
-        InstanceManager.setSensorManager(getSensorManager());
-        this.reporterManager = new ConcentratorReporterManager(this);
-        InstanceManager.setReporterManager(getReporterManager());
+        super.configureManagers(sensorManager,reporterManager);
     }
 
     @Override
     public void dispose() {
-        InstanceManager.deregister(this, ConcentratorSystemConnectionMemo.class);
         super.dispose();
     }
 

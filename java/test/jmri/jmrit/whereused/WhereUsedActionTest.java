@@ -2,7 +2,9 @@ package jmri.jmrit.whereused;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the WhereUsedAction Class
@@ -18,13 +20,13 @@ public class WhereUsedActionTest {
         action.actionPerformed(null);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -5,9 +5,8 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorPane class.
@@ -64,15 +63,14 @@ public class MonitorPaneTest {
         memo.dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

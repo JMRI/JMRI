@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame providing access to the loco database on the Tams MC
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 

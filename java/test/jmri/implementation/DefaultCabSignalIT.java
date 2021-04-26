@@ -16,13 +16,15 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 
 /**
  * Integration Tests for DefaultCabSignal
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class DefaultCabSignalIT {
 
@@ -37,7 +39,7 @@ public class DefaultCabSignalIT {
     public void testSignalSequenceIdTag() throws jmri.JmriException {
         runSequence(new DefaultRailCom("ID1234","Test Tag"));
     }
-    
+
     protected void runSequence(Object initialBlockContents) throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display test panel file
@@ -49,7 +51,7 @@ public class DefaultCabSignalIT {
         // Find new window by name (should be more distinctive, comes from sample file)
         EditorFrameOperator to = new EditorFrameOperator("Cab Signal Test");
         LayoutEditor le = (LayoutEditor) jmri.util.JmriJFrame.getFrame("Cab Signal Test");
-        InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).addEditorPanel(le);
+        InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).add(le);
         jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         smlm.initialise();
         for(jmri.SignalMastLogic sml:smlm.getSignalMastLogicList()) {
@@ -67,12 +69,12 @@ public class DefaultCabSignalIT {
             return InstanceManager.sensorManagerInstance().provideSensor("IS_ROUTING_DONE").getKnownState() == jmri.Sensor.ACTIVE;
         },
                 "LayoutEditor stabilized sensor went ACTIVE");
-        
+
         BlockManager bm = InstanceManager.getDefault(jmri.BlockManager.class);
         SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
         TurnoutManager tm = InstanceManager.getDefault(jmri.TurnoutManager.class);
 
-        ThreadingUtil.runOnLayout( ()-> { 
+        ThreadingUtil.runOnLayout( ()-> {
              try{
                 tm.provideTurnout("EastTurnout").setState(Turnout.CLOSED);
                 tm.provideTurnout("WestTurnout").setState(Turnout.CLOSED);
@@ -116,7 +118,7 @@ public class DefaultCabSignalIT {
         checkBlock(cs,"MainlineBlock","EastTurnoutOSBlock","IF$vsm:AAR-1946:PL-1-high-abs($0005)");
 
         //throw the turnout behind the train.
-        ThreadingUtil.runOnLayout( ()-> { 
+        ThreadingUtil.runOnLayout( ()-> {
              try{
               tm.provideTurnout("WestTurnout").setState(Turnout.THROWN);
              } catch (JmriException je) {
@@ -126,7 +128,7 @@ public class DefaultCabSignalIT {
         checkBlock(cs,"MainlineBlock","EastTurnoutOSBlock","IF$vsm:AAR-1946:PL-1-high-abs($0005)");
 
         // throw the turnout in front of the train
-        ThreadingUtil.runOnLayout( ()-> { 
+        ThreadingUtil.runOnLayout( ()-> {
              try{
               tm.provideTurnout("EastTurnout").setState(Turnout.THROWN);
              } catch (JmriException je) {
@@ -134,7 +136,7 @@ public class DefaultCabSignalIT {
         });
         // and verify the state changes.
         checkBlock(cs,"MainlineBlock","","");
-        
+
         cs.dispose(); // verify no exceptions
 
         // and close the editor window
@@ -143,11 +145,11 @@ public class DefaultCabSignalIT {
 
     private void moveBlock(String startingBlock,String endingBlock) {
         // use sensors to move to the next block.
-        ThreadingUtil.runOnLayout( ()-> { 
+        ThreadingUtil.runOnLayout( ()-> {
              try{
                  SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
                  sm.provideSensor(endingBlock).setState(Sensor.ACTIVE);
-                 sm.provideSensor(startingBlock).setState(Sensor.INACTIVE); 
+                 sm.provideSensor(startingBlock).setState(Sensor.INACTIVE);
              } catch (JmriException je) {
              }
         });
@@ -167,8 +169,7 @@ public class DefaultCabSignalIT {
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -180,17 +181,18 @@ public class DefaultCabSignalIT {
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalIT.class);
 
 }

@@ -1,12 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 /**
  *
@@ -21,7 +23,7 @@ public class CbusNodeNVTableDataModelTest {
         t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull();
         
     }
     
@@ -31,20 +33,20 @@ public class CbusNodeNVTableDataModelTest {
         t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
-        Assert.assertEquals( "Column Count after construction", 7,t.getColumnCount() );
+        assertThat(t.getColumnCount()).isEqualTo(7);
         
         CbusNode myNode = new CbusNode(memo,12345);
         
         t.setNode(myNode);
         
-        Assert.assertTrue( t.getRowCount()== 0 );
-        Assert.assertEquals( "Column Count", 7,t.getColumnCount() );
+        assertThat(t.getRowCount()).isEqualTo(0);
+        assertThat(t.getColumnCount()).isEqualTo(7);
         
         for (int i = 0; i <t.getColumnCount(); i++) {
-            Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
+            assertThat(t.getColumnName(i)).isNotEmpty();
         }
         
-        Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
+        assertThat(t.getColumnName(999)).isEqualTo("unknown 999");
         
         t.dispose();
         myNode.dispose();
@@ -64,115 +66,116 @@ public class CbusNodeNVTableDataModelTest {
         
         t.setNode(myNode);
         
-        Assert.assertTrue( t.getRowCount()== 3 );
+        assertThat(t.getRowCount()).isEqualTo(3);
         
-        Assert.assertTrue("cell not editable", 
-            t.isCellEditable(0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN) == false );
-        Assert.assertTrue("cell editable", 
-            t.isCellEditable(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) == true );
+        assertThat(t.isCellEditable(0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isFalse();
         
-        Assert.assertTrue("column class int", 
-            t.getColumnClass(CbusNodeNVTableDataModel.NV_NUMBER_COLUMN) == Integer.class );
-        Assert.assertTrue("column class string", 
-            t.getColumnClass(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) == String.class );
+        assertThat(t.isCellEditable(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isTrue();
+        
+        assertThat(t.getColumnClass(CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(Integer.class);
+        assertThat(t.getColumnClass(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)).isEqualTo(String.class);
         
         
-        Assert.assertTrue("getValueAt NV_NUMBER_COLUMN number", (Integer)t.getValueAt(
-            0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)== 1 );
-        Assert.assertTrue("getValueAt NV_NUMBER_COLUMN number", (Integer)t.getValueAt(
-            1,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)== 2 );
-        Assert.assertTrue("getValueAt NV_NUMBER_COLUMN number", (Integer)t.getValueAt(
-            2,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)== 3 );
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(1);
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(3);
+        
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(-1);
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)).isEqualTo("");
         
         
-        Assert.assertEquals("NV_CURRENT_HEX_COLUMN","",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN) );
+        assertThat(t.getValueAt(0,999)).isNull();
+        assertThat(t.isTableDirty()).isFalse();
+        assertThat(t.getCountDirty()).isEqualTo(0);
         
-        Assert.assertEquals("NV_CURRENT_BIT_COLUMN","",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN) );
-        
-        Assert.assertTrue("NV_SELECT_COLUMN",-1== (Integer) t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
-        
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        
-        Assert.assertEquals("NV_SELECT_BIT_COLUMN","",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
-            
-        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
-        
-        Assert.assertTrue("isTableDirty nac", t.isTableDirty() == false );
-        Assert.assertTrue("getCountDirty nac", t.getCountDirty() == 0 );
-        
-        t.setValueAt(0,0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN);
-        Assert.assertTrue("isTableDirty no edit", t.isTableDirty() == false );
+        t.setValueAt(0,0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN);
+        assertThat(t.isTableDirty()).isFalse();
         
         t.setValueAt(0,0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         t.setValueAt(122,1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         
-        Assert.assertTrue("isTableDirty edit 0", t.isTableDirty() == true );
-        Assert.assertTrue("getCountDirty 1", t.getCountDirty() == 2 );
+        assertThat(t.isTableDirty()).isTrue();
+        assertThat(t.getCountDirty()).isEqualTo(2);
         
         t.setValueAt(255,2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         
-        Assert.assertTrue("isTableDirty 2", t.isTableDirty() == true );
+        assertThat(t.isTableDirty()).isTrue();
         
-        Assert.assertTrue("getValueAt NV_NUMBER_COLUMN number", (Integer)t.getValueAt(
-            0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)== 1 );
-        Assert.assertTrue("getValueAt NV_NUMBER_COLUMN number", (Integer)t.getValueAt(
-            1,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)== 2 );
-        Assert.assertTrue("getValueAt NV_NUMBER_COLUMN number", (Integer)t.getValueAt(
-            2,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)== 3 );
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(1);
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(2);
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_NUMBER_COLUMN)).isEqualTo(3);
         
-        Assert.assertEquals("NV_CURRENT_HEX_COLUMN","",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN) );
-        Assert.assertEquals("NV_CURRENT_HEX_COLUMN","",t.getValueAt( 
-            1,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN) );
-        Assert.assertEquals("NV_CURRENT_HEX_COLUMN","",t.getValueAt( 
-            2,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN) );
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN)).isEqualTo("");
         
-        Assert.assertEquals("NV_CURRENT_BIT_COLUMN","",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN) );
-        Assert.assertEquals("NV_CURRENT_BIT_COLUMN","",t.getValueAt( 
-            1,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN) );
-        Assert.assertEquals("NV_CURRENT_BIT_COLUMN","",t.getValueAt( 
-            2,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN) );
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN)).isEqualTo("");
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN)).isEqualTo("");
+
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(0);
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(122);
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(255);
         
-        Assert.assertTrue("NV_SELECT_COLUMN",0== (Integer) t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
-        Assert.assertTrue("NV_SELECT_COLUMN",122== (Integer) t.getValueAt( 
-            1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
-        Assert.assertTrue("NV_SELECT_COLUMN",255== (Integer) t.getValueAt( 
-            2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN)).isEqualTo("00");
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN)).isEqualTo("7A");
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN)).isEqualTo("FF");
         
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","00",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","7A",t.getValueAt( 
-            1,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","FF",t.getValueAt( 
-            2,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
+        assertThat(t.getValueAt( 0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)).isEqualTo("0000 0000");
+        assertThat(t.getValueAt( 1,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)).isEqualTo("0111 1010");
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)).isEqualTo("1111 1111");
         
-        Assert.assertEquals("NV_SELECT_BIT_COLUMN","0000 0000",t.getValueAt( 
-            0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
-        Assert.assertEquals("NV_SELECT_BIT_COLUMN","0111 1010",t.getValueAt( 
-            1,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
-        Assert.assertEquals("NV_SELECT_BIT_COLUMN","1111 1111",t.getValueAt( 
-            2,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
         
         t.resetNewNvs();
-        Assert.assertTrue("isTableDirty after reset", t.isTableDirty() == false );
+        assertThat(t.isTableDirty()).isFalse();
         
-        Assert.assertTrue("NV_SELECT_COLUMN after reset",-1== (Integer) t.getValueAt( 
-            1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
+        assertThat(t.getValueAt( 2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(-1);
         
         t.setValueAt(255,0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-        // t.setValueAt(122,1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-        // t.setValueAt(255,2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         
         t.dispose();
         myNode.dispose();
     
+    }
+    
+    @Test
+    public void testHexBinSets() {
+        
+        t = new CbusNodeNVTableDataModel(
+            memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
+        
+        CbusNode myNode = new CbusNode(memo,12345);        
+        
+        // set node to 3 node vars , param6
+        myNode.getNodeParamManager().setParameters(new int[]{7,1,2,3,4,5,3,7});
+        
+        t.setNode(myNode);
+        
+        // set all 3 NVs to 0
+        myNode.getNodeNvManager().setNVs(new int[]{3,0,0,0});
+        
+        assertThat(t.getValueAt(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(0);
+        
+        t.setValueAt("01", 0, CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN);
+        assertThat(t.getValueAt(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(1);
+        
+        t.setValueAt("FF", 0, CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN);
+        assertThat(t.getValueAt(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(255);
+        
+        t.setValueAt("0000 0000", 0, CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(0);
+        
+        t.setValueAt("1100 0011", 0, CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(195);
+        
+        t.setValueAt("not binary", 0, CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN);
+        assertThat(t.getValueAt(0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN)).isEqualTo(195);
+        
+        t.dispose();
+        myNode.dispose();
     }
     
     private CanSystemConnectionMemo memo;
@@ -180,8 +183,7 @@ public class CbusNodeNVTableDataModelTest {
     private CbusNodeNVTableDataModel t;
     
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -191,7 +193,7 @@ public class CbusNodeNVTableDataModelTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
         tcis.terminateThreads();

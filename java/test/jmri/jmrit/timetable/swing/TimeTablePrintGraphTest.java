@@ -1,18 +1,22 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for the TimeTablePrintGraph Class
  * @author Dave Sand Copyright (C) 2019
  */
 public class TimeTablePrintGraphTest {
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testGraph() {
@@ -24,19 +28,15 @@ public class TimeTablePrintGraphTest {
         JUnitAppender.suppressWarnMessage("No scale found, defaulting to HO");
 
     }
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
-          Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
        // use reflection to reset the static file location.
        try {

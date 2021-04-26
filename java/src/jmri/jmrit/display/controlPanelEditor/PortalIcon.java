@@ -2,13 +2,12 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.catalog.NamedIcon;
@@ -17,6 +16,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.Portal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,9 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     private boolean _hide = false; // true when arrow should NOT show entry into ToBlock
 
     public PortalIcon(Editor editor) {
-        // super ctor call to make sure this is an icon label
         super(editor);
-        initMap();
+        _status = PortalIcon.HIDDEN;
+        makeIconMap();
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -49,10 +49,27 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setPortal(portal);
     }
 
-    public void initMap() {
-        ControlPanelEditor ed = (ControlPanelEditor) _editor;
+    static public HashMap<String, NamedIcon> getPaletteMap() {
+        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps("Portal");
+        if (families.keySet().isEmpty()) {
+            log.debug("Adding missing PortalIconMap");
+            ItemPalette.loadMissingItemType("Portal");
+            families = ItemPalette.getFamilyMaps("Portal");
+        }
+        HashMap<String, NamedIcon> iconMap = families.get("Standard");
+        if (iconMap == null) {
+            for (HashMap<String, NamedIcon> map : families.values()) {
+                iconMap = map;
+                break;
+            }
+        }
+        // return a copy, not ItemPalette's map!
+        return cloneMap(iconMap, null);
+    }
+    
+    public void makeIconMap() {
+        _iconMap = ((ControlPanelEditor)_editor).getPortalIconMap();
         int deg = getDegrees();
-        _iconMap = PositionableIcon.cloneMap(ed.getPortalIconMap(), this);
         if (!_regular) {
             NamedIcon a = _iconMap.get(TO_ARROW);
             NamedIcon b = _iconMap.get(FROM_ARROW);
@@ -64,23 +81,36 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setIcon(_iconMap.get(HIDDEN));
     }
 
+    /**
+     * PortalIcon family is managed by editor, ignoring per icon setting if any.
+     * @return the family name as set in editor.
+     */
     @Override
+    public String getFamily() {
+        return ((ControlPanelEditor)_editor).getPortalIconFamily();
+    }
+
+    protected void setMap(HashMap<String, NamedIcon> map) {
+        _iconMap = map;
+    }
+
+    @Override
+    @Nonnull
     public Positionable deepClone() {
         PortalIcon pos = new PortalIcon(_editor, getPortal());
         return finishClone(pos);
     }
 
     protected Positionable finishClone(PortalIcon pos) {
-        pos._iconMap = cloneMap(_iconMap, pos);
         pos._regular = _regular;
         pos._hide = _hide;
         pos._status = _status;
         return super.finishClone(pos);
     }
 
-    protected void setIcon(String name, NamedIcon ic) {
+    public void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon " + getPortal().getName() + " put icon key= \"" + name + "\" icon= " + ic);
+            log.debug("Icon {} put icon key= \"{}\" icon= {}", getPortal().getName(), name, ic);
         }
         NamedIcon icon = cloneIcon(ic, this);
         icon.scale(getScale(), this);
@@ -88,16 +118,30 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         _iconMap.put(name, icon);
     }
 
+    /**
+     * Renamed in 4.21.5
+     * @param set true for regular, false for opposite (flipped in edit frame)
+     * @deprecated since 4.21.5 use setArrowOrientation(set)
+     */
+    @Deprecated
     public void setArrowOrientatuon(boolean set) {
+        setArrowOrientation(set);
+    }
+
+    /**
+     * Set direction of portal icon, renamed in 4.21.5
+     * @param set true for regular, false for opposite (flipped in edit frame)
+     */
+    public void setArrowOrientation(boolean set) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon " + getPortal().getName() + " setArrowOrientatuon regular=" + set + " from " + _regular);
+            log.debug("Icon {} setArrowOrientation regular={} from {}", getPortal().getName(), set, _regular);
         }
         _regular = set;
     }
 
     public void setHideArrows(boolean set) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon " + getPortal().getName() + " setHideArrows hide=" + set + " from " + _hide);
+            log.debug("Icon {} setHideArrows hide={} from {}", getPortal().getName(), set, _hide);
         }
         _hide = set;
     }
@@ -208,6 +252,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     @Override
+    @Nonnull
     public String getNameString() {
         Portal p = getPortal();
         if (p == null) return "No Portal Defined";
@@ -221,39 +266,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     @Override
     public boolean doViemMenu() {
         return false;
-    }
-
-    private void setPositionableMenu(JPopupMenu popup) {
-        JCheckBoxMenuItem lockItem = new JCheckBoxMenuItem(Bundle.getMessage("LockPosition"));
-        lockItem.setSelected(!isPositionable());
-        lockItem.addActionListener(new ActionListener() {
-            Positionable comp;
-            JCheckBoxMenuItem checkBox;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                comp.setPositionable(!checkBox.isSelected());
-            }
-
-            ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
-                comp = pos;
-                checkBox = cb;
-                return this;
-            }
-        }.init(this, lockItem));
-        popup.add(lockItem);
-    }
-
-    private void setShowCoordinatesMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLocationXY", getX(), getY()));
-        edit.addActionListener(CoordinateEdit.getCoordinateEditAction(this));
-        popup.add(edit);
-    }
-
-    private void setDisplayLevelMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLevel_", getDisplayLevel()));
-        edit.addActionListener(CoordinateEdit.getLevelEditAction(this));
-        popup.add(edit);
     }
 
     private void setRemoveMenu(JPopupMenu popup) {
@@ -272,11 +284,11 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     @Override
     public boolean showPopUp(JPopupMenu popup) {
         popup.add(getNameString());
-        setPositionableMenu(popup);
+        _editor.setPositionableMenu(this, popup);
         if (isPositionable()) {
-            setShowCoordinatesMenu(popup);
+            _editor.setShowCoordinatesMenu(this, popup);
         }
-        setDisplayLevelMenu(popup);
+        _editor.setDisplayLevelMenu(this, popup);
         popup.addSeparator();
         popup.add(CoordinateEdit.getScaleEditAction(this));
         popup.add(CoordinateEdit.getRotateEditAction(this));
@@ -285,20 +297,29 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return true;
     }
 
+    @Override 
+    public void setLocation(int x, int y ) {
+        ControlPanelEditor cpe = (ControlPanelEditor)_editor;
+        if (cpe.getCircuitBuilder().portalIconMove(this, x, y)) {
+            super.setLocation(x, y);
+        }
+    }
+
     @Override
-    public boolean setRotateMenu(JPopupMenu popup) {
+    public boolean setRotateMenu(@Nonnull JPopupMenu popup) {
         return false;
     }
 
     @Override
-    public boolean setScaleMenu(JPopupMenu popup) {
+    public boolean setScaleMenu(@Nonnull JPopupMenu popup) {
         return false;
     }
 
     @Override
-    public boolean setEditItemMenu(JPopupMenu popup) {
+    public boolean setEditItemMenu(@Nonnull JPopupMenu popup) {
         return false;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalIcon.class);
+
 }

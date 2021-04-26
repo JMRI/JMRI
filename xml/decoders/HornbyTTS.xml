@@ -12,30 +12,34 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
- 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.15" lastUpdated="20190524"/>
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.15" lastUpdated="20190520"/>			
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.14" lastUpdated="20190330"/>
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.13" lastUpdated="20181208"/>
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.12" lastUpdated="20181016"/>
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.11" lastUpdated="20181012"/>
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.10" lastUpdated="20181010"/>
-	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.9" lastUpdated="20181009"/>
-	<version author="Brian Jackson" version="1.10" lastUpdated="20181001"/>
-	<version author="Brian Jackson" version="1.9" lastUpdated="20180916"/>
-	<version author="Brian Jackson" version="1.8" lastUpdated="20180912"/>
-	<version author="Brian Jackson" version="1.7" lastUpdated="20180901"/>
-	<version author="Brian Jackson" version="1.6" lastUpdated="20180826"/>
-	<version author="Brian Jackson" version="1.5" lastUpdated="20180825"/>
-	<version author="Dave Heap" version="1.4" lastUpdated="23170520"/>
-        <version author="Dave Heap" version="1.3" lastUpdated="20170520"/>
-        <version author="Nigel Cliffe" version="1.1" lastUpdated="20150121"/>
-        <version author="Nigel Cliffe" version="1" lastUpdated="20141001"/>	
+    <version author="Dave Heap" version="1.19" lastUpdated="20200508"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.18" lastUpdated="20200426"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.17" lastUpdated="20200106"/>
+    <version author="Marc N Fournier forfoum@videotron.ca" version="1.16" lastUpdated="20190917"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.15" lastUpdated="20190524"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.15" lastUpdated="20190520"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.14" lastUpdated="20190330"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.13" lastUpdated="20181208"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.12" lastUpdated="20181016"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.11" lastUpdated="20181012"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.10" lastUpdated="20181010"/>
+    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.9" lastUpdated="20181009"/>
+    <version author="Brian Jackson" version="1.10" lastUpdated="20181001"/>
+    <version author="Brian Jackson" version="1.9" lastUpdated="20180916"/>
+    <version author="Brian Jackson" version="1.8" lastUpdated="20180912"/>
+    <version author="Brian Jackson" version="1.7" lastUpdated="20180901"/>
+    <version author="Brian Jackson" version="1.6" lastUpdated="20180826"/>
+    <version author="Brian Jackson" version="1.5" lastUpdated="20180825"/>
+    <version author="Dave Heap" version="1.4" lastUpdated="23170520"/>
+    <version author="Dave Heap" version="1.3" lastUpdated="20170520"/>
+    <version author="Nigel Cliffe" version="1.1" lastUpdated="20150121"/>
+    <version author="Nigel Cliffe" version="1" lastUpdated="20141001"/>
     <!--  Version 1 - First version of Hornby TTS sound decoder, based on manual for Duke of Gloucester from Hornby website. -->
-    <!--  Version 1.1 adds Class 37 diesel, from manuals posted by user on jmriusers Yahoo Group. 	-->
+    <!--  Version 1.1 adds Class 37 diesel, from manuals posted by user on jmriusers Yahoo Group.   -->
     <!--  Version 1.2, update to include more recent TTS releases and product ID numbers,  May/June 2016
-            From now on, product IDs follow numeric form, used by Hornby in their documentation. 
+            From now on, product IDs follow numeric form, used by Hornby in their documentation.
             Code change in JMRI to allow automatic identification on CV159 (product number) added to make use of these numbers.
-            Product ID's: 
+            Product ID's:
                 Class 37 = 147   (and "Cl37" label carried over from v1.1)
                 Class 40 = 151
                 Class 47 = 149
@@ -46,190 +50,665 @@
                 9F 2-10-0 = 655  (CV159=143, CV158 = 2)
                 4F 0-6-0 = 145
                 A4 Mallard & Gadwall = 135
-				
+
     -->
-    <!--  Version 1.3 - update to differentiate between 2P & 9F, based on a composite productID of CV159(low) & CV158(high). 	-->
-    <!--  Version 1.4 - update to replace "Hornby TTS A4 4-6-0" with "Hornby TTS A4 4-6-2" (typo). 	-->
+    <!--  Version 1.3 - update to differentiate between 2P & 9F, based on a composite productID of CV159(low) & CV158(high).    -->
+    <!--  Version 1.4 - update to replace "Hornby TTS A4 4-6-0" with "Hornby TTS A4 4-6-2" (typo).  -->
     <!--  Version 1.5 - update to include more recent TTS releases and product ID numbers
-			Separate class 37 and class 40, add original class 37 tts chip product no and correct label error on class 66 which should be class 67. 
-            Product ID's: 	
-				Class 37 = 147 
-				Class 31 = 161
-				Class 67 = 153 corrected class label from class 66
-				Class 20 = 159 
-    -->	
+                        Separate class 37 and class 40, add original class 37 tts chip product no and correct label error on class 66 which should be class 67.
+            Product ID's:
+                                Class 37 = 147
+                                Class 31 = 161
+                                Class 67 = 153 corrected class label from class 66
+                                Class 20 = 159
+    -->
     <!--  Version 1.6 added:
-				Class 60 product ID 163 
-				P2 2-8-2 product ID 133 
+                                Class 60 product ID 163
+                                P2 2-8-2 product ID 133
     -->
     <!--  Version 1.7 new locomotives added:
-				Class 08			= 175
-				Class 43 (valenta)  = 181
-				Class 43 (MTU)  	= 157
-				Added option of factory reset of sound volumes only using value of 5 in CV8
-    -->	
+                                Class 08            = 175
+                                Class 43 (valenta)  = 181
+                                Class 43 (MTU)      = 157
+                                Added option of factory reset of sound volumes only using value of 5 in CV8
+    -->
     <!--  Version 1.8 added Class 5MT 4-6-0 Black 5 ID 171  -->
     <!--  Version 1.9 added and explanation of how composite product ID value is achieved:
-				Hall Class 4-6-0					ID 2699  CV 158 = 10,  CV159 = 139 
-				Castle Class 4-6-0 					ID 	165 hidden awaiting manual to associate the correct sound level cv's
-				S15 Class 4-6-0   					ID	179 hidden awaiting manual to associate the correct sound level cv's
-				Coronation Class 4-6-2 				ID	177 hidden awaiting manual to associate the correct sound level cv's
-				Peppercorn Class A1 4-6=2 (Tornado)	ID 	129 hidden awaiting manual to associate the correct sound level cv's
-				Merchant Navy Class 4-6-2			ID 	169	hidden awaiting manual to associate the correct sound level cv's
-				6000 King Class 4-6-0				ID 	141 hidden awaiting manual to associate the correct sound level cv's
-				Lord Nelson Class 4-6-2				ID 	183 hidden awaiting manual to associate the correct sound level cv's
-				
+                                Hall Class 4-6-0                    ID 2699  CV 158 = 10,  CV159 = 139
+                                Castle Class 4-6-0                  ID  165 hidden awaiting manual to associate the correct sound level cv's
+                                S15 Class 4-6-0                     ID  179 hidden awaiting manual to associate the correct sound level cv's
+                                Coronation Class 4-6-2              ID  177 hidden awaiting manual to associate the correct sound level cv's
+                                Peppercorn Class A1 4-6=2 (Tornado) ID  129 hidden awaiting manual to associate the correct sound level cv's
+                                Merchant Navy Class 4-6-2           ID  169 hidden awaiting manual to associate the correct sound level cv's
+                                6000 King Class 4-6-0               ID  141 hidden awaiting manual to associate the correct sound level cv's
+                                Lord Nelson Class 4-6-2             ID  183 hidden awaiting manual to associate the correct sound level cv's
+
     -->
     <!--  Version 1.10 King and Merchant Navy class Visible in list after finding sound manual -->
     <!--  Version 1.11 the following alterations and additions have been made
-				Peppercorn A1 Tornado now showing in list live after receiving copy of sound manual 
-				Class 08 missing sound level CV's added and corrected error in V1.7 regarding CV166 having two horn definitions
+                                Peppercorn A1 Tornado now showing in list live after receiving copy of sound manual
+                                Class 08 missing sound level CV's added and corrected error in V1.7 regarding CV166 having two horn definitions
     -->
     <!--  Version 1.12 make the following Locomotives Visible after receiving Manuals - Thanks to Hornby Hobbies
-				Castle Class 4-6-0 					ID 	139 
-				S15 Class 4-6-0   					ID	179 
-				Coronation Class 4-6-2 				ID	177
-				Lord Nelson Class 4-6-2				ID 	183
-				Corrections to HST (Valenta)  missing sound levels
-				
-				Sound level CV's split into 5 sections to make updating easier.  
-				Track 1 sound levels (CV's 160 161,177)
-				Quick Set Volume settings (CV's 178,182)
-				Diesel Locomotives track 2 volumes (CV's 162 - 180)
-				Steam locomotives track 2 sound levels (CV's 162 - 181)
-				Start delay and Notching (CV 201 and CV's 210 - 215)
-				
-				Sound settings reorganised so that volume sliders are in Function order and all main Loco sounds are grouped.
+                                Castle Class 4-6-0                  ID  139
+                                S15 Class 4-6-0                     ID  179
+                                Coronation Class 4-6-2              ID  177
+                                Lord Nelson Class 4-6-2             ID  183
+                                Corrections to HST (Valenta)  missing sound levels
+
+                                Sound level CV's split into 5 sections to make updating easier.
+                                Track 1 sound levels (CV's 160 161,177)
+                                Quick Set Volume settings (CV's 178,182)
+                                Diesel Locomotives track 2 volumes (CV's 162 - 180)
+                                Steam locomotives track 2 sound levels (CV's 162 - 181)
+                                Start delay and Notching (CV 201 and CV's 210 - 215)
+
+                                Sound settings reorganised so that volume sliders are in Function order and all main Loco sounds are grouped.
     -->
     <!--  Version 1.13 altered CV Version low versionID to minimum of 10 where neccessary to allow new Vent Van to be correctly identified  -->
     <!-- NOTE - FOR DECODERS WITH IDENTICAL CV159 VALUES, CV158 IS USED AS THE LOW BYTE AND CV159 THE HIGH BYTE
-			EXAMPLE   CV 158 = 10 BINARY IS 00001010  CV159 = 139 BINARY IS 10001011
-			COMPOSITE PRODUCT ID VALUE BECOMES 0000101010001011 WHICH IN DECIMAL IS 2699
-    -->	
-    <!--  Version 1.14 added J36 Class 0-6-0       ID 185	-->
-    <!--  Version 1.5 added Class 66               ID 153       -->	
-    <!--  Version 1.16 added class 50              ID 189    -->
-   <decoder>
+                        EXAMPLE   CV 158 = 10 BINARY IS 00001010  CV159 = 139 BINARY IS 10001011
+                        COMPOSITE PRODUCT ID VALUE BECOMES 0000101010001011 WHICH IN DECIMAL IS 2699
+    -->
+    <!--  Version 1.14 added J36 Class 0-6-0       ID 185
+    -->
+    <!--  Version 1.15 added Class 66              ID 153
+    -->
+    <!--  Version 1.15 added class 50              ID 189
+    -->
+    <!--  Version 1.16 added class 07 (Britannia)   ID 173
+          added the Fuction labels for the Britannia
+    -->
+    <!--  Version 1.17 added Rebuilt Merchant navy   ID 130
+          corrected id no for  class 66 to ID 187
+    -->
+    <!--  Version 1.18 Added Function labels for all locomotives
+          Removed Duplicate Locos hidden from JMRI
+    -->
+    <!--  Version 1.19 Cleanup. Unresolved: no suggested replacementModel for Hornby TTS Flying Scotsman  -->
+    <decoder>
         <family name="Hornby TTS Sound Decoder" mfg="Hornby" comment="">
             <model model="Hornby TTS Class 08" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="175">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Whistle Long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle 2 bursts</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Horn 3 Bursts</functionlabel>
+                    <functionlabel num="11" lockable="false">Horn 2 Bursts</functionlabel>
+                    <functionlabel num="12" lockable="false">Reverser</functionlabel>
+                    <functionlabel num="13" lockable="false">Air Release</functionlabel>
+                    <functionlabel num="14" lockable="false">Air Dump</functionlabel>
+                    <functionlabel num="15" lockable="true">Detonator</functionlabel>
+                    <functionlabel num="16" lockable="true">Couple</functionlabel>
+                    <functionlabel num="17" lockable="true">Un-Couple</functionlabel>
+                    <functionlabel num="18" lockable="true">Primer</functionlabel>
+                    <functionlabel num="19" lockable="true">Exhauster</functionlabel>
+                    <functionlabel num="20" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="21" lockable="false">Handbrake</functionlabel>
+                    <functionlabel num="22" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="23" lockable="true">Flange Squeal</functionlabel>
+                    <functionlabel num="24" lockable="false">Metal Door</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
             </model>
-			<model model="Hornby TTS Class 20" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="159">
-                <versionCV lowVersionID="10" highVersionID="132"/>
-                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
-                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
-            </model>
-			<model model="Hornby TTS Class 31" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="161">
+            <model model="Hornby TTS Class 20" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="159">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Horn High Two Bursts</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn Long High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Low 2 Bursts</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Spirax valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Coupling 1</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Coupling 2</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Class 31" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="161">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Coupling</functionlabel>
+                    <functionlabel num="23" lockable="false">Dispatch Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
             <model model="Hornby TTS Class 37" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="cl37,147">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn Long High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Long Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Alternative Door Slam</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Locomotive Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
             <model model="Hornby TTS Class 40" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="151">
                 <versionCV lowVersionID="120" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
-            </model>
-			<model model="Hornby TTS Class 43 HST (Valenta)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="181">    
-			    <versionCV lowVersionID="10" highVersionID="132"/>
-                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
-                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn Long High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Long Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Coupling</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Locomotive Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
             </model>
-			<model model="Hornby TTS Class 43 HST (MTU)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="157">    
-			    <versionCV lowVersionID="10" highVersionID="132"/>
-                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
-                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-            </model>
-            <model model="Hornby TTS Class 47" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="149">    
-			                <versionCV lowVersionID="10" highVersionID="132"/>
-                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
-                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-            </model>
-	   <model model="Hornby TTS Class 50" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="189">
+            <model model="Hornby TTS Class 43 HST (Valenta)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="181">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Cab Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn High-Low-High (Passing)</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn (Fancy)</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Driver's Safety Device (in Cab)</functionlabel>
+                    <functionlabel num="18" lockable="false">Hort High-Low(Prototype loco)</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn High-Low-High)prototype Loco)</functionlabel>
+                    <functionlabel num="20" lockable="true">Windscreen Wipers</functionlabel>
+                    <functionlabel num="21" lockable="false">AWS Test (in Cab)</functionlabel>
+                    <functionlabel num="22" lockable="false">Fire Bell Test</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Guard to Driver Buzzer (in cab)</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
             </model>
-		<model model="Hornby TTS Class 60" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="163">
+            <model model="Hornby TTS Class 43 HST (MTU)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="157">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Cab Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn Long High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Long Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="false">Driver's Safety Device (in Cab)</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="true">Windscreen Wipers</functionlabel>
+                    <functionlabel num="21" lockable="false">AWS Test (in Cab)</functionlabel>
+                    <functionlabel num="22" lockable="false">Fire Bell Test</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Guard to Driver Buzzer (in cab)</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Class 47" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="149">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn Long High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Long Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Coupling</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Locomotive Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Class 50" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="189">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low Short</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn High-Low Long</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="false">Horn Low High Short</functionlabel>
+                    <functionlabel num="11" lockable="false">Horn Low Short</functionlabel>
+                    <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="13" lockable="false">Brake Release</functionlabel>
+                    <functionlabel num="14" lockable="true">Traction Motor Blowers</functionlabel>
+                    <functionlabel num="15" lockable="true">Manual Lubrication Oil primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Lift Pump</functionlabel>
+                    <functionlabel num="17" lockable="true">Radiator Fan</functionlabel>
+                    <functionlabel num="18" lockable="false">Air Release</functionlabel>
+                    <functionlabel num="19" lockable="true">Flange Squeal</functionlabel>
+                    <functionlabel num="20" lockable="false">BIS Firebell</functionlabel>
+                    <functionlabel num="21" lockable="false">Horn Low High Long</functionlabel>
+                    <functionlabel num="22" lockable="false">Horn High Short</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Class 60" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="163">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn High Low High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Low High Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="true">Spirax Valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Coupling</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Class 66" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="187">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="true">Compressor</functionlabel>
+                    <functionlabel num="11" lockable="false">Cab Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">Spirax valve</functionlabel>
+                    <functionlabel num="13" lockable="false">Brake Release</functionlabel>
+                    <functionlabel num="14" lockable="false">Brake Application</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer and Alarm</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="False">Horn Medium Low</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Low (with squeak)</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Fancy</functionlabel>
+                    <functionlabel num="20" lockable="true">Windscreen Wipers</functionlabel>
+                    <functionlabel num="21" lockable="false">Horn Single "Toot"</functionlabel>
+                    <functionlabel num="22" lockable="false">Horn "Toot" Toot"</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
             </model>
             <model model="Hornby TTS Class 67" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Class 66" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
-                <versionCV lowVersionID="10" highVersionID="132"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Engine Start/Stop</functionlabel>
+                    <functionlabel num="2" lockable="False">Horn High-Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Horn Low-High</functionlabel>
+                    <functionlabel num="4" lockable="false">Brake Squeal</functionlabel>
+                    <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+                    <functionlabel num="8" lockable="true">Thrash</functionlabel>
+                    <functionlabel num="9" lockable="true">Cold Start Override</functionlabel>
+                    <functionlabel num="10" lockable="false">Horn Special</functionlabel>
+                    <functionlabel num="11" lockable="false">Door Slam</functionlabel>
+                    <functionlabel num="12" lockable="true">fan</functionlabel>
+                    <functionlabel num="13" lockable="false">Horn Long High</functionlabel>
+                    <functionlabel num="14" lockable="false">Horn Long Low</functionlabel>
+                    <functionlabel num="15" lockable="true">Primer</functionlabel>
+                    <functionlabel num="16" lockable="true">Slow Flange Squeal</functionlabel>
+                    <functionlabel num="17" lockable="True">Spirax Valve</functionlabel>
+                    <functionlabel num="18" lockable="false">Horn Short Low</functionlabel>
+                    <functionlabel num="19" lockable="false">Horn Short High</functionlabel>
+                    <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+                    <functionlabel num="21" lockable="false">Wagons Clanging</functionlabel>
+                    <functionlabel num="22" lockable="false">Coupling</functionlabel>
+                    <functionlabel num="23" lockable="false">Guards Whistle</functionlabel>
+                    <functionlabel num="24" lockable="false">Locomotive Buffering</functionlabel>
+                    <functionlabel num="25" lockable="true">Aux Function</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
+                <versionCV lowVersionID="90" highVersionID="99"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="true">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="4" lockable="true">Whistle Short</functionlabel>
+                    <functionlabel num="5" lockable="true">Injector</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Coal Pusher</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="False">Guards Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Slam Doors</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Duke of Gloucester" show="no" replacementModel="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
+                <versionCV lowVersionID="90" highVersionID="99"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-			<model model="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
-                <versionCV lowVersionID="90" highVersionID="99"/>
-                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
-                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Duke of Gloucester" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
-                <versionCV lowVersionID="90" highVersionID="99"/>
-                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
-                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
-                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-            <model model="Hornby TTS Flying Scotsman" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
+            <model model="Hornby TTS Flying Scotsman" show="no" replacementModel="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-			 <model model="Hornby TTS Class A1 and A3 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
+            <model model="Hornby TTS Class A1 and A3 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle 4 Bursts</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle 2 Bursts</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short Burst</functionlabel>
+                    <functionlabel num="5" lockable="false">Door Slamming</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
             </model>
             <model model="Hornby TTS Fowler 2P 4-4-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2703">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle medium</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 2 short Bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="True">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
             </model>
-			 <model model="Hornby TTS P2 2-8-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="133">
+            <model model="Hornby TTS P2 2-8-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="133">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>	
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Chime Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Chime Whistle Short</functionlabel>
+                    <functionlabel num="4" lockable="false">Chime Whistle 2 Bursts</functionlabel>
+                    <functionlabel num="5" lockable="false">Chime Whistle Passing</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="True">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
+            </model>
             <model model="Hornby TTS 9F 2-10-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="655">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle Long #1</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Medium</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Long #2</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 2 Bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="True">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
             </model>
             <model model="Hornby TTS 4F 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="145">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle medium</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 2 Bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="True">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
             </model>
             <model model="Hornby TTS A4 4-6-0" show="no" replacementModel="Hornby TTS A4 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="135">
                 <versionCV lowVersionID="10" highVersionID="120"/>
@@ -242,73 +721,390 @@
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Chime Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Chime Whistle Short 1</functionlabel>
+                    <functionlabel num="4" lockable="false">Chime Whistle Short 2</functionlabel>
+                    <functionlabel num="5" lockable="false">Doors slamming shut</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="True">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
             </model>
-			<model model="Hornby TTS 5MT Black 5 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="171">
+            <model model="Hornby TTS 5MT Black 5 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="171">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long + 2 short bursts</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle medium</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle medium + 2 short bursts </functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle very short 2 Bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="false">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Long </functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle Long 2 Bursts alternate</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle medium 'Fancy'</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle Very Short Alternative</functionlabel>
+                </functionlabels>
             </model>
-			<model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2699">
+            <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2699">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Castle Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="165">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle Low</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle 2 Bursts</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle High</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Castle Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="165">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS S15 Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="179">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle Long passing</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Short 1</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short 2</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 2 bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS S15 Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="179">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Coronation Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="177">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Medium</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 2 Bursts Hi/Lo</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Medium Alternative</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle Short Alternative</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle Short Hi</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle Short lo</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Coronation Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="177">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Peppercorn Class A1 4-6-2 (Tornado)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="129">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Medium 2 Bursts</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short Burst</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 'fancy'</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Coal Pusher</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Long then Short</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle 2 Short Bursts</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle 'Strange'</functionlabel>
+                    <functionlabel num="22" lockable="true">Blow Down</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Peppercorn Class A1 4-6-2 (Tornado)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="129">
                 <versionCV lowVersionID="1" highVersionID="1"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Merchant Navy Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="169">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Chime Whistle </functionlabel>
+                    <functionlabel num="3" lockable="false">Screech Whistle</functionlabel>
+                    <functionlabel num="4" lockable="false">Long Chime Whistle</functionlabel>
+                    <functionlabel num="5" lockable="false">Short Screech Whistle</functionlabel>
+                    <functionlabel num="6" lockable="false">Short Chime Whistle</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="True">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Merchant Navy Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="169">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS 6000 King Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="141">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Medium</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle Very Short</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Long Alternative</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle Passing</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle Medium Alternative</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle Short Alternative</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Rebuilt Merchant Navy Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="130">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="183">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Medium A</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Medium 2 Bursts</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Long Alternative</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle Long Fancy</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle Medium Squeeky</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle Short Alternative</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS 6000 King Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="141">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>
-			<model model="Hornby TTS J36 Class 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="185">
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle Medium</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle Long</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 2 bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="183">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-			</model>						
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle 2 short bursts A</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short Burst</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle Long 'Fancy'</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Short Burst B</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle Short Burst C</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle Tunnel</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle 2 Short Bursts B</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS J36 Class 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="185">
+                <versionCV lowVersionID="10" highVersionID="120"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle 3 short bursts </functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Short Burst A</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle Very Long 2 Bursts</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Blower</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Short Burst B</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle Fancy</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle Long Fancy</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle 2 Short Bursts 'Odd'</functionlabel>
+                </functionlabels>
+            </model>
+            <model model="Hornby TTS Class 7 (Britannia)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="173">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">Lights</functionlabel>
+                    <functionlabel num="1" lockable="true">Backgrnd Steam/exhaust/coasting</functionlabel>
+                    <functionlabel num="2" lockable="false">Whistle long</functionlabel>
+                    <functionlabel num="3" lockable="false">Whistle 4 Bursts</functionlabel>
+                    <functionlabel num="4" lockable="false">Whistle Long-Short</functionlabel>
+                    <functionlabel num="5" lockable="false">Whistle 1 Burst</functionlabel>
+                    <functionlabel num="6" lockable="false">Wheel Slip</functionlabel>
+                    <functionlabel num="7" lockable="false">Coal Shovelling</functionlabel>
+                    <functionlabel num="8" lockable="true">Blow Down</functionlabel>
+                    <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+                    <functionlabel num="10" lockable="true">Injector</functionlabel>
+                    <functionlabel num="11" lockable="true">Cylinder Cock</functionlabel>
+                    <functionlabel num="12" lockable="false">Brake</functionlabel>
+                    <functionlabel num="13" lockable="true">Tender Coal Pusher</functionlabel>
+                    <functionlabel num="14" lockable="false">Guard's Whistle</functionlabel>
+                    <functionlabel num="15" lockable="false">Coupler Clank</functionlabel>
+                    <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                    <functionlabel num="17" lockable="false">Toogle Chuff / Coast</functionlabel>
+                    <functionlabel num="18" lockable="false">Aux Lights</functionlabel>
+                    <functionlabel num="19" lockable="false">Whistle Long Lo-Hi</functionlabel>
+                    <functionlabel num="20" lockable="false">Whistle 2 Bursts Distant</functionlabel>
+                    <functionlabel num="21" lockable="false">Whistle 2 Bursts Hi-Lo</functionlabel>
+                    <functionlabel num="22" lockable="false">Whistle 2 Bursts</functionlabel>
+                </functionlabels>
+            </model>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes"/>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-            <variable CV="7" readOnly="yes" item="Decoder Version">
+            <variable CV="7" item="Decoder Version" readOnly="yes">
                 <decVal/>
                 <label>Decoder Version: </label>
             </variable>
@@ -324,12 +1120,12 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-            <variable CV="150" default="1" item="EMF Enable" comment="Motor Algorithm">
+            <variable CV="150" default="0" item="EMF Enable" comment="Motor Algorithm">
                 <enumVal>
-                    <enumChoice choice="1" value="1">
+                    <enumChoice choice="1" value="0">
                         <choice>1</choice>
                     </enumChoice>
-                    <enumChoice choice="2" value="2">
+                    <enumChoice choice="2" value="1">
                         <choice>2</choice>
                     </enumChoice>
                 </enumVal>
@@ -340,7 +1136,17 @@
                 <label>P(1) adjustment</label>
                 <comment>Range 0-255</comment>
             </variable>
+            <variable CV="151" default="64" item="EMF Static Config" tooltip="P(1) adjustment, 0-255" comment="Range 0-255" include="173">
+                <decVal max="255"/>
+                <label>P(1) adjustment</label>
+                <comment>Range 0-255</comment>
+            </variable>
             <variable CV="152" default="50" item="EMF Dynamic Config" tooltip="I(1) adjustment, 0-255" comment="Range 0-255">
+                <decVal max="255"/>
+                <label>I(1) adjustment</label>
+                <comment>Range 0-255</comment>
+            </variable>
+            <variable CV="152" default="32" item="EMF Dynamic Config" tooltip="I(1) adjustment, 0-255" comment="Range 0-255" include="173">
                 <decVal max="255"/>
                 <label>I(1) adjustment</label>
                 <comment>Range 0-255</comment>
@@ -355,7 +1161,21 @@
                 <label>I2 adjustment</label>
                 <comment>Range 0-255</comment>
             </variable>
-			 <variable CV="158" readOnly="yes" item="Decoder Sound Version" default="0">
+            <variable CV="154" default="115" item="EMF Option 4" tooltip="I2 adjustment, 0-255" comment="Range 0-255" include="173">
+                <decVal max="255"/>
+                <label>I2 adjustment</label>
+                <comment>Range 0-255</comment>
+            </variable>
+
+            <variable CV="156" readOnly="yes" item="Decoder Loco ID" default="0">
+                <decVal/>
+                <label>Decoder sound ID: </label>
+            </variable>
+            <variable CV="157" readOnly="yes" item="Decoder Motor Type" default="0">
+                <decVal/>
+                <label>Decoder sound ID: </label>
+            </variable>
+            <variable CV="158" readOnly="yes" item="Decoder Sound Version" default="0">
                 <decVal/>
                 <label>Decoder sound ID: </label>
             </variable>
@@ -363,682 +1183,742 @@
                 <decVal/>
                 <label>Decoder sound ID: </label>
             </variable>
-			
-			<!-- TRACK 1 SOUND LEVELS -->
-	
-			<variable CV="160" default="4" item="Sound Setting 22" tooltip="Range 0-8" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+
+            <!-- TRACK 1 SOUND LEVELS -->
+
+            <variable CV="160" default="4" item="Sound Setting 22" tooltip="Range 0-8" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Background Steam, Cylinder Cocks</label>
             </variable>
-			<variable CV="161" default="4" item="Sound Setting 23" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="161" default="4" item="Sound Setting 23" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Locomotive Running - Accelerating</label>
             </variable>
-			 <variable CV="161" default="4" item="Sound Setting 22" tooltip="F1 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
+            <variable CV="161" default="4" item="Sound Setting 22" tooltip="F1 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal max="8"/>
                 <label>Engine Startup/Shutdown</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 24" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="177" default="4" item="Sound Setting 24" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Locomotive Running - Decelerating</label>
             </variable>
-			
-			<!--QUICK SET VOLUME SETTINGS -->
-			
-<variable CV="178" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,655,2699,2703">
+
+            <!--QUICK SET VOLUME SETTINGS -->
+
+            <variable CV="178" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,655,2699,2703">
                 <decVal max="8"/>
                 <label>Quick Set Volume level</label>
             </variable>
-			<variable CV="182" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,169,171,175,177,179,181,183,185,189">
+            <variable CV="182" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,169,171,173,175,177,179,181,183,185,187,189">
                 <decVal max="8"/>
                 <label>Quick Set Volume level</label>
             </variable>
-						
-			<!-- DIESEL LOCOMOTIVES TRACK 2 SOUND LEVELS -->
-			
-	<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181">
+
+            <!-- DIESEL LOCOMOTIVES TRACK 2 SOUND LEVELS -->
+
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181,187">
                 <decVal max="8"/>
                 <label>Horn High-Low</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="189">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Horn High-Low Short</label>
             </variable>
-			 <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="163">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn Low-High</label>
-            </variable>				 
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181">
+            </variable>
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181,187">
                 <decVal max="8"/>
                 <label>Horn Low-High</label>
-			</variable>	
+            </variable>
             <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn High-Low</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="189">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Horn High-Low Long</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181,187,189">
                 <decVal max="8"/>
                 <label>Brake Squeal</label>
             </variable>
-			<variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="175">
+            <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
-                <label>Horn Three Bursts</label>	
+                <label>Horn Three Bursts</label>
             </variable>
-			<variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="189">
+            <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
-                <label>Horn Low-High Short</label>	
+                <label>Horn Low-High Short</label>
             </variable>
-			 <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="cl37,147,149,151,153,157,161,163,181">
+            <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="cl37,147,149,151,153,157,161,163,181,187">
                 <decVal max="8"/>
                 <label>Compressor</label>
             </variable>
-			<variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="159">
+            <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="159">
                 <decVal max="8"/>
-                <label>Horn High Two Bursts</label>	
+                <label>Horn High Two Bursts</label>
             </variable>
-			<variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="175">
+            <variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Horn Two Bursts</label>
             </variable>
-			<variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="189">
+            <variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Horn Low Short</label>
             </variable>
-			<variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+            <variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Door Slam</label>
             </variable>
-			<variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="175">
+            <variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="187">
+                <decVal max="8"/>
+                <label>Cab Door Slam</label>
+            </variable>
+            <variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Reverser</label>
-            </variable>	
-			<variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+            </variable>
+            <variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Fan</label>
             </variable>
-			<variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="153,189">
+            <variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="153,187,189">
                 <decVal max="8"/>
                 <label>Spirax Valve</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="175">
+            <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Air Release</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="Cl37,147,149,151,157,159">
+            <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="Cl37,147,149,151,157,159">
                 <decVal max="8"/>
                 <label>Horn Long High</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="161">
+            <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="161">
                 <decVal max="8"/>
                 <label>Horn High</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="163">
+            <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn High-Low-High</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 7"  tooltip="F13 Volume" comment="Range 0-8" include="153,189">
+            <variable CV="169" default="4" item="Sound Setting 7"  tooltip="F13 Volume" comment="Range 0-8" include="153,187,189">
                 <decVal max="8"/>
                 <label>Brake Release</label>
             </variable>
-			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="181">
+            <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn High Low High(passing)</label>
             </variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="175">
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Air Dump</label>
             </variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157">
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157">
                 <decVal max="8"/>
                 <label>Horn Long Low</label>
-			</variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="159">
-                <decVal max="8"/>
-                <label>Horn Low Two bursts</label>	
             </variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="189">
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="159">
                 <decVal max="8"/>
-                <label>Traction Motor Blowers</label>	
+                <label>Horn Low Two bursts</label>
             </variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="161">
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Traction Motor Blowers</label>
+            </variable>
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="161">
                 <decVal max="8"/>
                 <label>Horn Low</label>
-			</variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="163">
+            </variable>
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn Low High Low</label>
-			</variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume" comment="Range 0-8" include="153">
+            </variable>
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume" comment="Range 0-8" include="153,187">
                 <decVal max="8"/>
                 <label>Brake Application</label>
             </variable>
-			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="181">
+            <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn (Fancy)</label>
-			</variable>
-			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="175">
+            </variable>
+            <variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Detonator</label>
             </variable>
-			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="189">
+            <variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Manual Lubricating Oil Primer</label>
             </variable>
-			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157,159,161,163,181">
+            <variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Primer</label>
             </variable>
-			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="153">
+            <variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="153,187">
                 <decVal max="8"/>
                 <label>Primer and Alarm</label>
             </variable>
-			<variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="175">
+            <variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Couple</label>
             </variable>
-			<variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+            <variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181,187">
                 <decVal max="8"/>
                 <label>Slow flange squeal</label>
             </variable>
-			<variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="189">
+            <variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Lift Pump</label>
             </variable>
-			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="175">
+            <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Un-Couple</label>
             </variable>
-			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
+            <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
                 <decVal max="8"/>
                 <label>Spirax Valve</label>
             </variable>
-			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="189">
+            <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Radiator Fan</label>
             </variable>
-			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="153">
+            <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="153,187">
                 <decVal max="8"/>
                 <label>Horn Medium Low</label>
             </variable>
-			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="157,181">
+            <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="157,181">
                 <decVal max="8"/>
                 <label>Drivers Safety Device (In Cab)</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="175">
+            <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Primer</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="189">
+            <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Air Release</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157,159,161">
+            <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157,159,161">
                 <decVal max="8"/>
                 <label>Horn Short Low</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="163,153">
+            <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="163,153">
                 <decVal max="8"/>
                 <label>Horn Low</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="181">
+            <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="187">
+                <decVal max="8"/>
+                <label>Horn Low with squeak</label>
+            </variable>
+            <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn High-Low (prototype Loco) </label>
             </variable>
-			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="175">
+            <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Exhauster</label>
             </variable>
-			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="cl37,147,149,151,157,159,161">
+            <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="cl37,147,149,151,157,159,161">
                 <decVal max="8"/>
                 <label>Horn Short High</label>
             </variable>
-			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="163">
+            <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="187">
+                <decVal max="8"/>
+                <label>Horn fancy</label>
+            </variable>
+            <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn High</label>
             </variable>
-			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="181">
+            <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn High-Low-High (Prototype Loco)</label>
             </variable>
-			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="189">
+            <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Flange Squeal</label>
             </variable>
-			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="175">
+            <variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Compressor</label>
             </variable>
-			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="189">
+            <variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>BIS and Fire Bell</label>
             </variable>
-			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
+            <variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
                 <decVal max="8"/>
                 <label>Wagons Buffering</label>
             </variable>
-			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="153,157,181">
+            <variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="153,157,181,187">
                 <decVal max="8"/>
                 <label>Windscreen wipers</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="175">
+            <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Hand Brake</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
+            <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
                 <decVal max="8"/>
                 <label>Wagons Clanging</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="153">
+            <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="153">
                 <decVal max="8"/>
                 <label>Horn Single Toot</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="189">
+            <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Horn Low High Long</label>
             </variable>
-			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="157,181">
+            <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="157,181">
                 <decVal max="8"/>
                 <label>AWS Test (In Cab)</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="175">
+            <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="187">
+                <decVal max="8"/>
+                <label>AWS Single "TooT"</label>
+            </variable>
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Spirax Valve</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="149,151,161,163">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="149,151,161,163">
                 <decVal max="8"/>
                 <label>Coupling</label>
-			</variable>	
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="159">
-                <decVal max="8"/>
-                <label>Coupling 1</label>	
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="Cl37,147">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="159">
+                <decVal max="8"/>
+                <label>Coupling 1</label>
+            </variable>
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="Cl37,147">
                 <decVal max="8"/>
                 <label>Alternative Door Slam</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="157,181">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="157,181">
                 <decVal max="8"/>
                 <label>Firebell test</label>
-			</variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="153">
+            </variable>
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="153,187">
                 <decVal max="8"/>
                 <label>Horn "Toot Toot"</label>
-			</variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="189">
+            </variable>
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Horn High Short</label>
-			</variable>
-			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="175">
+            </variable>
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Flange Squeal</label>
             </variable>
-			 <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,163,181,189">
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,163,181,187,189">
                 <decVal max="8"/>
                 <label>Guards Whistle</label>
             </variable>
-			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="161">
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="161">
                 <decVal max="8"/>
                 <label>Dispatch Whistle</label>
             </variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="175">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Metal Door</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,161,163">
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,161,163">
                 <decVal max="8"/>
                 <label>Locomotive Buffering</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="189">
-                <decVal max="8"/>
-                <label>Wagon Buffering</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="159">
-                <decVal max="8"/>
-                <label>Coupling 2</label>	
             </variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="157,181">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="187,189">
+                <decVal max="8"/>
+                <label>Wagons Buffering</label>
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="159">
+                <decVal max="8"/>
+                <label>Coupling 2</label>
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="157,181">
                 <decVal max="8"/>
                 <label>Guard to Driver Buzzer (In Cab)</label>
-			</variable>
-			
-			<!-- STEAM LOCOMOTIVE TRACK 2 SOUND LEVELS -->	
-	
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="2699">
+            </variable>
+
+            <!-- STEAM LOCOMOTIVE TRACK 2 SOUND LEVELS -->
+
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="2699">
                 <decVal max="8"/>
                 <label>Whistle Low</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="DoG,131,135,145,169,175,177,179,183,185,655,2703">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="DoG,130,131,135,145,169,173,175,177,179,183,185,655,2703">
                 <decVal max="8"/>
                 <label>Whistle Long</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="129">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Chime Whistle</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="133">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Long</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="137">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="137">
                 <decVal max="8"/>
                 <label>Whistle Four Burst</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="141">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="141">
                 <decVal max="8"/>
                 <label>Whistle Medium </label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="145,169,177,179,183,2703">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="145,169,177,179,183,2703">
                 <decVal max="8"/>
                 <label>Whistle Long</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="165">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="165">
                 <decVal max="8"/>
                 <label>Whistle Long Passing</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="171">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Long + 2 short bursts</label>
             </variable>
-			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="655">
+            <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="655">
                 <decVal max="8"/>
                 <label>Whistle Long 1</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="137,2699">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="137,2699">
                 <decVal max="8"/>
                 <label>Whistle Two Bursts</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F2 Volume" comment="Range 0-8" include="185">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F2 Volume" comment="Range 0-8" include="185">
                 <decVal max="8"/>
                 <label>Whistle Three Short Bursts</label>
-            </variable>		
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="129">
+            </variable>
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Screech Whistle</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="DoG,131">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Coupler Clank</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="133">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Short</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="135">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="135">
                 <decVal max="8"/>
                 <label>Chime Whistle Short 1</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="141">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="141">
                 <decVal max="8"/>
                 <label>Whistle Long</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="145,169,171,179,655,2703">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="130,145,169,171,179,655,2703">
                 <decVal max="8"/>
                 <label>Whistle Medium</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="165">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="165">
                 <decVal max="8"/>
                 <label>Whistle Short 1</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="177">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Medium Two Bursts</label>
             </variable>
-			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="183">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Two short Bursts A</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="2699">
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Whistle 4 Bursts</label>
+            </variable>
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="2699">
                 <decVal max="8"/>
                 <label>Whistle High</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="129,135">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="129,135">
                 <decVal max="8"/>
                 <label>Chime Whistle Long</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="135">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="135">
                 <decVal max="8"/>
                 <label>Chime Whistle Short 2</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="DoG,131,141,145,169,179,2703">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="DoG,131,141,145,169,179,2703">
                 <decVal max="8"/>
                 <label>Whistle Short</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="133">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Two bursts</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="137,177,183">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="137,177,183">
                 <decVal max="8"/>
                 <label>Whistle Short Burst</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="185">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="185">
                 <decVal max="8"/>
                 <label>Whistle Short Burst A</label>
             </variable>
-			 <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="165">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="165">
                 <decVal max="8"/>
                 <label>Whistle Short 2</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="171">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Medium + Short Burst</label>
             </variable>
-			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="655">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="130">
+                <decVal max="8"/>
+                <label>Whistle Medium 2 Bursts</label>
+            </variable>
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="655">
                 <decVal max="8"/>
                 <label>Whistle Long 2</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="2699">
+            <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Whistle Long-short</label>
+            </variable>
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="130,2699">
                 <decVal max="8"/>
                 <label>Whistle Short</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="129">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Screech Whistle Short</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="DoG,131">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Injector</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="133">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Passing</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="137,135">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="137,135">
                 <decVal max="8"/>
                 <label>Doors Slamming</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="141,145,165,655,2703">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="141,145,165,655,2703">
                 <decVal max="8"/>
                 <label>Whistle Two Bursts</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="169">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>Whistle Very Short</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="171">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Very Short Two Burst</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="177">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Fancy</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="179">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Two Bursts Hi/Lo</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="183">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Long Fancy</label>
             </variable>
-			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="185">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="185">
                 <decVal max="8"/>
                 <label>Whistle Very Long 2 Bursts</label>
             </variable>
-			<variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="129">
+            <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Whistle 1 burst</label>
+            </variable>
+            <variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Chime Whistle Short</label>
-			</variable>		
-			<variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            </variable>
+            <variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="DoG,130,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Wheel Slip</label>
-            </variable>   
-		    <variable CV="167" default="4" item="Sound Setting 6"  tooltip="F7 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            </variable>
+            <variable CV="167" default="4" item="Sound Setting 6"  tooltip="F7 Volume"  comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Coal Shovelling</label>
             </variable>
-		    <variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,179,183,185,655,2699,2703">
+            <variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,173,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Blow Down</label>
             </variable>
-			<variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="177">
+            <variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Coal Pusher</label>
             </variable>
-		    <variable CV="169" default="4" item="Sound Setting 8"   tooltip="F9 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="169" default="4" item="Sound Setting 8"   tooltip="F9 Volume" comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Safety Valve</label>
-            </variable>	
-		    <variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="129,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            </variable>
+            <variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="129,130,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Injector</label>
-            </variable>	
-			<variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="DoG,131">
+            </variable>
+            <variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Coal Pusher</label>
             </variable>
-         	<variable CV="171" default="4" item="Sound Setting 10"  tooltip="F11 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="171" default="4" item="Sound Setting 10"  tooltip="F11 Volume"  comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Cylinder Cock</label>
             </variable>
-		   <variable CV="172" default="4" item="Sound Setting 11"  tooltip="F12 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="172" default="4" item="Sound Setting 11"  tooltip="F12 Volume"  comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Brake</label>
-            </variable>			           
-            <variable CV="173" default="4" item="Sound Setting 12"   tooltip="F13 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            </variable>
+            <variable CV="173" default="4" item="Sound Setting 12"   tooltip="F13 Volume" comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Blower</label>
             </variable>
-		    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,141,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="173" default="4" item="Sound Setting 12"   tooltip="F13 Volume" comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Tender Coal Pusher</label>
+            </variable>
+            <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="DoG,130,131,133,135,137,141,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Guard’s Whistle</label>
             </variable>
-		    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="145">
+            <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="145">
                 <decVal max="8"/>
                 <label>Guard’s Whistle and Whistle Acknowledge</label>
             </variable>
-			<variable CV="174" default="4" item="Sound Setting 13"  tooltip="F18 Volume"  comment="Range 0-8" include="129">
+            <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F18 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Wheel Slip</label>
             </variable>
-		    <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="DoG,131">
+            <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Doors Slam</label>
             </variable>
-		    <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="129,133,135,137,141,145,165,169,171,177,179,183,185,655,2703,2699">
+            <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="129,130,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2703,2699">
                 <decVal max="8"/>
                 <label>Coupler Clank</label>
             </variable>
-		    <variable CV="176" default="4" item="Sound Setting 15"   tooltip="F16 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="176" default="4" item="Sound Setting 15"   tooltip="F16 Volume" comment="Range 0-8" include="DoG,129,130,131,133,135,137,141,145,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Fireman Breakfast</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="169">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="130,169">
                 <decVal max="8"/>
-                <label>Whistle Long alt</label>	
+                <label>Whistle Long alternate</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="171">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
-                <label>Whistle Long</label>	
+                <label>Whistle Long</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="177">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
-                <label>Whistle Long Then Short</label>	
+                <label>Whistle Long Then Short</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="179">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="173">
                 <decVal max="8"/>
-                <label>Whistle Medium Alt</label>	
+                <label>Whistle Long Lo-Hi</label>
             </variable>
-			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="183,185">
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="179">
                 <decVal max="8"/>
-                <label>Whistle Short Burst B</label>	
+                <label>Whistle Medium Alt</label>
+            </variable>
+            <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="183,185">
+                <decVal max="8"/>
+                <label>Whistle Short Burst B</label>
             </variable>
             <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>whistle Passing</label>
-			</variable>
-           	<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="171">
+            </variable>
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Long 2 Short Bursts Alternative</label>
             </variable>
-			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="177">
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Two Short Bursts</label>
             </variable>
-			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="179">
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Whistle 2 Bursts Distant</label>
+            </variable>
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Short Alternative</label>
             </variable>
-			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="183">
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Short Burst C</label>
             </variable>
-			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="185">
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="185">
                 <decVal max="8"/>
                 <label>Whistle Fancy</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="169">
-                <decVal max="8"/>
-                <label>Whistle Medium alt</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="171">
-                <decVal max="8"/>
-                <label>Whistle Medium Fancy</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="177">
-                <decVal max="8"/>
-                <label>Whistle "Strange"</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="179">
-                <decVal max="8"/>
-                <label>Whistle Short Hi</label>
-			</variable>
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="183">
-                <decVal max="8"/>
-                <label>Whistle Tunnel</label>
-			</variable>	
-			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="185">
+            </variable>
+            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="130">
                 <decVal max="8"/>
                 <label>Whistle Long Fancy</label>
-			</variable>	
-			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="169">
-                <decVal max="8"/>
-                <label>Whistle Very Short</label>	
             </variable>
-			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="171">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="169">
                 <decVal max="8"/>
-                <label>Whistle Very Short Alternative</label>	
+                <label>Whistle Medium alt</label>
             </variable>
-			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="177">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
-                <label>Blown Down</label>	
+                <label>Whistle Medium Fancy</label>
             </variable>
-			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="179">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="130">
                 <decVal max="8"/>
-                <label>Whistle Short Lo</label>	
+                <label>Whistle Medium Squeaky</label>
             </variable>
-			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="183,185">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
-                <label>Whistle 2 Short Bursts B</label>	
+                <label>Whistle "Strange"</label>
             </variable>
-		
-		<!-- START DELAY AND NOTCHING	-->			
-           
-            <variable CV="201" default="25" item="Sound Option 1" tooltip="Loco Start Delay (0-70,tenths of second)"  include="DoG,129,131,133,135,137,141,145,159,165,169,171,177,179,183,185,655,2699,2703">
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="179">
+                <decVal max="8"/>
+                <label>Whistle Short Hi</label>
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="183">
+                <decVal max="8"/>
+                <label>Whistle Tunnel</label>
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="185">
+                <decVal max="8"/>
+                <label>Whistle Long Fancy</label>
+            </variable>
+            <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Whistle 2 bursts Hi-Lo</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="130,169">
+                <decVal max="8"/>
+                <label>Whistle Very Short</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="171">
+                <decVal max="8"/>
+                <label>Whistle Very Short Alternative</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="177">
+                <decVal max="8"/>
+                <label>Blown Down</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="179">
+                <decVal max="8"/>
+                <label>Whistle Short Lo</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="183,185">
+                <decVal max="8"/>
+                <label>Whistle 2 Short Bursts B</label>
+            </variable>
+            <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="173">
+                <decVal max="8"/>
+                <label>Whistle 2 Bursts</label>
+            </variable>
+
+            <!-- START DELAY AND NOTCHING   -->
+
+            <variable CV="201" default="25" item="Sound Option 1" tooltip="Loco Start Delay (0-70,tenths of second)"  include="DoG,129,131,133,135,137,141,145,159,165,169,171,173,177,179,183,185,655,2699,2703">
                 <decVal max="70"/>
                 <label>Loco Start Delay</label>
             </variable>
@@ -1065,13 +1945,13 @@
             <variable CV="215" default="5" item="Sound Option 7" tooltip="Trigger Threshold Window 3"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="5" max="15"/>
                 <label>Trigger Threshold Window 3</label>
-            </variable>			
+            </variable>
         </variables>
         <resets>
             <factReset label="Reset All CVs" CV="8" default="8">
-			</factReset>
-			<factReset label="Reset sound levels only" CV="8" default="5">
-			</factReset>
+            </factReset>
+            <factReset label="Reset sound levels only" CV="8" default="5">
+            </factReset>
         </resets>
     </decoder>
 </decoder-config>

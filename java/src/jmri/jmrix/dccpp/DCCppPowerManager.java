@@ -1,7 +1,7 @@
 /**
  * DCCppPowerManager.java
  *
- * Description: PowerManager implementation for controlling layout power
+ * PowerManager implementation for controlling layout power
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
@@ -12,35 +12,27 @@
 package jmri.jmrix.dccpp;
 
 import jmri.JmriException;
-import jmri.PowerManager;
-
-import java.beans.PropertyChangeListener;
+import jmri.managers.AbstractPowerManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DCCppPowerManager implements PowerManager, DCCppListener {
+public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectionMemo> implements DCCppListener {
+
+    DCCppTrafficController tc = null;
 
     public DCCppPowerManager(DCCppSystemConnectionMemo memo) {
+        super(memo);
         // connect to the TrafficManager
         tc = memo.getDCCppTrafficController();
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
-        userName = memo.getUserName();
         // request the current command station status
         tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
     }
 
     @Override
-    public String getUserName() {
-        return "DCC++";
-    }
-
-    String userName = "DCC++";
-
-    int power = UNKNOWN;
-
-    @Override
     public void setPower(int v) throws JmriException {
+        int old = power;
         power = UNKNOWN;
         checkTC();
         if (v == ON) {
@@ -50,12 +42,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
             // send TRACK_POWER_OFF
             tc.sendDCCppMessage(DCCppMessage.makeTrackPowerOffMsg(), this);
         }
-        firePropertyChange("Power", null, null);
-    }
-
-    @Override
-    public int getPower() {
-        return power;
+        firePowerPropertyChange(old, power);
     }
 
     // to free resources when no longer used
@@ -71,79 +58,39 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         }
     }
 
-    // to hear of changes
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(propertyName, listener);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return pcs.getPropertyChangeListeners(propertyName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(propertyName, listener);
-    }
-
-    DCCppTrafficController tc = null;
-
-    // to listen for Broadcast messages related to track power.
-    // There are 5 messages to listen for
+    // listen for power and status messages
     @Override
     public void message(DCCppReply m) {
-        if (log.isDebugEnabled()) {
-            log.debug("Message received: " + m.toString());
-        }
         if (m.isPowerReply()) {
+            log.debug("Power Reply message received: {}", m);
+            int old = power;
             if (m.getPowerBool()) {
                 power = ON;
-                firePropertyChange("Power", null, null);
             } else {
                 power = OFF;
-                firePropertyChange("Power", null, null);
             }
- }
- 
+            firePowerPropertyChange(old, power);
+        // if status reply 's', then update the command station info (version, etc.)
+        } else if (m.isStatusReply()) {
+            log.debug("Version Info Received: {}", m);
+            tc.getCommandStation().setCommandStationInfo(m);
+        }
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the CommandStation
     @Override
     public void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     // Initialize logging information

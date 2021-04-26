@@ -94,6 +94,7 @@
               <li><a href="#devicetoolhelp">JMRI LocoNet-specific Help pages</a>
 
               <li><a href="#loconetRoster">Configuring some LocoNet devices via "Roster" entries</a></li>
+              <li><a href="#deviceBoardId">Programming Board ID (Board Address) for some Digitrax devices</a></li>
               <li><a href="#devicetoollimits">Some JMRI LocoNet-specific device and feature limitations</a></li>
           </ul></li>
           <li><a href="#Support">Support</a></li>
@@ -389,11 +390,11 @@
         "L1", "L2", ... Most users should be able to use the
         default "Connection Prefix" value provided by the JMRI
         tools.
-
-          <p>It is recommended that all connections for LocoNet
-          hardware use a prefix that begins with "L", as other
-          characters are normally associated with other hardware
-          connection types.</p>
+        <br>
+        It is recommended that all connections for LocoNet
+        hardware use a prefix that begins with "L", as other
+        characters are normally associated with other hardware
+        connection types.
         </li>
 
         <li>When a JMRI tool is configured for more than one
@@ -406,13 +407,16 @@
         needs.</li>
 
         <li>Some adapters may have addition configuration options,
-        which may be shown by checking the "Additional Connection
-        Settings". This may show additional settings which may be
-        made for some adapter types. These include, but are not
-        limited to, the options listed here.
+        which appear by checking the "Additional Connection
+        Settings". This may show additional settings applicable for
+        some adapter types. These include, but are not limited to,
+        the options listed here.
+        <br>
+        <img src="images/LoconetAdditionalSettings.png" alt="Connection Settings Additional settings"
+             width="515" height="219">
 
           <ul>
-            <li>The "Baud Rate" setting. When multiple settings are
+            <li>The "Baud rate" setting. When multiple settings are
             available, this must be set to match the needs of the
             particular hardware adapter specified in the "System
             Connection" setting. This setting will be pre-set and
@@ -426,27 +430,34 @@
             <a href="LocoBuffer.shtml">LocoBuffer</a> pages for
             more information.</li>
 
-            <li>The <a href="#TurnoutCmdHandling">"Command Station
-            Turnout Command Rejection and JMRI Turnout Command
-            Handling"</a> settings are described <a href=
-            "#TurnoutCmdHandling">below</a>.</li>
+            <li>The "(Serial) Connection Uses" selection determines how
+              "flow control" is implemented in software. This
+              selection should be configured for "hardware flow
+              control" unless you later consistently get a JMRI
+              console message about the LocoBuffer control leads
+              being improperly set up, in which case you might want
+              to try to bypass that by selecting "no flow control".<br>
+              This box will be blank if you've selected
+              LocoBuffer-USB, PR3, PR4 or MS100.</li>
 
-            <li>The "Transponding Present" allows you indicate whether
+            <li>Packetizer Type lets you choose Normal (recommended) or Strict.</li>
+
+            <li>"Transponding Present" allows you indicate whether
                 certain special hardware is present and configured.
                 If you have LocoNet-attached boards that configure
                 in "ops mode", or if you have Digitrax Transponding
                 installed, set this to "Yes". Otherwise, set it to
                 "No". </li>
 
-            <li>The "Connection Uses" selection determines how
-            "flow control" is implemented in software. This
-            selection should be configured for "hardware flow
-            control" unless you later consistently get a JMRI
-            console message about the LocoBuffer control leads
-            being improperly set up, in which case you might want
-            to try to bypass that by selecting "no flow control".
-            This box will be blank if you've selected
-            LocoBuffer-USB, PR3, PR4 or MS100.</li>
+            <li>The <a href="#TurnoutCmdHandling">"Command Station
+              Turnout Command Rejection and JMRI Turnout Command
+              Handling"</a> settings are described <a href="#TurnoutCmdHandling">below</a>.
+            </li>
+
+            <li>Output Interval sets a configurable (minimum) interval for all turnout outputs
+              that are part of a Route or Output Matrix Signal Mast on this same connection.<br>
+              Use the [Reset] button to restore the default of 250 ms.
+              No restart is required after a change.</li>
           </ul>
         </li>
 
@@ -686,7 +697,7 @@
             LocoNet switch commands. The retry mechanism described
             above for the "Normal" mode is enabled.</li>
 
-            <li>Once Only - This disables the JMRI retry mechanism
+            <li>One Only - This disables the JMRI retry mechanism
             for rejected switch commands. JMRI will not retry any
             LocoNet switch command messages. The amount of delay
             between any two JMRI-generated switch commands sent to
@@ -771,7 +782,7 @@
               <li>JMRI normally sends an "ON" LocoNet message followed by an
               "OFF" LocoNet message when controlling switches, just like Digitrax
               throttles do.  <span class="since">Since
-              <a href="http://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
+              <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
               JMRI 4.15.7</a></span>, it is possible to configure JMRI to send
               only "ON" messages to turnouts, without sending "OFF" messages.  Many
               accessory decoders work well when only receiving "ON" messages.
@@ -834,7 +845,7 @@
                   types may require similar re-configuration to be controllable.
                   </li>
                   <li><span class="since">Since
-                  <a href="http://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
+                  <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
                   JMRI 4.15.7</a></span>, JMRI provides a feature which "bypasses"
                   the command station's "Bushby" feature and therefore allows JMRI
                   to control those devices which are controlled by turnout control
@@ -1051,6 +1062,8 @@
             <li><a href=
             "../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">
             Download Sounds</a></li>
+            
+            <li><a href="./DigitraxMeters.shtml">Voltage and Current Meters</a></li>
           </ul>
         </li>
 
@@ -1128,6 +1141,136 @@
         other tools or processes, it will be necessary to manually update the
         roster entry.</p>
 
+      <a name="deviceBoardId" id="deviceBoardId"></a><h3>Programming Board ID (Board Address) for some Digitrax devices</h3>
+      <p>Some Digitrax devices can be configured for "Board ID" number (sometimes called 
+          Board Address).  This value is typically used to influence which Turnout, 
+          Sensor, Reporter, and/or Power Manager section numbers are used by the 
+          device.</p>
+      <p>Digitrax devices which make use of "Board ID" numbers, but which cannot be
+      programatically configured, include:</p>
+      <ul>
+          <li>Digitrax DS64</li>
+          <li>Digitrax BDL16, BDL162, and BDL168</li>
+          <li>Digitrax PM4, PM42</li>
+          <li>Digitrax SE8C</li>
+          <li>Digitrax BXPA1</li>
+          <li>Digitrax BXP88</li>
+      </ul>
+      <p>For these devices, JMRI cannot configure the Board ID number under JMRI's
+          control without user intervention.  It is, however, possible to configure 
+          the Board ID number using JMRI and manual intervention.  The process is
+          to follow the directions found in the device manual for changing Board 
+          Address (Board ID), but use JMRI's "Turnout Control" tool instead of a 
+          LocoNet throttle.</p>
+      <p>Below is a table showing, on the left, the Digitrax instructions copied 
+          from the BDL168 manual, and, on the right, the instructions when using JMRI.  
+          Similar instructions may be used to configure other the Board Address 
+          (Board ID) on other Digitrax devices.</p>
+      <table border="3">
+          <tr><td style="width: 6%" align="center"><strong>Step</strong></td>
+              <td style="width: 47%" align="center"><strong>Digitrax Instructions 
+                      for changing BDL168 Board Address</strong></td>
+              <td style="width: 47%" align="center"><strong>Instructions for 
+                      changing Board Address (Board ID) when using JMRI</strong></td></tr>
+          <tr><td align="center">0</td><td colspan="2"><strong>(A step <em>not</em> 
+                  included in Digitrax documentation, but one that is necessary 
+                  regardless of what method you use!)</strong><br><br>0. Ensure 
+                  that <em>NO OTHER ACTIVITY</em> is occurring on LocoNet!<br><br>
+                  If <em>anything</em> causes generation of a LocoNet Turnout Control 
+                  message after the device button has been pressed, but before you 
+                  issue the turnout control message to the specific number you 
+                  desire, then the board will be configured to use that unexpected 
+                  turnout number, leaving the board unmanageable at the Board ID 
+                  number you are expecting!<br><br>Be aware that movement of trains on 
+                  layouts where signaling is implemented can cause generation of
+                  LocoNet Turnout control messages!</td></tr>
+          <tr><td align="center">0.25</td><td></td><td>Configure JMRI to 
+                  communicate with with your LocoNet hardware.</td></tr>
+          <tr><td align="center">0.5</td><td colspan="2">See <a href="#BoardIdNote1">
+                  Note 1</a> below before proceeding. This step applies <em>both</em>
+                  for the Digitrax procedure and the JMRI-based procedure.</td></tr>
+          <tr><td rowspan="2" align="center">1</td><td align="center">Note: Steps 
+                  1 thru 4 of the Digitrax instructions are from Section "<em>8.1
+                  To set up the BDL168 board address</em>" of the Digitrax BDL168 
+                  manual, with some comments added by JMRI developers.)</td>
+              <td rowspan="2">Power up your layout, BDL168, and start JMRI.</td></tr>
+          <tr><td>Power up your BDL168.</td></tr>
+          <tr><td align="center">2</td><td>Press the switch behind the green ID 
+                  LED for about 1 second, then release it. The green ID LED will 
+                  blink. The red option LED will not light. This let's you know 
+                  that you are in board address set up mode.<br><br><em>(Note: 
+                  These instructions apply to BDL16, BDL162, and BDL168 devices.  
+                  Other instructions, buttons, and LED color/flashing conditions 
+                  may apply for other device types.  See the appropriate manual 
+                  for device-specific instructions!)</em></td>
+              <td>Same as per Digitrax instructions.</td></tr>
+          <tr><td align="center">3</td><td>Connect a DT or UT series Digitrax 
+                  throttle to the BDL168's LocoNet connector. (This can only be 
+                  done with a Digitrax LocoNet throttle or equivalent software).</td>
+              <td>Open JMRI's "Turnout Control" tool, via "Tools->Turnout Control"</td></tr>
+          <tr><td align="center">4</td><td>Go into SWITCH mode on the throttle. 
+                  Select the switch number that corresponds to the board address 
+                  you want to set and issue a closed "c" command to set the 
+                  board address. The board address is changed as soon as you 
+                  issue the SWITCH command. See following instructions for using 
+                  specific Digitrax throttles for setting the address. <em>(Those 
+                  instructions omitted here.)</em></td>
+              <td>Enter the switch number which corresponds to the board address
+                  you want to set in the number entry box below "Turnout" at the top
+                  of the JMRI "Turnout Control" tool.  As an example, to set Board 
+                  Address (Board ID) to 4, enter "4" (without quotes".  Then 
+                  activate the window's "Closed" button.</td></tr>
+          <tr><td align="center">5</td><td colspan="2">(A JMRI-specific step, not 
+                  included in Digitrax documentation, which applies regardless of 
+                  which method you use.)<br><br>See <a href="#BoardIdNote2">Note 
+                  2</a> below for important information on JMRI behaviors which 
+                  may influence how JMRI sees the device and which may require 
+                  changes to any pre-existing JMRI uses of affected Turnout, 
+                  Sensor, and/or Reporter configurations, and/or customized 
+                  scripts monitoring for LocoNet Power Management messages.</td></tr>
+          <tr><td align="center">6</td><td></td><td>Quit and Restart JMRI.  See <a href="#BoardIdNote3">
+                  Note 3</a> below, for more information on why this can be 
+                  important.</td></tr>
+          <tr><td align="center"><a name="BoardIdNote1" id="BoardIdNote1"><strong>Note 1</strong></a></td>
+              <td colspan="2">Some devices, 
+              by default, get their turnout control messages from 
+              the DCC track signal, and rely upon the command station to forward
+              the LocoNet turnout control messages as DCC track signal stationary 
+              decoder packets.  
+              <ul>
+                  <li>If you are connected via a Digitrax command station, then 
+                      it may be necessary to turn track power "On" (and <em>not</em> 
+                      "IdlE"!) before performing the steps shown above.</li>
+                  <li>If you are connected via a "Standalone LocoNet", then it 
+                      may be necessary to configure the device to get its control
+                      messages from LocoNet instead of RailSync.  This can be done 
+                      using the appropriate JMRI tool in the LocoNet directory, 
+                      if one is available for the device type, or, using the JMRI
+                      Roster, if the device type is supported in the Roster.</li></ul></td></tr>
+          <tr><td align="center"><a name="BoardIdNote2" id="BoardIdNote2"><strong>Note 2</strong></a></td>
+              <td colspan="2">The Board ID 
+              number typically implies the Turnout, Sensor, Reporter, 
+          and/or power management "addresses" used by the device.  Changing the 
+          Board ID number typically forces the device to use different addresses.
+          This can mean a disruption to the JMRI functionality which worked before
+          the Board ID number was changed.  If you have used "User Names" to 
+          reference those items, it is usually sufficient to give a similar User Name
+          to each "relocated" Turnout, Sensor, or Reporter object, and then change
+          each reference to the old object User Name to reflect the new User Name.</td></tr>
+          <tr><td align="center"><a name="BoardIdNote3" id="BoardIdNote3"><strong>Note 3</strong></a></td>
+              <td colspan="2">If JMRI has 
+              "pre-populated" the Turnouts or Sensors table with information about 
+              the device, it will be necessary to quit and restart JMRI so that 
+              any information that was "pre-populated" from the device based on 
+              its old Board ID value will _not_ be remembered.  Restarting JMRI 
+              causes JMRI to request the "pre-population" information, and if the
+          device responds to the request, the device should respond with its information
+          and the Turnouts and/or Sensors table should be pre-populated.</td></tr>
+          
+      </table>
+      <p>After completing the instructions as noted above, the device <em>should</em> be 
+          configured for the selected Device address.</p>
+     
       <a name="devicetoollimits" id="devicetoollimits"></a><h3>Some JMRI LocoNet-specific device and feature limitations</h3>
 
       <ul>

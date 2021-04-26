@@ -1,29 +1,23 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.InstanceManager;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).
@@ -34,6 +28,9 @@ import org.apache.commons.csv.CSVPrinter;
 public class TrainCsvManifest extends TrainCsvCommon {
 
     public TrainCsvManifest(Train train) {
+        if (!Setup.isGenerateCsvManifestEnabled()) {
+            return;
+        }
         // create comma separated value manifest file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainCsvManifestFile(train.getName());
 
@@ -41,7 +38,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 CSVFormat.DEFAULT)) {
             // build header
             printHeader(fileOut);
-            printRailroadName(fileOut, Setup.getRailroadName());
+            printRailroadName(fileOut,
+                    train.getRailroadName().isEmpty() ? Setup.getRailroadName() : train.getRailroadName());
             printTrainName(fileOut, train.getName());
             printTrainDescription(fileOut, train.getDescription());
             printPrinterName(fileOut, locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName());
@@ -98,7 +96,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                             printLocationComment(fileOut, comment);
                         }
                     }
-                    if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled()) {
+                    if (Setup.isPrintTruncateManifestEnabled() && location.isSwitchListEnabled()) {
                         fileOut.printRecord("TRUN", Bundle.getMessage("csvTruncate"));
                     }
                 }
@@ -132,11 +130,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     found = true;
                     for (Car car : carList) {
                         if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
-                            cars++;
                             newWork = true;
-                            if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                                emptyCars++;
-                            }
                             int count = 0;
                             if (car.isUtility()) {
                                 count = countPickupUtilityCars(carList, car, IS_MANIFEST);
@@ -151,12 +145,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 // car set outs
                 for (Car car : carList) {
                     if (car.getRouteDestination() == rl) {
-                        cars--;
                         newWork = true;
-                        if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName()).equals(
-                                CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars--;
-                        }
                         int count = 0;
                         if (car.isUtility()) {
                             count = countSetoutUtilityCars(carList, car, false, IS_MANIFEST);
@@ -179,7 +168,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 for (Car car : cList) {
                     // list cars on tracks that only this train can service
                     if (!car.getTrack().getLocation().isStaging()
-                            && car.getTrack().acceptsPickupTrain(train) && car.getTrack().getPickupIds().length == 1
+                            && car.getTrack().isPickupTrainAccepted(train) && car.getTrack().getPickupIds().length == 1
                             && car.getTrack().getPickupOption().equals(Track.TRAINS)) {
                         int count = 0;
                         if (car.isUtility()) {
@@ -198,7 +187,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     if (!routeLocationName.equals(nextRouteLocationName)) {
                         if (newWork) {
                             printTrainDeparts(fileOut, locationName, rl.getTrainDirectionString());
-                            printTrainLength(fileOut, train.getTrainLength(rl), emptyCars, cars);
+                            printTrainLength(fileOut, train.getTrainLength(rl), train.getNumberEmptyCarsInTrain(rl),
+                                    train.getNumberCarsInTrain(rl));
                             printTrainWeight(fileOut, train.getTrainWeight(rl));
                             newWork = false;
                         } else {

@@ -29,9 +29,18 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         return (NceSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout address");
+        }
         Turnout t = new NceTurnout(getMemo().getNceTrafficController(), getSystemPrefix(), addr);
         t.setUserName(userName);
 

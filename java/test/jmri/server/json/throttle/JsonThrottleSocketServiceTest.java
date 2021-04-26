@@ -17,10 +17,9 @@ import jmri.server.json.JsonRequest;
 import jmri.server.json.roster.JsonRoster;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -336,7 +335,7 @@ public class JsonThrottleSocketServiceTest {
         JUnitAppender.assertWarnMessage("JSON throttle \"\" requested using \"throttle\" instead of \"name\"");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -344,7 +343,7 @@ public class JsonThrottleSocketServiceTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

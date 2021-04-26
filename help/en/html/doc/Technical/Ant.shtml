@@ -42,15 +42,20 @@
       tool does not.
 
       <h2 id="ant">Ant</h2>
-      Ant is available for download at
-      <a href="http://ant.apache.org/">http://ant.apache.org/</a>.
-      Install it, then:
+      You computer may already have Ant installed as part of
+      a developer tools package.  Try <code>ant -version</code>
+      to check.  JMRI requires at least version 1.10.6, and 
+      should work with any version after that. 
+      <p>
+      If you need to install it, Ant is available for download at
+      <a href="http://ant.apache.org/">http://ant.apache.org/</a>
+      or via the usual package managers.
 
       <ul>
         <li>Create a directory to contain your project.</li>
 
         <li>In that project directory, <a href=
-        "http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
         get the code from GitHub</a>. This will create a
         <tt>jmri</tt> subdirectory where Ant will run, and load it
         with source, tests and resources. It will also create and
@@ -89,7 +94,7 @@
       <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven
       will download the appropriate plugins and dependencies as needed.
       After installation, the following can be done from your JMRI working copy
-      (see <a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a>
+      (see <a href="https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a>
       for instructions on creating a working copy):
 
       <dl>
@@ -97,7 +102,7 @@
         <dd><code>mvn test</code><br>Use <code>mvn test -Dtest=PATTERN</code> to
           run specific tests. See
           <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running a Single Test</a>
-        for more details, including running only a single test method.</dd>
+        for more details, including running only a single test method. An example to run all tests in a package is <code>mvn test -Dtest=jmri/jmrix/openlcb/**</code></dd>
         <dt>Check for vulnerabilities in JMRI dependencies</dt>
         <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code></dd>
         <dt>Check for newer versions of JMRI dependencies</dt>

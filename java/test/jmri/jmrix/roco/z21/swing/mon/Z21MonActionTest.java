@@ -4,10 +4,9 @@ import jmri.util.JUnitUtil;
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -24,8 +23,7 @@ public class Z21MonActionTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -37,7 +35,7 @@ public class Z21MonActionTest {
         jmri.InstanceManager.store(memo, jmri.jmrix.roco.z21.Z21SystemConnectionMemo.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.InstanceManager.deregister(memo, jmri.jmrix.roco.z21.Z21SystemConnectionMemo.class);
         memo=null;

@@ -290,7 +290,7 @@ public class TreePanel extends JPanel {
     public UsbNode getSelectedElement() {
         if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null) {
             // somebody has been selected
-            log.debug("getSelectedIcon with " + dTree.getSelectionPath().toString());
+            log.debug("getSelectedIcon with {}", dTree.getSelectionPath().toString());
             TreePath path = dTree.getSelectionPath();
 
             int level = path.getPathCount();

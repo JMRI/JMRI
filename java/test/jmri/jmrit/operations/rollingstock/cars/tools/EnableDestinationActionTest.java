@@ -1,15 +1,17 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EnableDestinationActionTest extends OperationsTestCase {
 
@@ -17,7 +19,7 @@ public class EnableDestinationActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarSetFrame f = new CarSetFrame();
-        EnableDestinationAction t = new EnableDestinationAction("Test Action",f);
+        EnableDestinationAction t = new EnableDestinationAction(f);
         Assert.assertNotNull("exists",t);
     }
 

@@ -82,7 +82,7 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
 
     @Override
     public void stepTwoActions() {
-        log.debug(_name + " SplitDateTimeVariableValue stepTwoActions");
+        log.debug("{} SplitDateTimeVariableValue stepTwoActions", _name);
         super.stepTwoActions(); // need to do base level checks
         _columns = cvCount * 4; //new default column width
         switch (display) {
@@ -131,6 +131,18 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
             default:
                 return dateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
         }
+    }
+
+    /**
+     * Set value from a String value.
+     * <p>
+     * This does nothing since we can't reliably parse text to date/time value.
+     *
+     * @param value a string representing the date/time value to be set
+     */
+    @Override
+    public void setValue(String value) {
+        log.debug("skipping set of date/time value \"{}\"", value);
     }
 
     // initialize logging

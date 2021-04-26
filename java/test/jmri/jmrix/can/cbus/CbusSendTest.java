@@ -5,10 +5,8 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.TextAreaFIFO;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -248,8 +246,7 @@ public class CbusSendTest {
         tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -258,7 +255,7 @@ public class CbusSendTest {
         send = new CbusSend(memo,null);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         send = null;
         memo.dispose();

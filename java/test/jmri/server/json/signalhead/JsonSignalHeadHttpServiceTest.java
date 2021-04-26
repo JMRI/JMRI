@@ -16,9 +16,8 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -124,8 +123,7 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         assertEquals(2, result.size());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -134,7 +132,7 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

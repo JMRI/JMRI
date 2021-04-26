@@ -4,7 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +39,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     }
 
     @Test
-    @Ignore("this test is disabled until the threading can be worked out")
+    @Disabled("this test is disabled until the threading can be worked out")
     public void testSendOK() throws Exception {
         c = new SerialTrafficController(scm) {
             // skip timeout message
@@ -262,8 +264,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     static DataOutputStream tistream; // Tests write to this
     static DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -275,7 +276,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     SerialTrafficController c; // TrafficController for tests in this class
     TmccSystemConnectionMemo scm = null;
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (c != null) c.terminateThreads();

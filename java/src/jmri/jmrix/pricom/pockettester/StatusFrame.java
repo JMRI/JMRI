@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * For more info on the product, see http://www.pricom.com
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
@@ -101,7 +101,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
             String id = m.substring(1, 3);
             String value = m.substring(4 + addOne, 14 + addOne);
             if (log.isDebugEnabled()) {
-                log.debug("set var " + id + ":" + value);
+                log.debug("set var {}:{}", id, value);
             }
             JLabel label = displayHash.get(id);
             String format = formatHash.get(id);

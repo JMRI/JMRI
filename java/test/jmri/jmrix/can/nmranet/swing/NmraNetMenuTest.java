@@ -1,18 +1,18 @@
 package jmri.jmrix.can.nmranet.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of NmraNetMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NmraNetMenuTest {
 
@@ -26,7 +26,7 @@ public class NmraNetMenuTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // tc = new TestTrafficController();
@@ -35,7 +35,7 @@ public class NmraNetMenuTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         // tc = null;

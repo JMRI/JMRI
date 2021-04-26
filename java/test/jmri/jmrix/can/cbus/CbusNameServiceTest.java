@@ -1,15 +1,20 @@
 package jmri.jmrix.can.cbus;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.File;
+import jmri.Light;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.eventtable.CbusEventBeanData;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -24,19 +29,22 @@ public class CbusNameServiceTest {
     @Test
     public void testCTor() {
         CbusNameService t = new CbusNameService();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull();
     }
     
     @Test
     public void testgetEventName() {
         CbusNameService t = new CbusNameService();
-        Assert.assertEquals("no ev name no ev table","",t.getEventName(123,456));
+        assertThat(t.getEventName(123,456)).isEmpty();
         
         CbusEventTableDataModel m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
         
-        m.addEvent(123,456, 0, null, "Event Name", "Comment", 0, 0, 0, 0);
-        Assert.assertEquals("Event and Node Name","Event Name",t.getEventName(123,456));
+        CbusTableEvent tabEv = m.provideEvent(123, 456);
+        tabEv.setName("Event Name");
+        tabEv.setComment("Comment");
+        
+        assertEquals("Event Name",t.getEventName(123,456));
         
         m.skipSaveOnDispose();
         m.dispose();
@@ -46,12 +54,10 @@ public class CbusNameServiceTest {
     @Test
     public void testgetEventNodeString() {
         
-        // memo.setTrafficController(tcis);
-        
         CbusNameService t = new CbusNameService(memo);
         
-        Assert.assertEquals("EventNodeStr","NN:123 EN:456 ",t.getEventNodeString(123,456));
-        Assert.assertEquals("EventNodeStr nd 0","EN:456 ",t.getEventNodeString(0,456));
+        assertEquals("NN:123 EN:456 ",t.getEventNodeString(123,456));
+        assertEquals("EN:456 ",t.getEventNodeString(0,456));
         
         CbusEventTableDataModel m = new CbusEventTableDataModel(
             memo, 5, CbusEventTableDataModel.MAX_COLUMN);
@@ -63,38 +69,74 @@ public class CbusNameServiceTest {
         nodeModel.provideNodeByNodeNum(123).setUserName("Node Name");
         nodeModel.provideNodeByNodeNum(69).setUserName("My Node");
         
-        m.addEvent(123,456, 0, null, "Event Name", "Comment", 0, 0, 0, 0);
-        m.addEvent(69,741, 0, null, "John Smith", "My Comment", 0, 0, 0, 0);
-        m.addEvent(0,357, 0, null, "Alonso", "My Second Comment", 0, 0, 0, 0);
-        Assert.assertEquals("evstr Event and Node Name","NN:123 Node Name EN:456 Event Name ",t.getEventNodeString(123,456));
-        Assert.assertEquals("evstr Not on table","NN:98 EN:76 ",t.getEventNodeString(98,76));
-        Assert.assertEquals("js evstr Event and Node Name","NN:69 My Node EN:741 John Smith ",t.getEventNodeString(69,741));
-        Assert.assertEquals("alonso evstr Event Name","EN:357 Alonso ",t.getEventNodeString(0,357));
+        m.provideEvent(123, 456).setName("Event Name");
+        m.provideEvent(123, 456).setComment("Event Comment");
+                
+        m.provideEvent(69, 741).setName("John Smith");
+        m.provideEvent(69, 741).setComment("My Comment");
+        
+        m.provideEvent(0, 357).setName("Alonso");
+        m.provideEvent(0, 357).setComment("My Second Comment");
+        
+        assertEquals("NN:123 Node Name EN:456 Event Name ",t.getEventNodeString(123,456));
+        assertEquals("NN:98 EN:76 ",t.getEventNodeString(98,76));
+        assertEquals("NN:69 My Node EN:741 John Smith ",t.getEventNodeString(69,741));
+        assertEquals("EN:357 Alonso ",t.getEventNodeString(0,357));
         
         m.skipSaveOnDispose();
         m.dispose();
         nodeModel.dispose();
     }
+    
+    @Test
+    public void testgetJmriBeans(){
+    
+        CbusNameService t = new CbusNameService(memo);
+        
+        CbusEventBeanData bd = t.getJmriBeans(0, 4, CbusEventDataElements.EvState.ON);
+        assertThat(bd.toString()).isEmpty();
+        
+        CbusEventTableDataModel evModel = new CbusEventTableDataModel(
+            memo, 5, CbusEventTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,evModel );
+        
+        CbusLightManager lm = new CbusLightManager(memo);        
+        Light lightA = lm.provideLight("+4");
+        lightA.setUserName("MyLightA");
+        
+        evModel.provideEvent(0, 4).appendOnOffBean(lightA, true, CbusEvent.EvState.ON);
+        evModel.provideEvent(0, 4).appendOnOffBean(lightA, false, CbusEvent.EvState.OFF);
+        
+        bd = t.getJmriBeans(0, 4, CbusEvent.EvState.ON);
+        assertEquals("Light On: MyLightA",bd.toString());
+        
+        bd = t.getJmriBeans(0, 4, CbusEvent.EvState.OFF);
+        assertEquals("Light Off: MyLightA",bd.toString());
+        
+        evModel.skipSaveOnDispose();
+        evModel.dispose();
+        
+        lm.dispose();
+    }
 
     private CanSystemConnectionMemo memo;
     private CbusPreferences pref;
     
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir 
+    protected File tempDir;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         memo = new CanSystemConnectionMemo();
         pref = new CbusPreferences();
         jmri.InstanceManager.store(pref,CbusPreferences.class );
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;

@@ -44,10 +44,10 @@
 
       <p>Launch the VSDecoder Manager by selecting "Virtual Sound
       Decoder -&gt; VSDecoder Manager" from the Debug menu. A
-      simple window will appear, with a blank panel, a volume/mute
+      simple window will appear, with a blank panel, a master volume/mute
       control, and an "Add Decoder" button.</p>
 
-      <p><img src="images/VSD_Manager01.png" alt="blank VSDManager window" width="423" height="147"></p>
+      <p><img src="images/VSD_Manager01.png" alt="blank VSDManager window" width="463" height="145"></p>
 
       <p>To create a new VSDecoder, click "Add Decoder". This will
       open a Configuration Dialog ("Config Dialog") where you can
@@ -59,7 +59,7 @@
       added to the main window. You can remove Control Panels by
       clicking the "Delete" button.</p>
 
-      <p><img src="images/VSD_Manager04.png" alt="VSDecoder Manager with one loco" width="442" height="157"></p>
+      <p><img src="images/VSD_Manager04.png" alt="VSDecoder Manager with one loco" width="537" height="169"></p>
 
       <p>Once you have added a Control Panel, the VSDecoder will
       respond to throttle and function button presses from a
@@ -120,12 +120,12 @@
         <li>Options and Delete buttons</li>
       </ul>
 
-      <p><img src="images/VSD_Manager05.png" alt="Two Control Panels" width="631" height="231"></p>
+      <p><img src="images/VSD_Manager05.png" alt="Two Control Panels" width="626" height="257"></p>
 
       <p>The left section shows the assigned Loco Address and
       Profile Name. The center section provides buttons for
-      activating sounds. The right section has buttons for
-      Options or deleting the Control Panel.</p>
+      activating sounds and a volume control for these sounds. The right section
+      has buttons for Options or deleting the Control Panel.</p>
 
       <p>Sounds can also be activated by a throttle assigned to the
       same address as the VSDecoder.</p>
@@ -139,9 +139,14 @@
 
       <h5>Volume / Mute control</h5>
 
+      <p>There is a volume control to the right of the "Engine Start" button
+      for each VSDecoder. The changed volume is saved in the Roster Media when
+      a Roster is used.</p>
+
       <p>At the bottom of the window is a master volume slider and
       mute button. These control the overall sound level for all
-      VSDecoders within the VSDecoder Manager.</p>
+      VSDecoders within the VSDecoder Manager.
+      The changed master volume is saved in the VSDecoder Preferences.</p>
 
       <h5>Menu Items</h5>
 

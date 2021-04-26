@@ -11,12 +11,10 @@ import javax.swing.border.*;
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
-    private transient JPanel floatEditTabsPanel;
-    private transient JTabbedPane floatEditTabsPane;
+    private JPanel floatEditTabsPanel = new JPanel();
+    private JTabbedPane floatEditTabsPane = new JTabbedPane();
 
     /**
      * constructor for LayoutEditorFloatingToolBarPanel
@@ -24,25 +22,32 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
      * @param layoutEditor the layout editor that this is for
      */
     public LayoutEditorFloatingToolBarPanel(@Nonnull LayoutEditor layoutEditor) {
-        super(layoutEditor);
-    }   //constructor
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void setupComponents() {
-        super.setupComponents();
-
-        floatEditTabsPanel = new JPanel();
-        floatEditTabsPane = new JTabbedPane();
+        super(layoutEditor);    
+        localLayoutComponents();    
     }
 
+    // super.setupComponents() used as-is. super.layoutComponents() is 
+    // suppressed, as it doesn't need to run. localLayoutComponents()
+    // is then invoked by this class's constructor after the initializers
+    // are complete. (Putting this into an override of layoutComponents would
+    // not be correct, as that is invoked from the superclass constructor before
+    // this classes initializers are run; local reference members will be 
+    // overwritten when that happens.)
+    
     /**
-     * {@inheritDoc}
+     * Deliberately not running the superclass
+     * {@link LayoutEditorToolBarPanel#layoutComponents()}
+     * method.
      */
     @Override
-    protected void layoutComponents() {
+    final protected void layoutComponents() {
+    }
+    
+    /**
+     * Local configuration of Swing components run as 
+     * last phase of construction.
+     */
+    private void localLayoutComponents() {    
         /*
          *  JPanel - floatEditTabsPanel
          *      JTabbedPane - floatEditTabsPane
@@ -54,12 +59,13 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
          *      JPanel - floatEditHelpPanel
          *          ...
          */
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         FlowLayout floatContentLayout = new FlowLayout(FlowLayout.CENTER, 5, 2); //5 pixel gap between items, 2 vertical gap
 
-        //Contains the block and sensor combo boxes.
-        //It is moved to the appropriate detail pane when the tab changes.
+        // Contains the block and sensor combo boxes.
+        // It is moved to the appropriate detail pane when the tab changes.
         blockPropertiesPanel = new JPanel();
         blockPropertiesPanel.setLayout(new BoxLayout(blockPropertiesPanel, BoxLayout.Y_AXIS));
 
@@ -75,9 +81,9 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         blockSensorPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
         blockPropertiesPanel.add(blockSensorPanel);
 
-        //Begin the tabs structure
+        // Begin the tabs structure
         //
-        //Tab 0 - Turnouts
+        // Tab 0 - Turnouts
         JPanel floatEditTurnout = new JPanel();
         floatEditTurnout.setLayout(new BoxLayout(floatEditTurnout, BoxLayout.Y_AXIS));
 
@@ -111,7 +117,7 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
         floatEditTabsPane.addTab(Bundle.getMessage("Turnouts"), null, floatEditTurnout, null);
 
-        //Tab 1 - Track
+        // Tab 1 - Track
         JPanel floatEditTrack = new JPanel();
         floatEditTrack.setLayout(new BoxLayout(floatEditTrack, BoxLayout.Y_AXIS));
 
@@ -132,7 +138,7 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabTrack"), null, floatEditTrack, null);
 
-        //Tab 2 - Labels
+        // Tab 2 - Labels
         JPanel floatEditLabel = new JPanel();
         floatEditLabel.setLayout(new BoxLayout(floatEditLabel, BoxLayout.Y_AXIS));
 
@@ -153,7 +159,7 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabLabel"), null, floatEditLabel, null);
 
-        //Tab 3 - Icons
+        // Tab 3 - Icons
         JPanel floatEditIcon = new JPanel();
         floatEditIcon.setLayout(new BoxLayout(floatEditIcon, BoxLayout.Y_AXIS));
 
@@ -186,8 +192,8 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         floatEditTabsPanel.add(floatEditTabsPane);
         add(floatEditTabsPanel);
 
-        //End the tabs structure
-        //The next 3 groups reside under the tab secton
+        // End the tabs structure
+        // The next 3 groups reside under the tab secton
         JPanel floatEditLocationPanel = new JPanel();
         floatEditLocationPanel.add(zoomPanel);
         floatEditLocationPanel.add(locationPanel);
@@ -205,16 +211,12 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         });
         floatEditTabsPane.setSelectedIndex(0);
         floatEditTurnout.add(blockPropertiesPanel);
-
-// JPanel floatEditActionPanel = new JPanel();
-        // floatEditActionPanel.add(new JLabel("floatEditActionPanel", JLabel.CENTER));
-        // add(floatEditActionPanel);
-    }   //layoutComponents
+    }
 
     public JTabbedPane getfloatEditTabsPane() {
         return floatEditTabsPane;
     }
 
-    //initialize logging
-    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanel.class);
+    // initialize logging
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanel.class);
 }

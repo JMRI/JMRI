@@ -122,7 +122,7 @@
     </variable>
     <variable CV="141" default="20" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 2">
         <decVal/>
-        <label>Smoke Unit Minimum Steam Chuff Duration</label>
+        <label>Minimum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Min.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Minimale Dauer</label>
         <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
@@ -130,7 +130,7 @@
     </variable>
     <variable CV="142" default="122" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 3">
         <decVal/>
-        <label>Smoke Unit Maximum Steam Chuff Duration</label>
+        <label>Maximum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Max.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Maximale Dauer</label>
         <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
@@ -138,7 +138,7 @@
     </variable>
     <variable CV="143" default="102" item="ESU V4 Function Settings Smoke Chuffs Slider 1">
         <decVal/>
-        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+        <label>Chuff Duration rel. to trig. dist.</label>
         <label xml:lang="it">Durata Suono per Gener.Fumo in funz.dist.Trigger</label>
         <label xml:lang="de">Dauer der Dampfstöße (relativ zu Trigger-Impulsen)</label>
         <label xml:lang="ca">Unitat de xuf en relació a distància</label>

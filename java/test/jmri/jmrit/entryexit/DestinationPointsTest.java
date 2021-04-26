@@ -2,6 +2,7 @@ package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
+
 import jmri.InstanceManager;
 import jmri.MemoryManager;
 import jmri.SensorManager;
@@ -9,11 +10,11 @@ import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -115,7 +116,7 @@ public class DestinationPointsTest {
         return t;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -129,16 +130,18 @@ public class DestinationPointsTest {
         tm = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
-        JUnitUtil.tearDown();
         tm = null;
         sm = null;
         lbm = null;
         eep = null;
         panels = null;
         tools = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPointsTest.class);

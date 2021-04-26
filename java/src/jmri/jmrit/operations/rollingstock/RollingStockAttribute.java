@@ -11,7 +11,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.operations.setup.Control;
+import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,
@@ -20,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
-public abstract class RollingStockAttribute {
+public abstract class RollingStockAttribute extends PropertyChangeSupport {
 
     protected static final int MIN_NAME_LENGTH = 1;
 
@@ -43,25 +44,20 @@ public abstract class RollingStockAttribute {
         if (list.isEmpty()) {
             list.addAll(Arrays.asList(getDefaultNames().split(",")));
         }
-        String[] names = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            names[i] = list.get(i);
-        }
-        return names;
+        return list.toArray(new String[0]);
     }
 
     protected String getDefaultNames() {
-        return "Error"; // overridden //  NOI18N
+        return "Error"; // overridden // NOI18N
     }
 
     public void setNames(String[] names) {
-        if (names.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(names);
-        for (String name : names) {
-            if (!list.contains(name)) {
-                list.add(name);
+        if (names.length > 0) {
+            java.util.Arrays.sort(names);
+            for (String name : names) {
+                if (!list.contains(name)) {
+                    list.add(name);
+                }
             }
         }
     }
@@ -82,9 +78,9 @@ public abstract class RollingStockAttribute {
             for (int i = 0; i < lengths.length; i++) {
                 try {
                     Integer.parseInt(lengths[i]);
-                    log.error("length " + i + " = " + lengths[i]);
+                    log.error("length {} = {}", i, lengths[i]);
                 } catch (NumberFormatException ee) {
-                    log.error("length " + i + " = " + lengths[i] + " is not a valid number!");
+                    log.error("length {} = {} is not a valid number!", i, lengths[i]);
                 }
             }
         }
@@ -94,6 +90,10 @@ public abstract class RollingStockAttribute {
             }
         }
     }
+    
+    public void sort() {
+        java.util.Collections.sort(list);
+    }
 
     public void addName(String name) {
         if (name == null) {
@@ -102,8 +102,8 @@ public abstract class RollingStockAttribute {
         if (list.contains(name)) {
             return;
         }
-        // insert at start of list, sort on restart
-        list.add(0, name);
+        list.add(name);
+        sort();
         maxNameLength = 0; // reset maximum name length
         maxNameSubStringLength = 0;
     }
@@ -155,8 +155,8 @@ public abstract class RollingStockAttribute {
             maxName = "";
             maxNameSubStringLength = getMinNameLength();
             for (String name : getNames()) {
-                String[] subString = name.split("-");
-                if (subString[0].length() > maxNameSubStringLength) {
+                String[] subString = name.split(TrainCommon.HYPHEN);
+                if (subString.length > 0 && subString[0].length() > maxNameSubStringLength) {
                     maxName = name;
                     maxNameSubStringLength = subString[0].length();
                 }
@@ -175,18 +175,9 @@ public abstract class RollingStockAttribute {
      * @param root Common Element for storage.
      * @param eNames New format Element group name
      * @param eName New format Element name
-     * @param oldName Backwards compatibility Element name
      *
      */
-    public void store(Element root, String eNames, String eName, String oldName) {
-        if (Control.backwardCompatible) {
-            Element values = new Element(oldName);
-            for (String name : getNames()) {
-                values.addContent(name + "%%"); // NOI18N
-            }
-            root.addContent(values);
-        }
-        // new format using elements
+    public void store(Element root, String eNames, String eName) {
         Element names = new Element(eNames);
         for (String name : getNames()) {
             Element e = new Element(eName);
@@ -223,20 +214,6 @@ public abstract class RollingStockAttribute {
             String[] names = root.getChildText(oldName).split("%%"); // NOI18N
             setNames(names);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);

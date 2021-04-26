@@ -1,7 +1,9 @@
 package jmri.jmrix.bachrus;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -64,14 +66,13 @@ public class DccSpeedProfileTest {
         Assert.assertEquals("after clear, last value", -1, profile.getLast());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         profile = new DccSpeedProfile(28);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         profile = null;
         JUnitUtil.tearDown();

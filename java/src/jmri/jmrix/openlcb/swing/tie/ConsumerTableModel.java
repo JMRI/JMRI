@@ -21,7 +21,7 @@ public class ConsumerTableModel extends AbstractTableModel {
     public static final int USERNAME_COLUMN = 0;
     public static final int NODE_COLUMN = 1;
     public static final int NUMBER_COLUMN = 2;
-    String[] columnName = new String[]{"User Name", "Node", "Event"};
+    final String[] columnName = new String[]{"User Name", "Node", "Event"};
 
     @Override
     public String getColumnName(int c) {
@@ -58,7 +58,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         // nothing is stored here
     }
 
-    String[][] dummy = {{"Turnout 21 Left", "11", "1"}, // row then column
+    final String[][] dummy = {{"Turnout 21 Left", "11", "1"}, // row then column
     {"Turnout 21 Right", "11", "2"},
     {"Turnout 22 Right", "13", "1"},
     {"Turnout 22 Left", "13", "2"},
@@ -77,7 +77,7 @@ public class ConsumerTableModel extends AbstractTableModel {
      * @param w hard copy writer connection
      * @param colWidth array of column widths
      */
-    public void printTable(HardcopyWriter w, int colWidth[]) {
+    public void printTable(HardcopyWriter w, int[] colWidth) {
         // determine the column sizes - proportionately sized, with space between for lines
         int[] columnSize = new int[4];
         int charPerLine = w.getCharactersPerLine();
@@ -135,7 +135,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int[] columnSize) {
         StringBuilder columnString = new StringBuilder();
         StringBuilder lineString = new StringBuilder();
         String[] spaces = new String[4];
@@ -159,9 +159,9 @@ public class ConsumerTableModel extends AbstractTableModel {
                     // this column string will not fit on one line
                     boolean noWord = true;
                     for (int k = columnSize[i]; k >= 1; k--) {
-                        if (columnStrings[i].substring(k - 1, k).equals(" ")
-                                || columnStrings[i].substring(k - 1, k).equals("-")
-                                || columnStrings[i].substring(k - 1, k).equals("_")) {
+                        if (columnStrings[i].startsWith(" ", k - 1)
+                                || columnStrings[i].startsWith("-", k - 1)
+                                || columnStrings[i].startsWith("_", k - 1)) {
                             columnString = new StringBuilder(columnStrings[i].substring(0, k));
                             columnString.append(spaces[i].substring(columnStrings[i].substring(0, k).length()));
                             columnStrings[i] = columnStrings[i].substring(k);
@@ -199,7 +199,7 @@ public class ConsumerTableModel extends AbstractTableModel {
                 w.write("\n");
                 lineString = new StringBuilder();
             } catch (IOException e) {
-                log.warn("error during printing: " + e);
+                log.warn("error during printing: {}", e);
             }
         }
     }

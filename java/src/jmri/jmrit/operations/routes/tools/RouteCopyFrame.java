@@ -44,7 +44,7 @@ public class RouteCopyFrame extends OperationsFrame {
 
     // combo boxes
     JComboBox<Route> routeBox = InstanceManager.getDefault(RouteManager.class).getComboBox();
-    
+
     public RouteCopyFrame(Route route) {
         super(Bundle.getMessage("TitleRouteCopy"));
         // general GUI config
@@ -77,7 +77,7 @@ public class RouteCopyFrame extends OperationsFrame {
 
         // setup buttons
         addButtonAction(copyButton);
-        
+
         routeBox.setSelectedItem(route);
     }
 
@@ -98,13 +98,9 @@ public class RouteCopyFrame extends OperationsFrame {
                 reportRouteDoesNotExist();
                 return;
             }
-            Route oldRoute = (Route) routeBox.getSelectedItem();
-            if (oldRoute == null) {
-                reportRouteDoesNotExist();
-                return;
-            }
 
             // now copy
+            Route oldRoute = (Route) routeBox.getSelectedItem();
             newRoute = routeManager.copyRoute(oldRoute, routeNameTextField.getText(),
                     invertCheckBox.isSelected());
 
@@ -114,20 +110,17 @@ public class RouteCopyFrame extends OperationsFrame {
     }
 
     private void reportRouteExists(String s) {
-        log.info("Can not " + s + ", route already exists");
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[]{s}),
                 JOptionPane.ERROR_MESSAGE);
     }
 
     private void reportRouteDoesNotExist() {
-        log.debug("route does not exist");
         JOptionPane.showMessageDialog(this, Bundle.getMessage("CopyRoute"),
                 Bundle.getMessage("CopyRoute"), JOptionPane.ERROR_MESSAGE);
     }
 
     /**
-     *
      * @return true if name length is okay
      */
     private boolean checkName() {
@@ -139,8 +132,10 @@ public class RouteCopyFrame extends OperationsFrame {
         if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(
                     Bundle.getMessage("RouteNameLess"),
-                    new Object[]{Control.max_len_string_route_name + 1}), Bundle
-                    .getMessage("CanNotAddRoute"), JOptionPane.ERROR_MESSAGE);
+                    new Object[]{Control.max_len_string_route_name + 1}),
+                    Bundle
+                            .getMessage("CanNotAddRoute"),
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

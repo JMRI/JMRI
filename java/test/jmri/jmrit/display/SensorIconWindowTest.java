@@ -1,21 +1,21 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Swing tests for the SensorIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  * @author  Paul Bender Copyright 2017
  */
 public class SensorIconWindowTest {
@@ -34,7 +34,7 @@ public class SensorIconWindowTest {
         icon.setSensor("IS1");
         icon.setIcon("BeanStateUnknown", new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-        icon.setDisplayLevel(Editor.SENSORS);	//daboudreau added this for Win7
+        icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7
 
         panel.setVisible(true);
 
@@ -46,7 +46,7 @@ public class SensorIconWindowTest {
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
         co.clickMouse(xloc,yloc,1);
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
@@ -101,14 +101,14 @@ public class SensorIconWindowTest {
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
         co.clickMouse(xloc,yloc,1);
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
             return sn.getState() != Sensor.UNKNOWN;
         }, "state not still unknown after one click");
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
@@ -131,8 +131,7 @@ public class SensorIconWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -140,9 +139,11 @@ public class SensorIconWindowTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

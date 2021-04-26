@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<!DOCTYPE catalogTrees SYSTEM "/xml/DTD/catalogTree.dtd">
+<catalogTrees class="jmri.jmrit.catalog.DefaultCatalogTreeManagerConfigXML">
+  <!--Written by JMRI version 4.21.3ish+tata+20201127T1751Z+R7256178f23 on Fri Nov 27 19:35:55 CET 2020-->
+  <catalogTree systemName="NXPI" userName="Item Palette">
+    <node nodeName="Item Palette">
+      <node nodeName="Background">
+        <node nodeName="set">
+          <leaf name="plain" path="program:resources/icons/USS/background/Panel-plain.gif" />
+          <leaf name="signal" path="program:resources/icons/USS/background/Panel-signal.gif" />
+          <leaf name="switch" path="program:resources/icons/USS/background/Panel-switch.gif" />
+        </node>
+      </node>
+      <node nodeName="MultiSensor">
+        <node nodeName="Traťový souhlas">
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/permission/permission-none/permission_none_dark_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/permission/permission-none/permission_none_yellow.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/permission/permission-right/permission_right_white.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/permission/permission-none/permission_none_black.png" />
+          <leaf name="first" path="program:resources/icons/panels/CSD/JOP/permission/permission-left/permission_left_white.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/permission/permission-none/permission_none_grey.png" />
+        </node>
+        <node nodeName="Výkolejka pravá">
+          <leaf name="tenth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_magenta.png" />
+          <leaf name="eighth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_red.png" />
+          <leaf name="eleventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_cyan.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-u/derailer_u_grey.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_red.png" />
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-n/derailer_n_grey.png" />
+          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_white.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-i/derailer_i_grey.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_green.png" />
+          <leaf name="seventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_grey.png" />
+          <leaf name="twelfth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_white.png" />
+          <leaf name="nineth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_green.png" />
+          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_cyan.png" />
+          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_magenta.png" />
+          <leaf name="first" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_grey.png" />
+        </node>
+        <node nodeName="Přejezd">
+          <leaf name="tenth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_magenta.png" />
+          <leaf name="eighth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_red.png" />
+          <leaf name="eleventh" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_cyan.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-u/rxr_u_grey.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_red.png" />
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-n/rxr_n_grey.png" />
+          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_white.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-i/rxr_i_grey.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_green.png" />
+          <leaf name="seventh" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_grey.png" />
+          <leaf name="twelfth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_white.png" />
+          <leaf name="nineth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_green.png" />
+          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_cyan.png" />
+          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_magenta.png" />
+          <leaf name="first" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_grey.png" />
+        </node>
+        <node nodeName="lever">
+          <leaf name="SensorStateInactive" path="program:resources/icons/USS/plate/levers/l-inactive.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/USS/plate/levers/l-inconsistent.gif" />
+          <leaf name="third" path="program:resources/icons/USS/plate/levers/l-right.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/USS/plate/levers/l-unknown.gif" />
+          <leaf name="first" path="program:resources/icons/USS/plate/levers/l-left.gif" />
+          <leaf name="second" path="program:resources/icons/USS/plate/levers/l-vertical.gif" />
+        </node>
+        <node nodeName="Výkolejka levá">
+          <leaf name="tenth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_magenta.png" />
+          <leaf name="eighth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_red.png" />
+          <leaf name="eleventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_cyan.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-u/derailer_u_grey.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_red.png" />
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-n/derailer_n_grey.png" />
+          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_white.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-i/derailer_i_grey.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_green.png" />
+          <leaf name="seventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_grey.png" />
+          <leaf name="twelfth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_white.png" />
+          <leaf name="nineth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_green.png" />
+          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_cyan.png" />
+          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_magenta.png" />
+          <leaf name="first" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_grey.png" />
+        </node>
+      </node>
+      <node nodeName="Reporter" />
+      <node nodeName="SignalHead">
+        <node nodeName="TallMast">
+          <leaf name="SignalHeadStateLunar" path="program:resources/icons/smallschematics/searchlights/left-lunar-marker.gif" />
+          <leaf name="SignalHeadStateFlashingGreen" path="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" />
+          <leaf name="SignalHeadStateHeld" path="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" />
+          <leaf name="SignalHeadStateFlashingYellow" path="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" />
+          <leaf name="SignalHeadStateRed" path="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" />
+          <leaf name="SignalHeadStateDark" path="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" />
+          <leaf name="SignalHeadStateFlashingLunar" path="program:resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif" />
+          <leaf name="SignalHeadStateYellow" path="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" />
+          <leaf name="SignalHeadStateGreen" path="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" />
+          <leaf name="SignalHeadStateFlashingRed" path="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" />
+        </node>
+        <node nodeName="Dwarf">
+          <leaf name="SignalHeadStateLunar" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif" />
+          <leaf name="SignalHeadStateFlashingGreen" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_rt.gif" />
+          <leaf name="SignalHeadStateHeld" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_lt.gif" />
+          <leaf name="SignalHeadStateFlashingYellow" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif" />
+          <leaf name="SignalHeadStateRed" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_lt.gif" />
+          <leaf name="SignalHeadStateDark" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_lt.gif" />
+          <leaf name="SignalHeadStateFlashingLunar" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif" />
+          <leaf name="SignalHeadStateYellow" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_lt.gif" />
+          <leaf name="SignalHeadStateGreen" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_lt.gif" />
+          <leaf name="SignalHeadStateFlashingRed" path="program:resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_rt.gif" />
+        </node>
+      </node>
+      <node nodeName="Light">
+        <node nodeName="Cross">
+          <leaf name="StateOff" path="program:resources/icons/smallschematics/lights/cross-off.png" />
+          <leaf name="StateOn" path="program:resources/icons/smallschematics/lights/cross-on.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/lights/cross-inconsistent.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/lights/cross-unknown.png" />
+        </node>
+        <node nodeName="ToggleSwitch">
+          <leaf name="StateOff" path="program:resources/icons/USS/plate/levers/switch-off.gif" />
+          <leaf name="StateOn" path="program:resources/icons/USS/plate/levers/switch-on.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/USS/plate/levers/switch-unknown.gif" />
+        </node>
+        <node nodeName="LightBulb">
+          <leaf name="StateOff" path="program:resources/icons/functionicons/transparent_background/generic_light_off.png" />
+          <leaf name="StateOn" path="program:resources/icons/functionicons/transparent_background/generic_light.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/lights/cross-inconsistent.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/lights/cross-unknown.png" />
+        </node>
+      </node>
+      <node nodeName="IndicatorTrack">
+        <node nodeName="Přímá 117">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_white.png" />
+        </node>
+        <node nodeName="Oblouk levý">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_white.png" />
+        </node>
+        <node nodeName="Přímá čtvrtinová">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_white.png" />
+        </node>
+        <node nodeName="Přímá poloviční">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_white.png" />
+        </node>
+        <node nodeName="USS-BlockSegment">
+          <leaf name="OccupiedTrack" path="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" />
+          <leaf name="ClearTrack" path="program:resources/icons/track/USS/TrackSeg/block-white.gif" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/track/USS/TrackSeg/block-green.gif" />
+          <leaf name="DontUseTrack" path="program:resources/icons/track/USS/TrackSeg/block-gray.gif" />
+          <leaf name="PositionTrack" path="program:resources/icons/track/USS/TrackSeg/block-blue.gif" />
+          <leaf name="ErrorTrack" path="program:resources/icons/track/USS/TrackSeg/block-red.gif" />
+        </node>
+        <node nodeName="Oblouk levý 90">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_white.png" />
+        </node>
+        <node nodeName="Přímá 63">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_white.png" />
+        </node>
+        <node nodeName="BlockSegment">
+          <leaf name="OccupiedTrack" path="program:resources/icons/track/line/TrackSeg/block-yellow.gif" />
+          <leaf name="ClearTrack" path="program:resources/icons/track/line/TrackSeg/block-black.gif" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/track/line/TrackSeg/block-green.gif" />
+          <leaf name="DontUseTrack" path="program:resources/icons/track/line/TrackSeg/block-gray.gif" />
+          <leaf name="PositionTrack" path="program:resources/icons/track/line/TrackSeg/block-blue.gif" />
+          <leaf name="ErrorTrack" path="program:resources/icons/track/line/TrackSeg/block-red.gif" />
+        </node>
+        <node nodeName="Oblouk pravý">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_white.png" />
+        </node>
+        <node nodeName="Oblouk pravý 90">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_white.png" />
+        </node>
+        <node nodeName="Zarážedlo">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/bumper/bumper_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/bumper/bumper_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/bumper/bumper_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/bumper/bumper_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/bumper/bumper_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/bumper/bumper_white.png" />
+        </node>
+        <node nodeName="Oblouk pravý 45">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_white.png" />
+        </node>
+        <node nodeName="Přímá 45">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_white.png" />
+        </node>
+        <node nodeName="Přímá">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_white.png" />
+        </node>
+        <node nodeName="Oblouk levý 45">
+          <leaf name="OccupiedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_red.png" />
+          <leaf name="ClearTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_grey.png" />
+          <leaf name="AllocatedTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_green.png" />
+          <leaf name="DontUseTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_cyan.png" />
+          <leaf name="PositionTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_magenta.png" />
+          <leaf name="ErrorTrack" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_white.png" />
+        </node>
+      </node>
+      <node nodeName="FastClock">
+        <node nodeName="set">
+          <leaf name="analog" path="program:resources/clock2.gif" />
+        </node>
+      </node>
+      <node nodeName="SignalMast" />
+      <node nodeName="Portal">
+        <node nodeName="Standard">
+          <leaf name="path" path="program:resources/icons/greenSquare.gif" />
+          <leaf name="hidden" path="program:resources/icons/Invisible.gif" />
+          <leaf name="fromArrow" path="program:resources/icons/track/fromArrow.gif" />
+          <leaf name="toArrow" path="program:resources/icons/track/toArrow.gif" />
+          <leaf name="block" path="program:resources/icons/throttles/RoundRedCircle20.png" />
+        </node>
+        <node nodeName="JOP">
+          <leaf name="path" path="program:resources/icons/panels/CSD/JOP/portal/path-editing/path_editing_green.png" />
+          <leaf name="hidden" path="program:resources/icons/Invisible.gif" />
+          <leaf name="toArrow" path="program:resources/icons/panels/CSD/JOP/portal/exit-arrow/exit_arrow_green.png" />
+          <leaf name="fromArrow" path="program:resources/icons/panels/CSD/JOP/portal/entry-arrow/entry_arrow_green.png" />
+          <leaf name="block" path="program:resources/icons/panels/CSD/JOP/portal/visible/visible_red.png" />
+        </node>
+      </node>
+      <node nodeName="Icon">
+        <node nodeName="set">
+          <leaf name="Elektromagnetický zámek" path="program:resources/icons/panels/CSD/JOP/tower/tower-lock/tower_lock_grey.png" />
+          <leaf name="Přímá poloviční" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_grey.png" />
+          <leaf name="Stanoviště obsluhy" path="program:resources/icons/panels/CSD/JOP/tower/tower-main/tower_main_grey.png" />
+          <leaf name="Oblouk pravý bez kontroly" path="program:resources/icons/panels/CSD/JOP/curve/curve-right/curve_right_dashed.png" />
+          <leaf name="Oblouk pravý 45 bez kontroly" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_dashed.png" />
+          <leaf name="Oblouk levý 90" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_grey.png" />
+          <leaf name="Oblouk pravý 90" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_grey.png" />
+          <leaf name="logo" path="program:resources/PanelPro.gif" />
+          <leaf name="track" path="program:resources/icons/smallschematics/tracksegments/block.gif" />
+          <leaf name="Přímá" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_grey.png" />
+          <leaf name="Oblouk levý 90 bez kontroly" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-90/curve_left_90_dashed.png" />
+          <leaf name="Přímá 117" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_grey.png" />
+          <leaf name="Oblouk levý 45 bez kontroly" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_dashed.png" />
+          <leaf name="Přímá čtvrtinová" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_grey.png" />
+          <leaf name="Oblouk pravý 90 bez kontroly" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-90/curve_right_90_dashed.png" />
+          <leaf name="Přímá 63 bez kontroly" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_dashed.png" />
+          <leaf name="Přímá 45  " path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_grey.png" />
+          <leaf name="Přímá 63" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-63/straigth_63_grey.png" />
+          <leaf name="Přímá bez kontroly" path="program:resources/icons/panels/CSD/JOP/track/track-straigth/straigth_dashed.png" />
+          <leaf name="Přímá 117 bez kontroly" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-117/straigth_117_dashed.png" />
+          <leaf name="Oblouk levý bez kontroly" path="program:resources/icons/panels/CSD/JOP/curve/curve-left/curve_left_dashed.png" />
+          <leaf name="Přímá poloviční bez kontroly" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-short/straigth_short_dashed.png" />
+          <leaf name="Přímá 45 bez kontroly" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-45/straigth_45_dashed.png" />
+          <leaf name="Oblouk pravý 45" path="program:resources/icons/panels/CSD/JOP/curve/curve-right-45/curve_right_45_grey.png" />
+          <leaf name="Přímá čtvrtinová bez kontroly" path="program:resources/icons/panels/CSD/JOP/track/track-straigth-quarter/straigth_quarter_dashed.png" />
+          <leaf name="Oblouk levý 45" path="program:resources/icons/panels/CSD/JOP/curve/curve-left-45/curve_left_45_grey.png" />
+          <leaf name="Maska" path="program:resources/icons/panels/CSD/JOP/signal/signal-mask/signal_mask_333333.png" />
+        </node>
+      </node>
+      <node nodeName="RPSReporter">
+        <node nodeName="classic">
+          <leaf name="active" path="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" />
+          <leaf name="error" path="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" />
+        </node>
+      </node>
+      <node nodeName="Turnout">
+        <node nodeName="LeftCrossOver">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-closed.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-error.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-unknown.gif" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-thrown.gif" />
+        </node>
+        <node nodeName="Výhybka pravá">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_grey.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_grey.png" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_grey.png" />
+        </node>
+        <node nodeName="RightCrossOver">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-closed.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-error.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-unknown.gif" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-thrown.gif" />
+        </node>
+        <node nodeName="Výhybka levá 63">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_grey.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_grey.png" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_grey.png" />
+        </node>
+        <node nodeName="RightTurnout">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" />
+        </node>
+        <node nodeName="Výhybka pravá 63">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_grey.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_grey.png" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_grey.png" />
+        </node>
+        <node nodeName="LeftTurnout">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" />
+        </node>
+        <node nodeName="Výhybka levá">
+          <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_grey.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_grey.png" />
+          <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_grey.png" />
+        </node>
+      </node>
+      <node nodeName="Sensor">
+        <node nodeName="Pomocné stavědlo">
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/tower/tower-auxiliary/tower_auxiliary_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/tower/tower-auxiliary/tower_auxiliary_cyan.png" />
+          <leaf name="SensorStateActive" path="program:resources/icons/panels/CSD/JOP/tower/tower-auxiliary/tower_auxiliary_blue.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/tower/tower-auxiliary/tower_auxiliary_black.png" />
+        </node>
+        <node nodeName="LargeJewel">
+          <leaf name="SensorStateInactive" path="program:resources/icons/USS/sensor/red-off.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/USS/sensor/amber-on.gif" />
+          <leaf name="SensorStateActive" path="program:resources/icons/USS/sensor/green-on.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/USS/sensor/blue-on.gif" />
+        </node>
+        <node nodeName="Elektromagnetický zámek">
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/tower/tower-lock/tower_lock_grey.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/tower/tower-lock/tower_lock_cyan.png" />
+          <leaf name="SensorStateActive" path="program:resources/icons/panels/CSD/JOP/tower/tower-lock/tower_lock_blue.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/tower/tower-lock/tower_lock_black.png" />
+        </node>
+        <node nodeName="SmallJewel">
+          <leaf name="SensorStateInactive" path="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" />
+          <leaf name="SensorStateActive" path="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" />
+        </node>
+      </node>
+      <node nodeName="IndicatorTO">
+        <node nodeName="Výhybka pravá">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_red.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_red.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_red.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_red.png" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_grey.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_grey.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_grey.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_grey.png" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_green.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_green.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_green.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_green.png" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_cyan.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_cyan.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_cyan.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_cyan.png" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_magenta.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_magenta.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_magenta.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_magenta.png" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_closed_white.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_error_white.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_unknown_white.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right/turnout_right_thrown_white.png" />
+          </node>
+        </node>
+        <node nodeName="Výhybka levá 63">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_red.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_red.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_red.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_red.png" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_grey.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_grey.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_grey.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_grey.png" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_green.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_green.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_green.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_green.png" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_cyan.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_cyan.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_cyan.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_cyan.png" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_magenta.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_magenta.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_magenta.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_magenta.png" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_closed_white.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_error_white.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_unknown_white.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left-63/turnout_left_63_thrown_white.png" />
+          </node>
+        </node>
+        <node nodeName="RightTurnout">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/RightTO/os-righthand-east-closed-yellow.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/RightTO/os-righthand-east-error-yellow.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-yellow.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-yellow.gif" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/RightTO/os-righthand-east-closed-black.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/RightTO/os-righthand-east-error-black.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-black.gif" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/RightTO/os-righthand-east-closed-green.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/RightTO/os-righthand-east-error-green.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-green.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-green.gif" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/RightTO/os-righthand-east-closed-gray.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/RightTO/os-righthand-east-error-gray.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-gray.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-gray.gif" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/RightTO/os-righthand-east-closed-blue.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/RightTO/os-righthand-east-error-blue.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-blue.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-blue.gif" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/RightTO/os-righthand-east-closed-red.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/RightTO/os-righthand-east-error-red.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-red.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-red.gif" />
+          </node>
+        </node>
+        <node nodeName="USS-RightTurnout">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/RightTO/os-righthand-east-closed-yellow.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/RightTO/os-righthand-east-error-yellow.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-unknown-yellow.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-thrown-yellow.gif" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/RightTO/os-righthand-east-closed-white.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/RightTO/os-righthand-east-error-white.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-unknown-white.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-thrown-white.gif" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/RightTO/os-righthand-east-closed-green.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/RightTO/os-righthand-east-error-green.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-unknown-green.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-thrown-green.gif" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/RightTO/os-righthand-east-closed-gray.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/RightTO/os-righthand-east-error-gray.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-unknown-gray.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-thrown-gray.gif" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/RightTO/os-righthand-east-closed-blue.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/RightTO/os-righthand-east-error-blue.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-unknown-blue.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-thrown-blue.gif" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/RightTO/os-righthand-east-closed-red.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/RightTO/os-righthand-east-error-red.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-unknown-red.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/RightTO/os-righthand-east-thrown-red.gif" />
+          </node>
+        </node>
+        <node nodeName="Výhybka pravá 63">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_red.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_red.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_red.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_red.png" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_grey.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_grey.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_grey.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_grey.png" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_green.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_green.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_green.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_green.png" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_cyan.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_cyan.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_cyan.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_cyan.png" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_magenta.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_magenta.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_magenta.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_magenta.png" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_closed_white.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_error_white.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_unknown_white.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-right-63/turnout_right_63_thrown_white.png" />
+          </node>
+        </node>
+        <node nodeName="LeftTurnout">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-yellow.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-yellow.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-yellow.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-yellow.gif" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-black.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-black.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-black.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-black.gif" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-green.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-green.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-green.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-green.gif" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-gray.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-gray.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-gray.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-gray.gif" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-blue.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-blue.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-blue.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-blue.gif" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-red.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-red.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-red.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-red.gif" />
+          </node>
+        </node>
+        <node nodeName="USS-LeftTurnout">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-yellow.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-yellow.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-yellow.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-yellow.gif" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-white.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-white.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-white.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-white.gif" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-green.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-green.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-green.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-green.gif" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-gray.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-gray.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-gray.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-gray.gif" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-blue.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-blue.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-blue.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-blue.gif" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-red.gif" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-red.gif" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-red.gif" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-red.gif" />
+          </node>
+        </node>
+        <node nodeName="Výhybka levá">
+          <node nodeName="OccupiedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_red.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_red.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_red.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_red.png" />
+          </node>
+          <node nodeName="ClearTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_grey.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_grey.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_grey.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_grey.png" />
+          </node>
+          <node nodeName="AllocatedTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_green.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_green.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_green.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_green.png" />
+          </node>
+          <node nodeName="DontUseTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_cyan.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_cyan.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_cyan.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_cyan.png" />
+          </node>
+          <node nodeName="PositionTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_magenta.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_magenta.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_magenta.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_magenta.png" />
+          </node>
+          <node nodeName="ErrorTrack">
+            <leaf name="TurnoutStateClosed" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_closed_white.png" />
+            <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_error_white.png" />
+            <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_unknown_white.png" />
+            <leaf name="TurnoutStateThrown" path="program:resources/icons/panels/CSD/JOP/turnout/turnout-left/turnout_left_thrown_white.png" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </catalogTree>
+</catalogTrees>

@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AbstractXNetSerialConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -25,7 +24,7 @@ public class AbstractXNetSerialConnectionConfigXmlTest extends jmri.jmrix.config
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         xmlAdapter = null;

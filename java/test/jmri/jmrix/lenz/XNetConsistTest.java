@@ -4,14 +4,16 @@ import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetConsistTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.XNetConsist class
+ * Test for the jmri.jmrix.lenz.XNetConsist class
  *
- * @author	Paul Bender Copyright (C) 2010,2016,2017
+ * @author Paul Bender Copyright (C) 2010,2016,2017
  */
 public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
@@ -28,7 +30,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     }
 
     @Override
-    @Test(expected = java.lang.NullPointerException.class)
+    @Test
     public void checkDisposeMethod() {
         // verify that c has been added to the traffic controller's 
         // list of listeners.
@@ -48,8 +50,8 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
         Assert.assertEquals("dispose check", listeners - 1, tc.numListeners());
 
         // after dispose, this should fail
-        Assert.assertTrue("Advanced Consist Contains", c.contains(A));
-        Assert.assertTrue("Advanced Consist Contains", c.contains(B));
+        Assert.assertThrows("Advanced Consist is null", NullPointerException.class, () -> c.contains(A));
+        Assert.assertThrows("Advanced Consist is null", NullPointerException.class, () -> c.contains(B));
 
     }
 
@@ -98,21 +100,20 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     }
 
     @Test
-    @Ignore("Remove requires response from command station")
+    @Disabled("Remove requires response from command station")
     @ToDo("re-write parent class test here and include simulated command station response")
     @Override
     public void checkRemoveWithGetRosterIDAdvanced() {
     }
 
     @Test
-    @Ignore("Remove requires response from command station")
+    @Disabled("Remove requires response from command station")
     @ToDo("re-write parent class test here and include simulated command station response")
     @Override
     public void checkAddRemoveWithRosterUpdateAdvanced() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -124,13 +125,14 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
         c = new XNetConsist(5, tc, memo);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
+        tc.terminateThreads();
         tc = null;
+        memo.dispose();
         memo = null;
+        JUnitUtil.tearDown();
     }
 
 }

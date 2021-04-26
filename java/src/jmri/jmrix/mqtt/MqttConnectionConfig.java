@@ -55,7 +55,9 @@ public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionCo
         // move to a SystemConnectionMemo architecture.  It sets the
         // combobox for the topic preference to editable, so that it
         // can be changed to an arbitrary string before being stored.
-        ((JComboBox) options.get(adapter.getOptions()[0]).getComponent()).setEditable(true);
+        if ( options.get(adapter.getOptions()[0]).getComponent() instanceof JComboBox) {
+            ((JComboBox) options.get(adapter.getOptions()[0]).getComponent()).setEditable(true);
+        }
     }
     
     @Override

@@ -27,7 +27,12 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
 
-    public FrmAddModifyCTCColumn(AwtWindowProperties awtWindowProperties, Columns columns, boolean isModify, int existingSwitchNumber, int existingGUIColumnNumber, boolean existingGUIGeneratedAtLeastOnceAlready) {
+    public FrmAddModifyCTCColumn(AwtWindowProperties awtWindowProperties,
+            Columns columns,
+            boolean isModify,
+            int existingSwitchNumber,
+            int existingGUIColumnNumber,
+            boolean existingGUIGeneratedAtLeastOnceAlready) {
         super();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_osList", true);  // NOI18N
@@ -36,10 +41,8 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         _mIsModify = isModify;
         if (!isModify) {    // Add:
             this.setTitle(Bundle.getMessage("TitleDlgAddModAdd"));  // NOI18N
-            _mInfo.setVisible(false);
         } else {    // Modify:
             this.setTitle(Bundle.getMessage("TitleDlgAddModChg"));  // NOI18N
-            _mInfo.setVisible(true);
         }
         _mGUIColumnNumber.setModel(new SpinnerNumberModel(existingGUIColumnNumber, 0, 32767, 1));
         _mGUISwitchNumber.setModel(new SpinnerNumberModel(existingSwitchNumber, 1, 32767, 2));
@@ -59,7 +62,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         _mSaveAndClose = new javax.swing.JButton();
-        _mInfo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         _mGUIColumnNumber = new javax.swing.JSpinner();
@@ -87,34 +89,17 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
             }
         });
 
-        _mInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        _mInfo.setText(Bundle.getMessage("InfoDlgAddModNote")
-        );
-        _mInfo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        _mInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        _mInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
         jLabel4.setText(Bundle.getMessage("LabelDlgAddModColumn"));
 
         jLabel5.setText(Bundle.getMessage("InfoDlgAddModGen"));
 
         _mGUIGeneratedAtLeastOnceAlready.setText(Bundle.getMessage("LabelDlgAddModGen")
         );
-        _mGUIGeneratedAtLeastOnceAlready.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(_mInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +142,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
                 .addComponent(_mGUIGeneratedAtLeastOnceAlready)
                 .addGap(32, 32, 32)
                 .addComponent(_mSaveAndClose)
-                .addGap(18, 18, 18)
-                .addComponent(_mInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -185,15 +168,10 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGUIGeneratedAtLeastOnceAlreadyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event__mGUIGeneratedAtLeastOnceAlreadyActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner _mGUIColumnNumber;
     private javax.swing.JCheckBox _mGUIGeneratedAtLeastOnceAlready;
     private javax.swing.JSpinner _mGUISwitchNumber;
-    private javax.swing.JLabel _mInfo;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

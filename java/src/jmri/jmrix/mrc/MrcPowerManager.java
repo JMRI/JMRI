@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class MrcPowerManager
-        extends jmri.managers.AbstractPowerManager
+        extends jmri.managers.AbstractPowerManager<MrcSystemConnectionMemo>
         implements MrcTrafficListener {
 
     public MrcPowerManager(MrcSystemConnectionMemo memo) {
@@ -32,8 +32,6 @@ public class MrcPowerManager
         tc.addTrafficListener(MrcInterface.POWER, this);
 
     }
-
-    protected int power = UNKNOWN;
 
     @Override
     public void setPower(int v) throws JmriException {
@@ -49,12 +47,7 @@ public class MrcPowerManager
             tc.sendMrcMessage(l);
         }
         power = v;
-        firePropertyChange("Power", old, power); //IN18N
-    }
-
-    @Override
-    public int getPower() {
-        return power;
+        firePowerPropertyChange(old, power);
     }
 
     // these next three public methods have been added so that other classes
@@ -84,7 +77,7 @@ public class MrcPowerManager
 
     private void checkTC() throws JmriException {
         if (tc == null) {
-            throw new JmriException("Use power manager after dispose"); //IN18N
+            throw new JmriException("Use power manager after dispose"); // NOI18N
         }
     }
 

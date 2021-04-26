@@ -34,7 +34,7 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
 
     @Override
     public ObjectNode doGet(IdTag idTag, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(idTag, name, type, request); // throws JsonException if idTag == null
+        ObjectNode root = this.getNamedBean(idTag, name, getType(), request); // throws JsonException if idTag == null
         ObjectNode data = root.with(JSON.DATA);
         if (idTag != null) {
             int state = idTag.getState();

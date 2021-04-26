@@ -2,10 +2,8 @@ package jmri.implementation;
 
 import jmri.*;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test the DefaultLogixTest implementation class
@@ -42,10 +40,9 @@ public class DefaultLogixTest extends NamedBeanTest {
         Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
 
         Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
-
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -53,8 +50,9 @@ public class DefaultLogixTest extends NamedBeanTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

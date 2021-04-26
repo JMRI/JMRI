@@ -1,12 +1,13 @@
 package jmri.jmrix.openlcb.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.openlcb.OlcbConfigurationManager;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nonnull;
 
 /**
  * Provides load and store functionality for configuring OlcbLightManagers.
@@ -28,13 +29,8 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        boolean result = true;
+    public boolean load(@Nonnull Element shared, Element perNode) {
+        boolean result;
         // We tell the Light managers that we will be loading Lights from XML and they should
         // expect additional property set sequences. This is somewhat tricky in the face of
         // possibly multiple OpenLCB buses registered.
@@ -55,5 +51,5 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXml.class);
 }

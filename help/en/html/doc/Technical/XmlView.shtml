@@ -27,7 +27,7 @@
       JMRI XML files can be displayed in a web browser. A technique
       called "XSLT stylesheets" is used to format them within the
       web browser. For an example of how this looks, please see the
-      <a href="http://jmri.org/xml/samples/NicksClinic.xml">sample
+      <a href="https://jmri.org/xml/samples/NicksClinic.xml">sample
       panel XML file</a> on the main JMRI web site. (May take a few
       seconds to load)</p>
 
@@ -48,7 +48,7 @@
       right, while Firefox seems to work properly on some platforms
       and not on others. (There might also be options that affect
       whether it works. Here's some
-      <a href="http://jmri.org/xml/XSLT/README">technical
+      <a href="https://jmri.org/xml/XSLT/README">technical
       background</a>)</p>
 
       <p>If none of the browsers available to you can display the

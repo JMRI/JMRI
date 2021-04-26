@@ -11,19 +11,19 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
 
 /**
  * Test simple functioning of ManagerDefaultSelector
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ManagerDefaultSelectorTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -32,8 +32,9 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.initInternalLightManager();  // start proxies, which start internal
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
@@ -72,11 +73,14 @@ public class ManagerDefaultSelectorTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo.configureManagers();
         return memo;
     }
 
     @Test
     public void testSingleSystemPreferencesValid() throws InitializationException {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         // assert default state
         Assert.assertFalse(mds.isAllInternalDefaultsValid());
@@ -94,7 +98,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet.getPropertyChangeListeners().length;
+            return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
@@ -128,6 +132,8 @@ public class ManagerDefaultSelectorTest {
 
     @Test
     public void testAuxInternalPreferencesValid() throws InitializationException {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
 
@@ -144,7 +150,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet.getPropertyChangeListeners().length;
+            return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
@@ -192,6 +198,8 @@ public class ManagerDefaultSelectorTest {
 
     @Test
     public void testTwoLoconetPreferencesValid() throws InitializationException {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
 
@@ -208,7 +216,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet.getPropertyChangeListeners().length;
+            return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
@@ -217,7 +225,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet2.getPropertyChangeListeners().length;
+            return 2 == loconet2.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 

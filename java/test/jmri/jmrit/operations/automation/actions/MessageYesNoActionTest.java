@@ -5,12 +5,12 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MessageYesNoActionTest extends OperationsTestCase {
 

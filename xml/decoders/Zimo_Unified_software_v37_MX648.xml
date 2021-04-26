@@ -35,10 +35,11 @@
   <!--        File is not tested cause no decoder of this type is in my collection.          -->
   <!--        If you find any errors please contact me by mail (ronald@wirkuhns.de)          -->
   <!-- v1.8,  added MX648 Rev C,D,  Ronald Kuhn, 25 Jun 2019              -->
+  <!-- v1.9,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <!--                                                                                       -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model  model="MX648 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+      <model  model="MX648 version 37+" replacementModel="MX648 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -47,7 +48,7 @@
         <output name="6" label="FO 4 (+5v)"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model  model="MX648F version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+      <model  model="MX648F version 37+" replacementModel="MX648F version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
        <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -56,7 +57,7 @@
         <output name="6" label="FO 4"/>
         <size length="28" width="10.5" height="4" units="mm"/>
       </model>
-      <model  model="MX648P16 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+      <model  model="MX648P16 version 37+" replacementModel="MX648P16 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -65,7 +66,7 @@
         <output name="6" label="FO 4"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model  model="MX648R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+      <model  model="MX648R version 37+" replacementModel="MX648R version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -74,7 +75,7 @@
         <output name="6" label="FO 4"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model  model="MX648 Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+      <model  model="MX648 Rev. C,D version 37+" replacementModel="MX648 Rev. C,D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -83,7 +84,7 @@
         <output name="6" label="FO 4 (+5v)"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model  model="MX648F Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+      <model  model="MX648F Rev. C,D version 37+" replacementModel="MX648F Rev. C,D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
        <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -92,7 +93,7 @@
         <output name="6" label="FO 4"/>
         <size length="28" width="10.5" height="4" units="mm"/>
       </model>
-      <model  model="MX648P16 Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+      <model  model="MX648P16 Rev. C,D version 37+" replacementModel="MX648P16 Rev. C,D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -101,7 +102,7 @@
         <output name="6" label="FO 4"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model  model="MX648R Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+      <model  model="MX648R Rev. C,D version 37+" replacementModel="MX648R Rev. C,D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -120,7 +121,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 36 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
-      <variable CV="7" readOnly="yes" default="37">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

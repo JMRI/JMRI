@@ -56,6 +56,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
     JRadioButton sortByFinalDestination = new JRadioButton(Bundle.getMessage("FD"));
     JRadioButton sortByRwe = new JRadioButton(Bundle.getMessage("RWE"));
+    JRadioButton sortByRwl = new JRadioButton(Bundle.getMessage("RWL"));
+    JRadioButton sortByDivision = new JRadioButton(Bundle.getMessage("Division"));
     JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
     JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
     JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
@@ -114,6 +116,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         destp.add(sortByDestination);
         destp.add(sortByFinalDestination);
         destp.add(sortByRwe);
+        destp.add(sortByRwl);
+        destp.add(sortByDivision);
         cp1.add(destp);
         cp1.add(sortByTrain);
 
@@ -169,6 +173,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         // some tool tips
         sortByFinalDestination.setToolTipText(Bundle.getMessage("FinalDestination"));
         sortByRwe.setToolTipText(Bundle.getMessage("ReturnWhenEmpty"));
+        sortByRwl.setToolTipText(Bundle.getMessage("ReturnWhenLoaded"));
         sortByPickup.setToolTipText(Bundle.getMessage("TipPickup"));
         sortByLast.setToolTipText(Bundle.getMessage("TipLastMoved"));
 
@@ -193,6 +198,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         addRadioButtonAction(sortByDestination);
         addRadioButtonAction(sortByFinalDestination);
         addRadioButtonAction(sortByRwe);
+        addRadioButtonAction(sortByRwl);
+        addRadioButtonAction(sortByDivision);
         addRadioButtonAction(sortByTrain);
         addRadioButtonAction(sortByMoves);
         addRadioButtonAction(sortByBuilt);
@@ -213,6 +220,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         group.add(sortByDestination);
         group.add(sortByFinalDestination);
         group.add(sortByRwe);
+        group.add(sortByRwl);
+        group.add(sortByDivision);
         group.add(sortByTrain);
         group.add(sortByMoves);
         group.add(sortByBuilt);
@@ -243,8 +252,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         toolMenu.add(new ResetCheckboxesCarsTableAction(carsTableModel));
         toolMenu.add(new ModifyLocationsAction());
         toolMenu.add(new TrainsByCarTypeAction());
-        toolMenu.add(new PrintCarLoadsAction(true, this));
-        toolMenu.add(new PrintCarLoadsAction(false, this));
+        toolMenu.add(new PrintCarLoadsAction(true));
+        toolMenu.add(new PrintCarLoadsAction(false));
         toolMenu.add(new CarsSetFrameAction(carsTable));
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
@@ -293,6 +302,12 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         }
         if (ae.getSource() == sortByRwe) {
             carsTableModel.setSort(carsTableModel.SORTBY_RWE);
+        }
+        if (ae.getSource() == sortByRwl) {
+            carsTableModel.setSort(carsTableModel.SORTBY_RWL);
+        }
+        if (ae.getSource() == sortByDivision) {
+            carsTableModel.setSort(carsTableModel.SORTBY_DIVISION);
         }
         if (ae.getSource() == sortByTrain) {
             carsTableModel.setSort(carsTableModel.SORTBY_TRAIN);

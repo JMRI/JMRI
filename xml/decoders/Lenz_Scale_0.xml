@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="W.D.Kok" version="1.00" lastUpdated="20200423            "/>
+  <version author="W.D.Kok" version="2.00" lastUpdated="20210128            "/>
+  <!-- Version 1.00 - Initial version                                       -->
+  <!-- Version 2.00 - Added V20 and KLV 12                                  -->
+  <decoder>
+    <family name="Lenz Scale 0 Locomotive" mfg="Lenz" highVersionID="62" lowVersionID="0">
+      <model model="BR38" lowVersionID="31" highVersionID="31" formFactor="0" productID="31"/>
+      <model model="BR50" lowVersionID="22" highVersionID="22" formFactor="0" productID="22"/>
+      <model model="BR64" lowVersionID="5" highVersionID="5" formFactor="0" productID="05"/>
+      <model model="BR89" lowVersionID="24" highVersionID="24" formFactor="0" productID="24"/>
+      <model model="BR94" lowVersionID="28" highVersionID="28" formFactor="0" productID="28"/>
+      <model model="V36" lowVersionID="61" highVersionID="61" formFactor="0" productID="61"/>
+      <model model="V100" lowVersionID="3" highVersionID="3" formFactor="0" productID="03"/>
+      <model model="V20" lowVersionID="17" highVersionID="17" formFactor="0" productID="17"/>
+      <model model="V60 ver 1" lowVersionID="9" highVersionID="9" formFactor="0" productID="09"/>
+      <model model="V60 ver 2" lowVersionID="32" highVersionID="32" formFactor="0" productID="32"/>
+      <model model="V160" lowVersionID="5" highVersionID="5" formFactor="0" productID="05"/>
+      <model model="V160 Lollo" lowVersionID="18" highVersionID="18" formFactor="0" productID="18"/>
+      <model model="BR216" lowVersionID="5" highVersionID="5" formFactor="0" productID="05"/>
+      <model model="BR260 ver 1" lowVersionID="9" highVersionID="9" formFactor="0" productID="09"/>
+      <model model="BR260 ver 2" lowVersionID="32" highVersionID="32" formFactor="0" productID="32"/>
+      <model model="BR360" lowVersionID="9" highVersionID="9" formFactor="0" productID="09"/>
+      <model model="VT98" lowVersionID="10" highVersionID="10" formFactor="0" productID="10"/>
+      <model model="Köf II" lowVersionID="2" highVersionID="2" formFactor="0" productID="02"/>
+      <model model="KLV 12" lowVersionID="27" highVersionID="27" formFactor="0" productID="27"/>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="0" comment="Range 0-255">
+        <defaultItem default="3" include="27"/>
+        <defaultItem default="2" include="31,24,28,17,32,10"/>
+        <defaultItem default="1" include="22"/>
+        <decVal/>
+        <label>Start Volts</label>
+        <label xml:lang="ca">Voltatge d'arrencada</label>
+        <label xml:lang="cs">Rozjezdové napětí</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="it">Tensione di partenza</label>
+        <label xml:lang="nl">Start spanning</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="3" item="Accel" default="6" comment="Range 0-255">
+        <defaultItem default="20" include="31,24,28,32,27"/>
+        <defaultItem default="25" include="22"/>
+        <defaultItem default="12" include="10"/>
+        <decVal/>
+        <label>Acceleration Momentum</label>
+        <label xml:lang="ca">Inèrcia d'Acceleració</label>
+        <label xml:lang="cs">Zrychlení</label>
+        <label xml:lang="de">Anfahrverzögerung</label>
+        <label xml:lang="it">Inerzia Accellerazione</label>
+        <label xml:lang="nl">Startvertraging</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="4" item="Decel" default="5" comment="Range 0-255">
+        <defaultItem default="10" include="27"/>
+        <defaultItem default="12" include="31,24,28,32"/>
+        <defaultItem default="20" include="22"/>
+        <decVal/>
+        <label>Deceleration (Brake) Momentum</label>
+        <label xml:lang="ca">Inèrcia desacceleració</label>
+        <label xml:lang="cs">Zpomalení</label>
+        <label xml:lang="de">Bremsverzögerung</label>
+        <label xml:lang="it">Inerzia Decellarazione (Frenata)</label>
+        <label xml:lang="nl">Remvertraging</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="5" item="Vhigh" default="255" comment="Range 0-255">
+        <defaultItem default="250" include="22"/>
+        <defaultItem default="254" include="05,09,03,17,18,10,02.27"/>
+        <decVal/>
+        <label>Max Volts</label>
+        <label xml:lang="ca">Voltatge màxim</label>
+        <label xml:lang="cs">Maximální napětí</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="it">Tensione massima</label>
+        <label xml:lang="nl">Maximale snelheid</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="6" item="Vmid" default="48" comment="Range 0-255">
+        <defaultItem default="31" include="31"/>
+        <defaultItem default="22" include="22"/>
+        <decVal/>
+        <label>Vmid</label>
+        <label xml:lang="ca">Voltatge mitjà</label>
+        <label xml:lang="cs">Střední napětí</label>
+        <label xml:lang="de">Mittengeschwindigkeit</label>
+        <label xml:lang="it">Tensione intermedia</label>
+        <label xml:lang="nl">Gemiddelde snelheid</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="7" item="Decoder Version" readOnly="yes">
+        <defaultItem default="31" include="31"/>
+        <defaultItem default="22" include="22"/>
+        <defaultItem default="5" include="05"/>
+        <defaultItem default="24" include="24"/>
+        <defaultItem default="28" include="28"/>
+        <defaultItem default="61" include="61"/>
+        <defaultItem default="9" include="09"/>
+        <defaultItem default="32" include="32"/>
+        <defaultItem default="3" include="03"/>
+        <defaultItem default="17" include="17"/>
+        <defaultItem default="18" include="18"/>
+        <defaultItem default="10" include="10"/>
+        <defaultItem default="2" include="02"/>
+        <defaultItem default="27" include="27"/>
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoderversion: </label>
+        <label xml:lang="nl">Decoderversie: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant ID: </label>
+        <tooltip>&lt;html&gt;ID 99 = LENZ ELEKTRONIK GMBH&lt;br&gt; https://www.lenz-elektronik.de &lt;br&gt; support@lenz-elektronik.de &lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <!--   RailCom   -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+      <variable CV="28" mask="XXXXXXXV" item="RailCom Address" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Ch. 1 for Address.</label>
+        <label xml:lang="ca">Canal 1 per adreça.</label>
+        <label xml:lang="cs">Kanál 1 pro adresu.</label>
+        <label xml:lang="de">Kanal 1 für Adressen.</label>
+        <label xml:lang="it">Canale.1 per Indirizzo.</label>
+        <label xml:lang="nl">Kanaal 1 voor adressen.</label>
+      </variable>
+      <variable CV="28" mask="XXXXXXVX" item="RailCom Data" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Ch. 2 for Data.</label>
+        <label xml:lang="ca">Canal 2 per dades.</label>
+        <label xml:lang="cs">Kanál 2 pro data.</label>
+        <label xml:lang="de">Kanal 2 für Daten.</label>
+        <label xml:lang="it">Canale.2 per Dati.</label>
+        <label xml:lang="nl">Kanaal 2 voor Daten.</label>
+      </variable>
+      <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="0" include="50,61,27">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Ch. 1 for Command Ack.</label>
+        <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
+        <label xml:lang="cs">Kanál 1 pro potvrzení příkazu.</label>
+        <label xml:lang="de">Kanal 1 für Befehls-Ack.</label>
+        <label xml:lang="it">Canale.1 per Comando Ack.</label>
+        <label xml:lang="nl">Kanaal 1 voor beveel erkenning.</label>
+      </variable>
+      <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="1" include="03,17">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Ch. 1 for Command Ack.</label>
+        <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
+        <label xml:lang="cs">Kanál 1 pro potvrzení příkazu.</label>
+        <label xml:lang="de">Kanal 1 für Befehls-Ack.</label>
+        <label xml:lang="it">Canale.1 per Comando Ack.</label>
+        <label xml:lang="nl">Kanaal 1 voor beveel erkenning.</label>
+      </variable>
+      <variable CV="28" readOnly="yes" mask="XXXXXVXX" item="RailCom Command" default="1" include="05,09,18,10,02">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Not in use.</label>
+        <label xml:lang="de">nicht verwendet.</label>
+        <label xml:lang="nl">Nicht in gebruik.</label>
+      </variable>
+      <variable CV="29" mask="XXXXVXXX" item="Enable RailCom" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>RailCom</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" include="31,22,24,28,32">
+        <enumVal>
+          <enumChoice choice="NMRA Digital only">
+            <choice>NMRA Digital only</choice>
+            <choice xml:lang="ca">NMRA Digital only (ca)</choice>
+            <choice xml:lang="cs">Pouze digitál NMRA</choice>
+            <choice xml:lang="de">Nur Digital nach NMRA</choice>
+            <choice xml:lang="fr">Digital NMRA seulement</choice>
+            <choice xml:lang="it">Solo NMRA Digitale</choice>
+            <choice xml:lang="nl">Alleen digitaal vlg. NMRA</choice>
+          </enumChoice>
+          <enumChoice choice="DC conversion enabled">
+            <choice>DC conversion enabled</choice>
+            <choice xml:lang="ca">DC conversion enabled (ca)</choice>
+            <choice xml:lang="cs">Povolena konverze DC</choice>
+            <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
+            <choice xml:lang="fr">Mode analogique activé</choice>
+            <choice xml:lang="it">Alim.Analogica Abilitata (DCC+Analogico)</choice>
+            <choice xml:lang="nl">Analogmodus geactiveerd</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Power Source Conversion</label>
+        <label xml:lang="ca">Power Source Conversion(ca)</label>
+        <label xml:lang="cs">Konverze napájení</label>
+        <label xml:lang="de">Stromquelle Konversion</label>
+        <label xml:lang="fr">Conversion source d'alimentation</label>
+        <label xml:lang="it">Conversione Sorgente Alimentazione</label>
+        <label xml:lang="nl">Stroombron-omschakeling</label>
+        <tooltip>&lt;html&gt;NMRA Digital only: Digital Operation Only.&lt;br&gt; DC conversion enabled: both Digital + Analog, default is both&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Pouze digitál NMRA: pouze digitální provoz. &lt;br&gt; Povolena konverze DC: obojí provoz digitální + analogový, výhozí hodnota je vypnuto.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Nur Digital nach NMRA: Die Lokomotive fährt nur digital.&lt;br&gt; Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;Digital NMRA seulement: fonctionne uniquement en Digital&lt;br&gt; Mode analogique activé: fonctionne à la fois en Digital et en analogique&lt;br&gt;Les deux par défaut.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;'4' bit.&lt;br&gt; Permette alla loco di andare in DC, per default è On&lt;br&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alleen digitaal volgens NMRA: de locomotief rijdt alleen digitaal.&lt;br&gt; Analogemodus geactiveerd: de locomotief rijdt zowel digitaal als analoog.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="29" readOnly="yes" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" include="09,18,10,02,17,27">
+        <enumVal>
+          <enumChoice choice="NMRA Digital only">
+            <choice>NMRA Digital only</choice>
+            <choice xml:lang="ca">NMRA Digital only (ca)</choice>
+            <choice xml:lang="cs">Pouze digitál NMRA</choice>
+            <choice xml:lang="de">Nur Digital nach NMRA</choice>
+            <choice xml:lang="fr">Digital NMRA seulement</choice>
+            <choice xml:lang="it">Solo NMRA Digitale</choice>
+            <choice xml:lang="nl">Alleen digitaal vlg. NMRA</choice>
+          </enumChoice>
+          <enumChoice choice="DC conversion enabled">
+            <choice>DC conversion enabled</choice>
+            <choice xml:lang="ca">DC conversion enabled (ca)</choice>
+            <choice xml:lang="cs">Povolena konverze DC</choice>
+            <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
+            <choice xml:lang="fr">Mode analogique activé</choice>
+            <choice xml:lang="it">Alim.Analogica Abilitata (DCC+Analogico)</choice>
+            <choice xml:lang="nl">Analogmodus geactiveerd</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Not in use.</label>
+        <label xml:lang="de">nicht verwendet.</label>
+        <label xml:lang="nl">Nicht in gebruik.</label>
+      </variable>
+      <variable CV="33" item="Forward Headlight F0(f)" default="0" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Forward Headlight F0(f)</label>
+        <label xml:lang="de">Frontlicht F0(f)</label>
+        <label xml:lang="nl">Koplampen vooruit F0(f)</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the front light is switched.&lt;br&gt;Range 0-28, Default = 0, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Frontlicht geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 0, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie de koplampen vooruit geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 0, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="34" item="Reverse Headlight F0(r)" default="1" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Reverse Headlight F0(r)</label>
+        <label xml:lang="de">Licht hinten F0(r)</label>
+        <label xml:lang="nl">Koplampen achteruit F0(r)</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the rear light is switched.&lt;br&gt;Range 0-28, Default = 1, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das licht hinten geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 1, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie de koplampen achteruit geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 1, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="35" item="Cab Light" default="6" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Cab Light</label>
+        <label xml:lang="de">Führerstands Beleuchtung</label>
+        <label xml:lang="nl">Cabine licht</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the cab light is switched.&lt;br&gt;Range 0-28, Default = 6, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Führerstands Beleuchtung geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 6, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het cabine licht geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 6, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="36" item="Chassis Light" default="9" include="22">
+        <decVal max="28"/>
+        <label>Chassis Light</label>
+        <label xml:lang="de">Triebwerks Beleuchtung</label>
+        <label xml:lang="nl">Chassis licht</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the Chassis light is switched.&lt;br&gt;Range 0-28, Default = 6, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Triebwerks Beleuchtung geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 6, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het Chassis licht geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 6, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="37" item="Shunting light" default="5" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Shunting light</label>
+        <label xml:lang="de">Rangierlicht</label>
+        <label xml:lang="nl">Rangeerlicht</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the Shunting light is switched.&lt;br&gt;To turn on the shunting light, at least one of the headlights must be switched on&lt;br&gt;Range 0-28, Default = 5, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Rangierlicht geschaltet wird.&lt;br&gt;Um das Rangierlicht einzuschalten muss mindestens eines der Spitzenlichter eingeschaltet sein.&lt;br&gt;Bereich 0-28, Standard = 5, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het Rangeerlicht geschakeld worden.&lt;br&gt;Om het rangeerlicht aan te zetten, moet ten minste één van de koplampen ingeschakeld zijn&lt;br&gt;Bereik 0-28, Standaard = 5, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="38" item="Cab Light Tender" default="6" comment="Range 0-28" include="22">
+        <decVal max="28"/>
+        <label>Cab light tender (BR50 Kab)</label>
+        <label xml:lang="de">Kabinenbeleuchtung Tender (BR50 Kab)</label>
+        <label xml:lang="nl">Cabine licht tender (BR50 Kab)</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the cab light tender is switched.&lt;br&gt;Range 0-28, Default = 6, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Führerstands Beleuchtung Tender geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 6, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het cabine licht tender geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 6, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="39" item="Shunting" default="5" comment="Range 0-28" exclude="27">
+        <decVal max="28"/>
+        <label>Shunting</label>
+        <label xml:lang="de">Rangiergang</label>
+        <label xml:lang="nl">Rangeergang</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the Shunting is switched.&lt;br&gt;Range 0-28, Default = 5, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der die Rangiergang geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 5, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie die Rangeergang geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 5, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="40" item="Uncoupling 1" default="2" comment="Range 0-28" include="31,22,24,28,32">
+        <decVal max="28"/>
+        <label>uncoupling,front/rear (depending on direction of travel)</label>
+        <label xml:lang="de">Entkuppeln, vorne/hinten (je nach Fahrtrichtung)</label>
+        <label xml:lang="nl">Ontkoppellen, voor/achter (afhankelijk van de rijrichting)</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the uncoupling is switched.&lt;br&gt;Range 0-28, Default = 2, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Entkuppeln geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 2, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie die Ontkoppeller geschakeld wordt.&lt;br&gt;Bereik 0-28, Standaard = 2, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="40" item="Uncoupling 1" default="2" comment="Range 0-28" include="05,61,09,03,18,10,02,17">
+        <decVal max="28"/>
+        <label>uncoupling front</label>
+        <label xml:lang="de">Entkuppeln vorne</label>
+        <label xml:lang="nl">Ontkoppellen voor</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the uncoupling is switched.&lt;br&gt;Range 0-28, Default = 2, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Entkuppeln geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 2, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie die Ontkoppeller geschakeld wordt.&lt;br&gt;Bereik 0-28, Standaard = 2, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="41" item="Uncoupling 2" default="2" comment="Range 0-28" include="05,61,09,03,18,10,02,17">
+        <decVal max="28"/>
+        <label>uncoupling rear</label>
+        <label xml:lang="de">Entkuppeln hinten</label>
+        <label xml:lang="nl">Ontkoppellen achter</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the uncoupling is switched.&lt;br&gt;Range 0-28, Default = 2, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der das Entkuppeln geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 2, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie die Ontkoppeller geschakeld wordt.&lt;br&gt;Bereik 0-28, Standaard = 2, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="44" item="Steam generator 1" default="8" comment="Range 0-28" include="31,22,24,28">
+        <decVal max="28"/>
+        <label>Steam generator</label>
+        <label xml:lang="de">Dampfgenerator</label>
+        <label xml:lang="nl">Stoomgenerator</label>
+        <tooltip>&lt;html&gt;The number in this CV indicates the function with which the Steam generator is switched.&lt;br&gt;Range 0-28, Default = 8, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Die Zahl in diesem CV gibt die Funktion an, mit der die Dampfgenerator geschaltet wird.&lt;br&gt;Bereich 0-28, Standard = 8, &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie de Stoomgenerator geschakeld wordt.&lt;br&gt;Bereik 0-28, Standaard = 8, &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="45" item="Riggenbach" default="9" comment="Range 0-28" include="28">
+        <decVal max="28"/>
+        <label>Steam effect Riggenbach counter-pressure brake</label>
+        <label xml:lang="de">Dampfeffekt Riggenbach-Gegendruckbremse</label>
+        <label xml:lang="nl">Stoomeffect Riggenbach tegendrukrem</label>
+        <tooltip>Range 0-28, Default = 9, </tooltip>
+        <tooltip xml:lang="de">Bereich 0-28, Standard = 9, </tooltip>
+        <tooltip xml:lang="nl">Bereik 0-28, Standaard = 9, </tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="46" item="Drivers" default="20" comment="Range 0-28" include="18">
+        <decVal max="28"/>
+        <label>Loc drivers visible/invisible</label>
+        <label xml:lang="de">Lokführer sichtbar/unsichtbar</label>
+        <label xml:lang="nl">Machinist/meester zichtbaar/onzichtbaar</label>
+        <tooltip>Range 0-28, Default = 20, </tooltip>
+        <tooltip xml:lang="de">Bereich 0-28, Standard = 20, </tooltip>
+        <tooltip xml:lang="nl">Bereik 0-28, Standaard = 20, </tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="47" item="Alternative delay" default="255" comment="Range 0-255" include="31,24,28,32">
+        <decVal/>
+        <label>Alternative delay (CV103, CV104)/ none</label>
+        <label xml:lang="de">Alternative Verzögerung (CV103, CV104) / keine</label>
+        <label xml:lang="nl">Alternatieve vertraging (CV103, CV104) / geen</label>
+        <tooltip>Range 0-255, Default = 255, </tooltip>
+        <tooltip xml:lang="de">Bereich 0-255, Standard = 255, </tooltip>
+        <tooltip xml:lang="nl">Bereik 0-255, Standaard = 255, </tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="50" include="31,22,24,28,61,32,03">
+        <defaultItem default="255" include="22"/>
+        <defaultItem default="56" include="03"/>
+        <decVal/>
+        <label>Uncoupling Distains</label>
+        <label xml:lang="de">Entkopplung Distanz</label>
+        <label xml:lang="nl">Ontkoppelingsafstand</label>
+        <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;value 50 corresponds to about 2 cm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Wert 50 entspricht etwa 2 cm.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;waarde 50 komt overeen met ongeveer 2 cm.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="81" include="02">
+        <decVal/>
+        <label>Uncoupling Distains</label>
+        <label xml:lang="de">Entkopplung Distanz</label>
+        <label xml:lang="nl">Ontkoppelingsafstand</label>
+        <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;value 50 corresponds to about 12 mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Wert 50 entspricht etwa 12 mm.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;waarde 50 komt overeen met ongeveer 12 mm.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="64" include="05,18">
+        <defaultItem default="15" include="18"/>
+        <decVal/>
+        <label>Uncoupling Distains</label>
+        <label xml:lang="de">Entkopplung Distanz</label>
+        <label xml:lang="nl">Ontkoppelingsafstand</label>
+        <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;The required value is calculated according to the formula&lt;br&gt;CV49 = X * 32 , where X is the desired path in mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Die Berechnung des benötigten Wertes erfolgt nach der Formel&lt;br&gt;CV49 = X * 32 , wobei X der gewünschte Weg in mm ist.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 32 , waarbij X de gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="28" include="09,17">
+        <decVal/>
+        <label>Uncoupling Distains</label>
+        <label xml:lang="de">Entkopplung Distanz</label>
+        <label xml:lang="nl">Ontkoppelingsafstand</label>
+        <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;The required value is calculated according to the formula&lt;br&gt;CV49 = X * 15 , where X is the desired path in mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Die Berechnung des benötigten Wertes erfolgt nach der Formel&lt;br&gt;CV49 = X * 15 , wobei X der gewünschte Weg in mm ist.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 15 , waarbij X de gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="16" include="10">
+        <decVal/>
+        <label>Uncoupling Distains</label>
+        <label xml:lang="de">Entkopplung Distanz</label>
+        <label xml:lang="nl">Ontkoppelingsafstand</label>
+        <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;The required value is calculated according to the formula&lt;br&gt;CV49 = X * 8.4 , where X is the desired path in mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Die Berechnung des benötigten Wertes erfolgt nach der Formel&lt;br&gt;CV49 = X * 8,4 , wobei X der gewünschte Weg in mm ist.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 8,4 , waarbij X de gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="51" mask="XXXXXXXV" item="Constant Braking" default="0" exclude="22">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Constant Braking Distance</label>
+        <label xml:lang="ca">Distància de Frenada Constant</label>
+        <label xml:lang="de">Konstanter Bremsweg bei ABC</label>
+        <label xml:lang="it">Distanza Frenata Costante</label>
+        <label xml:lang="nl">Constante remweg bij ABC</label>
+      </variable>
+      <variable CV="51" mask="XXXXXXVX" item="ABC" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Automatic Braking Control</label>
+        <label xml:lang="ca">Control Autmàtic de Frenada [ABC]</label>
+        <label xml:lang="cs">ABC automatické řízení brždění</label>
+        <label xml:lang="de">ABC aktiviert</label>
+        <label xml:lang="it">Controllo Automatico frenata</label>
+        <label xml:lang="nl">ABC ingeschakeld</label>
+      </variable>
+      <variable CV="51" mask="XXXXXVXX" item="ABC Direction" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>ABC direction dependancy</label>
+        <label xml:lang="ca">Dependència del Control de Freanada segons el sentit</label>
+        <label xml:lang="cs">ABC automatické řízení brždění závislé na směru</label>
+        <label xml:lang="de">Richtungsabhängigkeit von ABC ist ausgeschaltet</label>
+        <label xml:lang="it">Dipendenza Controlla Frenata da direzione</label>
+        <label xml:lang="nl">Richtingsafhankelijkheid van ABC is uitgeschakeld</label>
+      </variable>
+      <variable CV="51" mask="XXXXVXXX" item="Push-Pull w/o Stop" default="0" exclude="22">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Push-Pull without Stop</label>
+        <label xml:lang="ca">Push-Pull Sense Parada</label>
+        <label xml:lang="cs">Kyvadlový provoz bez mezizastávky</label>
+        <label xml:lang="de">Pendelbetrieb ohne Zwischenhalt</label>
+        <label xml:lang="it">Push-Pull senza Stop</label>
+        <label xml:lang="nl">Pendeldienst zonder tussenstop</label>
+      </variable>
+      <variable CV="51" mask="XXXVXXXX" item="Push-Pull w Stop" default="0" exclude="22">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Push-Pull with Stop</label>
+        <label xml:lang="ca">Push-Pull amb parada</label>
+        <label xml:lang="cs">Kyvadlový provoz s mezizastávkou</label>
+        <label xml:lang="de">Pendelbetrieb mit Zwischenhalt</label>
+        <label xml:lang="it">Push-Pull con Stop</label>
+        <label xml:lang="nl">Pendeldienst met tussenstops</label>
+      </variable>
+      <variable CV="51" mask="XXVXXXXX" item="Stop on DC" default="0" exclude="31,22,24,28,32">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Stop on DC (RailCom off only)</label>
+        <label xml:lang="ca">Frenada amb CC (Només amb RailCom desactivat)</label>
+        <label xml:lang="cs">Zastavit na DC (pouze při vypnutém RailCom)</label>
+        <label xml:lang="de">Bei Gleichspannung anhalten (nur bei RailCom aus)</label>
+        <label xml:lang="it">Stop in Analogica (Solo con RailCom=off)</label>
+        <label xml:lang="nl">Stopt bij gelijkspanning (alleen voor RailCom uit)</label>
+      </variable>
+      <variable CV="51" mask="VXXXXXXX" item="Constant braking 0" default="0" include="31,24,28,09,32,10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>constant braking distance activated, driving level 0</label>
+        <label xml:lang="de">Konstanter Bremsweg aktiviert, Fahrstufe 0</label>
+        <label xml:lang="nl">Constante remweg geactiveerd, rijniveau 0</label>
+      </variable>
+      <variable CV="52" item="Braking Distance" default="30" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>Braking Distance in Constant Mode</label>
+        <label xml:lang="ca">Distància de Frenada en mode Constant</label>
+        <label xml:lang="cs">Brzdná dráha</label>
+        <label xml:lang="de">Bremsweg bei konstantem Bremsweg</label>
+        <label xml:lang="it">Distanza Frenata in modalità Costante</label>
+        <label xml:lang="nl">Remweg bij constante remweg</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="53" item="ABC Approach Speed" default="48" comment="Range 0-255" exclude="09">
+        <decVal min="0" max="255"/>
+        <label>Slow approach speed with ABC</label>
+        <label xml:lang="ca">Apropament Lent de Velocitat amb ABC</label>
+        <label xml:lang="cs">Pomalá rychlost s ABC (0-255)</label>
+        <label xml:lang="de">Langsamfahrgeschwindigkeit bei ABC</label>
+        <label xml:lang="it">Avvicinamento lento con Controllo frenata</label>
+        <label xml:lang="nl">langzame rijsnelheid bij ABC</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="54" item="Push-Pull Stop Time" default="4" comment="Range 0-255" exclude="22">
+        <decVal min="0" max="255"/>
+        <label>Push-Pull stop time</label>
+        <label xml:lang="ca">Temps de parada del Push-Pull</label>
+        <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve vteřinách</label>
+        <label xml:lang="de">Aufenthaltsdauer bei Pendelbetrieb in Sekunden</label>
+        <label xml:lang="it">Tempo di Stop Push-Pull</label>
+        <label xml:lang="nl">Duur van de stop bij de pendeldienst in seconden</label>
+      </variable>
+      <variable CV="55" item="Global lighting option 1" default="127" include="31,22,05,24,28,02,">
+        <defaultItem default="100" include="31"/>
+        <defaultItem default="128" include="22"/>
+        <defaultItem default="50" include="05"/>
+        <defaultItem default="100" include="28"/>
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity, Headlight</label>
+        <label xml:lang="de">Helligkeit, Front licht</label>
+        <label xml:lang="nl">Dimintensiteit, koplampen</label>
+        <tooltip>Sets intensity of Headlight (larger number = brighter light).</tooltip>
+        <tooltip xml:lang="de">Helligkeit, Front licht (größer = heller).</tooltip>
+        <tooltip xml:lang="nl">Helderheid van de koplampen (hoger = helderder).</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="55" item="Global lighting option 1" default="127" include="09,32,03,18,10,17,27">
+        <defaultItem default="50" include="09"/>
+        <defaultItem default="96" include="32"/>
+        <defaultItem default="128" include="03"/>
+        <defaultItem default="150" include="10"/>
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity, Headlight white</label>
+        <label xml:lang="de">Helligkeit, Front licht weiss</label>
+        <label xml:lang="nl">Dimintensiteit, koplampen wit</label>
+        <tooltip>Sets intensity of Headlight (larger number = brighter light).</tooltip>
+        <tooltip xml:lang="de">Helligkeit, Front licht (größer = heller).</tooltip>
+        <tooltip xml:lang="nl">Helderheid van de koplampen (hoger = helderder).</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="56" item="Global lighting option 2" default="127" include="09,32,03,18,10,17">
+        <defaultItem default="50" include="09"/>
+        <defaultItem default="32" include="32"/>
+        <defaultItem default="128" include="03"/>
+        <defaultItem default="150" include="10"/>
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity, Headlight red</label>
+        <label xml:lang="de">Helligkeit, Front licht rot</label>
+        <label xml:lang="nl">Dimintensiteit, koplampen rood</label>
+        <tooltip>Sets intensity of Headlight (larger number = brighter light).</tooltip>
+        <tooltip xml:lang="de">Helligkeit, Front licht (größer = heller).</tooltip>
+        <tooltip xml:lang="nl">Helderheid van de koplampen (hoger = helderder).</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="57" item="Global lighting option 3" default="130" include="31,22,24,28,32,10">
+        <defaultItem default="175" include="31"/>
+        <defaultItem default="175" include="28"/>
+        <defaultItem default="176" include="32"/>
+        <defaultItem default="80" include="10"/>
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity, Cab Light</label>
+        <label xml:lang="de">Helligkeit, Führerstands Beleuchtung</label>
+        <label xml:lang="nl">Dimintensiteit, Cabine licht</label>
+        <tooltip>Sets intensity of Cab Light (larger number = brighter light).</tooltip>
+        <tooltip xml:lang="de">Helligkeit von die Führerstands Beleuchtung (größer = heller).</tooltip>
+        <tooltip xml:lang="nl">Helderheid van het Cabine licht (hoger = helderder).</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="58" item="Global lighting option 4" default="130" include="22">
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity, Cab Light tender (BR50 Kab)</label>
+        <label xml:lang="de">Helligkeit, Führerstands Beleuchtung tender (BR50 Kab)</label>
+        <label xml:lang="nl">Dimintensiteit, Cabine licht tender (BR50 Kab)</label>
+        <tooltip>Sets intensity of Cab Light tender (larger number = brighter light).</tooltip>
+        <tooltip xml:lang="de">Helligkeit von die Führerstands Beleuchtung tender (größer = heller).</tooltip>
+        <tooltip xml:lang="nl">Helderheid van het Cabine licht tender (hoger = helderder).</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="62" item="Global lighting option 5" default="255" include="22">
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity, Chassis Light</label>
+        <label xml:lang="de">Helligkeit, Triebwerks Beleuchtung</label>
+        <label xml:lang="nl">Dimintensiteit, Chassis licht</label>
+        <tooltip>Sets intensity of Chassis Light (larger number = brighter light).</tooltip>
+        <tooltip xml:lang="de">Helligkeit von dem Triebwerks Beleuchtung (größer = heller).</tooltip>
+        <tooltip xml:lang="nl">Helderheid van het Chassis licht (hoger = helderder).</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="63" item="Global lighting option 6" default="32" include="61">
+        <decVal/>
+        <label>Flashing frequency for F outputs C and D:</label>
+        <label xml:lang="de">Blinkfrequenz für F-Ausgänge C und D:</label>
+        <label xml:lang="nl">Knipper frequentie voor F-uitgangen C en D:</label>
+        <tooltip>default ca. 1 Sekunde, f = 1 / ( 0,03 * (1 + CV63))</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="64" item="Flashing" default="0" include="61">
+        <decVal/>
+        <label>Function assignment Light effects F-output C and D</label>
+        <label xml:lang="de">Funktionszuordnung Lichteffekte F-Ausgang C und D</label>
+        <label xml:lang="nl">Functietoewijzing Lichteffecten F-uitgang C en D</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="71" item="Steam generator 2" default="60" include="22,24">
+        <decVal min="0" max="255"/>
+        <label>Shutdown time of the steam generator at standstill</label>
+        <label xml:lang="de">Abschaltzeit d. Dampferzeugers bei Stillstand</label>
+        <label xml:lang="nl">Uitschakeltijd van de stoomgenerator bij stilstand</label>
+        <tooltip>The time after which the steam generator is switched off at standstill. (higher = longer).</tooltip>
+        <tooltip xml:lang="de">Die Zeit, nach der der Dampferzeuger im Stillstand abgeschaltet wird.(höher = länger)</tooltip>
+        <tooltip xml:lang="nl">De tijd waarna de stoomgenerator uitgeschakeld wordt bij stilstand. (hoger = langer)</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="102" item="Audio 1" default="74" include="32">
+        <decVal/>
+        <label>Volume of the audio amplifier</label>
+        <label xml:lang="de">Lautstärke des Audioverstärkers</label>
+        <label xml:lang="nl">Volume van de audioversterker</label>
+      </variable>
+      <variable CV="102" item="Audio 1" default="200" include="22">
+        <decVal/>
+        <label>Volume of the boiler speaker</label>
+        <label xml:lang="de">Lautstärke des Kessellautsprecher</label>
+        <label xml:lang="nl">Volume van de ketelluidspreker</label>
+      </variable>
+      <variable CV="102" item="Audio 1" default="200" include="31">
+        <decVal/>
+        <label>Volume of the tender speaker</label>
+        <label xml:lang="de">Lautstärke des Tenderlautsprecher</label>
+        <label xml:lang="nl">Volume van de tenderluidspreker</label>
+      </variable>
+      <variable CV="103" item="Audio 2" default="200" include="22">
+        <decVal/>
+        <label>Volume of the tender speaker</label>
+        <label xml:lang="de">Lautstärke des Tenderlautsprecher</label>
+        <label xml:lang="nl">Volume van de tenderluidspreker</label>
+      </variable>
+      <variable CV="103" item="Alternative Accel" default="0" include="31,24,28,32">
+        <decVal/>
+        <label>Alternative Acceleration</label>
+        <label xml:lang="de">Alternative Beschleunigung</label>
+        <label xml:lang="nl">Alternatieve versnelling</label>
+      </variable>
+      <variable CV="104" item="Alternative Decel" default="0" include="31,24,28,32">
+        <decVal/>
+        <label>Alternative Deceleration</label>
+        <label xml:lang="de">Alternative Verzögerung</label>
+        <label xml:lang="nl">Alternatieve vertraging</label>
+      </variable>
+      <variable CV="112" item="Motor Option 1" default="16" comment="Range 0-255" include="22,61,03">
+        <decVal min="0" max="255"/>
+        <label>Motor timeout on loss of DCC</label>
+        <label xml:lang="ca">Timeout del Motor per manca de DCC</label>
+        <label xml:lang="cs">Timeout motoru při ztrátě DCC</label>
+        <label xml:lang="de">Motorabschaltung bei nicht vorhandenem DCC-Signal.</label>
+        <label xml:lang="it">Timeout Motore per mancanza di DCC</label>
+        <label xml:lang="nl">Motoruitschakeling bij niet aanwezige DCC signaal.</label>
+        <tooltip>"Duration of motor timeout t = value * 16 ms"</tooltip>
+        <tooltip xml:lang="ca">Timeout del motor t = Valor * 16 ms</tooltip>
+        <tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
+        <tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
+        <tooltip xml:lang="nl">Motor Timeout t = Wert * 16 ms</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="124" readOnly="yes" item="Product sub Number" include="31,22,24,28,32">
+        <decVal/>
+        <label>Decoder Software sub version (read only)</label>
+        <label xml:lang="de">Softwareunterversion des Decoders (nur lesen)</label>
+        <label xml:lang="nl">Software onderversie van de decoder (alleen lezen)</label>
+      </variable>
+      <variable CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>CV indicator for SUSI, offset 800</label>
+        <label xml:lang="ca">Adreça CV de SUSI, offset 800</label>
+        <label xml:lang="cs">CV ukazatel pro SUSI, offset 800</label>
+        <label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
+        <label xml:lang="it">Indicatore CV per SUSI, offset 800</label>
+        <label xml:lang="nl">CV-Aanwijzer voor SUSI, offset 800</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
+        <defaultItem default="255" include="31,24,27,28"/>
+        <defaultItem default="150" include="17"/>
+        <decVal min="0" max="255"/>
+        <label>CV transport device for SUSI</label>
+        <label xml:lang="ca">Dispositiu de transferència SUSI</label>
+        <label xml:lang="cs">CV transport pro SUSI</label>
+        <label xml:lang="de">Transport-CV für SUSI</label>
+        <label xml:lang="it">Dispositivo trasferimento SUSI</label>
+        <label xml:lang="nl">CV-Transport voor SUSI</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="128" readOnly="yes" item="Product Number">
+        <decVal/>
+        <label>Decoder Software Version (read only): </label>
+        <label xml:lang="ca">Versió Software del Decoder (Només Lectura)</label>
+        <label xml:lang="cs">Verze softwaru dekodéru (pouze pro čtení)</label>
+        <label xml:lang="de">Softwareversion des Dekoders (nur lesen)</label>
+        <label xml:lang="it">Versione Software Decoder (sola lettura)</label>
+        <label xml:lang="nl">Software versie van de decoder (alleen lezen)</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset to factory settings" CV="8" default="33">
+        <label xml:lang="ca">Reset de totes les CV a valors ede fàbrica</label>
+        <label xml:lang="de">Auf die Werkseinstellungen zurück setzen</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="nl">Op de fabrieksinstelling terugsetten</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane nameFmt="label"> <!-- Function Map -->
+    <name>Function Map</name>
+    <name xml:lang="ca">Mapejat de funcions</name>
+    <name xml:lang="cs">Přiřazení funkcí</name>
+    <name xml:lang="da">Funktions Indstillinger</name>
+    <name xml:lang="de">Funktionszuordnung</name>
+    <name xml:lang="fr">Carte des Fonctions</name>
+    <name xml:lang="it">Mappa Funzioni</name>
+    <name xml:lang="nl">Funktietoewijzing</name>
+    <column>
+      <grid gridy="NEXT" weightx="1" ipadx="10">
+        <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Forward Headlight F0(f)"/>
+            <display item="Forward Headlight F0(f)" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Reverse Headlight F0(r)"/>
+            <display item="Reverse Headlight F0(r)" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Cab Light"/>
+            <display item="Cab Light" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Chassis Light"/>
+            <display item="Chassis Light" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Shunting light"/>
+            <display item="Shunting light" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Cab Light Tender"/>
+            <display item="Cab Light Tender" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Shunting"/>
+            <display item="Shunting" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Uncoupling 1"/>
+            <display item="Uncoupling 1" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Uncoupling 2"/>
+            <display item="Uncoupling 2" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Steam generator 1"/>
+            <display item="Steam generator 1" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Riggenbach"/>
+            <display item="Riggenbach" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Drivers"/>
+            <display item="Drivers" format="hslider" label=""/>
+          </row>
+        </griditem>
+        <griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+          <row>
+            <display item="Flashing"/>
+            <display item="Flashing" format="hslider" label=""/>
+          </row>
+        </griditem>
+      </grid>
+    </column>
+  </pane>
+  <pane nameFmt="label"> <!-- Lenz -->
+    <name>Lenz</name>
+    <column>
+      <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;RailCom Configuration&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Configuració RailCom&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="cs">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Konfigurace RailCom&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;RailCom Einstellungen&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;RailCom-instellingen&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Enable RailCom"/>
+          <display item="RailCom Address"/>
+          <display item="RailCom Data"/>
+          <display item="RailCom Command"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Braking Configuration&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Configuració de la Frenada&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="cs">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Konfigurace RailCom&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Bremseinstellungen&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Reminstellingen&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Constant Braking"/>
+          <display item="ABC"/>
+          <display item="ABC Direction"/>
+          <display item="Push-Pull w/o Stop"/>
+          <display item="Push-Pull w Stop"/>
+          <display item="Stop on DC"/>
+          <display item="Constant braking 0"/>
+          <display item="Braking Distance"/>
+          <display item="ABC Approach Speed"/>
+          <display item="Push-Pull Stop Time"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Alternative delay&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Alternative Verzögerung&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Alternatieve vertraging&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Alternative delay"/>
+          <display item="Alternative Accel"/>
+          <display item="Alternative Decel"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Steam&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Dampf&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Stoom&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Steam generator 1"/>
+          <display item="Steam generator 2"/>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>                                      </text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Light options&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Lichtoptionen&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Licht opties&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Global lighting option 1"/>
+          <display item="Global lighting option 2"/>
+          <display item="Global lighting option 3"/>
+          <display item="Global lighting option 4"/>
+          <display item="Global lighting option 5"/>
+          <display item="Global lighting option 6"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+           <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;SUSI&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="SUSI Indicator"/>
+          <display item="SUSI transport"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Software Version&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Softwareversion&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Software versie&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Decoder Version"/>
+          <display item="Product Number"/>
+          <display item="Product sub Number"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Sound&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Sound&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Geluid&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Audio 1"/>
+          <display item="Audio 2"/>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;uncoupling&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Entkuppeln&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Ontkoppellen&lt;/u&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Uncoupling 1"/>
+          <display item="Uncoupling 2"/>
+          <display item="Uncoupling 3"/>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
+        <text xml:lang="ca">Nota: La frenada constant només funciona amb inèrcia connectada i sense marxa de maniobres</text>
+        <text xml:lang="cs">Tip: Konstantní brzdná dráha funguje pouze tehdy, když je zpřístupněno zrychlení/zpomalení, a není zapnut posun</text>
+        <text xml:lang="de">Hinweis: Konstanter Bremsweg funktioniert nur wenn "Anfahr- / Bremsverzögerung" eingeschaltet und der Rangiergang ausgeschaltet ist.</text>
+        <text xml:lang="it">Nota: frenata costante funziona solo se è abilitata l'inerzia e non in velocità da manovra</text>
+        <text xml:lang="nl">Opmerking: Constante remweg werkt alleen wanneer "start/remvertraging" is ingeschakeld en de rangeerversnelling is uitgeschakeld.</text>
+      </label>
+    </column>
+  </pane>
+</decoder-config>

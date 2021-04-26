@@ -1,13 +1,18 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -16,6 +21,8 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 programmer.getMode());        
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                programmer2.getMode());        
     }
     
     @Override
@@ -23,10 +30,12 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 ((CbusDccProgrammer)programmer).getBestMode());        
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                ((CbusDccProgrammer)programmer2).getBestMode());        
     }
 
 /*
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
@@ -70,23 +79,30 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
 */
     
+    protected Programmer programmer2;
     private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcis);
         programmer = new CbusDccProgrammer(tcis);
+        programmer2 = new CbusDccProgrammer(tcis);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
+        programmer2 = null;
         programmer = null;
         tcis.terminateThreads();
         tcis = null;
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
 
     }

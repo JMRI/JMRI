@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,10 +96,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.SOURCE))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.LISTENER))) {
-            log.error("Invalid system name for Audio: " + systemName
-                    + " needed either " + getSystemPrefix() + typeLetter() + Audio.BUFFER // NOI18N
-                    + " or " + getSystemPrefix() + typeLetter() + Audio.SOURCE // NOI18N
-                    + " or " + getSystemPrefix() + typeLetter() + Audio.LISTENER);        // NOI18N
+            log.error("Invalid system name for Audio: {} needed either {}{}" + Audio.BUFFER + " or {}{}" + Audio.SOURCE + " or {}{}" + Audio.LISTENER, systemName, getSystemPrefix(), typeLetter(), getSystemPrefix(), typeLetter(), getSystemPrefix(), typeLetter());        // NOI18N
             throw new AudioException("Invalid system name for Audio: " + systemName
                     + " needed either " + getSystemPrefix() + typeLetter() + Audio.BUFFER
                     + " or " + getSystemPrefix() + typeLetter() + Audio.SOURCE
@@ -143,7 +140,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Audio has been invoked.
      *
      * @param systemName Audio object system name (for example IAS1, IAB4)
      * @param userName   Audio object user name

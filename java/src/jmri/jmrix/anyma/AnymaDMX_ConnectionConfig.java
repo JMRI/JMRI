@@ -5,6 +5,8 @@ import jmri.jmrix.AbstractUsbConnectionConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Definition of objects to handle configuring an Anyma DMX layout connection
  * via a AnymaDMX_UsbPortAdapter object.
@@ -45,7 +47,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         log.debug("*    updateAdapter()");
         if ((adapter.getSystemConnectionMemo() != null)
                 && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -78,8 +80,9 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     @Override
+    @Nonnull
     protected List<String> getPortNames() {
-        log.debug("*	getPortNames()");
+        log.debug("*   getPortNames()");
         return getAdapter().getPortNames();
     }
 

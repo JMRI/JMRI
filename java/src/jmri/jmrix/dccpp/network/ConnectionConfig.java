@@ -19,6 +19,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p network port adapter.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
@@ -56,8 +57,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         hostNameField.setText(adapter.getHostName());
         portFieldLabel.setText(Bundle.getMessage("CommunicationPortLabel"));
         portField.setText(String.valueOf(adapter.getPort()));
-        portField.setEnabled(false); // we can't change this now.
-        //opt1Box.setEnabled(false); // we can't change this now.
+        portField.setEnabled(true);
     }
 
     @Override

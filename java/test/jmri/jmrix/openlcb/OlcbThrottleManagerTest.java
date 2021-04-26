@@ -1,55 +1,71 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.can.TestTrafficController;
+import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottleManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Paul Bender Copyright (C) 2016
  */
 public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    private static OlcbSystemConnectionMemo m;
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
 
-    @Test
     @Override
-    @Ignore("test requires further setup")
-    @ToDo("finish test setup and remove this overriden test so that the parent class test can run")
-    public void testGetThrottleInfo() {
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
+    @BeforeEach
     public void setUp() {
-        tm = new OlcbThrottleManager(m);
+        tm = new OlcbThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
        tm = null;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void preClassInit() {
         JUnitUtil.setUp();
-        m = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
+        // we need to set up the memo because as a throttle is created in test, a message will be generated
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
-        m.setTrafficController(tc);
+        memo.setTrafficController(tc);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
-        if(m != null && m.getInterface() !=null ) {
-           m.getInterface().dispose();
+        if (memo != null && memo.getInterface() != null ) {
+            memo.getTrafficController().terminateThreads();
+            memo.getInterface().dispose();
         }
-        m = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo = null;
+        connection = null;
+        nodeID = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
-
     }
+
 }

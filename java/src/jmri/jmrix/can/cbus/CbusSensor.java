@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import java.beans.PropertyChangeEvent;
-import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrix.can.CanListener;
@@ -16,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class CbusSensor extends AbstractSensor implements CanListener {
+public class CbusSensor extends AbstractSensor implements CanListener, CbusEventInterface {
 
     private CbusAddress addrActive;    // go to active state
     private CbusAddress addrInactive;  // go to inactive state
@@ -27,7 +25,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         init(address);
     }
     
-    private Reporter reporter = null;
     private final TrafficController tc;
 
     /**
@@ -85,40 +82,32 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * User request to set the state, which means that we broadcast that to all
-     * listeners by putting it out on CBUS. In turn, the code in this class
+     * User request to set the state.
+     * We broadcast that to all listeners by putting it out on CBUS. 
+     * In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
-     * Unknown state does not send a message to CBUS but updates 
-     * internal sensor state, enabling user test of Start of Day / Logix.
+     * Unknown / Inconsistent states do not send a message to CBUS,
+     * but do update sensor state.
      * {@inheritDoc}
      */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
+        setOwnState(s);
         CanMessage m;
-        if (s == Sensor.ACTIVE) {
-            if (getInverted()){
-                m = addrInactive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.ACTIVE);
-            } else {
-                m = addrActive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.ACTIVE);
-            }
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        } else if (s == Sensor.INACTIVE) {
-            if (getInverted()){
-                m = addrActive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.INACTIVE);                
-            } else {
-                m = addrInactive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.INACTIVE);
-            }
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
+        switch (s) {
+            case Sensor.ACTIVE:
+                m = ( getInverted() ? addrInactive.makeMessage(tc.getCanid()) : 
+                    addrActive.makeMessage(tc.getCanid()));
+                break;
+            case Sensor.INACTIVE:
+                m = ( !getInverted() ? addrInactive.makeMessage(tc.getCanid()) : 
+                    addrActive.makeMessage(tc.getCanid()));
+                break;
+            default:
+                return;
         }
-        if (s == Sensor.UNKNOWN){
-            setOwnState(Sensor.UNKNOWN);
-        }
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        tc.sendCanMessage(m, this);
     }
     
     /**
@@ -156,7 +145,23 @@ public class CbusSensor extends AbstractSensor implements CanListener {
             m = addrInactive.makeMessage(tc.getCanid());
         }
         return m;
-    }    
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrActive());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrInactive());
+    }
     
     /**
      * Track layout status from messages being sent to CAN
@@ -190,44 +195,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         } else if (addrInactive.match(f)) {
             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
-    }
-    
-    /**
-     * {@inheritDoc}
-     *
-     * When a reporter is attached to the sensor, the sensor will go
-     * active when ID tags are present ( assuming Sensor not inverted ),
-     * inactive when no ID tags are present, ie all previously announced
-     * ID tags have since been announced by other reporters.
-     */
-    @Override
-    public void setReporter(Reporter er) {
-        reporter = er;
-        if (reporter!=null) {
-            log.debug("attached to reporter",reporter);
-            reporter.addPropertyChangeListener((PropertyChangeEvent e) -> {
-                log.debug("Report {} property {} new value {}",reporter, e.getPropertyName(), e.getNewValue());
-                if (e.getPropertyName().equals("state")) {
-                    try {
-                        if ( (int) e.getNewValue()==jmri.IdTag.SEEN) {
-                            setKnownState(Sensor.ACTIVE); // setKnownState does any inversion
-                        } else {
-                            setKnownState(Sensor.INACTIVE); // setKnownState does any inversion
-                        }
-                    } catch (jmri.JmriException ex) {
-                        log.error("Reporter {} unable to change sensor status",reporter);
-                    }
-                }
-            });
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Reporter getReporter() {
-        return reporter;
     }
     
     /**

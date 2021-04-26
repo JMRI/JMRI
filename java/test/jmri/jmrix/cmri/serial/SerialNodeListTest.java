@@ -1,14 +1,13 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialNodeList class.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class SerialNodeListTest {
 
@@ -21,8 +20,7 @@ public class SerialNodeListTest {
     private SerialTrafficControlScaffold stcs = null;
     private SerialNode n2 = null;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // replace the SerialTrafficController
@@ -42,7 +40,7 @@ public class SerialNodeListTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (stcs != null) stcs.terminateThreads();
         stcs = null;

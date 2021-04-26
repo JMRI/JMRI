@@ -220,7 +220,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
         pDestinationOption.add(destinationOptionButton);
-        destinationOptionButton.addActionListener(new TrackDestinationEditAction(this));
+        destinationOptionButton.addActionListener(new TrackDestinationEditAction(_track));
 
         panelRoadAndLoadStatus.add(pRoadOption);
         panelRoadAndLoadStatus.add(pLoadOption);
@@ -266,7 +266,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         JPanel readerPanel = new JPanel();
         if (Setup.isRfidEnabled()) {
             readerPanel.setLayout(new GridBagLayout());
-            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReporter")));
             ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
             readerSelector = new NamedBeanComboBox<>(reporterManager);
             readerSelector.setAllowNull(true);
@@ -650,7 +650,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             return false;
         }
         if (TrainCommon.splitString(trackNameTextField.getText()).length() > MAX_NAME_LENGTH) {
-            log.error("Track name must be less than " + Integer.toString(MAX_NAME_LENGTH + 1) + " charaters"); // NOI18N
+            log.error("Track name must be less than {} charaters", Integer.toString(MAX_NAME_LENGTH + 1)); // NOI18N
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),
                     MessageFormat.format(Bundle
@@ -671,7 +671,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 length = Integer.toString(feet);
             } catch (NumberFormatException e) {
-                //                log.error("Can not convert from inches to feet");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -756,7 +755,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void reportTrackExists(String s) {
-        log.info("Can not " + s + ", track already exists");
+        log.info("Can not {}, track already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
     }
@@ -1099,7 +1098,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 checkBox.setText(type);
                 addCheckBoxAction(checkBox);
                 addItemLeft(panelCheckBoxes, checkBox, x++, y);
-                if (_track != null && _track.acceptsTypeName(type)) {
+                if (_track != null && _track.isTypeNameAccepted(type)) {
                     checkBox.setSelected(true);
                 }
             }

@@ -218,18 +218,16 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             al = ALFactory.getAL();
             al.alGetError();
             if (log.isInfoEnabled()) {
-                log.info("Initialised JOAL using OpenAL:"
-                        + " vendor - " + al.alGetString(AL.AL_VENDOR)
-                        + " version - " + al.alGetString(AL.AL_VERSION));
+                log.info("Initialised JOAL using OpenAL: vendor - {} version - {}", al.alGetString(AL.AL_VENDOR), al.alGetString(AL.AL_VERSION));
             }
         } catch (ALException e) {
             if (log.isDebugEnabled()) {
-                log.debug("Error initialising JOAL: " + e);
+                log.debug("Error initialising JOAL: {}", e);
             }
             return false;
         } catch (RuntimeException e) {
             if (log.isDebugEnabled()) {
-                log.debug("Error initialising OpenAL: " + e);
+                log.debug("Error initialising OpenAL: {}", e);
             }
             return false;
         }
@@ -277,22 +275,14 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN16 = checkMultiChannel;
         }
-        log.debug("8-bit quadrophonic supported? "
-                + (AL_FORMAT_QUAD8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("16-bit quadrophonic supported? "
-                + (AL_FORMAT_QUAD16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("8-bit 5.1 surround supported? "
-                + (AL_FORMAT_51CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("16-bit 5.1 surround supported? "
-                + (AL_FORMAT_51CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("8-bit 6.1 surround supported? "
-                + (AL_FORMAT_61CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("16-bit 6.1 surround supported? "
-                + (AL_FORMAT_61CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("8 bit 7.1 surround supported? "
-                + (AL_FORMAT_71CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        log.debug("16 bit 7.1 surround supported? "
-                + (AL_FORMAT_71CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+        log.debug("8-bit quadrophonic supported? {}", AL_FORMAT_QUAD8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("16-bit quadrophonic supported? {}", AL_FORMAT_QUAD16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("8-bit 5.1 surround supported? {}", AL_FORMAT_51CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("16-bit 5.1 surround supported? {}", AL_FORMAT_51CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("8-bit 6.1 surround supported? {}", AL_FORMAT_61CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("16-bit 6.1 surround supported? {}", AL_FORMAT_61CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("8 bit 7.1 surround supported? {}", AL_FORMAT_71CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
+        log.debug("16 bit 7.1 surround supported? {}", AL_FORMAT_71CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes");
 
         // Check context
         alc = ALFactory.getALC();
@@ -300,7 +290,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         if (!checkALCError(alcDevice)) {
             int[] size = new int[1];
             alc.alcGetIntegerv(alcDevice, ALC.ALC_ATTRIBUTES_SIZE, size.length, size, 0);
-            log.debug("Size of ALC_ATTRIBUTES: " + size[0]);
+            log.debug("Size of ALC_ATTRIBUTES: {}", size[0]);
             if (!checkALCError(alcDevice) && size[0] > 0) {
                 int[] attributes = new int[size[0]];
                 alc.alcGetIntegerv(alcDevice, ALC.ALC_ALL_ATTRIBUTES, attributes.length, attributes, 0);
@@ -313,19 +303,19 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                             log.debug("Invalid");
                             break;
                         case ALC.ALC_MONO_SOURCES:
-                            log.debug("Number of mono sources: " + attributes[i + 1]);
+                            log.debug("Number of mono sources: {}", attributes[i + 1]);
                             break;
                         case ALC.ALC_STEREO_SOURCES:
-                            log.debug("Number of stereo sources: " + attributes[i + 1]);
+                            log.debug("Number of stereo sources: {}", attributes[i + 1]);
                             break;
                         case ALC.ALC_FREQUENCY:
-                            log.debug("Frequency: " + attributes[i + 1]);
+                            log.debug("Frequency: {}", attributes[i + 1]);
                             break;
                         case ALC.ALC_REFRESH:
-                            log.debug("Refresh: " + attributes[i + 1]);
+                            log.debug("Refresh: {}", attributes[i + 1]);
                             break;
                         default:
-                            log.debug("Attribute " + i + ": " + attributes[i]);
+                            log.debug("Attribute {}: {}", i, attributes[i]);
                     }
                 }
             }
@@ -364,8 +354,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Removing JoalAudioSource: {}", source.getSystemName());
             }
-            // Cast to JoalAudioSource and cleanup
-            ((JoalAudioSource) source).cleanup();
+            // Includes cleanup
+            source.dispose();
         }
 
         // Now, retrieve list of AudioBuffer objects and remove the buffers
@@ -374,8 +364,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Removing JoalAudioBuffer: {}", buffer.getSystemName());
             }
-            // Cast to JoalAudioBuffer and cleanup
-            ((JoalAudioBuffer) buffer).cleanup();
+            // Includes cleanup
+            buffer.dispose();
         }
 
         // Lastly, retrieve list of AudioListener objects and remove listener.
@@ -384,8 +374,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Removing JoalAudioListener: {}", listener.getSystemName());
             }
-            // Cast to JoalAudioListener and cleanup
-            ((JoalAudioListener) listener).cleanup();
+            // Includes cleanup
+            listener.dispose();
         }
 
         // Finally, shutdown OpenAL and close the output device
@@ -476,22 +466,22 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             case AL.AL_NO_ERROR:
                 return false;
             case AL.AL_INVALID_NAME:
-                log.warn(msg + "Invalid name parameter");
+                log.warn("{}Invalid name parameter", msg);
                 return true;
             case AL.AL_INVALID_ENUM:
-                log.warn(msg + "Invalid enumerated parameter value");
+                log.warn("{}Invalid enumerated parameter value", msg);
                 return true;
             case AL.AL_INVALID_VALUE:
-                log.warn(msg + "Invalid parameter value");
+                log.warn("{}Invalid parameter value", msg);
                 return true;
             case AL.AL_INVALID_OPERATION:
-                log.warn(msg + "Requested operation is not valid");
+                log.warn("{}Requested operation is not valid", msg);
                 return true;
             case AL.AL_OUT_OF_MEMORY:
-                log.warn(msg + "Out of memory");
+                log.warn("{}Out of memory", msg);
                 return true;
             default:
-                log.warn(msg + "Unrecognised error occurred");
+                log.warn("{}Unrecognised error occurred", msg);
                 return true;
         }
     }
@@ -536,22 +526,22 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             case ALC.ALC_NO_ERROR:
                 return false;
             case ALC.ALC_INVALID_DEVICE:
-                log.warn(msg + "Invalid device");
+                log.warn("{}Invalid device", msg);
                 return true;
             case ALC.ALC_INVALID_CONTEXT:
-                log.warn(msg + "Invalid context");
+                log.warn("{}Invalid context", msg);
                 return true;
             case ALC.ALC_INVALID_ENUM:
-                log.warn(msg + "Invalid enumerated parameter value");
+                log.warn("{}Invalid enumerated parameter value", msg);
                 return true;
             case ALC.ALC_INVALID_VALUE:
-                log.warn(msg + "Invalid parameter value");
+                log.warn("{}Invalid parameter value", msg);
                 return true;
             case ALC.ALC_OUT_OF_MEMORY:
-                log.warn(msg + "Out of memory");
+                log.warn("{}Out of memory", msg);
                 return true;
             default:
-                log.warn(msg + "Unrecognised error occurred");
+                log.warn("{}Unrecognised error occurred", msg);
                 return true;
         }
     }

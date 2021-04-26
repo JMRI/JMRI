@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2015
  */
-public class CbusLight extends AbstractLight implements CanListener {
+public class CbusLight extends AbstractLight implements CanListener, CbusEventInterface {
 
-    CbusAddress addrOn;   // go to on state
-    CbusAddress addrOff;   // go to off state
+    private CbusAddress addrOn;   // go to on state
+    private CbusAddress addrOff;   // go to off state
 
     protected CbusLight(String prefix, String address, TrafficController tc) {
         super(prefix + "L" + address);
@@ -24,7 +24,7 @@ public class CbusLight extends AbstractLight implements CanListener {
         init(address);
     }
 
-    TrafficController tc;
+    private final TrafficController tc;
 
     /**
      * Common initialization for both constructors.
@@ -91,31 +91,26 @@ public class CbusLight extends AbstractLight implements CanListener {
     /** {@inheritDoc} */
     @Override
     public void requestUpdateFromLayout() {
-        CanMessage m;
-        m = addrOn.makeMessage(tc.getCanid());
-        int opc = CbusMessage.getOpcode(m);
-        if (CbusOpCodes.isShortEvent(opc)) {
-            m.setOpCode(CbusConstants.CBUS_ASRQ);
-        }
-        else {
-            m.setOpCode(CbusConstants.CBUS_AREQ);
-        }
+        CanMessage m = addrOn.makeMessage(tc.getCanid());
+        m.setOpCode( CbusOpCodes.isShortEvent(CbusMessage.getOpcode(m)) ? CbusConstants.CBUS_ASRQ : CbusConstants.CBUS_AREQ);
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
     }
     
+    /** {@inheritDoc} */
     @Override
     public void message(CanMessage f) {
         if ( f.extendedOrRtr() ) {
             return;
         }
         if (addrOn.match(f)) {
-            setState(ON);
+            notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {
-            setState(OFF);
+            notifyStateChange(getState(), OFF);
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void reply(CanReply f) {
         if ( f.extendedOrRtr() ) {
@@ -124,9 +119,9 @@ public class CbusLight extends AbstractLight implements CanListener {
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrOn.match(f)) {
-            setState(ON);
+            notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {
-            setState(OFF);
+            notifyStateChange(getState(), OFF);
         }
     }
     
@@ -135,19 +130,31 @@ public class CbusLight extends AbstractLight implements CanListener {
      * @return CanMessage for Light ON
      */    
     public CanMessage getAddrOn(){
-        CanMessage m;
-        m = addrOn.makeMessage(tc.getCanid());
-        return m;
+        return addrOn.makeMessage(tc.getCanid());
     }
     
     /**
      * Get a CanMessage for the Off Light Address.
-     * @return CanMessage for Light ON
+     * @return CanMessage for Light OFF
      */    
     public CanMessage getAddrOff(){
-        CanMessage m;
-        m = addrOff.makeMessage(tc.getCanid());
-        return m;
+        return addrOff.makeMessage(tc.getCanid());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrOn());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrOff());
     }
 
     /**

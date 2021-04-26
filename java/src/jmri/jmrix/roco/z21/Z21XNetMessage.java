@@ -11,20 +11,22 @@ import jmri.jmrix.lenz.XNetMessage;
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2003-2010
  */
 public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
     /**
-     * Constructor, just pass on to the supperclass.
+     * Constructor, just pass on to the superclass.
+     * @param len message length.
      */
     public Z21XNetMessage(int len) {
         super(len);
     }
 
     /**
-     * Constructor from a Z21Message
+     * Constructor from a Z21Message.
+     * @param m the Z21Message.
      */
     public Z21XNetMessage(Z21Message m) {
         super(m.getLength()-4);
@@ -44,6 +46,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
     /**
      * Create an Z21XNetMessage from an Z21XNetReply.
+     * @param message the existing Z21XNetReply.
      */
     public Z21XNetMessage(Z21XNetReply message) {
         super(message);
@@ -51,17 +54,10 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
     /**
      * Create an XNetMessage from a String containing bytes.
+     * @param s byte string.
      */
     public Z21XNetMessage(String s) {
         super(s);
-    }
-
-    @Override
-    public boolean replyExpected() {
-        if(getOpCode()==Z21Constants.LAN_X_SET_TURNOUT){
-            return false;
-        }
-        return super.replyExpected();
     }
 
     @Override
@@ -84,7 +80,9 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
     }
 
     /**
-     * Create messages of a particular form
+     * Create messages of a particular form.
+     * @param cv CV index
+     * @return message to send.
      */
     public static Z21XNetMessage getZ21ReadDirectCVMsg(int cv) {
         Z21XNetMessage m = new Z21XNetMessage(5);
@@ -115,6 +113,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
      * Given a locomotive address, request its status.
      *
      * @param address is the locomotive address
+     * @return message to send.
      */
     public static Z21XNetMessage getZ21LocomotiveInfoRequestMsg(int address) {
         Z21XNetMessage msg = new Z21XNetMessage(5);
@@ -133,6 +132,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
      * @param address is the locomotive address
      * @param functionno is the function to change
      * @param state is boolean representing whether the function is to be on or off
+     * @return message to send.
      */
     public static Z21XNetMessage getZ21LocomotiveFunctionOperationMsg(int address, int functionno, boolean state) {
         Z21XNetMessage msg = new Z21XNetMessage(6);
@@ -164,6 +164,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
      * @param speed a normalized speed value (a floating point number between 0
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
+     * @return message to send.
      */
     public static XNetMessage getZ21LanXSetLocoDriveMsg(int address, SpeedStepMode speedMode, float speed, boolean isForward) {
         XNetMessage msg = XNetMessage.getSpeedAndDirectionMsg(address,
@@ -177,6 +178,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
      * Given a turnout address, generate a message to request the state.
      *
      * @param address the turnout address
+     * @return message to send.
      */
     public static Z21XNetMessage getZ21TurnoutInfoRequestMessage(int address ) {
         // refer to section 5.1 of the z21 lan protocol manual.
@@ -201,6 +203,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
      * to active.
      * @param queue boolean value representing whehter or not the message is 
      * added to the queue.
+     * @return message to send.
      */
     public static Z21XNetMessage getZ21SetTurnoutRequestMessage(int address, boolean thrown, boolean active, boolean queue) {
         // refer to section 5.2 of the z21 lan protocol manual.

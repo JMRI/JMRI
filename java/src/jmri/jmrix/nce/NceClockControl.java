@@ -133,21 +133,14 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     //  ignore replies
     @Override
     public void message(NceMessage m) {
-        log.error("message received: " + m);
+        log.error("message received: {}", m);
     }
 
     // TODO: Why does this if statement contain a direct false? FIXME!
     @Override
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {
-            log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting
-                    + " watingForRead: " + waitingForCmdRead
-                    + " waitingForCmdTime: " + waitingForCmdTime
-                    + " waitingForCmd1224: " + waitingForCmd1224
-                    + " waitingForCmdRatio: " + waitingForCmdRatio
-                    + " waitingForCmdStop: " + waitingForCmdStop
-                    + " waitingForCmdStart: " + waitingForCmdStart
-            );
+            log.debug("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
 
         }
         if (waiting <= 0) {
@@ -162,45 +155,45 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         }
         if (waitingForCmdTime) {
             if (r.getNumDataElements() != CMD_CLOCK_SET_REPLY_SIZE) {
-                log.error(Bundle.getMessage("LogNceClockReplySizeError") + r.getNumDataElements());
+                log.error("{}{}", Bundle.getMessage("LogNceClockReplySizeError"), r.getNumDataElements());
                 return;
             } else {
                 waitingForCmdTime = false;
                 if (r.getElement(0) != '!') {
-                    log.error("NCE set clock replied: " + r.getElement(0));
+                    log.error("NCE set clock replied: {}", r.getElement(0));
                 }
                 return;
             }
         }
         if (r.getNumDataElements() != CMD_CLOCK_SET_REPLY_SIZE) {
-            log.error(Bundle.getMessage("LogNceClockReplySizeError") + r.getNumDataElements());
+            log.error("{}{}", Bundle.getMessage("LogNceClockReplySizeError"), r.getNumDataElements());
             return;
         } else {
             if (waitingForCmd1224) {
                 waitingForCmd1224 = false;
                 if (r.getElement(0) != '!') {
-                    log.error(Bundle.getMessage("LogNceClock1224CmdError") + r.getElement(0));
+                    log.error("{}{}", Bundle.getMessage("LogNceClock1224CmdError"), r.getElement(0));
                 }
                 return;
             }
             if (waitingForCmdRatio) {
                 waitingForCmdRatio = false;
                 if (r.getElement(0) != '!') {
-                    log.error(Bundle.getMessage("LogNceClockRatioCmdError") + r.getElement(0));
+                    log.error("{}{}", Bundle.getMessage("LogNceClockRatioCmdError"), r.getElement(0));
                 }
                 return;
             }
             if (waitingForCmdStop) {
                 waitingForCmdStop = false;
                 if (r.getElement(0) != '!') {
-                    log.error(Bundle.getMessage("LogNceClockStopCmdError") + r.getElement(0));
+                    log.error("{}{}", Bundle.getMessage("LogNceClockStopCmdError"), r.getElement(0));
                 }
                 return;
             }
             if (waitingForCmdStart) {
                 waitingForCmdStart = false;
                 if (r.getElement(0) != '!') {
-                    log.error(Bundle.getMessage("LogNceClockStartCmdError") + r.getElement(0));
+                    log.error("{}{}", Bundle.getMessage("LogNceClockStartCmdError"), r.getElement(0));
                 }
                 return;
             }
@@ -280,7 +273,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     @Override
     public void setRate(double newRate) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
-            log.debug("setRate: " + newRate);
+            log.debug("setRate: {}", newRate);
         }
         int newRatio = (int) newRate;
         if (newRatio < 1 || newRatio > 15) {
@@ -309,7 +302,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         issueReadOnlyRequest(); // get the current rate
         //issueDeferredGetRate = true;
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
-            log.debug("getRate: " + nceLastRatio);
+            log.debug("getRate: {}", nceLastRatio);
         }
         return (nceLastRatio);
     }
@@ -321,7 +314,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
-            log.debug("setTime: " + now);
+            log.debug("setTime: {}", now);
         }
         issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
     }
@@ -349,7 +342,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
             now.setSeconds(nceLastSecond);
         }
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
-            log.debug("getTime returning: " + now);
+            log.debug("getTime returning: {}", now);
         }
         return (now);
     }
@@ -361,7 +354,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
-            log.debug("startHardwareClock: " + now);
+            log.debug("startHardwareClock: {}", now);
         }
         issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
         issueClockStart();
@@ -456,7 +449,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     private void issueClockRatio(int r) {
-        log.debug("sending ratio " + r + " to nce cmd station");
+        log.debug("sending ratio {} to nce cmd station", r);
         byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClockRatio(r);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_CLOCK_SET_REPLY_SIZE);
         waiting++;
@@ -551,7 +544,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         int mm = now.getMinutes();
         int hh = now.getHours();
         if (false && log.isDebugEnabled()) {
-            log.debug("getIntTime: " + hh + ":" + mm + ":" + ss + "." + ms);
+            log.debug("getIntTime: {}:{}:{}.{}", hh, mm, ss, ms);
         }
         return ((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }

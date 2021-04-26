@@ -31,7 +31,7 @@
 
       <p>We go through creating one from scratch, but it's often
       easier to copy and modify one of the existing ones in the
-      <a href="http://jmri.org/xml/signals/">xml/signals</a>
+      <a href="https://jmri.org/xml/signals/">xml/signals</a>
       directory.</p>
 
       <h2>Creating a New Signaling System</h2>First, you need to
@@ -213,7 +213,7 @@ the user. <a name="appearances" id="appearances"></a>
       <code>&lt;description&gt;</code> elements to provide
       information to future users of this signal system. You can
       see how this is displayed in a <a href=
-      "http://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">
+      "https://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">
       sample file</a>.</p>
 
       <p>Next is the <code>&lt;appearances&gt;</code> element,
@@ -258,7 +258,7 @@ followed by zero or more <code>&lt;show&gt;</code> elements.
       of your new signal definition are working on your
       panel/layout and you plan to submit your new signal system as
       a patch to JMRI, use full URL paths like
-      http://jmri.org/resources/icons/etc in the XML files so that
+      https://jmri.org/resources/icons/etc in the XML files so that
       they'll work with both the local JMRI program and for people
       viewing them on the JMRI web site.</p>
 

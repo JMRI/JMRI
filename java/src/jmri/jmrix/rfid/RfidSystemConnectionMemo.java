@@ -4,6 +4,9 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.ReporterManager;
+import jmri.SensorManager;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.rfid.swing.RfidComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
@@ -28,11 +31,9 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
  */
-public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class RfidSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     private RfidTrafficController rt;
-    protected RfidSensorManager sensorManager;
-    protected RfidReporterManager reporterManager;
     private RfidProtocol protocol;
 
     public RfidSystemConnectionMemo(RfidTrafficController rt) {
@@ -42,8 +43,7 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public RfidSystemConnectionMemo() {
         super("F", "Rfid");
-        register(); // registers general type
-        InstanceManager.store(this, RfidSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, RfidSystemConnectionMemo.class);
 
         // Create and register the ComponentFactory
         InstanceManager.store(new RfidComponentFactory(this),
@@ -60,10 +60,11 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
-        this.sensorManager = sensorManager;
-        this.reporterManager = reporterManager;
-        InstanceManager.setSensorManager(this.sensorManager);
-        InstanceManager.setReporterManager(this.reporterManager);
+        store(sensorManager, SensorManager.class);
+        store(reporterManager, ReporterManager.class);
+        InstanceManager.setSensorManager(sensorManager);
+        InstanceManager.setReporterManager(reporterManager);
+        register();
     }
 
     public RfidProtocol getProtocol() {
@@ -75,45 +76,11 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public RfidSensorManager getSensorManager() {
-        return sensorManager;
+        return get(SensorManager.class);
     }
 
     public RfidReporterManager getReporterManager() {
-        return reporterManager;
-    }
-
-    /**
-     * Tells which managers this class provides.
-     *
-     * @param type manager type to check
-     * @return true if provided
-     */
-    @Override
-    public boolean provides(Class<?> type) {
-        if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        }
-        if (type.equals((jmri.ReporterManager.class))) {
-            return true;
-        }
-        // Delegate to super class
-        return super.provides(type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.ReporterManager.class)) {
-            return (T) getReporterManager();
-        }
-        // nothing, by default
-        return null;
+        return get(ReporterManager.class);
     }
 
     @Override
@@ -130,12 +97,6 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void dispose() {
         rt = null;
         InstanceManager.deregister(this, RfidSystemConnectionMemo.class);
-        if (reporterManager != null) {
-            InstanceManager.deregister(reporterManager, RfidReporterManager.class);
-        }
-        if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, RfidSensorManager.class);
-        }
         protocol = null;
         super.dispose();
     }

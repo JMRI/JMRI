@@ -7,11 +7,7 @@ import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -36,15 +32,15 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     ScheduleManager scheduleManager; // There is only one manager
 
     // Defines the columns
-    private static final int ID_COLUMN = 0;
-    private static final int NAME_COLUMN = ID_COLUMN + 1;
-    private static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN + 1;
-    private static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN + 1;
-    private static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN + 1;
-    private static final int STATUS_COLUMN = SPUR_COLUMN + 1;
-    private static final int MODE_COLUMN = STATUS_COLUMN + 1;
-    private static final int EDIT_COLUMN = MODE_COLUMN + 1;
-    private static final int DELETE_COLUMN = EDIT_COLUMN + 1;
+    static final int ID_COLUMN = 0;
+    static final int NAME_COLUMN = ID_COLUMN + 1;
+    static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN + 1;
+    static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN + 1;
+    static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN + 1;
+    static final int STATUS_COLUMN = SPUR_COLUMN + 1;
+    static final int MODE_COLUMN = STATUS_COLUMN + 1;
+    static final int EDIT_COLUMN = MODE_COLUMN + 1;
+    static final int DELETE_COLUMN = EDIT_COLUMN + 1;
 
     private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 
@@ -340,11 +336,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         if (ltp == null) {
             return "";
         }
-        String mode = Bundle.getMessage("Sequential");
-        if (ltp.getTrack().getScheduleMode() == Track.MATCH) {
-            mode = Bundle.getMessage("Match");
-        }
-        return mode;
+        return ltp.getTrack().getScheduleModeName();
     }
 
     private void removePropertyChangeSchedules() {

@@ -10,13 +10,15 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008, 2009
  */
 public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHead> {
 
@@ -154,9 +156,8 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
         return "Edit Signal Head";
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -168,7 +169,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         a = null;
         JUnitUtil.tearDown();

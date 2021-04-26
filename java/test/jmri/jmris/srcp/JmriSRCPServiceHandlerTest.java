@@ -9,17 +9,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JmriSRCPServiceHandlerTest {
 
     @Test
     public void testCTor() {
         JmriSRCPServiceHandler t = new JmriSRCPServiceHandler(42);
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

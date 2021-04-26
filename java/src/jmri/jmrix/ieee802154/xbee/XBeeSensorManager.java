@@ -66,8 +66,8 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
-        XBeeNode curNode = null;
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        XBeeNode curNode;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
             if ((curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null) {
@@ -223,7 +223,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
         }
         if (log.isDebugEnabled()) {
-            log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
+            log.debug("Converted {} to hardware address {}", systemName, encoderAddress);
         }
         return encoderAddress;
     }
@@ -238,7 +238,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             try {
                 input = Integer.parseInt(systemName.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                log.debug("Unable to convert {} into the cab and input format of nn:xx", systemName);
                 return -1;
             }
         } else {
@@ -246,12 +246,12 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
                 input = iName % 10;
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                log.debug("Unable to convert {} Hardware Address to a number", systemName);
                 return -1;
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("Converted " + systemName + " to pin number" + input);
+            log.debug("Converted {} to pin number{}", systemName, input);
         }
         return input;
     }

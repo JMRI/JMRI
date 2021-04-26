@@ -6,6 +6,8 @@ import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.util.ArrayList;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -24,8 +26,6 @@ public class FrmSWDI extends javax.swing.JFrame {
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
 
-    private String _mSWDI_NormalInternalSensorOrig;
-    private String _mSWDI_ReversedInternalSensorOrig;
     private String _mSWDI_ExternalTurnoutOrig;
     private int _mSWDI_CodingTimeInMillisecondsOrig;
     private boolean _mSWDI_FeedbackDifferentOrig;
@@ -34,9 +34,7 @@ public class FrmSWDI extends javax.swing.JFrame {
     private boolean _mSWDI_GUICrossoverLeftHandOrig;
 
     private void initOrig() {
-        _mSWDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_NormalInternalSensor;
-        _mSWDI_ReversedInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor;
-        _mSWDI_ExternalTurnoutOrig = _mCodeButtonHandlerData._mSWDI_ExternalTurnout;
+        _mSWDI_ExternalTurnoutOrig = _mCodeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName();
         _mSWDI_CodingTimeInMillisecondsOrig = _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds;
         _mSWDI_FeedbackDifferentOrig = _mCodeButtonHandlerData._mSWDI_FeedbackDifferent;
         _mSWDI_GUITurnoutTypeOrig = _mCodeButtonHandlerData._mSWDI_GUITurnoutType;
@@ -44,8 +42,6 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_GUICrossoverLeftHandOrig = _mCodeButtonHandlerData._mSWDI_GUICrossoverLeftHand;
     }
     private boolean dataChanged() {
-        if (!_mSWDI_NormalInternalSensorOrig.equals(_mSWDI_NormalInternalSensor.getText())) return true;
-        if (!_mSWDI_ReversedInternalSensorOrig.equals(_mSWDI_ReversedInternalSensor.getText())) return true;
         if (!_mSWDI_ExternalTurnoutOrig.equals(_mSWDI_ExternalTurnout.getSelectedItem())) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds) != _mSWDI_CodingTimeInMillisecondsOrig) return true;
         if (_mSWDI_FeedbackDifferentOrig != _mSWDI_FeedbackDifferent.isSelected()) return true;
@@ -67,9 +63,9 @@ public class FrmSWDI extends javax.swing.JFrame {
         CommonSubs.numberButtonGroup(_mSWDI_GUITurnoutType);
         CommonSubs.setButtonSelected(_mSWDI_GUITurnoutType, _mCodeButtonHandlerData._mSWDI_GUITurnoutType.getInt());
         CommonSubs.setMillisecondsEdit(_mSWDI_CodingTimeInMilliseconds);
-        _mSWDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_NormalInternalSensor);
-        _mSWDI_ReversedInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_ReversedInternalSensor);
-        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout, true);
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_NormalInternalSensor, "Sensor", _mCodeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ReversedInternalSensor, "Sensor", _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), true);
         _mSWDI_CodingTimeInMilliseconds.setText(Integer.toString(_mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds));
         _mSWDI_FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mSWDI_FeedbackDifferent);
         _mSWDI_GUITurnoutLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUITurnoutLeftHand);
@@ -82,9 +78,9 @@ public class FrmSWDI extends javax.swing.JFrame {
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSWDI_Enabled) return true; // Not enabled, can be no error!
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor)) return false;
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor)) return false;
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout)) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName())) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName())) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName())) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
 
@@ -92,8 +88,6 @@ public class FrmSWDI extends javax.swing.JFrame {
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
 //  Checks:
-        CommonSubs.checkJTextFieldNotEmpty(_mSWDI_NormalInternalSensor, _mSWDI_NormalInternalSensorPrompt, errors);
-        CommonSubs.checkJTextFieldNotEmpty(_mSWDI_ReversedInternalSensor, _mSWDI_ReversedInternalSensorPrompt, errors);
         CommonSubs.checkJComboBoxNotEmpty(_mSWDI_ExternalTurnout, _mSWDI_ActualTurnoutPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
@@ -110,10 +104,11 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_GUITurnoutType = new javax.swing.ButtonGroup();
         _mSaveAndClose = new javax.swing.JButton();
         _mSWDI_NormalInternalSensorPrompt = new javax.swing.JLabel();
-        _mSWDI_NormalInternalSensor = new javax.swing.JTextField();
+        _mSWDI_NormalInternalSensor = new javax.swing.JComboBox<>();
         _mSWDI_ReversedInternalSensorPrompt = new javax.swing.JLabel();
-        _mSWDI_ReversedInternalSensor = new javax.swing.JTextField();
+        _mSWDI_ReversedInternalSensor = new javax.swing.JComboBox<>();
         _mSWDI_ActualTurnoutPrompt = new javax.swing.JLabel();
+        _mSWDI_ExternalTurnout = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         _mSWDI_CodingTimeInMilliseconds = new javax.swing.JFormattedTextField();
         _mSWDI_FeedbackDifferent = new javax.swing.JCheckBox();
@@ -125,7 +120,6 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mTurnout = new javax.swing.JRadioButton();
         _mCrossover = new javax.swing.JRadioButton();
         _mDoubleCrossover = new javax.swing.JRadioButton();
-        _mSWDI_ExternalTurnout = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleSWDI"));
@@ -147,10 +141,16 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSWDI_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelSWDINormal"));
 
+        _mSWDI_NormalInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         _mSWDI_ReversedInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSWDI_ReversedInternalSensorPrompt.setText(Bundle.getMessage("LabelSWDIReverse"));
 
+        _mSWDI_ReversedInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         _mSWDI_ActualTurnoutPrompt.setText(Bundle.getMessage("LabelSWDIToName"));
+
+        _mSWDI_ExternalTurnout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel19.setText(Bundle.getMessage("LabelSWDITime"));
 
@@ -201,8 +201,6 @@ public class FrmSWDI extends javax.swing.JFrame {
             }
         });
 
-        _mSWDI_ExternalTurnout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,15 +215,13 @@ public class FrmSWDI extends javax.swing.JFrame {
                             .addComponent(_mSWDI_ReversedInternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(_mSWDI_NormalInternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(_mSWDI_NormalInternalSensor)
-                                .addComponent(_mSWDI_ReversedInternalSensor)
-                                .addComponent(_mSWDI_ExternalTurnout, 0, 119, Short.MAX_VALUE))
-                            .addComponent(_mSWDI_FeedbackDifferent))
-                        .addGap(83, 83, 83))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(_mSWDI_ReversedInternalSensor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mSWDI_NormalInternalSensor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(_mSWDI_FeedbackDifferent)
+                            .addComponent(_mSWDI_ExternalTurnout, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -243,7 +239,7 @@ public class FrmSWDI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
                                 .addComponent(_mSaveAndClose)))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,9 +289,13 @@ public class FrmSWDI extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = _mSWDI_NormalInternalSensor.getText();
-        _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = _mSWDI_ReversedInternalSensor.getText();
-        _mCodeButtonHandlerData._mSWDI_ExternalTurnout = (String) _mSWDI_ExternalTurnout.getSelectedItem();
+
+        _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = CommonSubs.getNBHSensor((String) _mSWDI_NormalInternalSensor.getSelectedItem(), false);
+        _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = CommonSubs.getNBHSensor((String) _mSWDI_ReversedInternalSensor.getSelectedItem(), false);
+
+        NBHTurnout newTurnout = CommonSubs.getNBHTurnout((String) _mSWDI_ExternalTurnout.getSelectedItem(), _mSWDI_FeedbackDifferent.isSelected());
+        _mCodeButtonHandlerData._mSWDI_ExternalTurnout = newTurnout;
+
         _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds);
         _mCodeButtonHandlerData._mSWDI_FeedbackDifferent = _mSWDI_FeedbackDifferent.isSelected();
         _mCodeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(_mSWDI_GUITurnoutType);
@@ -312,10 +312,10 @@ public class FrmSWDI extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SWDI(_mProgramProperties, temp);
-        _mSWDI_NormalInternalSensor.setText(temp._mSWDI_NormalInternalSensor);
-        _mSWDI_ReversedInternalSensor.setText(temp._mSWDI_ReversedInternalSensor);
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_NormalInternalSensor, "Sensor", temp._mSWDI_NormalInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ReversedInternalSensor, "Sensor", temp._mSWDI_ReversedInternalSensor.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mTurnoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTurnoutActionPerformed
@@ -343,9 +343,9 @@ public class FrmSWDI extends javax.swing.JFrame {
     private javax.swing.JCheckBox _mSWDI_GUICrossoverLeftHand;
     private javax.swing.JCheckBox _mSWDI_GUITurnoutLeftHand;
     private javax.swing.ButtonGroup _mSWDI_GUITurnoutType;
-    private javax.swing.JTextField _mSWDI_NormalInternalSensor;
+    private javax.swing.JComboBox<String> _mSWDI_NormalInternalSensor;
     private javax.swing.JLabel _mSWDI_NormalInternalSensorPrompt;
-    private javax.swing.JTextField _mSWDI_ReversedInternalSensor;
+    private javax.swing.JComboBox<String> _mSWDI_ReversedInternalSensor;
     private javax.swing.JLabel _mSWDI_ReversedInternalSensorPrompt;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JRadioButton _mTurnout;

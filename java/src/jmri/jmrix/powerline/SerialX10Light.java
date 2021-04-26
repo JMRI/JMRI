@@ -79,7 +79,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
     @Override
     protected void initIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("initIntensity(" + intensity + ")");
+            log.debug("initIntensity({})", intensity);
         }
 
         maxDimStep = tc.getNumberOfIntensitySteps();
@@ -133,7 +133,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
     @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
+            log.debug("sendIntensity({}) lastOutputStep: {} maxDimStep: {}", intensity, lastOutputStep, maxDimStep);
         }
 
         // if we don't know the dim count, force it to a value.
@@ -143,13 +143,13 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
         // check for errors
         if ((newStep < 0) || (newStep > maxDimStep)) {
-            log.error("newStep wrong: " + newStep + " intensity: " + intensity);
+            log.error("newStep wrong: {} intensity: {}", newStep, intensity);
         }
 
         if (newStep == 0) {
             // nothing to do!
             if (log.isDebugEnabled()) {
-                log.debug("intensity " + intensity + " within current step, return");
+                log.debug("intensity {} within current step, return", intensity);
             }
             return;
 
@@ -163,7 +163,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         lastOutputStep = newStep;
 
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " newStep: " + newStep);
+            log.debug("sendIntensity({}) house {} device {} newStep: {}", intensity, X10Sequence.houseValueToText(housecode), devicecode, newStep);
         }
     }
 
@@ -182,7 +182,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
     @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
-            log.debug("sendOnOff(" + newState + ") Current: " + mState);
+            log.debug("sendOnOff({}) Current: {}", newState, mState);
         }
 
         // figure out command 
@@ -195,11 +195,11 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
             function = X10Sequence.FUNCTION_OFF;
             newDim = 0;
         } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+            log.warn("illegal state requested for Light: {}", getSystemName());
             return;
         }
 
-        log.debug("set state " + newState + " house " + housecode + " device " + devicecode);
+        log.debug("set state {} house {} device {}", newState, housecode, devicecode);
 
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();
@@ -209,7 +209,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         tc.sendX10Sequence(out, null);
 
         if (log.isDebugEnabled()) {
-            log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " funct: " + function);
+            log.debug("sendOnOff({})  house {} device {} funct: {}", newDim, X10Sequence.houseValueToText(housecode), devicecode, function);
         }
     }
 

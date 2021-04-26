@@ -2,11 +2,13 @@ package jmri.jmrix.mrc;
 
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -25,11 +27,9 @@ public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     public void testSetGetMode() {
-        programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());        
+        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
     }
 
     @Override
@@ -38,9 +38,8 @@ public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
     }    
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
@@ -51,7 +50,7 @@ public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         programmer = null;
         JUnitUtil.tearDown();

@@ -90,7 +90,7 @@ public class ImportRosterEngines extends Thread {
                     engine.setOwner(owner);
                     enginesAdded++;
                 } else {
-                    log.info("Can not add, engine number (" + re.getRoadNumber() + ") road (" + re.getRoadName() + ") already exists");
+                    log.info("Can not add, engine number ({}) road ({}) already exists", re.getRoadNumber(), re.getRoadName());
                 }
             }
         }

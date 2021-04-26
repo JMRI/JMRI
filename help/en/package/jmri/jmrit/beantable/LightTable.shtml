@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Table lights enable disable">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,70 +24,22 @@
       <p>Lights are digital output bits that function as on/off
       switches. Lights were created to provide easy control for
       fascia panel lights and scenery lighting. Lights can also be
-      used for any purpose that requires an on/off switch. A Light
-      can be used, for example, to activate an electromagnetic
-      decoupler for a pre-determined time in response to a fascia
-      panel button, or play a layout sound via a stationary
-      decoder.</p>
+      used for any purpose that requires an on/off switch. </p>
 
-      <p>Lights share available digital output bits with Turnouts.
-      Either a Light or a Turnout, but not both, can control a
-      specific digital output bit. Since Lights lack the feedback
-      structure of Turnouts, Lights should not be used to control
-      track switches (turnouts) on the layout; only Turnouts should
-      be used to control track switches. For historical reasons,
-      Signal Head appearances are defined using Turnouts, even
-      though they may actually be physical lights. So Turnouts
-      should be used to reference the digital output bits used with
-      JMRI Signal Heads. Lights should be used if you need a simple
-      mechanism to control scenery lighting or panel lights, or for
-      other on/off tasks where the control mechanisms of Lights fit
-      the need.</p>
+     <p>Lights may also be defined as variable intensity (not just on/off).
+      This will depend on the interface and the hardware driving the physical
+      light.</p>
 
-      <p>Optionally a Light may be controlled in five ways:
-      <ul>
-        <li>by a single Sensor</li>
-        <li>by two Sensors</li>
-        <li>by a Turnout</li>
-        <li>by the JMRI Fast Clock</li>
-        <li>or switched on for a specified time by a Sensor.</li>
-      </ul>
-      One or more of these controls may be specified when the
-      Light is created, or when it is edited via the Light Table.
-
-    <p>Note that enabled / disabled column only applies to a Light's
-      automated Light Control mechanism.
-      <br>A 'disabled' state will not
-      prevent a Light from being turned On or Off using the button
-      in the Light Table or from being controlled by a Logix.</p>
-
-
-      <p>When a Light is created, or when it is read from a
-      configuration file, the Light is 'activated'; it is set up to
-      monitor automatically any changes in state of its control
-      Sensor(s), Turnout, or Fast Clock. When the controlling
-      Sensor, Turnout, or Fast Clock changes in a user-specified
-      way, the Light is switched on or off. Lights can also be
-      controlled by <a href="LogixTable.shtml">Logix</a>, if more
-      complicated control logic is needed.</p>
-      
-      
-      
-      
-      <p>which contains the following columns:</p>
+      <p>The Light Table contains the following columns:</p>
 
       <ul>
         <li>System Name</li>
         <li>User Name (optional)</li>
         <li>State</li>
         <li>Comment (optional, double click to edit)</li>
-        <li>Enabled ( Automated Light Control excl. Logix )</li>
-        <li>Intensity</li>
+        <li>Enabled (Automated Light Control excl. Logix)</li>
+        <li>Intensity (availble in certain hardware only)</li>
       </ul>
-      
-      
-      
-      
 
       <p>The Light Table contains an 'Enabled' column. For a Light
       to be triggered by its control Sensor, the Fast Clock, or its
@@ -99,35 +51,40 @@
       and sort the rows by clicking one of the sort triangles next to
       a column title.</p>
 
-      <p>A Light may also be a variable light. This will depend on
-      the interface and the hardware driving the physical
-      light.</p>
+    <p>Note that enabled / disabled column only applies to a Light's
+      automated Light Control mechanism.
+      <br>A 'disabled' state will not
+      prevent a Light from being turned On or Off using the button
+      in the Light Table or from being controlled by a Logix.</p>
 
       <img src="images/LightTableGraphic.png" height="135" width="276"
       alt="Graphic Light state column">
       <p>Choose between textual and graphic display of the Light state
-      in the <a href="../../../apps/TabbedPreferences.shtml#Display" 
+      in the <a href="../../../apps/TabbedPreferences.shtml#Display"
       title="Main JMRI Preferences"
       >Display preferences</a>.</p>
 
-      <h2>Switching a Light On or Off</h2>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <p>Lights may be turned on or off by clicking the button/icon in
-      the State column of the Light Table. A Light may be set up to
-      follow the state of a track switch (Turnout), On when the
-      Turnout is Closed, and Off when it is Thrown, or vice versa.
-      A Light may be set to follow the state of a block occupancy
-      sensor, on when the sensor is active, and off when it is
-      inactive, or vice versa. A Light may also be set by a fascia
-      panel button if a Sensor for that button is defined as the
-      control Sensor. A Light may be configured to follow the JMRI
-      Fast Clock, On for a specified time period, then Off. A Light
-      may be controlled by two Sensors, On when either of the two
-      Sensors is Active (or Inactive). Two sensor control is useful
-      in controlling layout sounds or crossing gates. A Light may
-      also be controlled from a Logix, as the action of one of its
-      conditionals. If you need more powerful logic to control your
-      Light, consider using a <a href=
+      <h2>Creating New Lights</h2>
+      To define a new light, click the <a href="LightAddEdit.shtml">Add...</a> button
+      the Light Table. This will take you to a <a href= "LightAddEdit.shtml">new window</a>
+      for adding or editing Lights.
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2>Turning Lights On/Off/Setting Intensity</h2>
+
+      <p>Lights may be turned on or off by clicking the button/icon in the State column of the
+      Light Table.</p>
+
+      <p>A Light may be set up in the Light Table to be controlled by  the state of a track
+      switch (Turnout), a block occupancy sensor, or one or two sensors. For example, the sensor
+      for a fascia panel button could be  specified as the control sensor for the light, turning
+      it on or off. Two sensor control is useful in controlling layout sounds or crossing gates.</p>
+
+      <p class="note">A Light ma also be controlled from a Logix, as the action of one of its
+      conditionals. If you need more powerful logic to control your Light, consider using a <a href=
       "LogixTable.shtml">Logix</a>.</p>
 
       <p>Note that Enabled/Disabled applies only to a Light's
@@ -149,28 +106,29 @@
       not the target intensity, when transition effects are
       enabled.</p>
 
-      <h2>Creating New Lights</h2>
-      To define a new light, click the
-      <a href="LightAddEdit.shtml">Add...</a> button the Light
-      Table. This will take you to a <a href=
-      "LightAddEdit.shtml">new window</a> for adding or editing
-      Lights.
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Saving Lights to Disk</h2>
 
-      <p>Lights is kept in your <i>layout configuration</i>, along
-      with Turnouts, Sensors, Signal Heads, control panel
-      setup etc. To store this
-      information on disk, use <b>Store &gt;</b> in the <b>File</b>
-      menu at the top of the Lights Table (or other tables from the
-      Tools menu), or select <b>Store Panel...</b> in the
-      <b>Panel</b> menu. Note that the enabled/disabled state of
-      each Light is not saved in the configuration file. When
-      Lights are loaded from a configuration file, they are all
-      enabled.</p>
-      
-      <h3>Further JMRI Support</h3>
-      <p><a href="../../../../html/tools/Lights.shtml" title="JMRI Lights Help">JMRI Lights Documentation</a>.</p>
+      <p>The Light Table is kept in your <i>layout configuration</i>, along
+      with Turnouts, Sensors, Signal Heads, control panel setup etc.
+      To store this information on disk, see <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+      <p>Note that the enabled/disabled state of
+      each Light is not saved in the configuration file. When Lights are loaded from
+      a configuration file, they are all enabled.</p>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2>Other Light Reading</h2>
+
+      <p><a href="LightAddEdit.shtml#addLight">Add / </a><a href="LightAddEdit.shtml#editLight">
+        Edit Light</a> (including automated <a href="LightAddEdit.shtml#lightcontrol"> Light Controls</a>)</p>
+
+      <p><a href="../../../../html/tools/Lights.shtml">Lights General Documentation</a></p>
+
+      <p><a href="../simplelightctrl/SimpleLightCtrl.shtml">Light Control Tool</a> (for manual Light operation)</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

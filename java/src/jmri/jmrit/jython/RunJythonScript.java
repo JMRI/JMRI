@@ -90,7 +90,7 @@ public class RunJythonScript extends JmriAbstractAction {
     File selectFile() {
         if (fci == null) {
             fci = new ScriptFileChooser(FileUtil.getScriptsPath());
-            fci.setDialogTitle("Find desired script file");
+            fci.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
         } else {
             // when reusing the chooser, make sure new files are included
             fci.rescanCurrentDirectory();

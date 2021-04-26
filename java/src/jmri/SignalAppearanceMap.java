@@ -100,9 +100,12 @@ public interface SignalAppearanceMap {
 
     /**
      * Provide a multi-line summary of the signal system content,
-     * typically for printing. Not intended for further parsing, 
-     * i.e. for persistance, as format likely to differ from type 
+     * typically for printing. 
+     * <p>
+     * Not intended for further parsing, 
+     * i.e. for persistence, as format likely to differ from type 
      * to type, and to change often.
+     * @return summary string.
      */
     public String summary();
 

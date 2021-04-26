@@ -70,7 +70,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                     } else if (type.equals("int")) {
                         m.invoke(o, new Object[]{Integer.valueOf(value)});
                     } else {
-                        log.error("Can't handle type: " + type);
+                        log.error("Can't handle type: {}", type);
                     }
                     break;
                 }
@@ -97,7 +97,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                     continue;
                 }
                 if (properties[i].getPropertyType() == null) {
-                    log.warn("skipping property with null type: " + properties[i].getName());
+                    log.warn("skipping property with null type: {}", properties[i].getName());
                     continue;
                 }
                 Element p = new Element("property");
@@ -116,11 +116,11 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                 e.addContent(p);
             }
         } catch (java.beans.IntrospectionException ex) {
-            log.error("Partial store due to IntrospectionException: " + ex);
+            log.error("Partial store due to IntrospectionException: {}", ex);
         } catch (java.lang.reflect.InvocationTargetException ex) {
-            log.error("Partial store due to InvocationTargetException: " + ex);
+            log.error("Partial store due to InvocationTargetException: {}", ex);
         } catch (IllegalAccessException ex) {
-            log.error("Partial store due to IllegalAccessException: " + ex);
+            log.error("Partial store due to IllegalAccessException: {}", ex);
         }
 
         return e;

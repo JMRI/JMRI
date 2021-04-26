@@ -4,22 +4,32 @@
           <li></li>
         </ul>
 
+        <h4>Acela CTI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
+        <h4>CBUS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
             </ul>
 
-        <h4>DCC++</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li></li>
             </ul>
@@ -44,6 +54,16 @@
                 <li></li>
             </ul>
 
+        <h4>Internal</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>IPOCSMR</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -64,7 +84,7 @@
                 <li></li>
             </ul>
 
-        <h4>MERG CBUS</h4>
+        <h4>MERG</h4>
             <ul>
                 <li></li>
             </ul>
@@ -89,7 +109,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
             </ul>
@@ -244,6 +264,11 @@
                 <li></li>
             </ul>
 
+        <h4>PIKO</h4>
+            <ul>
+                <li>Added support for Piko SmartDecoder 4.1 Next 18 Series used in N and TT scale engines.</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -278,7 +303,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -330,8 +355,20 @@
             <li></li>
         </ul>
 
+    <h3>CTC Tool</h3>
+        <a id="PE-CTC" name="PE-CTC"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
+        <ul>
+             <li></li>
+        </ul>
+
+    <h3>Dispatcher System</h3>
+        <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
              <li></li>
         </ul>
@@ -359,19 +396,42 @@
           <li></li>
         </ul>
 
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li>Implement Clock Action and Expression</li>
+        </ul>
+
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
         </ul>
 
-   <h3>Panel Editors</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
         </ul>
-        <h4>CTC Tool</h4>
-            <a id="PE-CTC" name="PE-CTC"></a>
+
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
             <ul>
                 <li></li>
             </ul>
@@ -394,6 +454,12 @@
             <li></li>
         </ul>
 
+    <h3>Routes</h3>
+        <a id="Routes" name="Routes"></a>
+       <ul>
+            <li></li>
+       </ul>
+
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -413,7 +479,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Eckart Meyer updated the DB HV 1969 system to have proper aspect control.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -425,7 +491,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -433,7 +499,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -452,18 +518,10 @@
             <li></li>
         </ul>
 
-   <h3>Throttle</h3>
+    <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Add a speed step dropdown to the extended throttle;
-                this makes it easier to select the speed step mode and 
-                makes it possible to select the less common speed step modes 
-                exposed by some systems. 
-            </li>
-            <li>Consolidated the throttle layout code, 
-                centralized the logic for determining if throttle icons should be shown, 
-                and added unit tests for the control panel layout and some preferences.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -501,7 +559,13 @@
         <ul>
             <li></li>
         </ul>
-        
+
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -511,9 +575,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Long deprecated <code>instance()</code> methods to get the default
-                instance of a manager have been removed. Use
-                <code>InstanceManager.getDefault(NameOfManager.class)</code>
-                instead.</li>
+            <li></li>
         </ul>
 

@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.26.1
+; - Remove Tools start menu items
+; - Add support for Open JDK 8 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.26.0
 ; - Remove JMRIDemo link
 ; - Rename Tools and Demos Folder to Tools
@@ -312,7 +316,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.26.0"                    ; Installer version
+!define INST_VER  "0.1.26.1"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -613,7 +617,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Change file attributes early so they have time to propagate on systems
     ; --        with unexpected delays in the filesystem.
-    SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+    SetFileAttributes "$SMPROGRAMS\$0\Tools\Preferences.lnk" NORMAL
 
     Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
     Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
@@ -905,7 +909,7 @@ Section "Uninstall" ; SEC_CRUNINST
 
     ; -- Change file attributes early so they have time to propagate on systems
     ; --        with unexpected delays in the filesystem.
-    SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+    SetFileAttributes "$SMPROGRAMS\$0\Tools\Preferences.lnk" NORMAL
 
   Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
   Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
@@ -918,8 +922,11 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
   Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
+  Delete "$SMPROGRAMS\$0\Tools\Preferences.lnk"
+  Delete "$SMPROGRAMS\$0\Tools\InstallTest.lnk"
   Delete "$SMPROGRAMS\$0\Uninstall.lnk"
   RMDir "$SMPROGRAMS\$0\Tools and Demos\"
+  RMDir "$SMPROGRAMS\$0\Tools\"
   RMDir "$SMPROGRAMS\$0\"
   Delete "$DESKTOP\DecoderPro.lnk"
   Delete "$DESKTOP\PanelPro.lnk"
@@ -1092,6 +1099,9 @@ Function CheckJRE
     IfErrors 0 JRECheck
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JDK\$1" "JavaHome"
+    IfErrors 0 JRECheck
+    ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Development Kit" "CurrentVersion"
+    ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Development Kit\$1" "JavaHome"
 
     ; -- Not found
     IfErrors 0 JRECheck

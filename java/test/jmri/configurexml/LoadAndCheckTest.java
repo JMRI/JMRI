@@ -1,13 +1,13 @@
 package jmri.configurexml;
 
 import java.io.File;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Functional checks of loading basic configuration files. When done across
@@ -80,7 +80,7 @@ public class LoadAndCheckTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -92,7 +92,7 @@ public class LoadAndCheckTest {
         System.setProperty("jmri.test.no-dialogs", "true");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

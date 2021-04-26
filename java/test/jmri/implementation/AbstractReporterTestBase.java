@@ -1,7 +1,9 @@
 package jmri.implementation;
 
 import jmri.Reporter;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Reporter class
@@ -78,6 +80,15 @@ abstract public class AbstractReporterTestBase {
         // Check that LastReport was not seen (no change on null)
         Assert.assertFalse("LastReport seen after null", lastReportSeen);
     }
+    
+    @Test
+    public void testAddRemoveListener() {
+        Assert.assertEquals("starts 0 listeners", 0, r.getNumPropertyChangeListeners());
+        r.addPropertyChangeListener(new TestReporterListener());
+        Assert.assertEquals("controller listener added", 1, r.getNumPropertyChangeListeners());
+        r.dispose();
+        Assert.assertTrue("controller listeners remaining < 1", r.getNumPropertyChangeListeners() < 1);
+    }
 
     protected boolean currentReportSeen = false;
     protected boolean lastReportSeen = false;
@@ -93,10 +104,10 @@ abstract public class AbstractReporterTestBase {
         }
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

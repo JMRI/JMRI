@@ -1,15 +1,14 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * DCCppPowerManagerTest.java
  *
- * Description: tests for the jmri.jmrix.dccpp.DCCppPowerManager class
+ * Test for the jmri.jmrix.dccpp.DCCppPowerManager class
  *
  * @author Paul Bender
  * @author Mark Underwood (C) 2015
@@ -30,12 +29,12 @@ public class DCCppPowerManagerTest {
         Assert.assertNotNull(c);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

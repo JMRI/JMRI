@@ -6,6 +6,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 import jmri.jmrix.powerline.SerialPortController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,14 +45,14 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     @Override
     public String openPort(String portName, String appName) {
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return

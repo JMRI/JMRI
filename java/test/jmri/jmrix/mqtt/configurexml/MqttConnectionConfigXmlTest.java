@@ -1,7 +1,9 @@
 package jmri.jmrix.mqtt.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.mqtt.MqttConnectionConfig;
 
 
@@ -13,8 +15,7 @@ import jmri.jmrix.mqtt.MqttConnectionConfig;
  */
 public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +24,7 @@ public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstrac
         cc = new MqttConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

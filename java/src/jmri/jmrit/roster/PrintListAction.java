@@ -3,11 +3,13 @@ package jmri.jmrit.roster;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.roster.swing.RosterFrame;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -65,8 +67,8 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
         // we test that the property exists before attempting to get its value
-        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
-            rosterGroup = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
+        if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            rosterGroup = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         if (rosterGroup == null) {
             title = title + " " + Bundle.getMessage("ALLENTRIES");
@@ -95,12 +97,19 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
                 writer.write(s, 0, s.length());
             }
         } catch (IOException ex) {
-            log.warn("error during printing: " + ex);
+            log.warn("error during printing: {}", ex);
         }
 
         // Loop through the Roster, printing a 1 line list entry as needed
-        List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
-        log.debug("Roster list size: " + l.size());
+        List<RosterEntry> l = null;
+
+        if ( BeanUtil.hasProperty(wi, "allRosterEntries")) {
+            l = Arrays.asList(((RosterFrame)wi).getAllRosterEntries());
+        } else {
+            l = r.matchingList(null, null, null, null, null, null, null); // take all
+        }
+        log.debug("Roster list size: {}", l.size());
+
         // print table column headers, match column order + widths with RosterEntry#PrintEntryLine
         // fields copied from RosterTableModel#getColumnName(int)
         String headerText = "";
@@ -130,7 +139,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         writer.write("\n", 0, 1);
         writer.write(headerText);
         } catch (IOException ex) {
-            log.warn("error during printing: " + ex);
+            log.warn("error during printing: {}", ex);
         }
 
         for (RosterEntry re : l) {

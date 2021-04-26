@@ -4,22 +4,18 @@ import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
 import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
 
 import java.awt.GraphicsEnvironment;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
 import jmri.jmrix.openlcb.SampleFactory;
 import jmri.util.JUnitUtil;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.openlcb.cdi.swing.CdiPanel;
 
 /**
@@ -30,6 +26,7 @@ import org.openlcb.cdi.swing.CdiPanel;
  */
 public class CdiPanelDemo {
 
+    @Test
     public void testCtor() {
         CdiPanel m = new CdiPanel();
         Assert.assertNotNull(m);
@@ -88,18 +85,6 @@ public class CdiPanelDemo {
         f.dispose();
     }
 
-    Element getRootFromFile(String name) {
-        Element root = null;
-        try {
-            SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", false);  // argument controls validation
-            Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))));
-            root = doc.getRootElement();
-        } catch (Exception e) {
-            System.out.println("While reading file: " + e);
-        }
-        return root;
-    }
-
     JFrame makeFrameFromFile(String fileName) {
         JFrame f = new JFrame();
         CdiPanel m = new CdiPanel();
@@ -108,7 +93,6 @@ public class CdiPanelDemo {
                 new CdiPanel.GuiItemFactory() {
             @Override
             public JButton handleReadButton(JButton button) {
-                //System.out.println("process button");
                 button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
                 return button;
             }
@@ -121,12 +105,12 @@ public class CdiPanelDemo {
         return f;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();

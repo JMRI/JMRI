@@ -8,23 +8,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+
 import javax.annotation.Nonnull;
 import javax.swing.JMenuItem;
-import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+
 import jmri.*;
-import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.throttle.AddressPanel;
-import jmri.jmrit.throttle.ControlPanel;
-import jmri.jmrit.throttle.FunctionButton;
-import jmri.jmrit.throttle.FunctionPanel;
 import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.util.MathUtil;
+
 import org.hid4java.*;
 import org.hid4java.event.HidServicesEvent;
 import org.slf4j.Logger;
@@ -35,29 +33,39 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
-public class RailDriverMenuItem extends JMenuItem
-        implements HidServicesListener, PropertyChangeListener {
+public class RailDriverMenuItem extends JMenuItem implements HidServicesListener, PropertyChangeListener {
 
     private static final short VENDOR_ID = 0x05F3;
     private static final short PRODUCT_ID = 0x00D2;
-    public static final String SERIAL_NUMBER = null;
+    public static final String SERIAL_NUMBER = null; // For later use, if not null, uncomment line 454
 
     private HidServices hidServices = null;
-
     private HidDevice hidDevice = null;
+    
+
+    //TODO: Remove this if/when the RailDriver script is removed
+    //private final boolean invokeOnMenuOnly = true;
+
+    private Thread thread = null;
+    private ThrottleWindow throttleWindow = null;
+    private ThrottleFrame activeThrottleFrame = null;    
 
     public RailDriverMenuItem(String name) {
-        this();
-        setText(name);
+        super();
+        initGUI(name);
+        setupListeners();
     }
 
     public RailDriverMenuItem() {
-
-        super();
-
-        // TODO: remove "(built in)" if/when this replaces Raildriver script
-        setText(Bundle.getMessage("RdBuiltIn"));
-
+        // TODO: remove "(built in)" if/when this replaces Raildriver script        
+        this(Bundle.getMessage("RdBuiltIn"));
+    }
+    
+    private void initGUI(String name) {
+        setText(name);
+    }
+    
+    private void setupListeners() {
         addPropertyChangeListener(this);
 
         addActionListener((ActionEvent e) -> {
@@ -67,26 +75,16 @@ public class RailDriverMenuItem extends JMenuItem
             setupHidServices();
 
             // Open the device device by Vendor ID, Product ID and serial number
-            HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
+            hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
             if (hidDevice != null) {
                 log.info("Got RailDriver hidDevice: {}", hidDevice);
                 // Consider overriding dropReportIdZero on Windows
                 // if you see "The parameter is incorrect"
                 // HidApi.dropReportIdZero = true;
-                setupRailDriver(hidDevice);
+                setupRailDriver();
             }
         });
     }
-
-    //TODO: Remove this if/when the RailDriver script is removed
-    private boolean invokeOnMenuOnly = true;
-
-    private Thread thread = null;
-    private ThrottleWindow throttleWindow = null;
-    private ThrottleFrame activeThrottleFrame = null;
-    private ControlPanel controlPanel = null;
-    private FunctionPanel functionPanel = null;
-    private AddressPanel addressPanel = null;
 
     protected void setupHidServices() {
         try {
@@ -109,37 +107,28 @@ public class RailDriverMenuItem extends JMenuItem
             //    log.info(hidDevice.toString());
             //}
             //
-            if (!invokeOnMenuOnly) {
+  /*          if (!invokeOnMenuOnly) {
                 // start the HID services
-                InstanceManager.getDefault(ShutDownManager.class)
-                        .register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
-                            // if we're going to start, we have to also stop
-                            @Override
-                            public boolean execute() {
-                                hidServices.stop();
-                                return true;
-                            }
-                        });
+                InstanceManager.getDefault(ShutDownManager.class).register(hidServices::stop);
                 log.debug("Starting HID services.");
                 hidServices.start();
 
                 // Open the device device by Vendor ID, Product ID and serial number
-                HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
+                hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
                 if (hidDevice != null) {
                     log.info("Got RailDriver hidDevice: {}", hidDevice);
                     // Consider overriding dropReportIdZero on Windows
                     // if you see "The parameter is incorrect"
                     // HidApi.dropReportIdZero = true;
-                    setupRailDriver(hidDevice);
+                    setupRailDriver();
                 }
-            }
+            }*/
         } catch (HidException ex) {
             log.error("HidException: {}", ex);
         }
     }
 
-    private void setupRailDriver(HidDevice hidDevice) {
-        this.hidDevice = hidDevice;
+    private void setupRailDriver() {
         if (hidDevice != null) {
             setLEDs("Pro");
             speakerOn();
@@ -180,9 +169,6 @@ public class RailDriverMenuItem extends JMenuItem
                 }
                 if (activeThrottleFrame != null) {
                     activeThrottleFrame.toFront();
-                    controlPanel = activeThrottleFrame.getControlPanel();
-                    functionPanel = activeThrottleFrame.getFunctionPanel();
-                    addressPanel = activeThrottleFrame.getAddressPanel();
 
                     throttleWindow.addPropertyChangeListener(this);
                     activeThrottleFrame.addPropertyChangeListener(this);
@@ -201,55 +187,53 @@ public class RailDriverMenuItem extends JMenuItem
                 }
             }
             // start a new thread
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    byte[] buff_old = new byte[14];	// read buffer
-                    Arrays.fill(buff_old, (byte) 0);
-
-                    while (!thread.isInterrupted()) {
-                        if (!hidDevice.isOpen()) {
-                            hidDevice.open();
-                        }
-                        byte[] buff_new = new byte[14];	// read buffer
-                        int ret = hidDevice.read(buff_new);
-                        if (ret >= 0) {
-                            //log.debug("hidDevice.read: {}", buff_new);
-                            for (int i = 0; i < buff_new.length; i++) {
-                                if (buff_old[i] != buff_new[i]) {
-                                    if (i < 7) {    // analog values
-                                        // convert to unsigned int
-                                        int vInt = 0xFF & buff_new[i];
-                                        // convert to double (0.0 thru 1.0)
-                                        double vDouble = (256 - vInt) / 256.D;
-                                        if (i == 1) {   // throttle
-                                            // convert to float (-1.0 thru +1.0)
-                                            vDouble = (2.D * vDouble) - 1.D;
-                                        }
-                                        String name = String.format("Axis %d", i);
-                                        log.info("firePropertyChange(\"Value\", {}, {})", name, vDouble);
-                                        firePropertyChange("Value", name, Double.toString(vDouble));
-                                    } else {        // digital values
-                                        byte xor = (byte) (buff_old[i] ^ buff_new[i]);
-                                        for (int bit = 0; bit < 8; bit++) {
-                                            byte mask = (byte) (1 << bit);
-                                            if (mask == (mask & xor)) {
-                                                int n = (8 * (i - 7)) + bit;
-                                                String name = String.format("%d", n);
-                                                boolean down = (mask == (buff_new[i] & mask));
-                                                log.info("firePropertyChange(\"Value\", {}, {})", name, down ? "1" : "0");
-                                                firePropertyChange("Value", name, down ? "1" : "0");
-                                            }
+            thread = new Thread(() -> {
+                byte[] buff_old = new byte[14]; // read buffer
+                Arrays.fill(buff_old, (byte) 0);
+                while (!thread.isInterrupted()) {
+                    if (!hidDevice.isOpen()) {
+                        hidDevice.open();
+                    }
+                    byte[] buff_new = new byte[14]; // read buffer
+                    int ret = hidDevice.read(buff_new);
+                    if (ret >= 0) {
+                        //log.debug("hidDevice.read: {}", buff_new);
+                        for (int i = 0; i < buff_new.length; i++) {
+                            if (buff_old[i] != buff_new[i]) {
+                                if (i < 7) {
+                                    // analog values
+                                    // convert to unsigned int
+                                    int vInt = 0xFF & buff_new[i];
+                                    // convert to double (0.0 thru 1.0)
+                                    double vDouble = (256 - vInt) / 256.D;
+                                    if (i == 1) {   // throttle
+                                        // convert to float (-1.0 thru +1.0)
+                                        vDouble = (2.D * vDouble) - 1.D;
+                                    }
+                                    String name1 = String.format("Axis %d", i);
+                                    log.info("firePropertyChange(\"Value\", {}, {})", name1, vDouble);
+                                    firePropertyChange("Value", name1, Double.toString(vDouble));
+                                } else {
+                                    // digital values
+                                    byte xor = (byte) (buff_old[i] ^ buff_new[i]);
+                                    for (int bit = 0; bit < 8; bit++) {
+                                        byte mask = (byte) (1 << bit);
+                                        if (mask == (mask & xor)) {
+                                            int n = (8 * (i - 7)) + bit;
+                                            String name2 = String.format("%d", n);
+                                            boolean down = (mask == (buff_new[i] & mask));
+                                            log.info("firePropertyChange(\"Value\", {}, {})", name2, down ? "1" : "0");
+                                            firePropertyChange("Value", name2, down ? "1" : "0");
                                         }
                                     }
-                                    buff_old[i] = buff_new[i];
                                 }
+                                buff_old[i] = buff_new[i];
                             }
-                        } else {
-                            String error = hidDevice.getLastErrorMessage();
-                            if (error != null) {
-                                log.error("hidDevice.read error: {}", error);
-                            }
+                        }
+                    } else {
+                        String error = hidDevice.getLastErrorMessage();
+                        if (error != null) {
+                            log.error("hidDevice.read error: {}", error);
                         }
                     }
                 }
@@ -261,39 +245,36 @@ public class RailDriverMenuItem extends JMenuItem
 
     private void testRailDriver(boolean testFlag) {
         if (testFlag) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    //
-                    // this is here for testing the SevenSegmentAlpha (LED display)
-                    //
-                    for (int pass = 0; pass < 3; pass++) {
-                        for (char c = 'A'; c < 'Z'; c++) {
-                            StringBuilder s = new StringBuilder();
-                            for (int i = 0; i < 3; i++) {
-                                char ci = (char) (c + i);
-                                ci = (char) (((ci - 'A') % 26) + 'A');
-                                s.append(ci);
-                                if (0 == ci % 3) {
-                                    s.append('.');
-                                }
+            new Thread(() -> {
+                //
+                // this is here for testing the SevenSegmentAlpha (LED display)
+                //
+                for (int pass = 0; pass < 3; pass++) {
+                    for (char c = 'A'; c < 'Z'; c++) {
+                        StringBuilder s = new StringBuilder();
+                        for (int i = 0; i < 3; i++) {
+                            char ci = (char) (c + i);
+                            ci = (char) (((ci - 'A') % 26) + 'A');
+                            s.append(ci);
+                            if (0 == ci % 3) {
+                                s.append('.');
                             }
-                            setLEDs(s.toString());
-                            sleep(0.25);
                         }
+                        setLEDs(s.toString());
+                        sleep(0.25);
                     }
-
-                    sendString("The quick brown fox jumps over the lazy dog.", 0.250);
-                    sleep(2.0);
-
-                    setLEDs("8.8.8.");
-                    sleep(2.0);
-
-                    setLEDs("???");
-                    sleep(3.0);
-
-                    setLEDs("Pro");
                 }
+                
+                sendString("The quick brown fox jumps over the lazy dog.", 0.250);
+                sleep(2.0);
+                
+                setLEDs("8.8.8.");
+                sleep(2.0);
+                
+                setLEDs("???");
+                sleep(3.0);
+                
+                setLEDs("Pro");
             }).start();
         }
     }
@@ -305,11 +286,8 @@ public class RailDriverMenuItem extends JMenuItem
      * @param delay  how much to delay before shifting in next character
      */
     public void sendStringAsync(@Nonnull String string, double delay) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sendString(string, delay);
-            }
+        new Thread(() -> {
+            sendString(string, delay);
         }).start();
     }
 
@@ -343,7 +321,7 @@ public class RailDriverMenuItem extends JMenuItem
         try {
             TimeUnit.MILLISECONDS.sleep((long) (delay * 1000.0));
         } catch (InterruptedException ex) {
-            log.debug("TimeUnit.sleep InterruptedException: " + ex);
+            log.debug("TimeUnit.sleep InterruptedException: {}", ex);
         }
     }
 
@@ -351,8 +329,8 @@ public class RailDriverMenuItem extends JMenuItem
     // constants used to talk to RailDriver
     //
     // these are the report ID's
-    private final byte LEDCommand = (byte) 134;			// Command code to set the LEDs.
-    private final byte SpeakerCommand = (byte) 133;		// Command code to set the speaker state.
+    private final byte LEDCommand = (byte) 134; // Command code to set the LEDs.
+    private final byte SpeakerCommand = (byte) 133; // Command code to set the speaker state.
 
     // Seven segment lookup table for digits ('0' thru '9')
     private final byte SevenSegment[] = {
@@ -377,7 +355,7 @@ public class RailDriverMenuItem extends JMenuItem
 
     // Set the LEDS.
     public void setLEDs(@Nonnull String ledstring) {
-        byte[] buff = new byte[7];	// Segment buffer.
+        byte[] buff = new byte[7]; // Segment buffer.
         Arrays.fill(buff, (byte) 0);
 
         int outIdx = 2;
@@ -419,16 +397,16 @@ public class RailDriverMenuItem extends JMenuItem
                 break;
             }
         }
-        sendMessage(hidDevice, buff, LEDCommand);
+        sendMessage(buff, LEDCommand);
     }   // setLEDs
 
     public void setSpeakerOn(boolean onFlag) {
-        byte[] buff = new byte[7];	// data buffer
+        byte[] buff = new byte[7]; // data buffer
         Arrays.fill(buff, (byte) 0);
 
         buff[5] = (byte) (onFlag ? 1 : 0);      // On / off
 
-        sendMessage(hidDevice, buff, SpeakerCommand);
+        sendMessage(buff, SpeakerCommand);
     }   // setSpeakerOn
 
     // Turn speaker on.
@@ -444,11 +422,10 @@ public class RailDriverMenuItem extends JMenuItem
     /**
      * send message to hid device {p}
      * <p>
-     * @param hidDevice the hid device to send the message to
      * @param message   the message to send
      * @param reportID  the report ID
      */
-    private void sendMessage(HidDevice hidDevice, byte[] message, byte reportID) {
+    private void sendMessage(byte[] message, byte reportID) {
         // Ensure device is open after an attach/detach event
         if (!hidDevice.isOpen()) {
             hidDevice.open();
@@ -462,7 +439,7 @@ public class RailDriverMenuItem extends JMenuItem
                 log.error("hidDevice.write error: {}", hidDevice.getLastErrorMessage());
             }
         } catch (IllegalStateException ex) {
-            log.error("hidDevice.write Exception : " + ex);
+            log.error("hidDevice.write Exception : {}", ex);
         }
     }
 
@@ -472,16 +449,11 @@ public class RailDriverMenuItem extends JMenuItem
     @Override
     public void hidDeviceAttached(HidServicesEvent event) {
         log.info("hidDeviceAttached({})", event);
-        HidDevice tHidDevice = event.getHidDevice();
-        if (tHidDevice.getVendorId() == VENDOR_ID) {
-            if (tHidDevice.getProductId() == PRODUCT_ID) {
-                if ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
-                    if (!invokeOnMenuOnly) {
-                        setupRailDriver(tHidDevice);
-                    }
-                }
-            }
-        }
+/*        HidDevice tHidDevice = event.getHidDevice();
+        if ((tHidDevice.getVendorId() == VENDOR_ID) && (tHidDevice.getProductId() == PRODUCT_ID) && (!invokeOnMenuOnly) ) {
+//                && ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
+            setupRailDriver();                             
+        }*/
     }
 
     /*
@@ -509,298 +481,288 @@ public class RailDriverMenuItem extends JMenuItem
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         // log.debug("{}", event);
-        if (event.getPropertyName().equals("ancestor")) {
-            //ancestor property change - closing throttle window
-            // Remove all property change listeners and
-            // dereference all throttle components
-            if (throttleWindow != null) {
-                throttleWindow.removePropertyChangeListener(this);
-                throttleWindow = null;
-            }
-            if (activeThrottleFrame != null) {
-                activeThrottleFrame.removePropertyChangeListener(this);
-                activeThrottleFrame = null;
-            }
-            controlPanel = null;
-            functionPanel = null;
-            addressPanel = null;
-            // Now remove this propertyChangeListener from the model
-            //global model
-            //model.removePropertyChangeListener(self)
-        } else if (event.getPropertyName().equals("ThrottleFrame")) {
-            //Current throttle frame changed
-            Object object = event.getNewValue();
-            //log.debug("event.newValue(): " + object);
-            if (object == null) {
-                if (activeThrottleFrame != null) {
-                    activeThrottleFrame.removePropertyChangeListener(this);
-                    activeThrottleFrame = null;
-                }
-                controlPanel = null;
-                functionPanel = null;
-                addressPanel = null;
-            } else if (object instanceof ThrottleFrame) {
-
+        switch (event.getPropertyName()) {
+            case "ancestor":
+                //ancestor property change - closing throttle window
+                // Remove all property change listeners and
+                // dereference all throttle components
                 if (throttleWindow != null) {
                     throttleWindow.removePropertyChangeListener(this);
                     throttleWindow = null;
-                }
-                if (activeThrottleFrame != null) {
+                }   if (activeThrottleFrame != null) {
                     activeThrottleFrame.removePropertyChangeListener(this);
                     activeThrottleFrame = null;
                 }
-
-                activeThrottleFrame = (ThrottleFrame) object;
-                throttleWindow = activeThrottleFrame.getThrottleWindow();
-
-                throttleWindow.addPropertyChangeListener(this);
-                activeThrottleFrame.addPropertyChangeListener(this);
-
-                addressPanel = activeThrottleFrame.getAddressPanel();
-                controlPanel = activeThrottleFrame.getControlPanel();
-                functionPanel = activeThrottleFrame.getFunctionPanel();
-            }
-        } else if (event.getPropertyName().equals("Value")) {
-            String oldValue = event.getOldValue().toString();
-            String newValue = event.getNewValue().toString();
-            //log.info("propertyChange \"Value\" old: {}, new: {}", oldValue, newValue);
-
-            double value;
-            try {
-                value = Double.parseDouble(newValue);
-            } catch (NumberFormatException ex) {
-                log.error("RailDriver parse property new value ('{}')", newValue, ex);
-                return;
-            }
-
-            if (oldValue.equals("Axis 0")) {
-                // REVERSER is the state of the reverser lever, values greater
-                // than 0.5 are forward, values near to 0.5 are neutral and
-                // values (much) less than 0.5 are reverse.
-                log.info("REVERSER value: {}", value);
-                if ((controlPanel != null) && controlPanel.isEnabled()) {
-                    if (value < 0.45) {
-                        controlPanel.setForwardDirection(false);
-                    } else if (value > 0.55) {
-                        controlPanel.setForwardDirection(true);
+                // Now remove this propertyChangeListener from the model
+                //global model
+                //model.removePropertyChangeListener(self)
+                break;
+            case "ThrottleFrame":
+                //Current throttle frame changed
+                Object object = event.getNewValue();
+                //log.debug("event.newValue(): " + object);
+                if (object == null) {
+                    if (activeThrottleFrame != null) {
+                        activeThrottleFrame.removePropertyChangeListener(this);
+                        activeThrottleFrame = null;
                     }
-                }
-            } else if (oldValue.equals("Axis 1")) {
-                // THROTTLE is the state of the Throttle (and dynamic brake).  Values
-                // (much) greater than 0.0 are for throttle (maximum throttle is
-                // values close to 1.0), values near 0.0 are at the center position
-                // (idle/coasting), and values (much) less than 0.0 are for dynamic
-                // braking, with values aproaching -1.0 for full dynamic braking.
-                log.info("THROTTLE value: {}", value);
-
-                if (controlPanel != null) {
-                    JSlider slider = controlPanel.getSpeedSlider();
-                    if ((slider != null) && slider.isEnabled()) {
-                        // lever front is negative, back is positive
-                        // limit range to only positive side of lever
-                        double throttle_min = 0.125D;
-                        double throttle_max = 0.7D;
-                        double v = MathUtil.pin(value, throttle_min, throttle_max);
-                        // compute fraction (0.0 to 1.0)
-                        double fraction = (v - throttle_min) / (throttle_max - throttle_min);
-                        // convert fraction to slider setting
-                        int setting = (int) (fraction * (slider.getMaximum() - slider.getMinimum()));
-                        slider.setValue(setting);
-
-                        if (value < 0) {
-                            //TODO: dynamic braking
-                            setLEDs("DBr");
-                        } else {
-                            String speed = String.format("%03d", setting);
-                            //log.info("speed: " + speed);
-                            setLEDs(speed);
-                        }
+                } else if (object instanceof ThrottleFrame) {
+                    
+                    if (throttleWindow != null) {
+                        throttleWindow.removePropertyChangeListener(this);
+                        throttleWindow = null;
                     }
-                }
-            } else if (oldValue.equals("Axis 2")) {
-                // AUTOBRAKE is the state of the Automatic (trainline) brake.  Large
-                // values for no braking, small values for more braking.
-                log.info("AUTOBRAKE value: {}", value);
-            } else if (oldValue.equals("Axis 3")) {
-                // INDEPENDBRK is the state of the Independent (engine only) brake.
-                // Like the Automatic brake: large values for no braking, small
-                // values for more braking.
-                log.info("INDEPENDBRK value: {}", value);
-            } else if (oldValue.equals("Axis 4")) {
-                // BAILOFF is the Independent brake 'bailoff', this is the spring
-                // loaded right movement of the Independent brake lever.  Larger
-                // values mean the lever has been shifted right.
-                log.info("BAILOFF value: {}", value);
-            } else if (oldValue.equals("Axis 5")) {
-                // HEADLIGHT is the state of the headlight switch.  A value below 0.5
-                // is off, a value near 0.5 is dim, and a number much larger than 0.5
-                // is full. This is an analog input w/detents, not a switch!
-                log.info("HEADLIGHT value: {}", value);
-            } else if (oldValue.equals("Axis 6")) {
-                // WIPER is the state of the wiper switch.  Much like the headlight
-                // switch, this is also an analog input w/detents, not a switch!
-                // Small values (much less than 0.5) are off, values near 0.5 are
-                // slow, and larger values are full.
-                log.info("WIPER value: " + value);
-            } else {
-                log.info("FUNCTION {} value: {}", oldValue, value);
-                if (functionPanel != null) {
-                    FunctionButton[] functionButtons = functionPanel.getFunctionButtons();
-                    boolean isDown = (value > 0.5D);
-
-                    int fNum = -1;
-                    try {
-                        fNum = Integer.parseInt(oldValue);
-                    } catch (NumberFormatException ex) {
-                        //log.error("RailDriver parse property new value ('{}') exception: {}", newValue, ex);
-                        return;
+                    if (activeThrottleFrame != null) {
+                        activeThrottleFrame.removePropertyChangeListener(this);
+                        activeThrottleFrame = null;
                     }
-
-                    String ledString = String.format("F%d", fNum + 1);
-
-                    switch (fNum) {
-                        case 28: {  // zoom/rocker button up
-                            if ((addressPanel != null) && isDown) {
-                                addressPanel.selectRosterEntry();
-                                DccLocoAddress a = addressPanel.getCurrentAddress();
-                                ledString = "sel " + ((a != null) ? a.toString() : "null");
+                    
+                    activeThrottleFrame = (ThrottleFrame) object;
+                    throttleWindow = activeThrottleFrame.getThrottleWindow();
+                    
+                    throttleWindow.addPropertyChangeListener(this);
+                    activeThrottleFrame.addPropertyChangeListener(this);
+                    
+                }   
+                break;
+            case "Value":
+                String oldValue = event.getOldValue().toString();
+                String newValue = event.getNewValue().toString();
+                DccThrottle throttle = activeThrottleFrame.getAddressPanel().getThrottle();
+                AddressPanel addressPanel = activeThrottleFrame.getAddressPanel();
+                //log.info("propertyChange \"Value\" old: {}, new: {}", oldValue, newValue);
+                
+                double value;
+                try {
+                    value = Double.parseDouble(newValue);
+                } catch (NumberFormatException ex) {
+                    log.error("RailDriver parse property new value ('{}')", newValue, ex);
+                    return;
+                }  
+                switch (oldValue) {
+                    case "Axis 0":
+                        // REVERSER is the state of the reverser lever, values greater
+                        // than 0.5 are forward, values near to 0.5 are neutral and
+                        // values (much) less than 0.5 are reverse.
+                        log.info("REVERSER value: {}", value);
+                        if (throttle != null) {
+                            if (value < 0.45) {
+                                throttle.setIsForward(false);
+                            } else if (value > 0.55) {
+                                throttle.setIsForward(true);
                             }
-                            break;
                         }
-                        case 29: {  // zoom/rocker button down
-                            if ((addressPanel != null) && isDown) {
-                                addressPanel.dispatchAddress();
-                                DccLocoAddress a = addressPanel.getCurrentAddress();
-                                ledString = "dis " + ((a != null) ? a.toString() : "null");
+                        break;
+                    case "Axis 1":
+                        // THROTTLE is the state of the Throttle (and dynamic brake).  Values
+                        // (much) greater than 0.0 are for throttle (maximum throttle is
+                        // values close to 1.0), values near 0.0 are at the center position
+                        // (idle/coasting), and values (much) less than 0.0 are for dynamic
+                        // braking, with values aproaching -1.0 for full dynamic braking.
+                        log.info("THROTTLE value: {}", value);
+                        if (throttle != null) {
+                            // lever front is negative, back is positive
+                            // limit range to only positive side of lever
+                            double throttle_min = 0.125D;
+                            double throttle_max = 0.7D;
+                            double v = MathUtil.pin(value, throttle_min, throttle_max);
+                            // compute fraction (0.0 to 1.0)
+                            double fraction = (v - throttle_min) / (throttle_max - throttle_min);
+                            throttle.setSpeedSetting((float)fraction);
+                            if (value < 0) {
+                                //TODO: dynamic braking
+                                setLEDs("DBr");
+                            } else {
+                                String speed = String.format("%03d", (int) fraction*100);
+                                //log.info("speed: " + speed);
+                                setLEDs(speed);
                             }
-                            break;
                         }
-                        case 30: {  // four way panning up
-                            if ((addressPanel != null) && isDown) {
-                                int selectedIndex = addressPanel.getRosterSelectedIndex();
-                                if (selectedIndex > 1) {
-                                    addressPanel.setRosterSelectedIndex(selectedIndex - 1);
-                                    ledString = String.format("Prev %d", selectedIndex - 1);
+                        break;
+                    case "Axis 2":
+                        // AUTOBRAKE is the state of the Automatic (trainline) brake.  Large
+                        // values for no braking, small values for more braking.
+                        log.info("AUTOBRAKE value: {}", value);
+                        break;
+                    case "Axis 3":
+                        // INDEPENDBRK is the state of the Independent (engine only) brake.
+                        // Like the Automatic brake: large values for no braking, small
+                        // values for more braking.
+                        log.info("INDEPENDBRK value: {}", value);
+                        break;
+                    case "Axis 4":
+                        // BAILOFF is the Independent brake 'bailoff', this is the spring
+                        // loaded right movement of the Independent brake lever.  Larger
+                        // values mean the lever has been shifted right.
+                        log.info("BAILOFF value: {}", value);
+                        break;
+                    case "Axis 5":
+                        // HEADLIGHT is the state of the headlight switch.  A value below 0.5
+                        // is off, a value near 0.5 is dim, and a number much larger than 0.5
+                        // is full. This is an analog input w/detents, not a switch!
+                        log.info("HEADLIGHT value: {}", value);
+                        break;
+                    case "Axis 6":
+                        // WIPER is the state of the wiper switch.  Much like the headlight
+                        // switch, this is also an analog input w/detents, not a switch!
+                        // Small values (much less than 0.5) are off, values near 0.5 are
+                        // slow, and larger values are full.
+                        log.info("WIPER value: {}", value);
+                        break;
+                    default:
+                        log.info("FUNCTION {} value: {}", oldValue, value);
+                        boolean isDown = (value > 0.5D);
+                        int fNum ;
+                        try {
+                            fNum = Integer.parseInt(oldValue);
+                        } catch (NumberFormatException ex) {
+                            //log.error("RailDriver parse property new value ('{}') exception: {}", newValue, ex);
+                            return;
+                        }
+                        String ledString = String.format("F%d", fNum + 1);
+                        switch (fNum) {
+                            case 28: {  // zoom/rocker button up
+                                if ((addressPanel != null) && isDown) {
+                                    addressPanel.selectRosterEntry();
+                                    DccLocoAddress a = addressPanel.getCurrentAddress();
+                                    ledString = "sel " + ((a != null) ? a.toString() : "null");
                                 }
+                                break;
                             }
-                            break;
-                        }
-                        case 31: {  // four way panning right
-                            if (isDown) {
-                                if (throttleWindow != null) {
-                                    throttleWindow.nextThrottleFrame();
+                            case 29: {  // zoom/rocker button down
+                                if ((addressPanel != null) && isDown) {
+                                    addressPanel.dispatchAddress();
+                                    DccLocoAddress a = addressPanel.getCurrentAddress();
+                                    ledString = "dis " + ((a != null) ? a.toString() : "null");
                                 }
-                                ledString = "NXT";
+                                break;
                             }
-                            break;
-                        }
-                        case 32: {  // four way panning down
-                            if ((addressPanel != null) && isDown) {
-                                RosterEntrySelectorPanel resp = addressPanel.getRosterEntrySelector();
-                                if (resp != null) {
-                                    RosterEntryComboBox recb = resp.getRosterEntryComboBox();
-                                    if (recb != null) {
-                                        int cnt = recb.getItemCount();
-                                        int selectedIndex = addressPanel.getRosterSelectedIndex();
-                                        if (selectedIndex + 1 < cnt) {
-                                            try {
-                                                addressPanel.setRosterSelectedIndex(selectedIndex + 1);
-                                                ledString = String.format("Next %d", selectedIndex + 1);
-                                            } catch (ArrayIndexOutOfBoundsException ex) {
-                                                // ignore this
+                            case 30: {  // four way panning up
+                                if ((addressPanel != null) && isDown) {
+                                    int selectedIndex = addressPanel.getRosterSelectedIndex();
+                                    if (selectedIndex > 1) {
+                                        addressPanel.setRosterSelectedIndex(selectedIndex - 1);
+                                        ledString = String.format("Prev %d", selectedIndex - 1);
+                                    }
+                                }
+                                break;
+                            }
+                            case 31: {  // four way panning right
+                                if (isDown) {
+                                    if (throttleWindow != null) {
+                                        throttleWindow.nextThrottleFrame();
+                                    }
+                                    ledString = "NXT";
+                                }
+                                break;
+                            }
+                            case 32: {  // four way panning down
+                                if ((addressPanel != null) && isDown) {
+                                    RosterEntrySelectorPanel resp = addressPanel.getRosterEntrySelector();
+                                    if (resp != null) {
+                                        RosterEntryComboBox recb = resp.getRosterEntryComboBox();
+                                        if (recb != null) {
+                                            int cnt = recb.getItemCount();
+                                            int selectedIndex = addressPanel.getRosterSelectedIndex();
+                                            if (selectedIndex + 1 < cnt) {
+                                                try {
+                                                    addressPanel.setRosterSelectedIndex(selectedIndex + 1);
+                                                    ledString = String.format("Next %d", selectedIndex + 1);
+                                                } catch (ArrayIndexOutOfBoundsException ex) {
+                                                    // ignore this
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                break;
                             }
-                            break;
-                        }
-                        case 33: {  // four way panning left
-                            if (isDown) {
-                                if (throttleWindow != null) {
-                                    throttleWindow.previousThrottleFrame();
-                                }
-                                ledString = "PRE";
-                            }
-                            break;
-                        }
-                        case 34: {  // Gear Shift Up
-                            if (isDown) {
-                                // shuntFn
-                                functionButtons[3].changeState(false);
-                            }
-                            break;
-                        }
-                        case 35: {  // Gear Shift Down
-                            if (isDown) {
-                                // shuntFn
-                                functionButtons[3].changeState(true);
-                            }
-                            break;
-                        }
-                        case 36:
-                        case 37: {  // Emergency Brake up/down
-                            if ((controlPanel != null) && isDown) {
-                                controlPanel.stop();
-                            }
-                            break;
-                        }
-
-                        case 38: {  // Alerter
-                            if (isDown) {
-                                fNum = 6;   // alertFn
-                            }
-                            break;
-                        }
-                        case 39: {  // Sander
-                            if (isDown) {
-                                fNum = 7;   // sandFn
-                            }
-                            break;
-                        }
-                        case 40: {  // Pantograph
-                            if (isDown) {
-                                fNum = 8;   // pantoFn
-                            }
-                            break;
-                        }
-                        case 41: {  // Bell
-                            if (isDown) {
-                                fNum = 1;   // bellFn
-                            }
-                            break;
-                        }
-                        case 42:
-                        case 43: {  // Horn/Whistle
-                            fNum = 2;   // hornFn
-                            break;
-                        }
-                        default: {
-                            break;
-                        }
-                    }
-                    if (fNum < functionButtons.length) {
-                        FunctionButton button = functionButtons[fNum];
-                        if (button != null) {
-                            if (button.getIsLockable()) {
+                            case 33: {  // four way panning left
                                 if (isDown) {
-                                    button.changeState(!button.getState());
+                                    if (throttleWindow != null) {
+                                        throttleWindow.previousThrottleFrame();
+                                    }
+                                    ledString = "PRE";
+                                }
+                                break;
+                            }
+                            case 34: {  // Gear Shift Up
+                                if ((throttle != null) && isDown) {
+                                    // shuntFn
+                                    throttle.setF3(false);
+                                }
+                                break;
+                            }
+                            case 35: {  // Gear Shift Down
+                                if ((throttle != null) && isDown) {
+                                    // shuntFn
+                                    throttle.setF3(true);
+                                }
+                                break;
+                            }
+                            case 36:
+                            case 37: {  // Emergency Brake up/down
+                                if ((throttle != null) && isDown) {
+                                    throttle.setSpeedSetting(-1);
+                                }
+                                break;
+                            }
+
+                            case 38: {  // Alerter
+                                if (isDown) {
+                                    fNum = 6;   // alertFn
+                                }
+                                break;
+                            }
+                            case 39: {  // Sander
+                                if (isDown) {
+                                    fNum = 7;   // sandFn
+                                }
+                                break;
+                            }
+                            case 40: {  // Pantograph
+                                if (isDown) {
+                                    fNum = 8;   // pantoFn
+                                }
+                                break;
+                            }
+                            case 41: {  // Bell
+                                if (isDown) {
+                                    fNum = 1;   // bellFn
+                                }
+                                break;
+                            }
+                            case 42:
+                            case 43: {  // Horn/Whistle
+                                fNum = 2;   // hornFn
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+                        if (throttle != null && fNum > 0 && fNum < throttle.getFunctions().length)  {
+                            if (! throttle.getFunctionMomentary(fNum)) {
+                                if (isDown) {
+                                    throttle.setFunction(fNum, !throttle.getFunction(fNum) );
                                 }
                             } else {
-                                button.changeState(isDown);
+                                throttle.setFunction(fNum, isDown);
                             }
                         }
-                    }
-                    if (isDown) {
-                        if (ledString.length() <= 3) {
-                            setLEDs(ledString);
-                        } else {
-                            sendStringAsync(ledString, 0.333);
+                        if (isDown) {
+                            if (ledString.length() <= 3) {
+                                setLEDs(ledString);
+                            } else {
+                                sendStringAsync(ledString, 0.333);
+                            }
                         }
-                    }
-                }   // if (functionPanel != null)
-            } // if (oldValue.equals(...) {} else...
-        }   // if event.getPropertyName().equals("Value")
+                        break; // if (oldValue.equals(...) {} else...
+                }
+                break;
+            default:
+                break;
+        }
     }   // propertyChange
 
     //initialize logging

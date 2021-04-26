@@ -16,7 +16,7 @@ import jmri.ProgrammingMode;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Andrew Crosland Copyright (C) 2006
+ * @author Andrew Crosland Copyright (C) 2006
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 
@@ -39,7 +39,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     @Override
     synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        log.debug("write CV=" + CV + " val=" + val);
+        log.debug("write CV={} val={}", CV, val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);

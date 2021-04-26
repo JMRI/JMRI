@@ -1,17 +1,17 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ThrottleFramePropertyEditor
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottleFramePropertyEditorTest {
 
@@ -26,7 +26,7 @@ public class ThrottleFramePropertyEditorTest {
         JUnitUtil.dispose(frame);
      }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -34,7 +34,7 @@ public class ThrottleFramePropertyEditorTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

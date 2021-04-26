@@ -1,6 +1,6 @@
 package jmri.util.swing.multipane;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -173,7 +173,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
 
     Box statusBox;
-    int statusBoxIndex = 0;	// index to insert extra stuff
+    int statusBoxIndex = 0; // index to insert extra stuff
     static final int statusStrutWidth = 10;
 
     public void addToStatusBox(Component comp) {
@@ -194,29 +194,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     @Override
     public void dispose() {
         super.dispose();
-    }
-
-    /*
-     The property change listener is located here so that the menus can interact with the front end
-     */
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        if (pcs == null) {
-            return;
-        }
-        pcs.firePropertyChange(p, old, n);
     }
 
 }

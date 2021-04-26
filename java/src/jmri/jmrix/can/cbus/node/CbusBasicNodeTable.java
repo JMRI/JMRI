@@ -2,8 +2,6 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.ThreadingUtil;
 
@@ -109,31 +107,10 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
      */
     @Override
     public Class<?> getColumnClass(int col) {
-        switch (col) {
-            case CANID_COLUMN:
-            case NODE_NUMBER_COLUMN:
-            case COMMAND_STAT_NUMBER_COLUMN:
-            case NODE_EVENTS_COLUMN:
-            case NODE_TOTAL_BYTES_COLUMN:
-            case BYTES_REMAINING_COLUMN:
-                return Integer.class;
-            case NODE_USER_NAME_COLUMN:
-            case NODE_TYPE_NAME_COLUMN:
-                return String.class;
-            case NODE_IN_LEARN_MODE_COLUMN:
-            case NODE_EVENT_INDEX_VALID_COLUMN:
-                return Boolean.class;
-            case NODE_RESYNC_BUTTON_COLUMN:
-                return javax.swing.JButton.class;
-            case SESSION_BACKUP_STATUS_COLUMN:
-                return CbusNodeConstants.BackupType.class;
-            case NUMBER_BACKUPS_COLUMN:
-                return Integer.class;
-            case LAST_BACKUP_COLUMN:
-                return java.util.Date.class;
-            default:
-                return null;
+        if (_mainArray.isEmpty() || getValueAt(0, col)==null) {
+            return Object.class;
         }
+        return getValueAt(0, col).getClass();
     }
     
     /**
@@ -142,13 +119,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        switch (col) {
-            case NODE_USER_NAME_COLUMN:
-            case NODE_RESYNC_BUTTON_COLUMN:
-                return true;
-            default:
-                return false;
-        }
+        return (col == NODE_USER_NAME_COLUMN || col == NODE_RESYNC_BUTTON_COLUMN);
     }
 
     /**
@@ -156,7 +127,6 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int col) {
-        // log.info("requesting row {} col {}",row,col);
         switch (col) {
             case NODE_NUMBER_COLUMN:
                 return _mainArray.get(row).getNodeNumber();
@@ -216,8 +186,8 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
     }
     
     /**
-     * String array of Column Tooltips
-     * order needs to match column list top of dtabledatamodel
+     * String array of Column Tool tips.
+     * Order needs to match column list.
      */
     public static final String[] COLUMNTOOLTIPS = {
         null,
@@ -236,56 +206,6 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
         null
 
     }; // Length = number of items in array should (at least) match number of columns
-    
-    /**
-     * Returns int of startup column widths
-     * @param col int col number
-     * @return default column width
-     */
-    public static int getPreferredWidth(int col) {
-        switch (col) {
-            case CANID_COLUMN:
-            case NODE_EVENTS_COLUMN:
-            case COMMAND_STAT_NUMBER_COLUMN:
-            case NODE_IN_LEARN_MODE_COLUMN:
-            case NODE_EVENT_INDEX_VALID_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
-            case NODE_TOTAL_BYTES_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case NODE_NUMBER_COLUMN:
-                return new JTextField(6).getPreferredSize().width;
-            case NODE_RESYNC_BUTTON_COLUMN:
-                return new JTextField(8).getPreferredSize().width;
-            case NODE_TYPE_NAME_COLUMN:
-                return new JTextField(10).getPreferredSize().width;
-            case NODE_USER_NAME_COLUMN:
-            case BYTES_REMAINING_COLUMN:
-                return new JTextField(13).getPreferredSize().width;
-            default:
-                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
-        }
-    }
-    
-    /**
-     * Configure a table to have standard rows and columns.
-     * <p>
-     * 
-     * @param table the JTable to have common defaults
-     */
-    public void configureTable(JTable table) {
-        // allow reordering of the columns
-        table.getTableHeader().setReorderingAllowed(true);
-
-        // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // resize columns as requested
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            int width = getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        table.sizeColumnsToFit(-1);
-    }
     
     private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTable.class);
 }

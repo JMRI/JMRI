@@ -57,7 +57,7 @@ public class IndicatorTrackPaths {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("addPath \"" + path + "\" #paths= " + _paths.size());
+            log.debug("addPath \"{}\" #paths= {}", path, _paths.size());
         }
     }
 
@@ -148,7 +148,12 @@ public class IndicatorTrackPaths {
         pt.x = pt.x + (size.width - _loco.maxWidth()) / 2;
         pt.y = pt.y + (size.height - _loco.maxHeight()) / 2;
         _loco.setLocation(pt);
-        ed.putItem(_loco);
+        try {
+            ed.putItem(_loco);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /*

@@ -1,0 +1,10 @@
+<!-- Local part for hardware/grapevine Sidebar -->
+
+<dt><h3 style="padding-left: 1em;"><a href="index.shtml">Protrak Grapevine</a></h3></dt>
+		<dd>
+		   <ul>
+                    <li><a href="Names.shtml">Grapevine Naming</a></li>
+                   </ul>
+		 </dd>	
+<!-- /SidebarHardwareLocalPart.shtml -->
+     

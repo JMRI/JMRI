@@ -3,11 +3,13 @@ package jmri.jmrit.beantable;
 import jmri.Audio;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
@@ -23,7 +25,7 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
     @Test
     @Override
-    @Ignore("Audio table will only be init if an audio manager is available")
+    @Disabled("Audio table will only be init if an audio manager is available")
     @ToDo("Complete Test Initialization, then remove overriden test so parent class can execute")
     public void testGetTableDataModel(){
     }
@@ -54,7 +56,7 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
     }
 
     @Test
-    @Ignore("Audio table does not have Add... button")
+    @Disabled("Audio table does not have Add... button")
     @Override
     public void testAddButton() {
     }
@@ -66,29 +68,28 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
     @Test
     @Override
-    @Ignore("Audio table does not have Add... button")
+    @Disabled("Audio table does not have Add... button")
     public void testAddThroughDialog() {
     }
 
     @Test
     @Override
-    @Ignore("Audio table does not have Add... button, so test needs re-written")
+    @Disabled("Audio table does not have Add... button, so test needs re-written")
     @ToDo("Re-write parent class test to use the right name, or add without dialog")
     public void testEditButton() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.AudioTable";
-	    a = new AudioTableAction();
+        a = new AudioTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions

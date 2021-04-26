@@ -1,15 +1,14 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of ConnectionStatus
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConnectionStatusTest {
 
@@ -93,12 +92,12 @@ public class ConnectionStatusTest {
         Assert.assertFalse("connection OK", cs.isConnectionOk(null, "Bar"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

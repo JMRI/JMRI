@@ -22,7 +22,7 @@ public class SharingThrottleManager extends DebugThrottleManager {
     /**
      * Constructor.
      */
-    public SharingThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public SharingThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
     }
 

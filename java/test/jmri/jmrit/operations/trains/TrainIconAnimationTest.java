@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -61,7 +61,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        InstanceManager.getDefault(EditorManager.class).add(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
@@ -120,7 +120,6 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Assert.assertEquals("Location 1 Id", "1", l1.getId());
         Assert.assertEquals("Location 1 Name", "North End", l1.getName());
         Assert.assertEquals("Location 1 Initial Length", 0, l1.getLength());
-        l1.setLocationOps(Location.STAGING);
         l1.setTrainDirections(DIRECTION_ALL);
         l1.setSwitchListEnabled(true);
         lmanager.register(l1);
@@ -149,7 +148,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         l1.addTrack("North End 1", Track.STAGING);
         l1.addTrack("North End 2", Track.STAGING);
-        List<Track> templist1 = l1.getTrackByNameList(null);
+        List<Track> templist1 = l1.getTracksByNameList(null);
         for (int i = 0; i < templist1.size(); i++) {
             if (i == 0) {
                 Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i).getName());
@@ -167,7 +166,6 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Location l2 = new Location("20", "North Industries");
         Assert.assertEquals("Location 2 Id", "20", l2.getId());
         Assert.assertEquals("Location 2 Name", "North Industries", l2.getName());
-        l2.setLocationOps(Location.NORMAL);
         l2.setTrainDirections(DIRECTION_ALL);
         l2.setSwitchListEnabled(true);
         lmanager.register(l2);
@@ -187,7 +185,6 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Assert.assertEquals("Location 3 Id", "3", l3.getId());
         Assert.assertEquals("Location 3 Name", "South End", l3.getName());
         Assert.assertEquals("Location 3 Initial Length", 0, l3.getLength());
-        l3.setLocationOps(Location.STAGING);
         l3.setTrainDirections(DIRECTION_ALL);
         l3.setSwitchListEnabled(true);
         lmanager.register(l3);
@@ -216,7 +213,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         l3.addTrack("South End 1", Track.STAGING);
         l3.addTrack("South End 2", Track.STAGING);
-        List<Track> templist3 = l3.getTrackByNameList(null);
+        List<Track> templist3 = l3.getTracksByNameList(null);
         for (int i = 0; i < templist3.size(); i++) {
             if (i == 0) {
                 Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i).getName());

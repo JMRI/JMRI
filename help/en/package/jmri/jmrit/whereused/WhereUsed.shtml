@@ -109,6 +109,16 @@
 </pre>
       </dd>
 
+      <dt>O.S. name : sub-type object-type</dt>
+      <dd>The O.S. name is the turnout number and the signal number.  The sub-type is
+      either Global or a detail section acronym.
+<pre>
+    CTC references
+        1/2 : SWDI Turnout
+        1/2 : TUL Turnout
+</pre>
+      </dd>
+
     </dl>
 
       <!--#include virtual="/Footer.shtml" -->

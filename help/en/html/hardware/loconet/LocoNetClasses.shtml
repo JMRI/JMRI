@@ -32,12 +32,12 @@
       <p>This page describes various high-level structures of the
       JMRI LocoNet&reg; implementation. Please also read the
       <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">
       Javadocs for the jmrix.loconet package</a>.</p>
 
       <h2>LocoNet-specific values</h2>
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnConstants.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnConstants.html">
       LnConstants class</a> provides static, final constants to
       represent various fields and values in LocoNet messages. At
       some point, some of this should be built into to the specific
@@ -47,7 +47,7 @@
       <h2>Sending and receiving LocoNet messages</h2>
 
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
       LocoNetInterface</a> class provides the basic connection to a
       LocoNet for user classes. Messages are sent by passing them
       to a LocoNetInterface implementation, and you can register
@@ -58,7 +58,7 @@
       "UML of JMRI's LocoNet Interface"></p>
 
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">
       LocoNetMessage</a> class represents the basic message.
       Currently (since July 2001), this class doesn't really help other
       code construct and decode LocoNet packets, but rather just
@@ -68,16 +68,16 @@
 
       <ol>
         <li>Create a <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">
         LocoNetMessage</a> object, and fill it with the message you
         want to send. It's not necessary to fill in the error-check
         byte; that will be done as part of sending.</li>
 
         <li>Locate an object providing a <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
           LocoNetInterface</a> interface. In many cases, the
           <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
           LnTrafficController</a> is providing this, and the object
           can be located with
           <pre>
@@ -86,9 +86,9 @@
         <br><span class="since">Since <a href="/releasenotes/jmri4.11.6.shtml" target="_blank">JMRI 4.11.6</a></span>
         The
           <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
           LnTrafficController</a> is connected to a given <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetSystemConnectionMemo.html">
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetSystemConnectionMemo.html">
           LocoNetSystemConnectionMemo</a>, and the
         object can be located with
           <pre>
@@ -106,10 +106,10 @@
 
       <p>Classes that want to receive inbound LocoNet packets
       should implement the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetListener.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetListener.html">
       LocoNetListener</a> interface, and register their desire to
       listen via an object with a <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
       LocoNetInterface</a> interface. It's important to note that
       listener objects can't assume that they receive incoming
       LocoNet messages in any specific thread. In particular, they
@@ -122,17 +122,17 @@
       <p>Implementing communication with a real LocoNet is handled
       by classes that implement the LocoNetListener interface.
       There are currently three (see below): <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
       LnTrafficController</a> and its subclasses <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPacketizer.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPacketizer.html">
       LnPacketizer</a> and <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">
       LnTrafficRouter</a>.</p>
 
       <h3>LnTrafficController</h3>
 
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
       LnTrafficController</a> abstract class provides some common
       implementation for it's subclasses, and adds a mechanism to
       find a usable LocoNetInterface implementation.</p>
@@ -158,12 +158,12 @@
       <h3>LnPacketizer</h3>
 
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPacketizer.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPacketizer.html">
       LnPacketizer</a> class extends the LnTrafficController
       implementation to send and receive packets over a LocoBuffer
       serial link to a LocoNet. It works with an implementation of
       the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html">
       LnPortController</a> - Abstract class, which works at the
       level of character streams. These communicate through Java
       streams which carry the LocoNet messages as character
@@ -184,7 +184,7 @@
       <h3>LnTrafficRouter</h3>
 
       <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">
       LnTrafficRouter</a> class provides a scatter-gather operation
       for the LocoNetListener interface. Note that this
       implementation doesn't transform the LocoNetMessages into
@@ -237,7 +237,7 @@
       vary.</p>
 
       <h2>Port adapters</h2><a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html">LnPortController</a>
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html">LnPortController</a>
       is an abstract base class to carry common implementations for
       the Adapter classes that connect to serial ports with
       specific protocols.

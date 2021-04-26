@@ -2,15 +2,15 @@ package jmri.server.json.schema;
 
 import java.util.Locale;
 import java.util.Set;
+
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * @author Randall Wood Copyright 2018
@@ -19,12 +19,12 @@ public class JsonSchemaServiceCacheTest {
 
     private Locale locale = Locale.ENGLISH;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

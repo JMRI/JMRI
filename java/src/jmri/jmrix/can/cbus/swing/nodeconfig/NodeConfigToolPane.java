@@ -742,10 +742,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public void propertyChange(PropertyChangeEvent ev){
         if (ev.getPropertyName().equals("TEACHNVCOMPLETE")) {
-            nVTeachComplete((Integer) ev.getNewValue());
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                nVTeachComplete((Integer) ev.getNewValue());
+            });
         }
         else if (ev.getPropertyName().equals("ADDALLEVCOMPLETE")) {
-            teachEventsComplete((Integer) ev.getNewValue());
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                teachEventsComplete((Integer) ev.getNewValue());
+            });
         }
     }
     

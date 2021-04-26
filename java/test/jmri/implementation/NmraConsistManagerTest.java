@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,8 +10,7 @@ import org.junit.Before;
  */
 public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -19,7 +18,7 @@ public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistM
         cm = new NmraConsistManager(jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cm = null;

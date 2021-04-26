@@ -20,9 +20,8 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -140,8 +139,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         assertEquals(2, result.size());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -151,7 +149,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         JUnitUtil.initSignalMastLogicManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

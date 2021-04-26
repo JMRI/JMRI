@@ -1,11 +1,12 @@
 package jmri.util.zeroconf;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.util.JUnitUtil;
+
 import javax.jmdns.JmDNS;
+
 import jmri.InstanceManager;
 
 /**
@@ -24,14 +25,14 @@ public class ZeroConfServiceEventTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
         

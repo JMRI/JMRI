@@ -41,7 +41,7 @@ public class MultiThrottle {
 
     public MultiThrottle(char id, ThrottleControllerListener tcl, ControllerInterface ci) {
         if (log.isDebugEnabled()) {
-            log.debug("Creating new MultiThrottle for id: " + id);
+            log.debug("Creating new MultiThrottle for id: {}", id);
         }
         whichThrottle = id;
         parentTCL = tcl;
@@ -184,7 +184,7 @@ public class MultiThrottle {
         }
         if (!throttles.containsKey(key)) {
             if (log.isDebugEnabled()) {
-                log.debug("Throttle: " + key + " not in MultiThrottle.");
+                log.debug("Throttle: {} not in MultiThrottle.", key);
             }
             return false;
         }
@@ -195,7 +195,7 @@ public class MultiThrottle {
         mtc.removeThrottleControllerListener(parentTCL);
         throttles.remove(key);
         if (log.isDebugEnabled()) {
-            log.debug("Throttle: " + key + " removed from MultiThrottle.");
+            log.debug("Throttle: {} removed from MultiThrottle.", key);
         }
         return true;
     }
@@ -206,7 +206,7 @@ public class MultiThrottle {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("MultiThrottle key: " + key + ", action: " + action);
+            log.debug("MultiThrottle key: {}, action: {}", key, action);
         }
 
         if (key.equals("*")) {

@@ -2,8 +2,7 @@ package jmri.jmrix.lenz.liusbethernet;
 
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * <p>
@@ -26,7 +25,7 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
         c.sendXNetMessage(m, null);
 
         p.flush();
-        jmri.util.JUnitUtil.waitFor(()->{return p.tostream.available()==6;},"total length 6");
+        jmri.util.JUnitUtil.waitFor(()-> p.tostream.available()==6,"total length 6");
 
         Assert.assertEquals("total length ", 6, p.tostream.available());
         Assert.assertEquals("Header 0", 0xFF, p.tostream.readByte() & 0xff);
@@ -38,8 +37,7 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
         Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

@@ -3,10 +3,10 @@ package jmri.jmrix.loconet.sdf;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class SdfBufferTest {
             }
             in.close();
         } catch (IOException e) {
-            log.error("exception reading golden file: " + e);
+            log.error("exception reading golden file: {}", e);
             System.out.println("exception reading golden file: " + e);
         }
 
@@ -95,12 +95,12 @@ public class SdfBufferTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
-    LinkedList<byte[]> xmtList = new LinkedList<>();
+    final LinkedList<byte[]> xmtList = new LinkedList<>();
 
     /**
      * (local class) object to implement the transmit thread
@@ -33,7 +33,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      */
     public XpaTrafficController() {
         if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
+            log.debug("setting instance: {}", this);
         }
     }
 
@@ -69,9 +69,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
     @Override
     public synchronized void removeXpaListener(XpaListener l) {
-        if (cmdListeners.contains(l)) {
-            cmdListeners.remove(l);
-        }
+        cmdListeners.remove(l);
     }
 
     /**
@@ -90,12 +88,12 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         for (XpaListener client : v) {
             if (notMe != client) {
                 if (log.isDebugEnabled()) {
-                    log.debug("notify client: " + client);
+                    log.debug("notify client: {}", client);
                 }
                 try {
                     client.message(m);
                 } catch (Exception e) {
-                    log.warn("notify: During dispatch to " + client + "\nException " + e);
+                    log.warn("notify: During dispatch to {}\nException {}", client, e);
                 }
             }
         }
@@ -112,7 +110,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         // forward to all listeners
         for (XpaListener client : v) {
             if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
+                log.debug("notify client: {}", client);
             }
             try {
                 // Skip forwarding the message to the last sender until 
@@ -121,7 +119,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + client + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", client, e);
             }
         }
 
@@ -144,7 +142,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     @Override
     synchronized public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendXpaMessage message: [" + m + "]");
+            log.debug("sendXpaMessage message: [{}]", m);
         }
         // remember who sent this
         lastSender = reply;
@@ -156,7 +154,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         int len = m.getNumDataElements();
         int cr = 1;  // space for carriage return linefeed
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) m.getElement(i);
@@ -186,7 +184,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             log.warn("connectPort: connect called while connected");
         }
         controller = p;
-        // Send the initilization string to the port
+        // Send the initialization string to the port
         this.sendXpaMessage(XpaMessage.getDefaultInitMsg(), null);
     }
 
@@ -221,7 +219,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             try {
                 handleOneIncomingReply();
             } catch (java.io.IOException e) {
-                log.warn("run: Exception: " + e.toString());
+                log.warn("run: Exception: {}", e.toString());
             }
         }
     }
@@ -242,15 +240,15 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
         // message is complete, dispatch it !!
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + i);
+            log.debug("dispatch reply of length {}", i);
         }
         {
             final XpaMessage thisMsg = msg;
             final XpaTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
-                XpaMessage msgForLater = thisMsg;
-                XpaTrafficController myTc = thisTc;
+                final XpaMessage msgForLater = thisMsg;
+                final XpaTrafficController myTc = thisTc;
 
                 @Override
                 public void run() {
@@ -278,7 +276,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                     if (log.isDebugEnabled()) {
                         log.debug("check for input");
                     }
-                    byte msg[];
+                    byte[] msg;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
@@ -287,7 +285,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                     try {
                         if (ostream != null) {
                             if (log.isDebugEnabled()) {
-                                log.debug("write message: " + java.util.Arrays.toString(msg));
+                                log.debug("write message: {}", java.util.Arrays.toString(msg));
                             }
                             synchronized (ostream) {
                                 ostream.write(msg);
@@ -298,7 +296,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                             log.warn("sendMessage: no connection established");
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendMessage: Exception: " + e.toString());
+                        log.warn("sendMessage: Exception: {}", e.toString());
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input

@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
@@ -44,7 +43,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     public AbstractUsbConnectionConfig(UsbPortAdapter p) {
         adapter = p;
         //addToActionList();
-        log.debug("*	AbstractUSBConnectionConfig({})", p);
+        log.debug("*   AbstractUSBConnectionConfig({})", p);
     }
 
     /**
@@ -53,14 +52,14 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      */
     public AbstractUsbConnectionConfig() {
         this(null);
-        log.debug("*	AbstractUSBConnectionConfig()");
+        log.debug("*   AbstractUSBConnectionConfig()");
     }
 
-    protected UsbPortAdapter adapter = null;
+    protected UsbPortAdapter adapter;
 
     @Override
     public UsbPortAdapter getAdapter() {
-        log.debug("*	getAdapter()");
+        log.debug("*   getAdapter()");
         return adapter;
     }
 
@@ -73,52 +72,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     protected void checkInitDone() {
         log.debug("init called for {}", name());
         if (!init) {
-            if (adapter.getSystemConnectionMemo() != null) {
-                systemPrefixField.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                        }
-                    }
-                });
-                systemPrefixField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                        }
-                    }
-
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
-                });
-                connectionNameField.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                        }
-                    }
-                });
-                connectionNameField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                        }
-                    }
-
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
-                });
-            }
+            addNameEntryCheckers(adapter);
             portBox.addFocusListener(new FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -139,14 +93,13 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     });
                 }
             }
-
             init = true;
         }
     }
 
     @Override
     public void updateAdapter() {
-        log.debug("*	updateAdapter()");
+        log.debug("*   updateAdapter()");
     }
 
     protected UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -155,7 +108,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public String getInfo() {
-        log.debug("*	getInfo()");
+        log.debug("*   getInfo()");
         String t = (String) portBox.getSelectedItem();
         if (t != null) {
             return t;
@@ -171,7 +124,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     String invalidPort = null;
 
     public void refreshPortBox() {
-        log.debug("*	refreshPortBox()");
+        log.debug("*   refreshPortBox()");
         if (!init) {
             newList = getPortNames();
             portBox.setRenderer(new ComboBoxRenderer());
@@ -264,7 +217,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      */
     @Override
     public void loadDetails(final JPanel details) {
-        log.debug("*	loadDetails()");
+        log.debug("*   loadDetails()");
         _details = details;
         setInstance();
         if (!init) {
@@ -298,15 +251,16 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     log.debug("Zero-length port List");
                 }
             }
-        } catch (UnsatisfiedLinkError e1) {
+        }
+        catch (UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
-            log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
+            log.error("java.library.path={}", System.getProperty("java.library.path", "<unknown>"));
             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorComLibLoad"));
             return;
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS = NUMOPTIONS + 2;
         }
@@ -319,9 +273,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
-        showAdvanced.addItemListener((ItemEvent e) -> {
-            showAdvancedItems();
-        });
+        showAdvanced.addItemListener((ItemEvent e) -> showAdvancedItems());
         showAdvancedItems();
         init = false;       // need to reload action listeners
         checkInitDone();
@@ -329,9 +281,9 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-        justification = "Type is checked before casting")
+            justification = "Type is checked before casting")
     protected void showAdvancedItems() {
-        log.debug("*	showAdvancedItems()");
+        log.debug("*   showAdvancedItems()");
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
         cL.insets = new Insets(2, 5, 0, 5);
@@ -400,7 +352,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     }
 
     protected int addStandardDetails(boolean incAdvanced, int i) {
-        log.debug("*	addStandardDetails()");
+        log.debug("*   addStandardDetails()");
         if (!isPortAdvanced()) {
             cR.gridy = i;
             cL.gridy = i;
@@ -415,26 +367,26 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     }
 
     public boolean isPortAdvanced() {
-        log.debug("*	isPortAdvanced()");
+        log.debug("*   isPortAdvanced()");
         return false;
     }
 
     @Override
     public String getManufacturer() {
-        log.debug("*	getManufacturer()");
+        log.debug("*   getManufacturer()");
         return adapter.getManufacturer();
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
         setInstance();
-        log.debug("*	setManufacturer('{}')", manufacturer);
+        log.debug("*   setManufacturer('{}')", manufacturer);
         adapter.setManufacturer(manufacturer);
     }
 
     @Override
     public boolean getDisabled() {
-        log.debug("*	getDisabled()");
+        log.debug("*   getDisabled()");
         if (adapter == null) {
             return true;
         }
@@ -443,7 +395,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void setDisabled(boolean disabled) {
-        log.debug("*	setDisabled({})", disabled ? "True" : "False");
+        log.debug("*   setDisabled({})", disabled ? "True" : "False");
         if (adapter != null) {
             adapter.setDisabled(disabled);
         }
@@ -451,7 +403,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public String getConnectionName() {
-        log.debug("*	getConnectionName()");
+        log.debug("*   getConnectionName()");
         if ((adapter != null) && (adapter.getSystemConnectionMemo() != null)) {
             return adapter.getSystemConnectionMemo().getUserName();
         } else {
@@ -461,7 +413,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void dispose() {
-        log.debug("*	dispose()");
+        log.debug("*   dispose()");
         if (adapter != null) {
             adapter.dispose();
             adapter = null;

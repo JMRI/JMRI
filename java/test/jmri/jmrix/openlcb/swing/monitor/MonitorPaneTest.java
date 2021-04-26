@@ -1,31 +1,33 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
+import jmri.jmrix.AbstractMonPaneTestBase;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.assertj.swing.edt.GuiActionRunner;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class MonitorPaneTest {
+public class MonitorPaneTest extends AbstractMonPaneTestBase {
 
     private TrafficControllerScaffold tcs = null;
     private CanSystemConnectionMemo memo = null;
 
     @Test
-    public void testCTor() {
-        MonitorPane t = new MonitorPane();
-        t.initComponents(memo);
-        Assert.assertNotNull("exists", t);
+    @Override
+    public void testConcreteCtor() {
+        Throwable thrown = catchThrowable(() -> GuiActionRunner.execute(() -> ((MonitorPane)pane).initComponents(memo)));
+        assertThat(thrown).isNull();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -33,12 +35,20 @@ public class MonitorPaneTest {
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
+        panel = pane = new MonitorPane();
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
+        title = Bundle.getMessage("MonitorTitle");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        pane.dispose();
+        pane = null;
+        memo.dispose();
+        memo = null;
+        tcs.terminateThreads();
+        tcs = null;
         jmri.util.JUnitUtil.resetWindows(false, false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

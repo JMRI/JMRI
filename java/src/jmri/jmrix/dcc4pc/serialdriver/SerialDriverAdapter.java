@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -51,10 +51,9 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
                 activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                 configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
             }
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             serialStream = activeSerialPort.getInputStream();
             // purge contents, if any
@@ -62,14 +61,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -96,7 +88,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     }
 
     /**
-     * Option 1 controls the connection used for programming
+     * Option 1 controls the connection used for programming.
+     * @return array with options for programming.
      */
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
@@ -123,6 +116,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     /**
      * Get a String that says what Option 2 represents May be an empty string,
      * but will not be null
+     * @return option to match detected locos to roster.
      */
     public String option2Name() {
         return "Match Detected Locos to Roster: ";
@@ -135,7 +129,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     @Override
     public void configureOption2(String value) {
         super.configureOption2(value);
-        log.debug("configureOption2: " + value);
+        log.debug("configureOption2: {}", value);
         //Not yet implemented
         /*boolean enable = true;
          if(value.equals("No"))
@@ -161,7 +155,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }
@@ -192,6 +186,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     InputStream serialStream = null;
 
     /**
+     * @return instance.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated

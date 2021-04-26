@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-vlozena</aspecttable>
@@ -41,6 +47,7 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_vl.gif</imagelink>
+      <imagelink type="vložená">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
     </appearance>
@@ -48,6 +55,7 @@
     <appearance>
       <aspectname>Odjezdové návěstidlo dovoluje jízdu</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/405_ondj_vl.gif</imagelink>
+      <imagelink type="vložená">../../../resources/icons/largeschematics/aspects/CSD-1962/405_ondj_vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
@@ -55,6 +63,7 @@
     <appearance>
       <aspectname>Posun dovolen</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_vl.gif</imagelink>
+      <imagelink type="vložená">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
@@ -71,6 +80,10 @@
     <aspectMapping>
       <advancedAspect>Volno</advancedAspect>
       <ourAspect>Odjezdové návěstidlo dovoluje jízdu</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Stůj</ourAspect>
     </aspectMapping>
   </aspectMappings>
   

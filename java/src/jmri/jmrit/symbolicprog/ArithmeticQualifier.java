@@ -129,12 +129,12 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         if (watchedVal == null) {
             if (!warnedDoesntExist) {
                 warnedDoesntExist = true;
-                log.error("Arithmetic " + test + " operation when watched value doesn't exist");
+                log.error("Arithmetic {} operation when watched value doesn't exist", test);
             }
             return true;  // this determines default for what happens when qualifier (watched) Variable isn't present
         }
         return false;  // should never be reached, because should only be invoked after returnFromExistsLogic() == true
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class);
+    private final static Logger log = LoggerFactory.getLogger(ArithmeticQualifier.class);
 }

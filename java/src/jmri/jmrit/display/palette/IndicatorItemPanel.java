@@ -6,10 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
@@ -22,16 +19,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for for Indicating track blocks.
+ * @author Pete Cressman Copyright (c) 2010, 2020
  */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
     private DetectionPanel _detectPanel;
 
-    /**
-     * Constructor for plain icons and backgrounds.
+    /*
+     * Constructor for track icons.
      */
-    public IndicatorItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame, type, family, editor);
+    public IndicatorItemPanel(DisplayFrame parentFrame, String type, String family) {
+        super(parentFrame, type, family);
     }
 
     /**
@@ -42,13 +40,27 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         if (!_initialized) {
             super.init();
             _detectPanel = new DetectionPanel(this);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(Box.createVerticalGlue());
-            panel.add(_detectPanel);
-            add(panel, 0);
-            hideIcons();
+            add(_detectPanel, 1);
         }
+        hideIcons();
+    }
+
+    @Override
+    protected void hideIcons() {
+        if (_detectPanel != null) {
+            _detectPanel.setVisible(true);
+            _detectPanel.invalidate();
+        }
+        super.hideIcons();
+    }
+
+    @Override
+    protected void showIcons() {
+        if (_detectPanel != null) {
+            _detectPanel.setVisible(false);
+            _detectPanel.invalidate();
+        }
+        super.showIcons();
     }
 
     /**
@@ -63,11 +75,12 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track by CircuitBuilder.
+     * CircuitBuilder init for conversion of plain track to indicator track.
      */
     @Override
-    public void init(ActionListener doneAction) {
-        super.init(doneAction);
+    public void init(JPanel bottomPanel) {
+        super.init(bottomPanel);
+        add(_iconFamilyPanel, 0);
     }
 
     @Override
@@ -78,12 +91,13 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "ClearTrack");
+    protected String getDisplayKey() {
+        return "ClearTrack";
     }
 
     /**
      * ************* pseudo inheritance to DetectionPanel ******************
+     * @return getShowTrainName status from detection panel.
      */
     public boolean getShowTrainName() {
         return _detectPanel.getShowTrainName();
@@ -92,15 +106,6 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     public void setShowTrainName(boolean show) {
         _detectPanel.setShowTrainName(show);
     }
-    /*
-     public String getErrSensor() {
-     return _detectPanel.getErrSensor();
-     }
-
-     public void setErrSensor(String name) {
-     _detectPanel.setErrSensor(name);
-     }
-     */
 
     public String getOccSensor() {
         return _detectPanel.getOccSensor();
@@ -123,7 +128,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * ****************************************************
+     * {@inheritDoc} 
      */
     @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
@@ -157,24 +162,20 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 log.debug("IndicatorDragJLabel.getTransferData");
             }
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
+                IndicatorTrackIcon t = new IndicatorTrackIcon(_frame.getEditor());
 
                 t.setOccBlock(_detectPanel.getOccBlock());
                 t.setOccSensor(_detectPanel.getOccSensor());
                 t.setShowTrain(_detectPanel.getShowTrainName());
                 t.setFamily(_family);
 
-                Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, NamedIcon> entry = it.next();
+                for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
                     t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
                 }
                 t.setLevel(Editor.TURNOUTS);
                 return t;                
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icons");
-                return  sb.toString();
+                return _itemType + " icons";
             }
             return null;
         }

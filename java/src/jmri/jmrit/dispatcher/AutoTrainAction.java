@@ -99,7 +99,7 @@ public class AutoTrainAction {
                     case TransitSectionAction.TRAINSTART:
                         // when train starts - monitor in separate thread
                         Runnable monTrain = new MonitorTrain(tsa);
-                        Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action " + _activeTrain.getDccAddress());
+                        Thread tMonTrain = jmri.util.ThreadingUtil.newThread(monTrain, "Monitor Train Transit Action " + _activeTrain.getDccAddress());
                         tsa.setWaitingThread(tMonTrain);
                         tMonTrain.start();
                         break;
@@ -133,7 +133,7 @@ public class AutoTrainAction {
         }
         Sensor s = InstanceManager.sensorManagerInstance().getSensor(tsa.getStringWhen());
         if (s == null) {
-            log.error("Sensor with name - " + tsa.getStringWhen() + " - was not found.");
+            log.error("Sensor with name - {} - was not found.", tsa.getStringWhen());
             return false;
         }
         int now = s.getKnownState();
@@ -261,7 +261,7 @@ public class AutoTrainAction {
         } else {
             // start thread to trigger delayed action execution
             Runnable r = new TSActionDelay(tsa, delay);
-            Thread t = new Thread(r, "Check Delay on Action");
+            Thread t = jmri.util.ThreadingUtil.newThread( r, "Check Delay on Action");
             tsa.setWaitingThread(t);
             t.start();
         }
@@ -275,7 +275,7 @@ public class AutoTrainAction {
     private synchronized void listenToDoneSensor(TransitSectionAction tsa) {
         jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor(tsa.getStringWhat());
         if (s == null) {
-            log.error("Done Sensor with name - " + tsa.getStringWhat() + " - was not found.");
+            log.error("Done Sensor with name - {} - was not found.", tsa.getStringWhat());
             return;
         }
         _doneSensor = s;
@@ -288,7 +288,7 @@ public class AutoTrainAction {
                     int state = _doneSensor.getKnownState();
                     if (state == Sensor.ACTIVE) {
                         if (_activeTrain.getStatus() == ActiveTrain.WORKING) {
-                            _activeTrain.setStatus(ActiveTrain.READY);
+                            _activeTrain.getAutoActiveTrain().resumeAutomaticRunning();
                         }
                     }
                 }
@@ -340,19 +340,8 @@ public class AutoTrainAction {
                 if (spd > _autoActiveTrain.getMaxSpeed()) {
                     spd = _autoActiveTrain.getMaxSpeed();
                 }
-                _autoActiveTrain.setTargetSpeed(spd * _autoActiveTrain.getSpeedFactor());
-                if ((_autoActiveTrain.getRampRate() != AutoActiveTrain.RAMP_NONE)
-                        && (_autoActiveTrain.getAutoEngineer() != null)) {
-                    // temporarily turn ramping off
-                    _autoActiveTrain.setCurrentRampRate(AutoActiveTrain.RAMP_NONE);
-                    // wait for train to achieve speed in a separate thread which will complete action
-                    Runnable monTrainSpeed = new MonitorTrainSpeed(tsa);
-                    Thread tMonTrainSpeed = new Thread(monTrainSpeed);
-                    tsa.setWaitingThread(tMonTrainSpeed);
-                    tMonTrainSpeed.start();
-                } else {
-                    completedAction(tsa);
-                }
+                _autoActiveTrain.getAutoEngineer().setSpeedImmediate(spd * _autoActiveTrain.getSpeedFactor());
+                completedAction(tsa);
                 break;
             case TransitSectionAction.RAMPTRAINSPEED:
                 // set current speed to target using specified ramp rate
@@ -382,7 +371,7 @@ public class AutoTrainAction {
                     } else if (tsa.getStringWhat().equals("Off")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(0, false);
                     } else {
-                        log.error("Incorrect Light ON/OFF setting *" + tsa.getStringWhat() + "*");
+                        log.error("Incorrect Light ON/OFF setting *{}*", tsa.getStringWhat());
                     }
                 }
                 completedAction(tsa);
@@ -410,7 +399,7 @@ public class AutoTrainAction {
                 if (_autoActiveTrain.getSoundDecoder()) {
                     log.debug("{}: sounding horn as specified in action", _activeTrain.getTrainName());
                     Runnable rHorn = new HornExecution(tsa);
-                    Thread tHorn = new Thread(rHorn);
+                    Thread tHorn = jmri.util.ThreadingUtil.newThread(rHorn);
                     tsa.setWaitingThread(tHorn);
                     tHorn.start();
                 } else {
@@ -440,16 +429,16 @@ public class AutoTrainAction {
                         try {
                             s.setState(Sensor.INACTIVE);
                         } catch (jmri.JmriException reason) {
-                            log.error("Exception when toggling Sensor " + tsa.getStringWhat() + " Inactive - " + reason);
+                            log.error("Exception when toggling Sensor {} Inactive - {}", tsa.getStringWhat(), reason);
                         }
                     }
                     try {
                         s.setState(Sensor.ACTIVE);
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensor " + tsa.getStringWhat() + " Active - " + reason);
+                        log.error("Exception when setting Sensor {} Active - {}", tsa.getStringWhat(), reason);
                     }
                 } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
-                    log.error("Could not find Sensor " + tsa.getStringWhat());
+                    log.error("Could not find Sensor {}", tsa.getStringWhat());
                 } else {
                     log.error("Sensor not specified for Action");
                 }
@@ -462,16 +451,16 @@ public class AutoTrainAction {
                         try {
                             s.setState(Sensor.ACTIVE);
                         } catch (jmri.JmriException reason) {
-                            log.error("Exception when toggling Sensor " + tsa.getStringWhat() + " Active - " + reason);
+                            log.error("Exception when toggling Sensor {} Active - {}", tsa.getStringWhat(), reason);
                         }
                     }
                     try {
                         s.setState(Sensor.INACTIVE);
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensor " + tsa.getStringWhat() + " Inactive - " + reason);
+                        log.error("Exception when setting Sensor {} Inactive - {}", tsa.getStringWhat(), reason);
                     }
                 } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
-                    log.error("Could not find Sensor " + tsa.getStringWhat());
+                    log.error("Could not find Sensor {}", tsa.getStringWhat());
                 } else {
                     log.error("Sensor not specified for Action");
                 }
@@ -515,7 +504,7 @@ public class AutoTrainAction {
                 }
                 break;
             default:
-                log.error("illegal What code - " + tsa.getWhatCode() + " - in call to executeAction");
+                log.error("illegal What code - {} - in call to executeAction", tsa.getWhatCode());
                 break;
         }
     }

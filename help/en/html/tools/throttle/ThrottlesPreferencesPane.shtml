@@ -135,7 +135,10 @@
       so steal or share questions are processed as steal-only.</p>
       
       <p>See individual hardware documentation for more detail on how these options affect
-      your system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">MERG CBUS Throttles</a></p>
+      your system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS&reg; Throttles</a></p>
+
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

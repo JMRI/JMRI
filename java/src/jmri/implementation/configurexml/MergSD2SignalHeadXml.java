@@ -71,7 +71,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                 element.addContent(addTurnoutElement(p.getInput3(), "input3"));
                 break;
             default:
-                log.error("incorrect number of aspects " + aspects + " for Signal " + p.getDisplayName());
+                log.error("incorrect number of aspects {} for Signal {}", aspects, p.getDisplayName());
         }
 
         return element;

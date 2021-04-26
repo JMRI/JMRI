@@ -2,13 +2,15 @@ package jmri.implementation;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 
 /**
  * test class for AbstractSensor 
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
+ * @author Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  * @author      Paul Bender Copyright (C) 2018
 */
 public class AbstractSensorTest extends AbstractSensorTestBase {
@@ -17,10 +19,10 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
@@ -40,7 +42,7 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     
     // load t with actual object; create scaffolds as needed
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         t = new AbstractSensor("Foo", "Bar"){
@@ -50,10 +52,10 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	    t.dispose();
-	    t = null;
+        t.dispose();
+        t = null;
         JUnitUtil.tearDown();
     }
 

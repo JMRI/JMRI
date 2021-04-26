@@ -5,15 +5,13 @@ import jmri.managers.DefaultProgrammerManager;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * IdentifyDecoderTest.java.
  * <p>
- * Description: tests for the jmrit.roster.IdentifyDecoder class
+ * Test for the jmrit.roster.IdentifyDecoder class
  *
  * @author Bob Jacobsen
  */
@@ -435,7 +433,7 @@ public class IdentifyDecoderTest {
     /**
      * Initialize the system.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         p = new ProgDebugger() {
@@ -453,7 +451,7 @@ public class IdentifyDecoderTest {
     /**
      * Tear down the system.
      */
-    @After
+    @AfterEach
     public void tearDown() {
         p = null;
         JUnitUtil.tearDown();

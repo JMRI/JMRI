@@ -52,6 +52,10 @@ public class PowerPane extends jmri.util.swing.JmriPanel
      * Constructor for PowerPane.
      */
     public PowerPane() {
+        init();
+    }
+    
+    private void init() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
             @Override
             protected void choiceChanged() {
@@ -60,25 +64,9 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         };
 
         // add listeners to buttons
-        onButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                onButtonPushed();
-            }
-        });
-        offButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                offButtonPushed();
-            }
-        });
-
-        idleButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                idleButtonPushed();
-            }
-        });
+        onButton.addActionListener(e -> onButtonPushed());
+        offButton.addActionListener(e -> offButtonPushed());
+        idleButton.addActionListener(e -> idleButtonPushed());
         
         if ((selectMenu != null) && (selectMenu.getManager() != null)) {
             idleButton.setVisible(selectMenu.getManager().implementsIdle());
@@ -108,21 +96,23 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     void setStatus() {
         // Check to see if the Power Manager has a current status
         if (mgrOK()) {
-            try {
-                if (listening.getPower() == PowerManager.ON) {
+            switch (listening.getPower()) {
+                case PowerManager.ON:
                     onOffStatus.setText(Bundle.getMessage("StatusOn"));
-                } else if (listening.getPower() == PowerManager.OFF) {
+                    break;
+                case PowerManager.OFF:
                     onOffStatus.setText(Bundle.getMessage("StatusOff"));
-                } else if (listening.getPower() == PowerManager.IDLE) {
+                    break;
+                case PowerManager.IDLE:
                     onOffStatus.setText(Bundle.getMessage("StatusIdle"));
-                } else if (listening.getPower() == PowerManager.UNKNOWN) {
+                    break;
+                case PowerManager.UNKNOWN:
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
-                } else {
+                    break;
+                default:
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                     log.error("Unexpected state value: {}", selectMenu.getManager().getPower());
-                }
-            } catch (JmriException ex) {
-                onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
+                    break;
             }
         }
     }
@@ -202,21 +192,23 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         log.debug("PropertyChange received ");
-        try {
-            if (listening.getPower() == PowerManager.ON) {
+        switch (listening.getPower()) {
+            case PowerManager.ON:
                 onOffStatus.setText(Bundle.getMessage("StatusOn"));
-            } else if (listening.getPower() == PowerManager.OFF) {
+                break;
+            case PowerManager.OFF:
                 onOffStatus.setText(Bundle.getMessage("StatusOff"));
-            } else if (listening.getPower() == PowerManager.IDLE) {
+                break;
+            case PowerManager.IDLE:
                 onOffStatus.setText(Bundle.getMessage("StatusIdle"));
-            } else if (listening.getPower() == PowerManager.UNKNOWN) {
+                break;
+            case PowerManager.UNKNOWN:
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
-            } else {
+                break;
+            default:
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                 log.error("Unexpected state value: {}", listening.getPower());
-            }
-        } catch (JmriException ex) {
-            onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
+                break;
         }
     }
 

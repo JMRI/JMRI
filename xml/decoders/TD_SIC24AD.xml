@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Stephen Lowens" version="1.9" lastUpdated="20210131"/>  
   <version author="Michael Mosher" version="1.8" lastUpdated="20200109"/>
   <version author="B. Milhaupt" version="1.7" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.5" lastUpdated="20130807"/>
@@ -24,6 +25,7 @@
   <!-- Version 1.6 correct Input 5 toggle, was labeled same as input 1 toggle and did not fuction correctly 06/12/17-->
   <!-- Version 1.7 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <!-- Version 1.8 change mfg to match name in NMRA.xml -->
+  <!-- Version 1.9 change maximum primary address to 2040 -->
   <decoder>
     <family name="SIC24AD" mfg="Team Digital, LLC" type="stationary" comment="The SIC24AD can be programmed in the usual way">
       <model model="SIC24AD" lowVersionID="10"/>
@@ -200,7 +202,7 @@
         <label>Common Cathode LEDs</label>
       </variable>
       <variable item="Primary Address 1" CV="10" mask="VVVVVVVV">
-        <splitVal highCV="11" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="11" max="2040" upperMask="XXXXVVVV"/>
         <label>Primary Address 1</label>
       </variable>
       <variable CV="11" mask="VXXXXXXX" item="Inv P1">

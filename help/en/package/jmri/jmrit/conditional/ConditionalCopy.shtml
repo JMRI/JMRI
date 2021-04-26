@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Conditional State Variables and Actions List</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Pete cressman">
+  <meta name="keywords" content=
+  "JMRI help Logix Conditional Copy">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>Conditional Copy List</h1>
+
+      <dl>
+        <dd>
+          <h2><a name="logix" id="logix">Logix Copy</a></h2>
+
+          <p>The conditionals of one logix can be copied into another 
+          logix by selecting the "Copy" item from the <strong>Select</strong>
+          menu. The <Strong>Copy Logix</strong> window will be displayed.
+          This window is similar to the <Strong>Add Logix</strong> window and
+          the same rules must be be followed when creating a new logix.
+          Additionally, you may enter the name of an existing logix and copy 
+          conditionals into it. You may even copy logix conditionals back into the same
+          logix.  Of course the same restrictions about duplicate system and
+          user names of conditionals must be followed. For detailed information
+          about editing conditionals see the
+          <a href="../../../../html/tools/Logix.shtml">Logix main page</a>.</p>
+          <p></P>
+
+          <h2><a name="CopyList" id="CopyList">The Copy List</a></h2>
+
+          <p>After choosing a target logix and pressing the copy button, the 
+          <strong>Copy List</strong> window is displays the list of conditionals
+          of the source logix.  Select a conditional from the list to copy.
+          There are two ways to add the conditional to the target logix.
+          Either is done by the radio buttons under the conditional list.</p>
+           <p></P>
+           
+          <h3>The Change Items Only Button</h3>
+
+          <p>This choice (the default) displays a copy of the selected conditional
+          for quick copying where you only want to change the items tested or
+          items to react. The tests and actions of the item are shown but cannot
+          be changed. The logical expression cannot be changed either.</p>
+          
+          <p>The items under the <strong>Name</strong> columns of the Variables and
+          Actions tables are combo boxes (see "Logix Option Choices" below). 
+          These drop down to select the change of item for
+          the variable or action. Actions may be deleted, but not variables.</p>
+          
+          <p>This choice is intended to for simply changing item names. Provide 
+          a name for the new conditional and press the
+          <strong>Save</strong> button.  The conditional is saved to the target
+          logix and you are returned to the Copy List window.</p>
+          <p></P>
+
+          <h3>The Edit all Data Button</h3>
+
+          <p>This choice displays a copy of the selected conditional with
+          full conditional editing capabilities. There are no restrictions
+          on how the copy is changed.</p>
+          
+          <p>Provide a name for the new conditional and press the
+          <strong>Save</strong> button.  The conditional is saved to the target
+          logix and you are returned to the Copy List window.</p>
+          <p></P>
+
+          <h2>Logix Option Choices</h2>
+
+          <p>The choices made under the Logix <strong>Options</strong> menu are 
+          followed by edit conditional window displayed by the
+          <strong>Edit all Data</strong> button.</p>
+
+          <p>The quick edit window displayed by the <strong>Change Items Only</strong> 
+          button uses drop drop down combo boxes for the "Traditional Pick List"
+          option. If you prefer using a picklist other than combo boxes, use
+          the "Single Pick List" option. To enter an indirect reference to a
+          memory, the "Single Pick List" option must be used.</p>
+          <p></P>
+
+
+        </dd>
+      </dl>
+
+      <h2>Logix Documentation Pages Logically Listed</h2>
+
+      <!--#include virtual="LogixDocList.shtml" -->
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

@@ -1,5 +1,7 @@
 package jmri.jmris;
 
+import jmri.InstanceManager;
+import jmri.SensorManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 abstract public class AbstractSensorServerTestBase {
 
     protected AbstractSensorServer ss = null;
-
+    
     @Test public void testCtor() {
         assertThat(ss).isNotNull();
     }
@@ -30,7 +32,7 @@ abstract public class AbstractSensorServerTestBase {
     @Test 
     public void checkInitSensor() {
         ss.initSensor("IS1");
-        assertThat((jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1")).isNotNull();
+        assertThat((InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1")).isNotNull();
     }
 
     // test sending an ACTIVE status message.
@@ -62,7 +64,7 @@ abstract public class AbstractSensorServerTestBase {
     public void testPropertyChangeOnStatus() {
         Throwable thrown = catchThrowable( () -> {
             ss.initSensor("IS1");
-            jmri.InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1").setState(jmri.Sensor.ACTIVE);
+            InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1").setState(jmri.Sensor.ACTIVE);
         });
         assertThat(thrown).withFailMessage("Exception setting Status").isNull();
         checkSensorActiveSent();
@@ -73,9 +75,10 @@ abstract public class AbstractSensorServerTestBase {
     public void testPropertyChangeOffStatus() {
         Throwable thrown = catchThrowable( () -> {
             ss.initSensor("IS1");
-            jmri.InstanceManager.getDefault(jmri.SensorManager.class)
+            InstanceManager.getDefault(SensorManager.class)
                             .provideSensor("IS1").setState(jmri.Sensor.INACTIVE);
         });
+
         assertThat(thrown).withFailMessage("Exception setting Status").isNull();
         checkSensorInActiveSent();
     }

@@ -21,10 +21,11 @@
   <!--                                                                                       -->
   <!--   File is not tested cause no decoder of this type is in my collection.               -->
   <!--   If you find any errors please contact me by mail.                                   -->
+  <!-- v1.1,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <!--                                                                                       -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX636C version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636C version 37+" replacementModel="MX636C version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -59,7 +60,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636D version 37+" replacementModel="MX636D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -94,7 +95,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636VC version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636VC version 37+" replacementModel="MX636VC version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -129,7 +130,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636VD version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636VD version 37+" replacementModel="MX636VD version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -175,7 +176,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 37 -->
-      <variable CV="7" readOnly="yes" default="37">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

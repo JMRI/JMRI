@@ -1,12 +1,10 @@
 package jmri.jmrix.rfid.protocol.em18;
 
 import jmri.jmrix.AbstractMRReply;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Em18RfidProtocol class
@@ -128,12 +126,12 @@ public class Em18RfidProtocolTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

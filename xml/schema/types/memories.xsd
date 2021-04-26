@@ -25,7 +25,7 @@
     <xs:complexType name="MemoryManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a MemoryManager implementation.
+          Define the XML structure for storing the contents of a MemoryManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.AbstractMemoryManagerConfigXML</jmri:usingclass>

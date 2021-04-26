@@ -18,7 +18,6 @@ import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 
@@ -243,6 +242,14 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public List<Car> getByRweList() {
         return getByList(getByLocationList(), BY_RWE);
     }
+    
+    public List<Car> getByRwlList() {
+        return getByList(getByLocationList(), BY_RWL);
+    }
+    
+    public List<Car> getByDivisionList() {
+        return getByList(getByLocationList(), BY_DIVISION);
+    }
 
     public List<Car> getByFinalDestinationList() {
         return getByList(getByDestinationList(), BY_FINAL_DEST);
@@ -269,6 +276,8 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     private static final int BY_WAIT = 16;
     private static final int BY_PICKUP = 19;
     private static final int BY_HAZARD = 21;
+    private static final int BY_RWL = 22; // Return When loaded
+    private static final int BY_DIVISION = 23;
 
     // add car options to sort comparator
     @Override
@@ -281,9 +290,15 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
             case BY_RWE:
                 return (c1, c2) -> (c1.getReturnWhenEmptyDestName()
                         .compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
+            case BY_RWL:
+                return (c1, c2) -> (c1.getReturnWhenLoadedDestName()
+                        .compareToIgnoreCase(c2.getReturnWhenLoadedDestName()));
             case BY_FINAL_DEST:
                 return (c1, c2) -> (c1.getFinalDestinationName()
                         .compareToIgnoreCase(c2.getFinalDestinationName()));
+            case BY_DIVISION:
+                return (c1, c2) -> (c1.getDivisionName()
+                        .compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
                 return (c1, c2) -> (c1.getWait() - c2.getWait());
             case BY_PICKUP:
@@ -544,6 +559,13 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                     car.setReturnWhenEmptyLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
                 }
             }
+            if (car.getTypeName().equals(type) && car.getReturnWhenLoadedLoadName().equals(oldLoadName)) {
+                if (newLoadName != null) {
+                    car.setReturnWhenLoadedLoadName(newLoadName);
+                } else {
+                    car.setReturnWhenLoadedLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
+                }
+            }
         }
     }
 
@@ -603,14 +625,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
 
         Element values;
         List<String> names = getKernelNameList();
-        if (Control.backwardCompatible) {
-            root.addContent(values = new Element(Xml.KERNELS));
-            for (String name : names) {
-                String kernelNames = name + "%%"; // NOI18N
-                values.addContent(kernelNames);
-            }
-        }
-        // new format using elements
         Element kernels = new Element(Xml.NEW_KERNELS);
         for (String name : names) {
             Element kernel = new Element(Xml.KERNEL);

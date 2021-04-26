@@ -1,12 +1,10 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
@@ -15,14 +13,16 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import jmri.InstanceManager;
+import javax.swing.SpinnerNumberModel;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;
@@ -43,12 +43,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Thought to be safe as default connection config")
     public AbstractSerialConnectionConfig(jmri.jmrix.PortAdapter p) {
-            this((jmri.jmrix.SerialPortAdapter) p);
+        this((jmri.jmrix.SerialPortAdapter) p);
     }
 
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         adapter = p;
-        addToActionList();
     }
 
     /**
@@ -57,7 +56,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     public AbstractSerialConnectionConfig() {
         adapter = null;
-        addToActionList();
+
     }
 
     @Override
@@ -77,60 +76,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             return;
         }
 
-        baudBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureBaudRate((String) baudBox.getSelectedItem());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem()); // NOI18N
-            }
+        baudBox.addActionListener(e -> {
+            adapter.configureBaudRate((String) baudBox.getSelectedItem());
+            p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem()); // NOI18N
         });
 
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                }
-            });
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                }
-            });
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-        }
+        addNameEntryCheckers(adapter);
 
         portBox.addFocusListener(new FocusListener() {
             @Override
@@ -142,6 +93,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             public void focusLost(FocusEvent e) {
             }
         });
+
+        // set/change delay interval between (actually before) output (Turnout) commands
+        outputIntervalSpinner.addChangeListener(e -> adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue()));
 
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             final String item = entry.getKey();
@@ -165,7 +119,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
 
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -176,7 +130,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JComboBox<String> baudBox = new JComboBox<>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
-    protected jmri.jmrix.SerialPortAdapter adapter = null;
+
+    private final SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    // the following items are protected so they can be hidden when not applicable from a specific ConnectionConfig (ie. Simulator) implementation
+    protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
+    protected JLabel outputIntervalLabel;
+    protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
+
+    protected jmri.jmrix.SerialPortAdapter adapter;
 
     /**
      * {@inheritDoc}
@@ -290,8 +251,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         });
     }
 
-    String value;
-
     /**
      * {@inheritDoc}
      */
@@ -339,7 +298,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS = NUMOPTIONS + 2;
         }
@@ -385,6 +344,20 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (baudBox.getItemCount() > 0) { // skip when adapter returned an empty array (= spotbug's preference)
             baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
         }
+        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setOutputInterval(int)
+        outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
+        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip",
+                adapter.getSystemConnectionMemo().getDefaultOutputInterval(),adapter.getManufacturer()));
+        JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
+        field.setColumns(6);
+        outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
+        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
+        outputIntervalSpinner.setEnabled(true);
+        outputIntervalReset.addActionListener((ActionEvent event) -> {
+            outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
+            adapter.getSystemConnectionMemo().setOutputInterval(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
+        });
+
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {
@@ -463,6 +436,19 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                     i++;
                 }
             }
+
+            // interval config field
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(outputIntervalLabel, cL);
+            _details.add(outputIntervalLabel);
+            JPanel intervalPanel = new JPanel();
+            gbLayout.setConstraints(intervalPanel, cR);
+            intervalPanel.add(outputIntervalSpinner);
+            intervalPanel.add(outputIntervalReset);
+            _details.add(intervalPanel);
+            i++;
+
         }
         cL.gridwidth = 2;
         for (JComponent item : additionalItems) {
@@ -554,7 +540,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             adapter.dispose();
             adapter = null;
         }
-        removeFromActionList();
     }
 
     class ComboBoxRenderer extends JLabel
@@ -667,38 +652,22 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return null;
     }
 
+    /**
+     *
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected final void addToActionList() {
-        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-        ResourceBundle bundle = getActionModelResourceBundle();
-        if (bundle == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, bundle.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // nothing to do
     }
 
+    /**
+     *
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected void removeFromActionList() {
-        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-        ResourceBundle bundle = getActionModelResourceBundle();
-        if (bundle == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.removeAction(key);
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // nothing to do
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);

@@ -2,14 +2,16 @@ package jmri.jmrix.secsi.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Test simple functioning of NodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -22,7 +24,7 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         Assert.assertEquals("title","Configure Nodes",frame.getTitle());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -30,16 +32,16 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
         memo = new SecsiSystemConnectionMemo();
         memo.setTrafficController(new SerialTrafficControlScaffold(memo));
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new NodeConfigFrame(memo);
-	    }
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new NodeConfigFrame(memo);
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-	    memo = null;
+        memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	super.tearDown();
+        super.tearDown();
     }
 }

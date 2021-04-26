@@ -13,7 +13,7 @@ import jmri.util.FileUtil;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class ScriptFileChooser extends JFileChooser {
 

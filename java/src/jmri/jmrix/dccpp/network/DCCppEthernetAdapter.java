@@ -80,18 +80,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     }
     
     /**
-     * Local method to do specific configuration.
-     */
-    @Deprecated
-    static public DCCppEthernetAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new DCCppEthernetAdapter();
-        }
-        return mInstance;
-    }
-    volatile static DCCppEthernetAdapter mInstance = null;
-    
-    /**
      * Set up the keepAliveTimer, and start it.
      */
     private void keepAliveTimer() {

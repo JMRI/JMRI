@@ -11,6 +11,7 @@ import jmri.jmrix.tmcc.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,16 +55,16 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     @Override
     public String openPort(String portName, String appName) {
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return
@@ -89,7 +90,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
      */
     public boolean okToSend() {
         if (checkBuffer) {
-            log.debug("Buffer Empty: " + outputBufferEmpty);
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
             log.debug("No Flow Control or Buffer Check");
@@ -209,11 +210,11 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             SerialMessage m = readMessage();
             SerialReply r;
             if (log.isDebugEnabled()) {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 buf.append("TMCC Simulator Thread received message: ");
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                     }
                 } else {
                     buf.append("null message buffer");
@@ -223,11 +224,11 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
-                if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
+                if (log.isDebugEnabled()) {
+                    StringBuilder buf = new StringBuilder();
                     buf.append("TMCC Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
                     log.debug(buf.toString());
                 }
@@ -264,7 +265,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
 
         SerialReply reply = new SerialReply();
         char command = msg.toString().charAt(0);
-        log.debug("Message type = " + command);
+        log.debug("Message type = {}", command);
         switch (command) {
 
             default:

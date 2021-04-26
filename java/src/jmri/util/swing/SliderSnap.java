@@ -63,7 +63,10 @@ import javax.swing.plaf.basic.BasicSliderUI;
  *
  * @author Michael Kneebone Copyright (c) 2007, 2011
  * @author Matthew Harris Copyright (c) 2011
+ * @deprecated since 4.21.1 without direct replacement as uses illegal
+ * reflective access
  */
+@Deprecated
 public class SliderSnap extends BasicSliderUI {
 
     /**
@@ -93,7 +96,7 @@ public class SliderSnap extends BasicSliderUI {
         try {
             Method m = (Method) defaults.get(sliderClass);
             if (m == null) {
-                m = sliderClass.getMethod("createUI", //NOI18N
+                m = sliderClass.getMethod("createUI", // NOI18N
                         new Class<?>[]{JComponent.class});
                 defaults.put(sliderClass, m);
             }
@@ -141,7 +144,7 @@ public class SliderSnap extends BasicSliderUI {
                 SnapListener listen = new SnapListener(m, (BasicSliderUI) c.getUI(), c);
                 c.addMouseMotionListener(listen);
                 c.addMouseListener(listen);
-                c.addPropertyChangeListener("UI", listen); //NOI18N
+                c.addPropertyChangeListener("UI", listen); // NOI18N
             }
         }
     }
@@ -181,11 +184,11 @@ public class SliderSnap extends BasicSliderUI {
          */
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if ("UI".equals(evt.getPropertyName())) { //NOI18N
+            if ("UI".equals(evt.getPropertyName())) { // NOI18N
                 // Remove old listeners and create new ones
                 slider.removeMouseMotionListener(this);
                 slider.removeMouseListener(this);
-                slider.removePropertyChangeListener("UI", this); //NOI18N
+                slider.removePropertyChangeListener("UI", this); // NOI18N
                 attachTo(slider);
             }
         }
@@ -375,7 +378,7 @@ public class SliderSnap extends BasicSliderUI {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if ("lookAndFeel".equals(evt.getPropertyName())) { //NOI18N
+            if ("lookAndFeel".equals(evt.getPropertyName())) { // NOI18N
                 // The Look and Feel was changed so we need to re-insert
                 // our hook into the new UIDefaults map
                 sliderClass = null;
@@ -396,14 +399,14 @@ public class SliderSnap extends BasicSliderUI {
         public void run() {
             try {
                 UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-                sliderClass = defaults.getUIClass("SliderUI"); //NOI18N
+                sliderClass = defaults.getUIClass("SliderUI"); // NOI18N
 
                 // Set up two reflective method calls
                 xForVal = BasicSliderUI.class.getDeclaredMethod(
-                        "xPositionForValue", //NOI18N
+                        "xPositionForValue", // NOI18N
                         new Class<?>[]{int.class});
                 yForVal = BasicSliderUI.class.getDeclaredMethod(
-                        "yPositionForValue", //NOI18N
+                        "yPositionForValue", // NOI18N
                         new Class<?>[]{int.class});
 
                 // Allow us access to the methods
@@ -411,7 +414,7 @@ public class SliderSnap extends BasicSliderUI {
                 yForVal.setAccessible(true);
 
                 // Replace UI class with ourself
-                defaults.put("SliderUI", SliderSnap.class.getName()); //NOI18N
+                defaults.put("SliderUI", SliderSnap.class.getName()); // NOI18N
                 UIManager.addPropertyChangeListener(reinitListener);
             } catch (NoSuchMethodException e) {
                 sliderClass = null;

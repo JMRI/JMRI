@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -47,11 +47,9 @@ public class CbusNodeEventTableDataModelTest {
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeEventTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeEventTableDataModel.getPreferredWidth(999) > 0 );
         
         
         myNode.dispose();
@@ -126,8 +124,7 @@ public class CbusNodeEventTableDataModelTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -139,7 +136,7 @@ public class CbusNodeEventTableDataModelTest {
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         nodeModel.dispose();

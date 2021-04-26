@@ -1,37 +1,36 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private StandaloneTrafficController tc = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        StandaloneSystemConnectionMemo memo = new StandaloneSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         memo.setProtocol(new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol());
         tc = new StandaloneTrafficController(memo);
         m = new StandaloneReply(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = null;
-	tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        m = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
 
     }
 
     // private final static Logger log = LoggerFactory.getLogger(StandaloneReplyTest.class);
-
 }

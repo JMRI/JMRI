@@ -1,10 +1,9 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -19,15 +18,14 @@ public class ResetTableModelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.tearDown();

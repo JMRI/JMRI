@@ -24,16 +24,11 @@ public class EcosReporterManagerXml extends jmri.managers.configurexml.AbstractR
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // load individual Reporters
         return loadReporters(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosReporterManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(EcosReporterManagerXml.class);
 
 }

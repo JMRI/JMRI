@@ -54,6 +54,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="_mOK" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -77,10 +78,12 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="_mOK" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -124,6 +127,11 @@
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
         <Property name="text" type="java.lang.String" value="Bob Perrin"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rick Moser"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<title>B&amp;O 1980 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+C&amp;O 1980 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the Chessie System 1980 rule book for the C&amp;O RR.  
+
+<p>
+<body>
+Chessie System's 1980 rule book listed separate signal rules sections for the three component road.
+Rules 281 through 292 applied to the C&amp;O, B-281 through B-292 applied to the B&amp;O, and W-281 through W-292 applied 
+to the Western Maryland.
+
+<p>
+This rule set was created by back dating the existing Chessie-2014 rule set and references the icons for that set except for one icon to create clear aspect on a double head searchlight dwarf.  This set more accurately portrays the C&amp;O signal rules as the were from 1969 to 1980.    
+
+<p>
+For some signal masts types, there are two possible selections.  Signal mast types that contain short block at the end of the name map approach medium to be displayed before an approach aspect.  
+
+<P>
+
+For best results it is recommended you set up your layout on the layout editor, create the necessary blocks.  When setting up the bocks, set the speed of the block.  The signal system will use this speed to pick between the possible siganls aspects.
+  
+</body>
+
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CO-333-hi.xml">Full 3 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-333-hi-shortblock.xml">Full 3 Head Color Light Mast Signals, Short Block</a>
+<li><a href="appearance-CO-332-hi.xml">3-3-2 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-332-hi-shortblock.xml">3-3-2 Head Color Light Mast Signals, Short Block</a>
+<li><a href="appearance-CO-331-hi.xml">3-3-1 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-331-hi-shortblock.xml">3-3-1 Head Color Light Mast Signals, Short Block</a>
+<li><a href="appearance-CO-322-hi.xml">3-2-2 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-133-hi.xml">1-3-3 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-132-hi.xml">1-3-2 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-131-hi.xml">1-3-1 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-122-hi.xml">1-2-2 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-33-hi.xml">3-3 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-33-hi-shortblock.xml">3-3 Head Color Light Mast Signals, Short Block</a>
+<li><a href="appearance-CO-32-hi.xml">3-2 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-32-hi-shortblock.xml">3-2 Head Color Light Mast Signals, Short Block</a>
+<li><a href="appearance-CO-31g-hi.xml">3-Green Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-31g-hi-shortblock.xml">3-Green Head Color Light Mast Signals, Short Block</a>
+<li><a href="appearance-CO-31r-hi.xml">3-Red Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-31y-hi.xml">3-Yellow Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-13-hi.xml">1-3 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-12-hi.xml">1-2 Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-3-mast.xml">Single Head Color Light Mast Signals</a>
+<li><a href="appearance-CO-33-dwarf.xml">3-3 Searchlight Dwarf Signals</a>
+<li><a href="appearance-CO-3-dwarf.xml">Color Light Dwarf Signals</a>
+<li><a href="appearance-CO-3p-dwarf.xml">Permissive Color Light Dwarf Signals</a>
+<li><a href="appearance-CO-1-dwarf.xml">Buffer or Stop Board</a>
+</ul>
+</div>
+</div>
+<!--#include virtual="/Footer.shtml" -->
+</body>
+</html>

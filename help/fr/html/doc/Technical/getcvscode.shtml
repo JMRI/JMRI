@@ -15,7 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-    <!--#include virtual="/Style" -->
+    <!--#include virtual="/Style.shtml" -->
 </head>
 
  <body>

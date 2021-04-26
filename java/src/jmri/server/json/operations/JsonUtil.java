@@ -214,7 +214,7 @@ public class JsonUtil {
             types.add(type);
         }
         ArrayNode tracks = data.putArray(TRACK);
-        for (Track track : location.getTrackList()) {
+        for (Track track : location.getTracksList()) {
             tracks.add(getTrack(track, locale));
         }
         return data;
@@ -254,8 +254,8 @@ public class JsonUtil {
         node.put(NAME, track.getId());
         node.put(COMMENT, track.getComment());
         node.put(LENGTH, track.getLength());
-        node.put(LOCATION, track.getLocation().getId()); // only includes ID to
-                                                         // avoid recursion
+        // only includes location ID to avoid recursion
+        node.put(LOCATION, track.getLocation().getId());
         Reporter reporter = track.getReporter();
         node.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
         node.put(TYPE, track.getTrackType());
@@ -391,8 +391,8 @@ public class JsonUtil {
             data.put(JSON.TERMINATES_LOCATION, train.getTrainTerminatesName());
         }
         data.put(LOCATION, train.getCurrentLocationName());
-        if (train.getCurrentLocation() != null) {
-            data.put(JsonOperations.LOCATION_ID, train.getCurrentLocation().getId());
+        if (train.getCurrentRouteLocation() != null) {
+            data.put(JsonOperations.LOCATION_ID, train.getCurrentRouteLocation().getId());
         }
         data.put(JSON.STATUS, train.getStatus(locale));
         data.put(JSON.STATUS_CODE, train.getStatusCode());

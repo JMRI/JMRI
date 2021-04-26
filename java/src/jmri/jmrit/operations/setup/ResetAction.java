@@ -1,15 +1,18 @@
 package jmri.jmrit.operations.setup;
 
-import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionDisplayFrame;
 import jmri.util.swing.UnexpectedExceptionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the operation demo files.
@@ -20,8 +23,8 @@ import jmri.util.swing.UnexpectedExceptionContext;
  */
 public class ResetAction extends AbstractAction {
 
-    public ResetAction(String s) {
-        super(s);
+    public ResetAction() {
+        super(Bundle.getMessage("ResetOperations"));
     }
 
     @Override
@@ -56,7 +59,12 @@ public class ResetAction extends AbstractAction {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterReset"),
                     Bundle.getMessage("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
-            Apps.handleRestart();
+            try {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+            } catch (Exception er) {
+                log.error("Continuing after error in handleRestart", er);
+            }
+
 
         } catch (IOException ex) {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
@@ -65,7 +73,7 @@ public class ResetAction extends AbstractAction {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ResetAction.class);
+    private final static Logger log = LoggerFactory.getLogger(ResetAction.class);
 }
 
 

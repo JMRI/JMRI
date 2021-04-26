@@ -28,6 +28,14 @@
     <div id="mainContent">
 
       <h1>JMRI: PanelPro</h1>
+            <div class="noted"><span class="since">since 4.23.3</span>
+            <p>Note: The PanelPro main menu is being changed.
+            See <a href="../LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
+            The menu references below are for the new menu structure with the old
+            menu paths in braces.
+            </p>
+            </div>
+
             <p>The JMRI libraries contain the PanelPro
             application for creating panels to control or follow your
             (virtual) model railroad. This page introduces the
@@ -79,7 +87,7 @@
 
             <p>The <strong><a href="#le">Layout Editor</a></strong> builds
             a "Layout" which is a <i>logical description</i> of your
-            entire layout. A Layout, built with the Layout Editor, can
+            layout. A Layout, built with the Layout Editor, can
             be used for directly controlling elements such as Turnouts
             and Signals; indeed many users find it very suitable for this
             task. But, it is primarily designed for automation and
@@ -106,7 +114,7 @@
             appearance of track elements and how they are used.<br>
             You can have multiple Layout panels, but you have to tell
             the software how to connect track elements across the
-            boundaries between multiple Layouts.</p>
+            boundaries between multiple Layout panels.</p>
 
             <p>The <strong><a href="#swb">Switchboard Editor</a></strong>
             is easier to set up, using a simple grid of pre-defined buttons
@@ -118,7 +126,7 @@
             <p><a href=
             "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
             <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
-            align="right" height="216" width="313"></a> Many people use
+            align="right" height="216" width="313" alt="Quaker Valley"></a> Many people use
             a combination of panel types, with the Layout Editor creating
             schematic panels to handle the actual configuration for
             signals and Panel Editor providing exactly the appearance
@@ -129,10 +137,10 @@
             that describes how he used Panel Editor and Layout Editor
             together.</li>
             <li>Our <a href=
-            "http://jmri.org/community/examples/Gallery.shtml">Gallery
+            "https://jmri.org/community/examples/Gallery.shtml">Gallery
             page</a> shows examples of how model railroaders have used
             panels on their own layouts, including using PanelPro for <a href=
-            "http://jmri.org/community/examples/Modules.shtml">Modular
+            "https://jmri.org/community/examples/Modules.shtml">Modular
             layouts</a>.</li>
             <li>Rodney Black's <a href="http://cats4ctc.org/">CATS</a>
             (Computer Automated Traffic System) application is another
@@ -178,25 +186,29 @@
             Editor" from the "Panels" menu on the main window.</p>
 
             <p>After getting the Panel the way you want, you use the
-            "Store Panels..." entry in the "Panels" menu to write it to an
-            .xml file on disk, allowing to reload it the next time you run JMRI
-            and see all your turnouts, sensors etc as you configured them.<br>
-            A Panel xml file contains ALL of the tables and panels.
+            <strong>Store ALL table content and panels...</strong>
+            {<em>Old: <strong>Store Panels...</strong></em>} entry in the
+            <strong>File</strong> {<em>Old: <strong>Panels</strong></em>} menu
+            to write it to an .xml file on disk, allowing you to reload it the next time
+            you run JMRI and see all your turnouts, sensors etc as you configured them.<br>
+            A PanelPro xml data file contains ALL of the tables and panels.
             It is recommended to start with just one panel/configuration file
             for your layout. Except for some specific use cases, multiple xml
-            files create confusion and errors.<br>
-            Think of the xml file as a book. There are chapters for turnouts,
+            files create confusion and errors.</p>
+
+            <p>Think of the xml file as a book. There are chapters for turnouts,
             sensors, signals, blocks, Logix, etc. Each panel is also a chapter.
             As the layout design is progressing, various chapters are created
             and modified. It is a good idea to periodically save the changes.
             Some people use an incrementing file naming approach. Others rely
-            on the <i>backupPanels</i> directory where you can find older
+            on the <em>backupPanels</em> directory where you can find older
             versions of the configuration file (see the <a href=
             "../../setup/Files.shtml">JMRI Configuration Files</a>)</p>
 
             <h3>(Re)opening a panel file</h3>
-            <p>When starting your next PanelPro session, either load the latest
-            xml file via the Panels &gt; Open Panel... menu item or add an
+            <p>When starting your next PanelPro session, either load the latest xml file
+            via the <strong>File &rArr; Load table content and panels...</strong>
+            {<em>Old: <strong>Panels &rArr; Open Panel...</strong></em>} menu item or add an
             "Open file..." entry to <a
             href="../../../package/apps/TabbedPreferences.shtml#Startup">"Preferences
             &gt; Start Up"</a> to do it for you.</p>
@@ -226,7 +238,7 @@
             panels for even large layouts. The example above is from <a href=
             "http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's
             Cornwall Railroad</a>. There's a <a href=
-            "http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">
+            "https://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">
             page on the main web site</a> that describes this in detail.
             There's also a <a href=
             "http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">
@@ -294,7 +306,7 @@
 
             <a href="../../../package/jmri/jmrit/display/images/Switchboard.png">
             <img src="../../../package/jmri/jmrit/display/images/Switchboard.png"
-            width="198" height="154" align="right" hspace="0" vspace="0"></a>
+            width="198" height="154" align="right" hspace="0" vspace="0" alt="Switchboard"></a>
 
             <h2><a name="swb" id="swb">The Switchboard Editor</a></h2>
             <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>

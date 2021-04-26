@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.Icon;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.swing.JmriNamedPaneAction;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction {
+public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction<LocoNetSystemConnectionMemo> {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
@@ -80,18 +80,14 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     }
 
     @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return this.memo;
     }
 
     @Override
-    public void setSystemConnectionMemo(SystemConnectionMemo memo) throws IllegalArgumentException {
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo memo) throws IllegalArgumentException {
         if (LocoNetSystemConnectionMemo.class.isAssignableFrom(memo.getClass())) {
-            if (memo instanceof LocoNetSystemConnectionMemo) {
-            this.memo = (LocoNetSystemConnectionMemo) memo;
-            } else {
-                throw new IllegalArgumentException();
-            }
+            this.memo = memo;
         } else {
             throw new IllegalArgumentException();
         }

@@ -1,11 +1,11 @@
 package jmri.util.iharder.dnd;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import javax.swing.JPanel;
+
 import java.awt.GraphicsEnvironment;
 import java.net.URI;
 
@@ -31,13 +31,12 @@ public class FileDropTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

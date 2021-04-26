@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractAudioManager;
 import org.slf4j.Logger;
@@ -57,13 +55,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private final TreeSet<Audio> buffers = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     private final TreeSet<Audio> sources = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
 
-    public final ShutDownTask audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
-        @Override
-        public boolean execute() {
-            InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
-            return true;
-        }
-    };
+    public final Runnable audioShutDownTask = this::cleanup;
 
     @Override
     public int getXMLOrder() {
@@ -89,7 +81,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
             case Audio.BUFFER: {
                 if (countBuffers >= MAX_BUFFERS) {
-                    log.error("Maximum number of buffers reached (" + countBuffers + ") " + MAX_BUFFERS);
+                    log.error("Maximum number of buffers reached ({}) " + MAX_BUFFERS, countBuffers);
                     throw new AudioException("Maximum number of buffers reached (" + countBuffers + ") " + MAX_BUFFERS);
                 }
                 countBuffers++;
@@ -99,7 +91,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
             }
             case Audio.LISTENER: {
                 if (countListeners >= MAX_LISTENERS) {
-                    log.error("Maximum number of Listeners reached (" + countListeners + ") " + MAX_LISTENERS);
+                    log.error("Maximum number of Listeners reached ({}) " + MAX_LISTENERS, countListeners);
                     throw new AudioException("Maximum number of Listeners reached (" + countListeners + ") " + MAX_LISTENERS);
                 }
                 countListeners++;
@@ -109,7 +101,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
             }
             case Audio.SOURCE: {
                 if (countSources >= MAX_SOURCES) {
-                    log.error("Maximum number of Sources reached (" + countSources + ") " + MAX_SOURCES);
+                    log.error("Maximum number of Sources reached ({}) " + MAX_SOURCES, countSources);
                     throw new AudioException("Maximum number of Sources reached (" + countSources + ") " + MAX_SOURCES);
                 }
                 countSources++;
@@ -234,7 +226,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");
                 register(s);
             } catch (AudioException ex) {
-                log.error("Error creating Default Audio Listener: " + ex);
+                log.error("Error creating Default Audio Listener: {}", ex);
             }
 
             // Register a shutdown task to ensure clean exit
@@ -242,7 +234,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
             initialised = true;
             if (log.isDebugEnabled()) {
-                log.debug("Initialised AudioFactory type: " + activeAudioFactory.getClass().getSimpleName());
+                log.debug("Initialised AudioFactory type: {}", activeAudioFactory.getClass().getSimpleName());
             }
         }
     }

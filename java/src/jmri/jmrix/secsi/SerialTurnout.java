@@ -23,6 +23,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in SerialTurnoutManager.
+     * @param systemName turnout system name
+     * @param userName turnout user name
+     * @param _memo system connection
      */
     public SerialTurnout(String systemName, String userName, SecsiSystemConnectionMemo _memo) {
         super(systemName, userName);
@@ -34,31 +37,31 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command.
+     * {@inheritDoc}
+     * Sends a Secsi command
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue, Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(!getInverted());
         }
     }
 

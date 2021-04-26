@@ -10,7 +10,9 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -27,7 +29,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
 public class LRouteTableActionTest {
 
@@ -41,15 +43,15 @@ public class LRouteTableActionTest {
     public void testRouteElementComparator() {
         LRouteTableAction.RouteElement e1 = new LRouteTableAction.RouteElement("ISname1", "B", LRouteTableAction.SENSOR_TYPE);
         LRouteTableAction.RouteElement e2 = new LRouteTableAction.RouteElement("ISname2", "B", LRouteTableAction.SENSOR_TYPE);
-        
+
         LRouteTableAction.RouteElementComparator rc = new LRouteTableAction.RouteElementComparator();
-        
+
         assertTrue("e1 = e1", rc.compare(e1, e1) == 0);
         assertTrue("e2 > e1", rc.compare(e2, e1) > 0);
         assertTrue("e1 < e2", rc.compare(e1, e2) < 0);
-        
+
     }
-    
+
     @Test
     public void testCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -63,8 +65,7 @@ public class LRouteTableActionTest {
             _lRouteTable._outputList.get(3 * i + 1).setIncluded(true);
         }
         _lRouteTable.createPressed(null);
-        java.util.List<String> l = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList();
-        assertEquals("Logix Count", 1, l.size());
+        assertEquals("Logix Count", 1, InstanceManager.getDefault(jmri.LogixManager.class).getNamedBeanSet().size());
 
         _lRouteTable.m.setValueAt(Bundle.getMessage("ButtonEdit"), 0,
                 LRouteTableAction.LBeanTableDataModel.EDITCOL);
@@ -78,7 +79,7 @@ public class LRouteTableActionTest {
     }
 
     @Test
-    @Ignore("Commented out in JUnit 3")
+    @Disabled("Commented out in JUnit 3")
     public void testPrompt() {
         assertNotNull("LRouteTableAction is null!", _lRouteTable); // test has begun
         _lRouteTable.addPressed(null);
@@ -106,7 +107,7 @@ public class LRouteTableActionTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
@@ -156,12 +157,14 @@ public class LRouteTableActionTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         // now close action window
         if (_lRouteTable.f != null) {
             _lRouteTable.f.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

@@ -1,17 +1,18 @@
 package jmri.util.usb;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import javax.usb.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UsbBrowserPanelTest {
 
@@ -31,14 +32,13 @@ public class UsbBrowserPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         hub = new UsbHubScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         hub = null;
         JUnitUtil.tearDown();

@@ -2,29 +2,28 @@ package jmri.jmrix.loconet.lnsvf2;
 
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnSv2MessageContentsTest {
 
-    @Test(expected = IllegalArgumentException.class )
+    @Test
     public void testCTorIllegalArgument() {
         LocoNetMessage lm = new LocoNetMessage(3);
-        new LnSv2MessageContents(lm);
+        Assert.assertThrows(IllegalArgumentException.class, () -> new LnSv2MessageContents(lm));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

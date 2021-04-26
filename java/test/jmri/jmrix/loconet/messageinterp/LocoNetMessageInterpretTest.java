@@ -1,10 +1,9 @@
 package jmri.jmrix.loconet.messageinterp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
@@ -5027,14 +5026,14 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6F} );
         Assert.assertEquals(" Slot test 10",
                 "Report of current Extended Command Station OpSw values:\n" +
-"	OpSw65=Thrown, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Thrown, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
-"	OpSw73=Thrown, OpSw74=Thrown, OpSw75=Thrown, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
-"	OpSw81=Thrown, OpSw82=Thrown, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Thrown, OpSw87=Thrown, OpSw88=Thrown,\n" +
-"	OpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
-"	OpSw97=Thrown, OpSw98=Thrown, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Thrown, OpSw102=Thrown, OpSw103=Thrown, OpSw104=Thrown,\n" +
-"	OpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
-"	OpSw113=Thrown, OpSw114=Thrown, OpSw115=Thrown, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Thrown, OpSw120=Thrown,\n" +
-"	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n",
+"\tOpSw65=Thrown, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Thrown, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
+"\tOpSw73=Thrown, OpSw74=Thrown, OpSw75=Thrown, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
+"\tOpSw81=Thrown, OpSw82=Thrown, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Thrown, OpSw87=Thrown, OpSw88=Thrown,\n" +
+"\tOpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
+"\tOpSw97=Thrown, OpSw98=Thrown, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Thrown, OpSw102=Thrown, OpSw103=Thrown, OpSw104=Thrown,\n" +
+"\tOpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
+"\tOpSw113=Thrown, OpSw114=Thrown, OpSw115=Thrown, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Thrown, OpSw120=Thrown,\n" +
+"\tOpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x21, 0x31, 0x50} );
@@ -6653,14 +6652,14 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7E, 0x11, 0x04, 0x22, 0x00, 0x47, 0x33, 0x00, 0x44, 0x00, 0x6C, 0x03});
         Assert.assertEquals("read 1", "Report of current Extended Command Station OpSw values:\n" +
-"	OpSw65=Closed, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Closed, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
-"	OpSw73=Thrown, OpSw74=Thrown, OpSw75=Closed, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
-"	OpSw81=Thrown, OpSw82=Closed, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Closed, OpSw87=Thrown, OpSw88=Thrown,\n" +
-"	OpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
-"	OpSw97=Closed, OpSw98=Closed, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Closed, OpSw102=Closed, OpSw103=Thrown, OpSw104=Thrown,\n" +
-"	OpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
-"	OpSw113=Thrown, OpSw114=Thrown, OpSw115=Closed, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Closed, OpSw120=Thrown,\n" +
-"	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+"\tOpSw65=Closed, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Closed, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
+"\tOpSw73=Thrown, OpSw74=Thrown, OpSw75=Closed, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
+"\tOpSw81=Thrown, OpSw82=Closed, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Closed, OpSw87=Thrown, OpSw88=Thrown,\n" +
+"\tOpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
+"\tOpSw97=Closed, OpSw98=Closed, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Closed, OpSw102=Closed, OpSw103=Thrown, OpSw104=Thrown,\n" +
+"\tOpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
+"\tOpSw113=Thrown, OpSw114=Thrown, OpSw115=Closed, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Closed, OpSw120=Thrown,\n" +
+"\tOpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test
@@ -6669,14 +6668,12 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("check LocoReset", "Loco Reset mechanism triggered.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
-    @Before
-    @Test
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
-    @Test
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

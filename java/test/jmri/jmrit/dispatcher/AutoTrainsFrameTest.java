@@ -1,10 +1,12 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,7 +16,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
         
     DispatcherFrame d = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +30,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (d!=null) {

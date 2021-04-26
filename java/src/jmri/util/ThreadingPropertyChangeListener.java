@@ -6,9 +6,12 @@ import java.beans.PropertyChangeListener;
 /**
  * PropertyChangeListener that resends the event on the passed in thread when
  * constructed.
- * 
+ *
  * @author Randall Wood Copyright 2019
+ * @deprecated since 4.19.6; use {@link jmri.beans.SwingPropertyChangeListener}
+ * to ensure notifications are on EDT.
  */
+@Deprecated
 public class ThreadingPropertyChangeListener implements PropertyChangeListener {
 
     private PropertyChangeListener listener;

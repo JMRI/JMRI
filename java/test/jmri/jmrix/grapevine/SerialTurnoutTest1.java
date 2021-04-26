@@ -2,21 +2,21 @@ package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, middle bank.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
     private SerialTrafficControlScaffold tcis = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -51,7 +51,7 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
     }
 
     // reset objects
-    @After
+    @AfterEach
     public void tearDown() {
         tcis.terminateThreads();
         tcis = null;

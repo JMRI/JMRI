@@ -1,26 +1,23 @@
 package jmri.jmrit.withrottle;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test simple functioning of WiThrottlePrefsPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class WiThrottlePrefsPanelTest {
+public class WiThrottlePrefsPanelTest extends PreferencesPanelTestBase<WiThrottlePrefsPanel> {
 
-    @Test
-    public void testCtor() {
-        WiThrottlePrefsPanel panel = new WiThrottlePrefsPanel();
-        Assert.assertNotNull("exists", panel );
-    }
-
-    @Before
-    public void setUp() throws Exception {
+    @Override
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -28,10 +25,7 @@ public class WiThrottlePrefsPanelTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initStartupActionsManager();
+        prefsPanel = new WiThrottlePrefsPanel();
     }
-    
-    @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-    }
+
 }

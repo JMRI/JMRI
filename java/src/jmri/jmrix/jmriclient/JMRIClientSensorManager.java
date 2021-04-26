@@ -33,7 +33,7 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor t;
         int addr;
         try {
@@ -57,5 +57,16 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
+    
+    /**
+     * Validates to only numeric.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name,locale);
+    }
+    
 
 }

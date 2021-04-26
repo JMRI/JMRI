@@ -37,14 +37,7 @@ public class PiSprogOneSerialDriverAdapter
     public int[] validBaudNumbers() {
         return new int[]{115200};
     }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated  // will be removed when class converted to multi-system
-    static public PiSprogOneSerialDriverAdapter instance() {
-        return null;
-    }
+    
     // private final static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class);
 
 }

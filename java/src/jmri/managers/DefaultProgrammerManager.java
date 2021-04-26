@@ -8,6 +8,7 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.beans.PropertyChangeSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,19 +27,19 @@ import org.slf4j.LoggerFactory;
  * @see jmri.GlobalProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
-public class DefaultProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
+public class DefaultProgrammerManager extends PropertyChangeSupport implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     // For the record, these were the original numerical definitions:
-    //     public static final ProgrammingMode NONE	    =  new ProgrammingMode("NONE", 0);
-    //     public static final ProgrammingMode REGISTERMODE    = new ProgrammingMode("REGISTERMODE", 11);
-    //     public static final ProgrammingMode PAGEMODE        = new ProgrammingMode("PAGEMODE", 21);
-    //     public static final ProgrammingMode DIRECTBITMODE   = new ProgrammingMode("DIRECTBITMODE", 31);
-    //     public static final ProgrammingMode DIRECTBYTEMODE  = new ProgrammingMode("DIRECTBYTEMODE", 32);
-    //     public static final ProgrammingMode ADDRESSMODE     = new ProgrammingMode("ADDRESSMODE", 41);
-    //     public static final ProgrammingMode OPSBYTEMODE     = new ProgrammingMode("OPSBYTEMODE", 101);
-    //     public static final ProgrammingMode OPSBITMODE      = new ProgrammingMode("OPSBITMODE", 102);
-    //     public static final ProgrammingMode OPSACCBYTEMODE  = new ProgrammingMode("OPSACCBYTEMODE", 111);
-    //     public static final ProgrammingMode OPSACCBITMODE   = new ProgrammingMode("OPSACCBITMODE", 112);
+    //     public static final ProgrammingMode NONE              = new ProgrammingMode("NONE", 0);
+    //     public static final ProgrammingMode REGISTERMODE      = new ProgrammingMode("REGISTERMODE", 11);
+    //     public static final ProgrammingMode PAGEMODE          = new ProgrammingMode("PAGEMODE", 21);
+    //     public static final ProgrammingMode DIRECTBITMODE     = new ProgrammingMode("DIRECTBITMODE", 31);
+    //     public static final ProgrammingMode DIRECTBYTEMODE    = new ProgrammingMode("DIRECTBYTEMODE", 32);
+    //     public static final ProgrammingMode ADDRESSMODE       = new ProgrammingMode("ADDRESSMODE", 41);
+    //     public static final ProgrammingMode OPSBYTEMODE       = new ProgrammingMode("OPSBYTEMODE", 101);
+    //     public static final ProgrammingMode OPSBITMODE        = new ProgrammingMode("OPSBITMODE", 102);
+    //     public static final ProgrammingMode OPSACCBYTEMODE    = new ProgrammingMode("OPSACCBYTEMODE", 111);
+    //     public static final ProgrammingMode OPSACCBITMODE     = new ProgrammingMode("OPSACCBITMODE", 112);
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     private Programmer programmer;
@@ -67,7 +68,7 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
      *                   programmer is available
      * @param memo       the associated connection
      */
-    public DefaultProgrammerManager(@CheckForNull Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@CheckForNull Programmer programmer, @Nonnull jmri.SystemConnectionMemo memo) {
         this(programmer);
         this.userName = memo.getUserName();
     }
@@ -166,5 +167,5 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammingMode.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }

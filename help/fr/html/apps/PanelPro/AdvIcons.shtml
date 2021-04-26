@@ -78,7 +78,7 @@ sur comment d&#233;finir ce code manuellement
 	Rechercher dans le r&#233;pertoire "xml/samples" dans JMRI un fichier appel&#233; 	
 	"ReporterIconExample.xml".
 	<br>
-	(Il est &#233;galement disponible <a href="http://jmri.org/xml/samples/ReporterIconExample.xml"> sur le Web </a>
+	(Il est &#233;galement disponible <a href="https://jmri.org/xml/samples/ReporterIconExample.xml"> sur le Web </a>
 	mais de nombreux navigateurs vont essayer de l'interpr&#233;ter au lieu de vous montrer 
 	le texte, (votre option navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gard)
 	<br>
@@ -110,7 +110,7 @@ sur comment d&#233;finir ce code manuellement
         JMRI un fichier appel&eacute;
         "ReporterIconExample.xml".<br>
         (Il est &eacute;galement disponible <a href=
-        "http://jmri.org/xml/samples/ReporterIconExample.xml">sur
+        "https://jmri.org/xml/samples/ReporterIconExample.xml">sur
         le Web</a> mais de nombreux navigateurs vont essayer de
         l'interpr&eacute;ter au lieu de vous montrer le texte,
         (votre option navigateur "Afficher la source" tableau

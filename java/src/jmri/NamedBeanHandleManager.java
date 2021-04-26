@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +48,7 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
 
     public NamedBeanHandleManager() {
         // use Internal memo as connection for this manager
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        super();
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
@@ -220,23 +219,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     @Override

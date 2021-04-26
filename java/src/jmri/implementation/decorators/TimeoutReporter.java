@@ -16,7 +16,6 @@ import java.beans.PropertyChangeListener;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * <p>
  * based on TimeoutRfidReporter originally implemented by Matthew Harris
  * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
@@ -53,8 +52,6 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
      * Reference to the timeout thread for this object
      */
     private TimeoutThread timeoutThread = null;
-
-    private final boolean logDebug = log.isDebugEnabled();
 
     public TimeoutReporter(Reporter reporter) {
         super(reporter);
@@ -143,9 +140,7 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
                 }
             }
             reporter.setReport(null);
-            if (logDebug) {
-                log.debug("Timeout-" + getSystemName());
-            }
+            log.debug("Timeout-{}", getSystemName());
             cleanUpTimeout();
         }
     }

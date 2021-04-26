@@ -1,10 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 16.4), see www.w3.org">
 
   <title>JMRI: Continuous Integration</title>
   <meta name="author" content="Bob Jacobsen">
@@ -23,17 +23,18 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
-  <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>JMRI Code: Continuous Integration</h1>
+
       <p>"Continuous Integration" is the process of rebuilding a
       system every time it changes, so that you rapidly learn of
       new problems and are motivated to remove existing ones.</p>
@@ -42,29 +43,67 @@
       "#jenkins">Jenkins</a> jobs that routinely build the code,
       run checks, and creates downloadable installers. That means
       that we can and do put changes into our users hands very
-      quickly. There's a 
-      <a href="CI-status.shtml">CI status page</a>
-      that shows the combined status of that.</p>
+      quickly. There's a <a href="CI-status.shtml">CI status
+      page</a> that shows the combined status of that.</p>
 
-      <p>We also use two additional CI engines to test every change
-      entered into our GitHub code repository.</p>
+      <p>We divide these into three groups:</p>
 
-      <a name="travis" id="travis"></a>
-      <h2>Travis CI</h2>
-      We use <a href=
+      <ul>
+        <li><a href="#mandatory">Mandatory checks</a> that must be
+        OK before the change will be merged.</li>
+
+        <li><a href="#optional">Optional checks</a> that provide
+        additional information on the code. These don't have to be
+        completely cleared before a change is merged, but their
+        observations should be considered and their metrics should
+        be improving.</li>
+
+        <li><a href="#independent">Independent checks</a> that are
+        run by our <a href="#jenkins">Jenkins instance</a> on a
+        periodic basis to look for deeper problems.</li>
+      </ul><a name="mandatory" id="mandatory"></a>
+
+      <h2>Mandatory Checks</h2>We use three CI engines to test
+      every proposed change entered into our GitHub code repository
+      before it gets merged.
+
+      <ul>
+        <li><a href="#travis">Travis</a></li>
+
+        <li><a href="#actions">GitHub Actions</a></li>
+
+        <li><a href="#wip">WIP check</a></li>
+      </ul><a name="travis" id="travis"></a>
+
+      <h3>Travis CI</h3>
+      <p>We use <a href=
       "https://travis-ci.org/">Travis CI</a> to do integration/test
       builds on Linux for every pull into our main <a href=
-      "http://github.com/JMRI">GitHub</a> repositories.
+      "http://github.com/JMRI">GitHub</a> repositories.</p>
 
       <p>Travis will build any branch that contains a .travis.yml
       file. The build history for the main JMRI repository is at
       <a href=
       "https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.</p>
 
-      <p>Travis normally runs the checks for valid line-ends, the
-      check for proper ASCII characters, followed by building the
-      code and running the "AllTest" test routine. A screen buffer
-      (not a real screen) is used for all the GUI tests.</p>
+      <p>Travis normally runs several jobs in parallel:</p>
+
+      <ul>
+        <li>The "graphical" one, which just runs AllTest with
+        schema checks and intermittent tests disabled to reduce
+        runtime; this also does coverage checks. A screen buffer
+        (not a real screen) is used for all the GUI tests.</li>
+
+        <li>The "static" one, which runs various static code checks
+        such as he checks for valid line-ends, the check for proper
+        ASCII characters, SpotBugs, etc,</li>
+
+        <li>The "headless" one, which runs HeadlessTest with schema
+        tests enabled</li>
+
+        <li>And one that separately and individual runs the tests
+        that are marked as requiring separate runnning.</li>
+      </ul>
 
       <p>You can enable Travis CI for your fork (personal GitHub
       repository) as well. After merging JMRI/master into your own
@@ -78,76 +117,136 @@
       brackets, but not the quotes) anywhere in the commit message
       if so desired.</p>
 
-      <a name="appveyor" id="appveyor"></a>
-      <h2>AppVeyor CI</h2>
-      We use 
-      <a href="http://www.appveyor.com">AppVeyor CI</a>
-      to do
-      integration/test builds on Windows for every pull into our
-      main <a href="http://github.com/JMRI">GitHub</a>
-      repositories.
+      <p>Travis is controlled by the .travis.yml file. Much of the
+      work is done by the scripts/travis.sh script. </p>
 
-      <p>AppVeyor will build any branch that contains a
-      appveyor.yml file. The build history for the main JMRI
-      repository is at
-      <a href="https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
+      <h3>GitHub Actions</h3>We use <a href=
+      "https://github.com/features/actions">GitHub Actions</a> to
+      do two things on every pull into our main <a href=
+      "http://github.com/JMRI">GitHub</a> repositories. <a href=
+      "images/ActionSettings.png"><img src=
+      "images/ActionSettings.png" align="right" width="331" height=
+      "167"></a>
 
-      <p>AppVeyor normally runs the property-files checks (for
-      duplicate targets and other errors), followed by building the
-      code and running the "AllTest" test routine. A screen buffer
-      (not a real screen) is used for all the GUI tests.</p>
+      <ul>
+        <li>Run a series of static checks: Run Spotbugs and the
+        compiler warning checks, make sure Javadocs build cleanly,
+        etc.</li>
 
-      <p>Although it is possible to enable AppVeyor to build
-      commits to your own fork of the JMRI repositories, it's a bit
-      complicated to do it within the AppVeyor security model.</p>
+        <li>Run the JUnit tests on a Windows machine.</li>
+      </ul>
 
-      <a name="jenkins" id="jenkins"></a>
-      <h2>Jenkins</h2>
-      JMRI uses the <a href=
-      "http://jenkins-ci.org/">Jenkins</a> continuous integration
-      engine for integration and test builds. This includes keeping
-      our <a href="WebSite.shtml">web site</a> up to date as
-      changes are committed, building installer packages from
-      development builds, and building final releases.
+      <p>These checks are defined by files in the
+      .github/workflows/ directory.</p>
+
+      <p>These normally run both on PRs to the main JMRI/JMRI
+      repository, but also on pushes and PRs to your own
+      repository. If you want to turn that off,</p>
+
+      <ol>
+        <li>On the page for your own repository, select
+        "Settings"</li>
+
+        <li>From the left sidebar, select "Actions"</li>
+
+        <li>Pick on option for what can run. The bottom option
+        turns everything off for you locally.</li>
+      </ol>
+      Note that if you turn this off, the "Actions"
+      tab won't show in the GitHub web interface until
+      you turn it back on.
+      
+
+      <a name="wip" id="wip"></a>
+      <h3>WIP</h3>
+      <p>We use the <a href=
+      "https://github.com/apps/wip">WIP check</a> to allow somebody
+      to mark a PR as "Work in Progress" (WIP) by putting WIP in
+      the title line. The PR will then not be merged until the WIP
+      is removed. 
+
+      <a name="optional" id="optional"></a>
+      <h2>Optional Checks</h2>
+      
+      <p>We also run some advisory checkers.
+      Although we don't require that they pass, we strongly
+      recommend that people look at them and try to improve their
+      metrics of test coverage, simplicity and understandability,
+      etc.</p>
+
+      <ul>
+        <li><a href="#coveralls">Coveralls</a></li>
+
+        <li><a href="#codeclimate">CodeClimate</a></li>
+      </ul>
+            
+      <a name="coveralls" id="coveralls"></a>
+      <h3>Coveralls</h3>The <a href=
+      "https://coveralls.io/github/JMRI">Coveralls check</a> does a
+      deep check of which parts of the code were run during the
+      test steps, and which were left uncovered. This can be very
+      useful information when writing tests to make sure your code
+      is working properly. In general, you should try to increase
+      the code coverage, even if just a bit, with every PR.
+      <a name="CodeClimate" id="CodeClimate"></a>
+
+      <h3>Code Climate</h3>The <a href=
+      "https://codeclimate.com/github/JMRI/JMRI/">Code Climate</a>
+      points out places where the code appears to be complex in
+      various ways. (It also provides coverage information, though
+      <a href="#coveralls">Coveralls</a> seems to do a better job
+      of that.) We recommend you look at those results and make
+      updates where they make sense, so that things are
+      continuously improving, but not every suggestion it makes is
+      worth it, or even appropriate. We don't require this to be
+      clean before merging.
+
+      <p>Code Climate is controlled by the .codeclimate.yml file.
+      <a name="independent" id="independent"></a></p>
+
+      <h2>Independent Checks with Jenkins</h2>JMRI uses the
+      <a href="http://jenkins-ci.org/">Jenkins</a> continuous
+      integration engine for integration and test builds. This
+      includes keeping our <a href="WebSite.shtml">web site</a> up
+      to date as changes are committed, building installer packages
+      from development builds, and building final releases.
 
       <p>Our primary Jenkins engine is at <a href=
-      "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>,
-      also known as <a href=
-      "http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>.
-      Because it's hosted outside the US, we force its
-      Java locale to US English by setting the 
-      <code>LC_ALL</code> environment variable to
-      <code>en_US</code> in the master Jenkins configuration settings.
-      
+      "https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>.
+      Because it's hosted outside the US, we force its Java locale
+      to US English by setting the <code>LC_ALL</code> environment
+      variable to <code>en_US</code> in the master Jenkins
+      configuration settings. 
       <!-- We previously had an engine at <a href=
       "https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
       but that's now inactive -->
+       <a name="jenkins" id="jenkins"></a></p>
 
       <p>Specific Jenkins results of interest:</p>
 
       <ul>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/Builds/">
+        "https://builds.jmri.org/jenkins/job/Development/job/Builds/">
         Builds</a> page, showing status of the builds done after
         every series of commits. Successful builds are followed by
         builds installers via the <a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/Packages">
+        "https://builds.jmri.org/jenkins/job/Development/job/Packages">
         Packages</a> job.</li>
 
         <li>
           <a href=
-          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">
-              SpotBugs</a> page, showing status of the more-extensive
+          "https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">
+          SpotBugs</a> page, showing status of the more-extensive
           <a href="SpotBugs.shtml">SpotBugs</a> tests done
           periodically. There are also pages of the <a href=
-          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/changes">
+          "https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/changes">
           most recent changes</a> and the <a href=
-          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/">
+          "https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/">
           most recent results</a>.
 
           <p>For more information on JMRI's use of SpotBugs, see
-              the <a href="SpotBugs.shtml">separate SpotBugs
-                  page</a>.</p>
+          the <a href="SpotBugs.shtml">separate SpotBugs
+          page</a>.</p>
         </li>
       </ul>
 
@@ -189,7 +288,7 @@
 
             <dt>URL</dt>
 
-            <dd>http://builds.jmri.org/jenkins/</dd>
+            <dd>https://builds.jmri.org/jenkins/</dd>
 
             <dt>Auto refresh every X minutes</dt>
 

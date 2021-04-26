@@ -9,6 +9,8 @@ import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
+
+import jmri.SystemConnectionMemo;
 import jmri.util.usb.UsbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

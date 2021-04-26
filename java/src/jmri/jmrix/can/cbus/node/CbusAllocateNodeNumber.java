@@ -224,7 +224,14 @@ public class CbusAllocateNodeNumber implements CanListener {
         if ( m.extendedOrRtr() ) {
             return;
         }
-
+        // run on GUI not Layout thread as pretty much all of this is GUI based.
+        // and could be awaiting from response from JDialog.
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+            processAllocateFrame(m);
+        });
+    }
+    
+    private void processAllocateFrame(CanReply m){
         switch (CbusMessage.getOpcode(m)) {
             case CbusConstants.CBUS_RQNN:
                 // node requesting a number, nn is existing number
@@ -247,6 +254,7 @@ public class CbusAllocateNodeNumber implements CanListener {
                     nd.resetNodeAll();
                     nodeModel.startUrgentFetch();
                     nodeModel.setRequestNodeDisplay(-1);
+                    send.searchForCommandStations();
                 }   
                 _paramsArr = null;
                 break;

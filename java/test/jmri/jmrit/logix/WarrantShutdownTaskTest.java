@@ -1,32 +1,32 @@
 package jmri.jmrit.logix;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import java.awt.GraphicsEnvironment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WarrantShutdownTaskTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantShutdownTask t = new WarrantShutdownTask("test warrant shtudown task");
-        Assert.assertNotNull("exists",t);
+        WarrantShutdownTask t = new WarrantShutdownTask("test warrant shutdown task");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

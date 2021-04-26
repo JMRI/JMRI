@@ -1,11 +1,6 @@
 package jmri.web.servlet.directory;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.channels.ReadableByteChannel;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -15,6 +10,7 @@ import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.util.StringUtil;
 import org.eclipse.jetty.util.URIUtil;
+import org.eclipse.jetty.util.resource.PathResource;
 import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,15 +21,14 @@ import org.slf4j.LoggerFactory;
  * in {@link org.eclipse.jetty.util.resource.Resource} so that directory
  * listings can include the complete JMRI look and feel.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copright 2016, 2020
  */
-public class DirectoryResource extends Resource {
+public class DirectoryResource extends PathResource {
 
-    private final Resource resource;
     private final Locale locale;
 
-    public DirectoryResource(Locale locale, Resource resource) {
-        this.resource = resource;
+    public DirectoryResource(Locale locale, Resource resource) throws IOException {
+        super(resource.getFile());
         this.locale = locale;
     }
 
@@ -52,7 +47,7 @@ public class DirectoryResource extends Resource {
         Arrays.sort(ls);
 
         String decodedBase = URIUtil.decodePath(basePath);
-        String title = Bundle.getMessage(this.locale, "DirectoryTitle", deTag(decodedBase)); // NOI18N
+        String title = Bundle.getMessage(this.locale, "DirectoryTitle", StringUtil.sanitizeXmlString(decodedBase)); // NOI18N
 
         StringBuilder table = new StringBuilder(4096);
         String row = Bundle.getMessage(this.locale, "TableRow"); // NOI18N
@@ -75,7 +70,7 @@ public class DirectoryResource extends Resource {
             }
             table.append(String.format(this.locale, row,
                     itemPath,
-                    deTag(l),
+                    StringUtil.sanitizeXmlString(l),
                     Bundle.getMessage(this.locale, "SizeInBytes", item.length()),
                     dfmt.format(new Date(item.lastModified())))
             );
@@ -96,8 +91,20 @@ public class DirectoryResource extends Resource {
         );
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // spotbugs errors if equals is not overridden, so override and call super
+        return super.equals(other);
+    }
+
+    @Override
+    public int hashCode() {
+        // spotbugs errors if equals is present, but not hashCode, so override and call super
+        return super.hashCode();
+    }
+
     /*
-     * TODO: Do we already have something like this elsewhere in the JMRI code or in a required library?
+     * Originally copied from private static method of org.eclipse.jetty.util.resource.Resource
      */
     /**
      * Encode any characters that could break the URI string in an HREF. Such as
@@ -111,7 +118,7 @@ public class DirectoryResource extends Resource {
      * @return the defanged text.
      */
     private static String hrefEncodeURI(String raw) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
 
         loop:
         for (int i = 0; i < raw.length(); i++) {
@@ -121,7 +128,7 @@ public class DirectoryResource extends Resource {
                 case '"':
                 case '<':
                 case '>':
-                    buf = new StringBuffer(raw.length() << 1);
+                    buf = new StringBuilder(raw.length() << 1);
                     break loop;
                 default:
                     log.debug("Unhandled code: {}", c);
@@ -137,16 +144,16 @@ public class DirectoryResource extends Resource {
             switch (c) {
                 case '"':
                     buf.append("%22");
-                    continue;
+                    break;
                 case '\'':
                     buf.append("%27");
-                    continue;
+                    break;
                 case '<':
                     buf.append("%3C");
-                    continue;
+                    break;
                 case '>':
                     buf.append("%3E");
-                    continue;
+                    break;
                 default:
                     buf.append(c);
             }
@@ -155,92 +162,6 @@ public class DirectoryResource extends Resource {
         return buf.toString();
     }
 
-    /*
-     * TODO: Do we already have something like this elsewhere in the JMRI code or in a required library?
-     */
-    private static String deTag(String raw) {
-        return StringUtil.replace(StringUtil.replace(raw, "<", "&lt;"), ">", "&gt;");
-    }
-
-    /*
-     * Abstract methods of Resource that must be overridden.
-     */
-    @Override
-    public boolean isContainedIn(Resource rsrc) throws MalformedURLException {
-        return this.resource.isContainedIn(rsrc);
-    }
-
-    @Override
-    public void close() {
-        this.resource.close();
-    }
-
-    @Override
-    public boolean exists() {
-        return this.resource.exists();
-    }
-
-    @Override
-    public boolean isDirectory() {
-        return this.resource.isDirectory();
-    }
-
-    @Override
-    public long lastModified() {
-        return this.resource.lastModified();
-    }
-
-    @Override
-    public long length() {
-        return this.resource.length();
-    }
-
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public URL getURL() {
-        return this.resource.getURL();
-    }
-
-    @Override
-    public File getFile() throws IOException {
-        return this.resource.getFile();
-    }
-
-    @Override
-    public String getName() {
-        return this.resource.getName();
-    }
-
-    @Override
-    public InputStream getInputStream() throws IOException {
-        return this.resource.getInputStream();
-    }
-
-    @Override
-    public boolean delete() throws SecurityException {
-        return this.resource.delete();
-    }
-
-    @Override
-    public boolean renameTo(Resource rsrc) throws SecurityException {
-        return this.resource.renameTo(rsrc);
-    }
-
-    @Override
-    public String[] list() {
-        return this.resource.list();
-    }
-
-    @Override
-    public Resource addPath(String string) throws IOException, MalformedURLException {
-        return this.resource.addPath(string);
-    }
-
-    @Override
-    public ReadableByteChannel getReadableByteChannel() throws IOException {
-        return this.resource.getReadableByteChannel();
-    }
-
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DirectoryResource.class);
+    private static final Logger log = LoggerFactory.getLogger(DirectoryResource.class);
 }

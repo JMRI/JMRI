@@ -56,15 +56,15 @@ public class DefaultIdTag extends AbstractIdTag {
             this.whenLastSeen = null;
         }
         setCurrentState(r != null ? SEEN : UNSEEN);
-        firePropertyChange("whereLastSeen", oldWhere, this.whereLastSeen); //NOI18N
-        firePropertyChange("whenLastSeen", oldWhen, this.whenLastSeen);    //NOI18N
+        firePropertyChange("whereLastSeen", oldWhere, this.whereLastSeen); // NOI18N
+        firePropertyChange("whenLastSeen", oldWhen, this.whenLastSeen);    // NOI18N
     }
 
     private void setCurrentState(int state) {
         try {
             setState(state);
         } catch (JmriException ex) {
-            log.warn("Problem setting state of IdTag " + getSystemName());
+            log.warn("Problem setting state of IdTag {}", getSystemName());
         }
     }
 
@@ -80,7 +80,7 @@ public class DefaultIdTag extends AbstractIdTag {
 
     @Override
     public Element store(boolean storeState) {
-        Element e = new Element("idtag"); //NOI18N
+        Element e = new Element("idtag"); // NOI18N
         // e.setAttribute("systemName", this.mSystemName); // not needed from 2.11.1
         e.addContent(new Element("systemName").addContent(this.mSystemName)); // NOI18N
         String uName = this.getUserName();
@@ -97,45 +97,45 @@ public class DefaultIdTag extends AbstractIdTag {
             e.addContent(new Element("whereLastSeen").addContent(whereLast.getSystemName())); // NOI18N
         }
         if (this.getWhenLastSeen() != null && storeState) {
-            e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen()))); //NOI18N
+            e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen()))); // NOI18N
         }
         return e;
     }
 
     @Override
     public void load(Element e) {
-        if (e.getName().equals("idtag")) { //NOI18N
+        if (e.getName().equals("idtag")) { // NOI18N
             if (log.isDebugEnabled()) {
-                log.debug("Load IdTag element for " + this.getSystemName());
+                log.debug("Load IdTag element for {}", this.getSystemName());
             }
-            if (e.getChild("userName") != null) //NOI18N
+            if (e.getChild("userName") != null) // NOI18N
             {
-                this.setUserName(e.getChild("userName").getText()); //NOI18N
+                this.setUserName(e.getChild("userName").getText()); // NOI18N
             }
-            if (e.getChild("comment") != null) //NOI18N
+            if (e.getChild("comment") != null) // NOI18N
             {
-                this.setComment(e.getChild("comment").getText()); //NOI18N
+                this.setComment(e.getChild("comment").getText()); // NOI18N
             }
-            if (e.getChild("whereLastSeen") != null) { //NOI18N
+            if (e.getChild("whereLastSeen") != null) { // NOI18N
                 try {
                     Reporter r = InstanceManager.getDefault(jmri.ReporterManager.class)
-                                    .provideReporter(e.getChild("whereLastSeen").getText()); //NOI18N
+                                    .provideReporter(e.getChild("whereLastSeen").getText()); // NOI18N
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;
                 } catch (IllegalArgumentException ex) {
                     log.warn("Failed to provide Turnout \"{}\" in load", e.getChild("whereLastSeen").getText());
                 }
             }
-            if (e.getChild("whenLastSeen") != null) { //NOI18N
-                log.debug("When Last Seen: " + e.getChild("whenLastSeen").getText());
+            if (e.getChild("whenLastSeen") != null) { // NOI18N
+                log.debug("When Last Seen: {}", e.getChild("whenLastSeen").getText());
                 try {
-                    this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); //NOI18N
+                    this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); // NOI18N
                 } catch (ParseException ex) {
-                    log.warn("Error parsing when last seen: " + ex);
+                    log.warn("Error parsing when last seen: {}", ex);
                 }
             }
         } else {
-            log.error("Not an IdTag element: " + e.getName());
+            log.error("Not an IdTag element: {}", e.getName());
         }
     }
 

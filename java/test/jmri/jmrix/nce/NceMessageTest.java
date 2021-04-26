@@ -1,36 +1,43 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NceMessage class.
  *
- * @author	Bob Jacobsen Copyright 2002-2004
+ * @author Bob Jacobsen Copyright 2002-2004
  */
 public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // ensure that the static useBinary value is left OK
     private int saveCommandOptions;
     private NceTrafficController tc; // don't init now, as there's logging in the ctor
-    private NceMessage msg = null; 
+    private NceMessage msg = null;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new NceTrafficController();
         saveCommandOptions = tc.getCommandOptions();
-        m = msg = new NceMessage(1);
+        try {
+            m = msg = new NceMessage(1);
+        }
+        catch (Throwable t) { // debug for "Could not initialize class jmri.jmrix.nce.NceMessage"
+            log.error("caught in NceMesssage ctor", t);
+        }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = msg = null;
-        tc.commandOptionSet = false;	// kill warning message
+        m = msg = null;
+        tc.commandOptionSet = false; // kill warning message
         tc.setCommandOptions(saveCommandOptions);
         Assert.assertTrue("Command has been set", tc.commandOptionSet);
-        tc.commandOptionSet = false;	// kill warning message
+        tc.commandOptionSet = false; // kill warning message
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
@@ -165,5 +172,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg = NceMessage.sendPacketMessage(tc, new byte[]{(byte) 0x81, (byte) 0xff, (byte) 0x7e});
         Assert.assertEquals("content", "93 02 81 FF 7E", msg.toString());
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessageTest.class);
 
 }

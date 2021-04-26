@@ -97,22 +97,29 @@
             <text> </text>
         </label>
         <row>
-            <display item="ESU V4 Function Settings Auto Uncoupling Slider 1" layout="above" label=""/>
-            <display item="ESU V4 Function Settings Auto Uncoupling Slider 1" layout="above" format="hslider"/>
+            <display item="ESU Auto Uncoupling Speed" layout="above" label=""/>
+            <display item="ESU Auto Uncoupling Speed" layout="above" format="hslider"/>
         </row>
         <label>
             <text> </text>
         </label>
         <row>
-            <display item="ESU V4 Function Settings Auto Uncoupling Slider 2" layout="above" label=""/>
-            <display item="ESU V4 Function Settings Auto Uncoupling Slider 2" layout="above" format="hslider"/>
+            <display item="ESU Auto Uncoupling Push Time" layout="above" label=""/>
+            <display item="ESU Auto Uncoupling Push Time" layout="above" format="hslider"/>
         </row>
         <label>
             <text> </text>
         </label>
         <row>
-            <display item="ESU V4 Function Settings Auto Uncoupling Slider 3" layout="above" label=""/>
-            <display item="ESU V4 Function Settings Auto Uncoupling Slider 3" layout="above" format="hslider"/>
+            <display item="ESU Auto Uncoupling Wait Time" layout="above" label=""/>
+            <display item="ESU Auto Uncoupling Wait Time" layout="above" format="hslider"/>
+        </row>
+        <label>
+            <text> </text>
+        </label>
+        <row>
+            <display item="ESU Auto Uncoupling Remove Time" layout="above" label=""/>
+            <display item="ESU Auto Uncoupling Remove Time" layout="above" format="hslider"/>
         </row>
     </column>
     <group exclude="ESU LokPilot Standard V1.0">
@@ -181,6 +188,8 @@
                 <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" label=""/>
                 <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" format="hslider"/>
             </row>
+            <separator/>
+            <display item="ESU AUX10/Sensor" layout="above" format="radiobuttons"/>
         </column>
     </group>
     <group include="MBW Silberling,Bachmann MK2F">

@@ -27,6 +27,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
@@ -53,7 +54,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     JRadioButton _fillColorButon;
     JSlider _lineSlider;
     JSlider _alphaSlider;
-    private transient NamedBeanComboBox<Sensor> _sensorBox = new NamedBeanComboBox<>(
+    private final transient NamedBeanComboBox<Sensor> _sensorBox = new NamedBeanComboBox<>(
         InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     JRadioButton _hideShape;
     JRadioButton _changeLevel;
@@ -105,7 +106,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(label);
     }
-    private final JPanel makeCreatePanel(String type) {
+    private JPanel makeCreatePanel(String type) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         java.awt.Dimension dim = new java.awt.Dimension(250, 8);
@@ -131,7 +132,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         return panel;
     }
 
-    private final JPanel makeEditPanel() {
+    private JPanel makeEditPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
@@ -140,9 +141,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         JPanel pp = new JPanel();
         pp.add(new JLabel(Bundle.getMessage("thin")));
         _lineSlider = new JSlider(SwingConstants.HORIZONTAL, 1, 30, _lineWidth);
-        _lineSlider.addChangeListener((ChangeEvent e) -> {
-            widthChange();
-        });
+        _lineSlider.addChangeListener((ChangeEvent e) -> widthChange());
         pp.add(_lineSlider);
         pp.add(new JLabel(Bundle.getMessage("thick")));
         p.add(pp);
@@ -158,9 +157,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         _lineColorButon.setSelected(true);
         panel.add(p);
         _chooser = new JColorChooser(_lineColor);
-        _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
-            colorChange();
-        });
+        _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> colorChange());
         _chooser.setPreviewPanel(new JPanel());
         _chooser = JmriColorChooser.extendColorChooser(_chooser);
         panel.add(_chooser);
@@ -170,13 +167,9 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         pp = new JPanel();
         pp.add(new JLabel(Bundle.getMessage("transparent")));
         _alphaSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _lineColor.getAlpha());
-        _alphaSlider.addChangeListener((ChangeEvent e) -> {
-            alphaChange();
-        });
+        _alphaSlider.addChangeListener((ChangeEvent e) -> alphaChange());
         pp.add(_alphaSlider);
-        _lineColorButon.addChangeListener((ChangeEvent e) -> {
-            buttonChange();
-        });
+        _lineColorButon.addChangeListener((ChangeEvent e) -> buttonChange());
         pp.add(new JLabel(Bundle.getMessage("opaque")));
         p.add(pp);
         panel.add(p);
@@ -363,9 +356,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         panel.add(Box.createHorizontalGlue());
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener((ActionEvent a) -> {
-            closingEvent(true);
-        });
+        cancelButton.addActionListener((ActionEvent a) -> closingEvent(true));
         p =new JPanel();
         p.add(cancelButton);
         panel.add(p);
@@ -439,7 +430,12 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
             if (cancel) {
                 _shape.remove();
                 if (_originalShape != null) {
-                    _originalShape.getEditor().putItem(_originalShape);
+                    try {
+                        _originalShape.getEditor().putItem(_originalShape);
+                    } catch (Positionable.DuplicateIdException e) {
+                        // This should never happen
+                        log.error("Editor.putItem() with has thrown DuplicateIdException", e);
+                    }
                     _originalShape.setListener();
                 }
             } else {

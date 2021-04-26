@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -11,19 +12,6 @@ import javax.swing.AbstractAction;
  * 
  */
 public class YardmasterByTrackAction extends AbstractAction {
-
-    public YardmasterByTrackAction(String s, Location location) {
-        super(s);
-        _location = location;
-    }
-
-    public YardmasterByTrackAction(String s) {
-        super(s);
-    }
-
-    public YardmasterByTrackAction() {
-        super(Bundle.getMessage("TitleYardmasterByTrack"));
-    }
     
     public YardmasterByTrackAction(Location location) {
         super(Bundle.getMessage("TitleYardmasterByTrack"));
@@ -31,7 +19,6 @@ public class YardmasterByTrackAction extends AbstractAction {
     }
 
     Location _location;
-
     YardmasterByTrackFrame f = null;
 
     @Override

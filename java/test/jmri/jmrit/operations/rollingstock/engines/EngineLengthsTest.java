@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -13,7 +14,7 @@ import org.junit.Test;
  * Everything Consist: Everything Import: Everything EngineManager: Engine
  * register/deregister EngineManager: Consists
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class EngineLengthsTest extends OperationsTestCase {
 
@@ -39,19 +40,19 @@ public class EngineLengthsTest extends OperationsTestCase {
     public void testEngineLengthsNames() {
         EngineLengths el1 = new EngineLengths();
 
-        Assert.assertEquals("EngineLengths Null Names", false, el1.containsName("TESTENGINELENGTHNAME1"));
+        Assert.assertEquals("EngineLengths Null Names", false, el1.containsName("1"));
 
-        el1.addName("TESTENGINELENGTHNAME1");
-        Assert.assertEquals("EngineLengths add Name1", true, el1.containsName("TESTENGINELENGTHNAME1"));
+        el1.addName("1");
+        Assert.assertEquals("EngineLengths add Name1", true, el1.containsName("1"));
 
-        el1.addName("TESTENGINELENGTHNAME2");
-        Assert.assertEquals("EngineLengths add Name2", true, el1.containsName("TESTENGINELENGTHNAME2"));
+        el1.addName("2");
+        Assert.assertEquals("EngineLengths add Name2", true, el1.containsName("2"));
 
-        el1.deleteName("TESTENGINELENGTHNAME2");
-        Assert.assertEquals("EngineLengths delete Name2", false, el1.containsName("TESTENGINELENGTHNAME2"));
+        el1.deleteName("2");
+        Assert.assertEquals("EngineLengths delete Name2", false, el1.containsName("2"));
 
-        el1.deleteName("TESTENGINELENGTHNAME1");
-        Assert.assertEquals("EngineLengths delete Name1", false, el1.containsName("TESTENGINELENGTHNAME1"));
+        el1.deleteName("1");
+        Assert.assertEquals("EngineLengths delete Name1", false, el1.containsName("1"));
     }
 
     // TODO: Add test for import

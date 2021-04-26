@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 /**
  * Panel for entry and modifiation of an Affine Transform.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class AffineEntryPanel extends javax.swing.JPanel {
 

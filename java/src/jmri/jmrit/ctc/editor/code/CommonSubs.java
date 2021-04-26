@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -20,12 +21,18 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.BlockManager;
+import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.TurnoutManager;
+import jmri.jmrit.ctc.CtcManager;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHSignal;
+import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -87,13 +94,29 @@ public class CommonSubs {
                 }
             }
         }
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT)) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withRecordSeparator(null))) {
             printer.printRecord(entries);
             return printer.getOut().toString();
         } catch (IOException ex) {
             log.error("Unable to create CSV", ex);
             return "";
         }
+    }
+
+//  If the table model value is null, that is the same as "".  This also "compacts"
+//  the entries also (i.e. blank line(s) between entries are removed):
+    public static ArrayList<String> getStringArrayFromDefaultTableModel(DefaultTableModel defaultTableModel) {
+        ArrayList<String> entries = new ArrayList<>();
+        for (int sourceIndex = 0; sourceIndex < defaultTableModel.getRowCount(); sourceIndex++) {
+            Object object = defaultTableModel.getValueAt(sourceIndex, 0);
+            if (object != null) {
+                String entry = object.toString().trim();
+                if (!entry.isEmpty()) { // Do a "compact" on the fly:
+                    entries.add(entry);
+                }
+            }
+        }
+        return entries;
     }
 
     public static int compactDefaultTableModel(DefaultTableModel defaultTableModel) {
@@ -125,11 +148,11 @@ public class CommonSubs {
     public static ArrayList<String> getArrayListOfSelectableSwitchDirectionIndicators(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
         ArrayList<String> returnValue = new ArrayList<>();
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
-            if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.isEmpty()) {
-                returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor);
+            if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName().isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName());
             }
-            if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.isEmpty()) {
-                returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor);
+            if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName().isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName());
             }
         }
 //      Collections.sort(returnValue);
@@ -189,14 +212,7 @@ public class CommonSubs {
      * @param firstRowBlank True to create a blank row. If the selection is null or empty, the blank row will be selected.
      */
     public static void populateJComboBoxWithBeans(JComboBox<String> jComboBox, String beanType, String currentSelection, boolean firstRowBlank) {
-        boolean panelLoaded = InstanceManager.getDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class)._mPanelLoaded;
         jComboBox.removeAllItems();
-        if (!panelLoaded) {
-            // Configure combo box as a pseudo text field
-            jComboBox.setEditable(true);
-            jComboBox.addItem(currentSelection == null ? "" : currentSelection);
-            return;
-        }
         jComboBox.setEditable(false);
         ArrayList<String> list = new ArrayList<>();
         switch (beanType) {
@@ -286,17 +302,6 @@ public class CommonSubs {
         }
     }
 
-//  Or you can get the actual string that the user sees in the button (or null if you screwed up by
-//  allowing all buttons to be non-selected, for instance if you didn't select one by default).
-    public static String getButtonSelectedText(ButtonGroup buttonGroup) {
-        Enumeration<AbstractButton> buttons = buttonGroup.getElements();
-        while (buttons.hasMoreElements()) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) return button.getText();
-        }
-        return null;
-    }
-
 //  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.
     public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
         if (errors.isEmpty()) return false;
@@ -330,15 +335,74 @@ public class CommonSubs {
         return !((String) combo.getSelectedItem()).trim().isEmpty();
     }
 
-//  Returns the directory only of a directory + filename combination.  The return
-//  string has a file separator at the end, so that filenames can just be appended to it.
-    public static String getDirectoryOnly(String directoryAndFilename) {
-        File file = new File(directoryAndFilename);
-        String parent = file.getParent();   // Returns "null" if no parent.
-        if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
-        return file.getParent() + File.separator;
+    /**
+     * Get a NBHSensor from the CtcManager NBHSensor map or create a new one.
+     * @param newName The new name to be retrieved from the map or created.
+     * @param isInternal True if an internal sensor is being requested.  Internal will create the sensor if necessary using provide(String).
+     * @return a NBHSensor or null.
+     */
+    public static NBHSensor getNBHSensor(String newName, boolean isInternal) {
+        NBHSensor sensor = null;
+        if (!ProjectsCommonSubs.isNullOrEmptyString(newName)) {
+            sensor = InstanceManager.getDefault(CtcManager.class).getNBHSensor(newName);
+            if (sensor == null) {
+                if (isInternal) {
+                    sensor = new NBHSensor("CommonSubs", "new sensor = ", newName, newName);
+                } else {
+                    sensor = new NBHSensor("CommonSubs", "new sensor = ", newName, newName, false);
+                }
+            }
+        }
+        return sensor;
+    }
+
+    /**
+     * Get a NBHTurnout from the CtcManager NBHTurnout map or create a new one.
+     * @param newName The new name to be retrieved from the map or created.
+     * @param feedbackDifferent The feedback different state.
+     * @return a valid NBHTurnout or an empty NBHTurnout.
+     */
+    public static NBHTurnout getNBHTurnout(String newName, boolean feedbackDifferent) {
+        NBHTurnout turnout = null;
+        if (!ProjectsCommonSubs.isNullOrEmptyString(newName)) {
+            turnout = InstanceManager.getDefault(CtcManager.class).getNBHTurnout(newName);
+            if (turnout == null) {
+                turnout = new NBHTurnout("CommonSubs", "new turnout = ", newName, newName, feedbackDifferent);
+            }
+        }
+        if (turnout == null) {
+            // Create a dummy NBHTurnout
+            turnout = new NBHTurnout("CommonSubs", "Empty turnout", "");
+        }
+        return turnout;
+    }
+
+    /**
+     * Get a NBHSignal from the CtcManager NBHSignal map or create a new one.
+     * @param newName The new name to be retrieved from the map or created.
+     * @return a valid NBHSignal or null.
+     */
+    public static NBHSignal getNBHSignal(String newName) {
+        NBHSignal signal = null;
+        if (!ProjectsCommonSubs.isNullOrEmptyString(newName)) {
+            signal = InstanceManager.getDefault(CtcManager.class).getNBHSignal(newName);
+            if (signal == null) {
+                signal = new NBHSignal(newName);
+            }
+        }
+        return signal;
+    }
+
+    /**
+     * Add a valid NBHSensor entry to an ArrayList.  The sensor name has to match an existing
+     * sensor in the JMRI sensor table.
+     * @param list The NBHSensor array list.
+     * @param sensorName The proposed sensor name.
+     */
+    public static void addSensorToSensorList(ArrayList<NBHSensor> list, String sensorName) {
+        NBHSensor sensor = getNBHSensor(sensorName, false);
+        if (sensor != null && sensor.valid()) list.add(sensor);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonSubs.class);
-
 }

@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
 
+import jmri.SystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The "system name" referred to here is the human-readable name like "LocoNet 2"
  * which can be obtained from i.e. 
- * {@link SystemConnectionMemo#getUserName}. 
+ * {@link jmri.SystemConnectionMemo#getUserName}. 
  * Not clear whether {@link ConnectionConfig#getConnectionName} is correct.
  * It's not intended to be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
  * Maybe the right thing is to pass in the SystemConnectionMemo?
@@ -132,7 +134,7 @@ public class ConnectionStatus {
      * Confirm status of a communication port is not down.
      *
      * @param systemName human-readable name for system like "LocoNet 2"
-     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
+     *                   which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @return true if port connection is operational or unknown, false if not
      */

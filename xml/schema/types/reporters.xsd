@@ -25,7 +25,7 @@
     <xs:complexType name="ReporterManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ReporterManager implementation.
+          Define the XML structure for storing the contents of a ReporterManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.AbstractReporterManagerConfigXML</jmri:usingclass>

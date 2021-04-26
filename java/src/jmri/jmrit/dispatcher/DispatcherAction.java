@@ -32,7 +32,7 @@ public class DispatcherAction extends AbstractAction {
         // create a Dispatcher window or activate the existing one
         if (f == null) {
             f = InstanceManager.getDefault(DispatcherFrame.class);
-            new Thread(new Runnable() {
+            jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     f.loadAtStartup();

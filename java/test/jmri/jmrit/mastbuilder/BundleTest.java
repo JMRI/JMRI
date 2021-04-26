@@ -1,7 +1,7 @@
 package jmri.jmrit.mastbuilder;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle class
@@ -15,9 +15,9 @@ public class BundleTest  {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessage() {
-            Bundle.getMessage("FFFFFTTTTTTT");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test public void testGoodKeysMessageArg() {
@@ -26,9 +26,9 @@ public class BundleTest  {
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessageArg() {
-            Bundle.getMessage("FFFFFTTTTTTT", "foo");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
 

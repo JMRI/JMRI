@@ -14,8 +14,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1" lastUpdated="20051012"/>
   <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+  <version author="Stephen Lowens" version="3" lastUpdated="20210131"/>  
   <!-- Version 1 initial release -->
   <!-- Version 2 change mfg to match name in NMRA.xml -->
+  <!-- Version 3 change maximum address to 2040 -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way">
       <model model="SMD2" lowVersionID="1"/>
@@ -23,10 +25,10 @@
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
       <variable CV="1" mask="VVVVVVVV" item="Base Address" default="1" tooltip="Range 1-2040">
-        <splitVal highCV="9" max="7" default="0" factor="1" offset="0" upperMask="XXXXXVVV"/>
+        <splitVal highCV="9" max="2040" default="0" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Base Address</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Version ID</label>
       </variable>
@@ -69,23 +71,23 @@
         <label>Output 2 Type</label>
       </variable>
       <variable CV="15" mask="VVVVVVVV" item="Output 2 Alternate Address" default="00" tooltip="Range 1-2040">
-        <splitVal highCV="16" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
+        <splitVal highCV="16" max="2040" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Output 2 Alternate Address</label>
       </variable>
       <variable CV="17" mask="VVVVVVVV" item="Route 1 Address" default="00" tooltip="Range 1-2040">
-        <splitVal highCV="18" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
+        <splitVal highCV="18" max="2040" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 1 Address</label>
       </variable>
       <variable CV="19" mask="VVVVVVVV" item="Route 2 Address" default="00" tooltip="Range 1-2040">
-        <splitVal highCV="20" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
+        <splitVal highCV="20" max="2040" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 2 Address</label>
       </variable>
       <variable CV="21" mask="VVVVVVVV" item="Route 3 Address" default="00" tooltip="Range 1-2040">
-        <splitVal highCV="22" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
+        <splitVal highCV="22" max="2040" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 3 Address</label>
       </variable>
       <variable CV="23" mask="VVVVVVVV" item="Route 4 Address" default="00" tooltip="Range 1-2040">
-        <splitVal highCV="24" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
+        <splitVal highCV="24" max="2040" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 4 Address</label>
       </variable>
     </variables>

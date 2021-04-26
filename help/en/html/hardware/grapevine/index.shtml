@@ -76,8 +76,9 @@
       Configure Nodes</a> tool in the <strong>Grapevine</strong>
       menu.</p>
 
-      <p>Grapevine Systems Names start with a system letter of "G".
-      After that, there's a <a href=
+      <p>Grapevine Systems Names start with a system letter of "G",
+      optionally followed by an integer to form a unique System Prefix.
+      After the prefix, there's a <a href=
       "../../doc/Technical/Names.shtml#type">type letter</a>, then
       a node number and a pin number.<br>
       Naming and input/output connectors are described on a

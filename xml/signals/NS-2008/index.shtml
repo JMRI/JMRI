@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -43,6 +43,6 @@ Signal Mast definitions:
 <li><a href="appearance-CLS-3-lo.xml">Triple lamp colorlight dwarf signal</a>
 </ul>
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

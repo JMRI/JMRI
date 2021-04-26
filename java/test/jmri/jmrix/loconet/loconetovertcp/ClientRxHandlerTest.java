@@ -3,15 +3,13 @@ package jmri.jmrix.loconet.loconetovertcp;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for ClientRxHandler class.
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ClientRxHandlerTest {
 
@@ -21,24 +19,24 @@ public class ClientRxHandlerTest {
     @Test
     public void testCTor() {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1", new java.net.Socket(), lnis);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         t.dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
 
         memo = new LocoNetSystemConnectionMemo();
+        jmri.InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, memo); // register now to prevent having to wait for register() to complete (or test fail)
         // ensure memo exists in order to later use InstanceManager.getDefault()
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         lnis = null;
         memo.dispose();

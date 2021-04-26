@@ -12,6 +12,9 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.TransitSection;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,20 +101,27 @@ public class AllocatedSection {
     private int mAllocationNumber = 0;     // used to keep track of allocation order
     private Sensor mForwardStoppingSensor = null;
     private Sensor mReverseStoppingSensor = null;
+    // list of expected states of turnouts in allocated section
+    // used for delayed checking
+    private List<LayoutTrackExpectedState<LayoutTurnout>> autoTurnoutsResponse = null;
 
     //
     // Access methods
     //
+    public void setAutoTurnoutsResponse(List<LayoutTrackExpectedState<LayoutTurnout>> atr) {
+        autoTurnoutsResponse = atr;
+    }
+
+    public List<LayoutTrackExpectedState<LayoutTurnout>> getAutoTurnoutsResponse() {
+        return autoTurnoutsResponse;
+    }
+
     public Section getSection() {
         return mSection;
     }
 
     public String getSectionName() {
-        String s = mSection.getSystemName();
-        String u = mSection.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = mSection.getDisplayName();
         return s;
     }
 
@@ -289,7 +299,7 @@ public class AllocatedSection {
             if (!isInActiveBlockList(b)) {
                 int occ = b.getState();
                 Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
-                Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
+                Thread tBlockChange = jmri.util.ThreadingUtil.newThread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
                 tBlockChange.start();
                 addToActiveBlockList(b);
                 if (InstanceManager.getDefault(DispatcherFrame.class).getSupportVSDecoder()) {

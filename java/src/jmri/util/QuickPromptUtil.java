@@ -22,8 +22,9 @@ import javax.swing.SwingConstants;
 public class QuickPromptUtil {
 
     /**
-     * Utility function to prompt for new string value
+     * Utility function to prompt for new string value.
      *
+     * @param parentComponent the parent component
      * @param message  the prompt message
      * @param title    the dialog title
      * @param oldValue the original string value
@@ -41,8 +42,9 @@ public class QuickPromptUtil {
     }
 
     /**
-     * Utility function to prompt for new integer value
+     * Utility function to prompt for new integer value.
      *
+     * @param parentComponent the parent component
      * @param message  the prompt message
      * @param title    the dialog title
      * @param oldValue the original integer value
@@ -155,8 +157,9 @@ public class QuickPromptUtil {
     }
 
     /**
-     * Utility function to prompt for new float value
+     * Utility function to prompt for new float value.
      *
+     * @param parentComponent the parent component.
      * @param message  the prompt message
      * @param title    the dialog title
      * @param oldValue the original float value
@@ -176,8 +179,9 @@ public class QuickPromptUtil {
     }
 
     /**
-     * Utility function to prompt for new double value
+     * Utility function to prompt for new double value.
      *
+     * @param parentComponent the parent component
      * @param message  the prompt message
      * @param title    the dialog title
      * @param oldValue the original double value

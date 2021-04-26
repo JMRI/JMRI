@@ -14,7 +14,6 @@ import java.util.Set;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
@@ -36,7 +35,7 @@ public class Server {
     boolean settingsLoaded = false;
     ServerListner stateListner;
     boolean settingsChanged = false;
-    QuietShutDownTask shutDownTask;
+    Runnable shutDownTask;
     ZeroConfService service = null;
     static final String AUTO_START_KEY = "AutoStart";
     static final String PORT_NUMBER_KEY = "PortNumber";
@@ -151,13 +150,7 @@ public class Server {
             log.info("Starting ZeroConfService _dccppovertcpserver._tcp.local for DCCppOverTCP Server");
             this.service.publish();
             if (this.shutDownTask == null) {
-                this.shutDownTask = new QuietShutDownTask("DCCppOverTcpServer") {
-                    @Override
-                    public boolean execute() {
-                        InstanceManager.getDefault(Server.class).disable();
-                        return true;
-                    }
-                };
+                this.shutDownTask = this::disable;
             }
             if (this.shutDownTask != null) {
                 InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);

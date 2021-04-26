@@ -44,20 +44,20 @@
       "border: 0px solid ; width: 369px; height: 215px;" alt=
       "Fully Jysntrumented Throttle Window" src=
       "images/throttleWindowJynstrumented.png"></a> Jetez un oeil
-      &agrave; la page du <a href="http://jmri.org/jython">dossier
+      &agrave; la page du <a href="https://jmri.org/jython">dossier
       Jython</a> dans votre arborescence des sources, il y a un
-      <a href="http://jmri.org/jython/Jynstruments/">dossier
+      <a href="https://jmri.org/jython/Jynstruments/">dossier
       Jynstruments</a> avec un <a href=
-      "http://jmri.org/jython/Jynstruments/README">README</a> et un
+      "https://jmri.org/jython/Jynstruments/README">README</a> et un
       <a href=
-      "http://jmri.org/jython/Jynstruments/ThrottleFrame/Light.jyn">
+      "https://jmri.org/jython/Jynstruments/ThrottleFrame/Light.jyn">
       ThrottleFrame/Light.jyn</a> qui doit &ecirc;tre essay&eacute;
       sur la fen&ecirc;tre R&eacute;gulateur JMRI. L'image &agrave;
       droite les affiche dans une utilisation (les boutons de
       diamant).<br>
       Dans le dossier Jython, vous trouverez &eacute;galement un
       simple <a href=
-      "http://jmri.org/jython/Jynstruments/Test.jyn">Test.jyn</a>
+      "https://jmri.org/jython/Jynstruments/Test.jyn">Test.jyn</a>
       &agrave; des fins de tests</p>
 
       <p>Voir ThrottleFrame.java pour savoir comment rendre le code
@@ -91,7 +91,7 @@
       <ul>
         <li>La fen&ecirc;tre principale JMRI o&ugrave; vous pouvez
         ajouter des <a href=
-        "http://jmri.org/jython/Jynstruments/Launchers/">lanceurs</a>
+        "https://jmri.org/jython/Jynstruments/Launchers/">lanceurs</a>
         . Il y a un script Jython nomm&eacute;
         JynstrumentMainFrame.py dans le dossier de script par
         d&eacute;faut Jython JMRI qui montre comment charger ces
@@ -109,7 +109,7 @@
         "../throttle/BasicThrottleWindow.shtml">Fen&ecirc;tre JMRI
         R&eacute;gulateur</a> o&ugrave; vous pouvez ajouter
         Jynstruments <a href=
-        "http://jmri.org/jython/Jynstruments/ThrottleFrame/">pour
+        "https://jmri.org/jython/Jynstruments/ThrottleFrame/">pour
         enrichir l'exp&eacute;rience de r&eacute;gulateur
         courant</a> (fonctions sp&eacute;ciales, l'e-stop, les
         directions ... et m&ecirc;me celui qui affiche la

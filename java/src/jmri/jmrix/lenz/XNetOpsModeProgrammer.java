@@ -19,9 +19,9 @@ import jmri.ProgrammingMode;
  */
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener, AddressedProgrammer {
 
-    protected int mAddressHigh;
-    protected int mAddressLow;
-    protected int mAddress;
+    protected final int mAddressHigh;
+    protected final int mAddressLow;
+    protected final int mAddress;
     protected int progState = NOTPROGRAMMING;
     protected int value;
     protected jmri.ProgListener progListener = null;
@@ -30,18 +30,18 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     static protected final int NOTPROGRAMMING = 0; // is notProgramming
     static protected final int REQUESTSENT = 1; // read/write command sent, waiting reply
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     public XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
         tc = controller;
         if (log.isDebugEnabled()) {
-            log.debug("Creating Ops Mode Programmer for Address " + pAddress);
+            log.debug("Creating Ops Mode Programmer for Address {}", pAddress);
         }
         mAddressLow = LenzCommandStation.getDCCAddressLow(pAddress);
         mAddressHigh = LenzCommandStation.getDCCAddressHigh(pAddress);
         mAddress = pAddress;
         if (log.isDebugEnabled()) {
-            log.debug("High Address: " + mAddressHigh + " Low Address: " + mAddressLow);
+            log.debug("High Address: {} Low Address: {}", mAddressHigh, mAddressLow);
         }
         // register as a listener
         tc.addXNetListener(XNetInterface.COMMINFO | XNetInterface.CS_INFO, this);
@@ -100,7 +100,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
@@ -140,7 +140,6 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         if (progState == NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
-            return;
         } else if (progState == REQUESTSENT) {
             if (l.isOkMessage()) {
                 // Before we set the programmer state to not programming, 
@@ -153,7 +152,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
-                    return;  // just ignore this, since we are retransmitting 
+                    // just ignore this, since we are retransmitting
                     // the message.
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
@@ -209,7 +208,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

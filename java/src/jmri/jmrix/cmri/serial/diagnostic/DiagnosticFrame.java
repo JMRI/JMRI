@@ -158,11 +158,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                 public void actionPerformed(ActionEvent event) {
                     displayNodeInfo((String) nodeSelBox.getSelectedItem());
                 }
-            });                   
+            });
         }
-        
+
         // set the frame's initial state
-        setTitle(Bundle.getMessage("DiagnosticTitle") + Bundle.getMessage("WindowConnectionMemo")+_memo.getUserName());  // NOI18N
+        setTitle(Bundle.getMessage("DiagnosticTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName());  // NOI18N
         setSize(500, 200);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -172,68 +172,68 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         JPanel panelNode = new JPanel();
         panelNode.setLayout(new BoxLayout(panelNode, BoxLayout.Y_AXIS));
         JPanel panelNode1 = new JPanel();
-        panelNode1.setLayout(new FlowLayout());        
+        panelNode1.setLayout(new FlowLayout());
         panelNode1.add(new JLabel(Bundle.getMessage("LabelNodeAddress")));
         panelNode1.add(nodeSelBox);
         nodeSelBox.setToolTipText(Bundle.getMessage("SelectNodeAddressTip"));
         panelNode1.add(nodeText1);
         nodeText1.setText("Node Type/Card Size");
         panelNode.add(panelNode1);
-        
+
         JPanel panelNode2 = new JPanel();
-        panelNode2.setLayout(new FlowLayout());        
+        panelNode2.setLayout(new FlowLayout());
         nodeText2.setText("Ins and Outs");
         panelNode2.add(nodeText2);
         panelNode.add(panelNode2);
 
         Border panelNodeBorder = BorderFactory.createEtchedBorder();
-        Border panelNodeTitled = BorderFactory.createTitledBorder(panelNodeBorder,Bundle.getMessage("TestNodeTitle"));
+        Border panelNodeTitled = BorderFactory.createTitledBorder(panelNodeBorder, Bundle.getMessage("TestNodeTitle"));
         panelNode.setBorder(panelNodeTitled);
         contentPane.add(panelNode);
-                
+
         // Set up the test suite buttons
         //------------------------------
         JPanel panelTest = new JPanel();
-        panelTest.setLayout(new BoxLayout(panelTest, BoxLayout.Y_AXIS));        
+        panelTest.setLayout(new BoxLayout(panelTest, BoxLayout.Y_AXIS));
         JPanel panelTest1 = new JPanel();
-        panelTest1.setLayout(new FlowLayout(FlowLayout.LEADING));        
+        panelTest1.setLayout(new FlowLayout(FlowLayout.LEADING));
         testSelectBox.addItem(Bundle.getMessage("ButtonTestOutput"));
         testSelectBox.addItem(Bundle.getMessage("ButtonTestLoopback"));
         testSelectBox.addItem(Bundle.getMessage("ButtonTestSendCommands"));
         panelTest1.add(testSelectBox);
         testSelectBox.setToolTipText(Bundle.getMessage("TestTypeToolLabel"));
-        
+
         // --------------------------
         // Set up Halt Polling button
         // --------------------------
         haltPollButton.setVisible(true);
-        haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip") );
-	haltPollButton.addActionListener(new java.awt.event.ActionListener()
-        {
+        haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip"));
+        haltPollButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					haltpollButtonActionPerformed();
-				}
-			});
-	panelTest1.add(haltPollButton);
+                haltpollButtonActionPerformed();
+            }
+        });
+        panelTest1.add(haltPollButton);
         SerialTrafficController stc = _memo.getTrafficController();
-         if (stc.getPollNetwork())
+        if (stc.getPollNetwork()) {
             haltPollButton.setText(Bundle.getMessage("HaltPollButtonText"));
-         else
+        } else {
             haltPollButton.setText(Bundle.getMessage("ResumePollButtonText"));
-        
+        }
+
         panelTest.add(panelTest1);
-        
+
         JPanel panel11 = new JPanel();
-        panel11.setLayout(new FlowLayout(FlowLayout.LEFT)); 
+        panel11.setLayout(new FlowLayout(FlowLayout.LEFT));
         testReqEquip.setText(Bundle.getMessage("NeededEquipmentTitle"));
         panel11.add(testReqEquip);
         panel11.add(testEquip);
         testEquip.setToolTipText(Bundle.getMessage("NeededTestEquipmentTip"));
         panelTest.add(panel11);
-       
+
         Border panel1Border = BorderFactory.createEtchedBorder();
-        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,Bundle.getMessage("TestTypeTitle"));
+        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border, Bundle.getMessage("TestTypeTitle"));
         panelTest.setBorder(panel1Titled);
         contentPane.add(panelTest);
 
@@ -256,7 +256,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel21.add(obsDelayField);
         obsDelayField.setToolTipText(Bundle.getMessage("ObservationDelayToolTip"));
         obsDelayField.setText(Integer.toString(obsDelay));
-    
+
         // Panel for the Loopback test
         JPanel panel22 = new JPanel();
         panel22.setLayout(new FlowLayout());
@@ -287,13 +287,13 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                 pollButtonActionPerformed(e);
             }
         });
-        
+
         JPanel panel23a = new JPanel();
         panel23a.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel23a.add(pollButton);
         panel23a.add(nodeReplyLabel);
         panel23a.add(nodeReplyText);
-        
+
         JPanel panel24 = new JPanel();
         panel24.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel24.add(writeButton);
@@ -310,23 +310,23 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel24.add(writeBytesLabel);
         panel24.add(writeBytesField);
         writeBytesField.setText("0");
-        
+
         // Panel for the Poll node with inputs display
         JPanel panel25 = new JPanel();
         panel25.setLayout(new FlowLayout());
-       
+
         panel2.add(panel21);
-        
+
         panel2.add(panel22);
         panel22.setVisible(false);
-        
+
         panel2.add(panel23);
-        panel23.setVisible(false);       
+        panel23.setVisible(false);
         panel2.add(panel23a);
-        panel23a.setVisible(false);       
+        panel23a.setVisible(false);
         panel2.add(panel24);
         panel24.setVisible(false);
-        
+
         panel2.add(panel25);
         panel25.setVisible(false);
 
@@ -334,16 +334,15 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         Border panel2Titled = BorderFactory.createTitledBorder(panel2Border, Bundle.getMessage("TestSetUpTitle"));
         panel2.setBorder(panel2Titled);
         contentPane.add(panel2);
-        
+
         // Add the button listeners to display the appropriate test options
         //-----------------------------------------------------------------
         testSelectBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                    selTestType = testSelectBox.getSelectedIndex(); 
-                    switch(selTestType)
-                    {
-                      case testType_Outputs:
+                selTestType = testSelectBox.getSelectedIndex();
+                switch (selTestType) {
+                    case testType_Outputs:
                         testEquip.setText(Bundle.getMessage("OutputTestEquipment"));
                         panel21.setVisible(true);
                         panel22.setVisible(false);
@@ -356,7 +355,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         continueButton.setVisible(false);
                         displayNodeInfo(testNodeID);
                         break;
-                      case testType_Wraparound:
+                    case testType_Wraparound:
                         testEquip.setText(Bundle.getMessage("WrapTestEquipment"));
                         panel21.setVisible(true);
                         panel22.setVisible(true);
@@ -371,7 +370,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         invertWrapButton.setSelected(testNodeType == SerialNode.CPNODE);
                         displayNodeInfo(testNodeID);
                         break;
-                      case testType_SendCommand:
+                    case testType_SendCommand:
                         testEquip.setText(Bundle.getMessage("SendCommandEquipment"));
                         panel21.setVisible(false);
                         panel22.setVisible(false);
@@ -384,7 +383,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         continueButton.setVisible(false);
                         displayNodeInfo(testNodeID);
                         break;
-                      case testType_WriteBytes:
+                    case testType_WriteBytes:
                         testEquip.setText(Bundle.getMessage("WriteBytesEquipment"));
                         panel21.setVisible(false);
                         panel22.setVisible(false);
@@ -394,45 +393,45 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         panel25.setVisible(true);
                         displayNodeInfo(testNodeID);
                         break;
-                      default:
+                    default:
                         log.debug("default case in testSelectBox switch");
-                    }
-               }
-            });
+                }
+            }
+        });
 
         // Set up the status panel
         //------------------------
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-        
+
         JPanel panel31 = new JPanel();
         panel31.setLayout(new FlowLayout());
         statusText1.setText(Bundle.getMessage("StatusLine1"));
         statusText1.setVisible(true);
         statusText1.setMaximumSize(new Dimension(statusText1.getMaximumSize().width,
-        statusText1.getPreferredSize().height));
+                statusText1.getPreferredSize().height));
         panel31.add(statusText1);
-        
+
         JPanel panel32 = new JPanel();
         panel32.setLayout(new FlowLayout());
         statusText2.setText(Bundle.getMessage("StatusLine2", Bundle.getMessage("ButtonRun")));
         statusText2.setVisible(true);
         statusText2.setMaximumSize(new Dimension(statusText2.getMaximumSize().width,
-        statusText2.getPreferredSize().height));
+                statusText2.getPreferredSize().height));
         panel32.add(statusText2);
-        
+
         JPanel panel33 = new JPanel();
         panel33.setLayout(new FlowLayout());
         compareErr.setText("   "); //Bundle.getMessage("StatusLine1"));
         compareErr.setVisible(true);
         compareErr.setMaximumSize(new Dimension(compareErr.getMaximumSize().width,
-        compareErr.getPreferredSize().height));
+                compareErr.getPreferredSize().height));
         panel33.add(compareErr);
-       
+
         panel3.add(panel31);
         panel3.add(panel32);
         panel3.add(panel33);
-       
+
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, Bundle.getMessage("StatusTitle"));
         panel3.setBorder(panel3Titled);
@@ -473,7 +472,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
         contentPane.add(panel4);
-        
+
         if (numTestNodes > 0) {
             // initialize for the first time
             displayNodeInfo((String) nodeSelBox.getSelectedItem());
@@ -484,6 +483,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // pack for display
         pack();
     }
+
     /**
      * Initialize configured nodes and set up the node select combo box.
      */
@@ -514,8 +514,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             index++;
         }
     }
+    
     /**
-     * Method to handle selection of a Node for info display
+     * Method to handle selection of a Node for info display.
+     * @param nodeID Node ID.
      */
     public void displayNodeInfo(String nodeID) {
         if (!nodeID.equals(testNodeID)) {
@@ -529,7 +531,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
             if (s == null) {
                 // serious trouble, log error and ignore
-                log.error("Cannot find Node " + nodeID + " in list of configured Nodes.");
+                log.error("Cannot find Node {} in list of configured Nodes.", nodeID);
                 return;
             }
             // have node, initialize for new node
@@ -601,8 +603,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         statusText2.setVisible(true);
 
     }
+    
     /**
      * Handle run button in Diagnostic Frame.
+     * @param e unused.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Ignore button if test is already running
@@ -778,6 +782,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     /**
      * Handle continue button in Diagnostic Frame.
+     * @param e unused.
      */
     public void continueButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (testRunning && testSuspended) {
@@ -791,6 +796,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     /**
      * Handle Stop button in Diagnostic Frame.
+     * @param e unused.
      */
     public void stopButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Ignore button push if test is not running, else change flag
@@ -1132,6 +1138,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     /**
      * Create an Transmit packet (SerialMessage).
+     * @return loaded packet to transmit
      */
     SerialMessage createOutPacket() {
         // Count the number of DLE's to be inserted
@@ -1162,6 +1169,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     
     /**
      * Handle poll node button in Diagnostic Frame.
+     * @param e unused.
      */
     public synchronized void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
             portsPerCard = (testNode.getNumBitsPerCard()) / 8;
@@ -1222,10 +1230,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
     
     /**
-    * Transmit bytes to selected output card starting with out card number
-    * for number of bytes entered.
-    * If inverted checked, data is flipped.
-    */    
+     * Transmit bytes to selected output card starting with out card number
+     * for number of bytes entered.
+     * If inverted checked, data is flipped.
+     * @param e unused.
+     */    
     public synchronized void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 
        portsPerCard = (testNode.getNumBitsPerCard()) / 8;

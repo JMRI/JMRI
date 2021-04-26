@@ -2,18 +2,20 @@ package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
 import jmri.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for MaintainerCallSection class in the jmri.jmrit.ussctc package.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class MaintainerCallSectionTest {
 
     @Test
     public void testConstruction() {
-        new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", station);
+        Assert.assertNotNull(new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", station));
     }
  
     @Test 
@@ -58,8 +60,7 @@ public class MaintainerCallSectionTest {
     Turnout mcLayoutTurnout;
     Sensor panelSensor;
     
-    // The minimal setup for log4J
-    @org.junit.Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -84,7 +85,7 @@ public class MaintainerCallSectionTest {
         };
     }
 
-    @org.junit.After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

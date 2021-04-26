@@ -1,11 +1,13 @@
 package jmri.jmrix.roco.z21.swing.configtool;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Z21ConfigFrame class.
@@ -18,7 +20,7 @@ public class Z21ConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     private Z21SystemConnectionMemo memo = null;
     private Z21InterfaceScaffold tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -29,12 +31,12 @@ public class Z21ConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
-        if(!GraphicsEnvironment.isHeadless()){
-          frame = new Z21ConfigFrame(memo);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new Z21ConfigFrame(memo);
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;

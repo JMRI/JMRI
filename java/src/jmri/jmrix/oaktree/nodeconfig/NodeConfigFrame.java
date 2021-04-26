@@ -58,7 +58,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private OakTreeSystemConnectionMemo _memo = null;
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param memo system connection.
      */
     public NodeConfigFrame(OakTreeSystemConnectionMemo memo) {
         super();

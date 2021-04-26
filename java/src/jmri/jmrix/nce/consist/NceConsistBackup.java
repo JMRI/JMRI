@@ -148,7 +148,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                     }
 
                     if (log.isDebugEnabled()) {
-                        log.debug("consist " + buf.toString());
+                        log.debug("consist {}", buf.toString());
                     }
 
                     fileOut.println(buf.toString());

@@ -31,7 +31,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -57,9 +57,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-<p/>Site hosted by: <br/>
-      <a href="http://www.tagadab.com/">
-      <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 
 	</body>
 </html>

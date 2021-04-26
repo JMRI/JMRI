@@ -1,15 +1,16 @@
 package jmri.jmrit.display;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
- * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
+ * Gather common methods for Turnouts, Sensors, SignalHeads, Masts, etc.
  *
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
- * @author PeteCressman Copyright (C) 2011
+ * @author Pete Cressman Copyright (C) 2011
  */
 public class PositionableIcon extends PositionableLabel {
 
@@ -47,6 +48,11 @@ public class PositionableIcon extends PositionableLabel {
         return super.finishClone(pos);
     }
 
+    public Collection<String> getStateNameCollection() {
+        log.error("getStateNameCollection() must be implemented by extensions!");
+        return null;
+    }
+
     /**
      * Get icon by its localized bean state name.
      *
@@ -69,13 +75,16 @@ public class PositionableIcon extends PositionableLabel {
         return _iconMap.keySet().iterator();
     }
 
+    public HashMap<String, NamedIcon> getIconMap() {
+        return cloneMap(_iconMap, this);
+    }
+
     @Override
     public int maxHeight() {
         int max = super.maxHeight();
         if (_iconMap != null) {
-            Iterator<NamedIcon> iter = _iconMap.values().iterator();
-            while (iter.hasNext()) {
-                max = Math.max(iter.next().getIconHeight(), max);
+            for (NamedIcon namedIcon : _iconMap.values()) {
+                max = Math.max(namedIcon.getIconHeight(), max);
             }
         }
         return max;
@@ -85,9 +94,8 @@ public class PositionableIcon extends PositionableLabel {
     public int maxWidth() {
         int max = super.maxWidth();
         if (_iconMap != null) {
-            Iterator<NamedIcon> iter = _iconMap.values().iterator();
-            while (iter.hasNext()) {
-                max = Math.max(iter.next().getIconWidth(), max);
+            for (NamedIcon namedIcon : _iconMap.values()) {
+                max = Math.max(namedIcon.getIconWidth(), max);
             }
         }
         return max;
@@ -101,9 +109,7 @@ public class PositionableIcon extends PositionableLabel {
      */
     @Override
     protected void rotateOrthogonal() {
-        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
+        for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
             entry.getValue().setRotation(entry.getValue().getRotation() + 1, this);
         }
         updateSize();
@@ -115,9 +121,7 @@ public class PositionableIcon extends PositionableLabel {
         if (_iconMap == null) {
             return;
         }
-        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
+        for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
             entry.getValue().scale(s, this);
         }
         updateSize();
@@ -129,27 +133,11 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     @Override
-    public int getDegrees() {
-        if (_text) {
-            return super.getDegrees();
-        }
-        if (_iconMap != null) {
-            Iterator<NamedIcon> it = _iconMap.values().iterator();
-            if (it.hasNext()) {
-                return it.next().getDegrees();
-            }
-        }
-        return super.getDegrees();
-    }
-
-    @Override
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);
         if (_iconMap != null) {
-            Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
                 entry.getValue().rotate(deg, this);
             }
         }
@@ -159,15 +147,14 @@ public class PositionableIcon extends PositionableLabel {
 
     public static HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map,
             PositionableLabel pos) {
-        HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
+        HashMap<String, NamedIcon> clone = new HashMap<>();
         if (map != null) {
-            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
             }
         }
         return clone;
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableIcon.class);
 }

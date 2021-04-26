@@ -69,8 +69,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen, Alex Shepherd Copyright (C) 2001, 2004, 2013
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style speed table
- * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart {@literal &} Vhigh not written)
- * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &} Vhigh
+ * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart and Vhigh not written)
+ * @author Dave Heap - generate cvList array to incorporate Vstart and Vhigh
  *
  */
 public class SpeedTableVarValue extends VariableValue implements ChangeListener {
@@ -88,6 +88,22 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Create the object with a "standard format ctor".
+     * @param name name.
+     * @param comment comment.
+     * @param cvName cv name.
+     * @param readOnly true if read only, else false.
+     * @param infoOnly true if info only, else false.
+     * @param writeOnly true if write only, else false.
+     * @param opsOnly true if ops only, else false.
+     * @param cvNum cv number.
+     * @param mask cv mask.
+     * @param minVal minimum value.
+     * @param maxVal maximum value.
+     * @param v hashmap of string and cv value.
+     * @param status status label.
+     * @param stdname std name.
+     * @param entries number entries.
+     * @param mfxFlag set mx flag true or false.
      */
     public SpeedTableVarValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -126,6 +142,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         }
 
         _defaultColor = (new JSlider()).getBackground();
+        // simplifyMask(); // not required as mask is ignored
     }
 
     /**
@@ -220,6 +237,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * If there are fixed points specified, set linear step settings to them.
+     * @param modifiedStepIndex Index of requested break point
      *
      */
     void matchPoints(int modifiedStepIndex) {
@@ -229,14 +247,13 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             return;
         }
         if (modifiedStepIndex < 0) {
-            log.error("matchPoints called with index too small: " + modifiedStepIndex);
+            log.error("matchPoints called with index too small: {}", modifiedStepIndex);
         }
         if (modifiedStepIndex >= stepCheckBoxes.size()) {
-            log.error("matchPoints called with index too large: " + modifiedStepIndex
-                    + " >= " + stepCheckBoxes.size());
+            log.error("matchPoints called with index too large: {} >= {}", modifiedStepIndex, stepCheckBoxes.size());
         }
         if (stepCheckBoxes.get(modifiedStepIndex) == null) {
-            log.error("matchPoints found null checkbox " + modifiedStepIndex);
+            log.error("matchPoints found null checkbox {}", modifiedStepIndex);
         }
 
         // don't do the match if this step isn't checked,
@@ -257,11 +274,11 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
                 int leftval = _cvMap.get(cvList[i]).getValue();
                 int rightval = _cvMap.get(cvList[modifiedStepIndex]).getValue();
                 int steps = modifiedStepIndex - i;
-                log.debug("left found " + leftval + " " + rightval + " " + steps);
+                log.debug("left found {} {} {}", leftval, rightval, steps);
                 // loop to set values
                 for (int j = i + 1; j < modifiedStepIndex; j++) {
                     int newValue = leftval + (rightval - leftval) * (j - i) / steps;
-                    log.debug("left set " + j + " to " + newValue);
+                    log.debug("left set {} to {}", j, newValue);
                     if (_cvMap.get(cvList[j]).getValue() != newValue) {
                         _cvMap.get(cvList[j]).setValue(newValue);
                     }
@@ -281,11 +298,11 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
                 int rightval = _cvMap.get(cvList[i]).getValue();
                 int leftval = _cvMap.get(cvList[modifiedStepIndex]).getValue();
                 int steps = i - modifiedStepIndex;
-                log.debug("right found " + leftval + " " + rightval + " " + steps);
+                log.debug("right found {} {} {}", leftval, rightval, steps);
                 // loop to set values
                 for (int j = modifiedStepIndex + 1; j < i; j++) {
                     int newValue = leftval + (rightval - leftval) * (j - modifiedStepIndex) / steps;
-                    log.debug("right set " + j + " to " + newValue);
+                    log.debug("right set {} to {}", j, newValue);
                     if (_cvMap.get(cvList[j]).getValue() != newValue) {
                         _cvMap.get(cvList[j]).setValue(newValue);
                     }
@@ -355,7 +372,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     @Override
     public void setIntValue(int i) {
-        log.warn("setIntValue doesn't make sense for a speed table: " + i);
+        log.warn("setIntValue doesn't make sense for a speed table: {}", i);
     }
 
     @Override
@@ -376,7 +393,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
     }
 
     public void setValue(int value) {
-        log.warn("setValue doesn't make sense for a speed table: " + value);
+        log.warn("setValue doesn't make sense for a speed table: {}", value);
     }
 
     Color _defaultColor;
@@ -431,7 +448,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             g.setConstraints(v, cs);
 
             if (i == 0 && log.isDebugEnabled()) {
-                log.debug("Font size " + v.getFont().getSize());
+                log.debug("Font size {}", v.getFont().getSize());
             }
             float newSize = v.getFont().getSize() * 0.8f;
             v.setFont(v.getFont().deriveFont(newSize));
@@ -534,6 +551,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set the values to a straight line from _min to _max
+     * @param e Event triggering this operation
      */
     void doForceStraight(java.awt.event.ActionEvent e) {
         _cvMap.get(cvList[0]).setValue(_min);
@@ -543,11 +561,12 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set the values to a straight line from existing ends
+     * @param e Event triggering this operation
      */
     void doMatchEnds(java.awt.event.ActionEvent e) {
         int first = _cvMap.get(cvList[0]).getValue();
         int last = _cvMap.get(cvList[nValues - 1]).getValue();
-        log.debug(" first=" + first + " last=" + last);
+        log.debug(" first={} last={}", first, last);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
         _cvMap.get(cvList[0]).setValue(last);
@@ -561,6 +580,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set a constant ratio curve
+     * @param e Event triggering this operation
      */
     void doRatioCurve(java.awt.event.ActionEvent e) {
         double first = _cvMap.get(cvList[0]).getValue();
@@ -572,7 +592,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             last = first + 1.;
         }
         double step = Math.log(last / first) / (nValues - 1);
-        log.debug("log ratio step is " + step);
+        log.debug("log ratio step is {}", step);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
         _cvMap.get(cvList[0]).setValue((int) Math.round(last));
@@ -586,6 +606,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set a log curve
+     * @param e Event triggering this operation
      */
     void doLogCurve(java.awt.event.ActionEvent e) {
         double first = _cvMap.get(cvList[0]).getValue();
@@ -610,6 +631,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Shift the curve one CV to left. The last entry is left unchanged.
+     * @param e Event triggering this operation
      */
     void doShiftLeft(java.awt.event.ActionEvent e) {
         for (int i = 0; i < nValues - 1; i++) {
@@ -621,6 +643,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Shift the curve one CV to right. The first entry is left unchanged.
+     * @param e Event triggering this operation
      */
     void doShiftRight(java.awt.event.ActionEvent e) {
         for (int i = nValues - 1; i > 0; i--) {
@@ -685,7 +708,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         onlyChanges = true;
         setBusy(true);  // will be reset when value changes
         if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+            log.warn("Programming state {}, not IDLE, in read()", _progState);
         }
         isReading = true;
         isWriting = false;
@@ -712,7 +735,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         setBusy(true);  // will be reset when value changes
         super.setState(STORED);
         if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+            log.warn("Programming state {}, not IDLE, in write()", _progState);
         }
         isReading = false;
         isWriting = true;
@@ -733,7 +756,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         setToRead(false);
         setBusy(true);  // will be reset when value changes
         if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+            log.warn("Programming state {}, not IDLE, in read()", _progState);
         }
         isReading = true;
         isWriting = false;
@@ -758,7 +781,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         setBusy(true);  // will be reset when value changes
         super.setState(STORED);
         if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+            log.warn("Programming state {}, not IDLE, in write()", _progState);
         }
         isReading = false;
         isWriting = true;
@@ -795,7 +818,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         CvValue cv = _cvMap.get(cvList[_progState]);
         int state = cv.getState();
         if (log.isDebugEnabled()) {
-            log.debug("invoke CV read index " + _progState + " cv state " + state);
+            log.debug("invoke CV read index {} cv state {}", _progState, state);
         }
         if (!onlyChanges || considerChanged(cv)) {
             cv.read(_status);
@@ -827,7 +850,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         CvValue cv = _cvMap.get(cvList[_progState]);
         int state = cv.getState();
         if (log.isDebugEnabled()) {
-            log.debug("invoke CV write index " + _progState + " cv state " + state);
+            log.debug("invoke CV write index {} cv state {}", _progState, state);
         }
         if (!onlyChanges || considerChanged(cv)) {
             cv.write(_status);
@@ -840,8 +863,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property changed event - name: "
-                    + e.getPropertyName());
+            log.debug("property changed event - name: {}", e.getPropertyName());
         }
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -858,7 +880,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         } else if (e.getPropertyName().equals("State")) {
             CvValue cv = _cvMap.get(cvList[0]);
             if (log.isDebugEnabled()) {
-                log.debug("CV State changed to " + cv.getState());
+                log.debug("CV State changed to {}", cv.getState());
             }
             setState(cv.getState());
         } else if (e.getPropertyName().equals("Value")) {
@@ -916,7 +938,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
         void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("VarSlider saw property change: " + e);
+                log.debug("VarSlider saw property change: {}", e);
             }
             // update this color from original state
             if (e.getPropertyName().equals("State")) {

@@ -1,7 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -36,7 +38,7 @@ public class PositionableJPanelTest extends PositionableTestBase {
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();

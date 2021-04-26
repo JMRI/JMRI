@@ -1,14 +1,13 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 public class SplitButtonColorChooserPanelTest {
 
@@ -24,14 +23,13 @@ public class SplitButtonColorChooserPanelTest {
         Assert.assertEquals("display name",Bundle.getMessage("SplitButtonColorChooserName"),panel.getDisplayName());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new SplitButtonColorChooserPanel();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

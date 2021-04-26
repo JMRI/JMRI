@@ -83,7 +83,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
 
         // get new value
         now = sensor.getKnownState();
-        log.debug("Found new state: " + now);
+        log.debug("Found new state: {}", now);
 
         // match the decoder's momentum
         setMomentum(now);
@@ -106,7 +106,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
                 programmer.writeCV("3", 0, null);
             }
         } catch (JmriException e) {
-            log.error("exception setting turnout:" + e);
+            log.error("exception setting turnout:{}", e);
         }
     }
 

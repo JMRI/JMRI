@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20200417"/>
+    <!-- Arduino interface S88 - LocoNet -->
+    <!-- Description of circuit diagram and program https://sites.google.com/site/sidloweb/elektrika/32-ard-ln-s88 -->
+
+    <decoder>
+        <family name="sidlo" mfg="Public-domain and DIY" >
+            <model model="ARD-LN-S88" lowVersionID="10" highVersionID="19" productID="1" developerID="21" />
+        </family>
+    
+        <programming direct="no" paged="no" register="no" ops="no">
+            <mode>LOCONETSV2MODE</mode>
+        </programming>
+        
+        <variables>
+        
+            <variable CV="3" comment="Device SV Address" item="Devide Address" default="0" mask="VVVVVVVV" >
+                <splitVal highCV="4" upperMask="VVVVVVVV" min="0" max="65535" />
+                <label>Device Address:</label>
+                <label xml:lang="cs">Adresa zařízení:</label>
+            </variable>
+
+            <variable CV="1" item="EEPROM size" readOnly="yes" default="2" >
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>256 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>512 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="2">
+                        <choice>1024 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="3">
+                        <choice>2048 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="4">
+                        <choice>4096 bytes</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>EEPROM size:</label>
+                <label xml:lang="cs">Velikost EEPROM:</label>
+            </variable>
+
+            <variable CV="2" item="SW version" readOnly="yes" default="10" >
+                <decVal/>
+                <label>SW version:</label>
+                <label xml:lang="cs">Verze SW:</label>
+            </variable>
+
+            <variable CV="5" item="Serial Number" readOnly="yes" default="0" mask="VVVVVVVV" >
+                <splitVal highCV="6" upperMask="VVVVVVVV" min="0" max="65535" />
+                <label>Serial Number:</label>
+                <label xml:lang="cs">Sériové číslo:</label>
+            </variable>
+
+            <variable CV="8" item="Manufacturer ID" readOnly="yes" default="13" >
+                <decVal/>
+                <label>Manufacturer ID:</label>
+                <label xml:lang="cs">ID výrobce:</label>
+            </variable>
+
+            <variable CV="9" item="Developer ID" readOnly="yes" default="21" >
+                <decVal/>
+                <label>Developer ID:</label>
+                <label xml:lang="cs">ID vývojáře:</label>
+            </variable>
+
+            <variable CV="10" item="Product ID" default="1" readOnly="yes" mask="VVVVVVVV" >
+                <splitVal highCV="11" upperMask="VVVVVVVV" min="0" max="65535" />
+                <label>Product ID:</label>
+                <label xml:lang="cs">ID výrobku:</label>
+            </variable>
+
+            <variable CV="12" item="Sensors Number" default="128" >
+                <decVal min="1" max="248" />
+                <label>Sensors number:</label>
+                <label xml:lang="cs">Počet snímačů:</label>
+            </variable>
+
+            <variable CV="13" item="Sensors Address" default="257" >
+                <splitVal highCV="14" upperMask="XXXXVVVV" min="1" max="2044" />
+                <label>Sensors Address:</label>
+                <label xml:lang="cs">Adresa snímačů:</label>
+            </variable>
+
+            <variable CV="15" comment="Change SV Address" item="Long Address" default="0" mask="VVVVVVVV" >
+                <splitVal highCV="16" upperMask="VVVVVVVV" min="0" max="65535" />
+                <label>Change Address:</label>
+                <label xml:lang="cs">Změna adresy:</label>
+            </variable>
+
+    </variables>
+  </decoder>
+  
+    <pane>
+    <!--  Pane Interface =================================================== -->      
+  	<name>S88</name>
+        <column>
+            <display item="Sensors Address" />
+            <display item="Sensors Number" />
+        </column>
+        <column>
+            <display item="Manufacturer ID" />
+            <display item="Developer ID" />
+            <display item="Product ID" />
+            <display item="Serial Number" />
+            <display item="SW version" />
+            <display item="EEPROM size" />
+        </column>
+    </pane>
+            
+</decoder-config>

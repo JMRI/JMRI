@@ -142,8 +142,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
             int retVal = fc.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                return file;
+                return fc.getSelectedFile();
             }
         }
         return null;

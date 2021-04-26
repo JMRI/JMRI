@@ -54,6 +54,14 @@ public class RampData {
         return _rampLength;
     }
 
+    protected int getNumSteps() {
+        return _settings.size();
+    }
+
+    protected int getRamptime() {
+        return _settings.size()*_timeInterval;
+    }
+
     protected float getMaxSpeed() {
         if (_settings == null) {
             throw new IllegalArgumentException("Null array of throttle settings"); 

@@ -4,6 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import jmri.InstanceManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -52,15 +53,26 @@ public class ToolsMenu extends JMenu {
         signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
         signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
         signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalMastLogicTable"), "jmri.jmrit.beantable.SignalMastLogicTableAction"));
-
         tableMenu.add(signalMenu);
+
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
+
+        JMenu logixNG_Menu = new JMenu(Bundle.getMessage("MenuLogixNG"));
+        logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGTable"), "jmri.jmrit.beantable.LogixNGTableAction"));
+        logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGModuleTable"), "jmri.jmrit.beantable.LogixNGModuleTableAction"));
+        logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGTableTable"), "jmri.jmrit.beantable.LogixNGTableTableAction"));
+        tableMenu.add(logixNG_Menu);
+
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemBlockTable"), "jmri.jmrit.beantable.BlockTableAction"));
+        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed()) { // turn on or off in prefs
+            tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemOBlockTable"), "jmri.jmrit.beantable.OBlockTableAction"));
+        } else {
+            tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
+        }
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSectionTable"), "jmri.jmrit.beantable.SectionTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTransitTable"), "jmri.jmrit.beantable.TransitTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
@@ -111,7 +123,7 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction(Bundle.getMessage("MenuItemTurnoutControl")));
         add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(Bundle.getMessage("MenuItemLightControl")));
         add(new jmri.jmrit.speedometer.SpeedometerAction(Bundle.getMessage("MenuItemSpeedometer")));
-        add(new jmri.jmrit.ampmeter.AmpMeterAction(Bundle.getMessage("MenuItemAmpMeter")));
+        add(new jmri.jmrit.swing.meter.MeterAction(Bundle.getMessage("MenuItemMeter")));
         add(new jmri.jmrit.sensorgroup.SensorGroupAction(Bundle.getMessage("MenuItemSensorGroup")));
         add(new jmri.jmrit.blockboss.BlockBossAction(Bundle.getMessage("MenuItemSimpleSignal")));
         add(new jmri.jmrit.sendpacket.SendPacketAction(Bundle.getMessage("MenuItemSendDCCPacket")));
@@ -135,6 +147,12 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // add start web server menu item (immediate action)
         add(new jmri.web.server.WebServerAction());
+        // add the server menu
+        add(new jmri.jmris.ServerMenu());
+
+        add(new JSeparator());
+        // LogixNG menu
+        add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
     }
 
 }

@@ -27,9 +27,14 @@ public class SCWarrant extends Warrant {
     private boolean forward = true;
     private final boolean _allowShallowAllocation = false;
     private DccThrottle _throttle = null;
+    
     /**
-     * Create an object with no route defined. The list of BlockOrders is the
-     * route from an Origin to a Destination
+     * Create an object with no route defined.
+     * <p>
+     * The list of BlockOrders is the route from an Origin to a Destination.
+     * @param sName system name.
+     * @param uName username.
+     * @param TTP time to platform.
      */
     public SCWarrant(String sName, String uName, long TTP) {
         super(sName, uName);
@@ -216,11 +221,12 @@ public class SCWarrant extends Warrant {
         allocateBlocksAndSetTurnouts(0);
         setTrainDirection();
         SCTrainRunner thread = new SCTrainRunner(this);
-        new Thread(thread).start();
+        jmri.util.ThreadingUtil.newThread(thread).start();
     }
     
     /**
-     * wait until there is a train in the start block.
+     * Wait until there is a train in the start block.
+     * @return true if block not UNOCCUPIED
      */
     protected boolean isStartBlockOccupied() {
         int blockState = getBlockOrderAt(0).getBlock().getState();
@@ -253,6 +259,7 @@ public class SCWarrant extends Warrant {
     /**
      * Is the next block free or occupied, i.e do we risk to crash into an other train, if we proceed?
      * And is it allocated to us?
+     * @return true if allocated to us and unoccupied, else false.
      */
     public boolean isNextBlockFreeAndAllocated() {
         BlockOrder bo = getBlockOrderAt(_idxCurrentOrder+1);
@@ -296,6 +303,7 @@ public class SCWarrant extends Warrant {
     
     /**
      * Are we still in the start block?
+     * @return true if still in start block
      */
     boolean inStartBlock() {
         return (_idxCurrentOrder == 0);
@@ -303,6 +311,7 @@ public class SCWarrant extends Warrant {
     
     /**
      * Are we close to the destination block?
+     * @return true if close
      */
     boolean approchingDestination() {
         float distance = 0;
@@ -353,6 +362,7 @@ public class SCWarrant extends Warrant {
      /**
      * Do what the title says. But make sure not to set the turnouts if already done, since that 
      * would just cause all signals to go to Stop aspects and thus cause a jerky train movement.
+     * @param startIndex Allocate starting with this index
      */
     protected void allocateBlocksAndSetTurnouts(int startIndex) {
         log.debug("{} allocateBlocksAndSetTurnouts startIndex={} _orders.size()={}",_trainName,startIndex,getBlockOrders().size());
@@ -423,21 +433,21 @@ public class SCWarrant extends Warrant {
         } else if (activeIdx == _idxCurrentOrder) {
             // Unusual case of current block losing detection, then regaining it.  i.e. dirty track, derail etc.
             log.debug("{} Current block becoming active - ignored",_trainName);
-        } else if (activeIdx == _idxCurrentOrder+1) {
+        } else if (activeIdx == _idxCurrentOrder + 1) {
             // not necessary: It is done in the main loop in SCTrainRunner.run:  allocateBlocksAndSetTurnouts(_idxCurrentOrder+1)
             // update our present location
             _idxCurrentOrder++;
             // fire property change (entered new block)
-            firePropertyChange("blockChange", getBlockAt(_idxCurrentOrder-1), getBlockAt(_idxCurrentOrder));
+            firePropertyChange("blockChange", getBlockAt(_idxCurrentOrder - 1), getBlockAt(_idxCurrentOrder));
             // now let the main loop adjust speed.
             synchronized(this) {
-                notify();
+                notifyAll();
             }
         } else {
             log.debug("{} Rogue occupation of block.",_trainName);
             // now let the main loop stop for a train that is coming in our immediate way.
             synchronized(this) {
-                notify();
+                notifyAll();
             }
         }
     }
@@ -469,7 +479,7 @@ public class SCWarrant extends Warrant {
         // now let the main loop stop our train if this means that the train is now entirely within the last block.
         // Or let the train continue if an other train that was in its way has now moved.
         synchronized(this) {
-            notify();
+            notifyAll();
         }
     }
 
@@ -477,6 +487,7 @@ public class SCWarrant extends Warrant {
      * Deallocate all blocks up to and including idx, but only on these conditions in order to ensure that only a consecutive list of blocks are allocated at any time:
      *     1. Only if our train has left not only this block, but also all previous blocks.
      *     2. Only if the block shall not be re-used ahead and all block up until the block are allocated.
+     * @param idx Index of final block
      */
     protected void deallocateUpToBlock(int idx) {
         for (int i=0; i<=idx; i++) {
@@ -509,7 +520,6 @@ public class SCWarrant extends Warrant {
         }
     }
 
-
     /**
      * Something has fired a property change event.
      * React if:
@@ -531,7 +541,7 @@ public class SCWarrant extends Warrant {
             if (property.equals("Aspect") || property.equals("Appearance")) {
                 // The signal controlling this warrant has changed. Adjust the speed (in runSignalControlledTrain)
                 synchronized(this) {
-                    notify();
+                    notifyAll();
                 }
                 return;
             }
@@ -555,7 +565,7 @@ public class SCWarrant extends Warrant {
                         log.debug(WAIT_UNEXPECTED_EXCEPTION,_trainName,e,e);
                     }
                     // And then let our main loop continue
-                    notify();
+                    notifyAll();
                     return;
                 }
                 if (((NamedBean) evt.getSource()).getDisplayName().equals(getBlockOrderAt(0).getBlock().getDisplayName()) &&
@@ -582,7 +592,7 @@ public class SCWarrant extends Warrant {
      * Make sure to free up additional resources for a running SCWarrant.
      */
     @Override
-    public synchronized void stopWarrant(boolean abort) {
+    public synchronized void stopWarrant(boolean abort, boolean turnOffFunctions) {
         if (_nextSignal != null) {
             _nextSignal.removePropertyChangeListener(this);
             _nextSignal = null;
@@ -787,7 +797,7 @@ public class SCWarrant extends Warrant {
                 } else {
                     _throttle.setSpeedSetting(SPEED_STOP);
                 }
-                stopWarrant(false);
+                stopWarrant(false, false);
             }
         }
 

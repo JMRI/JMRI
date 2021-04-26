@@ -1,11 +1,13 @@
 package jmri.jmrit.display.configurexml;
 
 import java.util.List;
+
 import jmri.Block;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.BlockContentsIcon;
-import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -39,8 +41,8 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         storeTextInfo(p, element);
 
-        //If the fixed width option is not set and the justification is not left
-        //Then we need to replace the x, y values with the original ones.
+        // If the fixed width option is not set and the justification is not LEFT
+        // then we need to replace the x, y values with the original ones.
         if (p.getPopupUtility().getFixedWidth() == 0 && p.getPopupUtility().getJustification() != 0) {
             element.setAttribute("x", "" + p.getOriginalX());
             element.setAttribute("y", "" + p.getOriginalY());
@@ -56,10 +58,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         java.util.HashMap<String, NamedIcon> map = p.getMap();
         if (map != null) {
 
-            java.util.Iterator<java.util.Map.Entry<String, NamedIcon>> iterator = map.entrySet().iterator();
-
-            while (iterator.hasNext()) {
-                java.util.Map.Entry<String, NamedIcon> mi = iterator.next();
+            for (java.util.Map.Entry<String, NamedIcon> mi : map.entrySet()) {
                 String key = mi.getKey();
                 String value = mi.getValue().getName();
 
@@ -78,9 +77,11 @@ public class BlockContentsIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
 
         Editor ed = null;
         BlockContentsIcon l;
@@ -91,7 +92,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
             ed = (Editor) o;
             l = new BlockContentsIcon("", ed);
         } else {
-            log.error("Unrecognizable class - " + o.getClass().getName());
+            log.error("Unrecognizable class - {}", o.getClass().getName());
             return;
         }
 
@@ -111,7 +112,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setBlock(name);
         } else {
-            log.error("Block named '" + attr.getValue() + "' not found.");
+            log.error("Block named '{}' not found.", attr.getValue());
             ed.loadFailed();
         }
 
@@ -124,15 +125,14 @@ public class BlockContentsIconXml extends PositionableLabelXml {
 
         // get the icon pairs
         List<Element> items = element.getChildren("blockstate");
-        for (int i = 0; i < items.size(); i++) {
+        for (Element item : items) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String iconName = item.getAttribute("icon").getValue();
             NamedIcon icon = NamedIcon.getIconByName(iconName);
             if (icon == null) {
                 icon = ed.loadFailed("Memory " + name, iconName);
                 if (icon == null) {
-                    log.info("Memory \"" + name + "\" icon removed for url= " + iconName);
+                    log.info("Memory \"{}\" icon removed for url= {}", name, iconName);
                 }
             }
             if (icon != null) {
@@ -140,7 +140,11 @@ public class BlockContentsIconXml extends PositionableLabelXml {
                 l.addKeyAndIcon(icon, keyValue);
             }
         }
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
         int x = 0;

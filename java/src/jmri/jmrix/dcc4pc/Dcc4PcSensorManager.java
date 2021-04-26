@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,18 +32,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         jmri.InstanceManager.store(this, Dcc4PcSensorManager.class);
         this.boardManager = new Dcc4PcBoardManager(tc, this);
         // Finally, create and register a shutdown task to ensure clean exit
-        this.pollShutDownTask = new QuietShutDownTask("DCC4PC Board Poll Shutdown") {
-            @Override
-            public boolean execute() {
-                stopPolling();
-                return true;
-            }
-        };
+        this.pollShutDownTask = this::stopPolling;
         startPolling();
     }
 
     Dcc4PcReporterManager reportManager;
-    ShutDownTask pollShutDownTask;
+    Runnable pollShutDownTask;
     Dcc4PcBoardManager boardManager;
 
     Dcc4PcTrafficController tc;
@@ -69,15 +62,16 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s = new Dcc4PcSensor(systemName, userName);
         s.setUserName(userName);
         extractBoardID(systemName);
         return s;
     }
 
-    /*
+    /**
      * This extracts the board id out from the system name.
+     * @param systemName including system prefix and type letter.
      */
     void extractBoardID(String systemName) {
         if (systemName.contains(":")) {
@@ -114,25 +108,21 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 board = Integer.parseInt(curAddress.substring(0, seperator));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Unable to convert "+curAddress+" into the cab and channel format of nn:xx");
             }
 
             try {
                 channel = Integer.parseInt(curAddress.substring(seperator + 1));
                 if ((channel > 16) || (channel < 1)) {
-                    log.error("Channel number is out of range");
-                    throw new JmriException("Channel number should be in the range of 1 to 16");
+                    throw new JmriException("In Address "+curAddress+" Channel number should be in the range of 1 to 16");
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Unable to convert "+curAddress+" into the cab and channel format of nn:xx");
             }
             iName = curAddress;
             addBoard(board);
         } else {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            throw new JmriException("Unable to convert " + curAddress + " Hardware Address to a number");
+            throw new JmriException("Unable to convert "+curAddress+" into the cab and channel format of nn:xx");
         }
         return prefix + typeLetter() + iName;
     }
@@ -141,23 +131,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     private int channel;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
-        String tmpSName = "";
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
-
+        String tmpSName = createSystemName(curAddress, prefix);
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
+        if (s != null || ignoreInitialExisting) {
             for (int x = 1; x < 10; x++) {
                 if (channel < 16) {
                     channel++;
@@ -170,7 +150,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     return board + ":" + channel;
                 }
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,board + ":" + channel));
         } else {
             return curAddress;
         }
@@ -410,6 +390,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Determining if the railcommdata is duplicated. If it is then this
      * instructs the rc input to move things about.
+     * @param value Railcommand data
+     * @param seq message sequence number
+     * @param rc RailCommand to request action(s) from
+     * @return value calculated locally
      */
     int decodeDuplicatePacket(int value, int seq, Dcc4PcReporter rc) {
         int lastbit = 7;
@@ -548,7 +532,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("timeout received to our last message " + m.toString());
+            log.debug("timeout received to our last message {}", m.toString());
         }
         if (!stopPolling) {
             synchronized (this) {
@@ -761,7 +745,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 int inputNo = 0;
                 int dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
                 if (log.isDebugEnabled()) {
-                    log.debug("Input " + railCommDataForSensor.get(j).getDisplayName() + " - " + dup);
+                    log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
                 }
                 if (dup == 0) {
                     j++;
@@ -773,7 +757,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if (j < railCommDataForSensor.size()) {
                     dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
                     if (log.isDebugEnabled()) {
-                        log.debug("Input " + railCommDataForSensor.get(j).getDisplayName() + " - " + dup);
+                        log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
                     }
                     if (dup == 0) {
                         j++;
@@ -785,7 +769,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if (j < railCommDataForSensor.size()) {
                     dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
                     if (log.isDebugEnabled()) {
-                        log.debug("Input " + railCommDataForSensor.get(j).getDisplayName() + " - " + dup);
+                        log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
                     }
                     if (dup == 0) {
                         j++;
@@ -798,7 +782,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if (j < railCommDataForSensor.size()) {
                     dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
                     if (log.isDebugEnabled()) {
-                        log.debug("Input " + railCommDataForSensor.get(j).getDisplayName() + " - " + dup);
+                        log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
                     }
                     if (dup == 0) {
                         j++;
@@ -817,7 +801,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             // re-use the variable to gather the size of each railcom input data
             railComDupPacket = (int) Math.ceil((railCommDataForSensor.size()) / 2.0f);
             if (log.isDebugEnabled()) {
-                log.debug("We have " + railComDupPacket + " size byte(s) to read on data");
+                log.debug("We have {} size byte(s) to read on data", railComDupPacket);
             }
 
             // This now becomes the length bytes for the rail comm information
@@ -836,7 +820,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 currentByteLocation++;
             }
             for (int i = 0; i < railCommDataForSensor.size(); i++) {
-                log.debug(railCommDataForSensor.get(i).getDisplayName() + " " + railCommDataForSensor.get(i).getPacketLength());
+                log.debug("{} {}", railCommDataForSensor.get(i).getDisplayName(), railCommDataForSensor.get(i).getPacketLength());
                 int[] arraytemp = new int[railCommDataForSensor.get(i).getPacketLength()];
                 for (j = 0; j < railCommDataForSensor.get(i).getPacketLength(); j++) {
                     arraytemp[j] = 0xFF & r.getElement(currentByteLocation);
@@ -872,7 +856,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     buf.append(Integer.toHexString(packet[i])).append(",");
                 }
                 String s = buf.toString();
-                log.debug("bytes to process " + s);
+                log.debug("bytes to process {}", s);
             }
             // Basic Accessory Decoder packet 10aaaaaa 1aaacddd eeeeeeee
             // Extended Accessory decoder packet starts 10aaaaaa 0aaa0aa1 000xxxxx eeeeeeee
@@ -930,13 +914,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         break;
                 }
 
-                log.debug("DCC address type " + addt + " addr " + addr);
+                log.debug("DCC address type {} addr {}", addt, addr);
                 if ((dcc_addr_type != NO_ADDRESS)) {
-                    log.debug("Current index  " + i + " value " + (packet[i] & 0xFF));
+                    log.debug("Current index  {} value {}", i, packet[i] & 0xFF);
                     if ((packet[i] & 0xE0) == 0xE0) {
                         i++;
                         cvNumber = ((packet[i] & 0xff) + 1);
-                        log.debug("CV Access cv:" + cvNumber);
+                        log.debug("CV Access cv:{}", cvNumber);
                         // two byte instruction when 1111
                         // three byte instuction when 1110
                     } else if ((packet[i] & 0xC0) == 0xC0) {
@@ -1013,11 +997,11 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         log.debug("For Function Group 1");
                     } else if ((packet[i] & 0x60) == 0x60) {
                         speed = (packet[i] & 0xff) - 0x60;
-                        log.debug("Speed for forward 14 speed steps " + speed);
+                        log.debug("Speed for forward 14 speed steps {}", speed);
                         //Only a single byte instruction
                     } else if ((packet[i] & 0x40) == 0x40) {
                         speed = ((packet[i] & 0xff) - 0x40);
-                        log.debug("Speed for reverse 14 speed steps " + speed);
+                        log.debug("Speed for reverse 14 speed steps {}", speed);
                         //Only a single byte instruction
                     } else if ((packet[i] & 0x20) == 0x20) {
                         log.debug("Advanced Op");
@@ -1027,10 +1011,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                             log.debug("128 speed step control");
                             if ((packet[i] & 0x80) == 0x80) {
                                 speed = ((packet[i]) & 0xff) - 0x80;
-                                log.debug("Forward " + speed);
+                                log.debug("Forward {}", speed);
                             } else {
                                 speed = ((packet[i]) & 0xff);
-                                log.debug("Reverse " + speed);
+                                log.debug("Reverse {}", speed);
                             }
                         }
                     } else {
@@ -1138,6 +1122,18 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: Custom validation for Dcc4PcSensorManager could be improved.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+    }
+    
     @Override
     public void dispose() {
         stopPolling();

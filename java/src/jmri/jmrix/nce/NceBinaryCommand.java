@@ -161,7 +161,7 @@ public class NceBinaryCommand {
     public static byte[] accDecoder(int number, boolean closed) {
 
         if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
-            log.error("invalid NCE accessory address " + number);
+            log.error("invalid NCE accessory address {}", number);
             return null;
         }
         byte op_1;
@@ -405,7 +405,7 @@ public class NceBinaryCommand {
         justification = "Long-standing API, risky to update")
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
         if (locoSubCmd < 1 || locoSubCmd > 0x17) {
-            log.error("invalid NCE loco command " + locoSubCmd);
+            log.error("invalid NCE loco command {}", locoSubCmd);
             return null;
         }
 

@@ -55,7 +55,7 @@ public class CsvImporter {
                     value = Integer.parseInt(lineStrings[1].trim());
                     cvObject = cvModel.allCvMap().get(name);
                     if (cvObject == null) {
-                        log.warn("CV " + name + " was in import file, but not defined by the decoder definition");
+                        log.warn("CV {} was in import file, but not defined by the decoder definition", name);
                         cvModel.addCV(name, false, false, false);
                         cvObject = cvModel.allCvMap().get(name);
                     }
@@ -63,7 +63,7 @@ public class CsvImporter {
                 }
             }
         } catch (IOException e) {
-            log.error("Error reading file: " + e);
+            log.error("Error reading file: {}", e);
         } finally {
             if(bufferedReader!=null) {
                bufferedReader.close();

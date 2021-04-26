@@ -1,51 +1,34 @@
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.Sensor;
+
+import javax.swing.*;
+
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.beantable.BlockTableAction;
+import jmri.jmrit.beantable.block.BlockCurvatureJComboBox;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Provides an edit panel for a Block object.
+ * Note that LayoutBlockEditAction extends this class, so please check
+ * this still functions as expected when making changes here.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class BlockEditAction extends BeanEditAction<Block> {
 
-    private String noneText = Bundle.getMessage("BlockNone");
-    private String gradualText = Bundle.getMessage("BlockGradual");
-    private String tightText = Bundle.getMessage("BlockTight");
-    private String severeText = Bundle.getMessage("BlockSevere");
-    public String[] curveOptions = {noneText, gradualText, tightText, severeText};
-    static final java.util.Vector<String> speedList = new java.util.Vector<String>();
+    static final java.util.Vector<String> speedList = new java.util.Vector<>();
 
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockEdit";
-    } //IN18N
+    } // NOI18N
 
     @Override
     protected void initPanels() {
@@ -56,52 +39,48 @@ public class BlockEditAction extends BeanEditAction<Block> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameBlock");
-    }
-
-    @Override
     public Block getByUserName(String name) {
         return InstanceManager.getDefault(BlockManager.class).getByUserName(name);
     }
 
-    JTextField userNameField = new JTextField(20);
-    NamedBeanComboBox<Reporter> reporterComboBox;
-    JCheckBox useCurrent = new JCheckBox();
-    JTextArea commentField = new JTextArea(3, 30);
-    JScrollPane commentFieldScroller = new JScrollPane(commentField);
+    private NamedBeanComboBox<Reporter> reporterComboBox;
+    private JCheckBox useCurrent = new JCheckBox();
 
+    private JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
+    private BlockCurvatureJComboBox curvatureField = new BlockCurvatureJComboBox();
+    private JCheckBox permissiveField = new JCheckBox();
+    private JComboBox<String> speedField;
+
+    JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
+    
+    private String defaultBlockSpeedText;
+    
+    protected boolean metricUi = InstanceManager.getDefault(UserPreferencesManager.class)
+        .getSimplePreferenceState(BlockTableAction.BLOCK_METRIC_PREF);
+    
     BeanItemPanel reporterDetails() {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
 
         reporterComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(ReporterManager.class), bean.getReporter(), DisplayOptions.DISPLAYNAME);
         reporterComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(reporterComboBox);
 
         reporter.addItem(new BeanEditItem(reporterComboBox, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
 
-        reporterComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (reporterComboBox.getSelectedItem() != null) {
-                    useCurrent.setEnabled(true);
-                } else {
-                    useCurrent.setEnabled(false);
-                }
-            }
+        reporterComboBox.addActionListener((ActionEvent e) -> {
+            useCurrent.setEnabled(reporterComboBox.getSelectedItem() != null);
         });
 
         reporter.addItem(new BeanEditItem(useCurrent, Bundle.getMessage("BlockReporterCurrent"), Bundle.getMessage("BlockUseCurrentText")));
-
-        if (reporterComboBox.getSelectedItem() == null) {
-            useCurrent.setEnabled(false);
-        }
 
         reporter.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reporterComboBox.setSelectedItem(bean.getReporter());
                 useCurrent.setSelected(bean.isReportingCurrent());
+                useCurrent.setEnabled(bean.getReporter()!=null);
             }
         });
 
@@ -118,16 +97,6 @@ public class BlockEditAction extends BeanEditAction<Block> {
         }
         return reporter;
     }
-
-    JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
-    JComboBox<String> curvatureField = new JComboBox<String>(curveOptions);
-    JCheckBox permissiveField = new JCheckBox();
-    JComboBox<String> speedField;
-
-    JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
-    JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
-
-    String defaultBlockSpeedText;
 
     BeanItemPanel physicalDetails() {
 
@@ -147,8 +116,6 @@ public class BlockEditAction extends BeanEditAction<Block> {
                             new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
         lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
-        lengthSpinner.setValue(Float.valueOf(0f)); // reset from possible previous use
-        basic.addItem(new BeanEditItem(lengthSpinner, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText")));
 
         ButtonGroup rg = new ButtonGroup();
         rg.add(inch);
@@ -158,26 +125,16 @@ public class BlockEditAction extends BeanEditAction<Block> {
         p.add(inch);
         p.add(cm);
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        inch.setSelected(true);
-
-        inch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cm.setSelected(!inch.isSelected());
-                updateLength();
-            }
-        });
-        cm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inch.setSelected(!cm.isSelected());
-                updateLength();
-            }
-        });
-
+        inch.setSelected(!metricUi);
+        cm.setSelected(metricUi);
+        inch.addActionListener(this::updateLength);
+        cm.addActionListener(this::updateLength);
+        
+        basic.addItem(new BeanEditItem(lengthSpinner, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText") ));
         basic.addItem(new BeanEditItem(p, Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
         basic.addItem(new BeanEditItem(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
-        basic.addItem(new BeanEditItem(speedField = new JComboBox<String>(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
+        speedField = new JComboBox<>(speedList);
+        basic.addItem(new BeanEditItem(speedField, Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
         basic.addItem(new BeanEditItem(permissiveField, Bundle.getMessage("BlockPermColName"), Bundle.getMessage("BlockPermissiveText")));
 
         permissiveField.setSelected(bean.getPermissiveWorking());
@@ -185,66 +142,33 @@ public class BlockEditAction extends BeanEditAction<Block> {
         basic.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String cName = (String) curvatureField.getSelectedItem();
-                if (cName.equals(noneText)) {
-                    bean.setCurvature(Block.NONE);
-                } else if (cName.equals(gradualText)) {
-                    bean.setCurvature(Block.GRADUAL);
-                } else if (cName.equals(tightText)) {
-                    bean.setCurvature(Block.TIGHT);
-                } else if (cName.equals(severeText)) {
-                    bean.setCurvature(Block.SEVERE);
-                }
-
+                bean.setCurvature(curvatureField.getCurvature());
                 String speed = (String) speedField.getSelectedItem();
                 try {
                     bean.setBlockSpeed(speed);
                 } catch (JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                    JOptionPane.showMessageDialog(f, ex.getMessage() + "\n" + speed);
                     return;
                 }
                 if (!speedList.contains(speed) && !speed.contains("Global")) {
                     speedList.add(speed);
                 }
-                float len = 0.0f;
-                len = (Float) lengthSpinner.getValue();
-                if (inch.isSelected()) {
-                    bean.setLength(len * 25.4f);
-                } else {
-                    bean.setLength(len * 10.0f);
-                }
+                float len = (Float) lengthSpinner.getValue();
+                bean.setLength( metricUi ? len * 10.0f : len * 25.4f);
                 bean.setPermissiveWorking(permissiveField.isSelected());
             }
         });
         basic.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lengthSpinner.setValue(bean.getLengthMm());
-
-                if (bean.getCurvature() == Block.NONE) {
-                    curvatureField.setSelectedItem(0);
-                } else if (bean.getCurvature() == Block.GRADUAL) {
-                    curvatureField.setSelectedItem(gradualText);
-                } else if (bean.getCurvature() == Block.TIGHT) {
-                    curvatureField.setSelectedItem(tightText);
-                } else if (bean.getCurvature() == Block.SEVERE) {
-                    curvatureField.setSelectedItem(severeText);
-                }
-
+                curvatureField.setCurvature(bean.getCurvature());
                 String speed = bean.getBlockSpeed();
                 if (!speedList.contains(speed)) {
                     speedList.add(speed);
                 }
-
                 speedField.setEditable(true);
                 speedField.setSelectedItem(speed);
-                float len = 0.0f;
-                if (inch.isSelected()) {
-                    len = bean.getLengthIn();
-                } else {
-                    len = bean.getLengthCm();
-                }
-                lengthSpinner.setValue(len);
+                updateLength(e);
                 permissiveField.setSelected(bean.getPermissiveWorking());
             }
         });
@@ -252,14 +176,9 @@ public class BlockEditAction extends BeanEditAction<Block> {
         return basic;
     }
 
-    private void updateLength() {
-        float len = 0.0f;
-        if (inch.isSelected()) {
-            len = bean.getLengthIn();
-        } else {
-            len = bean.getLengthCm();
-        }
-        lengthSpinner.setValue(len);
+    private void updateLength(ActionEvent e) {
+        metricUi = cm.isSelected();
+        lengthSpinner.setValue(metricUi ?  bean.getLengthCm() : bean.getLengthIn());
     }
 
     NamedBeanComboBox<Sensor> sensorComboBox;
@@ -271,18 +190,16 @@ public class BlockEditAction extends BeanEditAction<Block> {
 
         sensorComboBox = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance(), bean.getSensor(), DisplayOptions.DISPLAYNAME);
         sensorComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(sensorComboBox);
         basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 
         final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
         //debounce.setBean(bean);
         debounce.sensorDebounce(basic);
 
-        sensorComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                debounce.setBean(sensorComboBox.getSelectedItem());
-                debounce.resetDebounceItems(e);
-            }
+        sensorComboBox.addActionListener((ActionEvent e) -> {
+            debounce.setBean(sensorComboBox.getSelectedItem());
+            debounce.resetDebounceItems(e);
         });
 
         basic.setSaveItem(new AbstractAction() {

@@ -47,8 +47,7 @@ hs_err_pid*.log
 nohup.out
 
 # private / per-user configuration files
-/nbproject/private
-/nbproject/nbjdk.properties
+/nbproject
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
 /.idea/workspace.xml
@@ -60,6 +59,7 @@ local.properties
 RemoteSystemsTempFiles
 .idea/libraries/**
 .idea/sonarlint/issuestore
+.factorypath
 
 # user-installed components
 /web/TrainCrew

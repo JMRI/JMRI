@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>11</minor>
-    <test>8</test>
+    <minor>21</minor>
+    <test>2</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
-    <defaultInitialState>unknown</defaultInitialState>
+    <defaultInitialState>inactive</defaultInitialState>
     <sensor inverted="false">
       <systemName>IS100</systemName>
       <userName>Occ East Block</userName>
@@ -107,7 +107,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="1:34 PM">
+    <memory value="2:14 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -190,7 +190,6 @@
       <unlit allowed="no" />
     </virtualsignalmast>
   </signalmasts>
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <blocks class="jmri.configurexml.BlockManagerXml">
     <defaultspeed>Normal</defaultspeed>
     <block systemName="IB:AUTO:0001">
@@ -242,26 +241,26 @@
       <userName>North Platform East End</userName>
       <permissive>no</permissive>
       <occupancysensor>Occ North Platform East End</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0001" />
       <path todir="128" fromdir="64" block="IB:AUTO:0008">
         <beansetting setting="2">
           <turnout systemName="Station East End" />
         </beansetting>
       </path>
-      <path todir="64" fromdir="128" block="IB:AUTO:0001" />
     </block>
     <block systemName="IB:AUTO:0003" length="1219.2" curve="0">
       <systemName>IB:AUTO:0003</systemName>
       <userName>South Platform</userName>
       <permissive>no</permissive>
       <occupancysensor>Occ South Platform</occupancysensor>
-      <path todir="128" fromdir="64" block="IB:AUTO:0008">
-        <beansetting setting="4">
-          <turnout systemName="Station East End" />
-        </beansetting>
-      </path>
       <path todir="64" fromdir="128" block="IB:AUTO:0007">
         <beansetting setting="4">
           <turnout systemName="Station West End" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0008">
+        <beansetting setting="4">
+          <turnout systemName="Station East End" />
         </beansetting>
       </path>
     </block>
@@ -270,16 +269,16 @@
       <userName>East Block</userName>
       <permissive>no</permissive>
       <occupancysensor>Occ East Block</occupancysensor>
-      <path todir="16" fromdir="32" block="IB:AUTO:0008" />
       <path todir="96" fromdir="144" block="IB:AUTO:0006" />
+      <path todir="16" fromdir="32" block="IB:AUTO:0008" />
     </block>
     <block systemName="IB:AUTO:0005" length="1219.2" curve="0">
       <systemName>IB:AUTO:0005</systemName>
       <userName>West Block</userName>
       <permissive>no</permissive>
       <occupancysensor>Occ West Block</occupancysensor>
-      <path todir="16" fromdir="32" block="IB:AUTO:0007" />
       <path todir="160" fromdir="80" block="IB:AUTO:0006" />
+      <path todir="16" fromdir="32" block="IB:AUTO:0007" />
     </block>
     <block systemName="IB:AUTO:0006" length="1422.4" curve="0">
       <systemName>IB:AUTO:0006</systemName>
@@ -294,7 +293,6 @@
       <userName>West Platform Switch</userName>
       <permissive>no</permissive>
       <occupancysensor>Occ West Platform Switch</occupancysensor>
-      <path todir="32" fromdir="16" block="IB:AUTO:0005" />
       <path todir="128" fromdir="64" block="IB:AUTO:0001">
         <beansetting setting="2">
           <turnout systemName="Station West End" />
@@ -305,13 +303,13 @@
           <turnout systemName="Station West End" />
         </beansetting>
       </path>
+      <path todir="32" fromdir="16" block="IB:AUTO:0005" />
     </block>
     <block systemName="IB:AUTO:0008" length="203.2" curve="0">
       <systemName>IB:AUTO:0008</systemName>
       <userName>East Platform Switch</userName>
       <permissive>no</permissive>
       <occupancysensor>Occ East Platform Switch</occupancysensor>
-      <path todir="32" fromdir="16" block="IB:AUTO:0004" />
       <path todir="64" fromdir="128" block="IB:AUTO:0002">
         <beansetting setting="2">
           <turnout systemName="Station East End" />
@@ -322,15 +320,15 @@
           <turnout systemName="Station East End" />
         </beansetting>
       </path>
+      <path todir="32" fromdir="16" block="IB:AUTO:0004" />
     </block>
   </blocks>
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
-    <layoutblock systemName="ILB1" occupiedsense="2" trackcolor="gray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB1" occupancysensor="Occ East Platform Switch" occupiedsense="2" trackcolor="gray" occupiedcolor="red" extracolor="white">
       <systemName>ILB1</systemName>
       <userName>East Platform Switch</userName>
     </layoutblock>
-    <layoutblock systemName="ILB2" occupiedsense="2" trackcolor="gray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB2" occupancysensor="Occ West Platform Switch" occupiedsense="2" trackcolor="gray" occupiedcolor="red" extracolor="white">
       <systemName>ILB2</systemName>
       <userName>West Platform Switch</userName>
     </layoutblock>
@@ -405,206 +403,30 @@
     <transit systemName="IZ1" userName="SouthPlatform CW">
       <systemName>IZ1</systemName>
       <userName>SouthPlatform CW</userName>
-      <transitsection sectionname="IY:AUTO:0002" sequence="1" direction="4" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0003" sequence="4" direction="4" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
     </transit>
     <transit systemName="IZ2" userName="NorthPlatform ACW">
       <systemName>IZ2</systemName>
       <userName>NorthPlatform ACW</userName>
-      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="8" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0003" sequence="2" direction="8" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" />
-      <transitsection sectionname="IY:AUTO:0001" sequence="5" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+    <transit systemName="IZ:AUTO:0001" userName="South-West-CW">
+      <systemName>IZ:AUTO:0001</systemName>
+      <userName>South-West-CW</userName>
+      <transitsection sectionname="IY:AUTO:0006" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
     </transit>
   </transits>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
-    <signalmastlogic source="South To East">
-      <sourceSignalMast>South To East</sourceSignalMast>
-      <destinationMast destination="East End Throat">
-        <destinationSignalMast>East End Throat</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>East Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>South Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="East To South">
-      <sourceSignalMast>East To South</sourceSignalMast>
-      <destinationMast destination="South To West">
-        <destinationSignalMast>South To West</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>East Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>South Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="West To South">
-      <sourceSignalMast>West To South</sourceSignalMast>
-      <destinationMast destination="South To East">
-        <destinationSignalMast>South To East</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>South Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>West Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="West End Throat">
-      <sourceSignalMast>West End Throat</sourceSignalMast>
-      <destinationMast destination="East End Cont">
-        <destinationSignalMast>East End Cont</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>North PlatForm Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>West Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-      <destinationMast destination="East End Div">
-        <destinationSignalMast>East End Div</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>South Platform Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>West Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="West End Div">
-      <sourceSignalMast>West End Div</sourceSignalMast>
-      <destinationMast destination="West To South">
-        <destinationSignalMast>West To South</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>South Platform Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>West Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="West End Cont">
-      <sourceSignalMast>West End Cont</sourceSignalMast>
-      <destinationMast destination="West To South">
-        <destinationSignalMast>West To South</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>North Platform Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>West Forward</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="South To West">
-      <sourceSignalMast>South To West</sourceSignalMast>
-      <destinationMast destination="West End Throat">
-        <destinationSignalMast>West End Throat</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-        <sensors>
-          <sensor>
-            <sensorName>South Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
-            <sensorName>West Reverse</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-        </sensors>
-      </destinationMast>
-    </signalmastlogic>
     <signalmastlogic source="East End Throat">
       <sourceSignalMast>East End Throat</sourceSignalMast>
       <destinationMast destination="West End Cont">
@@ -694,9 +516,190 @@
         </sensors>
       </destinationMast>
     </signalmastlogic>
+    <signalmastlogic source="West End Throat">
+      <sourceSignalMast>West End Throat</sourceSignalMast>
+      <destinationMast destination="East End Cont">
+        <destinationSignalMast>East End Cont</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>West Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>North PlatForm Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="East End Div">
+        <destinationSignalMast>East End Div</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>West Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>South Platform Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West End Cont">
+      <sourceSignalMast>West End Cont</sourceSignalMast>
+      <destinationMast destination="West To South">
+        <destinationSignalMast>West To South</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>West Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>North Platform Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West End Div">
+      <sourceSignalMast>West End Div</sourceSignalMast>
+      <destinationMast destination="West To South">
+        <destinationSignalMast>West To South</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>West Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>South Platform Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="East To South">
+      <sourceSignalMast>East To South</sourceSignalMast>
+      <destinationMast destination="South To West">
+        <destinationSignalMast>South To West</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>East Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>South Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="South To East">
+      <sourceSignalMast>South To East</sourceSignalMast>
+      <destinationMast destination="East End Throat">
+        <destinationSignalMast>East End Throat</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>East Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>South Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West To South">
+      <sourceSignalMast>West To South</sourceSignalMast>
+      <destinationMast destination="South To East">
+        <destinationSignalMast>South To East</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>West Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>South Forward</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="South To West">
+      <sourceSignalMast>South To West</sourceSignalMast>
+      <destinationMast destination="West End Throat">
+        <destinationSignalMast>West End Throat</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>West Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>South Reverse</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Jun 14 09:04:42 EDT 2018" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Test Layout" x="320" y="133" height="960" width="3820" windowheight="569" windowwidth="901" panelheight="960" panelwidth="3820" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="gray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="yellow" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Jun 14 09:04:42 EDT 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Test Layout" x="258" y="447" windowheight="596" windowwidth="1170" panelheight="960" panelwidth="3820" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="gray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="yellow" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Test Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -1041,54 +1044,71 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <layoutturnout ident="TO1" type="1" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="300.0" ycen="100.0" xa="280.0" ya="100.0" xb="320.0" yb="100.0" xc="320.0" yc="120.0" xd="280.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="Station East End" blockname="East Platform Switch" connectaname="T1" connectbname="T5" connectcname="T8">
+    <layoutturnout ident="TO1" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="300.0" ycen="100.0" xa="280.0" ya="100.0" xb="320.0" yb="100.0" xc="320.0" yc="120.0" xd="280.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="Station East End" blockname="East Platform Switch" connectaname="T1" connectbname="T5" connectcname="T8">
       <signalAMast>East End Throat</signalAMast>
       <signalBMast>East End Cont</signalBMast>
       <signalCMast>East End Div</signalCMast>
     </layoutturnout>
-    <layoutturnout ident="TO3" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="500.0" ycen="100.0" xa="520.0" ya="100.0" xb="480.0" yb="100.0" xc="480.0" yc="120.0" xd="520.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="Station West End" blockname="West Platform Switch" connectaname="T2" connectbname="T7" connectcname="T8">
+    <layoutturnout ident="TO3" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="500.0" ycen="100.0" xa="520.0" ya="100.0" xb="480.0" yb="100.0" xc="480.0" yc="120.0" xd="520.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="Station West End" blockname="West Platform Switch" connectaname="T2" connectbname="T7" connectcname="T8">
       <signalAMast>West End Throat</signalAMast>
       <signalBMast>West End Cont</signalBMast>
       <signalCMast>West End Div</signalCMast>
     </layoutturnout>
-    <tracksegment ident="T1" blockname="East Block" connect1name="TO1" type1="2" connect2name="A1" type2="1" dashed="no" mainline="no" hidden="no" arc="yes" flip="yes" circle="yes" angle="180.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T2" blockname="West Block" connect1name="TO3" type1="2" connect2name="A2" type2="1" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="180.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T4" blockname="South Block" connect1name="A1" type1="1" connect2name="A2" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T5" blockname="North Platform East End" connect1name="TO1" type1="3" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T7" blockname="North Platform West End" connect1name="A3" type1="1" connect2name="TO3" type2="3" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T8" blockname="South Platform" connect1name="TO1" type1="4" connect2name="TO3" type2="4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <positionablepoint ident="A1" type="1" x="280.0" y="300.0" connect1name="T1" connect2name="T4" eastboundsignalmast="East To South" westboundsignalmast="South To East" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A2" type="1" x="520.0" y="300.0" connect1name="T2" connect2name="T4" eastboundsignalmast="South To West" westboundsignalmast="West To South" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A3" type="1" x="400.0" y="100.0" connect1name="T5" connect2name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <tracksegment ident="T1" blockname="East Block" connect1name="TO1" type1="TURNOUT_A" connect2name="A1" type2="POS_POINT" dashed="no" mainline="no" hidden="no" arc="yes" flip="yes" circle="yes" angle="180.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="West Block" connect1name="TO3" type1="TURNOUT_A" connect2name="A2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="180.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="South Block" connect1name="A1" type1="POS_POINT" connect2name="A2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="North Platform East End" connect1name="TO1" type1="TURNOUT_B" connect2name="A3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="North Platform West End" connect1name="A3" type1="POS_POINT" connect2name="TO3" type2="TURNOUT_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="South Platform" connect1name="TO1" type1="TURNOUT_C" connect2name="TO3" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="ANCHOR" x="280.0" y="300.0" connect1name="T1" connect2name="T4" eastboundsignalmast="East To South" westboundsignalmast="South To East" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="ANCHOR" x="520.0" y="300.0" connect1name="T2" connect2name="T4" eastboundsignalmast="South To West" westboundsignalmast="West To South" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="ANCHOR" x="400.0" y="100.0" connect1name="T5" connect2name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
   </LayoutEditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Jun 26 13:28:45 EDT 2018</date>
+      <date>Fri Sep 11 13:59:52 EDT 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Jun 26 13:29:26 EDT 2018</date>
+      <date>Fri Sep 11 13:59:59 EDT 2020</date>
       <filename>/home/sg/devl/jmri/JMRI-Pugwash1/JMRI/java/test/jmri/jmrit/dispatcher/DispatcherSMLLayout.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sat Jun 16 17:15:31 EDT 2018</date>
+          <date>Tue Jun 26 13:28:45 EDT 2018</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
+          <type>Load OK</type>
+          <date>Tue Jun 26 13:29:26 EDT 2018</date>
+          <filename>/home/sg/devl/jmri/JMRI-Pugwash1/JMRI/java/test/jmri/jmrit/dispatcher/DispatcherSMLLayout.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sat Jun 16 17:15:31 EDT 2018</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Jun 16 17:51:08 EDT 2018</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
           <type>Store</type>
-          <date>Sat Jun 16 17:51:08 EDT 2018</date>
+          <date>Tue Jun 26 13:34:23 EDT 2018</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Jun 26 13:34:23 EDT 2018</date>
+      <date>Fri Sep 11 14:14:12 EDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.11.8ish+sg+2018-06-19T15:42:16Z+Recab8a0 on Tue Jun 26 13:34:23 EDT 2018-->
+  <!--Written by JMRI version 4.21.2ish+sg+2020-09-11T14:28:43Z+Rd65433a on Fri Sep 11 14:14:12 EDT 2020-->
 </layout-config>

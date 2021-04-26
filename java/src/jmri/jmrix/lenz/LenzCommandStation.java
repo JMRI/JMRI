@@ -24,6 +24,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Return the CS Type.
+     * @return CS type.
      */
     public int getCommandStationType() {
         return cmdStationType;
@@ -31,6 +32,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Set the CS Type.
+     * @param t CS type.
      */
     public void setCommandStationType(int t) {
         cmdStationType = t;
@@ -38,6 +40,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Set the CS Type based on an XpressNet Message.
+     * @param l XNetReply containing the CS type.
      */
     public void setCommandStationType(XNetReply l) {
         if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
@@ -50,6 +53,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Get the CS Software Version.
+     * @return software version.
      */
     public float getCommandStationSoftwareVersion() {
         return cmdStationSoftwareVersion;
@@ -57,6 +61,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Get the CS Software Version in BCD (for use in comparisons).
+     * @return software version.
      */
     public float getCommandStationSoftwareVersionBCD() {
         return cmdStationSoftwareVersionBCD;
@@ -64,6 +69,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Set the CS Software Version.
+     * @param v software version.
      */
     public void setCommandStationSoftwareVersion(float v) {
         cmdStationSoftwareVersion = v;
@@ -71,6 +77,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Set the CS Software Version based on an XpressNet Message.
+     * @param l reply containing CS version.
      */
     public void setCommandStationSoftwareVersion(XNetReply l) {
         if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
@@ -91,22 +98,19 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Provide the version string returned during the initial check.
+     * @return human readable version string.
      */
     public String getVersionString() {
         return Bundle.getMessage("CSVersionString", getCommandStationType(),getCommandStationSoftwareVersionBCD());
     }
 
     /**
-     * XpressNet command station does provide Ops Mode. We should make this
-     * return false based on what command station we're using but for now, we'll
-     * return true.
+     * XpressNet command station does provide Ops Mode.
+     * <p>
+     * @return true if CS type 1 or 2, else false.
      */
     public boolean isOpsModePossible() {
-        if (cmdStationType == 0x01 || cmdStationType == 0x02) {
-            return false;
-        } else {
-            return true;
-        }
+        return cmdStationType != 0x01 && cmdStationType != 0x02;
     }
 
     // A few utility functions
@@ -114,6 +118,8 @@ public class LenzCommandStation implements jmri.CommandStation {
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive
      * address.
+     * @param address loco address.
+     * @return low address byte including DCC offset.
      */
     public static int getDCCAddressLow(int address) {
         /* For addresses below 100, we just return the address, otherwise,
@@ -131,6 +137,8 @@ public class LenzCommandStation implements jmri.CommandStation {
     /**
      * Get the Upper byte of a locomotive address from the decimal locomotive
      * address.
+     * @param address loco address.
+     * @return upper byte after DCC offset.
      */
     public static int getDCCAddressHigh(int address) {
         /* this isn't actually the high byte, For addresses below 100, we
@@ -163,7 +171,7 @@ public class LenzCommandStation implements jmri.CommandStation {
             return (AL);
         } else {
             /* This must be a long address */
-            int address = 0;
+            int address;
             address = ((AH * 256) & 0xFF00);
             address += (AL & 0xFF);
             address -= 0xC000;

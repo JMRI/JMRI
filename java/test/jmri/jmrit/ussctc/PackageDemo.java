@@ -7,7 +7,7 @@ import jmri.*;
 /**
  * Demo of classes in jmri.jmrit.ussctc
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2015, 2017
+ * @author Bob Jacobsen Copyright 2003, 2007, 2015, 2017
  */
 public class PackageDemo {
 
@@ -90,5 +90,5 @@ public class PackageDemo {
             });
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PackageDemo.class);
 }

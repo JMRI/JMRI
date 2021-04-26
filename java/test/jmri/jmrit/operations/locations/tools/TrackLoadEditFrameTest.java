@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -17,7 +17,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrackLoadEditFrameTest extends OperationsTestCase {
 
@@ -64,15 +64,15 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoLoads"), Bundle.getMessage("ButtonOK"));
         
-        // now add a load "Flat & E"
+        // now add a load "Boxcar & E"
         JemmyUtil.enterClickAndLeave(tlef.addLoadButton);
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
         
-        Assert.assertTrue(track.acceptsLoad("E", "Flat"));
-        Assert.assertFalse(track.acceptsLoad("L", "Flat"));
+        Assert.assertTrue(track.isLoadNameAndCarTypeAccepted("E", "Boxcar"));
+        Assert.assertFalse(track.isLoadNameAndCarTypeAccepted("L", "Boxcar"));
         
-        Assert.assertFalse(track.acceptsLoadName("L"));
-        Assert.assertFalse(track.acceptsLoadName("E"));
+        Assert.assertFalse(track.isLoadNameAccepted("L"));
+        Assert.assertFalse(track.isLoadNameAccepted("E"));
         
         JUnitUtil.dispose(tlef);
 

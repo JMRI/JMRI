@@ -4,14 +4,10 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import jmri.ClockControl;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.SensorManager;
-import jmri.ThrottleManager;
-import jmri.TurnoutManager;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.srcp.parser.ASTinfo;
 import jmri.jmrix.srcp.parser.SimpleNode;
 import jmri.util.NamedBeanComparator;
@@ -26,9 +22,9 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
-public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements SRCPListener {
+public class SRCPBusConnectionMemo extends DefaultSystemConnectionMemo implements SRCPListener, ConfiguringSystemConnectionMemo {
 
     private int _bus = 0;
     private boolean configured = false;
@@ -36,9 +32,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     public SRCPBusConnectionMemo(SRCPTrafficController et, String Prefix, int bus) {
         super(Prefix + bus, "SRCP:" + bus);
         this.et = et;
-        //this.et.setSystemConnectionMemo(this);
         _bus = bus;
-        register();
         log.debug("Created SRCPBusConnectionMemo for bus {}", bus);
         et.addSRCPListener(this);
         et.sendSRCPMessage(new SRCPMessage("GET " + bus + " DESCRIPTION\n"), null);
@@ -49,6 +43,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return SRCP Traffic Controller.
      */
     public SRCPTrafficController getTrafficController() {
         return et;
@@ -76,6 +71,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
               }
            }
         }
+        register();
         log.debug("Manager configuration complete for bus {}", _bus );
     }
 
@@ -89,147 +85,77 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     }
 
     /**
-     * Provides access to the Programmer for this particular connection. NOTE:
-     * Programmer defaults to null
+     * Provides access to the Programmer for this particular connection.
+     * <p>
+     * NOTE: Programmer defaults to null
+     * @return programmer manager.
      */
     public SRCPProgrammerManager getProgrammerManager() {
-        return programmerManager;
+        return get(GlobalProgrammerManager.class);
     }
 
     public void setProgrammerManager(SRCPProgrammerManager p) {
-        programmerManager = p;
+        store(p,GlobalProgrammerManager.class);
     }
-
-    private SRCPProgrammerManager programmerManager = null;
 
     /*
      * Provides access to the Throttle Manager for this particular connection.
      * NOTE: Throttle Manager defaults to null
      */
     public ThrottleManager getThrottleManager() {
-        return throttleManager;
-
+        return get(ThrottleManager.class);
     }
 
     public void setThrottleManager(ThrottleManager t) {
-        throttleManager = t;
+        store(t,ThrottleManager.class);
     }
-
-    private ThrottleManager throttleManager;
 
     /*
      * Provides access to the Clock Control for this particular connection.
      * NOTE: May return null if the Clock Control has not been set.
      */
     public ClockControl getClockControl() {
-        return clockControl;
-
+        return get(ClockControl.class);
     }
 
     public void setClockControl(ClockControl t) {
-        clockControl = t;
-        InstanceManager.store(clockControl, ClockControl.class);
-        InstanceManager.setDefault(ClockControl.class, clockControl);
+        store(t,ClockControl.class);
+        InstanceManager.store(t, ClockControl.class);
+        InstanceManager.setDefault(ClockControl.class, t);
     }
-
-    private ClockControl clockControl = null;
 
     /*
      * Provides access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
-        return powerManager;
+        return get(PowerManager.class);
     }
 
     public void setPowerManager(PowerManager p) {
-        powerManager = p;
+        store(p,PowerManager.class);
     }
-
-    private PowerManager powerManager;
 
     /*
      * Provides access to the SensorManager for this particular connection.
      */
     public SensorManager getSensorManager() {
-        return sensorManager;
-
+        return get(SensorManager.class);
     }
 
     public void setSensorManager(SensorManager s) {
-        sensorManager = s;
+        store(s,SensorManager.class);
     }
-
-    private SensorManager sensorManager = null;
 
     /*
      * Provides access to the TurnoutManager for this particular connection.
      * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
-        return turnoutManager;
-
+        return get(TurnoutManager.class);
     }
 
     public void setTurnoutManager(TurnoutManager t) {
-        turnoutManager = t;
-    }
-
-    private TurnoutManager turnoutManager = null;
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.ClockControl.class)) {
-            return (T) getClockControl();
-        }
-        return super.get(T);
-    }
-
-    /**
-     * Tells which managers this class provides.
-     */
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return (null != programmerManager);
-        }
-        if (type.equals(jmri.ThrottleManager.class)) {
-            return (null != throttleManager);
-        }
-        if (type.equals(jmri.PowerManager.class)) {
-            return (null != powerManager);
-        }
-        if (type.equals(jmri.SensorManager.class)) {
-            return (null != sensorManager);
-        }
-        if (type.equals(jmri.TurnoutManager.class)) {
-            return (null != turnoutManager);
-        }
-        if (type.equals(jmri.ClockControl.class)) {
-            return (null != clockControl);
-        }
-        return super.provides(type); 
+        store(t,TurnoutManager.class);
     }
 
     @Override
@@ -244,7 +170,9 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 
     @Override
     public void dispose() {
-        et = null;
+        if (et != null) {
+            et = null;
+        }
         InstanceManager.deregister(this, SRCPBusConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);

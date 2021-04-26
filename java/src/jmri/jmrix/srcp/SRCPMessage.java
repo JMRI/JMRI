@@ -6,7 +6,7 @@ package jmri.jmrix.srcp;
  *
  * The {@link SRCPReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 

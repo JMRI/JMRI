@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Damian</firstname><surname>Dąbrowa</surname></personname>
+        <email>damian@damiansplace.net</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2021-03-03</date>
+        <authorinitials>DD</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>   
+  </revhistory>
+
+  <aspecttable>PKP-PLK-2020</aspecttable>
+  <name>Jazda manewrowa</name>
+  <description>Sygnalizacja świetlna dla jazdy manewrowej.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Sygnał Ms 1</aspectname>
+      <show>blue</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spk-Ms1.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spk-Ms1.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spk-Ms1.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał Ms 2</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spk-Ms2.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spk-Ms2.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spk-Ms2.png</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

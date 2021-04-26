@@ -42,10 +42,9 @@ public class ConcentratorSensorManager extends RfidSensorManager {
      */
     @Override
     @Nonnull
-    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("Create new Sensor");
-        TimeoutRfidSensor s;
-        s = new TimeoutRfidSensor(systemName, userName);
+        TimeoutRfidSensor s = new TimeoutRfidSensor(systemName, userName);
         s.addPropertyChangeListener(this);
         return s;
     }
@@ -83,9 +82,20 @@ public class ConcentratorSensorManager extends RfidSensorManager {
     // to free resources when no longer used
     @Override
     public void dispose() {
+        tc.removeRfidListener(this);
         super.dispose();
     }
 
+    /**
+     * Validates to validateTrimmedSystemNameFormat.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedSystemNameFormat(name, locale);
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManager.class);
 
 }

@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 import jmri.InstanceManager;
@@ -24,7 +24,7 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        PrintSavedTrainManifestAction t = new PrintSavedTrainManifestAction("Test Action", true, train1);
+        PrintSavedTrainManifestAction t = new PrintSavedTrainManifestAction(true, train1);
         Assert.assertNotNull("exists", t);
     }
 
@@ -42,14 +42,14 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
         Assert.assertTrue(train1.build());
         train1.terminate();
 
-        PrintSavedTrainManifestAction pa = new PrintSavedTrainManifestAction("Test Action", true, train1);
+        PrintSavedTrainManifestAction pa = new PrintSavedTrainManifestAction(true, train1);
         Assert.assertNotNull("exists", pa);
 
         // should cause file chooser to appear
         Thread printAction = new Thread(new Runnable() {
             @Override
             public void run() {
-                pa.actionPerformed(new ActionEvent(this, 0, null));
+                pa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         printAction.setName("Test Print Action"); // NOI18N

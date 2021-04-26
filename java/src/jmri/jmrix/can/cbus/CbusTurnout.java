@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class CbusTurnout extends jmri.implementation.AbstractTurnout
-        implements CanListener {
+        implements CanListener, CbusEventInterface {
 
-    CbusAddress addrThrown;   // go to thrown state
-    CbusAddress addrClosed;   // go to closed state
+    private CbusAddress addrThrown;   // go to thrown state
+    private CbusAddress addrClosed;   // go to closed state
 
     protected CbusTurnout(String prefix, String address, TrafficController tc) {
         super(prefix + "T" + address);
@@ -31,8 +31,6 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 
     /**
      * Common initialization for both constructors.
-     * <p>
-     *
      */
     private void init(String address) {
         // build local addresses
@@ -48,7 +46,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 } else if (address.startsWith("-")) {
                     addrClosed = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -89,21 +87,20 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (s2 != null) s2.requestUpdateFromLayout();
         }
     }
-    
+
     /**
-     * Handle a request to change state by sending CBUS events.
-     *
-     * @param s new state value
+     * {@inheritDoc}
+     * Sends a CBUS event.
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         CanMessage m;
-        if (s == Turnout.THROWN) {
+        if (newState == Turnout.THROWN) {
             m = getAddrThrown();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
-        if (s == Turnout.CLOSED) {
+        if (newState == Turnout.CLOSED) {
             m = getAddrClosed();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
@@ -111,7 +108,8 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     }
     
     /**
-     * Package method returning CanMessage for the Thrown Turnout Address
+     * Package method returning CanMessage for the Thrown Turnout Address.
+     *
      * @return CanMessage with the Thrown Address
      */    
     public CanMessage getAddrThrown(){
@@ -263,6 +261,22 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     @Override
     public boolean canInvert() {
         return true;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrClosed());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrThrown());
     }
 
     /**

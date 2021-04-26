@@ -59,7 +59,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
             // connect to the TrafficController
             tc.addDCCppListener(~0, this);
 
-            if ((tc instanceof SerialDCCppPacketizer)) {
+            if ((tc instanceof SerialDCCppPacketizer) && tc.getCommandStation().isFunctionRefreshRequired()) {
                 serialDCCppTC = (SerialDCCppPacketizer) tc;
 
                 pauseRefreshButton.setSelected(!serialDCCppTC.isActiveRefresh());
@@ -82,7 +82,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 
         // Create the background function refreshing-related buttons and add
         // them to a panel. The panel however will only be added if the traffic
-        // controller is an instance of SerialDCCppPacketizer
+        // controller is an instance of SerialDCCppPacketizer and FunctionRefreshRequired by the command station
         final JLabel functionLabel = new JLabel(Bundle.getMessage("LabelFunctionRefresh"), SwingConstants.LEFT); // NOI18N
 
         pauseRefreshButton.setText(Bundle.getMessage("ButtonPauseRefresh")); // NOI18N
@@ -168,7 +168,9 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     public synchronized void message(final DCCppReply l) {
         // receive a DCC++ message and log it
         // display the raw data if requested
-        log.debug("Message in Monitor: {} opcode {}", l.toString(), Character.toString(l.getOpCodeChar()));
+        if (log.isDebugEnabled()) {
+            log.debug("Message in Monitor: '{}' opcode {}", l, Character.toString(l.getOpCodeChar()));
+        }
 
         logMessage("", "RX: ", l);
     }
@@ -185,9 +187,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     // Handle a timeout notification
     @Override
     public void notifyTimeout(final DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     /**

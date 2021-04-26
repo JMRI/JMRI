@@ -16,6 +16,7 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p stream port controller.
      */
     public DCCppStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
         super(p);

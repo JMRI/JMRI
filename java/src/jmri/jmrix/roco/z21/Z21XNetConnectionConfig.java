@@ -19,6 +19,7 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p stream port controller.
      */
     public Z21XNetConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
         super(p);

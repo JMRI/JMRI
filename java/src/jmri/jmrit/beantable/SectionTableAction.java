@@ -6,8 +6,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
@@ -39,7 +42,7 @@ import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
@@ -112,12 +115,12 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             }
 
             @Override
-            public Section getBySystemName(String name) {
+            public Section getBySystemName(@Nonnull String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(name);
             }
 
             @Override
-            public Section getByUserName(String name) {
+            public Section getByUserName(@Nonnull String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getByUserName(name);
             }
 
@@ -319,7 +322,6 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     boolean addCreateActive = true;
     ArrayList<LayoutEditor> lePanelList = null;
     LayoutEditor curLayoutEditor = null;
-    ArrayList<Block> blockBoxList = new ArrayList<>();
     Block beginBlock = null;
     Block endBlock = null;
     Sensor fSensor = null;
@@ -332,6 +334,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     // add/create variables
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(15);
+    JLabel sysNameFixed = new JLabel("");
     JTextField userName = new JTextField(17);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -339,10 +342,10 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     jmri.UserPreferencesManager pref;
     JButton create = null;
     JButton update = null;
-    JComboBox<String> blockBox = new JComboBox<String>();
     JButton addBlock = null;
     JButton deleteBlocks = null;
     JComboBox<String> layoutEditorBox = new JComboBox<String>();
+    NamedBeanComboBox<Block> blockBox;
     NamedBeanComboBox<Sensor> forwardSensorBox;
     NamedBeanComboBox<Sensor> reverseSensorBox;
     NamedBeanComboBox<Sensor> forwardStopSensorBox;
@@ -374,7 +377,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             // no section - should never happen, but protects against a $%^#@ exception
             return;
         }
-        sysName.setText(sName);
+        sysNameFixed.setText(sName);
         editMode = true;
         addEditPressed();
     }
@@ -390,6 +393,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
             sysNameLabel.setLabelFor(sysName);
+            p.add(sysNameFixed);
             p.add(sysName);
             p.add(_autoSystemName);
             _autoSystemName.addActionListener(new ActionListener() {
@@ -452,6 +456,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             });
             deleteBlocks.setToolTipText(rbx.getString("DeleteAllBlocksButtonHint"));
             p13.add(new JLabel("     "));
+            initializeBlockCombo();
             p13.add(blockBox);
             blockBox.setToolTipText(rbx.getString("BlockBoxHint"));
             p13.add(addBlock = new JButton(rbx.getString("AddBlockButton")));
@@ -628,8 +633,10 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             create.setVisible(false);
             update.setVisible(true);
             sysName.setVisible(true);
-            sysName.setEnabled(false);
+            sysName.setVisible(false);
+            sysNameFixed.setVisible(true);
             initializeEditInformation();
+            addFrame.getRootPane().setDefaultButton(update);
             addFrame.setTitle(Bundle.getMessage("TitleEditSection"));
         } else {
             // setup for create window
@@ -637,9 +644,10 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             create.setVisible(true);
             update.setVisible(false);
             sysName.setVisible(true);
-            sysName.setEnabled(true);
+            sysNameFixed.setVisible(false);
             autoSystemName();
             clearForCreate();
+            addFrame.getRootPane().setDefaultButton(create);
             addFrame.setTitle(Bundle.getMessage("TitleAddSection"));
         }
         // initialize layout editor panels
@@ -654,6 +662,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         }
         // initialize block combo - first time
         initializeBlockCombo();
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -873,14 +882,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     }
 
     void addBlockPressed(ActionEvent e) {
-        if (blockBoxList.size() == 0) {
+        if (blockBox.getItemCount() == 0) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message5"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int index = blockBox.getSelectedIndex();
-        Block b = blockBoxList.get(index);
+        Block b = blockBox.getSelectedItem();
         if (b != null) {
             blockList.add(b);
             if (blockList.size() == 1) {
@@ -895,8 +903,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
 
     private boolean initializeLayoutEditorCombo(JComboBox<String> box) {
         // get list of Layout Editor panels
-        lePanelList = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        if (lePanelList.size() == 0) {
+        lePanelList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        if (lePanelList.isEmpty()) {
             return false;
         }
         box.removeAllItems();
@@ -921,26 +929,26 @@ public class SectionTableAction extends AbstractTableAction<Section> {
      * Build a combo box to select Blocks for this Section.
      */
     private void initializeBlockCombo() {
-        blockBox.removeAllItems();
-        for (int j = blockBoxList.size(); j > 0; j--) {
-            blockBoxList.remove(j - 1);
+        if (blockBox == null) {
+            blockBox = new NamedBeanComboBox<>(InstanceManager.getDefault(BlockManager.class));
         }
         if (blockList.size() == 0) {
             // No blocks selected, all blocks are eligible
-            for (Block b : blockManager.getNamedBeanSet()) {
-                blockBox.addItem(b.getDisplayName());
-                blockBoxList.add(b);
-            }
+            blockBox.setExcludedItems(new HashSet<Block>());
         } else {
             // limit combo list to Blocks bonded to the currently selected Block that are not already in the Section
+            Set<Block> excludes = new HashSet<>(InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet());
             for (Block b : blockManager.getNamedBeanSet()) {
                 if ((!inSection(b)) && connected(b, endBlock)) {
-                    blockBox.addItem(b.getDisplayName());
-                    blockBoxList.add(b);
+                    excludes.remove(b);
                 }
             }
+            blockBox.setExcludedItems(excludes);
         }
-        JComboBoxUtil.setupComboBoxMaxRows(blockBox);
+        if (blockBox.getItemCount()> 0) {
+            blockBox.setSelectedIndex(0);
+            JComboBoxUtil.setupComboBoxMaxRows(blockBox);
+        }
     }
 
     private boolean inSection(Block b) {
@@ -1070,10 +1078,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
      */
     private void deleteSectionPressed(String sName) {
         final Section s = jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(sName);
+        if (s == null){
+            throw new IllegalArgumentException("Not deleting Section :" + sName + ": , Not Found.");
+        }
         String fullName = s.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         ArrayList<Transit> affectedTransits = jmri.InstanceManager.getDefault(jmri.TransitManager.class).getListUsingSection(s);
         final JDialog dialog = new JDialog();
-        String msg = "";
+        String msg;
         dialog.setTitle(Bundle.getMessage("WarningTitle"));
         dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         dialog.getContentPane().setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
@@ -1157,7 +1168,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
@@ -1243,8 +1254,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     private boolean initializeLayoutEditor(boolean required) {
         // Get a Layout Editor panel. Choose Layout Editor panel if more than one.
         ArrayList<LayoutEditor> layoutEditorList
-                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        if ((panel == null) || (layoutEditorList.size() > 1)) {
+                = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        if (panel == null || !layoutEditorList.isEmpty()) {
             if (layoutEditorList.size() > 1) {
                 // initialize for choosing between layout editors
                 Object choices[] = new Object[layoutEditorList.size()];

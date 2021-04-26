@@ -32,13 +32,13 @@ import jmri.InstanceManager;
 import jmri.Metadata;
 import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -435,16 +435,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor,
         // SwitchboardEditor)
-        // list ControlPanelEditors
-        Editor.getEditors(ControlPanelEditor.class).stream()
-                .map(editor -> this.getPanel(editor, format, id))
-                .filter(Objects::nonNull).forEach(root::add);
-        // list LayoutEditors and PanelEditors
-        Editor.getEditors(PanelEditor.class).stream()
-                .map(editor -> this.getPanel(editor, format, id))
-                .filter(Objects::nonNull).forEach(root::add);
-        // list SwitchboardEditors
-        Editor.getEditors(SwitchboardEditor.class).stream()
+        InstanceManager.getDefault(EditorManager.class).getAll().stream()
                 .map(editor -> this.getPanel(editor, format, id))
                 .filter(Objects::nonNull).forEach(root::add);
         return root;
@@ -730,7 +721,6 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JsonException.ERROR:
                 case JSON.LIST:
                 case JSON.PONG:
-                case JSON.VERSION:
                     if (server) {
                         return doSchema(type, server,
                                 this.mapper.readTree(this.getClass().getClassLoader()
@@ -756,6 +746,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.METADATA:
                 case JSON.NODE:
                 case JSON.RAILROAD:
+                case JSON.VERSION:
                     return doSchema(type,
                             server,
                             RESOURCE_PATH + type + "-server.json",

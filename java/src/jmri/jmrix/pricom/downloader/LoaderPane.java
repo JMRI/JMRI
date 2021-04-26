@@ -24,7 +24,7 @@ import purejavacomm.*;
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -39,18 +39,18 @@ public class LoaderPane extends javax.swing.JPanel {
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    JComboBox<String> portBox = new JComboBox<String>();
-    JButton openPortButton = new JButton();
-    JTextArea traffic = new JTextArea();
+    final JComboBox<String> portBox = new JComboBox<>();
+    final JButton openPortButton = new JButton();
+    final JTextArea traffic = new JTextArea();
 
-    JFileChooser chooser = jmri.jmrit.XmlFile.userFileChooser();
-    JButton fileButton;
-    JLabel inputFileName = new JLabel("");
-    JTextArea comment = new JTextArea();
+    final JFileChooser chooser = jmri.jmrit.XmlFile.userFileChooser();
+    final JButton fileButton;
+    final JLabel inputFileName = new JLabel("");
+    final JTextArea comment = new JTextArea();
 
-    JButton loadButton;
-    JProgressBar bar;
-    JLabel status = new JLabel("");
+    final JButton loadButton;
+    final JProgressBar bar;
+    final JLabel status = new JLabel("");
 
     PdiFile pdiFile;
 
@@ -67,16 +67,11 @@ public class LoaderPane extends javax.swing.JPanel {
 
         openPortButton.setText(Bundle.getMessage("ButtonOpen"));
         openPortButton.setToolTipText(Bundle.getMessage("TipOpenPort"));
-        openPortButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    openPortButtonActionPerformed(evt);
-                    //} catch (jmri.jmrix.SerialConfigException ex) {
-                    //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
-                } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port. Did you select the right one?\n" + ex);
-                }
+        openPortButton.addActionListener(evt -> {
+            try {
+                openPortButtonActionPerformed(evt);
+            } catch (UnsatisfiedLinkError ex) {
+                log.error("Error while opening port. Did you select the right one?\n{}", ex);
             }
         });
 
@@ -104,6 +99,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e Event from pressed button
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
@@ -127,19 +123,19 @@ public class LoaderPane extends javax.swing.JPanel {
             ostream.write(startbyte);
 
             // send the rest of the bytes
-            for (int i = 0; i < bytes.length; i++) {
+            for (byte aByte : bytes) {
                 // expand as needed
-                switch (bytes[i]) {
+                switch (aByte) {
                     case 0x01:
                     case 0x02:
                     case 0x03:
                     case 0x06:
                     case 0x15:
                         ostream.write(0x01);
-                        ostream.write(bytes[i] + 64);
+                        ostream.write(aByte + 64);
                         break;
                     default:
-                        ostream.write(bytes[i]);
+                        ostream.write(aByte);
                         break;
                 }
             }
@@ -147,7 +143,7 @@ public class LoaderPane extends javax.swing.JPanel {
             byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: {}", e);
         }
     }
 
@@ -170,19 +166,19 @@ public class LoaderPane extends javax.swing.JPanel {
             try {
                 nibbleIncomingData();            // remove any pending chars in queue
             } catch (java.io.IOException e) {
-                log.warn("nibble: Exception: " + e.toString());
+                log.warn("nibble: Exception: {}", e);
             }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: " + e.toString());
+                    log.warn("run: Exception: {}", e);
                 }
             }
         }
 
         static final int maxMsg = 80;
-        byte inBuffer[];
+        byte[] inBuffer;
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
                                             justification="this is for skip-chars while loop: no matter how many, we're skipping")
@@ -241,6 +237,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
         /**
          * Send the next message of the download.
+         * @param buffer holds message to be sent
+         * @param length length of message within buffer
          */
         void nextMessage(byte[] buffer, int length) {
 
@@ -262,12 +260,7 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // update progress bar via the queue to ensure synchronization
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    updateGUI();
-                }
-            };
+            Runnable r = this::updateGUI;
             javax.swing.SwingUtilities.invokeLater(r);
 
             // get the next message
@@ -286,12 +279,7 @@ public class LoaderPane extends javax.swing.JPanel {
             sendBytes(outBuffer);
 
             // signal end to GUI via the queue to ensure synchronization
-            r = new Runnable() {
-                @Override
-                public void run() {
-                    enableGUI();
-                }
-            };
+            r = this::enableGUI;
             javax.swing.SwingUtilities.invokeLater(r);
 
             // stop this thread
@@ -352,7 +340,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 message = jmri.util.StringUtil.hexStringFromBytes(temp);
             }
 
-            String message;
+            final String message;
 
             /**
              * when invoked, format and display the message
@@ -390,7 +378,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
+        portNameVector = new Vector<>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -430,8 +418,8 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -454,14 +442,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             //opened = true;
@@ -523,7 +504,7 @@ public class LoaderPane extends javax.swing.JPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
+            loadButton = new JButton(Bundle.getMessage("ButtonDownload"));
             loadButton.setEnabled(false);
             loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);
@@ -565,7 +546,7 @@ public class LoaderPane extends javax.swing.JPanel {
         try {
             pdiFile.open();
         } catch (IOException e) {
-            log.error("Error opening file: " + e);
+            log.error("Error opening file: {}", e);
         }
 
         comment.setText(pdiFile.getComment());
@@ -610,12 +591,13 @@ public class LoaderPane extends javax.swing.JPanel {
      * <p>
      * The last two bytes of the buffer hold the checksum, and are not included
      * in the checksum.
+     * @param buffer Buffer holding the message to be get a CRC
      */
     void CRC_block(byte[] buffer) {
         long crc = 0;
 
         for (int r = 0; r < buffer.length - 2; r++) {
-            crc = CRC_char(crc, buffer[r]);	// do this character
+            crc = CRC_char(crc, buffer[r]); // do this character
         }
 
         // store into buffer
@@ -627,6 +609,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Check to see if message starts transmission
+     * @param buffer Buffer holding the message to be checked
+     * @return True if buffer is a upload-ready message
      */
     boolean isUploadReady(byte[] buffer) {
         if (buffer[0] != 31) {
@@ -641,14 +625,13 @@ public class LoaderPane extends javax.swing.JPanel {
         if (buffer[3] != 00) {
             return false;
         }
-        if (!((buffer[4] == 44) || (buffer[4] == 45))) {
-            return false;
-        }
-        return true;
+        return (buffer[4] == 44) || (buffer[4] == 45);
     }
 
     /**
      * Check to see if this is a request for the next block
+     * @param buffer Buffer holding the message to be checked
+     * @return True if buffer is a sent-next message
      */
     boolean isSendNext(byte[] buffer) {
         if (buffer[0] != 31) {
@@ -672,6 +655,9 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Get output data length from 1st message
+     * 
+     * @param buffer Message from which length is to be extracted
+     * @return length of the buffer
      */
     int getDataSize(byte[] buffer) {
         if (buffer[4] == 44) {
@@ -686,6 +672,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Return a properly formatted boot message, complete with CRC
+     * @return buffer Contains boot message that's been created
      */
     byte[] bootMessage() {
         byte[] buffer = new byte[]{99, 0, 0, 0, 0};

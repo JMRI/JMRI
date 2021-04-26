@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -10,8 +11,8 @@ import javax.swing.AbstractAction;
  */
 public class ExportSchedulesAction extends AbstractAction {
 
-    public ExportSchedulesAction(String actionName) {
-        super(actionName);
+    public ExportSchedulesAction() {
+        super(Bundle.getMessage("MenuItemExportSchedules"));
     }
 
     @Override

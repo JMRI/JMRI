@@ -2,25 +2,18 @@ package jmri.util;
 
 import java.io.PipedReader;
 import java.io.PipedWriter;
+
 import javax.swing.JTextArea;
 
-
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
+@Timeout(10)
 public class PipeListenerTest {
-
-    static final int TESTMAXTIME = 10;    // seconds - not too long, so job doesn't hang
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
 
     @Test
     public void testCTor() throws java.io.IOException {
@@ -48,13 +41,12 @@ public class PipeListenerTest {
         t.stop();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

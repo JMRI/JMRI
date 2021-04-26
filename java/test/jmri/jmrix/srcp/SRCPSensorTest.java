@@ -1,17 +1,15 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 
 /**
- * SRCPSensorTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPSensor class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
- *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2018	
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2018
  */
 public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -19,18 +17,16 @@ public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
 
-        
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
@@ -42,9 +38,9 @@ public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	    t.dispose();
+        t.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

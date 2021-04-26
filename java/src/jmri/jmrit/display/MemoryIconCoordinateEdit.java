@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -70,25 +69,22 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
-        ChangeListener listener = new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int x = ((Number) spinX.getValue()).intValue();
-                int y = ((Number) spinY.getValue()).intValue();
-                pl.setLocation(x, y);
-                textX.setText(" X: " + pl.getOriginalX());
-                textY.setText(" Y: " + pl.getOriginalY());
-            }
+        ChangeListener listener = e -> {
+            int x = ((Number) spinX.getValue()).intValue();
+            int y = ((Number) spinY.getValue()).intValue();
+            pl.setLocation(x, y);
+            textX.setText(" X: " + pl.getOriginalX());
+            textY.setText(" Y: " + pl.getOriginalY());
         };
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(Integer.valueOf(pl.getOriginalX()));
+        spinX.setValue(pl.getOriginalX());
         spinX.setToolTipText(Bundle.getMessage("EnterXcoord"));
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         spinX.addChangeListener(listener);
         model = new javax.swing.SpinnerNumberModel(0, 0, 10000, 1);
         spinY = new javax.swing.JSpinner(model);
-        spinY.setValue(Integer.valueOf(pl.getOriginalY()));
+        spinY.setValue(pl.getOriginalY());
         spinY.setToolTipText(Bundle.getMessage("EnterYcoord"));
         spinY.setMaximumSize(new Dimension(
                 spinY.getMaximumSize().width, spinY.getPreferredSize().height));
@@ -98,25 +94,19 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
         addSpinItems(true);
 
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                int x = ((Number) spinX.getValue()).intValue();
-                int y = ((Number) spinY.getValue()).intValue();
-                pl.setLocation(x, y);
-                textX.setText(" X: " + pl.getOriginalX());
-                textY.setText(" Y: " + pl.getOriginalY());
-                dispose();
-            }
+        okButton.addActionListener(e -> {
+            int x = ((Number) spinX.getValue()).intValue();
+            int y = ((Number) spinY.getValue()).intValue();
+            pl.setLocation(x, y);
+            textX.setText(" X: " + pl.getOriginalX());
+            textY.setText(" Y: " + pl.getOriginalY());
+            dispose();
         });
         okButton.getRootPane().setDefaultButton(okButton);
 
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.setLocation(oldX, oldY);
-                dispose();
-            }
+        cancelButton.addActionListener(e -> {
+            pl.setLocation(oldX, oldY);
+            dispose();
         });
         // make large enough to easily move
         setMinimumSize(new Dimension(250, 175));

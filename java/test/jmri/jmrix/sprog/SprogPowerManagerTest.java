@@ -2,7 +2,9 @@ package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogPowerManager.
@@ -36,12 +38,12 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     
     @Override
     protected void sendIdleReply() {
-        return;
+        // do nothing
     }
 
     @Override
     protected void hearIdle() {
-        return;
+        // do nothing
     }
 
     @Override
@@ -99,8 +101,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -111,7 +112,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
         p = new SprogPowerManager(m);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         stc.dispose();
         JUnitUtil.tearDown();

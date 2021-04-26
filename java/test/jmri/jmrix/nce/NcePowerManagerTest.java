@@ -3,12 +3,13 @@ package jmri.jmrix.nce;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NcePowerManager class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -72,7 +73,7 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     // setup a default NceTrafficController interface
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -82,7 +83,7 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 
     NceTrafficControlScaffold controller;  // holds dummy NceTrafficController for testing
 
-    @After
+    @AfterEach
     public void tearDown() {
         controller = null;
         p = null;

@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
@@ -25,17 +27,15 @@ import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 class ConvertDialog extends JDialog {
 
-        private CircuitBuilder _parent;
-        private PositionableLabel _pos;
+        private final CircuitBuilder _parent;
+        private final PositionableLabel _pos;
         FamilyItemPanel _panel;
         DisplayFrame _filler;
 
         ConvertDialog(CircuitBuilder cb, PositionableLabel pos, OBlock block) {
+            
             super(cb._editor, true);
             _parent = cb;
             _pos = pos;
@@ -54,7 +54,7 @@ class ConvertDialog extends JDialog {
             ActionListener updateAction;
             if (pos instanceof TurnoutIcon) {
                 title = "IndicatorTO";
-                _panel = new IndicatorTOItemPanel(_filler, title, null, null, cb._editor) {
+                _panel = new IndicatorTOItemPanel(_filler, title, null, null) {
                     @Override
                     protected void showIcons() {
                          super.showIcons();
@@ -66,12 +66,10 @@ class ConvertDialog extends JDialog {
                         displayIcons();
                     }
                 };
-                updateAction = (ActionEvent a) -> {
-                    convertTO(block);
-                };
+                updateAction = (ActionEvent a) -> convertTO(block);
             } else {
                 title = "IndicatorTrack";
-                _panel = new IndicatorItemPanel(_filler, title, null, cb._editor) {
+                _panel = new IndicatorItemPanel(_filler, title, null) {
                     @Override
                     protected void showIcons() {
                         super.showIcons();
@@ -83,12 +81,15 @@ class ConvertDialog extends JDialog {
                         displayIcons();
                     }
                 };
-                updateAction = (ActionEvent a) -> {
-                    convertSeg(block);
-                };
+                updateAction = (ActionEvent a) -> convertSeg(block);
             }
-            _panel.init(updateAction);
+
+            JPanel p = new JPanel();
+            p.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
+            _panel.add(p);
+            _panel.init(makeBottomPanel(updateAction, block));
             Dimension dim = _panel.getPreferredSize();
+
             javax.swing.JScrollPane sp = new javax.swing.JScrollPane(_panel);
             dim = new Dimension(dim.width +25, dim.height + 25);
             sp.setPreferredSize(dim);
@@ -100,6 +101,17 @@ class ConvertDialog extends JDialog {
              setVisible(true);
         }
 
+        private JPanel makeBottomPanel(ActionListener updateAction, OBlock block) {
+            JPanel panel = new JPanel();
+            JButton button = new JButton(Bundle.getMessage("convert"));
+            button.addActionListener(updateAction);
+            panel.add(button);
+            
+            button = new JButton(Bundle.getMessage("skip"));
+            button.addActionListener((ActionEvent a) -> dispose());
+            panel.add(button);
+            return panel;
+        }
         /*
          * Do for dialog what FamilyItemPanel, ItemPanel and DisplayFrame 
          * need to do for reSizeDisplay and reSize
@@ -116,17 +128,15 @@ class ConvertDialog extends JDialog {
         private void convertTO(OBlock block) {
             IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_parent._editor);
             t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block));
-            t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            if ( _pos instanceof TurnoutIcon ) {
+                t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            }
             t.setFamily(_panel.getFamilyName());
 
             HashMap<String, HashMap<String, NamedIcon>> iconMap = ((IndicatorTOItemPanel)_panel).getIconMaps();
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+            for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                 String status = entry.getKey();
-                Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
+                for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
                     t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
                 }
             }
@@ -142,9 +152,7 @@ class ConvertDialog extends JDialog {
             t.setFamily(_panel.getFamilyName());
 
             HashMap<String, NamedIcon> iconMap = _panel.getIconMap();
-            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
                 t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
             }
             t.setLevel(Editor.TURNOUTS);
@@ -165,12 +173,16 @@ class ConvertDialog extends JDialog {
             circuitIcons.add(pos);
             pos.setLocation(_pos.getLocation());
             _pos.remove();
-            _parent._editor.putItem(pos);
+            try {
+                _parent._editor.putItem(pos);
+            } catch (Positionable.DuplicateIdException e) {
+                log.error("Editor.putItem() has thrown DuplicateIdException", e);
+            }
             pos.updateSize();
             _parent._editor.highlight(null);
             dispose();
             _filler.dispose();
         }
 
-    //    private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+        private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConvertDialog.class);
     }

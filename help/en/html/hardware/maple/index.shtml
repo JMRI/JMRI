@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta name="keywords" content="JMRI help Maple hardware">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -19,16 +19,12 @@
     <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
-      <h1>Hardware Support: Maple Systems</h1><a href=
-      "http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"><img src="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"
-      align="right" height="93" width="173"></a><br>
-      <a href="http://www.maplesystems.com/">Maple Systems</a>
-      makes several series of <a href=
-      "http://www.maplesystems.com/products/silverseries/silverseries_ezw.htm">
-      touchscreen panels</a> that can be very useful on model
-      railroads.
+      <h1>Hardware Support: Maple Systems</h1>
+      <p><a href="http://www.maplesystems.com/">Maple Systems</a>
+      makes several series of touchscreen panels that can be very
+      useful on model railroads.</p>
 
-      <p>Each panel is really a standalone (Windows) computer. It's
+      <p>Each panel is really a standalone (Windows) computer. It is
       configured and loaded using the <a href=
       "http://www.maplesystems.com/products/graphic-hmi/tabmenu-features/faq/index.html#collapse-1-5">
       EZware configuration program</a> provided by Maple Systems.

@@ -1,5 +1,21 @@
-codecov:
-  ci:
-    - !appveyor # ignore CI builds by AppVeyor
-
+coverage:
+  # number of decimal places to display
+  precision: 1
+  round: up
+  status:
+    project:
+      default:
+        # allow a 2% project drop to reduce noise
+        threshold: 2%
+    patch:
+      default:
+        # this is the coverage of the patch code only, don't hold to high average
+        threshold: 20%
+  
 # see https://docs.codecov.io/docs/codecov-yaml#section-default-yaml for defaults
+
+
+github_checks:
+    annotations: false
+
+# see https://docs.codecov.io/docs/github-checks-beta

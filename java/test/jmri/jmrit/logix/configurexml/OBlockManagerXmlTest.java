@@ -1,28 +1,31 @@
 package jmri.jmrit.logix.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OBlockManagerXmlTest {
 
     @Test
-    @Ignore("causes missing data for other tests?")
+    @Disabled("causes missing data for other tests?")
     public void testCTor() {
         OBlockManagerXml t = new OBlockManagerXml();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

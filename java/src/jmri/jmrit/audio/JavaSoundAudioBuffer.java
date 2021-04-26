@@ -73,7 +73,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     public JavaSoundAudioBuffer(String systemName) {
         super(systemName);
         if (log.isDebugEnabled()) {
-            log.debug("New JavaSoundAudioBuffer: " + systemName);
+            log.debug("New JavaSoundAudioBuffer: {}", systemName);
         }
         initialised = init();
     }
@@ -87,7 +87,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     public JavaSoundAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
         if (log.isDebugEnabled()) {
-            log.debug("New JavaSoundAudioBuffer: " + userName + " (" + systemName + ")");
+            log.debug("New JavaSoundAudioBuffer: {} ({})", userName, systemName);
         }
         initialised = init();
     }
@@ -145,10 +145,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         try {
             audioInputStream = AudioSystem.getAudioInputStream(stream);
         } catch (UnsupportedAudioFileException ex) {
-            log.error("Unsupported audio file format when loading buffer:" + ex);
+            log.error("Unsupported audio file format when loading buffer:{}", ex);
             return false;
         } catch (IOException ex) {
-            log.error("Error loading buffer:" + ex);
+            log.error("Error loading buffer:{}", ex);
             return false;
         }
 
@@ -171,10 +171,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         try {
             audioInputStream = AudioSystem.getAudioInputStream(file);
         } catch (UnsupportedAudioFileException ex) {
-            log.error("Unsupported audio file format when loading buffer:" + ex);
+            log.error("Unsupported audio file format when loading buffer:{}", ex);
             return false;
         } catch (IOException ex) {
-            log.error("Error loading buffer:" + ex);
+            log.error("Error loading buffer:{}", ex);
             return false;
         }
 
@@ -196,7 +196,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
                 * (int) audioInputStream.getFrameLength()
                 * audioFormat.getSampleSizeInBits() / 8;
         if (log.isDebugEnabled()) {
-            log.debug("Size of JavaSoundAudioBuffer (" + this.getSystemName() + ") = " + dataSize);
+            log.debug("Size of JavaSoundAudioBuffer ({}) = {}", this.getSystemName(), dataSize);
         }
         if (dataSize > 0) {
             // Allocate buffer space
@@ -213,11 +213,11 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
                                 totalBytesRead,
                                 buffer.length - totalBytesRead))
                         != -1 && totalBytesRead < buffer.length) {
-                    log.debug("read " + bytesRead + " bytes of total " + dataSize);
+                    log.debug("read {} bytes of total {}", bytesRead, dataSize);
                     totalBytesRead += bytesRead;
                 }
             } catch (IOException ex) {
-                log.error("Error when reading JavaSoundAudioBuffer (" + this.getSystemName() + ") " + ex);
+                log.error("Error when reading JavaSoundAudioBuffer ({}) {}", this.getSystemName(), ex);
                 return false;
             }
 
@@ -225,7 +225,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             log.debug("...finished loading JavaSoundBuffer");
         } else {
             // Not loaded anything
-            log.warn("Unable to determine length of JavaSoundAudioBuffer (" + this.getSystemName() + ")");
+            log.warn("Unable to determine length of JavaSoundAudioBuffer ({})", this.getSystemName());
             log.warn(" - buffer has not been loaded.");
             return false;
         }
@@ -243,10 +243,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
         this.setState(STATE_LOADED);
         if (log.isDebugEnabled()) {
-            log.debug("Loaded buffer: " + this.getSystemName());
-            log.debug(" from file: " + this.getURL());
-            log.debug(" format: " + parseFormat() + ", " + freq + " Hz");
-            log.debug(" length: " + audioInputStream.getFrameLength());
+            log.debug("Loaded buffer: {}", this.getSystemName());
+            log.debug(" from file: {}", this.getURL());
+            log.debug(" format: {}, {} Hz", parseFormat(), freq);
+            log.debug(" length: {}", audioInputStream.getFrameLength());
         }
         return true;
 
@@ -260,7 +260,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         //if ((which==LOOP_POINT_END)||(which==LOOP_POINT_BOTH)) {
         //}
         if (log.isDebugEnabled()) {
-            log.debug("Method generateLoopBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
+            log.debug("Method generateLoopBuffers() called for JavaSoundAudioBuffer {}", this.getSystemName());
         }
     }
 
@@ -268,7 +268,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     protected boolean generateStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) {
-            log.debug("Method generateStreamingBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
+            log.debug("Method generateStreamingBuffers() called for JavaSoundAudioBuffer {}", this.getSystemName());
         }
         return true;
     }
@@ -277,7 +277,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     protected void removeStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) {
-            log.debug("Method removeStreamingBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
+            log.debug("Method removeStreamingBuffers() called for JavaSoundAudioBuffer {}", this.getSystemName());
         }
     }
 
@@ -388,9 +388,8 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     @Override
     protected void cleanup() {
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup JavaSoundAudioBuffer (" + this.getSystemName() + ")");
+            log.debug("Cleanup JavaSoundAudioBuffer ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioBuffer.class);

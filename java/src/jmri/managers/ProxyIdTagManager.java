@@ -16,11 +16,11 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  * Implementation of a IdTagManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2018
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Paul Bender Copyright (C) 2019
+ * @author Bob Jacobsen Copyright (C) 2010, 2018
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2019
  */
-public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
+public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
         implements IdTagManager {
 
     public ProxyIdTagManager() {
@@ -154,14 +154,6 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     public IdTag getByTagID(@Nonnull String tagID) {
         init();
         return getBySystemName(makeSystemName(tagID));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override

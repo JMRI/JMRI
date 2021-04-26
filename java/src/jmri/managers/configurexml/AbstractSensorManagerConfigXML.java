@@ -113,14 +113,15 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * parent of the set of Sensor elements.
      *
      * @param sensors Element containing the Sensor elements to load.
-     * @return true if succeeded
+     * @return true if succeeded.
+     * @throws JmriConfigureXmlException on error.
      */
     public boolean loadSensors(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
         log.debug("Found {} sensors", sensorList.size());
         SensorManager tm = InstanceManager.sensorManagerInstance();
-        tm.setDataListenerMute(true);
+        tm.setPropertyChangesSilenced("beans", true);
         long goingActive = 0L;
         long goingInActive = 0L;
         if (sensors.getChild("globalDebounceTimers") != null) {
@@ -216,7 +217,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
             }
         }
-        tm.setDataListenerMute(false);
+        tm.setPropertyChangesSilenced("beans", false);
         return result;
     }
 

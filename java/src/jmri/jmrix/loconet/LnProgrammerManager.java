@@ -6,6 +6,8 @@ import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
+import javax.annotation.Nonnull;
+
 /**
  * Extend DefaultProgrammerManager to provide programmers on LocoNet.
  *
@@ -61,7 +63,13 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     /**
      * Programming for LocoNet System Variables using version 2 of the protocol.
      */
-    static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
+    public static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
+
+    /**
+     * Programming for Uhlenbrock (LocoNet) LNCV protocol.
+     */
+    public static final ProgrammingMode LOCONETLNCVMODE    = new ProgrammingMode("LOCONETLNCVMODE", Bundle.getMessage("LOCONETLNCVMODE"));
+
 
     /**
      * Programming via LocoNet messages for Digitrax DS*, PM*, BDL*, SE* boards
@@ -77,12 +85,14 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getDefaultModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
         ret.add(LOCONETSV1MODE); // they show in the interface in the order listed here
+        ret.add(LOCONETLNCVMODE);
         return ret;
     }
 

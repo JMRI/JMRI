@@ -1,14 +1,13 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,11 +16,10 @@ public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+        Assert.assertNotNull("exists", tm);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -31,9 +29,14 @@ public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         tm = new NceThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tm.dispose();
+        tm = null;
+        memo.dispose();
+        memo = null;
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
     }
 

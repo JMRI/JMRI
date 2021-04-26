@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
@@ -58,8 +58,8 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     @Override
     public void actionPerformed(ActionEvent event) {
         String group = null;
-        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
-            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
+        if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.
@@ -89,6 +89,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     /**
      * Can provide some mechanism to prompt for user for one last chance to
      * change his/her mind
+     * @param entry roster group to confirm deletion of
      *
      * @return true if user says to continue
      */

@@ -6,7 +6,7 @@ package jmri.jmrix.configurexml;
  * most of the simulators save objects using classes derived directly from 
  * AbstractConnectionConfigXml.  This eventually needs to change.
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 abstract public class AbstractSimulatorConnectionConfigXmlTestBase extends AbstractConnectionConfigXmlTestBase {
 }

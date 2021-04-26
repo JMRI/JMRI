@@ -4,11 +4,10 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
-import jmri.ConsistManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.ThrottleManager;
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public EasyDccSystemConnectionMemo() {
         this("E", EasyDccConnectionTypeList.EASYDCC);
@@ -41,9 +40,8 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
         super("E", EasyDccConnectionTypeList.EASYDCC);
         this.et = et;
-        register(); // registers general type
         log.debug("EasyDCC SystemConnectionMemo with TC");
-        InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, EasyDccSystemConnectionMemo.class);
         // create and register the ComponentFactory for the GUI (menu)
         InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.EasyDccComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
@@ -53,9 +51,8 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     public EasyDccSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);
-        register(); // registers general type
         log.debug("EasyDCC SystemConnectionMemo prefix={}", prefix);
-        InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, EasyDccSystemConnectionMemo.class);
         // create and register the ComponentFactory for the GUI (menu)
         InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.EasyDccComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
@@ -68,6 +65,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller, provided if null.
      */
     public EasyDccTrafficController getTrafficController() {
         if (et == null) {
@@ -92,7 +90,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-        InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
@@ -102,145 +100,58 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.store(getConsistManager(), ConsistManager.class);
 
-        commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
+        EasyDccCommandStation commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
+        InstanceManager.store(commandStation,CommandStation.class);
+        store(commandStation,CommandStation.class);
 
-        InstanceManager.store(commandStation,jmri.CommandStation.class);
+        register(); // registers general type
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
-        }
-
-        if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.ConsistManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.CommandStation.class)) {
-            return true;
-        }
-        return super.provides(type); // nothing, by default
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.ConsistManager.class)) {
-            return (T) getConsistManager();
-        }
-        if (T.equals(jmri.CommandStation.class)) {
-            return (T) commandStation;
-        }
-        return super.get(T); // nothing, by default
-    }
-
-    private EasyDccPowerManager powerManager;
 
     public EasyDccPowerManager getPowerManager() {
         if (getDisabled()) {
             return null;
         }
-        if (powerManager == null) {
-            powerManager = new jmri.jmrix.easydcc.EasyDccPowerManager(this);
-        }
-        return powerManager;
+        return (EasyDccPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,
+                (Class c) -> new jmri.jmrix.easydcc.EasyDccPowerManager(this));
     }
-
-    private ThrottleManager throttleManager;
 
     public ThrottleManager getThrottleManager() {
         if (getDisabled()) {
             return null;
         }
-        if (throttleManager == null) {
-            throttleManager = new jmri.jmrix.easydcc.EasyDccThrottleManager(this);
-        }
-        return throttleManager;
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,
+                (Class c) -> new jmri.jmrix.easydcc.EasyDccThrottleManager(this));
     }
 
     public void setThrottleManager(ThrottleManager t) {
-        throttleManager = t;
+        store(t,ThrottleManager.class);
     }
-
-    private EasyDccTurnoutManager turnoutManager;
 
     public EasyDccTurnoutManager getTurnoutManager() {
         if (getDisabled()) {
             return null;
         }
-        if (turnoutManager == null) {
-            turnoutManager = new jmri.jmrix.easydcc.EasyDccTurnoutManager(this);
-        }
-        return turnoutManager;
+        return (EasyDccTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,
+                (Class c) -> new jmri.jmrix.easydcc.EasyDccTurnoutManager(this));
     }
-
-    private EasyDccConsistManager consistManager;
 
     @Override
     public EasyDccConsistManager getConsistManager() {
         if (getDisabled()) {
             return null;
         }
-        if (consistManager == null) {
-            consistManager = new jmri.jmrix.easydcc.EasyDccConsistManager(this);
-        }
-        return consistManager;
+        return (EasyDccConsistManager) classObjectMap.computeIfAbsent(ConsistManager.class,
+                (Class c) -> new jmri.jmrix.easydcc.EasyDccConsistManager(this));
     }
 
-    private EasyDccProgrammerManager programmerManager;
-
     public EasyDccProgrammerManager getProgrammerManager() {
-        if (programmerManager == null) {
-            programmerManager = new EasyDccProgrammerManager(new EasyDccProgrammer(this), this);
-        }
-        return programmerManager;
+         return (EasyDccProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,
+                 (Class c) -> new EasyDccProgrammerManager(new EasyDccProgrammer(this), this));
     }
 
     public void setProgrammerManager(EasyDccProgrammerManager p) {
-        programmerManager = p;
+        store(p, DefaultProgrammerManager.class);
     }
-
-    private EasyDccCommandStation commandStation;
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
@@ -258,18 +169,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.deregister(this, EasyDccSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
-        }
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, jmri.jmrix.easydcc.EasyDccPowerManager.class);
-        }
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, jmri.jmrix.easydcc.EasyDccTurnoutManager.class);
-        }
-        if (throttleManager != null) {
-            InstanceManager.deregister(((EasyDccThrottleManager) throttleManager), jmri.jmrix.easydcc.EasyDccThrottleManager.class);
-        }
-        if (consistManager != null) {
-            InstanceManager.deregister(consistManager, jmri.jmrix.easydcc.EasyDccConsistManager.class);
         }
         super.dispose();
     }

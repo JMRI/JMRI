@@ -7,7 +7,9 @@ import java.util.EventObject;
  * Mac OS X.
  *
  * @author Randall Wood (c) 2011
+ * @deprecated since 4.21.1; use {@link apps.plaf.macosx.QuitHandler} instead
  */
+@Deprecated
 public interface QuitHandler {
 
     /**

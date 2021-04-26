@@ -3,15 +3,13 @@ package jmri.jmrit.vsdecoder;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SoundBite class
@@ -20,7 +18,7 @@ import org.junit.Test;
  */
 public class SoundBiteTest {
 
-    private ShutDownTask damsdt;
+    private Runnable damsdt;
 
     @Test
     public void testStateConstants() {
@@ -72,7 +70,7 @@ public class SoundBiteTest {
         Assert.assertEquals("xml name", "unitUnderTest", uut.getName());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         DefaultAudioManager dam = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
@@ -80,7 +78,7 @@ public class SoundBiteTest {
         InstanceManager.setDefault(AudioManager.class, dam);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
         InstanceManager.getDefault(ShutDownManager.class).deregister(damsdt);

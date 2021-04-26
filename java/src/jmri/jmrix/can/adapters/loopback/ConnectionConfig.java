@@ -42,6 +42,9 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         portBox.setVisible(false);      // hide portBox combo idem
         baudBoxLabel.setVisible(false); // hide baudBoxLabel idem
         baudBox.setVisible(false);      // hide baudBox combo idem
+        outputIntervalLabel.setVisible(true);   // show interval JSpinner idem
+        outputIntervalSpinner.setVisible(true); // show intervalLabel idem
+        outputIntervalReset.setVisible(true);   // show Interval Reset button
     }
 
     @Override

@@ -1,17 +1,16 @@
 package jmri.util;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JmriJFrameTest extends JmriJFrameTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +20,7 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

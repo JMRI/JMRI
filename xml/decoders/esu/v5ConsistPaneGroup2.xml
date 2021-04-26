@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <row>
+        <column>
+            <display item="CV 22 bit 0">
+                <label>Consist Address Active For FL in Forward</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F-Luci Avanti</label>
+                <label xml:lang="fr">Adresse UM active pour FL en avant</label>
+                <label xml:lang="de">Verbundadresse aktiv für FL vorwärts</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F světla vpřed</label>
+            </display>
+            <display item="CV 22 bit 1">
+                <label>Consist Address Active For FL in Reverse</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F-Luci Indietro</label>
+                <label xml:lang="fr">Adresse UM active pour FL en arr</label>
+                <label xml:lang="de">Verbundadresse aktiv für FL rückwärts</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F světla vzad</label>
+                <label xml:lang="nl">Multitractie adres actief voor FL in de achteruit</label>
+            </display>
+            <display item="CV 21 bit 0">
+                <label>Consist Address Active For F1</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F1</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F1</label>
+                <label xml:lang="de">Verbundadresse aktiv für F1</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F1</label>
+                <label xml:lang="nl">Multitractie adres actief voor F1</label>
+            </display>
+            <display item="CV 21 bit 1">
+                <label>Consist Address Active For F2</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F2</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F2</label>
+                <label xml:lang="de">Verbundadresse aktiv für F2</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F2</label>
+                <label xml:lang="nl">Multitractie adres actief voor F2</label>
+            </display>
+            <display item="CV 21 bit 2">
+                <label>Consist Address Active For F3</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F3</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F3</label>
+                <label xml:lang="de">Verbundadresse aktiv für F3</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F3</label>
+                <label xml:lang="nl">Multitractie adres actief voor F3</label>
+            </display>
+            <display item="CV 21 bit 3">
+                <label>Consist Address Active For F4</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F4</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F4</label>
+                <label xml:lang="de">Verbundadresse aktiv für F4</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F4</label>
+                <label xml:lang="nl">Multitractie adres actief voor F4</label>
+            </display>
+            <display item="CV 21 bit 4">
+                <label>Consist Address Active For F5</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F5</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F5</label>
+                <label xml:lang="de">Verbundadresse aktiv für F5</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F5</label>
+                <label xml:lang="nl">Multitractie adres actief voor F5</label>
+            </display>
+            <display item="CV 21 bit 5">
+                <label>Consist Address Active For F6</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F6</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F6</label>
+                <label xml:lang="de">Verbundadresse aktiv für F6</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F6</label>
+                <label xml:lang="nl">Multitractie adres actief voor F6</label>
+            </display>
+            <display item="CV 21 bit 6">
+                <label>Consist Address Active For F7</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F7</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F7</label>
+                <label xml:lang="de">Verbundadresse aktiv für F7</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F7</label>
+                <label xml:lang="nl">Multitractie adres actief voor F7</label>
+            </display>
+            <display item="CV 21 bit 7">
+                <label>Consist Address Active For F8</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F8</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F8</label>
+                <label xml:lang="de">Verbundadresse aktiv für F8</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F8</label>
+                <label xml:lang="nl">Multitractie adres actief voor F8</label>
+            </display>
+            <display item="CV 22 bit 2">
+                <label>Consist Address Active for F9</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F9</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F9</label>
+                <label xml:lang="de">Verbundadresse aktiv für F9</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F9</label>
+                <label xml:lang="nl">Multitractie adres actief voor F9</label>
+            </display>
+            <display item="CV 22 bit 3">
+                <label>Consist Address Active for F10</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F10</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F10</label>
+                <label xml:lang="de">Verbundadresse aktiv für F10</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F10</label>
+                <label xml:lang="nl">Multitractie adres actief voor F10</label>
+            </display>
+            <display item="CV 22 bit 4">
+                <label>Consist Address Active for F11</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F11</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F11</label>
+                <label xml:lang="de">Verbundadresse aktiv für F11</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F11</label>
+                <label xml:lang="nl">Multitractie adres actief voor F11</label>
+            </display>
+            <display item="CV 22 bit 5">
+                <label>Consist Address Active for F12</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F12</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F12</label>
+                <label xml:lang="de">Verbundadresse aktiv für F12</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F12</label>
+                <label xml:lang="nl">Multitractie adres actief voor 12</label>
+            </display>
+            <display item="CV 22 bit 6">
+                <label>Consist Address Active for F13</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F13</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F13</label>
+                <label xml:lang="de">Verbundadresse aktiv für F13</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F13</label>
+                <label xml:lang="nl">Multitractie adres actief voor F13</label>
+            </display>
+            <display item="CV 22 bit 7">
+                <label>Consist Address Active for F14</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F14</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F14</label>
+                <label xml:lang="de">Verbundadresse aktiv für F14</label>
+                <label xml:lang="cs">Adresa soupravy aktivní na F14</label>
+                <label xml:lang="nl">Multitractie adres actief voor F14</label>
+            </display>
+        </column>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <column>
+            <display item="CV 109 bit 0">
+                <label>Consist Address Active For F15</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F15</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F15</label>
+                <label xml:lang="de">Verbundadresse aktiv für F15</label>
+            </display>
+            <display item="CV 109 bit 1">
+                <label>Consist Address Active For F16</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F16</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F16</label>
+                <label xml:lang="de">Verbundadresse aktiv für F16</label>
+            </display>
+            <display item="CV 109 bit 2">
+                <label>Consist Address Active For F17</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F17</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F17</label>
+                <label xml:lang="de">Verbundadresse aktiv für F17</label>
+            </display>
+            <display item="CV 109 bit 3">
+                <label>Consist Address Active For F18</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F18</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F18</label>
+                <label xml:lang="de">Verbundadresse aktiv für F18</label>
+            </display>
+            <display item="CV 109 bit 4">
+                <label>Consist Address Active For F19</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F19</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F19</label>
+                <label xml:lang="de">Verbundadresse aktiv für F19</label>
+            </display>
+            <display item="CV 109 bit 5" >
+                <label>Consist Address Active For F20</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F20</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F20</label>
+                <label xml:lang="de">Verbundadresse aktiv für F20</label>
+            </display>
+            <display item="CV 109 bit 6">
+                <label>Consist Address Active For F21</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F21</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F21</label>
+                <label xml:lang="de">Verbundadresse aktiv für F21</label>
+            </display>
+            <display item="CV 109 bit 7">
+                <label>Consist Address Active For F22</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F22</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F22</label>
+                <label xml:lang="de">Verbundadresse aktiv für F22</label>
+            </display>
+            <display item="CV 110 bit 0">
+                <label>Consist Address Active For F23</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F23</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F23</label>
+                <label xml:lang="de">Verbundadresse aktiv für F23</label>
+            </display>
+            <display item="CV 110 bit 1">
+                <label>Consist Address Active For F24</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F24</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F24</label>
+                <label xml:lang="de">Verbundadresse aktiv für F24</label>
+                <label>Consist Address Active For F24</label>
+            </display>
+            <display item="CV 110 bit 2">
+                <label>Consist Address Active For F25</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F25</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F25</label>
+                <label xml:lang="de">Verbundadresse aktiv für F25</label>
+            </display>
+            <display item="CV 110 bit 3">
+                <label>Consist Address Active For F26</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F26</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F26</label>
+                <label xml:lang="de">Verbundadresse aktiv für F26</label>
+            </display>
+            <display item="CV 110 bit 4">
+                <label>Consist Address Active For F27</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F27</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F27</label>
+                <label xml:lang="de">Verbundadresse aktiv für F27</label>
+                <label>Consist Address Active For F27</label>
+            </display>
+            <display item="CV 110 bit 5">
+                <label>Consist Address Active For F28</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F28</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F28</label>
+                <label xml:lang="de">Verbundadresse aktiv für F28</label>
+            </display>
+            <display item="CV 110 bit 6">
+                <label>Consist Address Active For F29</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F29</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F29</label>
+                <label xml:lang="de">Verbundadresse aktiv für F29</label>
+            </display>
+            <display item="CV 110 bit 7">
+                <label>Consist Address Active For F30</label>
+                <label xml:lang="it">Indirizzo Consist Attivo per F30</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F30</label>
+                <label xml:lang="de">Verbundadresse aktiv für F30</label>
+            </display>
+        </column>
+    </row>
+</group>

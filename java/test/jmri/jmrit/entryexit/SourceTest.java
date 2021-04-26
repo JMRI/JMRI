@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -12,11 +13,11 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -102,7 +103,7 @@ public class SourceTest {
         Assert.assertNotNull("getSourceObject", srcobj);  // NOI18N
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -117,9 +118,11 @@ public class SourceTest {
         sm = InstanceManager.getDefault(SensorManager.class);
     }
 
-    @AfterClass
+    @AfterAll
     static public void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

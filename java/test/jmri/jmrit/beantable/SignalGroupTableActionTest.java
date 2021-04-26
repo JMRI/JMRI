@@ -9,13 +9,15 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalGroupTableAction class
  *
- * @author	Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017
  */
 public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGroup> {
 
@@ -95,7 +97,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
     }
 
     @Override
-    public String getAddFrameName(){
+    public String getAddFrameName() {
         return "Add Signal Group";
     }
 
@@ -108,21 +110,21 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	    //Enter 1 in the text field labeled "System Name:"
-        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
-        ((JTextField)jlo.getLabelFor()).setText("1");
-	    //and press create
-	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //Enter 1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
+        ((JTextField) jlo.getLabelFor()).setText("1");
+        //and press create
+        jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     @Test
-    @Ignore("needs further setup")
+    @Disabled("needs further setup")
     @ToDo("To Edit, the signal group needs a mast added to it")
     @Override
     public void testEditButton() {
@@ -132,44 +134,42 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "System Name:"
-	   
-        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
-        ((JTextField)jlo.getLabelFor()).setText("1");
-	//and press create
-	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //Enter 1 in the text field labeled "System Name:"
+
+        JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
+        ((JTextField) jlo.getLabelFor()).setText("1");
+        //and press create
+        jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
 
         new org.netbeans.jemmy.QueueTool().waitEmpty();
-	// find the "Edit" button and press it.  This may be in the table body.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonEdit"));
+        // find the "Edit" button and press it.  This may be in the table body.
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonEdit"));
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
-	    JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
-
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalSignalHeadManager();
-        helpTarget = "package.jmri.jmrit.beantable.SignalGroupTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SignalGroupTable";
         a = new SignalGroupTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 }

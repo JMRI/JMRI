@@ -5,7 +5,6 @@ import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
@@ -20,9 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
-    /**
-     * Constructor.
-     */
+    
     String objectNumber;
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
@@ -34,59 +31,30 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     private boolean _hadControl = false;
     private boolean _control = true;
 
+    /** 
+     * Create a new EcosDccThrottle.
+     * @param address Throttle Address
+     * @param memo System Connection
+     * @param control sets _control flag which NEEDS CLARIFICATION.
+     */
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
-        super(memo);
+        super(memo,32);
         super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
         p = memo.getPreferenceManager();
         tc = memo.getTrafficController();
         objEcosLocoManager = memo.getLocoAddressManager();
         //The script will go through and read the values from the Ecos
-
-        this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
-
-        // extended values
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
-        this.f13 = false;
-        this.f14 = false;
-        this.f15 = false;
-        this.f16 = false;
-        this.f17 = false;
-        this.f18 = false;
-        this.f19 = false;
-        this.f20 = false;
-        this.f21 = false;
-        this.f22 = false;
-        this.f23 = false;
-        this.f24 = false;
-        this.f25 = false;
-        this.f26 = false;
-        this.f27 = false;
-        this.f28 = false;
-
+        synchronized (this) {
+            this.speedSetting = 0;
+        }
+        // Functions 0-31 default to false
         this.address = address;
         this.isForward = true;
         this._control = control;
 
         ecosretry = 0;
 
-        log.debug("EcosDccThrottle constructor " + address);
+        log.debug("EcosDccThrottle constructor {}", address);
 
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         if (address.getNumber() < EcosLocoAddress.MFX_DCCAddressOffset) {
@@ -146,386 +114,22 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
         return ((lSpeed) / 126.f);
     }
-
+    
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
-    public void setF0(boolean f0) {
-        boolean old = this.f0;
-        this.f0 = f0;
+    public void setFunction(int functionNum, boolean newState){
+        updateFunction(functionNum,newState);
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[0, " + (getF0() ? 1 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[" + 
+                String.valueOf(functionNum) + ", " + (newState ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f0) {
-            notifyPropertyChangeListener(Throttle.F0, old, this.f0);
-        }
-    }
-
-    @Override
-    public void setF1(boolean f1) {
-        boolean old = this.f1;
-        this.f1 = f1;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[1, " + (getF1() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f1) {
-            notifyPropertyChangeListener(Throttle.F1, old, this.f1);
-        }
-    }
-
-    @Override
-    public void setF2(boolean f2) {
-        boolean old = this.f2;
-        this.f2 = f2;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[2, " + (getF2() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f2) {
-            notifyPropertyChangeListener(Throttle.F2, old, this.f2);
-        }
-    }
-
-    @Override
-    public void setF3(boolean f3) {
-        boolean old = this.f3;
-        this.f3 = f3;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[3, " + (getF3() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f3) {
-            notifyPropertyChangeListener(Throttle.F3, old, this.f3);
-        }
-    }
-
-    @Override
-    public void setF4(boolean f4) {
-        boolean old = this.f4;
-        this.f4 = f4;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[4, " + (getF4() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f4) {
-            notifyPropertyChangeListener(Throttle.F4, old, this.f4);
-        }
-    }
-
-    @Override
-    public void setF5(boolean f5) {
-        boolean old = this.f5;
-        this.f5 = f5;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[5, " + (getF5() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f5) {
-            notifyPropertyChangeListener(Throttle.F5, old, this.f5);
-        }
-    }
-
-    @Override
-    public void setF6(boolean f6) {
-        boolean old = this.f6;
-        this.f6 = f6;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[6, " + (getF6() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f6) {
-            notifyPropertyChangeListener(Throttle.F6, old, this.f6);
-        }
-    }
-
-    @Override
-    public void setF7(boolean f7) {
-        boolean old = this.f7;
-        this.f7 = f7;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[7, " + (getF7() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f7) {
-            notifyPropertyChangeListener(Throttle.F7, old, this.f7);
-        }
-    }
-
-    @Override
-    public void setF8(boolean f8) {
-        boolean old = this.f8;
-        this.f8 = f8;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[8, " + (getF8() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f8) {
-            notifyPropertyChangeListener(Throttle.F8, old, this.f8);
-        }
-    }
-
-    @Override
-    public void setF9(boolean f9) {
-        boolean old = this.f9;
-        this.f9 = f9;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[9, " + (getF9() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f9) {
-            notifyPropertyChangeListener(Throttle.F9, old, this.f9);
-        }
-    }
-
-    @Override
-    public void setF10(boolean f10) {
-        boolean old = this.f10;
-        this.f10 = f10;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[10, " + (getF10() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f10) {
-            notifyPropertyChangeListener(Throttle.F10, old, this.f10);
-        }
-    }
-
-    @Override
-    public void setF11(boolean f11) {
-        boolean old = this.f11;
-        this.f11 = f11;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[11, " + (getF11() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f11) {
-            notifyPropertyChangeListener(Throttle.F11, old, this.f11);
-        }
-    }
-
-    @Override
-    public void setF12(boolean f12) {
-        boolean old = this.f12;
-        this.f12 = f12;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[12, " + (getF12() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f12) {
-            notifyPropertyChangeListener(Throttle.F12, old, this.f12);
-        }
-    }
-
-    @Override
-    public void setF13(boolean f13) {
-        boolean old = this.f13;
-        this.f13 = f13;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[13, " + (getF13() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f13) {
-            notifyPropertyChangeListener(Throttle.F13, old, this.f13);
-        }
-    }
-
-    @Override
-    public void setF14(boolean f14) {
-        boolean old = this.f14;
-        this.f14 = f14;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[14, " + (getF14() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f14) {
-            notifyPropertyChangeListener(Throttle.F14, old, this.f14);
-        }
-    }
-
-    @Override
-    public void setF15(boolean f15) {
-        boolean old = this.f15;
-        this.f15 = f15;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[15, " + (getF15() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f15) {
-            notifyPropertyChangeListener(Throttle.F15, old, this.f15);
-        }
-    }
-
-    @Override
-    public void setF16(boolean f16) {
-        boolean old = this.f16;
-        this.f16 = f16;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[16, " + (getF16() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f16) {
-            notifyPropertyChangeListener(Throttle.F16, old, this.f16);
-        }
-    }
-
-    @Override
-    public void setF17(boolean f17) {
-        boolean old = this.f17;
-        this.f17 = f17;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[17, " + (getF17() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f17) {
-            notifyPropertyChangeListener(Throttle.F17, old, this.f17);
-        }
-    }
-
-    @Override
-    public void setF18(boolean f18) {
-        boolean old = this.f18;
-        this.f18 = f18;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[18, " + (getF18() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f18) {
-            notifyPropertyChangeListener(Throttle.F18, old, this.f18);
-        }
-    }
-
-    @Override
-    public void setF19(boolean f19) {
-        boolean old = this.f19;
-        this.f19 = f19;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[19, " + (getF19() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f19) {
-            notifyPropertyChangeListener(Throttle.F19, old, this.f19);
-        }
-    }
-
-    @Override
-    public void setF20(boolean f20) {
-        boolean old = this.f20;
-        this.f20 = f20;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[20, " + (getF20() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f20) {
-            notifyPropertyChangeListener(Throttle.F20, old, this.f20);
-        }
-    }
-
-    @Override
-    public void setF21(boolean f21) {
-        boolean old = this.f21;
-        this.f21 = f21;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[21, " + (getF21() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f21) {
-            notifyPropertyChangeListener(Throttle.F21, old, this.f21);
-        }
-    }
-
-    @Override
-    public void setF22(boolean f22) {
-        boolean old = this.f22;
-        this.f22 = f22;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[22, " + (getF22() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f22) {
-            notifyPropertyChangeListener(Throttle.F22, old, this.f22);
-        }
-    }
-
-    @Override
-    public void setF23(boolean f23) {
-        boolean old = this.f23;
-        this.f23 = f23;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[23, " + (getF23() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f23) {
-            notifyPropertyChangeListener(Throttle.F23, old, this.f23);
-        }
-    }
-
-    @Override
-    public void setF24(boolean f24) {
-        boolean old = this.f24;
-        this.f24 = f24;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[24, " + (getF24() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f24) {
-            notifyPropertyChangeListener(Throttle.F24, old, this.f24);
-        }
-    }
-
-    @Override
-    public void setF25(boolean f25) {
-        boolean old = this.f25;
-        this.f25 = f25;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[25, " + (getF25() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f25) {
-            notifyPropertyChangeListener(Throttle.F25, old, this.f25);
-        }
-    }
-
-    @Override
-    public void setF26(boolean f26) {
-        boolean old = this.f26;
-        this.f26 = f26;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[26, " + (getF26() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f26) {
-            notifyPropertyChangeListener(Throttle.F26, old, this.f26);
-        }
-    }
-
-    @Override
-    public void setF27(boolean f27) {
-        boolean old = this.f27;
-        this.f27 = f27;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[27, " + (getF27() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f27) {
-            notifyPropertyChangeListener(Throttle.F27, old, this.f27);
-        }
-    }
-
-    @Override
-    public void setF28(boolean f28) {
-        boolean old = this.f28;
-        this.f28 = f28;
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[28, " + (getF28() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
-        if (old != this.f28) {
-            notifyPropertyChangeListener(Throttle.F28, old, this.f28);
         }
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -538,8 +142,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         if (!_haveControl) {
             return;
         }
-        if (speed == this.speedSetting && speedMessageSent <= 0) {
-            return;
+        synchronized (this) {
+            if (speed == this.speedSetting && speedMessageSent <= 0) {
+                return;
+            }
         }
         int value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
         if (value > 128) {
@@ -559,12 +165,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         } else {
             //Not sure if this performs an emergency stop or a normal one.
             String message = "set(" + this.objectNumber + ", stop)";
-            this.speedSetting = 0.0f;
+            synchronized (this) {
+                this.speedSetting = 0.0f;
+            }
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
 
         }
-        //record(speed);
+        record(speed);
     }
 
     long lastSpeedMessageTime = 0L;
@@ -573,6 +181,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     int speedMessageSent = 0;
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public void setIsForward(boolean forward) {
         if (!_haveControl) {
@@ -580,16 +191,18 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
 
         String message;
-        if (this.speedSetting > 0.0f) {
-            // Need to send current speed as well as direction, otherwise
-            // speed will be set to zero on direction change
-            int speedValue = (int) ((127 - 1) * this.speedSetting);     // -1 for rescale to avoid estop
-            if (speedValue > 128) {
-                speedValue = 126;    // max possible speed
+        synchronized (this) {
+            if (this.speedSetting > 0.0f) {
+                // Need to send current speed as well as direction, otherwise
+                // speed will be set to zero on direction change
+                int speedValue = (int) ((127 - 1) * this.speedSetting);     // -1 for rescale to avoid estop
+                if (speedValue > 128) {
+                    speedValue = 126;    // max possible speed
+                }
+                message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "], speed[" + speedValue + "])";
+            } else {
+                message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "])";
             }
-            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "], speed[" + speedValue + "])";
-        } else {
-            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "])";
         }
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -597,13 +210,19 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     private DccLocoAddress address;
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         String message = "release(" + this.objectNumber + ", control)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -612,6 +231,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         finishRecord();
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     @Override
     public void reply(EcosReply m) {
@@ -711,189 +333,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                         String funcStr = EcosReply.getContentDetails(line, "func");
                         int function = Integer.parseInt(funcStr.substring(0, funcStr.indexOf(",")).trim());
                         int functionValue = Integer.parseInt(funcStr.substring((funcStr.indexOf(",") + 1), funcStr.length()).trim());
-                        boolean functionresult = false;
-                        if (functionValue == 1) {
-                            functionresult = true;
-                        }
-                        switch (function) {
-                            case 0:
-                                if (this.f0 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F0, this.f0, functionresult);
-                                    this.f0 = functionresult;
-                                }
-                                break;
-                            case 1:
-                                if (this.f1 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F1, this.f1, functionresult);
-                                    this.f1 = functionresult;
-                                }
-                                break;
-                            case 2:
-                                if (this.f2 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F2, this.f2, functionresult);
-                                    this.f2 = functionresult;
-                                }
-                                break;
-                            case 3:
-                                if (this.f3 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F3, this.f3, functionresult);
-                                    this.f3 = functionresult;
-                                }
-                                break;
-                            case 4:
-                                if (this.f4 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F4, this.f4, functionresult);
-                                    this.f4 = functionresult;
-                                }
-                                break;
-                            case 5:
-                                if (this.f5 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F5, this.f5, functionresult);
-                                    this.f5 = functionresult;
-                                }
-                                break;
-                            case 6:
-                                if (this.f6 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F6, this.f6, functionresult);
-                                    this.f6 = functionresult;
-                                }
-                                break;
-                            case 7:
-                                if (this.f7 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F7, this.f7, functionresult);
-                                    this.f7 = functionresult;
-                                }
-                                break;
-                            case 8:
-                                if (this.f8 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F8, this.f8, functionresult);
-                                    this.f8 = functionresult;
-                                }
-                                break;
-                            case 9:
-                                if (this.f9 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F9, this.f9, functionresult);
-                                    this.f9 = functionresult;
-                                }
-                                break;
-                            case 10:
-                                if (this.f10 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F10, this.f10, functionresult);
-                                    this.f10 = functionresult;
-                                }
-                                break;
-                            case 11:
-                                if (this.f11 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F11, this.f11, functionresult);
-                                    this.f11 = functionresult;
-                                }
-                                break;
-                            case 12:
-                                if (this.f12 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F12, this.f12, functionresult);
-                                    this.f12 = functionresult;
-                                }
-                                break;
-                            case 13:
-                                if (this.f13 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F13, this.f13, functionresult);
-                                    this.f13 = functionresult;
-                                }
-                                break;
-                            case 14:
-                                if (this.f14 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F14, this.f14, functionresult);
-                                    this.f14 = functionresult;
-                                }
-                                break;
-                            case 15:
-                                if (this.f15 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F15, this.f15, functionresult);
-                                    this.f15 = functionresult;
-                                }
-                                break;
-                            case 16:
-                                if (this.f16 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F16, this.f16, functionresult);
-                                    this.f16 = functionresult;
-                                }
-                                break;
-                            case 17:
-                                if (this.f17 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F17, this.f17, functionresult);
-                                    this.f17 = functionresult;
-                                }
-                                break;
-                            case 18:
-                                if (this.f18 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F18, this.f18, functionresult);
-                                    this.f18 = functionresult;
-                                }
-                                break;
-                            case 19:
-                                if (this.f19 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F19, this.f19, functionresult);
-                                    this.f19 = functionresult;
-                                }
-                                break;
-                            case 20:
-                                if (this.f20 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F20, this.f20, functionresult);
-                                    this.f20 = functionresult;
-                                }
-                                break;
-                            case 21:
-                                if (this.f21 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F21, this.f21, functionresult);
-                                    this.f21 = functionresult;
-                                }
-                                break;
-                            case 22:
-                                if (this.f22 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F22, this.f22, functionresult);
-                                    this.f22 = functionresult;
-                                }
-                                break;
-                            case 23:
-                                if (this.f23 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F23, this.f23, functionresult);
-                                    this.f23 = functionresult;
-                                }
-                                break;
-                            case 24:
-                                if (this.f24 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F24, this.f24, functionresult);
-                                    this.f24 = functionresult;
-                                }
-                                break;
-                            case 25:
-                                if (this.f25 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F25, this.f25, functionresult);
-                                    this.f25 = functionresult;
-                                }
-                                break;
-                            case 26:
-                                if (this.f26 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F26, this.f26, functionresult);
-                                    this.f26 = functionresult;
-                                }
-                                break;
-                            case 27:
-                                if (this.f27 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F27, this.f27, functionresult);
-                                    this.f27 = functionresult;
-                                }
-                                break;
-                            case 28:
-                                if (this.f28 != functionresult) {
-                                    notifyPropertyChangeListener(Throttle.F28, this.f28, functionresult);
-                                    this.f28 = functionresult;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-
+                        updateFunction(function,functionValue == 1);
+                        
                     } else if (line.contains("msg")) {
                         //We get this lost control error because we have registered as a viewer.
                         if (line.contains("CONTROL_LOST")) {
@@ -905,10 +346,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
                 }
             } else if (replyType.equals("release")) {
-                log.debug("Released " + this.objectNumber + " from the Ecos");
+                log.debug("Released {} from the Ecos", this.objectNumber);
                 _haveControl = false;
             } else if (replyType.equals("request")) {
-                log.debug("We have control over " + this.objectNumber + " from the Ecos");
+                log.debug("We have control over {} from the Ecos", this.objectNumber);
                 ecosretry = 0;
                 if (_control) {
                     _haveControl = true;
@@ -937,7 +378,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
              */
             retryControl();
         } else if (resultCode == 15) {
-            log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
+            log.info("Loco can not be accessed via the Ecos Object Id {}", this.objectNumber);
             try {
                 javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("UnknownLocoDialog", this.address),
                         Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
@@ -946,14 +387,16 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             }
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         } else {
-            log.debug("Last Message resulted in an END code we do not understand " + resultCode);
+            log.debug("Last Message resulted in an END code we do not understand {}", resultCode);
         }
     }
 
+    /** 
+     * Messages ignored.
+     * {@inheritDoc} 
+     */
     @Override
     public void message(EcosMessage m) {
-        //System.out.println("Ecos message - "+ m);
-        // messages are ignored
     }
 
     public void forceControl() {
@@ -998,7 +441,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             String message = "request(" + this.objectNumber + ", view, control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
-            log.error("We have no control over the ecos object " + this.objectNumber + " Retrying Attempt " + ecosretry);
+            log.error("We have no control over the ecos object {} Retrying Attempt {}", this.objectNumber, ecosretry);
         } else if (ecosretry == 3) {
             ecosretry++;
             int val = 0;
@@ -1019,10 +462,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                 String message = "request(" + this.objectNumber + ", view, control, force)";
                 EcosMessage ms = new EcosMessage(message);
                 tc.sendEcosMessage(ms, this);
-                log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
+                log.error("We have no control over the ecos object {}Trying a forced control", this.objectNumber);
             } else {
                 if (_hadControl) {
-                    notifyPropertyChangeListener("LostControl", 0, 0);
+                    firePropertyChange("LostControl", 0, 0);
                     _hadControl = false;
                     ecosretry = 0;
                 } else {
@@ -1032,7 +475,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         } else {
             ecosretry = 0;
             if (_hadControl) {
-                notifyPropertyChangeListener("LostControl", 0, 0);
+                firePropertyChange("LostControl", 0, 0);
             } else {
                 ((EcosDccThrottleManager) adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, false);
             }

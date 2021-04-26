@@ -1,8 +1,8 @@
 package jmri.jmrix.ieee802154;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the IEEE802154PortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class IEEE802154PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        IEEE802154SystemConnectionMemo memo = new IEEE802154SystemConnectionMemo();
@@ -38,8 +38,7 @@ public class IEEE802154PortControllerTest extends jmri.jmrix.AbstractSerialPortC
              */
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -55,7 +54,7 @@ public class IEEE802154PortControllerTest extends jmri.jmrix.AbstractSerialPortC
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

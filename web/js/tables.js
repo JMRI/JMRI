@@ -6,6 +6,7 @@
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
+ * TODO I18N titles and headers
  */
 
 var jmri = null;
@@ -23,7 +24,12 @@ function showError(code, message) {
 //parm is the array of items from which to build table
 function rebuildTable(data) {
 	tableType = $("html").data("table-type");
-	if (data[0] && data[0].type !== tableType) { //skip if new array doesn't match this page
+	if (data[0] && data[0].type !== tableType) {  
+		if (tableType.startsWith(data[0].type) 
+		|| (tableType=="memories" && data[0].type=="memory")
+		|| (tableType=="roster" && data[0].type=="rosterEntry")) { //server returns singular for plural request 
+		    window.location = "/tables/" + data[0].type;  //redirect to singular page   
+		}
 		jmri.log("incoming type '" + data[0].type + "' does not match current page '" + tableType + "', ignoring.");
 		return; 
 	}
@@ -50,11 +56,12 @@ function rebuildTable(data) {
 		$("table#jmri-data").removeClass("hidden").addClass("show");
 		var newTableObject = document.getElementById("jmri-data");
 		sorttable.makeSortable(newTableObject);
+		hideEmptyColumns("table#jmri-data tr th");
+		sortByFirstColumn();
 	} else {
 		$("#warning-no-data").removeClass("hidden").addClass("show");
 	}
 	$("#activity-alert").removeClass("show").addClass("hidden");
-	hideEmptyColumns("table#jmri-data tr th");
 
 	//setup for clicking on state column to send state changes
 	$('table.idTag, table.light, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
@@ -97,6 +104,9 @@ function displayCellValue(type, colName, value) {
 	if (value == null) {
 		return ""; //return empty string for any null value
 	}
+	if (type == "type" && colName == "name"){                         //if list is of json types, 
+		return "<a href='/tables/" + value + "' >" + value + "</a>";  //  create link to table for this type
+	}
 	if ($.isArray(value)) { 
 		if (value.length == 0) {
 			return "";
@@ -105,16 +115,23 @@ function displayCellValue(type, colName, value) {
 			ret = "";
 			comma = "";
 			value.forEach(function(item) { //return list
-                            if (item) {
-				if (item.name)
-					ret += comma + item.name + " " + item.userName; //if named, list name and username only
-				else { 
-					Object.keys(item).forEach(function(key) { //otherwise list the array of pairs
-						ret += comma + key + ":" + item[key];
-					});
+				if (item) {
+					if (item.name) {
+						ret += comma + item.name;
+						if (item.value) {
+							ret += "=" + item.value;
+						} else if (item.userName) {
+							ret += " " + item.userName;
+						} else if (item.label) {
+							ret += " " + item.label;
+						}
+					} else { 
+						Object.keys(item).forEach(function(key) { //otherwise list the array of pairs
+							ret += comma + key + ":" + item[key];
+						});
+					}
+					comma = ", ";
 				}
-				comma = ", ";
-                            }
 			});
 			return ret;
 		}
@@ -129,6 +146,8 @@ function displayCellValue(type, colName, value) {
 	if (typeof value === "object") {
 	    if (value.type == "idTag"){
 	    	return value.data.userName // handle idTag object by displaying userName
+	    } else if (value.userName) {
+			return value.userName;  // return userName of object if it has one
 	    } else if (value.name) {
 			return value.name;  // return name of object if it has one
 		} else {
@@ -198,32 +217,37 @@ function hideEmptyColumns(selector) {
 	});
 }
 
+function sortByFirstColumn() {
+	var firstTH = document.getElementsByTagName("th")[0];
+	sorttable.innerSortFunction.apply(firstTH, []);
+}
+
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function () {
 	jmri = $.JMRI({});
 
-	//replace title with the table type
-	document.title = "JMRI Tables: " + $("html").data("table-type") + "s";
-	$("h1.title").text($("html").data("table-type") + "s");
+	// add table type to heading and title
+	$("#table-type").text($("html").data("table-type"));
+	document.title = $("h1.title").text(); 
 
 	jmri = $.JMRI({
-		//when we get the hello message, send a websocket list request which 
-		//  returns the list and sets up change listeners
+		// when we get the hello message, send a websocket list request which
+		// returns the list and sets up change listeners
+		// note: the functions and parameter names must match exactly those in jquery.jmri.js
 		hello: function (data) {
 			jmri.getList($("html").data("table-type")); // request list and updates for the table-type 
 		},
-		//everything calls console()
+		// everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
 //			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
-			if ($.isArray(data)) {  //if its an array, 
-				rebuildTable(data); //  replace the table with the array list			
+			if ($.isArray(data)) {  // if its an array,
+				rebuildTable(data); // replace the table with the array list
 			} else if ((data.type) && (data.type === "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (!data.type.match("pong|hello|goodbye"))) { //skip control messages
-				replaceRow(data.data.name, data.data); //if single item, update the row
+				replaceRow(data.data.name, data.data); // if single item, update the row
 			}
 		},
 	});
 });
-

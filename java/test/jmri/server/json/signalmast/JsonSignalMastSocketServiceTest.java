@@ -1,9 +1,11 @@
 package jmri.server.json.signalmast;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHeadManager;
@@ -15,10 +17,9 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -122,8 +123,7 @@ public class JsonSignalMastSocketServiceTest {
     }
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -132,7 +132,7 @@ public class JsonSignalMastSocketServiceTest {
         JUnitUtil.initSignalMastLogicManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

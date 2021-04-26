@@ -3,8 +3,8 @@ package jmri.jmrit.operations.routes.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 import jmri.InstanceManager;
@@ -18,7 +18,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SetTrainIconRouteFrameTest extends OperationsTestCase {
 

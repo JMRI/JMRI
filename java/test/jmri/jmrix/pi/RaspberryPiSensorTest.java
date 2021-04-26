@@ -2,15 +2,18 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -18,10 +21,10 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
@@ -57,7 +60,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
 
     @Override
     @Test
-    @Ignore("Base class test does not function correctly for RaspberryPi Sensors")
+    @Disabled("Base class test does not function correctly for RaspberryPi Sensors")
     @ToDo("provide mock raspberry pi implementation so code can be tested using parent class test")
     public void testAddListener() throws JmriException {
     }
@@ -71,7 +74,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     private GpioProvider myProvider;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -82,7 +85,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         if (t != null) {
             t.dispose(); // is supposed to unprovisionPin 4

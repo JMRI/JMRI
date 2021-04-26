@@ -3,18 +3,14 @@ package jmri.jmrit.operations;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+
+import jmri.InstanceManager;
+import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JmriJFrame;
 
 /**
@@ -66,14 +62,6 @@ public class OperationsFrame extends JmriJFrame {
     protected void addItem(JComponent c, int x, int y) {
         this.getContentPane().addItem(c, x, y);
     }
-
-//    protected void addItemLeft(JComponent c, int x, int y) {
-//        this.getContentPane().addItemLeft(c, x, y);
-//    }
-
-//    protected void addItemWidth(JComponent c, int width, int x, int y) {
-//        this.getContentPane().addItemWidth(c, width, x, y);
-//    }
 
     protected void addItem(JPanel p, JComponent c, int x, int y) {
         this.getContentPane().addItem(p, c, x, y);
@@ -161,18 +149,43 @@ public class OperationsFrame extends JmriJFrame {
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true
+     *
      */
-    public boolean loadTableDetails(JTable table) {
-        return this.getContentPane().loadTableDetails(table);
+    public void loadTableDetails(JTable table) {
+        this.getContentPane().loadTableDetails(table);
     }
 
     protected void clearTableSort(JTable table) {
         this.getContentPane().clearTableSort(table);
     }
 
+    /**
+     * Code at frame level to clear modified flag
+     */
     protected synchronized void createShutDownTask() {
-        this.getContentPane().createShutDownTask();
+        InstanceManager.getDefault(OperationsManager.class)
+        .setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
+                Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
+            @Override
+            public boolean checkPromptNeeded() {
+                setModifiedFlag(false); // allow only one popup requesting save operation files
+                if (Setup.isAutoSaveEnabled()) {
+                    storeValues();
+                    return true;
+                }
+                return !OperationsXml.areFilesDirty();
+            }
+
+            @Override
+            public void didPrompt() {
+                storeValues();
+            }
+        });
+    }
+    
+    @Override
+    protected void storeValues() {
+        this.getContentPane().storeValues();
     }
 
     @Override
@@ -181,30 +194,12 @@ public class OperationsFrame extends JmriJFrame {
         super.dispose();
     }
 
-    @Override
-    protected void storeValues() {
-        this.getContentPane().storeValues();
-    }
-
-//    // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+    /*
+     * Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+     */
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
         this.getContentPane().addHorizontalScrollBarKludgeFix(pane, panel);
     }
-
-//    @Override
-//    public void ancestorAdded(AncestorEvent event) {
-//        this.getContentPane().ancestorAdded(event);
-//    }
-//
-//    @Override
-//    public void ancestorRemoved(AncestorEvent event) {
-//        this.getContentPane().ancestorRemoved(event);
-//    }
-//
-//    @Override
-//    public void ancestorMoved(AncestorEvent event) {
-//        this.getContentPane().ancestorMoved(event);
-//    }
 
     /**
      * {@inheritDoc}
@@ -241,6 +236,4 @@ public class OperationsFrame extends JmriJFrame {
         }
         throw new IllegalArgumentException("OperationsFrames can only use an OperationsPanel as the contentPane");
     }
-
-//    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class);
 }

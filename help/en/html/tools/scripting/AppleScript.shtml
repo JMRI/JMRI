@@ -35,7 +35,7 @@
       <p>You can embed or call OSA scripts within JMRI scripts,
       invoking them to have your Mac perform functions outside
       JMRI. An example of this is in the <a href=
-      "http://jmri.org/jython/AppleScript.py">AppleScript.py</a>
+      "https://jmri.org/jython/AppleScript.py">AppleScript.py</a>
       sample script distributed with JMRI. It executes a simple
       AppleScript:</p>
       <pre style="font-family: monospace;">

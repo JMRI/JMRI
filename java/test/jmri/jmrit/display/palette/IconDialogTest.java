@@ -1,47 +1,47 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.Turnout;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class IconDialogTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new EditorScaffold();
         PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance();
-        DisplayFrame df = new DisplayFrame("Icon Dialog Test");
-        Editor editor = new EditorScaffold();
-        TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel,editor);
-        IconDialog t = new IconDialog("Icon","Icon",tip,null);
+        EditorScaffold editor = new EditorScaffold("Editor");
+        DisplayFrame df = new DisplayFrame("Icon Dialog Test", editor);
+        TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel);
+        IconDialog t = new IconDialog("Icon","Icon",tip);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
+        JUnitUtil.dispose(editor);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

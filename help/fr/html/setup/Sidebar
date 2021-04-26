@@ -19,13 +19,13 @@
 		<dt><h3 style="padding-left: 1em;">Installation</h3></dt>
 		<dd> 
 		    <ul>
-            <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
-            <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
-            <li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
+            <li><a href="https://jmri.org/install/WindowsNew.shtml">Windows</a></li>
+            <li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
+            <li><a href="https://jmri.org/install/Linux.shtml">Linux</a>
 	        <ul>
-	            <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a></li>
+	            <li><a href="https://jmri.org/install/Raspbian.shtml">RasPi</a></li>
 	        </ul></li>
-            <li><a href="http://jmri.org/install/Debug.shtml">Debugging an installation</a></li>
+            <li><a href="https://jmri.org/install/Debug.shtml">Debugging an installation</a></li>
 		    </ul>
 		</dd>
 
@@ -99,7 +99,7 @@
 				<li><a href="../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
 				<li><a href="../hardware/maple/index.shtml">Maple Systems</a></li>
 				<li><a href="../hardware/marklin/index.shtml">M&auml;rklin CS2</a></li>
-				<li><a href="../hardware/can/cbus/index.shtml">MERG CBUS</a></li>
+				<li><a href="../hardware/can/cbus/index.shtml">CBUS&reg;</a></li>
 				<li><a href="../hardware/modbus/index.shtml">Modbus</a></li>
                 <li><a href="../hardware/mqtt/index.shtml">MQTT</a></li>
 				<li><a href="../hardware/mrc/index.shtml">MRC</a></li>

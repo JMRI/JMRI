@@ -1,18 +1,18 @@
 package jmri.jmrix.jmriclient.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of JMRIClientComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientComponentFactoryTest {
 
@@ -26,7 +26,7 @@ public class JMRIClientComponentFactoryTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // tc = new JMRIClientTrafficController();
@@ -35,9 +35,9 @@ public class JMRIClientComponentFactoryTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        // JUnitUtil.tearDown();
-        // tc = null;
+        m.getJMRIClientTrafficController().terminateThreads();
+        JUnitUtil.tearDown();
     }
 }

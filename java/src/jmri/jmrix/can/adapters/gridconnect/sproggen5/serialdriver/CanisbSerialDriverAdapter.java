@@ -1,5 +1,6 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
+import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
@@ -19,9 +20,9 @@ import org.slf4j.LoggerFactory;
 public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public CanisbSerialDriverAdapter() {
-        super();
+        super("S");
         option2Name = "CANID";
-        options.put(option2Name, new Option("CAN ID for CAN-USB", new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
+        options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
     }
 
     /**
@@ -36,7 +37,7 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings " + e);
+            log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
         }
 
@@ -47,6 +48,8 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.CBUS);
+        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.NONE);
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));

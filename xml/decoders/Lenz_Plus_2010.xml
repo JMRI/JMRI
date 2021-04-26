@@ -196,7 +196,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       </variables>
     	
       <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_148.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_149.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33">

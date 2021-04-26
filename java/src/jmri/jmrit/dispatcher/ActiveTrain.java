@@ -9,6 +9,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Section;
 import jmri.Transit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,6 +104,8 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
 public class ActiveTrain {
+
+    private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
 
     /**
      * Create an ActiveTrain.
@@ -235,16 +238,12 @@ public class ActiveTrain {
     }
 
     public String getTransitName() {
-        String s = mTransit.getSystemName();
-        String u = mTransit.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = mTransit.getDisplayName();
         return s;
     }
 
     public String getActiveTrainName() {
-        return (mTrainName + "/" + getTransitName());
+        return (mTrainName + " / " + getTransitName());
     }
 
     // Note: Transit and Train may not be changed once an ActiveTrain is created.
@@ -289,7 +288,7 @@ public class ActiveTrain {
                 InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(this);
             }
         } else {
-            log.error("Invalid ActiveTrain status - " + status);
+            log.error("Invalid ActiveTrain status - {}", status);
         }
     }
 
@@ -468,13 +467,13 @@ public class ActiveTrain {
                             getDelaySensor().removePropertyChangeListener(delaySensorListener);
                             InstanceManager.getDefault(DispatcherFrame.class).removeDelayedTrain(at);
                             setStarted();
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                             if (resetStartSensor) {
                                 try {
                                     getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
-                                    log.debug("Start sensor {} set back to inActive", getDelaySensorName());                                    
+                                    log.debug("Start sensor {} set back to inActive", getDelaySensor().getDisplayName(USERSYS));
                                 } catch (jmri.JmriException ex) {
-                                    log.error("Error resetting start sensor {} back to inActive", getDelaySensorName());
+                                    log.error("Error resetting start sensor {} back to inActive", getDelaySensor().getDisplayName(USERSYS));
                                 }
                             }
                         }
@@ -501,11 +500,11 @@ public class ActiveTrain {
                             restartSensorListener = null;
                             InstanceManager.getDefault(DispatcherFrame.class).removeDelayedTrain(at);
                             restart();
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                             if (resetRestartSensor) {
                                 try {
                                     getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
-                                    log.debug("Restart sensor {} set back to inActive", getRestartSensorName());
+                                    log.debug("Restart sensor {} set back to inActive", getRestartSensor().getDisplayName(USERSYS));
                                 } catch (jmri.JmriException ex) {
                                     log.error("Error resetting restart sensor back to inActive");
                                 }
@@ -531,7 +530,7 @@ public class ActiveTrain {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.INACTIVE) {
                             restartAllocationSensor.getBean().removePropertyChangeListener(restartAllocationSensorListener);
                             restartAllocationSensorListener = null;
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         }
                     }
                 }
@@ -601,7 +600,7 @@ public class ActiveTrain {
             mMode = mode;
             firePropertyChange("mode", Integer.valueOf(old), Integer.valueOf(mMode));
         } else {
-            log.error("Attempt to set ActiveTrain mode to illegal value - " + mode);
+            log.error("Attempt to set ActiveTrain mode to illegal value - {}", mode);
         }
     }
 
@@ -706,13 +705,10 @@ public class ActiveTrain {
             }
         }
         if (index < 0) {
-            log.error("Attempt to remove an unallocated Section " + as.getSectionName());
+            log.error("Attempt to remove an unallocated Section {}", as.getSection().getDisplayName(USERSYS));
             return;
         }
         mAllocatedSections.remove(index);
-        if (mAutoRun) {
-            mAutoActiveTrain.removeAllocatedSection(as);
-        }
         if (InstanceManager.getDefault(DispatcherFrame.class).getNameInAllocatedBlock()) {
             as.getSection().clearNameInUnoccupiedBlocks();
             as.getSection().suppressNameUpdate(false);
@@ -743,6 +739,7 @@ public class ActiveTrain {
         }
         for (AllocatedSection as : sectionsToRelease) {
             InstanceManager.getDefault(DispatcherFrame.class).releaseAllocatedSection(as, true); // need to find Allocated Section
+            InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty(); //ensure release processed before proceding.
             as.getSection().setState(jmri.Section.FREE);
         }
         if (mLastAllocatedSection != null) {
@@ -750,6 +747,8 @@ public class ActiveTrain {
         }
         resetAllAllocatedSections();
         clearAllocations();
+        // wait for autoallocate to do its stuffbefore continuing
+        InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty();
         if (mAutoRun) {
             mAutoActiveTrain.allocateAFresh();
         }
@@ -804,26 +803,26 @@ public class ActiveTrain {
                     for (int j = 0; j < bl.size(); j++) {
                         Block b = bl.get(j);
                         list.add(b);
-                        log.trace("block {} ({}) added to list for Section {} (fwd)", b.getDisplayName(),
+                        log.trace("block {} ({}) added to list for Section {} (fwd)", b.getDisplayName(USERSYS),
                                 (b.getState() == Block.OCCUPIED ? "OCCUPIED" : "UNOCCUPIED"),
-                                s.getDisplayName());
+                                s.getDisplayName(USERSYS));
                     }
                 } else { //not connected, add in reverse order
                     for (int j = bl.size() - 1; j >= 0; j--) {
                         Block b = bl.get(j);
                         list.add(b);
-                        log.trace("block {} ({}) added to list for Section {} (rev)", b.getDisplayName(),
+                        log.trace("block {} ({}) added to list for Section {} (rev)", b.getDisplayName(USERSYS),
                                 (b.getState() == Block.OCCUPIED ? "OCCUPIED" : "UNOCCUPIED"),
-                                s.getDisplayName());
+                                s.getDisplayName(USERSYS));
                     }
                 }
 
             } else { //single block sections are simply added to the outgoing list
                 Block b = bl.get(0);
                 list.add(b);
-                log.trace("block {} ({}) added to list for Section {} (one)", b.getDisplayName(),
+                log.trace("block {} ({}) added to list for Section {} (one)", b.getDisplayName(USERSYS),
                         (b.getState() == Block.OCCUPIED ? "OCCUPIED" : "UNOCCUPIED"),
-                        s.getDisplayName());
+                        s.getDisplayName(USERSYS));
             }
         }
         return list;
@@ -873,11 +872,7 @@ public class ActiveTrain {
     }
 
     private String getSectionName(jmri.Section sc) {
-        String s = sc.getSystemName();
-        String u = sc.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = sc.getDisplayName();
         return s;
     }
 
@@ -999,8 +994,7 @@ public class ActiveTrain {
                 mNextSectionToAllocate = mTransit.getSectionFromConnectedBlockAndSeq(mStartBlock,
                         mStartBlockSectionSequenceNumber);
                 if (mNextSectionToAllocate == null) {
-                    log.error("ERROR - Cannot find Section for first allocation of ActiveTrain"
-                            + getActiveTrainName());
+                    log.error("ERROR - Cannot find Section for first allocation of ActiveTrain{}", getActiveTrainName());
                     return null;
                 }
             }
@@ -1012,8 +1006,8 @@ public class ActiveTrain {
             return null;
         }
         if (!InstanceManager.getDefault(DispatcherFrame.class).requestAllocation(this,
-                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null)) {
-            log.error("Allocation request failed for first allocation of " + getActiveTrainName());
+                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null, true)) {
+            log.error("Allocation request failed for first allocation of {}", getActiveTrainName());
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getRosterEntryInBlock() && getRosterEntry() != null) {
             mStartBlock.setValue(getRosterEntry());
@@ -1103,6 +1097,25 @@ public class ActiveTrain {
         InstanceManager.getDefault(DispatcherFrame.class).addDelayedTrain(this);
     }
 
+    protected boolean isInAllocatedList(AllocatedSection as) {
+        for (int i = 0; i < mAllocatedSections.size(); i++) {
+            if (mAllocatedSections.get(i) == as) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean isInAllocatedList(Section s) {
+        for (int i = 0; i < mAllocatedSections.size(); i++) {
+            if ((mAllocatedSections.get(i)).getSection() == s) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     boolean restartPoint = false;
 
     boolean holdAllocation = false;
@@ -1120,7 +1133,7 @@ public class ActiveTrain {
     }
 
     protected void restart() {
-        log.debug("{}: restarting", getTrainName());        
+        log.debug("{}: restarting", getTrainName());
         restartPoint = false;
         holdAllocation = false;
         setStatus(WAITING);

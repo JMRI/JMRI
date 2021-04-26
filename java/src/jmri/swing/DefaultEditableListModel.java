@@ -4,7 +4,7 @@ import javax.swing.DefaultListModel;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class DefaultEditableListModel<E> extends DefaultListModel<E> implements EditableListModel<E> {
 

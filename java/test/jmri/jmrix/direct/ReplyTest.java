@@ -1,8 +1,8 @@
 package jmri.jmrix.direct;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,14 +10,14 @@ import org.junit.Before;
  */
 public class ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new Reply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

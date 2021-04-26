@@ -6,7 +6,9 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Section;
+import jmri.SectionManager;
 import jmri.SignalMast;
+import jmri.SignalMastLogic;
 import jmri.Transit;
 import jmri.TransitManager;
 import org.slf4j.Logger;
@@ -34,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-public class TransitCreationTool {
+final public class TransitCreationTool {
 
     public TransitCreationTool() {
     }
@@ -53,12 +55,12 @@ public class TransitCreationTool {
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic(((SignalMast) list.get(list.size() - 1)));
                 if (sml == null || !sml.isDestinationValid((SignalMast) nb)) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNotValid", nb.getDisplayName(), list.get(list.size() - 1).getDisplayName());
-                    log.error(error);
+                    log.error("will throw {}", error);
                     throw new JmriException(error);
                 }
                 if (sml.getAssociatedSection((SignalMast) nb) == null) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(list.size() - 1).getDisplayName(), nb.getDisplayName());
-                    log.error(error);
+                    log.error("will throw {}", error);
                     throw new JmriException(error);
                 }
             } else {
@@ -73,25 +75,48 @@ public class TransitCreationTool {
         String transitName = "From " + list.get(0).getDisplayName() + " to " + list.get(list.size() - 1).getDisplayName();
         Transit t = tm.createNewTransit(transitName);
         if (t == null) {
-            log.error("Unable to create transit " + transitName);
+            log.error("Unable to create transit {}", transitName);
             throw new JmriException(Bundle.getMessage("TCTErrorUnableToCreate", transitName));
         }
-
         if (list.get(0) instanceof SignalMast) {
             jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+            int seqNo = 1;
+            // Add stub block section if applicable
+            SignalMastLogic smlForFirstMast = smlm.getSignalMastLogic((SignalMast) list.get(0));
+            if (smlForFirstMast != null) {
+                LayoutBlock layoutBlock = smlForFirstMast.getFacingBlock();
+                if (layoutBlock.getNumberOfNeighbours() == 1) {
+                    // A stub track block has one neighbor
+                    SectionManager sectionManager = InstanceManager.getDefault(SectionManager.class);
+                    for (Section section : sectionManager.getNamedBeanSet()) {
+                        // Look for a user defined section that has one block that matches the layout block
+                        if (section.getSectionType() == Section.USERDEFINED) {
+                            if (section.getNumBlocks() == 1 && layoutBlock.getBlock().equals(section.getEntryBlock())) {
+                                t.addTransitSection(new jmri.TransitSection(section, seqNo, Section.FORWARD));
+                                seqNo++;
+                                break;
+                            }
+                        }
+                    }
+                    if (seqNo == 1) {
+                        log.warn("Unable to find a stub block section for {}", layoutBlock.getDisplayName());
+                    }
+                }
+            }
             for (int i = 1; i <= list.size() - 1; i++) {
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic((SignalMast) list.get(i - 1));
                 Section sec = sml.getAssociatedSection((SignalMast) list.get(i));
                 //In theory sec being null would already have been tested when the signal was added.
                 if (sec == null) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(i - 1).getDisplayName(), list.get(i).getDisplayName());
-                    log.error(error);
+                    log.error("will throw {}", error);
                     tm.deregister(t);
                     t.dispose();
                     cancelTransitCreate();
                     throw new JmriException(error);
                 }
-                t.addTransitSection(new jmri.TransitSection(sec, i, Section.FORWARD));
+                t.addTransitSection(new jmri.TransitSection(sec, seqNo, Section.FORWARD));
+                seqNo++;
             }
         }
         //Once created clear the list for a fresh start.
@@ -111,5 +136,5 @@ public class TransitCreationTool {
         return !list.isEmpty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitCreationTool.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitCreationTool.class);
 }
