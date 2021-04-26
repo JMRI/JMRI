@@ -107,6 +107,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Constructor.
      */
     public ControlPanel() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         initGUI();
         applyPreferences();
     }
@@ -492,7 +496,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
     }
 
-    private void resizeButtons() {
+    private void resizeButtons() {       
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
         int w = buttonPanel.getWidth();
         int h = buttonPanel.getHeight();        
@@ -865,7 +869,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * The user has resized the Frame. Possibly change from Horizontal to
      * Vertical layout.
      */
-    private void changeOrientation() {
+    private void changeOrientation() {       
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         if (mainPanel.getWidth() > mainPanel.getHeight()) {
             speedSlider.setOrientation(JSlider.HORIZONTAL);
@@ -949,10 +953,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     void applyPreferences() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         
         if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
@@ -1234,7 +1234,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             throw new UnsupportedOperationException("Not supported yet."); 
         }
     }
-
+   
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }

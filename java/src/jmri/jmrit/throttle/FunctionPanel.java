@@ -38,6 +38,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Constructor
      */
     public FunctionPanel() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         initGUI();
         applyPreferences();
     }
@@ -175,10 +179,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     
     
     public void applyPreferences() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         RosterEntry re = null;
         if (mThrottle != null) {

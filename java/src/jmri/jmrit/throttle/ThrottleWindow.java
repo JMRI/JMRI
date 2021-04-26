@@ -75,6 +75,10 @@ public class ThrottleWindow extends JmriJFrame {
      */
     public ThrottleWindow() {
         super();
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }  
         myInputsListener = new ThrottleWindowInputsListener(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
@@ -745,10 +749,6 @@ public class ThrottleWindow extends JmriJFrame {
     }    
     
     public void applyPreferences() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
                 
         throttleToolBar.setVisible ( preferences.isUsingExThrottle() && preferences.isUsingToolBar() );

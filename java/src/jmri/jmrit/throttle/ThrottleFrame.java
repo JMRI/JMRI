@@ -90,8 +90,12 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
 
     public ThrottleFrame(ThrottleWindow tw) {
-        super();
+        super();        
         throttleWindow = tw;
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }        
         initGUI();
         applyPreferences();
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
@@ -465,11 +469,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private HashMap<Container, JInternalFrame> contentPanes;
 
-    public void applyPreferences() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }        
+    public void applyPreferences() {      
         ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         
         backgroundPanel.setVisible(  (preferences.isUsingExThrottle()) && (preferences.isUsingRosterImage()));

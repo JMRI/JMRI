@@ -24,6 +24,10 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     public BackgroundPanel() {
         super();
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         initGUI();
         applyPreferences();
     }
@@ -34,10 +38,6 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     }
     
     public void applyPreferences() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         setResizingContainer(InstanceManager.getDefault(ThrottlesPreferences.class).isResizingWindow());
     }
 
