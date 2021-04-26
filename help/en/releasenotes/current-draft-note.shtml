@@ -524,6 +524,7 @@
             <li>When "Large speed slider" mode is enabled (in throttle preferences), directions, stop, estop buttons will automaticaly depending on the control panel inner window size, allows for high visibility from far away (for people using a wireless device combined JMRI native throttles for instance)</li>
             <li>Function buttons icons, SVG file format now supported, allows for smooth scaling</li>
             <li>Throttle control panel button icons are now based on SVG files, allows better scaling</li>
+            <li>Throttle preferences can now be applied live, no need to reload the windows</li>
         </ul>
 
     <h3>Timetable</h3>
