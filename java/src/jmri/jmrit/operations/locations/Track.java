@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -303,6 +304,14 @@ public class Track extends PropertyChangeSupport {
 
     public String getName() {
         return _name;
+    }
+    
+    public Division getDivision() {
+        return getLocation().getDivision();
+    }
+    
+    public String getDivisionName() {
+        return getLocation().getDivisionName();
     }
 
     public boolean isSpur() {

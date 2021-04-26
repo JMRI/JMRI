@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.Color;
 import java.awt.*;
+import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
+import javax.swing.border.EmptyBorder;
 import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.*;
@@ -64,6 +66,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         
         // Create a JTree and tell it to display our model
         _tree = new JTree();
+        _tree.setRowHeight(0);
         ToolTipManager.sharedInstance().registerComponent(_tree);
         _tree.setModel(femaleSocketTreeModel);
         _tree.setCellRenderer(new FemaleSocketTreeRenderer(decorator));
@@ -305,18 +308,22 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             FemaleSocket socket = (FemaleSocket)value;
             
             JPanel mainPanel = new JPanel();
+            
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.setOpaque(false);
             
+            JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            mainPanel.add(commentPanel);
+            
             JPanel panel = new JPanel();
+            panel.setAlignmentX(LEFT_ALIGNMENT);
             mainPanel.add(panel);
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-//            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
             panel.setOpaque(false);
             
             JLabel socketLabel = new JLabel(socket.getShortDescription());
             Font font = socketLabel.getFont();
-            socketLabel.setFont(font.deriveFont((float)(font.getSize2D()*1.4)));
+            socketLabel.setFont(font.deriveFont((float)(font.getSize2D()*1.7)));
             socketLabel.setForeground(FEMALE_SOCKET_COLORS.get(socket.getClass().getName()));
 //            socketLabel.setForeground(Color.red);
             panel.add(socketLabel);
@@ -333,6 +340,20 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
                 MaleSocket connectedSocket = socket.getConnectedSocket();
+                
+                String comment = connectedSocket.getComment();
+                if (comment != null) {
+                    JLabel commentLabel = new JLabel();
+                    commentLabel.setText("<html><pre>"+comment+"</pre></html>");
+                    commentLabel.setForeground(Color.GRAY);
+                    Font font2 = commentLabel.getFont();
+                    commentLabel.setFont(font2.deriveFont(Font.ITALIC));
+                    commentPanel.setOpaque(false);
+                    commentPanel.add(commentLabel);
+                    commentPanel.setAlignmentX(LEFT_ALIGNMENT);
+                    commentPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
+                }
+                
                 String label = connectedSocket.getLongDescription();
                 if (connectedSocket.getUserName() != null) {
                     label += " ::: " + connectedSocket.getUserName();
@@ -341,9 +362,8 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                     label = "<html><strike>" + label + "</strike></html>";
                 }
                 connectedItemLabel.setText(label);
-                if (connectedSocket.getComment() != null) {
-                    mainPanel.setToolTipText(connectedSocket.getComment());
-                }
+                
+                mainPanel.setToolTipText(connectedSocket.getShortDescription());
                 
                 for (VariableData variableData : connectedSocket.getLocalVariables()) {
                     JLabel variableLabel = new JLabel(Bundle.getMessage(
@@ -351,6 +371,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                             variableData._name,
                             variableData._initalValueType,
                             variableData._initialValueData));
+                    variableLabel.setAlignmentX(LEFT_ALIGNMENT);
                     mainPanel.add(variableLabel);
                 }
             }

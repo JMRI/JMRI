@@ -143,6 +143,7 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Get associated comment text.
+     * A LogixNG comment can have multiple lines, separated with \n.
      *
      * @return the comment or null
      */

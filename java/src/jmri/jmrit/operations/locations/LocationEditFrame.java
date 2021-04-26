@@ -17,6 +17,9 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -57,6 +60,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
     JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton autoSelectButton = new JButton(Bundle.getMessage("AutoSelect"));
+    JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton saveLocationButton = new JButton(Bundle.getMessage("SaveLocation"));
     JButton deleteLocationButton = new JButton(Bundle.getMessage("DeleteLocation"));
     JButton addLocationButton = new JButton(Bundle.getMessage("AddLocation"));
@@ -84,6 +88,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTextArea commentTextArea = new JTextArea(2, 60);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    
+    // combo boxes
+    protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
 
     // Reader selection dropdown.
     NamedBeanComboBox<Reporter> readerSelector;
@@ -131,6 +138,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             enableButtons(true);
             locationNameTextField.setText(_location.getName());
             commentTextArea.setText(_location.getComment());
+            divisionComboBox.setSelectedItem(_location.getDivision());
             yardModel.initTable(yardTable, location);
             spurModel.initTable(spurTable, location);
             interchangeModel.initTable(interchangeTable, location);
@@ -157,7 +165,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             spurRadioButton.setSelected(true);
         }
 
-        setVisibleLocations();
+        setVisibleTracks();
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -187,6 +195,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         p1.add(pName);
         p1.add(directionPanel);
+        
+        // division field
+        JPanel pDivision = new JPanel();
+        pDivision.setLayout(new GridBagLayout());
+        pDivision.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Division")));
+        addItem(pDivision, divisionComboBox, 2, 0);
+        addItem(pDivision, editDivisionButton, 3, 0);
 
         // row 5
         panelCheckBoxes.setLayout(new GridBagLayout());
@@ -234,6 +249,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addItem(pB, saveLocationButton, 3, 0);
 
         getContentPane().add(p1Pane);
+        getContentPane().add(pDivision);
         getContentPane().add(typePane);
         getContentPane().add(pOp);
         getContentPane().add(yardPane);
@@ -252,6 +268,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addButtonAction(setButton);
         addButtonAction(clearButton);
         addButtonAction(autoSelectButton);
+        addButtonAction(editDivisionButton);
         addButtonAction(deleteLocationButton);
         addButtonAction(addLocationButton);
         addButtonAction(saveLocationButton);
@@ -276,6 +293,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         // add property listeners
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(DivisionManager.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -286,9 +304,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addHelpMenu("package.jmri.jmrit.operations.Operations_AddLocation", true); // NOI18N
 
         pack();
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
+        setMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
         setVisible(true);
-
     }
 
     private void loadToolMenu() {
@@ -312,6 +329,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
+    // frames
+    DivisionEditFrame def = null;
     YardEditFrame yef = null;
     SpurEditFrame sef = null;
     InterchangeEditFrame ief = null;
@@ -320,6 +339,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     // Save, Delete, Add
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        if (ae.getSource() == editDivisionButton) {
+            if (def != null) {
+                def.dispose();
+            }
+            def = new DivisionEditFrame((Division) divisionComboBox.getSelectedItem());
+        }
         if (ae.getSource() == addYardButton) {
             yef = new YardEditFrame();
             yef.initComponents(_location, null);
@@ -466,6 +491,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
+        _location.setDivision((Division) divisionComboBox.getSelectedItem());
         if (Setup.isRfidEnabled() && readerSelector != null) {
             _location.setReporter(readerSelector.getSelectedItem());
         }
@@ -514,6 +540,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         southCheckBox.setEnabled(enabled);
         eastCheckBox.setEnabled(enabled);
         westCheckBox.setEnabled(enabled);
+        divisionComboBox.setEnabled(enabled);
+        editDivisionButton.setEnabled(enabled);
         clearButton.setEnabled(enabled);
         setButton.setEnabled(enabled);
         autoSelectButton.setEnabled(enabled);
@@ -530,8 +558,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         yardRadioButton.setEnabled(enabled);
         interchangeRadioButton.setEnabled(enabled);
         stagingRadioButton.setEnabled(enabled);
-        //
-        yardTable.setEnabled(enabled);
         if (readerSelector != null) {
             // enable readerSelect.
             readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
@@ -540,11 +566,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-        setVisibleLocations();
+        setVisibleTracks();
     }
 
-    private void setVisibleLocations() {
-        setEnabledLocations();
+    private void setVisibleTracks() {
+        setEnabledTracks();
         interchangePane.setVisible(interchangeRadioButton.isSelected());
         addInterchangeButton.setVisible(interchangeRadioButton.isSelected());
         stagingPane.setVisible(stagingRadioButton.isSelected());
@@ -555,7 +581,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addSpurButton.setVisible(spurRadioButton.isSelected());
     }
 
-    private void setEnabledLocations() {
+    private void setEnabledTracks() {
         if (spurModel.getRowCount() > 0 || yardModel.getRowCount() > 0 || interchangeModel.getRowCount() > 0) {
             if (stagingRadioButton.isSelected()) {
                 spurRadioButton.setSelected(true);
@@ -610,6 +636,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         panelCheckBoxes.add(p, gc);
         panelCheckBoxes.revalidate();
         repaint();
+    }
+    
+    protected void updateDivisionComboBox() {
+        InstanceManager.getDefault(DivisionManager.class).updateComboBox(divisionComboBox);
+        if (_location != null) {
+            divisionComboBox.setSelectedItem(_location.getDivision());
+        }
     }
 
     int x = 0;
@@ -756,6 +789,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
             updateCheckboxes();
+        }
+        if (e.getPropertyName().equals(DivisionManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            updateDivisionComboBox();
         }
     }
 
