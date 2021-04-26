@@ -49,17 +49,18 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int FINAL_DESTINATION_COLUMN = 14;
     private static final int RWE_DESTINATION_COLUMN = 15;
     private static final int RWL_DESTINATION_COLUMN = 16;
-    private static final int TRAIN_COLUMN = 17;
-    private static final int MOVES_COLUMN = 18;
-    private static final int BUILT_COLUMN = 19;
-    private static final int OWNER_COLUMN = 20;
-    private static final int VALUE_COLUMN = 21;
-    private static final int RFID_COLUMN = 22;
-    private static final int WAIT_COLUMN = 23;
-    private static final int PICKUP_COLUMN = 24;
-    private static final int LAST_COLUMN = 25;
-    private static final int SET_COLUMN = 26;
-    private static final int EDIT_COLUMN = 27;
+    private static final int DIVISION_COLUMN = 17;
+    private static final int TRAIN_COLUMN = 18;
+    private static final int MOVES_COLUMN = 19;
+    private static final int BUILT_COLUMN = 20;
+    private static final int OWNER_COLUMN = 21;
+    private static final int VALUE_COLUMN = 22;
+    private static final int RFID_COLUMN = 23;
+    private static final int WAIT_COLUMN = 24;
+    private static final int PICKUP_COLUMN = 25;
+    private static final int LAST_COLUMN = 26;
+    private static final int SET_COLUMN = 27;
+    private static final int EDIT_COLUMN = 28;
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -83,6 +84,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBY_WAIT = 17;
     public final int SORTBY_PICKUP = 18;
     public final int SORTBY_LAST = 19;
+    public final int SORTBY_DIVISION = 20;
 
     private int _sort = SORTBY_NUMBER;
 
@@ -127,13 +129,15 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
         }
-        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE || sort == SORTBY_RWL) {
+        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE || sort == SORTBY_RWL
+                || sort == SORTBY_DIVISION) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_DESTINATION_COLUMN), sort == SORTBY_RWL);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), sort == SORTBY_DIVISION);
             // show load column if color column isn't visible.
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN),
                     sort != SORTBY_RWE &&
@@ -183,6 +187,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Location");
             case SORTBY_DESTINATION:
                 return Bundle.getMessage("Destination");
+            case SORTBY_DIVISION:
+                return Bundle.getMessage("HomeDivision");
             case SORTBY_TRAIN:
                 return Bundle.getMessage("Train");
             case SORTBY_FINALDESTINATION:
@@ -335,6 +341,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SORTBY_RWL:
                 list = carManager.getByRwlList();
                 break;
+            case SORTBY_DIVISION:
+                list = carManager.getByDivisionList();
+                break;
             case SORTBY_MOVES:
                 list = carManager.getByMovesList();
                 break;
@@ -399,7 +408,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     // Cars frame table column widths, starts with Select column and ends with Edit
     private final int[] tableColumnWidths = { 60, 60, 60, 65, 35, 75, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 190,
-            65, 50, 50, 50, 50, 100, 50, 100, 100, 65, 70 };
+            190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 65, 70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -429,6 +438,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_DESTINATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), false);
@@ -493,6 +503,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("RWLLocation");
             case RWL_LOAD_COLUMN:
                 return Bundle.getMessage("RWLLoad");
+            case DIVISION_COLUMN:
+                return Bundle.getMessage("HomeDivision");
             case TRAIN_COLUMN:
                 return Bundle.getMessage("Train");
             case MOVES_COLUMN:
@@ -628,6 +640,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getReturnWhenLoadedDestName();
             case RWL_LOAD_COLUMN:
                 return car.getReturnWhenLoadedLoadName();
+            case DIVISION_COLUMN:
+                return car.getDivisionName();
             case TRAIN_COLUMN: {
                 // if train was manually set by user add an asterisk
                 if (car.getTrain() != null && car.getRouteLocation() == null) {
