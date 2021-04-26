@@ -91,12 +91,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     public ThrottleFrame(ThrottleWindow tw) {
         super();
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         throttleWindow = tw;
         initGUI();
+        applyPreferences();
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
     }
 
@@ -269,7 +266,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * </ul>
      */
     private void initGUI() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         frameListener = new FrameListener();
 
         controlPanel = new ControlPanel();
@@ -330,15 +326,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight()) {
             addressPanel.setSize(addressPanel.getWidth(), controlPanel.getHeight() - functionPanel.getHeight());
         }
-        if (!(preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon())
-                && (functionPanel.getWidth() < addressPanel.getWidth())) {
+        if (functionPanel.getWidth() < addressPanel.getWidth()) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
-        // SpotBugs flagged the following (apparently correctly) as a
-        // useless control statement, so it has been commented out.
-        //if (!(preferences.isUsingIcons())
-        //        && (functionPanel.getWidth() < addressPanel.getWidth())) {
-        //}
 
         speedPanel.setSize(addressPanel.getWidth() + controlPanel.getWidth(), addressPanel.getHeight() / 2);
         speedPanel.setLocation(0, controlPanel.getHeight());
@@ -354,18 +344,15 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(addressPanel, PANEL_LAYER_FRAME);
         add(speedPanel, PANEL_LAYER_FRAME);
         
-        if (preferences.isUsingExThrottle()) {
-            if (preferences.isUsingRosterImage()) {
-                backgroundPanel = new BackgroundPanel();
-                backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
-                addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
-                addressPanel.addAddressListener(backgroundPanel);
-                addressPanel.setBackgroundPanel(backgroundPanel); // so that it's changeable when browsing through rosters
-                add(backgroundPanel, BACKPANEL_LAYER);
-            }
-            addComponentListener(this); // to force sub windows repositionning
-        }        
-
+        backgroundPanel = new BackgroundPanel();
+        backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
+        addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
+        addressPanel.addAddressListener(backgroundPanel);
+        addressPanel.setBackgroundPanel(backgroundPanel); // so that it's changeable when browsing through rosters
+        add(backgroundPanel, BACKPANEL_LAYER);
+            
+        addComponentListener(this); // to force sub windows repositionning
+           
         frameList = new JInternalFrame[NUM_FRAMES];
         frameList[ADDRESS_PANEL_INDEX] = addressPanel;
         frameList[CONTROL_PANEL_INDEX] = controlPanel;
@@ -477,6 +464,21 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
 
     private HashMap<Container, JInternalFrame> contentPanes;
+
+    public void applyPreferences() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }        
+        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        
+        backgroundPanel.setVisible(  (preferences.isUsingExThrottle()) && (preferences.isUsingRosterImage()));
+        
+        controlPanel.applyPreferences();
+        functionPanel.applyPreferences();
+        addressPanel.applyPreferences();
+        backgroundPanel.applyPreferences();        
+    }
 
     private static class TranslucentJPanel extends JPanel {
 

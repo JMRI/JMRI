@@ -13,7 +13,7 @@
    id="svg1307"
    sodipodi:version="0.32"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="stop.svg"
+   sodipodi:docname="stopOn.svg"
    inkscape:export-filename="/home/lapo/Desktop/Grafica/Icone/media-actions-outlines.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
@@ -87,26 +87,74 @@
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter174">
+       id="filter868">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix172" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix864" />
+      <feColorMatrix
+         type="saturate"
+         values="0.68"
+         result="fbSourceGraphic"
+         id="feColorMatrix866" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix882" />
+      <feColorMatrix
+         id="feColorMatrix884"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter178">
+       id="filter874">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix176" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix870" />
+      <feColorMatrix
+         type="saturate"
+         values="0.68"
+         result="fbSourceGraphic"
+         id="feColorMatrix872" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix886" />
+      <feColorMatrix
+         id="feColorMatrix888"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter182">
+       id="filter880">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix180" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix876" />
+      <feColorMatrix
+         type="saturate"
+         values="0.68"
+         result="fbSourceGraphic"
+         id="feColorMatrix878" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix890" />
+      <feColorMatrix
+         id="feColorMatrix892"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -117,7 +165,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313708"
-     inkscape:cx="20.613726"
+     inkscape:cx="3.024444"
      inkscape:cy="18.937723"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -131,8 +179,8 @@
      stroke="#ef2929"
      inkscape:window-width="1467"
      inkscape:window-height="1031"
-     inkscape:window-x="494"
-     inkscape:window-y="307"
+     inkscape:window-x="1447"
+     inkscape:window-y="235"
      showborder="true"
      inkscape:showpageshadow="false"
      inkscape:document-rotation="0"
@@ -235,7 +283,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title>Media Record</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Lapo Calamandrei</dc:title>
@@ -272,7 +320,7 @@
      style="display:inline"
      transform="translate(-9.9807925,-9.8322366)">
     <ellipse
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient2263);fill-opacity:1;fill-rule:evenodd;stroke:#cc0000;stroke-width:1.07572;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter182)"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient2263);fill-opacity:1;fill-rule:evenodd;stroke:#cc0000;stroke-width:1.07572;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter880)"
        id="path2525"
        transform="matrix(0.894862,0,0,0.9657,3.855776,2.660348)"
        cx="22.5"
@@ -280,14 +328,14 @@
        rx="14"
        ry="13" />
     <circle
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f77d7d;stroke-width:1.21739;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter178)"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#f77d7d;stroke-width:1.21739;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter874)"
        id="path2527"
        transform="matrix(0.821429,0,0,0.821429,4.285117,4.191455)"
        cx="24"
        cy="24"
        r="14" />
     <path
-       style="display:inline;opacity:0.6;fill:url(#radialGradient1368);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.25pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter174)"
+       style="display:inline;opacity:0.6;fill:url(#radialGradient1368);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.25pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter868)"
        d="m 23.84315,11.90574 c -6.279532,0.07959 -11.404423,4.992059 -11.8125,11.1875 6.117823,2.51678 13.87042,-1.451223 23.142005,-3.381886 -0.68841,-2.748569 -4.55472,-7.805614 -11.173255,-7.805614 -0.05171,0 -0.104697,-6.53e-4 -0.15625,0 z"
        id="path2529"
        sodipodi:nodetypes="cccsc" />

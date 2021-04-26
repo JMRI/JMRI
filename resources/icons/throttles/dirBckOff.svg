@@ -8,7 +8,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="dirBckOff.svg"
+   sodipodi:docname="dirBckRoll.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:version="0.32"
    id="svg11300"
@@ -76,24 +76,40 @@
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter485">
+       id="filter1073">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix483" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix1069" />
+      <feColorMatrix
+         type="saturate"
+         values="0.675696"
+         result="fbSourceGraphic"
+         id="feColorMatrix1071" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix996" />
+      <feColorMatrix
+         id="feColorMatrix998"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
   </defs>
   <sodipodi:namedview
-     inkscape:window-y="274"
-     inkscape:window-x="343"
+     inkscape:window-y="258"
+     inkscape:window-x="1332"
      inkscape:window-height="818"
-     inkscape:window-width="1280"
+     inkscape:window-width="1621"
      inkscape:showpageshadow="false"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:cy="19.239857"
-     inkscape:cx="10.963727"
+     inkscape:cx="15.910565"
      inkscape:zoom="11.313708"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -126,7 +142,7 @@
         <dc:source>http://jimmac.musichall.cz</dc:source>
         <cc:license
            rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
-        <dc:title></dc:title>
+        <dc:title>Go Down</dc:title>
         <dc:subject>
           <rdf:Bag>
             <rdf:li>go</rdf:li>
@@ -162,7 +178,7 @@
     <g
        id="g1464"
        transform="rotate(180,23.51428,21.999605)"
-       style="filter:url(#filter485)">
+       style="filter:url(#filter1073)">
       <path
          style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#radialGradient1469);fill-opacity:1;fill-rule:evenodd;stroke:#3a7304;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
          d="M 14.519136,38.5 32.524165,38.4961 V 25.504468 l 7.995366,-0.0078 L 23.374809,5.4992135 6.5285585,25.497284 l 7.9958815,0.0038 z"

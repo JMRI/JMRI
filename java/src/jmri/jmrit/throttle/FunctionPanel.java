@@ -38,11 +38,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Constructor
      */
     public FunctionPanel() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         initGUI();
+        applyPreferences();
     }
 
     public void destroy() {
@@ -176,6 +173,49 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
+    
+    public void applyPreferences() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        RosterEntry re = null;
+        if (mThrottle != null) {
+            if (addressPanel == null) {
+                return;
+            }
+            re = addressPanel.getRosterEntry();
+        }
+        for (int i = 0; i < functionButtons.length; i++) {            
+            if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+            } else {
+                functionButtons[i].setIconPath(null);
+                functionButtons[i].setSelectedIconPath(null);
+            }
+            if (re != null) {
+                if (re.getFunctionLabel(i) != null) {
+                    functionButtons[i].setDisplay(true);
+                    functionButtons[i].setButtonLabel(re.getFunctionLabel(i));
+                    if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                        functionButtons[i].setIconPath(re.getFunctionImage(i));
+                        functionButtons[i].setSelectedIconPath(re.getFunctionSelectedImage(i));
+                    } else {
+                        functionButtons[i].setIconPath(null);
+                        functionButtons[i].setSelectedIconPath(null);
+                    }
+                    functionButtons[i].setIsLockable(re.getFunctionLockable(i));
+                } else {
+                    functionButtons[i].setDisplay( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
+                    functionButtons[i].setVisible( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
+                }
+            }
+            functionButtons[i].updateLnF();
+        }
+    }
+    
     private void rebuildFnButons() {
         mainPanel.removeAll();
         if (this.mThrottle == null) {
@@ -202,10 +242,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * loaded from a roster entry, update buttons accordingly
      */
     public void resetFnButtons() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         rebuildFnButons();
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
         // Buttons names, ids,
-        for (int i = 0; i < functionButtons.length; i++) {                      
+        for (int i = 0; i < functionButtons.length; i++) {  
             functionButtons[i].setThrottle(mThrottle);
             functionButtons[i].setIdentity(i);
             functionButtons[i].addFunctionListener(this);
@@ -433,4 +473,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
     
     private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
+
 }

@@ -8,7 +8,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="dirFwdOff.svg"
+   sodipodi:docname="dirFwdRoll.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:version="0.32"
    id="svg11300"
@@ -76,31 +76,79 @@
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter409">
+       id="filter846">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix407" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix842" />
+      <feColorMatrix
+         type="saturate"
+         values="0.68"
+         result="fbSourceGraphic"
+         id="feColorMatrix844" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix851" />
+      <feColorMatrix
+         id="feColorMatrix853"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter413">
+       id="filter852">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix411" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix848" />
+      <feColorMatrix
+         type="saturate"
+         values="0.68"
+         result="fbSourceGraphic"
+         id="feColorMatrix850" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix855" />
+      <feColorMatrix
+         id="feColorMatrix857"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Greyscale"
-       id="filter417">
+       id="filter858">
       <feColorMatrix
-         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
-         id="feColorMatrix415" />
+         type="hueRotate"
+         values="100"
+         result="color1"
+         id="feColorMatrix854" />
+      <feColorMatrix
+         type="saturate"
+         values="0.68"
+         result="fbSourceGraphic"
+         id="feColorMatrix856" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix859" />
+      <feColorMatrix
+         id="feColorMatrix861"
+         values="0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0.21 0.72 0.072 -0.4 0 0 0 0 1 0 "
+         in="fbSourceGraphic" />
     </filter>
   </defs>
   <sodipodi:namedview
-     inkscape:window-y="374"
-     inkscape:window-x="118"
+     inkscape:window-y="378"
+     inkscape:window-x="1365"
      inkscape:window-height="818"
      inkscape:window-width="1280"
      inkscape:showpageshadow="false"
@@ -109,7 +157,7 @@
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:cy="21.621136"
-     inkscape:cx="4.6094211"
+     inkscape:cx="-10.628671"
      inkscape:zoom="13.059378"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -142,7 +190,7 @@
         <dc:source>http://jimmac.musichall.cz</dc:source>
         <cc:license
            rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>go</rdf:li>
@@ -179,14 +227,14 @@
        sodipodi:nodetypes="cccccccc"
        id="path8643"
        d="M 14.491792,38.5 H 32.469477 V 25.547437 H 40.5 L 23.374809,5.4992135 6.5285585,25.489471 l 7.9685375,0.06629 z"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#radialGradient1441);fill-opacity:1;fill-rule:evenodd;stroke:#3a7304;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter417)" />
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#radialGradient1441);fill-opacity:1;fill-rule:evenodd;stroke:#3a7304;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter858)" />
     <path
        sodipodi:nodetypes="cccscc"
        id="path8645"
        d="m 7.5855237,25.03253 h 7.4102973 l 0.0666,6.561809 c 5.655612,-11.000461 15.993095,-8.844411 16.594346,-15.627665 0,0 -8.28983,-9.5447048 -8.28983,-9.5447048 z"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.508021;fill:url(#radialGradient1438);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter413)" />
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.508021;fill:url(#radialGradient1438);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter852)" />
     <path
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.481283;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter409)"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.481283;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;filter:url(#filter846)"
        d="M 15.602735,37.5 H 31.502578 V 24.50705 h 6.808998 L 23.361206,7.0700896 8.6546798,24.55047 15.475049,24.52837 Z"
        id="path8658"
        sodipodi:nodetypes="cccccccc" />

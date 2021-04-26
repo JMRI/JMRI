@@ -59,8 +59,8 @@ public class ThrottleWindow extends JmriJFrame {
     private String titleTextType = "rosterID";
     private boolean isEditMode = true;
 
-
     private final PowerManager powerMgr;
+    private SmallPowerManagerButton smallPowerMgmtButton;
 
     private final ThrottleWindowInputsListener myInputsListener;
 
@@ -75,16 +75,13 @@ public class ThrottleWindow extends JmriJFrame {
      */
     public ThrottleWindow() {
         super();
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         myInputsListener = new ThrottleWindowInputsListener(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         }
         initGUI();
+        applyPreferences();
     }
 
     private void initGUI() {
@@ -93,10 +90,8 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
-        if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
-                && (InstanceManager.getDefault(ThrottlesPreferences.class).isUsingToolBar())) {
-            initializeToolbar();
-        }
+        
+        initializeToolbar();
         initializeMenu();
 
         setCurrentThrottleFrame(new ThrottleFrame(this));
@@ -447,10 +442,8 @@ public class ThrottleWindow extends JmriJFrame {
 
             this.getJMenuBar().add(powerMenu);
 
-            if ((!InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
-                    || (!InstanceManager.getDefault(ThrottlesPreferences.class).isUsingToolBar())) {
-                this.getJMenuBar().add(new SmallPowerManagerButton());
-            }
+            smallPowerMgmtButton = new SmallPowerManagerButton();
+            this.getJMenuBar().add(smallPowerMgmtButton);
         }
 
         // add help selection
@@ -750,6 +743,24 @@ public class ThrottleWindow extends JmriJFrame {
             }
         }
     }    
+    
+    public void applyPreferences() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
+        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+                
+        throttleToolBar.setVisible ( preferences.isUsingExThrottle() && preferences.isUsingToolBar() );
+        
+        if (smallPowerMgmtButton != null) {
+            smallPowerMgmtButton.setVisible( (!preferences.isUsingExThrottle()) || (!preferences.isUsingToolBar()) );
+        }
+
+        throttleFrames.values().forEach(tf -> {
+            tf.applyPreferences();
+        });
+    }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class);
 }
