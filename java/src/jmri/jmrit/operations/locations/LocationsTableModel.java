@@ -41,9 +41,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public static final int ROLLINGSTOCK_COLUMN = 6;
     public static final int PICKUPS_COLUMN = 7;
     public static final int DROPS_COLUMN = 8;
-    public static final int REPORTER_COLUMN = 9;
-    public static final int ACTION_COLUMN = 10;
-    public static final int EDIT_COLUMN = 11;
+    public static final int DIVISION_COLUMN = 9;
+    public static final int REPORTER_COLUMN = 10;
+    public static final int ACTION_COLUMN = 11;
+    public static final int EDIT_COLUMN = 12;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -114,6 +115,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 Math.max(60, new JLabel(getColumnName(PICKUPS_COLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(DROPS_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(DROPS_COLUMN)).getPreferredSize().width + 10));
+        table.getColumnModel().getColumn(DIVISION_COLUMN).setPreferredWidth(160);
         table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
@@ -124,6 +126,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     
     protected void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), locationManager.hasDivisions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN), Setup.isRfidEnabled() && locationManager.hasReporters());
     }
 
@@ -158,6 +161,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Pickups");
             case DROPS_COLUMN:
                 return Bundle.getMessage("Drop");
+            case DIVISION_COLUMN:
+                return Bundle.getMessage("Division");
             case REPORTER_COLUMN:
                 return Bundle.getMessage("Reporters");
             case ACTION_COLUMN:
@@ -174,6 +179,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
             case NAME_COLUMN:
             case TRACK_COLUMN:
+            case DIVISION_COLUMN:
             case REPORTER_COLUMN:
                 return String.class;
             case ID_COLUMN:
@@ -231,6 +237,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return location.getPickupRS();
             case DROPS_COLUMN:
                 return location.getDropRS();
+            case DIVISION_COLUMN:
+                return location.getDivisionName();
             case REPORTER_COLUMN:
                 return location.getReporterName();
             case ACTION_COLUMN:

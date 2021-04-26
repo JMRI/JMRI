@@ -185,11 +185,11 @@ public class ImportConditional {
             switch (cv.getType().getItemType()) {
                 case SENSOR:
                     Sensor sn = (Sensor)nb;
-                    newExpression = getSensorExpression(cv, sn);
+                    newExpression = getSensorExpression(cv, sn, isNegated);
                     break;
                 case TURNOUT:
                     Turnout tn = (Turnout)nb;
-                    newExpression = getTurnoutExpression(cv, tn);
+                    newExpression = getTurnoutExpression(cv, tn, isNegated);
                     break;
                 case MEMORY:
                     Memory my = (Memory)nb;
@@ -197,7 +197,7 @@ public class ImportConditional {
                     break;
                 case LIGHT:
                     Light l = (Light)nb;
-                    newExpression = getLightExpression(cv, l);
+                    newExpression = getLightExpression(cv, l, isNegated);
                     break;
                 case SIGNALHEAD:
                     SignalHead s = (SignalHead)nb;
@@ -209,22 +209,22 @@ public class ImportConditional {
                     break;
                 case ENTRYEXIT:
                     DestinationPoints dp = (DestinationPoints)nb;
-                    newExpression = getEntryExitExpression(cv, dp);
+                    newExpression = getEntryExitExpression(cv, dp, isNegated);
                     break;
                 case CONDITIONAL:
                     Conditional c = (Conditional)nb;
-                    newExpression = getConditionalExpression(cv, c);
+                    newExpression = getConditionalExpression(cv, c, isNegated);
                     break;
                 case CLOCK:
-                    newExpression = getFastClockExpression(cv);
+                    newExpression = getFastClockExpression(cv, isNegated);
                     break;
                 case WARRANT:
                     Warrant w = (Warrant)nb;
-                    newExpression = getWarrantExpression(cv, w);
+                    newExpression = getWarrantExpression(cv, w, isNegated);
                     break;
                 case OBLOCK:
                     OBlock b = (OBlock)nb;
-                    newExpression = getOBlockExpression(cv, b);
+                    newExpression = getOBlockExpression(cv, b, isNegated);
                     break;
                 default:
                     newExpression = null;
@@ -387,7 +387,12 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getSensorExpression(@Nonnull ConditionalVariable cv, Sensor sn) throws JmriException {
+    private DigitalExpressionBean getSensorExpression(
+            @Nonnull ConditionalVariable cv,
+            Sensor sn,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionSensor expression =
                 new ExpressionSensor(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
@@ -396,10 +401,10 @@ public class ImportConditional {
         
         expression.setSensor(sn);
         
-//        cv.getDataString();     // SignalMast, Memory, OBlock
-//        cv.getNamedBeanData();  // Only for memory
-//        cv.getNum1();   // Clock, Memory
-//        cv.getNum2();   // Clock, Memory
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         switch (cv.getType()) {
             case SENSOR_ACTIVE:
@@ -419,12 +424,22 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getTurnoutExpression(@Nonnull ConditionalVariable cv, Turnout tn) throws JmriException {
+    private DigitalExpressionBean getTurnoutExpression(
+            @Nonnull ConditionalVariable cv,
+            Turnout tn,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionTurnout expression =
                 new ExpressionTurnout(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setTurnout(tn);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         switch (cv.getType()) {
             case TURNOUT_CLOSED:
@@ -444,7 +459,10 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getMemoryExpression(@Nonnull ConditionalVariable cv, Memory my) throws JmriException {
+    private DigitalExpressionBean getMemoryExpression(
+            @Nonnull ConditionalVariable cv, Memory my)
+            throws JmriException {
+        
         ExpressionMemory expression =
                 new ExpressionMemory(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
@@ -516,12 +534,22 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getLightExpression(@Nonnull ConditionalVariable cv, Light ln) throws JmriException {
+    private DigitalExpressionBean getLightExpression(
+            @Nonnull ConditionalVariable cv,
+            Light ln,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionLight expression =
                 new ExpressionLight(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setLight(ln);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         switch (cv.getType()) {
             case LIGHT_ON:
@@ -542,7 +570,9 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getSignalHeadExpression(
-            @Nonnull ConditionalVariable cv, SignalHead s, AtomicBoolean isNegated)
+            @Nonnull ConditionalVariable cv,
+            SignalHead s,
+            AtomicBoolean isNegated)
             throws JmriException {
         
         ExpressionSignalHead expression =
@@ -612,7 +642,9 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getSignalMastExpression(
-            @Nonnull ConditionalVariable cv, SignalMast sm, AtomicBoolean isNegated)
+            @Nonnull ConditionalVariable cv,
+            SignalMast sm,
+            AtomicBoolean isNegated)
             throws JmriException {
         
         ExpressionSignalMast expression =
@@ -649,12 +681,22 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getEntryExitExpression(@Nonnull ConditionalVariable cv, DestinationPoints dp) throws JmriException {
+    private DigitalExpressionBean getEntryExitExpression(
+            @Nonnull ConditionalVariable cv,
+            DestinationPoints dp,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionEntryExit expression =
                 new ExpressionEntryExit(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setDestinationPoints(dp);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         switch (cv.getType()) {
             case ENTRYEXIT_ACTIVE:
@@ -674,12 +716,22 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getConditionalExpression(@Nonnull ConditionalVariable cv, Conditional cn) throws JmriException {
+    private DigitalExpressionBean getConditionalExpression(
+            @Nonnull ConditionalVariable cv,
+            Conditional cn,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionConditional expression =
                 new ExpressionConditional(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setConditional(cn);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         switch (cv.getType()) {
             case CONDITIONAL_TRUE:
@@ -699,10 +751,19 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getFastClockExpression(@Nonnull ConditionalVariable cv) throws JmriException {
+    private DigitalExpressionBean getFastClockExpression(
+            @Nonnull ConditionalVariable cv,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionClock expression =
                 new ExpressionClock(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         if (cv.getType() != Conditional.Type.FAST_CLOCK_RANGE) {
             throw new InvalidConditionalVariableException(
@@ -718,12 +779,22 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getWarrantExpression(@Nonnull ConditionalVariable cv, Warrant w) throws JmriException {
+    private DigitalExpressionBean getWarrantExpression(
+            @Nonnull ConditionalVariable cv,
+            Warrant w,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionWarrant expression =
                 new ExpressionWarrant(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setWarrant(w);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         switch (cv.getType()) {
             case ROUTE_FREE:
@@ -752,10 +823,20 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getOBlockExpression(@Nonnull ConditionalVariable cv, OBlock b) throws JmriException {
+    private DigitalExpressionBean getOBlockExpression(
+            @Nonnull ConditionalVariable cv,
+            OBlock b,
+            AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionOBlock expression =
                 new ExpressionOBlock(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
+        
+        if (isNegated.get()) {
+            expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+            isNegated.set(false);
+        }
         
         OBlock.OBlockStatus oblockStatus = OBlock.OBlockStatus.getByName(cv.getDataString());
         

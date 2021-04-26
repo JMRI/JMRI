@@ -17,15 +17,15 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Test ActionEnableDisable
+ * Test ActionPositionable
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
+public class ActionPositionableTest extends AbstractDigitalActionTestBase {
 
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
-    private ActionEnableDisable actionEnableDisable;
+    private ActionPositionable actionPositionable;
     private Turnout turnout;
     private Editor editor;
     private Positionable positionable1;
@@ -50,7 +50,7 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Enable/Disable item Some other id on panel A panel editor to Disabled ::: Log error%n");
+        return String.format("Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Log error%n");
     }
     
     @Override
@@ -59,12 +59,12 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Enable/Disable item Some other id on panel A panel editor to Disabled ::: Log error%n");
+                "         Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Log error%n");
     }
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new ActionEnableDisable(systemName, null);
+        return new ActionPositionable(systemName, null);
     }
     
     @Override
@@ -76,21 +76,21 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
     public void testCtor() throws JmriException {
         Assert.assertTrue("object exists", _base != null);
         
-        ActionEnableDisable action2;
+        ActionPositionable action2;
         Assert.assertNotNull("turnout is not null", turnout);
         turnout.setState(Turnout.ON);
         
-        action2 = new ActionEnableDisable("IQDA321", null);
+        action2 = new ActionPositionable("IQDA321", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Enable/Disable item '' on panel '' to Enabled", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set icon/label \"''\" on panel \"''\" to \"Enable\"", action2.getLongDescription());
         
-        action2 = new ActionEnableDisable("IQDA321", "My turnout");
+        action2 = new ActionPositionable("IQDA321", "My turnout");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
-        Assert.assertEquals("String matches", "Enable/Disable item '' on panel '' to Enabled", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set icon/label \"''\" on panel \"''\" to \"Enable\"", action2.getLongDescription());
 /*        
-        action2 = new ActionEnableDisable("IQDA321", null);
+        action2 = new ActionPositionable("IQDA321", null);
         action2.setTurnout(turnout);
         Assert.assertTrue("turnout is correct", turnout == action2.getTurnout().getBean());
         Assert.assertNotNull("object exists", action2);
@@ -98,7 +98,7 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("String matches", "Set turnout IT1 to state Thrown", action2.getLongDescription());
         
         Turnout l = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        action2 = new ActionEnableDisable("IQDA321", "My turnout");
+        action2 = new ActionPositionable("IQDA321", "My turnout");
         action2.setTurnout(l);
         Assert.assertTrue("turnout is correct", l == action2.getTurnout().getBean());
         Assert.assertNotNull("object exists", action2);
@@ -108,7 +108,7 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         boolean thrown = false;
         try {
             // Illegal system name
-            new ActionEnableDisable("IQA55:12:XY11", null);
+            new ActionPositionable("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -117,7 +117,7 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         thrown = false;
         try {
             // Illegal system name
-            new ActionEnableDisable("IQA55:12:XY11", "A name");
+            new ActionPositionable("IQA55:12:XY11", "A name");
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -129,11 +129,11 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == actionEnableDisable.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionPositionable.getChildCount());
         
         boolean hasThrown = false;
         try {
-            actionEnableDisable.getChild(0);
+            actionPositionable.getChild(0);
         } catch (UnsupportedOperationException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
@@ -143,8 +143,8 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testTurnoutState() {
-        Assert.assertEquals("String matches", "Disabled", ActionEnableDisable.IsControlling.Disabled.toString());
-        Assert.assertEquals("String matches", "Enabled", ActionEnableDisable.IsControlling.Enabled.toString());
+        Assert.assertEquals("String matches", "Disable", ActionPositionable.Operation.Disable.toString());
+        Assert.assertEquals("String matches", "Enable", ActionPositionable.Operation.Enable.toString());
     }
 /*    
     @Test
@@ -191,21 +191,21 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
         
         // Test to set turnout to closed
-        actionEnableDisable.setBeanState(ActionEnableDisable.TurnoutState.Closed);
+        actionEnableDisable.setBeanState(ActionPositionable.TurnoutState.Closed);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.CLOSED);
         
         // Test to set turnout to toggle
-        actionEnableDisable.setBeanState(ActionEnableDisable.TurnoutState.Toggle);
+        actionEnableDisable.setBeanState(ActionPositionable.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
         
         // Test to set turnout to toggle
-        actionEnableDisable.setBeanState(ActionEnableDisable.TurnoutState.Toggle);
+        actionEnableDisable.setBeanState(ActionPositionable.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
@@ -225,7 +225,7 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         Turnout t4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT104");
         Turnout t5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT105");
         
-        actionEnableDisable.setBeanState(ActionEnableDisable.TurnoutState.Thrown);
+        actionEnableDisable.setBeanState(ActionPositionable.TurnoutState.Thrown);
         actionEnableDisable.setTurnout(t1.getSystemName());
         actionEnableDisable.setReference("{IM1}");    // Points to "IT102"
         actionEnableDisable.setLocalVariable("myTurnout");
@@ -329,14 +329,14 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         actionEnableDisable.setStateAddressing(NamedBeanAddressing.Direct);
         // Test Closed
         turnout.setState(Turnout.THROWN);
-        actionEnableDisable.setBeanState(ActionEnableDisable.TurnoutState.Closed);
+        actionEnableDisable.setBeanState(ActionPositionable.TurnoutState.Closed);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertEquals(Turnout.CLOSED, turnout.getCommandedState());
         // Test Thrown
         turnout.setState(Turnout.CLOSED);
-        actionEnableDisable.setBeanState(ActionEnableDisable.TurnoutState.Thrown);
+        actionEnableDisable.setBeanState(ActionPositionable.TurnoutState.Thrown);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
@@ -432,7 +432,7 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         // Get the action and set the turnout
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
-        ActionEnableDisable action = new ActionEnableDisable(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        ActionPositionable action = new ActionPositionable(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         action.setTurnout(turnout);
         
         // Get some other turnout for later use
@@ -482,12 +482,12 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Enable/Disable item on panel", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Icon/Label on panel", _base.getShortDescription());
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Enable/Disable item Some other id on panel A panel editor to Disabled", _base.getLongDescription());
+        Assert.assertEquals("String matches", "Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\"", _base.getLongDescription());
     }
     
     @Test
@@ -543,14 +543,14 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
-        actionEnableDisable = new ActionEnableDisable(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        actionEnableDisable.setEditor(editor.getName());
-        actionEnableDisable.setPositionable(positionable2.getId());
-        actionEnableDisable.setIsControlling(ActionEnableDisable.IsControlling.Disabled);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionEnableDisable);
+        actionPositionable = new ActionPositionable(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        actionPositionable.setEditor(editor.getName());
+        actionPositionable.setPositionable(positionable2.getId());
+        actionPositionable.setOperation(ActionPositionable.Operation.Disable);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionPositionable);
         conditionalNG.getChild(0).connect(socket);
         
-        _base = actionEnableDisable;
+        _base = actionPositionable;
         _baseMaleSocket = socket;
         
         logixNG.setParentForAllChildren();

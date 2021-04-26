@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -31,6 +32,11 @@ public class DefaultFemaleDigitalActionSocketFactory implements FemaleSocketFact
         @Override
         public String getDescr() {
             return Bundle.getMessage("FemaleDigitalActionSocket_Descr");
+        }
+
+        @Override
+        public BaseManager<? extends MaleSocket> getManager() {
+            return InstanceManager.getDefault(DigitalActionManager.class);
         }
 
         @Override

@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 
 /**
@@ -349,9 +350,33 @@ public abstract class AbstractMaleSocket implements MaleSocket {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param currentIndent the current indentation
+     * @param lineNumber the line number
      */
-    protected void printTreeRow(PrintTreeSettings settings, Locale locale, PrintWriter writer, String currentIndent) {
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
         if (!(getObject() instanceof AbstractMaleSocket)) {
+            String comment = getComment();
+            if (comment != null) {
+                comment = comment.replaceAll("\\r\\n", "\\n");
+                comment = comment.replaceAll("\\r", "\\n");
+                for (String s : comment.split("\\n", 0)) {
+                    if (settings._printLineNumbers) {
+                        writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+                    }
+                    writer.append(currentIndent);
+                    writer.append("// ");
+                    writer.append(s);
+                    writer.println();
+                }
+            }
+            if (settings._printLineNumbers) {
+                writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+            }
             writer.append(currentIndent);
             writer.append(getLongDescription(locale));
             if (getUserName() != null) {
@@ -359,10 +384,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(Bundle.getMessage("LabelUserName"));
                 writer.append(" ");
                 writer.append(getUserName());
-            }
-            if (getComment() != null) {
-                writer.append(" ::: ");
-                writer.append(getComment());
             }
 
             if (settings._printErrorHandling) {
@@ -378,11 +399,16 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
 
     protected void printLocalVariable(
+            PrintTreeSettings settings,
             Locale locale,
             PrintWriter writer,
             String currentIndent,
+            MutableInt lineNumber,
             VariableData localVariable) {
 
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append("   ::: ");
         writer.append(Bundle.getMessage(
@@ -396,39 +422,48 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
-        printTree(settings, locale, writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
-    /**
-     * Print the tree to a stream.
-     * This method is the implementation of printTree(PrintStream, String)
-     *
-     * @param writer the stream to print the tree to
-     * @param indent the indentation of each level
-     * @param currentIndent the current indentation
-     */
+    /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(settings, locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (settings._printLocalVariables) {
             for (VariableData localVariable : _localVariables) {
-                printLocalVariable(locale, writer, currentIndent, localVariable);
+                printLocalVariable(settings, locale, writer, currentIndent, lineNumber, localVariable);
             }
         }
 
         if (getObject() instanceof MaleSocket) {
-            getObject().printTree(settings, locale, writer, indent, currentIndent);
+            getObject().printTree(settings, locale, writer, indent, currentIndent, lineNumber);
         } else {
             for (int i=0; i < getChildCount(); i++) {
-                getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent);
+                getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
             }
         }
     }

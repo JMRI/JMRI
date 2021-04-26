@@ -77,8 +77,8 @@ import jmri.jmrit.logixng.tools.swing.TableEditor;
  */
 public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
-    JRadioButton _typeExternalTable = new JRadioButton("External CSV table");
-    JRadioButton _typeInternalTable = new JRadioButton("Internal table stored in the panel file");
+    JRadioButton _typeExternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeExternalTable"));
+    JRadioButton _typeInternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTable"));
     ButtonGroup _buttonGroup = new ButtonGroup();
     JTextField _csvFileName = new JTextField(50);
     
