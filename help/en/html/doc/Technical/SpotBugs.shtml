@@ -260,7 +260,7 @@ scanning through the code.
         following to your 
         <a href="StartUpScripts.shtml">local.properties</a> file:
     <pre style="font-family: monospace;">
-    spotbugs.home = /Users/jake/.spotbugs/spotbugs-3.1.7
+    spotbugs.home = /Users/jake/.spotbugs/spotbugs-4.2.3
     </pre>
         <li>In order to check for spotbugs issues in logging statements, we use the <a
             href="https://www.kengo-toda.jp/findbugs-slf4j/">Findbugs-slf4j</a> plugin by KengoTODA. To use this
