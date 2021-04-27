@@ -31,8 +31,6 @@ install:
   - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 before_script:
-  # resize X11 display to something large enough
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xrandr --newmode "1280x1024"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync ; xrandr --addmode screen 1280x1024 ; xrandr -s 1280x1024 ; fi
   # start audio services
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then start-pulseaudio-x11 ; fi
   # silence errors from firefox about dbus.
