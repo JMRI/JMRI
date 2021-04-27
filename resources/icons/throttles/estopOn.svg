@@ -18,13 +18,6 @@
    version="1.1">
   <defs
      id="defs3">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 22.005009 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="48 : 22.005009 : 1"
-       inkscape:persp3d-origin="24 : 14.005009 : 1"
-       id="perspective52" />
     <linearGradient
        id="linearGradient2256">
       <stop
@@ -60,18 +53,6 @@
          id="stop9651" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
-       id="linearGradient7895">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0"
-         id="stop7897" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
-         offset="1"
-         id="stop7899" />
-    </linearGradient>
-    <linearGradient
        id="linearGradient4981">
       <stop
          style="stop-color:#cc0000;stop-opacity:1;"
@@ -81,29 +62,6 @@
          style="stop-color:#b30000;stop-opacity:1.0000000;"
          offset="1.0000000"
          id="stop4985" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient15762"
-       inkscape:collect="always">
-      <stop
-         id="stop15764"
-         offset="0"
-         style="stop-color:#ffffff;stop-opacity:1;" />
-      <stop
-         id="stop15766"
-         offset="1"
-         style="stop-color:#ffffff;stop-opacity:0;" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient14236">
-      <stop
-         id="stop14238"
-         offset="0.0000000"
-         style="stop-color:#ed4040;stop-opacity:1.0000000;" />
-      <stop
-         id="stop14240"
-         offset="1.0000000"
-         style="stop-color:#a40000;stop-opacity:1.0000000;" />
     </linearGradient>
     <linearGradient
        id="linearGradient11780">
@@ -116,31 +74,6 @@
          offset="1.0000000"
          id="stop11784" />
     </linearGradient>
-    <linearGradient
-       id="linearGradient11014">
-      <stop
-         style="stop-color:#a80000;stop-opacity:1.0000000;"
-         offset="0.0000000"
-         id="stop11016" />
-      <stop
-         style="stop-color:#c60000;stop-opacity:1.0000000;"
-         offset="0.0000000"
-         id="stop13245" />
-      <stop
-         style="stop-color:#e50000;stop-opacity:1.0000000;"
-         offset="1.0000000"
-         id="stop11018" />
-    </linearGradient>
-    <linearGradient
-       y2="9.650753"
-       x2="9.8940229"
-       y1="5.3855424"
-       x1="5.736527"
-       gradientTransform="rotate(180,15.86085,15.645395)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient15772"
-       xlink:href="#linearGradient15762"
-       inkscape:collect="always" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient11780"
@@ -161,15 +94,6 @@
        y2="37.959785"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(2.5999294e-7,-2.0000087)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient7895"
-       id="linearGradient7901"
-       x1="15.578875"
-       y1="16.285088"
-       x2="32.166405"
-       y2="28.394291"
-       gradientUnits="userSpaceOnUse" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient9647"
@@ -181,16 +105,6 @@
        r="12.30225"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.693981,0,0,1.693981,-16.86529,-25.11111)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4981"
-       id="linearGradient2243"
-       gradientUnits="userSpaceOnUse"
-       x1="23.995985"
-       y1="20.105337"
-       x2="41.047836"
-       y2="37.959785"
-       gradientTransform="matrix(0.988373,0,0,0.988373,0.279002,0.278984)" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient2248"
@@ -223,7 +137,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="-0.9871099"
+     inkscape:cx="-199.98711"
      inkscape:cy="8.0625355"
      inkscape:current-layer="layer1"
      showgrid="false"

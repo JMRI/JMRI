@@ -21,24 +21,6 @@
    version="1.1">
   <defs
      id="defs1309">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 4.1470223 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="48 : 4.1470223 : 1"
-       inkscape:persp3d-origin="24 : -3.8529777 : 1"
-       id="perspective47" />
-    <linearGradient
-       id="linearGradient3837">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop3839" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0.78350514;"
-         offset="1"
-         id="stop3841" />
-    </linearGradient>
     <linearGradient
        id="linearGradient2257">
       <stop

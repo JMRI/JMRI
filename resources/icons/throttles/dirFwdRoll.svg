@@ -8,7 +8,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="dirFwdOff.svg"
+   sodipodi:docname="dirFwdRoll.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:version="0.32"
    id="svg11300"
@@ -21,13 +21,6 @@
    version="1.1">
   <defs
      id="defs3">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 12.000759 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="48 : 12.000759 : 1"
-       inkscape:persp3d-origin="24 : 4.0007592 : 1"
-       id="perspective23" />
     <linearGradient
        id="linearGradient2304">
       <stop
@@ -109,7 +102,7 @@
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:cy="21.621136"
-     inkscape:cx="4.6094211"
+     inkscape:cx="-10.628671"
      inkscape:zoom="13.059378"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -142,7 +135,7 @@
         <dc:source>http://jimmac.musichall.cz</dc:source>
         <cc:license
            rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>go</rdf:li>

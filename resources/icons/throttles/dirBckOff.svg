@@ -8,7 +8,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="dirBckRoll.svg"
+   sodipodi:docname="dirBckOff.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:version="0.32"
    id="svg11300"
@@ -21,13 +21,6 @@
    version="1.1">
   <defs
      id="defs3">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 12.000759 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="48 : 12.000759 : 1"
-       inkscape:persp3d-origin="24 : 4.0007591 : 1"
-       id="perspective24" />
     <linearGradient
        id="linearGradient1442">
       <stop
