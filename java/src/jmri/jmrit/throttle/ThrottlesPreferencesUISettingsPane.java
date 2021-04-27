@@ -30,7 +30,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
     private JCheckBox cbSaveThrottleOnLayoutSave;
     private JCheckBox cbSilentSteal;
     private JCheckBox cbSilentShare;
-    private JLabel labelApplyWarning;
     private boolean isDirty = false;
 
     /**
@@ -59,7 +58,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbSaveThrottleOnLayoutSave = new JCheckBox();
         cbSilentSteal = new JCheckBox();
         cbSilentShare = new JCheckBox();
-        labelApplyWarning = new JLabel();
 
         cbUseExThrottle.setText(Bundle.getMessage("UseExThrottle"));
         cbResizeWinImg.setText(Bundle.getMessage("ExThrottleForceResize"));
@@ -72,7 +70,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbEnableAutoLoad.setText(Bundle.getMessage("ExThrottleEnableAutoSave"));
         cbHideUndefinedButtons.setText(Bundle.getMessage("ExThrottleHideUndefinedFunctionButtons"));
         cbIgnoreThrottlePosition.setText(Bundle.getMessage("ExThrottleIgnoreThrottlePosition"));
-        labelApplyWarning.setText(Bundle.getMessage("ExThrottleLabelApplyWarning"));
         cbSaveThrottleOnLayoutSave.setText(Bundle.getMessage("ExThrottleSaveThrottleOnLayoutSave"));
         cbSilentSteal.setText(Bundle.getMessage("ExThrottleSilentSteal"));
         cbSilentShare.setText(Bundle.getMessage("ExThrottleSilentShare"));
@@ -179,12 +176,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         
         constraints.gridy++;
         this.add(cbSilentShare,constraints );
-        
-        constraints.gridy++;
-        this.add(new JSeparator(),constraints );
-        constraints.gridy++;
-        this.add(labelApplyWarning, constraints);
-                
+                        
         if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
             cbSilentSteal.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentStealOption());
             cbSilentShare.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentShareOption());
