@@ -451,7 +451,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling in JMRI native throttle window</li>
         </ul>
 
     <h3>Routes</h3>
@@ -521,7 +521,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>When "Large speed slider" mode is enabled (in throttle preferences), directions, stop and estop buttons will automatically resize and scale depending on the control panel inner window size : allows for high visibility from far away (for people using a wireless device combined with JMRI native throttles for instance)</li>
+            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling</li>
+            <li>Throttle control panel button icons are now based on SVG files, allows better scaling</li>
+            <li>Throttle preferences are now be applied live, no need to reload the throttle windows or restart the application</li>
         </ul>
 
     <h3>Timetable</h3>
