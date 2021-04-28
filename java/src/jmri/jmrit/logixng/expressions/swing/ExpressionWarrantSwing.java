@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logix.Warrant;
@@ -17,16 +16,18 @@ import jmri.jmrit.logixng.expressions.ExpressionWarrant;
 import jmri.jmrit.logixng.expressions.ExpressionWarrant.WarrantState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionWarrant object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneWarrant;
-    private BeanSelectCreatePanel<Warrant> warrantBeanPanel;
+    private BeanSelectPanel<Warrant> warrantBeanPanel;
     private JPanel _panelWarrantDirect;
     private JPanel _panelWarrantReference;
     private JPanel _panelWarrantLocalVariable;
@@ -65,7 +66,7 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneWarrant.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelWarrantLocalVariable);
         _tabbedPaneWarrant.addTab(NamedBeanAddressing.Formula.toString(), _panelWarrantFormula);
         
-        warrantBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(WarrantManager.class), null);
+        warrantBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(WarrantManager.class), null);
         _panelWarrantDirect.add(warrantBeanPanel);
         
         _warrantReferenceTextField = new JTextField();
@@ -225,18 +226,14 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionWarrant but is a: "+object.getClass().getName());
         }
         ExpressionWarrant expression = (ExpressionWarrant)object;
-        try {
-            if (!warrantBeanPanel.isEmpty() && (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect)) {
-                Warrant warrant = warrantBeanPanel.getNamedBean();
-                if (warrant != null) {
-                    NamedBeanHandle<Warrant> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(warrant.getDisplayName(), warrant);
-                    expression.setWarrant(handle);
-                }
+        if (!warrantBeanPanel.isEmpty() && (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect)) {
+            Warrant warrant = warrantBeanPanel.getNamedBean();
+            if (warrant != null) {
+                NamedBeanHandle<Warrant> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(warrant.getDisplayName(), warrant);
+                expression.setWarrant(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for warrant", ex);
         }
         try {
             if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
@@ -276,33 +273,6 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
         }
     }
     
-    
-    /**
-     * Create Warrant object for the expression
-     *
-     * @param reference Warrant application description
-     * @return The new output as Warrant object
-     */
-    protected Warrant getWarrantFromPanel(String reference) {
-        if (warrantBeanPanel == null) {
-            return null;
-        }
-        warrantBeanPanel.setReference(reference); // pass warrant application description to be put into warrant Comment
-        try {
-            return warrantBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of warrant not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noWarrantMessage(String s1, String s2) {
-//        log.warn("Could not provide warrant " + s2);
-//        String msg = Bundle.getMessage("WarningNoWarrant", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {
@@ -317,6 +287,6 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionWarrantSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionWarrantSwing.class);
     
 }

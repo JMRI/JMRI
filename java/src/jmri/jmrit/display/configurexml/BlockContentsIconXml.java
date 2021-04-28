@@ -1,11 +1,13 @@
 package jmri.jmrit.display.configurexml;
 
 import java.util.List;
+
 import jmri.Block;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.BlockContentsIcon;
-import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -75,9 +77,11 @@ public class BlockContentsIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
 
         Editor ed = null;
         BlockContentsIcon l;
@@ -136,7 +140,11 @@ public class BlockContentsIconXml extends PositionableLabelXml {
                 l.addKeyAndIcon(icon, keyValue);
             }
         }
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
         int x = 0;

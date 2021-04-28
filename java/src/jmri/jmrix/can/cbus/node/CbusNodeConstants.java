@@ -3,6 +3,9 @@ package jmri.jmrix.can.cbus.node;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
+
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 
 // import org.slf4j.Logger;
@@ -41,23 +44,31 @@ public class CbusNodeConstants {
      * or provide extra info. which is missing for a known module firmware.
      * @param node The CbusNode object we are setting the traits for
      */
-    public static void setTraits( CbusNode node ){
+    public static void setTraits(@Nonnull CbusNode node ){
         
         // defaults
         node.setsendsWRACKonNVSET(true);
         
         if ( node.getNodeParamManager().getParameter(1) == 165 ) { // MERG MODULE
-            if ( node.getNodeParamManager().getParameter(3) == 29 ) { // CANPAN
-                node.setsendsWRACKonNVSET(false);
-            }
-            if ( node.getNodeParamManager().getParameter(3) == 10 // CANCMD
-                || node.getNodeParamManager().getParameter(3) ==  55 // or CANCSB 
-                || node.getNodeParamManager().getParameter(3) == 12 // or CANBC
-            ) { 
-                if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
-                    node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
-                    node.setStatResponseFlagsAccurate(false);
-                }
+            switch (node.getNodeParamManager().getParameter(3)) { // Module Type ID Number
+                case 29: // CANPAN
+                    node.setsendsWRACKonNVSET(false);
+                    break;
+                case 10 : // CANCMD
+                case 55 : // or CANCSB 
+                case 12 : // or CANBC
+                    if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
+                        node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
+                        node.setStatResponseFlagsAccurate(false);
+                    }
+                    break;
+                case 46: // CANPiWi
+                    if ( node.getNodeParamManager().getParameter(7) == 1 ) { // v1 Firmware
+                        node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }

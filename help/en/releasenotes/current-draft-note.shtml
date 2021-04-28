@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCCppOverTCP server now forwards all messages, even those with unknown or invalid syntax</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -109,7 +109,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
             </ul>
@@ -131,7 +131,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Added startup action to open SPROG Slot Monitor</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -264,6 +264,11 @@
                 <li></li>
             </ul>
 
+        <h4>PIKO</h4>
+            <ul>
+                <li>Added support for Piko SmartDecoder 4.1 Next 18 Series used in N and TT scale engines.</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -353,9 +358,7 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li>The CTC Editor windows location and size settings have been moved to the
-            standard JMRI location within the current profile.  The AwtWindowProperies.txt
-            file in the ctc directory at the user files location is no longer used.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -394,9 +397,9 @@
         </ul>
 
     <h3>LogixNG</h3>
-        <a id="Logix" name="LogixNG"></a>
+        <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Add Actions and Expressions for Blocks.</li>
+          <li>Implement Clock Action and Expression</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -448,7 +451,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling in JMRI native throttle window</li>
         </ul>
 
     <h3>Routes</h3>
@@ -518,7 +521,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>When "Large speed slider" mode is enabled (in throttle preferences), directions, stop and estop buttons will automatically resize and scale depending on the control panel inner window size : allows for high visibility from far away (for people using a wireless device combined with JMRI native throttles for instance)</li>
+            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling</li>
+            <li>Throttle control panel button icons are now based on SVG files, allows better scaling</li>
+            <li>Throttle preferences are now be applied live, no need to reload the throttle windows or restart the application</li>
         </ul>
 
     <h3>Timetable</h3>

@@ -84,18 +84,22 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
-            return null;
+            throw new IllegalArgumentException("Cannot create Turnout System Name from " + systemName);
         }
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
         if (t != null) {
-            return null;
+            return t;
         }
 
         // create the turnout

@@ -21,8 +21,8 @@ import subprocess
 import sys
 my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
-from org.jgrapht.graph import DefaultEdge
-from org.jgrapht.graph import DirectedMultigraph
+from org.jgrapht.graph import DefaultWeightedEdge
+from org.jgrapht.graph import DirectedWeightedMultigraph
 import threading
 import time
 import webbrowser
@@ -51,10 +51,10 @@ frame.add(panel)
 
 #*****Menu*******
 bar = JMenuBar()
-jmri.util.HelpUtil.helpMenu(bar, 'html.apps.DispatcherSystem.DispatcherSystem' , True)
+jmri.util.HelpUtil.helpMenu(bar, 'html.scripthelp.DispatcherSystem.DispatcherSystem' , True)
 frame.setJMenuBar(bar)
 #
-
+logLevel = 0
 
 ###info
 import os
@@ -401,12 +401,18 @@ robot = java.awt.Robot()
 KeyEvent = java.awt.event.KeyEvent
 
 
+def setAdvancedRouting():
+    jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).enableAdvancedRouting(True)
+
+setAdvancedRouting()
 
 def CreateTransits_action(event):
     #print "in create_transits"
     global g
     global le
     global DisplayProgress_global
+    global logLevel
+    
     
     #the displayProgress is in CreateTransits
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
@@ -415,8 +421,7 @@ def CreateTransits_action(event):
     progress = 0
     dpg=DisplayProgress_global()
     dpg.Update("creating signal mast logic")
-    
-    
+
     initialPanelFilename = icons_file
     finalPanelFilename = run_file
 
@@ -432,30 +437,30 @@ def CreateTransits_action(event):
     progress = 10
     dpg.Update(str(progress)+ "% complete")
     
-    print "updating logic"
+    if logLevel > 0: print "updating logic"
     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
     exec(open (CreateSignalLogic).read())
     usl = Update_Signal_Logic()
-    
     #print "updating logic stage1"
-    usl.create_autologic_and_sections()
     
-    #print "updating logic stage2"
-    usl.update_logic(run_file)
-    print "updated logic"
-    
-    progress = 15
-    dpg.Update(str(progress)+ "% complete")
+    ans = usl.create_autologic_and_sections()
+     
+    if ans == True: 
+        print "updating logic stage2"
+        usl.update_logic(run_file)
+        
+        progress = 15
+        dpg.Update(str(progress)+ "% complete")
 
-    #print "Creating Transits"
-    CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    exec(open (CreateTransits).read())
+        #print "Creating Transits"
+        CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+        exec(open (CreateTransits).read())
 
-    #print "about to run CreateTransits"
-    ct = CreateTransits()
-    
-    ct.run_transits(icons_file, run_file)
-    #print "ran CreateTransits"
+        #print "about to run CreateTransits"
+        ct = CreateTransits()
+        
+        ct.run_transits(icons_file, run_file)
+        #print "ran CreateTransits"
 
     dpg.killLabel()
 
@@ -600,5 +605,3 @@ panel.add(leftJustify(row3))
 
 
 frame.setVisible(True)
-
-

@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.actions.LogLocalVariables;
 
 /**
  * Configures an LogLocalVariables object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
 

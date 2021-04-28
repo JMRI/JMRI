@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
+import jmri.jmrit.display.logixng.CategoryDisplay;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.util.JUnitUtil;
@@ -87,10 +88,12 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
 
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionBlock.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionClock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionEntryExit.class);
         classes.add(jmri.jmrit.logixng.actions.ActionLight.class);
         classes.add(jmri.jmrit.logixng.actions.ActionLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionMemory.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionOBlock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionPower.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSimpleScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
@@ -115,6 +118,10 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
         classes.add(jmri.jmrit.logixng.actions.TableForEach.class);
         map.put(Category.COMMON, classes);
+
+        classes = new ArrayList<>();
+        classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
+        map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
@@ -166,6 +173,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

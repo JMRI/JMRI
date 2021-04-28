@@ -25,15 +25,15 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     private ThrottlesPreferencesWindowKeyboardControls tpwkc;
     
     ThrottleWindowInputsListener(ThrottleWindow tw) {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         this.tw = tw;
         resetTpwkc();
     }
     
     private void resetTpwkc() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         tpwkc = InstanceManager.getDefault(ThrottlesPreferences.class).getThrottlesKeyboardControls();        
     }
     
@@ -200,9 +200,13 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
             return;
         }
         float speed;
+        float curSpeed = throttle.getSpeedSetting();
+        if (curSpeed < 0) {
+            curSpeed = 0; // restart from 0 if was on emergency stop
+        }
         if (tw.getCurrentThrottleFrame().getControlPanel().getDisplaySlider() == ControlPanel.SLIDERDISPLAYCONTINUOUS ) {
             if (throttle.getIsForward()) {
-                speed = throttle.getSpeedSetting() + increment;
+                speed = curSpeed + increment;
                 if (speed > -throttle.getSpeedIncrement()/2 && speed < throttle.getSpeedIncrement()/2 ) {
                     speed = 0;
                 }
@@ -211,7 +215,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
                     speed = -speed;
                 }
             } else {
-                speed = -throttle.getSpeedSetting() + increment;
+                speed = -curSpeed + increment;
                 if (speed > -throttle.getSpeedIncrement()/2 && speed < throttle.getSpeedIncrement()/2 ) {
                     speed = 0;
                 }                
@@ -222,7 +226,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
                 }
             }            
         } else {
-            speed = throttle.getSpeedSetting() + increment;
+            speed = curSpeed + increment;
         }
         if ( speed < throttle.getSpeedIncrement()/2 || speed <0 ) { // force 0 bellow minimum speed
             speed = 0;

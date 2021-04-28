@@ -36,7 +36,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
 
     @Override
     public ObjectNode doGet(SignalMast signalMast, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(signalMast, name, type, request); // throws if signalMast is null
+        ObjectNode root = this.getNamedBean(signalMast, name, getType(), request); // throws if signalMast is null
         ObjectNode data = root.with(DATA);
         String aspect = signalMast.getAspect();
         if (aspect == null) {

@@ -47,6 +47,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     protected long sensorDebounceGoingInActive = 0L;
     protected boolean useDefaultTimerSettings = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSensorDebounceGoingActiveTimer(long time) {
         if (sensorDebounceGoingActive == time) {
@@ -57,11 +60,17 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         firePropertyChange("ActiveTimer", oldValue, sensorDebounceGoingActive);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getSensorDebounceGoingActiveTimer() {
         return sensorDebounceGoingActive;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSensorDebounceGoingInActiveTimer(long time) {
         if (sensorDebounceGoingInActive == time) {
@@ -72,6 +81,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         firePropertyChange("InActiveTimer", oldValue, sensorDebounceGoingInActive);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getSensorDebounceGoingInActiveTimer() {
         return sensorDebounceGoingInActive;

@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
@@ -48,10 +50,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     private String _blockConstant = "";
     private NamedBeanHandle<Memory> _blockMemoryHandle;
-
-    private int _eventState = 0;
-    private Object _eventValue = null;
-    private boolean _eventAllocated = false;
 
     public ExpressionBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -337,6 +335,20 @@ public class ExpressionBlock extends AbstractDigitalExpression
         }
     }
 
+    /**
+     * A block is considered to be allocated if the related layout block has use extra color enabled.
+     * @param block The block whose allocation state is requested.
+     * @return true if the layout block is using the extra color.
+     */
+    public boolean isBlockAllocated(Block block) {
+        boolean result = false;
+        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
+        if (layoutBlock != null) {
+            result = layoutBlock.getUseExtraColor();
+        }
+        return result;
+    }
+
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
@@ -387,7 +399,9 @@ public class ExpressionBlock extends AbstractDigitalExpression
             checkBlockState = BlockState.valueOf(getNewState());
         }
 
-        int currentState = _eventState;
+        int currentState = block.getState();
+        Object currentValue = null;
+
         switch (checkBlockState) {
             case Other:
                 if (currentState != Block.OCCUPIED && currentState != Block.UNOCCUPIED) {
@@ -398,18 +412,21 @@ public class ExpressionBlock extends AbstractDigitalExpression
                 break;
 
             case Allocated:
-                currentState = _eventAllocated ? BlockState.Allocated.getID() : 0;
+                boolean cuurrentAllocation = isBlockAllocated(block);
+                currentState = cuurrentAllocation ? BlockState.Allocated.getID() : 0;
                 break;
 
             case ValueMatches:
-                currentState = _blockConstant.equals(_eventValue) ? BlockState.ValueMatches.getID() : 0;
+                currentValue = block.getValue();
+                currentState = _blockConstant.equals(currentValue) ? BlockState.ValueMatches.getID() : 0;
                 break;
 
             case MemoryMatches:
                 currentState = 0;
                 if (_blockMemoryHandle != null) {
+                    currentValue = block.getValue();
                     Object memoryObject = _blockMemoryHandle.getBean().getValue();
-                    if (memoryObject != null && memoryObject.equals(_eventValue)) {
+                    if (memoryObject != null && memoryObject.equals(currentValue)) {
                         currentState = BlockState.MemoryMatches.getID();
                     }
                 }
@@ -542,19 +559,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()) {
-            case "state":
-                _eventState = (int) evt.getNewValue();
-                break;
-            case "value":
-                _eventValue = evt.getNewValue();
-                break;
-            case "allocated":
-                _eventAllocated = (boolean) evt.getNewValue();
-                break;
-            default:
-                return;
-        }
         if (getTriggerOnChange()) {
             getConditionalNG().execute();
         }
@@ -588,6 +592,18 @@ public class ExpressionBlock extends AbstractDigitalExpression
         @Override
         public String toString() {
             return _text;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ExpressionBlock: bean = {}, report = {}", cdl, report);
+        if (getBlock() != null && bean.equals(getBlock().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
+        }
+        if (getBlockMemory() != null && bean.equals(getBlockMemory().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
         }
     }
 

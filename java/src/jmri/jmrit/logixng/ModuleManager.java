@@ -6,6 +6,8 @@ import java.util.Locale;
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Manager for LogixNG modules
  * 
@@ -104,8 +106,13 @@ public interface ModuleManager extends Manager<Module> {
      * @param settings settings for what to print
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber);
     
     /**
      * Print the tree to a stream.
@@ -114,8 +121,14 @@ public interface ModuleManager extends Manager<Module> {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber);
     
     /**
      * Test if parameter is a properly formatted system name.

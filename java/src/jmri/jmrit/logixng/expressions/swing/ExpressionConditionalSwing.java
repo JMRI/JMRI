@@ -11,16 +11,18 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionConditional;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneConditional;
-    private BeanSelectCreatePanel<Conditional> _conditionalBeanPanel;
+    private BeanSelectPanel<Conditional> _conditionalBeanPanel;
     private JPanel _panelConditionalDirect;
     private JPanel _panelConditionalReference;
     private JPanel _panelConditionalLocalVariable;
@@ -59,7 +61,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneConditional.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelConditionalLocalVariable);
         _tabbedPaneConditional.addTab(NamedBeanAddressing.Formula.toString(), _panelConditionalFormula);
         
-        _conditionalBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(ConditionalManager.class), null);
+        _conditionalBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(ConditionalManager.class), null);
         _panelConditionalDirect.add(_conditionalBeanPanel);
         
         _conditionalReferenceTextField = new JTextField();
@@ -213,18 +215,14 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionConditional but is a: "+object.getClass().getName());
         }
         ExpressionConditional expression = (ExpressionConditional)object;
-        try {
-            if (!_conditionalBeanPanel.isEmpty() && (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect)) {
-                Conditional conditional = _conditionalBeanPanel.getNamedBean();
-                if (conditional != null) {
-                    NamedBeanHandle<Conditional> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(conditional.getDisplayName(), conditional);
-                    expression.setConditional(handle);
-                }
+        if (!_conditionalBeanPanel.isEmpty() && (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect)) {
+            Conditional conditional = _conditionalBeanPanel.getNamedBean();
+            if (conditional != null) {
+                NamedBeanHandle<Conditional> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(conditional.getDisplayName(), conditional);
+                expression.setConditional(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for conditional", ex);
         }
         try {
             if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect) {
@@ -275,6 +273,6 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionConditionalSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionConditionalSwing.class);
     
 }

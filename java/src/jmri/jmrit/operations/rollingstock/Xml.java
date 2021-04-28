@@ -56,60 +56,10 @@ public class Xml {
     static final String ROUTE_LOCATION_ID = "routeLocationId"; // NOI18N
     static final String ROUTE_DESTINATION_ID = "routeDestinationId"; // NOI18N
     static final String LAST_ROUTE_ID = "lastRouteId"; // NOI18N
+    static final String DIVISION_ID = "DivisionId"; // NOI18N
 
     // Car.java
     static final String PASSENGER = "passenger"; // NOI18N
-
-    // Location.java
-// static final String OPS = "ops"; // NOI18N
-// static final String SWITCH_LIST = "switchList"; // NOI18N
-// static final String SWITCH_LIST_STATE = "switchListState"; // NOI18N
-// static final String PRINTER_NAME = "printerName"; // NOI18N
-// static final String EAST_TRAIN_ICON_X = "eastTrainIconX"; // NOI18N
-// static final String EAST_TRAIN_ICON_Y = "eastTrainIconY"; // NOI18N
-// static final String WEST_TRAIN_ICON_X = "westTrainIconX"; // NOI18N
-// static final String WEST_TRAIN_ICON_Y = "westTrainIconY"; // NOI18N
-// static final String NORTH_TRAIN_ICON_X = "northTrainIconX"; // NOI18N
-// static final String NORTH_TRAIN_ICON_Y = "northTrainIconY"; // NOI18N
-// static final String SOUTH_TRAIN_ICON_X = "southTrainIconX"; // NOI18N
-// static final String SOUTH_TRAIN_ICON_Y = "southTrainIconY"; // NOI18N
-// static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
-// static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
-// static final String SECONDARY = "secondary"; // early version of operations called tracks "secondary" // NOI18N
-    // ScheduleItem.java
-// static final String ITEM = "item"; // NOI18N
-// static final String SEQUENCE_ID = "ScheduleId"; // NOI18N
-// static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
-// static final String COUNT = "count"; // NOI18N
-// static final String WAIT = "wait"; // NOI18N
     static final String LOAD = "load"; // NOI18N
     static final String SHIP = "ship"; // NOI18N
-// static final String DEST_TRACK_ID = "destTrackId"; // NOI18N
-// static final String HITS = "hits"; // NOI18N
-
- // Track.java
-// static final String LOC_TYPE = "locType"; // NOI18N
-// 
-// 
-// static final String CAR_ROAD_OPERATION = "carRoadOperation"; //  misspelled should have been carRoadOption // NOI18N
-// static final String CAR_ROADS = "carRoads"; // NOI18N
-// static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
-// static final String CAR_LOADS = "carLoads"; // NOI18N
-// static final String DROP_IDS = "dropIds"; // NOI18N
-// static final String DROP_OPTION = "dropOption"; // NOI18N
-// static final String PICKUP_IDS = "pickupIds"; // NOI18N
-// static final String PICKUP_OPTION = "pickupOption"; // NOI18N
-//
-// static final String SCHEDULE_ID = "scheduleId"; // NOI18N
-// static final String ITEM_ID = "itemId"; // NOI18N
-// static final String ITEM_COUNT = "itemCount"; // NOI18N
-// static final String FACTOR = "factor"; // NOI18N
-// static final String SCHEDULE_MODE = "scheduleMode"; // NOI18N
-// static final String ALTERNATIVE = "alternative"; // NOI18N
-// static final String LOAD_OPTIONS = "loadOptions"; // NOI18N
-// static final String BLOCK_OPTIONS = "blockOptions"; // NOI18N
-// static final String ORDER = "order"; // NOI18N
-// static final String POOL = "pool"; // NOI18N
-// static final String MIN_LENGTH = "minLength"; // NOI18N
-// static final String IGNORE_USED_PERCENTAGE = "ignoreUsedPercentage"; // NOI18N
 }

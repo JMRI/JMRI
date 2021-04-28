@@ -24,6 +24,19 @@ public class PreviewPanelTest  {
         Assert.assertNotNull("PreviewPanel Constructor",p);
         JUnitUtil.dispose(df);
         JUnitUtil.dispose(editor);
+        
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+    }
+    
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+    
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
     
 }

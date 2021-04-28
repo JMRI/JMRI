@@ -600,6 +600,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
+                setEditIdMenu(p, popup);
                 popup.addSeparator();
             }
 
@@ -1040,7 +1041,7 @@ public class PanelEditor extends Editor implements ItemListener {
     protected boolean addItemViaMouseClick = false;
 
     @Override
-    public void putItem(Positionable l) {
+    public void putItem(Positionable l) throws Positionable.DuplicateIdException {
         super.putItem(l);
         /*This allows us to catch any new items that are being pasted into the panel
          and add them to the selection group, so that the user can instantly move them around*/

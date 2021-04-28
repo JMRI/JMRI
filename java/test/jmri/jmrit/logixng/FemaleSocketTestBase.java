@@ -12,12 +12,13 @@ import jmri.Manager.NameValidity;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * Base class for testing FemaleStringExpressionSocket classes
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public abstract class FemaleSocketTestBase {
@@ -28,43 +29,49 @@ public abstract class FemaleSocketTestBase {
     protected MaleSocket maleSocket;
     protected MaleSocket otherMaleSocket;
     protected FemaleSocket _femaleSocket;
-    
-    
+
+
     /**
      * Get the manager that handles the type of beans that can connect to this
      * female socket
      * @return the manager
      */
     protected abstract Manager<? extends NamedBean> getManager();
-    
-    
+
+
     private SortedSet<String> getClassNames(List<Class<? extends Base>> classes) {
         SortedSet<String> set = new TreeSet<>();
-        
+
+        // If the category doesn't exist in one of the sets, 'classes' is null.
+        if (classes == null) return set;
+
         for (Class<? extends Base> clazz : classes) {
             set.add(clazz.getName());
         }
-        
+
         return set;
     }
-    
-    private boolean isSetsEqual(SortedSet<String> set1, SortedSet<String> set2) {
-        if (set1.size() != set2.size()) {
-            return false;
-        }
+
+    private boolean isSetsEqual(Category category, SortedSet<String> set1, SortedSet<String> set2) {
         for (String s1 : set1) {
             if (!set2.contains(s1)) {
+                System.out.format("set1 contains %s in category %s which is missing in set2%n", s1, category.name());
                 return false;
             }
         }
         for (String s2 : set2) {
             if (!set1.contains(s2)) {
+                System.out.format("set2 contains %s in category %s which is missing in set1%n", s2, category.name());
                 return false;
             }
         }
+        if (set1.size() != set2.size()) {
+            System.out.format("set1 and set2 has different sizes: %d, %d%n", set1.size(), set2.size());
+            return false;
+        }
         return true;
     }
-    
+
     /**
      * Asserts that the two maps of connection classes holds the same classes.
      * The reason to why this method returns a boolean is because every test
@@ -78,9 +85,9 @@ public abstract class FemaleSocketTestBase {
     public final boolean isConnectionClassesEquals(
             Map<Category, List<Class<? extends Base>>> expectedMap,
             Map<Category, List<Class<? extends Base>>> actualMap) {
-        
+
         List<Class<? extends Base>> classes;
-/*        
+/*
         for (Category category : Category.values()) {
             System.out.format("FemaleSocket: %s, category: %s%n",
                     femaleSocket.getClass().getName(),
@@ -93,15 +100,16 @@ public abstract class FemaleSocketTestBase {
                         clazz.getName());
             }
         }
-*/        
+*/
         for (Category category : Category.values()) {
-            
+
             if (!isSetsEqual(
+                    category,
                     getClassNames(expectedMap.get(category)),
                     getClassNames(actualMap.get(category)))) {
-                
+
                 System.err.format("Set of classes are different for category %s:%n", category.name());
-                
+
                 classes = _femaleSocket.getConnectableClasses().get(category);
                 for (Class<? extends Base> clazz : classes) {
                     System.err.format("Set of classes are different:%n");
@@ -117,15 +125,15 @@ public abstract class FemaleSocketTestBase {
                             clazz.getName());
 */
                 }
-                
+
                 return false;
             }
         }
-        
+
         // We will not get here if assertion fails.
         return true;
     }
-    
+
     /**
      * Returns a new FemaleSocket with the specified name.
      * The method is used to test that the constructor throws an exception if
@@ -134,7 +142,7 @@ public abstract class FemaleSocketTestBase {
      * @return the new female socket
      */
     protected abstract FemaleSocket getFemaleSocket(String name);
-    
+
     @Test
     public void testBadSocketName() {
         boolean hasThrown = false;
@@ -145,28 +153,28 @@ public abstract class FemaleSocketTestBase {
         }
         Assert.assertTrue("exception thrown", hasThrown);
     }
-    
+
     abstract protected boolean hasSocketBeenSetup();
-    
+
     @Test
     public void testSetup() throws SocketAlreadyConnectedException {
         Assert.assertFalse("not connected", _femaleSocket.isConnected());
 
         // Check that we can call setup() even if the socket is not connected.
         _femaleSocket.setup();
-        
+
         _femaleSocket.connect(maleSocket);
         Assert.assertTrue("is connected", _femaleSocket.isConnected());
         Assert.assertFalse("not setup", hasSocketBeenSetup());
         _femaleSocket.setup();
         Assert.assertTrue("is setup", hasSocketBeenSetup());
     }
-    
+
     @Test
     public void testConnectIncompatibleSocket() {
         MaleSocket incompatibleSocket = new IncompatibleMaleSocket();
         Assert.assertFalse("socket not compatible", _femaleSocket.isCompatible(incompatibleSocket));
-        
+
         // Test connect incompatible male socket
         errorFlag.set(false);
         try {
@@ -177,9 +185,9 @@ public abstract class FemaleSocketTestBase {
             // We shouldn't be here.
             Assert.fail("socket is already connected");
         }
-        
+
         Assert.assertTrue("socket is not compatible", errorFlag.get());
-        
+
         // Test connect null
         errorFlag.set(false);
         try {
@@ -190,13 +198,13 @@ public abstract class FemaleSocketTestBase {
             // We shouldn't be here.
             Assert.fail("socket is already connected");
         }
-        
+
         Assert.assertTrue("cannot connect socket that is null", errorFlag.get());
     }
-    
+
     @Test
     public void testConnect() {
-        
+
         // Test connect male socket
         flag.set(false);
         errorFlag.set(false);
@@ -205,10 +213,10 @@ public abstract class FemaleSocketTestBase {
         } catch (SocketAlreadyConnectedException ex) {
             errorFlag.set(true);
         }
-        
+
         Assert.assertTrue("Socket is connected", flag.get());
         Assert.assertFalse("No error", errorFlag.get());
-        
+
         // Test connect male socket when already connected
         flag.set(false);
         errorFlag.set(false);
@@ -217,33 +225,33 @@ public abstract class FemaleSocketTestBase {
         } catch (SocketAlreadyConnectedException ex) {
             errorFlag.set(true);
         }
-        
+
         Assert.assertFalse("Socket was not connected again", flag.get());
         Assert.assertTrue("Socket already connected error", errorFlag.get());
     }
-    
+
     @Test
     public void testDisconnect() throws SocketAlreadyConnectedException {
-        
+
         // Ensure the socket is connected before this test.
         if (!_femaleSocket.isConnected()) {
             _femaleSocket.connect(maleSocket);
         }
-        
+
         // Test disconnect male socket
         flag.set(false);
         _femaleSocket.disconnect();
-        
+
         Assert.assertTrue("Socket is disconnected", flag.get());
-        
+
         // Test connect male socket
         flag.set(false);
         errorFlag.set(false);
         _femaleSocket.disconnect();
-        
+
         Assert.assertFalse("Socket is not disconnected again", flag.get());
     }
-    
+
     @Test
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
@@ -252,6 +260,26 @@ public abstract class FemaleSocketTestBase {
         _femaleSocket.connect(maleSocket);
         _femaleSocket.setParentForAllChildren();
         Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
+    }
+
+    @Test
+    public void testValidateName() {
+        // Valid names
+        Assert.assertTrue(_femaleSocket.validateName("Abc"));
+        Assert.assertTrue(_femaleSocket.validateName("abc"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc123"));
+        Assert.assertTrue(_femaleSocket.validateName("A123bc"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc___"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc___fsdffs"));
+        Assert.assertTrue(_femaleSocket.validateName("Abc3123__2341fsdf"));
+        
+        // Invalid names
+        Assert.assertFalse(_femaleSocket.validateName("12Abc"));  // Starts with a digit
+        Assert.assertFalse(_femaleSocket.validateName("_Abc"));   // Starts with an underscore
+        Assert.assertFalse(_femaleSocket.validateName(" Abc"));   // Starts with a non letter
+        Assert.assertFalse(_femaleSocket.validateName("A bc"));   // Has a character that's not letter, digit or underscore
+        Assert.assertFalse(_femaleSocket.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
+        Assert.assertFalse(_femaleSocket.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
     }
     
     private boolean setName_verifyException(String newName, String expectedExceptionMessage) {
@@ -264,30 +292,34 @@ public abstract class FemaleSocketTestBase {
         }
         return hasThrown.get();
     }
-    
+
     @Test
     public void testSetName() {
         // Both letters and digits is OK
         _femaleSocket.setName("X12");
         Assert.assertTrue("name matches", "X12".equals(_femaleSocket.getName()));
-        
+
         // Only letters is OK
         _femaleSocket.setName("Xyz");
         Assert.assertTrue("name matches", "Xyz".equals(_femaleSocket.getName()));
-        
+
         // Both letters and digits in random order is OK as long as the first
         // character is a letter
         _femaleSocket.setName("X1b2c3Y");
         Assert.assertTrue("name matches", "X1b2c3Y".equals(_femaleSocket.getName()));
-        
+
+        // Underscore is also a valid letter
+        _femaleSocket.setName("X1b2___c3Y");
+        Assert.assertTrue("name matches", "X1b2___c3Y".equals(_femaleSocket.getName()));
+
         // The name must start with a letter, not a digit
         Assert.assertTrue("exception is thrown", setName_verifyException("123", "the name is not valid: 123"));
-        
+
         // The name must not contain any spaces
         Assert.assertTrue("exception is thrown", setName_verifyException(" A123", "the name is not valid:  A123"));
         Assert.assertTrue("exception is thrown", setName_verifyException("A1 23", "the name is not valid: A1 23"));
         Assert.assertTrue("exception is thrown", setName_verifyException("A123 ", "the name is not valid: A123 "));
-        
+
         // The name must not contain any character that's not a letter nor a digit
         Assert.assertTrue("exception is thrown", setName_verifyException("A12!3", "the name is not valid: A12!3"));
         Assert.assertTrue("exception is thrown", setName_verifyException("A+123", "the name is not valid: A+123"));
@@ -301,19 +333,19 @@ public abstract class FemaleSocketTestBase {
         Assert.assertTrue("exception is thrown", setName_verifyException("A12{3", "the name is not valid: A12{3"));
         Assert.assertTrue("exception is thrown", setName_verifyException("A12}3", "the name is not valid: A12}3"));
     }
-    
+
     @Test
     public void testLock() throws SocketAlreadyConnectedException {
         _femaleSocket.connect(maleSocket);
         Assert.assertTrue("socket is connected", _femaleSocket.isConnected());
-        
+
         _femaleSocket.setLock(Base.Lock.NONE);
         Assert.assertEquals("lock matches", Base.Lock.NONE, _femaleSocket.getLock());
         _femaleSocket.setLock(Base.Lock.USER_LOCK);
         Assert.assertEquals("lock matches", Base.Lock.USER_LOCK, _femaleSocket.getLock());
         _femaleSocket.setLock(Base.Lock.HARD_LOCK);
         Assert.assertEquals("lock matches", Base.Lock.HARD_LOCK, _femaleSocket.getLock());
-        
+
         _femaleSocket.disconnect();
         boolean hasThrown = false;
         try {
@@ -323,7 +355,7 @@ public abstract class FemaleSocketTestBase {
         }
         Assert.assertTrue("exception thrown", hasThrown);
 //        JUnitAppender.assertErrorMessage("the name is not valid: ----");
-        
+
         hasThrown = false;
         try {
             _femaleSocket.getLock();
@@ -333,13 +365,13 @@ public abstract class FemaleSocketTestBase {
         Assert.assertTrue("exception thrown", hasThrown);
 //        JUnitAppender.assertErrorMessage("the name is not valid: ----");
     }
-    
+
     @Test
     public void testDisposeWithoutChild() {
         _femaleSocket.dispose();
         Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
     }
-    
+
     @Test
     public void testDisposeWithChild() throws SocketAlreadyConnectedException {
         Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
@@ -348,25 +380,25 @@ public abstract class FemaleSocketTestBase {
         _femaleSocket.dispose();
         Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
     }
-    
+
     @Test
     public void testMethodsThatAreNotSupported() {
         errorFlag.set(false);
         try {
-            _femaleSocket.printTree((PrintWriter)null, "");
+            _femaleSocket.printTree((PrintWriter)null, "", new MutableInt(0));
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
-            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "");
+            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "", new MutableInt(0));
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.getCategory();
@@ -374,7 +406,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.isExternal();
@@ -382,7 +414,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.getChild(0);
@@ -390,7 +422,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.getChildCount();
@@ -398,7 +430,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.getUserName();
@@ -406,7 +438,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.setUserName("aaa");
@@ -414,7 +446,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
         errorFlag.set(false);
         try {
             _femaleSocket.getSystemName();
@@ -422,17 +454,17 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+
     }
-    
+
     @Test
     public void testCategory() {
         // Test that the classes method getCategory() returns the same value as
         // the factory.
         Map<Category, List<Class<? extends Base>>> map = _femaleSocket.getConnectableClasses();
-        
+
         for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
-            
+
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
@@ -443,13 +475,13 @@ public abstract class FemaleSocketTestBase {
             }
         }
     }
-    
+
     @Test
     public void testSWISystemName() {   // SWI = SwingConfiguratorInterface
         Map<Category, List<Class<? extends Base>>> map = _femaleSocket.getConnectableClasses();
-        
+
         for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
-            
+
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
@@ -462,9 +494,9 @@ public abstract class FemaleSocketTestBase {
             }
         }
     }
-    
-    
-    
+
+
+
     private class IncompatibleMaleSocket implements MaleSocket {
 
         @Override
@@ -613,17 +645,17 @@ public abstract class FemaleSocketTestBase {
         }
 */
         @Override
-        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
@@ -766,9 +798,18 @@ public abstract class FemaleSocketTestBase {
         public void setListen(boolean listen) {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
+        @Override
+        public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+            throw new UnsupportedOperationException("Not supported");
+        }
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FemaleSocketTestBase.class);
 
 }

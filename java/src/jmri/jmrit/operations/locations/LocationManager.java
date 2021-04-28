@@ -71,6 +71,19 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     }
     
     /**
+     * Used to determine if a division name has been assigned to a location
+     * @return true if a location has a division name
+     */
+    public boolean hasDivisions() {
+        for (Location location : getList()) {
+            if (location.getDivision() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Used to determine if a reporter has been assigned to a location
      * @return true if a location has a RFID reporter
      */

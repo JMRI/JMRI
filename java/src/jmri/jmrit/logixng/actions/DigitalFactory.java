@@ -19,11 +19,13 @@ public class DigitalFactory implements DigitalActionFactory {
     public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses() {
         Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> digitalActionClasses = new HashSet<>();
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionBlock.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionClock.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionEntryExit.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLight.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ActionListenOnBeans.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLocalVariable.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionMemory.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionOBlock.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionPower.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSimpleScript.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionScript.class));
