@@ -88,6 +88,7 @@ public class VSDConfigDialog extends JDialog {
 
     private RosterEntry rosterEntrySelected;
     private boolean is_auto_loading;
+    private boolean is_viewing;
 
     /**
      * Constructor
@@ -96,11 +97,13 @@ public class VSDConfigDialog extends JDialog {
      * @param title  title for the dialog
      * @param c      Config object to be set by the dialog
      * @param ial    Is Auto Loading
+     * @param viewing Viewing mode flag
      */
-    public VSDConfigDialog(JPanel parent, String title, VSDConfig c, boolean ial) {
+    public VSDConfigDialog(JPanel parent, String title, VSDConfig c, boolean ial, boolean viewing) {
         super(SwingUtilities.getWindowAncestor(parent), title);
         config = c;
         is_auto_loading = ial;
+        is_viewing = viewing;
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
             @Override
             public void eventAction(VSDManagerEvent evt) {
@@ -332,6 +335,7 @@ public class VSDConfigDialog extends JDialog {
                     || (profileComboBox.getSelectedItem() instanceof NullProfileBoxItem)) {
                 rosterSaveButton.setEnabled(false);
                 closeButton.setEnabled(false);
+                log.warn("No Profile found");
             } else {
                 closeButton.doClick(); // All done
             }
@@ -352,7 +356,7 @@ public class VSDConfigDialog extends JDialog {
 
     private RosterEntry getSelectedRosterItem() {
         // Used by Auto-Load and non Auto-Load
-        if (is_auto_loading && getRosterItem() != null) {
+        if ((is_auto_loading || is_viewing) && getRosterItem() != null) {
             rosterEntrySelected = getRosterItem();
         } else {
             if (rosterSelector.getSelectedRosterEntries().length != 0) {
@@ -523,8 +527,11 @@ public class VSDConfigDialog extends JDialog {
             // This will trigger a PROFILE_LIST_CHANGE event from the VSDecoderManager.
             boolean is_loaded = LoadVSDFileAction.loadVSDFile(vsd_path);
 
-            if (is_loaded && vsd_launch_throttle != null && vsd_launch_throttle.equals("yes")) {
-                // Launch a JMRI Throttle (if setup by the Roster media attribut).
+            if (is_loaded &&
+                    vsd_launch_throttle != null &&
+                    vsd_launch_throttle.equals("yes") &&
+                    InstanceManager.throttleManagerInstance().getThrottleUsageCount(rosterEntry) == 0) {
+                // Launch a JMRI Throttle (if setup by the Roster media attribut and a throttle not already exists).
                 jmri.jmrit.throttle.ThrottleFrame tf = 
                         InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleFrame();
                 tf.toFront();

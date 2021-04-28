@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import jmri.Audio;
 import jmri.Block;
 import jmri.IdTag;
@@ -114,7 +112,6 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     private float xPosi;
     public static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
-    private int remove_index;
     boolean is_tunnel = false;
     boolean geofile_ok = false;
     int num_setups;
@@ -163,6 +160,10 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Provide the VSdecoderManager instance.
+     * @return the manager
+     */
     public static VSDecoderManager instance() {
         if (thread == null) {
             thread = VSDecoderManagerThread.instance(true);
@@ -170,18 +171,34 @@ public class VSDecoderManager implements PropertyChangeListener {
         return VSDecoderManagerThread.manager();
     }
 
+    /**
+     * Get a reference to the VSD Preferences.
+     * @return the preferences reference
+     */
     public VSDecoderPreferences getVSDecoderPreferences() {
         return vsdecoderPrefs;
     }
 
+    /**
+     * Get the master volume of all VSDecoders.
+     * @return the master volume
+     */
     public int getMasterVolume() {
         return getVSDecoderPreferences().getMasterVolume();
     }
 
+    /**
+     * Set the master volume for all VSDecoders.
+     * @param mv The new master volume
+     */
     public void setMasterVolume(int mv) {
         getVSDecoderPreferences().setMasterVolume(mv);
     }
 
+    /**
+     * Get the VSD GUI.
+     * @return the VSD frame
+     */
     public JmriJFrame provideManagerFrame() {
         if (managerFrame == null) {
             if (GraphicsEnvironment.isHeadless()) {
@@ -202,7 +219,11 @@ public class VSDecoderManager implements PropertyChangeListener {
                                     log.info(" VSD path: {}", entry.getAttribute("VSDecoder_Path"));
                                     config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
                                     log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
-                                    config.setVolume(Float.parseFloat(entry.getAttribute("VSDecoder_Volume")));
+                                    if (entry.getAttribute("VSDecoder_Volume") != null) {
+                                        config.setVolume(Float.parseFloat(entry.getAttribute("VSDecoder_Volume")));
+                                    } else {
+                                        config.setVolume(0.8f);
+                                    }
                                     VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
                                     if (newDecoder != null) {
                                         log.info("VSD {}, profile \"{}\" ready.", config.getLocoAddress(), config.getProfileName());
@@ -306,6 +327,12 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Get a VSDecoder by its Id.
+     *
+     * @param id The Id of the VSDecoder
+     * @return vsdecoder, or null on error.
+     */
     public VSDecoder getVSDecoderByID(String id) {
         VSDecoder v = decodertable.get(id);
         if (v == null) {
@@ -314,6 +341,12 @@ public class VSDecoderManager implements PropertyChangeListener {
         return decodertable.get(id);
     }
 
+    /**
+     * Get a VSDecoder by its address.
+     *
+     * @param sa The address of the VSDecoder
+     * @return vsdecoder, or null on error.
+     */
     public VSDecoder getVSDecoderByAddress(String sa) {
         if (sa == null) {
             log.debug("Decoder Address is Null");
@@ -349,6 +382,11 @@ public class VSDecoderManager implements PropertyChangeListener {
         return default_decoder;
     }
 
+    /**
+     * Get a list of all profiles.
+     *
+     * @return sl The profiles list.
+     */
     public ArrayList<String> getVSDProfileNames() {
         ArrayList<String> sl = new ArrayList<>();
         for (String p : profiletable.keySet()) {
@@ -357,14 +395,29 @@ public class VSDecoderManager implements PropertyChangeListener {
         return sl;
     }
 
+    /**
+     * Get a list of all VSDecoders.
+     *
+     * @return the VSDecoder list.
+     */
     public Collection<VSDecoder> getVSDecoderList() {
         return decodertable.values();
     }
 
+    /**
+     * Get the VSD listener system name.
+     *
+     * @return the system name.
+     */
     public String getDefaultListenerName() {
         return VSDListener.ListenerSysName;
     }
 
+    /**
+     * Get the VSD listener location.
+     *
+     * @return the location or null.
+     */
     public ListeningSpot getDefaultListenerLocation() {
         VSDListener l = listenerTable.get(getDefaultListenerName());
         if (l != null) {
@@ -543,52 +596,13 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    protected void shutdownDecoders() {
-        // Shut down and destroy all running VSDecoders.
-        Set<String> vk = decodertable.keySet();
-        Iterator<String> it = vk.iterator();
-        while (it.hasNext()) {
-            VSDecoder v = decodertable.get(it.next());
-
-            if (v.getEngineSound().isEngineStarted()) {
-                log.warn("Shutting down a running Engine ...");
-                v.getEngineSound().setEngineStarted(false);
-                snooze(300);
-            }
-
-            v.shutdown();
-
-            snooze(300); // wait for AbstractAudioSource$AudioSourceMoveThread
-            cleanupId(v.getId()); // cleanup sources and buffers of this vsdecoder
-
-            if (timertable.size() > 0) {
-                stopSoundPositionTimer(v);
-            }
-        }
-        // Empty tables, maps, arrays
-        timertable.clear();
-        decodertable.clear();
-        decoderAddressMap.clear();
-        decoderInBlock.clear();
-        // Zeros to whole array
-        for (int i = 0; i < locoInBlock.length; i++) {
-            for (int k = 0; k < locoInBlock[i].length; k++) {
-                locoInBlock[i][k] = 0;
-            }
-        }
-        locorow = -1;
-        vsdecoderID = 0;
-        profiletable.clear();
-        log.debug("shutdown decoders done");
-    }
-
     /**
      * Delete a VSDecoder
      * 
      * @param address The DCC address of the VSDecoder
      */
     public void deleteDecoder(String address) {
-        log.debug("delete Decoder called, VSDedoder DCC address: {}", address);
+        log.debug("delete Decoder called, VSDecoder DCC address: {}", address);
         if (this.getVSDecoderByAddress(address) == null) {
             log.warn("VSDecoder not found");
         } else {
@@ -612,34 +626,29 @@ public class VSDecoderManager implements PropertyChangeListener {
         d.sound_list.clear();
         d.event_list.clear();
 
-        snooze(300); // wait for AbstractAudioSource$AudioSourceMoveThread
-        cleanupId(d.getId()); // cleanup sources and buffers of this vsdecoder
-    }
-
-    private void cleanupId(String id) {
         jmri.AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
-
-        SortedSet<Audio> sources = new TreeSet<>(am.getNamedBeanSet(Audio.SOURCE));
-        for (Audio source: sources) {
-            if (source.getSystemName().contains(id)) {
-                source.dispose();
+        ArrayList<Audio> sources = new ArrayList<>(am.getNamedBeanSet(Audio.SOURCE));
+        ArrayList<Audio> buffers = new ArrayList<>(am.getNamedBeanSet(Audio.BUFFER));
+        // wait until audio threads are finished and then run audio cleanup via dispose()
+        jmri.util.ThreadingUtil.newThread(new Runnable() {
+            @Override
+            public void run() { 
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ex) {
+                }
+                for (Audio source: sources) {
+                    if (source.getSystemName().contains(d.getId())) {
+                        source.dispose();
+                    }
+                }
+                for (Audio buffer: buffers) {
+                    if (buffer.getSystemName().contains(d.getId())) {
+                        buffer.dispose();
+                    }
+                }
             }
-        }
-
-        SortedSet<Audio> buffers = new TreeSet<>(am.getNamedBeanSet(Audio.BUFFER));
-        for (Audio buffer : buffers) {
-            if (buffer.getSystemName().contains(id)) {
-                buffer.dispose();
-            }
-        }
-    }
-
-    // copied from jmri.jmrit.audio.AbstractAudioThread.java
-    protected static void snooze(long ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ex) {
-        }
+        }).start();
     }
 
     @Override
@@ -664,7 +673,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                 removeVSDecoder((String) evt.getOldValue());
             } else if (evt.getPropertyName().equals(VSDManagerFrame.CLOSE_WINDOW)) {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
-                shutdownDecoders();
                 if (managerFrame != null) {
                     managerFrame = null;
                 }
@@ -929,9 +937,15 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    public int getArrayIndex(int numb) {
+    /**
+     * Get index of a decoder.
+     * @param number The loco address number.
+     * @return the index of a decoder's loco address number
+     *         in the array or the length of the array.
+     */
+    public int getArrayIndex(int number) {
         for (int i = 0; i < locoInBlock.length; i++) {
-            if (locoInBlock[i][ADDRESS] == numb) {
+            if (locoInBlock[i][ADDRESS] == number) {
                 return i;   
             }
         }
@@ -951,7 +965,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     public void locoInBlockRemove(int numb) {
         // Works only for <locoInBlock.length> rows
         //  find index first
-        remove_index = 0;
+        int remove_index = 0;
         for (int i = 0; i < locoInBlock.length; i++) {
             if (locoInBlock[i][ADDRESS] == numb) { 
                 remove_index = i;
@@ -987,8 +1001,6 @@ public class VSDecoderManager implements PropertyChangeListener {
             if ((pname != null) && !(pname.isEmpty())) { // NOI18N
                 profiletable.put(pname, vf.getName());
                 new_entries.add(pname);
-            } else {
-                log.error("Profile name is not valid");
             }
         }
 

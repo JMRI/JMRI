@@ -79,6 +79,8 @@ public class VSDManagerFrame extends JmriJFrame {
     private VSDConfigDialog cd;
     private List<JMenu> menuList;
     private boolean is_auto_loading;
+    private boolean is_viewing;
+    private List<VSDecoder> vsdlist;
 
     /**
      * Constructor
@@ -87,6 +89,7 @@ public class VSDManagerFrame extends JmriJFrame {
         super(false, false);
         this.addPropertyChangeListener(VSDecoderManager.instance());
         is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile();
+        is_viewing = VSDecoderManager.instance().getVSDecoderList().isEmpty() ? false : true;
         initGUI();
     }
 
@@ -163,8 +166,26 @@ public class VSDManagerFrame extends JmriJFrame {
 
         log.debug("done...");
 
-        // Auto-Load
-        if (is_auto_loading) {
+        // first, check Viewing Mode
+        if (is_viewing) {
+            vsdlist = new ArrayList<>(); // List of VSDecoders with uncomplete configuration (no Roster Entry reference)
+            for (VSDecoder vsd : VSDecoderManager.instance().getVSDecoderList()) {
+                if (vsd.getRosterEntry() != null) {
+                    // VSDecoder configuration is complete and will be listed
+                    addButton.doClick(); // simulate an Add-button-click
+                    cd.setRosterItem(vsd.getRosterEntry()); // forward the roster entry
+                } else {
+                    vsdlist.add(vsd); // VSDecoder with uncomplete configuration
+                }
+            }
+            // delete VSDecoder(s) with uncomplete configuration
+            for (VSDecoder v : vsdlist) {
+                VSDecoderManager.instance().deleteDecoder(v.getAddress().toString());
+            }
+            // change back to Edit mode
+            is_viewing = false;
+        } else if (is_auto_loading) {
+            // Auto-Load
             log.info("Auto-Loading VSDecoder");
             String vsdRosterGroup = "VSD";
             String msg = "";
@@ -215,13 +236,14 @@ public class VSDManagerFrame extends JmriJFrame {
         log.debug("Add button pressed");
 
         // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
-        if (VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
+        // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
+        if (! is_viewing && VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
             JOptionPane.showMessageDialog(null, 
                     "VSDecoder cannot be created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
         } else {
             config = new VSDConfig(); // Create a new Config for the new VSDecoder.
             // Do something here.  Create a new VSDecoder and add it to the window.
-            cd = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config, is_auto_loading);
+            cd = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config, is_auto_loading, is_viewing);
             cd.addPropertyChangeListener(new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent event) {
@@ -240,13 +262,14 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
         // If this decoder already exists, don't create a new Control
-        if (VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
+        // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
+        if (! is_viewing && VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
         } else {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
-                log.warn("No New Decoder constructed! Address: {}, profile: {}, ", config.getLocoAddress(), config.getProfileName());
-                JOptionPane.showMessageDialog(null, "VSDecoder not created");
+                log.error("Lost context, VSDecoder is null. Quit JMRI and start over. No New Decoder constructed! Address: {}, profile: {}, ",
+                        config.getLocoAddress(), config.getProfileName());
                 return;
             }
             VSDControl newControl = new VSDControl(config);
