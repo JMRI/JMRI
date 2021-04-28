@@ -535,7 +535,8 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 				}
 			} else {	// Panels
 				var panels = $jmri.getObjectList('panels');
-				panels.forEach(function(item) {
+				panels.forEach(function(itemdata) {
+					var item = itemdata.data;
 					var panelCell = $('<div>');
 					panelCell.on('click', function(event) {openPanel(event, decodeURIComponent(item.name), item.URL);});	// 'decode' because it arrives encoded
 					panelCell.addClass('panelCell');
@@ -697,7 +698,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
 			var iframeAux = $('<div>').attr('id', 'iframeAux');
-			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
+			var panel = $('<iframe>').attr('src', '/panel/' + $paramPanelName).addClass('panel');
 			panel.load(function() {
 				var bodyFrameOuter = $('#bodyFrameOuter');
 				var bodyFrameInner = $('#bodyFrameInner');
