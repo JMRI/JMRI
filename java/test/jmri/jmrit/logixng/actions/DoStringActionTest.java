@@ -46,7 +46,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Read string E and set string A ::: Log error%n" +
+                "Read string E and set string A ::: Use default%n" +
                 "   ?s E%n" +
                 "      Socket not connected%n" +
                 "   !s A%n" +
@@ -59,7 +59,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A ::: Log error%n" +
+                "         Read string E and set string A ::: Use default%n" +
                 "            ?s E%n" +
                 "               Socket not connected%n" +
                 "            !s A%n" +

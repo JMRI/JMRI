@@ -44,11 +44,11 @@ public class LogixTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Logix ::: Log error%n" +
+                "Logix ::: Use default%n" +
                 "   ? E%n" +
-                "      Sensor '' is Active ::: Log error%n" +
+                "      Sensor '' is Active ::: Use default%n" +
                 "   !b A%n" +
-                "      On change ::: Log error%n" +
+                "      On change ::: Use default%n" +
                 "         ! A%n" +
                 "            Socket not connected%n");
     }
@@ -59,11 +59,11 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Logix ::: Log error%n" +
+                "         Logix ::: Use default%n" +
                 "            ? E%n" +
-                "               Sensor '' is Active ::: Log error%n" +
+                "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               On change ::: Log error%n" +
+                "               On change ::: Use default%n" +
                 "                  ! A%n" +
                 "                     Socket not connected%n");
     }
