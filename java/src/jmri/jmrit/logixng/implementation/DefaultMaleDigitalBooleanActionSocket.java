@@ -43,6 +43,8 @@ public class DefaultMaleDigitalBooleanActionSocket
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((DigitalBooleanActionBean)getObject()).execute(hasChangedToTrue, hasChangedToFalse);
+        } catch (JmriMultiLineException e) {
+            handleError(this, Bundle.getMessage("ExceptionMulti"), e.getErrors(), e, log);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {

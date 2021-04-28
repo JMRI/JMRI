@@ -13,6 +13,11 @@ public class JmriMultiLineException extends JmriException {
 
     private final List<String> errors;
 
+    public JmriMultiLineException(String s, List<String> errors) {
+        super(s);
+        this.errors = Collections.unmodifiableList(new ArrayList<>(errors));
+    }
+
     public JmriMultiLineException(String s, List<String> errors, Throwable t) {
         super(s, t);
         this.errors = Collections.unmodifiableList(new ArrayList<>(errors));
