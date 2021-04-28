@@ -50,7 +50,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Log error%n");
+        return String.format("Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Use default%n");
     }
     
     @Override
@@ -59,7 +59,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Log error%n");
+                "         Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Use default%n");
     }
     
     @Override
