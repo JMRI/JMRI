@@ -560,6 +560,6 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionBlock.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionWarrant.class);
 
 }
