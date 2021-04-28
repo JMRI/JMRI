@@ -97,7 +97,7 @@ public class LoadVSDFileAction extends AbstractAction {
         // Check whether the file exists
         File file = new File(fp);
         if (!file.exists()) {
-            log.error("Cannot locate VSD File");
+            log.error("Cannot locate VSD File {}", fp);
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(null, "Cannot locate VSD File",
                         Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
