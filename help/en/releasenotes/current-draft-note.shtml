@@ -581,6 +581,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Luca Dentella contributed the new <a href="http://jmri.org/jython/CmdMapper.py">CmdMapper script</a>.</li>
         </ul>
 
