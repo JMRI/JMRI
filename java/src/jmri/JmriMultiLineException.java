@@ -27,4 +27,16 @@ public class JmriMultiLineException extends JmriException {
         return errors;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getMessage() {
+        return super.getMessage() + ": " + String.join(", ", errors);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getLocalizedMessage() {
+        return super.getLocalizedMessage() + ": " + String.join(", ", errors);
+    }
+
 }
