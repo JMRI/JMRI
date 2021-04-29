@@ -551,7 +551,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 						o.attr('originalWidth', o.width());
 						resizeImage(o);
 					};
-					img.attr('src', '/frame/' + decodeURIComponent(item.name) + '.png');
+					img.attr('src', '/panel/' + decodeURIComponent(item.name) + '?format=png');
 				});
 			}
 			break;
