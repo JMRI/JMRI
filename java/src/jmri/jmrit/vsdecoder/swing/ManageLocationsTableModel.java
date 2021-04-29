@@ -1,7 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import java.util.HashMap;
-import java.util.Set;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.PhysicalLocation;

@@ -79,12 +79,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBY_RFID = 12;
     public final int SORTBY_RWE = 13; // return when empty
     public final int SORTBY_RWL = 14; // return when loaded
-    public final int SORTBY_FINALDESTINATION = 15;
-    public final int SORTBY_VALUE = 16;
-    public final int SORTBY_WAIT = 17;
-    public final int SORTBY_PICKUP = 18;
-    public final int SORTBY_LAST = 19;
-    public final int SORTBY_DIVISION = 20;
+    public final int SORTBY_DIVISION = 15;
+    public final int SORTBY_FINALDESTINATION = 16;
+    public final int SORTBY_VALUE = 17;
+    public final int SORTBY_WAIT = 18;
+    public final int SORTBY_PICKUP = 19;
+    public final int SORTBY_LAST = 20; // also used by PrintCarRosterAction
 
     private int _sort = SORTBY_NUMBER;
 
