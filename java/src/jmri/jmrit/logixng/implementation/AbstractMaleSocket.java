@@ -29,7 +29,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LogError;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.Default;
     private boolean _catchAbortExecution;
     private boolean _listen = true;     // By default, actions and expressions listen
 

@@ -54,9 +54,9 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1 ::: Log error%n" +
+                "Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1 ::: Use default%n" +
                 "   ! A1%n" +
-                "      MyAction ::: Log error%n");
+                "      MyAction ::: Use default%n");
     }
     
     @Override
@@ -65,9 +65,9 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1 ::: Log error%n" +
+                "         Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1 ::: Use default%n" +
                 "            ! A1%n" +
-                "               MyAction ::: Log error%n");
+                "               MyAction ::: Use default%n");
     }
     
     @Override

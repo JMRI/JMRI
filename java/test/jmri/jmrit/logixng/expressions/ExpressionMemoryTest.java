@@ -63,7 +63,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Memory IM1 is equal to \"\" ::: Log error%n");
+        return String.format("Memory IM1 is equal to \"\" ::: Use default%n");
     }
     
     @Override
@@ -72,11 +72,11 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Always execute ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Memory IM1 is equal to \"\" ::: Log error%n" +
+                "               Memory IM1 is equal to \"\" ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
