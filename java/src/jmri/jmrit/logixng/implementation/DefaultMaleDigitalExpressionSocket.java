@@ -72,7 +72,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             lastEvaluationResult = ((DigitalExpressionBean)getObject()).evaluate();
         } catch (JmriMultiLineException e) {
-            handleError(this, Bundle.getMessage("ExceptionMulti"), e.getErrors(), e, log);
+            handleError(this, Bundle.getMessage("ExceptionEvaluateMulti"), e.getErrors(), e, log);
             lastEvaluationResult = false;
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e.getLocalizedMessage()), e, log);

@@ -49,7 +49,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((StringActionBean)getObject()).setValue(value);
         } catch (JmriMultiLineException e) {
-            handleError(this, Bundle.getMessage("ExceptionMulti"), e.getErrors(), e, log);
+            handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {
