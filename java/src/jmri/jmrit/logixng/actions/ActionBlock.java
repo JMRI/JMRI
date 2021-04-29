@@ -374,7 +374,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
             // Variables used in lambda must be effectively final
             DirectOperation theOper = oper;
 
-            ThreadingUtil.runOnLayout(() -> {
+            ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 Sensor sensor;
                 LayoutBlock lblk;
 

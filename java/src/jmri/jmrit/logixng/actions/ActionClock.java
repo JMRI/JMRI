@@ -83,7 +83,7 @@ public class ActionClock extends AbstractDigitalAction {
     @Override
     public void execute() throws JmriException {
         ClockState theState = _clockState;
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch(theState) {
                 case SetClock:
                     Calendar cal = Calendar.getInstance();

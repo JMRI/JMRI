@@ -276,7 +276,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         
         bindings.put("params", params);    // Give the script access to the local variable 'params'
         
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (operation) {
                 case RunScript:
                     try (InputStreamReader reader = new InputStreamReader(

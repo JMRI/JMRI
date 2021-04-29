@@ -320,7 +320,7 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
         // Variables used in lambda must be effectively final
         Operation theOper = oper;
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (theOper) {
                 case SetNXPairEnabled:
                     entryExit.setEnabled(true);
