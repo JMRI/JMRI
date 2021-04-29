@@ -2879,6 +2879,7 @@ public class TrainTest extends OperationsTestCase {
 
         // confirm that c1 isn't part of this train
         Assert.assertNull("c1 isn't assigned to a train", c1.getTrain());
+     // code currently eliminates the car's destination TODO is this correct?
         Assert.assertNull("c1 destination has been set to null", c1.getDestination());
         Assert.assertNull("c1 next destination should be null", c1.getFinalDestination());
         Assert.assertNull("c1 next destination track should be null", c1.getFinalDestinationTrack());

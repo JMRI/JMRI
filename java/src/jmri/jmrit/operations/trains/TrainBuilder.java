@@ -3738,9 +3738,15 @@ public class TrainBuilder extends TrainCommon {
             return false;
         }
         car.updateKernel(); // car part of kernel?
-        if (car.getDestinationTrack() != track && track.getSchedule() != null) {
-            car.setScheduleItemId(track.getCurrentScheduleItem().getId());
-            track.bumpSchedule();
+        if (car.getDestinationTrack() != track) {
+            // car is being routed to this track
+            if (track.getSchedule() != null) {
+                car.setScheduleItemId(track.getCurrentScheduleItem().getId());
+                track.bumpSchedule();
+            } else {
+                // bump the track move count
+                track.setMoves(track.getMoves() + 1);
+            }
         }
         return true; // done, car has a new destination
     }
@@ -4355,7 +4361,7 @@ public class TrainBuilder extends TrainCommon {
             rld = _routeList.get(k);
             // if car can be picked up later at same location, skip
             if (checkForLaterPickUp(rl, rld, car)) {
-                break;
+                return true; // done
             }
             if (!rld.getName().equals(car.getDestinationName())) {
                 continue;
@@ -4465,6 +4471,8 @@ public class TrainBuilder extends TrainCommon {
                 new Object[] { car.getDestinationName(), rl.getName(), rl.getId() }));
         // remove destination and revert to final destination
         if (car.getDestinationTrack() != null) {
+            // going to remove this destination from car
+            car.getDestinationTrack().setMoves(car.getDestinationTrack().getMoves() - 1);
             Track destTrack = car.getDestinationTrack();
             // TODO should we leave the car's destination? The spur expects this car!
             if (destTrack.getSchedule() != null && destTrack.getScheduleMode() == Track.SEQUENTIAL) {
