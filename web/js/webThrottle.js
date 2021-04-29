@@ -735,7 +735,7 @@ var defineTurnoutsRoutes = function(listTurnoutsRoutes) {
 		bodyFrameInner.append(trCell);
 		trCell.append($('<div>').text(item.data.name + ((item.data.userName) ? ' - ' + item.data.userName : '')).addClass('trName'));
 		trCell.append($('<div>').text('').addClass('trStatus').attr('id',encodeId(item.data.name)).attr('state', -1).on('click', function(event) {trChangeStatus(event, item.type, item.data.name);}));
-		$jmri.getJMRI(item.type == 'turnout' ? 'turnout' : 'route', item.data.name);
+		$jmri.getJMRI(item.type == 'turnouts' ? 'turnout' : 'route', item.data.name);
 	});
 };
 
@@ -1716,16 +1716,16 @@ var trChangeStatus = function(e, type, name) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	var lastState = Number($('#' + encodeId(name)).attr('state'));
-	if (type == 'turnout') {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
+	if (type == 'turnouts') {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
 		switch (lastState) {
 			case $jmri.turnoutTHROWN:
-				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED});
+				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED}, "post");
 				break;
 			case $jmri.turnoutCLOSED:
-				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutTHROWN});
+				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutTHROWN}, "post");
 				break;
 			default:
-				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED});
+				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED}, "post");
 				break;
 		}
 	} else {	// 0(unknown) 2(Active) 4(Inactive) 8(inconsistent) - Can only activate
