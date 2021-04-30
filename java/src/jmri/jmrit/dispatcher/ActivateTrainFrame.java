@@ -81,7 +81,7 @@ public class ActivateTrainFrame {
     //private String selectedTrain = "";
     private JmriJFrame initiateFrame = null;
     private JPanel initiatePane = null;
-    private final jmri.swing.NamedBeanComboBox<Transit> transitSelectBox = new jmri.swing.NamedBeanComboBox(_TransitManager);
+    private final jmri.swing.NamedBeanComboBox<Transit> transitSelectBox = new jmri.swing.NamedBeanComboBox<>(_TransitManager);
     private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
     private final JComboBox<String> trainSelectBox = new JComboBox<>();
     private final List<RosterEntry> trainBoxList = new ArrayList<>();
