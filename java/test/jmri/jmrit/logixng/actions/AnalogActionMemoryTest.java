@@ -43,7 +43,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory IM1 ::: Log error%n");
+        return String.format("Set memory IM1 ::: Use default%n");
     }
     
     @Override
@@ -52,11 +52,11 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
                 "            !~ A%n" +
-                "               Set memory IM1 ::: Log error%n");
+                "               Set memory IM1 ::: Use default%n");
     }
     
     @Override

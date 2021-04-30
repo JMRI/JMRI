@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -33,7 +33,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
 
         Track track = loc.getTrackByName("NI Yard", null);
 
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         tf.initComponents(loc, track);
         Assert.assertNotNull("exists", tf);
 
@@ -55,7 +55,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
 
         Track track = loc.getTrackByName("NI Yard", null);
 
-        TrackEditFrame tef = new TrackEditFrame();
+        TrackEditFrame tef = new TrackEditFrame("test");
         tef.initComponents(loc, track);
         Assert.assertNotNull("exists", tef);
         

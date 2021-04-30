@@ -70,7 +70,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Constructor
      */
     public AddressPanel() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }  
         initGUI();
+        applyPreferences();
     }
 
     public void destroy() { // Handle disposing of the throttle
@@ -704,5 +709,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }        
     }
     
+    void applyPreferences() {
+        // nothing to do, for now
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(AddressPanel.class);
+
 }
+

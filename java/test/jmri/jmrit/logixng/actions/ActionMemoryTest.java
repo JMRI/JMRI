@@ -52,7 +52,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory IM1 to \"\" ::: Log error%n");
+        return String.format("Set memory IM1 to \"\" ::: Use default%n");
     }
     
     @Override
@@ -61,7 +61,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set memory IM1 to \"\" ::: Log error%n");
+                "         Set memory IM1 to \"\" ::: Use default%n");
     }
     
     @Override

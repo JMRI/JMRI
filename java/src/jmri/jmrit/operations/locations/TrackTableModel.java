@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableColumnModelEvent;
@@ -33,7 +32,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
  */
-public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener, TableColumnModelListener {
+public abstract class TrackTableModel extends AbstractTableModel implements PropertyChangeListener, TableColumnModelListener {
 
     protected Location _location;
     protected List<Track> _tracksList = new ArrayList<>();
@@ -425,19 +424,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     TrackEditFrame tef = null;
 
-    protected void editTrack(int row) {
-        log.debug("Edit tracks");
-        if (tef != null) {
-            tef.dispose();
-        }
-        // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(() -> {
-            tef = new TrackEditFrame();
-            Track track = _tracksList.get(row);
-            tef.initComponents(_location, track);
-            tef.setTitle(Bundle.getMessage("EditTrack"));
-        });
-    }
+    abstract protected void editTrack(int row);
 
     private void setMoves(int row, Object value) {
         Track track = _tracksList.get(row);

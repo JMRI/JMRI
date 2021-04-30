@@ -32,7 +32,7 @@ public class StagingEditFrame extends TrackEditFrame {
     JPanel panelLoad = panelOpt4;
 
     public StagingEditFrame() {
-        super();
+        super(Bundle.getMessage("AddStaging"));
     }
 
     @Override

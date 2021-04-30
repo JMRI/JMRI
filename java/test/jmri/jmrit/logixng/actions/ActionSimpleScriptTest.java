@@ -51,7 +51,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Log error%n");
+                "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n");
     }
     
     @Override
@@ -60,11 +60,11 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Always execute ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Sensor IS1 is Active ::: Log error%n" +
+                "               Sensor IS1 is Active ::: Use default%n" +
                 "            ! Then%n" +
-                "               Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Log error%n" +
+                "               Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

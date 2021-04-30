@@ -25,15 +25,15 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     private ThrottlesPreferencesWindowKeyboardControls tpwkc;
     
     ThrottleWindowInputsListener(ThrottleWindow tw) {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         this.tw = tw;
         resetTpwkc();
     }
     
     private void resetTpwkc() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         tpwkc = InstanceManager.getDefault(ThrottlesPreferences.class).getThrottlesKeyboardControls();        
     }
     

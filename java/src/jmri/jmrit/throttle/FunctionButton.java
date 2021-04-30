@@ -48,6 +48,7 @@ public class FunctionButton extends JToggleButton {
     private FunctionButtonPropertyEditor editor ;
     private String iconPath;
     private String selectedIconPath;
+    private String dropFolder;    
     private ToggleOrPressButtonModel _model;
     private Throttle _throttle;
     private int img_size = DEFAULT_IMG_SIZE;
@@ -348,6 +349,15 @@ public class FunctionButton extends JToggleButton {
     public void removeFunctionListener(FunctionListener l) {
         listeners.remove(l);
     }
+    
+    /**
+     * Set the folder where droped images in function button property panel will be stored
+     * 
+     * @param df the folder path
+     */
+    void setDropFolder(String df) {
+        dropFolder = df;        
+    }
 
     /**
      * A PopupListener to handle mouse clicks and releases.
@@ -400,6 +410,7 @@ public class FunctionButton extends JToggleButton {
                 editor.resetProperties();
                 editor.setLocation(MouseInfo.getPointerInfo().getLocation());
                 editor.setVisible(true);
+                editor.setDropFolder(dropFolder);                
             });
             popupMenu = new JPopupMenu();
             popupMenu.add(propertiesItem);
