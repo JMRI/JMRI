@@ -140,6 +140,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
+            
+            addFrame.setEscapeKeyClosesWindow(true);
+            addFrame.getRootPane().setDefaultButton(addButton);
+            
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N
@@ -194,7 +198,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
-        String errorMessage;
         for (int x = 0; x < numberOfSensors; x++) {
             log.debug("b4 next valid addr for prefix {} conn choice mgr {}",sensorPrefix,connectionChoice);
             try {
@@ -214,11 +217,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 s = InstanceManager.getDefault(SensorManager.class).provideSensor(sName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(sName);
-                // Show error message in statusBarLabel
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.gray);
+                handleCreateException(ex, sName);
                 return;   // return without creating
             }
 
@@ -287,11 +286,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String hwAddress) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorSensorAddFailed", hwAddress) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String hwAddress) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(SensorManager.class).getBeanTypeHandled(),hwAddress);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {

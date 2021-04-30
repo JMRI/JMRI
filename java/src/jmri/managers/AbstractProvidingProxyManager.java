@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 
 /**
@@ -33,6 +35,7 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
      * @return an existing or new NamedBean
      * @throws IllegalArgumentException if name is not usable in a bean
      */
+    @Nonnull
     protected E provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
         initInternal();
@@ -51,7 +54,11 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
     }
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return an instance with the specified user or system name. 
+     * <p>
+     * Lookup by UserName, then provide by System Name.
+     * <p>
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * i.e. only one Sensor object representing a given physical sensor and
      * therefore only one with a specific system or user name.
@@ -62,25 +69,30 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
      * <li>If a null reference is given for user name, no user name will be
      * associated with the NamedBean object created; a valid system name must be
      * provided
-     * <li>If a null reference is given for the system name, a system name will
-     * _somehow_ be inferred from the user name. How this is done is system
-     * specific. Note: a future extension of this interface will add an
-     * exception to signal that this was not possible.
      * <li>If both names are provided, the system name defines the hardware
      * access of the desired turnout, and the user address is associated with
      * it.
+     * <li>If a matching UserName is located, that will be returned.
+     * <li>Else If a matching SystemName is located, that will be returned.
+     * <li>Else A New Bean will be created with the given System Name.
+     * The UserName will be added to the New Bean if no existing.
      * </ul>
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with
      * different objects. This is a problem, and we don't have a good solution
      * except to issue warnings. This will mostly happen if you're creating
      * NamedBean when you should be looking them up.
+     * <p>
+     * If the System Name contains the start of a specified Manager, that will be used,
+     * else the default manager will be used.
+     * @see #getManager(java.lang.String)
      *
      * @param systemName the system name
      * @param userName   the user name
      * @return requested NamedBean object (never null)
      */
-    public E newNamedBean(String systemName, String userName) {
+    @Nonnull
+    public E newNamedBean(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // make sure internal present
         initInternal();
 
@@ -101,9 +113,11 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
      * @param manager    the manager to invoke
      * @param systemName the system name
      * @param userName   the user name
+     * @throws IllegalArgumentException if unable to make.
      * @return a bean
      */
-    abstract protected E makeBean(Manager<E> manager, String systemName, String userName);
+    @Nonnull
+    abstract protected E makeBean(Manager<E> manager,@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingProxyManager.class);

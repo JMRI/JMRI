@@ -468,6 +468,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             mainSignalComboBox.setAllowNull(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
+            addFrame.setEscapeKeyClosesWindow(true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             Container contentPane = addFrame.getContentPane();
@@ -1101,6 +1102,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("EditSignalGroup"));
+        addFrame.setEscapeKeyClosesWindow(true);
         inEditMode = true; // to block opening another edit session
     }
 

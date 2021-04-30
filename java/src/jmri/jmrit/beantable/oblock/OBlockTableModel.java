@@ -12,6 +12,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.RowComboBoxPanel;
+import jmri.jmrit.beantable.block.BlockCurvatureJComboBox;
 import jmri.jmrit.logix.*;
 import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
@@ -56,12 +57,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static public final int CURVECOL = 15;
     static public final int NUMCOLS = 16;
 
-    static public final String noneText = Bundle.getMessage("BlockNone");
-    static public final String gradualText = Bundle.getMessage("BlockGradual");
-    static public final String tightText = Bundle.getMessage("BlockTight");
-    static public final String severeText = Bundle.getMessage("BlockSevere");
-    static public final String[] curveOptions = {noneText, gradualText, tightText, severeText};
-
     static String ZEROS = "000000000";      // 9 bits contain the OBlock state info
 
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
@@ -102,7 +97,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         }
         tempRow[LENGTHCOL] = twoDigit.format(0.0);
         tempRow[UNITSCOL] = Bundle.getMessage("in");
-        tempRow[CURVECOL] = noneText;
+        tempRow[CURVECOL] = BlockCurvatureJComboBox.getStringFromCurvature(Block.NONE);
         tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
         tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
         tempRow[SPEEDCOL] = "";
@@ -300,17 +295,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return tempRow[UNITSCOL].equals(Bundle.getMessage("cm"));
             case CURVECOL:
                 if (b != null) {
-                    String c = "";
-                    if (b.getCurvature() == Block.NONE) {
-                        c = noneText;
-                    } else if (b.getCurvature() == Block.GRADUAL) {
-                        c = gradualText;
-                    } else if (b.getCurvature() == Block.TIGHT) {
-                        c = tightText;
-                    } else if (b.getCurvature() == Block.SEVERE) {
-                        c = severeText;
-                    }
-                    return c;
+                    return BlockCurvatureJComboBox.getStringFromCurvature(b.getCurvature());
                 }
                 return tempRow[col];
             case ERR_SENSORCOL:
@@ -421,15 +406,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         block.setLength(len * 25.4f);
                         block.setMetricUnits(false);
                     }
-                    if (tempRow[CURVECOL].equals(noneText)) {
-                        block.setCurvature(Block.NONE);
-                    } else if (tempRow[CURVECOL].equals(gradualText)) {
-                        block.setCurvature(Block.GRADUAL);
-                    } else if (tempRow[CURVECOL].equals(tightText)) {
-                        block.setCurvature(Block.TIGHT);
-                    } else if (tempRow[CURVECOL].equals(severeText)) {
-                        block.setCurvature(Block.SEVERE);
-                    }
+                    block.setCurvature(BlockCurvatureJComboBox.getCurvatureFromString(tempRow[CURVECOL]));
                     block.setPermissiveWorking(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
                     block.setBlockSpeedName(tempRow[SPEEDCOL]);
                     
@@ -562,15 +539,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 if (cName == null) {
                     return;
                 }
-                if (cName.equals(noneText)) {
-                    block.setCurvature(Block.NONE);
-                } else if (cName.equals(gradualText)) {
-                    block.setCurvature(Block.GRADUAL);
-                } else if (cName.equals(tightText)) {
-                    block.setCurvature(Block.TIGHT);
-                } else if (cName.equals(severeText)) {
-                    block.setCurvature(Block.SEVERE);
-                }
+                block.setCurvature(BlockCurvatureJComboBox.getCurvatureFromString(cName));
                 fireTableRowsUpdated(row, row);
                 return;
             case ERR_SENSORCOL:
@@ -765,9 +734,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case UNITSCOL:
                 return new JTextField(4).getPreferredSize().width;
             case EDIT_COL:
-                return new JButton("EDIT").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonEditPath")).getPreferredSize().width+4;
             case DELETE_COL:
-                return new JButton("DELETE").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonDelete")).getPreferredSize().width+4;
             default:
                 // fall through
                 break;
@@ -827,14 +796,13 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
      * CellEditor. When not yet present, create, store and return a new one.
      *
      * @param row Index number (in TableDataModel)
-     * @return A combobox containing the valid aspect names for this mast
+     * @return A JCombobox containing the valid curvature names.
      */
     static JComboBox<String> getCurveEditorBox(int row) {
         // create dummy comboBox, override in extended classes for each bean
-        JComboBox<String> editCombo = new JComboBox<>(curveOptions);
-        editCombo.putClientProperty("JComponent.sizeVariant", "small");
-        editCombo.putClientProperty("JComboBox.buttonType", "square");
-        return editCombo;
+        BlockCurvatureJComboBox j = new BlockCurvatureJComboBox();
+        j.setJTableCellClientProperties();
+        return j;
     }
 
     /**

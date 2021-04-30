@@ -33,11 +33,6 @@ public class LightEditAction extends BeanEditAction<Light> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameLight");
-    }
-
-    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.LightAddEdit";
     } // NOI18N
@@ -132,7 +127,7 @@ public class LightEditAction extends BeanEditAction<Light> {
         if (lm instanceof ProxyManager){
             ProxyManager<Light> plm = (ProxyManager<Light>)lm;
             for (Manager<Light> m : plm.getManagerList()) {
-                if (bean.getSystemName().startsWith(m.getSystemNamePrefix())) {
+                if (m.getBySystemName(bean.getSystemName())!=null) {
                     return m.getMemo().getUserName();
                 }
             }

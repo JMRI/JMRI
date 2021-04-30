@@ -840,6 +840,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
         _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
+        
+        _addFrame.setEscapeKeyClosesWindow(true);
+        _addFrame.getRootPane().setDefaultButton(createButton);
     }
 
     /**

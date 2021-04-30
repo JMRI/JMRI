@@ -106,8 +106,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                     DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf('<') + 1,
                             inString.lastIndexOf('>')));
                     if (!msg.isValidMessageFormat()) {
-                        log.warn("Invalid Message Format {}", msg);
-                        continue;
+                        log.warn("Unknown Message Format '{}', forwarding anyway", msg);
+//                        continue;
                     }
 
                     memo.getDCCppTrafficController().sendDCCppMessage(msg, null);

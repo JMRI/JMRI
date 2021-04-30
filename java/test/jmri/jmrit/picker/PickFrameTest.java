@@ -29,13 +29,14 @@ public class PickFrameTest extends JmriJFrameTestBase {
 
         // Add an invalid name
         JTextFieldOperator jto = new JTextFieldOperator(jfo, 0);
-        jto.enterText("AAA");
+        jto.typeText("AAA");
         Thread add1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "add1 finished");  // NOI18N
 
         // Add a valid name
-        jto.enterText("IS123");
+        jto.clearText();
+        jto.typeText("IS123");
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
 
         // Switch to the signal mast table

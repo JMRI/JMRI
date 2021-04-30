@@ -1,14 +1,7 @@
 package jmri.jmrit.throttle;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
@@ -32,7 +25,6 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.iharder.dnd.URIDrop.Listener;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -67,12 +59,10 @@ public class ThrottleWindow extends JmriJFrame {
     private String titleTextType = "rosterID";
     private boolean isEditMode = true;
 
-
     private final PowerManager powerMgr;
+    private SmallPowerManagerButton smallPowerMgmtButton;
 
-    private final ThrottlePanelCyclingKeyListener throttlePanelsCyclingKeyListener;
-    private static final int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
-    private static final int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
+    private final ThrottleWindowInputsListener myInputsListener;
 
     private HashMap<String, ThrottleFrame> throttleFrames = new HashMap<>(5);
     private int cardCounterID = 0; // to generate unique names for each card
@@ -85,12 +75,17 @@ public class ThrottleWindow extends JmriJFrame {
      */
     public ThrottleWindow() {
         super();
-        throttlePanelsCyclingKeyListener = new ThrottlePanelCyclingKeyListener();
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }  
+        myInputsListener = new ThrottleWindowInputsListener(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         }
         initGUI();
+        applyPreferences();
     }
 
     private void initGUI() {
@@ -99,13 +94,8 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
-        if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
-                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
-            initializeToolbar();
-        }
-        /*        if ( (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() )
-         && ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isResizingWindow()))
-         setResizable(false);*/
+        
+        initializeToolbar();
         initializeMenu();
 
         setCurrentThrottleFrame(new ThrottleFrame(this));
@@ -113,8 +103,9 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesPanel.add(getCurrentThrottleFrame(), "default");
         throttleFrames.put("default", getCurrentThrottleFrame());
         add(throttlesPanel, BorderLayout.CENTER);
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurrentThrottleFrame());
-
+        
+        installInputsListenerOnAllComponents(throttlesPanel);
+        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -131,6 +122,19 @@ public class ThrottleWindow extends JmriJFrame {
                     }
                 }
             }
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                super.windowGainedFocus(e);
+                ThrottleWindow me = (ThrottleWindow) e.getSource();
+                me.getCurrentThrottleFrame().requestFocusInWindow();
+            }
+            @Override
+            public void windowActivated(WindowEvent e) {
+                super.windowActivated(e);
+                ThrottleWindow me = (ThrottleWindow) e.getSource();
+                me.getCurrentThrottleFrame().requestFocusInWindow();
+            }            
+            
         });
         updateGUI();
     }
@@ -168,6 +172,7 @@ public class ThrottleWindow extends JmriJFrame {
                 jbNextRunning.setEnabled(false);
             }
         }
+        throttlesPanel.requestFocusInWindow();
     }
 
     private void initializeToolbar() {
@@ -231,7 +236,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(new StopAllButton());
 
         if (powerMgr != null) {
-            throttleToolBar.add(new LargePowerManagerButton());
+            throttleToolBar.add(new LargePowerManagerButton(false));
         }
 
         throttleToolBar.addSeparator();
@@ -269,9 +274,9 @@ public class ThrottleWindow extends JmriJFrame {
             return;
         isEditMode = mode;
         if (!throttleFrames.isEmpty()) {
-            for (ThrottleFrame throttleFrame : throttleFrames.values()) {
+            throttleFrames.values().forEach((throttleFrame) -> {
                 throttleFrame.setEditMode(isEditMode);
-            }
+            });
         }
         updateGUI();
     }
@@ -441,10 +446,8 @@ public class ThrottleWindow extends JmriJFrame {
 
             this.getJMenuBar().add(powerMenu);
 
-            if ((!InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
-                    || (!InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
-                this.getJMenuBar().add(new SmallPowerManagerButton());
-            }
+            smallPowerMgmtButton = new SmallPowerManagerButton();
+            this.getJMenuBar().add(smallPowerMgmtButton);
         }
 
         // add help selection
@@ -467,9 +470,9 @@ public class ThrottleWindow extends JmriJFrame {
     @Override
     public void dispose() {
         if ((throttleFrames != null) && (!throttleFrames.isEmpty())) {
-            for (ThrottleFrame throttleFrame : throttleFrames.values()) {
+            throttleFrames.values().forEach((throttleFrame) -> {
                 throttleFrame.dispose();
-            }
+            });
         }
         throttleFrames = null;
         throttlesPanel.removeAll();
@@ -495,7 +498,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public ThrottleFrame getCurrentThrottleFrame() {
         return currentThrottleFrame;
-    }
+    }    
 
     public void setCurrentThrottleFrame(ThrottleFrame tf) {
         if (getCurrentThrottleFrame() != null) {
@@ -593,7 +596,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public ThrottleFrame addThrottleFrame() {
         setCurrentThrottleFrame(new ThrottleFrame(this));
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurrentThrottleFrame());
+        installInputsListenerOnAllComponents(getCurrentThrottleFrame());
         addThrottleFrame(getCurrentThrottleFrame());
         return getCurrentThrottleFrame();
     }
@@ -632,7 +635,7 @@ public class ThrottleWindow extends JmriJFrame {
         if (!throttleFrames.isEmpty()) {
             ThrottleFrame cf = this.getCurrentThrottleFrame();
             for (ThrottleFrame tf : throttleFrames.values()) {
-                if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()) && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSavingThrottleOnLayoutSave())) {
+                if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle()) && (InstanceManager.getDefault(ThrottlesPreferences.class).isSavingThrottleOnLayoutSave())) {
                     tf.toFront();
                     tf.saveThrottle();
                 }
@@ -711,39 +714,15 @@ public class ThrottleWindow extends JmriJFrame {
 
         List<Element> jinsts = e.getChildren("Jynstrument");
         if ((jinsts != null) && (jinsts.size() > 0)) {
-            for (Element jinst : jinsts) {
+            jinsts.forEach((jinst) -> {
                 Jynstrument jyn = ynstrument(FileUtil.getExternalFilename(jinst.getAttributeValue("JynstrumentFolder")));
                 if (jyn != null) {
                     jyn.setXml(jinst);
                 }
-            }
+            });
         }
 
         updateGUI();
-    }
-
-    /**
-     * A KeyAdapter that listens for the key that cycles through the
-     * ThrottlePanels.
-     */
-    class ThrottlePanelCyclingKeyListener extends KeyAdapter {
-
-        /**
-         * Description of the Method
-         *
-         * @param e Description of the Parameter
-         */
-        @Override
-        public void keyReleased(KeyEvent e) {
-            log.trace("TW {}", e);
-            if (e.isAltDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
-                log.debug("next");
-                nextThrottleFrame();
-            } else if (e.isAltDown() && e.getKeyCode() == PREV_THROTTLE_KEY) {
-                log.debug("previous");
-                previousThrottleFrame();
-            }
-        }
     }
 
     @Override
@@ -754,6 +733,33 @@ public class ThrottleWindow extends JmriJFrame {
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+    
+    private void installInputsListenerOnAllComponents(Container c) {
+        c.addKeyListener(myInputsListener);
+        c.addMouseWheelListener(myInputsListener);        
+        for (Component component : c.getComponents()) {
+            if (component instanceof Container) {
+                installInputsListenerOnAllComponents( (Container) component);
+            } else {
+                component.addKeyListener(myInputsListener);
+                component.addMouseWheelListener(myInputsListener);                
+            }
+        }
+    }    
+    
+    public void applyPreferences() {
+        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+                
+        throttleToolBar.setVisible ( preferences.isUsingExThrottle() && preferences.isUsingToolBar() );
+        
+        if (smallPowerMgmtButton != null) {
+            smallPowerMgmtButton.setVisible( (!preferences.isUsingExThrottle()) || (!preferences.isUsingToolBar()) );
+        }
+
+        throttleFrames.values().forEach(tf -> {
+            tf.applyPreferences();
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class);

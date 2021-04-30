@@ -691,8 +691,14 @@
 </li>
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
+<a href="html/apps/OperationsPro/index.shtml">OperationsPro </a>
 <ul>
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro Information </a>
+<ul></ul>
+</li>
+
    
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
@@ -980,6 +986,12 @@
   
 <li>
 <a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/RailComTable.shtml">RailCom Table </a>
 <ul></ul>
 </li>
 
@@ -1610,6 +1622,12 @@
   
 </ul>
 </li>
+  
+<li>
+<a href="package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling </a>
+<ul></ul>
+</li>
+
   
 <li>
 <a href="html/tools/speedometer/index.shtml">Speedometer </a>
@@ -2289,6 +2307,12 @@
 <ul></ul>
 </li>
 
+   
+<li>
+<a href="package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send OpenLCB Frame </a>
+<ul></ul>
+</li>
+
   
 </ul>
 </li>
@@ -2298,7 +2322,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/powerline/packetgen/PowerlinePacketGenFrame.shtml">Send Packet </a>
+<a href="package/jmri/jmrix/powerline/packetgen/PowerlinePacketGenPane.shtml">Send Packet </a>
 <ul></ul>
 </li>
 

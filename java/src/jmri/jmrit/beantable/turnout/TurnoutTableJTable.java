@@ -1,7 +1,10 @@
 package jmri.jmrit.beantable.turnout;
 
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import java.util.EventObject;
 import java.util.Hashtable;
 
 import javax.annotation.Nonnull;
@@ -15,8 +18,8 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 
-
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.JComboBoxUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +55,23 @@ public class TurnoutTableJTable extends JTable {
         int realRowIndex = convertRowIndexToModel(rowIndex);
         int realColumnIndex = convertColumnIndexToModel(colIndex);
         return model.getCellToolTip(this, realRowIndex, realColumnIndex);
+    }
+    
+    /**
+     * Disable Windows Key or Mac Meta Keys being pressed acting
+     * as a trigger for editing the focused cell.
+     * Causes unexpected behaviour, i.e. button presses.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean editCellAt(int row, int column, EventObject e) {
+        if (e instanceof KeyEvent) {
+            if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS
+                || ( (KeyEvent) e).getKeyCode() == KeyEvent.VK_META ) {
+                return false;
+            }
+        }
+        return super.editCellAt(row, column, e);
     }
 
     @Override
@@ -134,6 +154,7 @@ public class TurnoutTableJTable extends JTable {
             Turnout t, Sensor s) {
         NamedBeanComboBox<Sensor> c = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), s, NamedBean.DisplayOptions.DISPLAYNAME);
         c.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(c);
 
         BeanBoxRenderer renderer = new BeanBoxRenderer();
         renderer.setSelectedItem(s);

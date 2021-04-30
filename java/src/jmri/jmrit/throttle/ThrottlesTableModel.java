@@ -8,6 +8,14 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
 
+/**
+ * A TableModel to display active Throttles in a summary table
+ * (see ThrottlesListPanel)
+ * 
+ * @author Lionel Jeanson - 2011
+ * 
+ */
+
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
 
     private final ArrayList<ThrottleFrame> throttleFrames = new ArrayList<ThrottleFrame>(5);

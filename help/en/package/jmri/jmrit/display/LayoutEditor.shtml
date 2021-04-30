@@ -792,8 +792,12 @@
             block names are <strong>AUTOBLK:n</strong> where n is a number.</li>
 
             <li><strong>Hide Track Construction Lines</strong> - Some track
-            objects create construction lines.  This mainly applieds to curved
-            track.  If this option is enabled, then those lines are not displayed,</li>
+            objects create construction lines.  This mainly applies to curved
+            track.  If this option is enabled, then those lines are not displayed. Note: 
+            This state remains in effect ONLY during the current PanelPro session and WILL NOT
+            be stored to the PanelPro file if the panel file is stored.  To store the state of the 
+            given track segment in the PanelPro file, right click on the given track segment, select
+            hide construction lines from the resulting pop up menu, and store the panel.</li>
 
           </ul>
         </li>

@@ -39,6 +39,16 @@ public class StagingTableModel extends TrackTableModel {
             tef.setTitle(Bundle.getMessage("EditStaging"));
         });
     }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("StagingName");
+            default:
+                return super.getColumnName(col);
+        }
+    }
 
     // this table listens for changes to a location and it's staging tracks
     @Override

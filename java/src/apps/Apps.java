@@ -16,6 +16,8 @@ import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
+import jmri.jmrit.logixng.LogixNGPreferences;
+
 import jmri.*;
 
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -355,6 +357,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // do final activation
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        
+        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
+                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+        logixNG_Manager.setupAllLogixNGs();
+        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+            logixNG_Manager.activateAllLogixNGs();
+        }
 
         log.debug("End constructor");
     }

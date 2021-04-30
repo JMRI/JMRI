@@ -2,6 +2,7 @@ package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * Find signal head references.
@@ -19,7 +20,7 @@ public class SignalHeadWhereUsed {
     static public JTextArea getWhereUsed(NamedBean signalHead) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead"));  // NOI18N
-        textArea.append(Bundle.getMessage("ReferenceTitle", label, signalHead.getDisplayName()));  // NOI18N
+        textArea.append(Bundle.getMessage("ReferenceTitle", label, signalHead.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", signalHead.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkSignalHeadLogic(signalHead));
@@ -28,6 +29,7 @@ public class SignalHeadWhereUsed {
         textArea.append(WhereUsedCollectors.checkWarrants(signalHead));
         textArea.append(WhereUsedCollectors.checkEntryExit(signalHead));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(signalHead));
+        textArea.append(WhereUsedCollectors.checkLogixNGConditionals(signalHead));
         textArea.append(WhereUsedCollectors.checkPanels(signalHead));
         textArea.append(WhereUsedCollectors.checkCTC(signalHead));
         return textArea;

@@ -1,5 +1,8 @@
 package jmri.util;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.log4j.Level;
@@ -229,6 +232,14 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     public static int clearBacklog() {
         return clearBacklog(Level.WARN);
+    }
+
+    /**
+     * Returns the backlog.
+     * @return the backlog
+     */
+    public static List<LoggingEvent> getBacklog() {
+        return Collections.unmodifiableList(list);
     }
 
     /**

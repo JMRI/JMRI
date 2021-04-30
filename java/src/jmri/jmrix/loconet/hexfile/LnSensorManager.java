@@ -32,7 +32,7 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s = new LnSensor(systemName, userName, tc, getSystemPrefix());
         if (defaultSensorState != Sensor.UNKNOWN) {
             try {

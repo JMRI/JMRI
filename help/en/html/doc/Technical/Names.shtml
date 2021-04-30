@@ -310,6 +310,9 @@
         main layout power, e.g. LPB or S42 for subdistrict channel
         2 on card 4, e.g. LPS42.</li>
 
+        <li><strong>Q</strong> LogixNG - Logix Next Generation - a set of logic equations used
+		to control the layout. LogixNG system names start with IQ.</li>
+
         <li><strong>R</strong> Reporters - a general purpose mechanism for reporting
         complicated information from the layout, e.g. locomotive
         identification from some transponding hardware, RFID tag

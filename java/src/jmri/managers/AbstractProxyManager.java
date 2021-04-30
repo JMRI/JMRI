@@ -371,6 +371,15 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     }
     
     /**
+     * Get the Default Manager ToolTip.
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return getDefaultManager().getEntryToolTip();
+    }
+    
+    /**
      * Try to create a system manager.
      *
      * @param systemPrefix the system prefix

@@ -16,6 +16,14 @@ import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.util.FileUtil;
 
+/**
+ * A TableCellRender to graphicaly display an active throttles in a summary table
+ * (see ThrottlesListPanel)
+ * 
+ * @author Lionel Jeanson - 2011
+ * 
+ */
+
 public class ThrottlesTableCellRenderer implements TableCellRenderer {
 
     private static final ImageIcon FWD_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn.png"));
@@ -65,7 +73,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
         retPanel.add(locoID, BorderLayout.CENTER);
 
         if (tf.getAddressPanel().getThrottle() != null) {
-            final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
+            final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
             JPanel ctrlPanel = new JPanel();
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();

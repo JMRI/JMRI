@@ -48,11 +48,12 @@ public class DCCppLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return null;
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
         // Normalize the systemName
         String sName = getSystemNamePrefix() + bitNum;   // removes any leading zeros

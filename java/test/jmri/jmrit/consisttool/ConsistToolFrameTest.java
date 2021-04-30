@@ -75,7 +75,7 @@ public class ConsistToolFrameTest {
         cs.pushDeleteWithDismiss();
         Assert.assertFalse("Consists removed after delete", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -104,7 +104,7 @@ public class ConsistToolFrameTest {
         cs.pushDeleteWithDismiss();
         Assert.assertFalse("Consists removed after delete", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ConsistToolFrameTest {
         // delete the consist
         cs.pushDeleteWithDismiss();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -155,12 +155,15 @@ public class ConsistToolFrameTest {
         Assert.assertEquals("Throttle has right consist address",
                 new DccLocoAddress(1, false),
                 to.getConsistAddressValue());
+        
         to.pushReleaseButton();
+        to.getQueueTool().waitEmpty();  // pause for Throttle to release
+        
         to.requestClose();
-
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        to.getQueueTool().waitEmpty();  // pause for frame to close
+        
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -174,7 +177,7 @@ public class ConsistToolFrameTest {
         // this should trigger a warning dialog, which we want to dismiss.
         JemmyUtil.pressDialogButton("Message", "OK");
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
@@ -187,7 +190,7 @@ public class ConsistToolFrameTest {
         int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
         cs.startRosterScan();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
         Assert.assertEquals("No New Consists after scan", numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
@@ -204,7 +207,7 @@ public class ConsistToolFrameTest {
         int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
         cs.startRosterScan();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
         Assert.assertEquals("No New Consists after scan", numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
@@ -237,7 +240,7 @@ public class ConsistToolFrameTest {
         int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
         cs.startRosterScan();
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
         Assert.assertEquals("1 New Consists after scan", numConsists + 1, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 

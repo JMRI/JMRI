@@ -289,6 +289,10 @@
         </ul>
        </li>
        <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a> data: automatically stored when data is changed.</li>
+      <li>Block values may be restored, dependant on block occupancy and track power status.</li>
+      <li>ID Tags are stored on exit, with their Time last seen and last Reporter position.
+            When restored on startup, these Reporters will also be created.</li>
+      <li>Connection specific tools, e.g. MERG CBUS Event Table may also be have store / restoration settings.</li>
       </ul>
       <br>
 

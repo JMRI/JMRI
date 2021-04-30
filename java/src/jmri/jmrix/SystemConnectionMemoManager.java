@@ -63,6 +63,14 @@ public class SystemConnectionMemoManager extends Bean implements InstanceManager
         firePropertyChange(CONNECTION_REMOVED, memo, null);
     }
 
+    /**
+     * For a given System UserName AND System Prefix, get the Connection Memo.
+     * Both must match to return the memo.
+     * @param systemPrefix System Prefix to search for.
+     * @param userName system UserName to search for.
+     * @return connection memo, else null if no memo located.
+     */
+    @CheckForNull
     public synchronized SystemConnectionMemo getSystemConnectionMemo(@Nonnull String systemPrefix, @Nonnull String userName) {
         for (SystemConnectionMemo memo: InstanceManager.getList(SystemConnectionMemo.class)) {
             if (memo.getSystemPrefix().equals(systemPrefix) && memo.getUserName().equals(userName)) {
@@ -87,6 +95,12 @@ public class SystemConnectionMemoManager extends Bean implements InstanceManager
         return null;
     }
 
+    /**
+     * For a given System Prefix, get the Connection Memo.
+     * @param systemPrefix System Prefix to search for.
+     * @return connection memo, else null if no memo located.
+     */
+    @CheckForNull
     public synchronized SystemConnectionMemo getSystemConnectionMemoForSystemPrefix(@Nonnull String systemPrefix) {
         for (SystemConnectionMemo memo: InstanceManager.getList(SystemConnectionMemo.class)) {
             if (memo.getSystemPrefix().equals(systemPrefix)) {

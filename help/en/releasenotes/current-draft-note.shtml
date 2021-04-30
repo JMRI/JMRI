@@ -109,7 +109,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
             </ul>
@@ -161,10 +161,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>All decoder.xsd XML validation schema from now on require an "item" attribute on each variable
-          element. It is needed to apply qualifier selections to translated definitions.<br>
-          All current decoder definitions in JMRI were updated where necessary (see below for specific ESU, LDH and
-          Zimo series).</li>
+          <li></li>
         </ul>
 
         <h4>Arnold</h4>
@@ -204,26 +201,12 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>New - for all new D&amp;H definitions: decoder model (product ID) is now detected automatically thanks to the introduction of CV 261 in updated firmware.</li>
-                <li>DH05C (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH10C (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH16A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH21A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>PD05A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>PD12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>FH05B (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>FH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>FH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>SH05A (fw 1.14.050 - including update path from older fw versions definitions)</li>
-                <li>SH10A (fw 1.14.050 - including update path from older fw versions definitions)</li>
+                <li></li>
             </ul>
 
         <h4>ESU</h4>
             <ul>
-                <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -241,10 +224,9 @@
                 <li></li>
             </ul>
 
-        <h4>LDH</h4>
+        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-              <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.<br>
-                Common CVs were moved to cv33-39mapping.xml and cv67-94speed.xml respectively.</li>
+                <li></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -280,6 +262,11 @@
         <h4>Norsk Modelljernbane (NJM)</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>PIKO</h4>
+            <ul>
+                <li>Added support for Piko SmartDecoder 4.1 Next 18 Series used in N and TT scale engines.</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
@@ -354,9 +341,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>MX605 (Kato type plug N sound decoder for ICE 4)</li>
-                <li>Missing "item" attributes were added to the CVSwissMapping_v36.xml include and the Decoder
-                Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -369,27 +354,6 @@
         <ul>
             <li></li>
         </ul>
-
-    <h3>PanelPro</h3>
-      <a id="PanelPro" name="PanelPro"></a>
-      <ul>
-        <li>The main PanelPro menu has changed.
-          <ul>
-            <li>The Load, Store, and History menu items have moved from the <strong>Panels</strong>
-            menu to the <strong>File</strong> menu.</li>
-            <li>The script related menu items have been moved to a new <strong>Scripting</strong> menu.</li>
-            <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
-            <li>A dialog will be displayed if a second load is invoked.  The message can be suppressed using the checkbox.</li>
-            <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
-            <li>When the Close button on a panel window is clicked, a dialog will be displayed to
-            indicate that the panel has been hidden.  The message includes instructions on making the
-            panel visible and how to delete the panel.  The message can be suppressed using the checkbox.</li>
-            <li>When a panel is added, deleted or renamed, a pending update flag is set.  If PanelPro is stopped before
-            doing the <strong>Store</strong> process, a dialog will be displayed.  Select <strong>Yes</strong>
-            to store the changes before the shutdown proceeds.</li>
-          </ul>
-        </li>
-      </ul>
 
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
@@ -430,6 +394,12 @@
         <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
+        </ul>
+
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li>Implement Clock Action and Expression</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -481,7 +451,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling in JMRI native throttle window</li>
         </ul>
 
     <h3>Routes</h3>
@@ -529,7 +499,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -551,7 +521,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>When "Large speed slider" mode is enabled (in throttle preferences), directions, stop and estop buttons will automatically resize and scale depending on the control panel inner window size : allows for high visibility from far away (for people using a wireless device combined with JMRI native throttles for instance)</li>
+            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling</li>
+            <li>Throttle control panel button icons are now based on SVG files, allows better scaling</li>
+            <li>Throttle preferences are now be applied live, no need to reload the throttle windows or restart the application</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -599,9 +572,10 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Reduced audio buffer consumption for Diesel sounds.</li>
-            <li>Minimum time for a sub-buffer increased from 100 to 150 milliseconds.</li>
-            <li>Fixed bug with last accel-limit values less than 100 in config.xml.</li>
+            <li>Audio buffers and sources now are removed when a VSDecoder is deleted.</li>
+            <li>Deprecated methods in VSDecoderManager: getVSDecoder(String profile_name, String path),
+            getNumberOfDecoders, setDefaultVSDecoder, getDefaultVSDecoder.
+            And in VSDecoder: setDefault, isDefault.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
@@ -609,3 +583,4 @@
         <ul>
             <li></li>
         </ul>
+

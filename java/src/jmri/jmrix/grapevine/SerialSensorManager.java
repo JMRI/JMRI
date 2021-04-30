@@ -61,7 +61,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, prefix);
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
             throw new IllegalArgumentException("Invalid Grapevine Sensor system name - " +  // NOI18N
                     systemName);

@@ -7,7 +7,9 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+
 import javax.annotation.*;
 
 import jmri.*;
@@ -231,7 +233,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * This method is not intended for general use, e.g. for users to set the
      * KnownState, so it doesn't appear in the Turnout interface.
-     *
+     * <p>
+     * On change, fires Property Change "KnownState".
      * @param s New state value
      */
     public void newKnownState(int s) {
@@ -387,7 +390,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         throw new IllegalArgumentException("Unexpected mode: " + mode);
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * On change, fires Property Change "feedbackchange".
+     * {@inheritDoc}
+     */
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
         // check for error - following removed the low bit from mode
@@ -398,12 +404,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         // set the value
         int oldMode = _activeFeedbackType;
         _activeFeedbackType = mode;
+        // unlock turnout if feedback is changed
+        setLocked(CABLOCKOUT, false);
         if (oldMode != _activeFeedbackType) {
             firePropertyChange("feedbackchange", oldMode,
                     _activeFeedbackType);
         }
-        // unlock turnout if feedback is changed
-        setLocked(CABLOCKOUT, false);
     }
 
     /** {@inheritDoc} */
@@ -438,19 +444,22 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * On change, fires Property Change "inverted".
+     * {@inheritDoc}
+     */
     @Override
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", oldInverted, _inverted);
             int state = _knownState;
             if (state == THROWN) {
                 newKnownState(CLOSED);
             } else if (state == CLOSED) {
                 newKnownState(THROWN);
             }
+            firePropertyChange("inverted", oldInverted, _inverted);
         }
     }
 
@@ -482,11 +491,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Turnouts that are locked should only respond to JMRI commands to change
-     * state. We simulate a locked turnout by monitoring the known state
-     * (turnout feedback is required) and if we detect that the known state has
-     * changed, negate it by forcing the turnout to return to the commanded
-     * state. Turnouts that have local buttons can also be locked if their
+     * state.
+     * We simulate a locked turnout by monitoring the known state (turnout 
+     * feedback is required) and if we detect that the known state has
+     * changed, 
+     * negate it by forcing the turnout to return to the commanded
+     * state.
+     * Turnouts that have local buttons can also be locked if their
      * decoder supports it.
+     * On change, fires Property Change "locked".
      *
      * @param turnoutLockout lockout state to monitor. Possible values
      *                       {@link #CABLOCKOUT}, {@link #PUSHBUTTONLOCKOUT}.
@@ -578,8 +591,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * When true, report to console anytime a cab attempts to change the state
-     * of a turnout on the layout. When a turnout is cab locked, only JMRI is
+     * of a turnout on the layout.
+     * When a turnout is cab locked, only JMRI is
      * allowed to change the state of a turnout.
+     * On setting changed, fires Property Change "reportlocked".
      *
      * @param reportLocked report locked state
      */
@@ -629,10 +644,17 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _decoderName;
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc} 
+     * On change, fires Property Change "decoderNameChange".
+     */
     @Override
-    public void setDecoderName(String decoderName) {
-        _decoderName = decoderName;
+    public void setDecoderName(final String decoderName) {
+        if (!(Objects.equals(_decoderName, decoderName))) {
+            String oldName = _decoderName;
+            _decoderName = decoderName;
+            firePropertyChange("decoderNameChange", oldName, decoderName);
+        }
     }
 
     abstract protected void turnoutPushbuttonLockout(boolean locked);
@@ -660,7 +682,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return myTurnoutOperation;
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc} 
+     * Fires Property Change "TurnoutOperationState".
+     */
     @Override
     public void setTurnoutOperation(TurnoutOperation toper) {
         log.debug("setTurnoutOperation Called for turnout {}.  Operation type {}", this.getSystemName(), toper);
@@ -754,6 +779,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
+    /** 
+     * On change, fires Property Change "TurnoutFeedbackFirstSensorChange".
+     * @param s the Handle for First Feedback Sensor
+     */
     public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
         Sensor temp = getFirstSensor();
@@ -770,6 +799,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         // set initial state
         setInitialKnownStateFromFeedback();
+        firePropertyChange("turnoutFeedbackFirstSensorChange", temp, s);
     }
 
     /** {@inheritDoc} */
@@ -803,6 +833,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
+    /** 
+     * On change, fires Property Change "TurnoutFeedbackSecondSensorChange".
+     * @param s the Handle for Second Feedback Sensor
+     */
     public void provideSecondFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
         Sensor temp = getSecondSensor();
@@ -819,6 +853,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         // set initial state
         setInitialKnownStateFromFeedback();
+        firePropertyChange("turnoutFeedbackSecondSensorChange", temp, s);
     }
 
     /** {@inheritDoc} */
@@ -1017,7 +1052,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
         try {
-            return Float.valueOf(speed);
+            return Float.parseFloat(speed);
             //return Integer.parseInt(_blockSpeed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
@@ -1041,7 +1076,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _divergeSpeed;
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc} 
+     * On change, fires Property Change "TurnoutDivergingSpeedChange".
+     */
     @Override
     public void setDivergingSpeed(String s) throws JmriException {
         if (s == null) {
@@ -1084,7 +1122,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
         try {
-            return Float.valueOf(speed);
+            return Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
@@ -1107,7 +1145,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _straightSpeed;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * On change, fires Property Change "TurnoutStraightSpeedChange".
+     */
     @Override
     public void setStraightSpeed(String s) throws JmriException {
         if (s == null) {

@@ -99,7 +99,8 @@ public class LearnWarrantTest {
         Sensor lastSensor = recordtimes(route, frame._speedUtil.getThrottle());
 
         // After stopping train, wait a bit before pressing stop
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         pressButton(jfo, Bundle.getMessage("Stop"));
         JUnitUtil.waitFor(() -> (block0.getState() & OBlock.ALLOCATED) == 0, "Warrant deallocated");
         // warrant has been recorded using engine 99
@@ -130,7 +131,8 @@ public class LearnWarrantTest {
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
 
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
+        JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
         frame._userNameBox.setText("SavedIt");
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
@@ -173,7 +175,8 @@ public class LearnWarrantTest {
      * @throws Exception when null throttle was set
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         float speed = 0.1f;
         if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");
@@ -184,7 +187,8 @@ public class LearnWarrantTest {
         Sensor sensor = block.getSensor();
         for (int i=1; i<route.length; i++) {
             // Need to have some time elapse between commands. - Especially the last
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+            JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
+//            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             if (i<3) {
                 speed += 0.1f;
             } else {
@@ -198,7 +202,8 @@ public class LearnWarrantTest {
             sensor = sensorNext;
             block = blockNext;
         }
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
         throttle.setSpeedSetting(0.0f);
         return sensor;

@@ -1,0 +1,38 @@
+	Turnout and signal											
+	1	2	3	4	5							
+	The turnout controls three signals.											
+												
+	Signal before show Clear if turnout is closed, or Approach if the turnout is thrown.											
+	Signal straight show Clear if the turnout is closed, or Stop if the turnout is thrown.											
+	Signal diverge show Approach if the turnout is thrown, or Stop if the turnout is closed.											
+First turnout	IT1	IT2	IT3	IT101	IT102	IT103	IT104	IT301	IT401	IT403	IT404	IT405
+Second turnout												
+Signal before	IH1											
+Signal straight												
+Signal diverge												
+												
+												
+												
+												
+												
+Turnout 1 Closed	IT1	IT2	IT101	IT102	IT301	IT401	IT402					
+Turnout 2 Closed	IT3		IT103	IT104		IT403	IT404					
+Signal 1 Clear	IH1	IH2	IH101	IH102								
+Signal 2 Clear	IH6	IH5	IH106	IH105								
+Signal Approach												
+Signal 1 Stop	IH4	IH3	IH104	IH103								
+Signal 2 Stop	IH6		IH106									
+												
+												
+Turnout 1 Thrown	IT1	IT2	IT101		IT301	IT401	IT402					
+Signal 1 Approach	IH1											
+Signal 2 Approach	IH3											
+Signal 1 Stop	IH4											
+Signal 2 Stop	IH6											
+												
+												
+Turnout 1 Closed	IT1		IT101	IT102		IT401	IT402					
+Turnout 2 Thrown	IT3		IT103	IT104		IT403	IT404					
+Signal Approach												
+Signal 1 Stop												
+Signal 2 Stop												

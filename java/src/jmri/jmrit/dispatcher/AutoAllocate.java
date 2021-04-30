@@ -206,8 +206,8 @@ public class AutoAllocate implements Runnable {
                         continue;
                     }
                     // is the train held
-                    if (activeTrain.holdAllocation) {
-                        log.debug("[{}]:Allocation is Holding", trainName);
+                    if (activeTrain.holdAllocation || (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+                        log.debug("[{}]:Allocation is Holding or Delayed", trainName);
                         continue;
                     }
 
@@ -323,6 +323,8 @@ public class AutoAllocate implements Runnable {
 
                             log.trace("ForwardsFree[{}]", areForwardsFree);
                             if (!areForwardsFree) {
+                                // delete all reserves for this train
+                                removeAllReservesForTrain(trainName);
                                 continue;
                             }
                         }

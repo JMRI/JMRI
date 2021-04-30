@@ -76,7 +76,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     }
     
     public TurnoutTableDataModel(Manager<Turnout> mgr){
-        super(mgr);
+        super();
+        setManager(mgr);
         initTable();
     }
     
@@ -382,17 +383,14 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         if (col == INVERTCOL) {
             if (t.canInvert()) {
                 t.setInverted((Boolean) value);
-                fireTableRowsUpdated(row, row);
             }
         } else if (col == LOCKCOL) {
             t.setLocked(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT, (Boolean) value);
-            fireTableRowsUpdated(row, row);
         } else if (col == MODECOL) {
             @SuppressWarnings("unchecked")
             String modeName = (String) ((JComboBox<String>) value).getSelectedItem();
             assert modeName != null;
             t.setFeedbackMode(modeName);
-            fireTableRowsUpdated(row, row);
         } else if (col == SENSOR1COL) {
             try {
                 Sensor sensor = (Sensor) value;
@@ -400,7 +398,6 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             } catch (jmri.JmriException e) {
                 JOptionPane.showMessageDialog(null, e.toString());
             }
-            fireTableRowsUpdated(row, row);
         } else if (col == SENSOR2COL) {
             try {
                 Sensor sensor = (Sensor) value;
@@ -408,9 +405,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             } catch (jmri.JmriException e) {
                 JOptionPane.showMessageDialog(null, e.toString());
             }
-            fireTableRowsUpdated(row, row);
-        //} else if (col == OPSONOFFCOL) {
+        } else if (col == OPSONOFFCOL) {
             // do nothing as this is handled by the combo box listener
+            // column still handled here to prevent call to super.setValueAt
         } else if (col == OPSEDITCOL) {
             t.setInhibitOperation(false);
             @SuppressWarnings("unchecked") // cast to JComboBox<String> required in OPSEDITCOL
@@ -419,21 +416,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             editTurnoutOperation(t, cb);
             fireTableRowsUpdated(row, row);
         } else if (col == EDITCOL) {
-            class WindowMaker implements Runnable {
-
-                final Turnout t;
-
-                WindowMaker(Turnout t) {
-                    this.t = t;
-                }
-
-                @Override
-                public void run() {
-                    editButton(t);
-                }
-            }
-            WindowMaker w = new WindowMaker(t);
-            javax.swing.SwingUtilities.invokeLater(w);
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                editButton(t);
+            });
         } else if (col == LOCKOPRCOL) {
             @SuppressWarnings("unchecked")
             String lockOpName = (String) ((JComboBox<String>) value)
@@ -471,7 +456,6 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                     speedListClosed.add(speed);
                 }
             }
-            fireTableRowsUpdated(row, row);
         } else if (col == DIVERGCOL) {
 
             @SuppressWarnings("unchecked")
@@ -488,7 +472,6 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                     speedListThrown.add(speed);
                 }
             }
-            fireTableRowsUpdated(row, row);
         } else if (col == FORGETCOL) {
             t.setCommandedState(Turnout.UNKNOWN);
         } else if (col == QUERYCOL) {
@@ -610,35 +593,43 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         // and then set user prefs
         super.configureTable(tbl);
         
+        columnModel.getColumnByModelIndex(FORGETCOL).setHeaderValue(null);
+        columnModel.getColumnByModelIndex(QUERYCOL).setHeaderValue(null);
+        
     }
 
     // update table if turnout lock or feedback changes
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("locked")) {
-            return true;
-        }
-        if (e.getPropertyName().equals("feedbackchange")) {
-            return true;
-        }
-        if (e.getPropertyName().equals("TurnoutDivergingSpeedChange")) {
-            return true;
-        }
-        if (e.getPropertyName().equals("TurnoutStraightSpeedChange")) {
-            return true;
-        } else {
-            return super.matchPropertyName(e);
+        switch (e.getPropertyName()) {
+            case "locked":
+            case "inverted":
+            case "feedbackchange": // feedback type setting change, NOT Turnout feedback status
+            case "TurnoutDivergingSpeedChange":
+            case "TurnoutStraightSpeedChange":
+            case "turnoutFeedbackFirstSensorChange":
+            case "turnoutFeedbackSecondSensorChange":
+            case "decoderNameChange":
+            case "TurnoutOperationState":
+            case "KnownState":
+                return true;
+            default:
+                return super.matchPropertyName(e);
         }
     }
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("DefaultTurnoutClosedSpeedChange")) {
-            updateClosedList();
-        } else if (e.getPropertyName().equals("DefaultTurnoutThrownSpeedChange")) {
-            updateThrownList();
-        } else {
-            super.propertyChange(e);
+        switch (e.getPropertyName()) {
+            case "DefaultTurnoutClosedSpeedChange":
+                updateClosedList();
+                break;
+            case "DefaultTurnoutThrownSpeedChange":
+                updateThrownList();
+                break;
+            default:
+                super.propertyChange(e);
+                break;
         }
     }
 

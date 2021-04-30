@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="6.2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210319"/>
+  <!--  Fixed missing additional outputs for some decoders -->
     <version version="6.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
   <!--  Removed Firmware pane (outdated since fw 3.06 and
         introduction of CVs260-265: fw info now on "DH Info" page)
@@ -35,7 +37,7 @@
         -->
   <decoder>
     <family name="Train Decoders (2017)" mfg="Doehler und Haass">
-      <model model="DH05C v3.08.27 (firmware 3.08+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH05C_2017_02" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="DH05C v3.08.27 (firmware 3.08+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH05C_2017_02" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -77,7 +79,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH10C v3.08.27 (firmware 3.08+)" replacementModel="DH10C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH10C_2017_02" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+      <model model="DH10C v3.08.27 (firmware 3.08+)" replacementModel="DH10C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH10C_2017_02" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>

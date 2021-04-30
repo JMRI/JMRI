@@ -1,8 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.SignalMast;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.SignalMastIcon;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.display.*;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -49,9 +50,11 @@ public class SignalMastIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor ed = (Editor) o;
         SignalMastIcon l = new SignalMastIcon(ed);
@@ -138,7 +141,11 @@ public class SignalMastIconXml extends PositionableLabelXml {
             log.error("Failed on litmode attribute: {}", e);
         }
 
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
 
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SIGNALS, element);

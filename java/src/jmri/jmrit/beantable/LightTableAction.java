@@ -253,6 +253,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
         status1.setForeground(Color.gray);
+        
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(create);
 
         addFrame.pack();
         addFrame.setVisible(true);
@@ -545,10 +548,11 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     void handleCreateException(Exception ex, String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+        status1.setText(ex.getLocalizedMessage());
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(LightManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**

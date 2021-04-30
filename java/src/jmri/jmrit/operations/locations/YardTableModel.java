@@ -39,6 +39,16 @@ public class YardTableModel extends TrackTableModel {
             tef.setTitle(Bundle.getMessage("EditYard"));
         });
     }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("YardName");
+            default:
+                return super.getColumnName(col);
+        }
+    }
 
     // this table listens for changes to a location and its yards
     @Override

@@ -49,7 +49,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         Sensor s;
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
             throw new IllegalArgumentException("Invalid Powerline Sensor system name - " +  // NOI18N
                     systemName);

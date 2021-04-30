@@ -30,14 +30,17 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return (MapleSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name, and normalize it
-        String sName = "";
-        sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
-        if (sName.equals("")) {
+        String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
+        if (sName.isEmpty()) {
             // system name is not valid
-            return null;
+            throw new IllegalArgumentException("Cannot create System Name from " + systemName);
         }
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
@@ -48,14 +51,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // check if the addressed output bit is available
         int bitNum = SerialAddress.getBitFromSystemName(sName, getSystemPrefix());
         if (bitNum == 0) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit from System Name " + systemName + " " + sName);
         }
-        String conflict = "";
-        conflict = SerialAddress.isOutputBitFree(bitNum, getSystemPrefix());
-        if ((!conflict.equals("")) && (!conflict.equals(sName))) {
+        String conflict = SerialAddress.isOutputBitFree(bitNum, getSystemPrefix());
+        if ((!conflict.isEmpty()) && (!conflict.equals(sName))) {
             log.error("{} assignment conflict with {}.", sName, conflict);
-            notifyTurnoutCreationError(conflict, bitNum);
-            return (null);
+            throw new IllegalArgumentException("The output bit " + bitNum + ", is currently assigned to " + conflict + ".");
         }
 
         // create the turnout
@@ -81,7 +82,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Public method to notify user of Turnout creation error.
      * @param conflict string of the turnout which is in conflict.
      * @param bitNum the bit number in conflict.
+     * @deprecated  since 4.23.4;
      */
+    @Deprecated
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, "ERROR - The output bit, "
                 + bitNum + ", is currently assigned to " + conflict + ". Turnout can not be "
