@@ -364,7 +364,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Create Train. Fix sort order in Transit Combo.</li>
+             <li>Create Train. Fix starting train outside of Transit..</li>
         </ul>
 
     <h3>Dispatcher System</h3>
