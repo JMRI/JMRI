@@ -372,7 +372,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
             // Variables used in lambda must be effectively final
             DirectOperation theOper = oper;
 
-            ThreadingUtil.runOnLayout(() -> {
+            ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 switch (theOper) {
                     case None:
                         break;

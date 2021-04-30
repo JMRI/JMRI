@@ -74,9 +74,9 @@ public class AnalogActionMemory extends AbstractAnalogAction
 
     /** {@inheritDoc} */
     @Override
-    public void setValue(double value) {
+    public void setValue(double value) throws JmriException {
         if (_memoryHandle != null) {
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
+            jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 _memoryHandle.getBean().setValue(value);
             });
         }

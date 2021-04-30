@@ -111,7 +111,7 @@ public class ActionScript extends AbstractDigitalAction {
         AtomicReference<RuntimeException> runtimeExceptionRef = new AtomicReference<>();
         
         if (_scriptClass != null) {
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
+            jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 try {
                     _scriptClass.execute();
                 } catch (JmriException e) {

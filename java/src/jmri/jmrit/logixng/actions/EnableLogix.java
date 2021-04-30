@@ -315,7 +315,7 @@ public class EnableLogix extends AbstractDigitalAction implements VetoableChange
         // Variables used in lambda must be effectively final
         Operation theLock = lock;
         
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             logix.setEnabled(theLock == Operation.Enable);
         });
     }

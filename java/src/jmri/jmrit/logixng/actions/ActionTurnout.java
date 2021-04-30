@@ -311,7 +311,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             state = TurnoutState.valueOf(name);
         }
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == TurnoutState.Toggle) {
                 if (turnout.getCommandedState() == Turnout.CLOSED) {
                     turnout.setCommandedState(Turnout.THROWN);
