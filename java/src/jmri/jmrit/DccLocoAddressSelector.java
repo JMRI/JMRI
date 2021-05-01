@@ -36,6 +36,9 @@ public class DccLocoAddressSelector extends JPanel {
     JComboBox<String> box = null;
     JTextField text = new JTextField();
 
+    private static final int FONT_SIZE_MIN = 12;
+    private static final int FONT_SIZE_MAX = 96;
+
     public DccLocoAddressSelector() {
         super();
         if ((InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null)
@@ -190,26 +193,32 @@ public class DccLocoAddressSelector extends JPanel {
             return;
         }
         double fieldWidth = text.getSize().width;
-        int stringWidth = text.getFontMetrics(text.getFont()).
-                stringWidth(LONGEST_STRING) + 8;
+        int stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
         int fontSize = text.getFont().getSize();
-        if (stringWidth > fieldWidth) // component has shrunk.
-        {
-            while ((stringWidth > fieldWidth) && (fontSize > 12)) {
+        if (stringWidth > fieldWidth) { // component has shrunk horizontally
+            while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN)) {
                 fontSize -= 2;
                 Font f = new Font("", Font.PLAIN, fontSize);
                 text.setFont(f);
-                stringWidth = text.getFontMetrics(text.getFont()).
-                        stringWidth(LONGEST_STRING) + 8;
+                stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
             }
-        } else // component has grown
-        {
-            while ((fieldWidth - stringWidth > 10) && (fontSize < 48)) {
+        } else { // component has grown horizontally
+            while ((fieldWidth - stringWidth > 10) && (fontSize <= FONT_SIZE_MAX)) {
                 fontSize += 2;
                 Font f = new Font("", Font.PLAIN, fontSize);
                 text.setFont(f);
-                stringWidth = text.getFontMetrics(text.getFont()).
-                        stringWidth(LONGEST_STRING) + 8;
+                stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
+            }
+        }
+        // also fit vertically
+        double fieldHeight = text.getSize().height;
+        int stringHeight = text.getFontMetrics(text.getFont()).getHeight();
+        if (stringHeight > fieldHeight) { // component has shrunk vertically
+            while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN)) {
+                fontSize -= 2;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                text.setFont(f);
+                stringHeight = text.getFontMetrics(text.getFont()).getHeight();
             }
         }
     }

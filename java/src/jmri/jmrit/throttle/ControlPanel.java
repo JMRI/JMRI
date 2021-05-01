@@ -74,6 +74,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     final public static int SLIDERDISPLAYCONTINUOUS = 2;
 
     final public static int DEFAULT_BUTTON_SIZE = 24;
+    private static final String LONGEST_SS_STRING="999";
+    private static final int FONT_SIZE_MIN=12;
+    private static final int FONT_SIZE_MAX=256;
 
     private int _displaySlider = SLIDERDISPLAY;
 
@@ -615,6 +618,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
+        speedSpinner.setMinimumSize(new Dimension(20,20));
 
         EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
@@ -819,6 +823,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     @Override
                     public void componentResized(ComponentEvent e) {
                         changeOrientation();
+                        changeFontSizes();
                     }
                 });
 
@@ -905,6 +910,47 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /**
+     * A resizing has occurred, so determine the optimum font size for the speed spinner text font.
+     */
+    private void changeFontSizes() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        if ( preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider() ) {
+            int fontSize = speedSpinner.getFont().getSize();
+            // fit vertically
+            int fieldHeight = speedControlPanel.getSize().height;
+            int stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16;
+
+            if (stringHeight > fieldHeight) { // component has shrunk vertically
+                while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN)) {
+                    fontSize -= 2;
+                    Font f = new Font("", Font.PLAIN, fontSize);
+                    speedSpinner.setFont(f);
+                    stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16;
+                }
+            } else { // component has grown vertically
+                while ((fieldHeight - stringHeight > 10) && (fontSize <= FONT_SIZE_MAX)) {
+                    fontSize += 2;
+                    Font f = new Font("", Font.PLAIN, fontSize);
+                    speedSpinner.setFont(f);
+                    stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() ;
+                }
+            }
+            // fit horizontally
+            int fieldWidth = speedControlPanel.getSize().width;
+            int stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
+            if (stringWidth > fieldWidth) { // component has shrunk horizontally
+                while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN)) {
+                    fontSize -= 2;
+                    Font f = new Font("", Font.PLAIN, fontSize);
+                    speedSpinner.setFont(f);
+                    stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
+                }
+            }
+            speedSpinner.setMinimumSize(new Dimension(stringWidth,stringHeight)); //not sure why this helps here, required
+        }
+    }
+
+    /**
      * Intended for throttle scripting
      * 
      * @param fwd direction: true for forward; false for reverse.
@@ -952,15 +998,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
     }
 
+    /**
+     * Apply current throttles preferences to this panel
+     */
     void applyPreferences() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         
         if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
              speedSlider.setUI(new ControlPanelCustomSliderUI(speedSlider));
              speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSliderContinuous));
+             changeFontSizes();
         } else {
             speedSlider.setUI((new JSlider()).getUI());
             speedSliderContinuous.setUI((new JSlider()).getUI());
+            speedSpinner.setFont(new JSpinner().getFont());            
         }
         paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
