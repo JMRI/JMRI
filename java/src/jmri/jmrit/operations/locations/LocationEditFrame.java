@@ -348,22 +348,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (ae.getSource() == addYardButton) {
             yef = new YardEditFrame();
             yef.initComponents(_location, null);
-            yef.setTitle(Bundle.getMessage("AddYard"));
         }
         if (ae.getSource() == addSpurButton) {
             sef = new SpurEditFrame();
             sef.initComponents(_location, null);
-            sef.setTitle(Bundle.getMessage("AddSpur"));
         }
         if (ae.getSource() == addInterchangeButton) {
             ief = new InterchangeEditFrame();
             ief.initComponents(_location, null);
-            ief.setTitle(Bundle.getMessage("AddInterchange"));
         }
         if (ae.getSource() == addStagingButton) {
             stef = new StagingEditFrame();
             stef.initComponents(_location, null);
-            stef.setTitle(Bundle.getMessage("AddStaging"));
         }
 
         if (ae.getSource() == saveLocationButton) {

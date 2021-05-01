@@ -39,6 +39,16 @@ public class SpurTableModel extends TrackTableModel {
             tef.setTitle(Bundle.getMessage("EditSpur"));
         });
     }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("SpurName");
+            default:
+                return super.getColumnName(col);
+        }
+    }
 
     // this table listens for changes to a location and it's spurs
     @Override

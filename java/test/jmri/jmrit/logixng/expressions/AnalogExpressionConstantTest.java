@@ -50,7 +50,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get analog constant 10.2 ::: Log error%n");
+        return String.format("Get analog constant 10.2 ::: Use default%n");
     }
     
     @Override
@@ -59,11 +59,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
-                "               Get analog constant 10.2 ::: Log error%n" +
+                "               Get analog constant 10.2 ::: Use default%n" +
                 "            !~ A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override

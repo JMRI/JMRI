@@ -64,7 +64,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Light IL1 is On ::: Log error%n");
+        return String.format("Light IL1 is On ::: Use default%n");
     }
     
     @Override
@@ -73,11 +73,11 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Execute on change ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Light IL1 is On ::: Log error%n" +
+                "               Light IL1 is On ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

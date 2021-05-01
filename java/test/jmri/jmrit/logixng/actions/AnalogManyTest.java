@@ -48,7 +48,7 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Many ::: Log error%n" +
+                "Many ::: Use default%n" +
                 "   !~ A1%n" +
                 "      Socket not connected%n");
     }
@@ -59,11 +59,11 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
                 "            !~ A%n" +
-                "               Many ::: Log error%n" +
+                "               Many ::: Use default%n" +
                 "                  !~ A1%n" +
                 "                     Socket not connected%n");
     }

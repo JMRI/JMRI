@@ -47,7 +47,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute A after 0 milliseconds. Ignore on repeat ::: Log error%n" +
+                "Execute A after 0 milliseconds. Ignore on repeat ::: Use default%n" +
                 "   ! A%n" +
                 "      Socket not connected%n");
     }
@@ -58,7 +58,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Execute A after 0 milliseconds. Ignore on repeat ::: Log error%n" +
+                "         Execute A after 0 milliseconds. Ignore on repeat ::: Use default%n" +
                 "            ! A%n" +
                 "               Socket not connected%n");
     }

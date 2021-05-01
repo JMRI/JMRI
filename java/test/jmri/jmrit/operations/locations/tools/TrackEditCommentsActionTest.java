@@ -26,7 +26,7 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         TrackEditCommentsAction t = new TrackEditCommentsAction(tf);
         Assert.assertNotNull("exists",t);
     }
@@ -38,7 +38,7 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location location = lManager.getLocationById("20");
         Track track = location.getTrackById("20s1");
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         tf.initComponents(location, track);
         
         TrackEditCommentsAction a = new TrackEditCommentsAction(tf);

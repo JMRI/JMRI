@@ -21,7 +21,7 @@ public class AlternateTrackActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         AlternateTrackAction t = new AlternateTrackAction(tf);
         Assert.assertNotNull("exists",t);
     }
@@ -29,7 +29,7 @@ public class AlternateTrackActionTest extends OperationsTestCase {
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         AlternateTrackAction a = new AlternateTrackAction(tf);
         Assert.assertNotNull("exists", a);
         

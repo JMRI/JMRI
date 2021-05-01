@@ -21,7 +21,7 @@ public class ChangeTrackTypeActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         ChangeTrackTypeAction t = new ChangeTrackTypeAction(tf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(tf);
@@ -30,7 +30,7 @@ public class ChangeTrackTypeActionTest extends OperationsTestCase {
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        TrackEditFrame tf = new TrackEditFrame("test");
         ChangeTrackTypeAction a = new ChangeTrackTypeAction(tf);
         Assert.assertNotNull("exists", a);
         

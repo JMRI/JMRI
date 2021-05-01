@@ -163,7 +163,7 @@ public class ActionThrottle extends AbstractDigitalAction
             DccThrottle throttle = _throttle;
             float spd = (float) speed;
             boolean fwd = isForward;
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
+            jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 throttle.setSpeedSetting(spd);
                 throttle.setIsForward(fwd);
             });

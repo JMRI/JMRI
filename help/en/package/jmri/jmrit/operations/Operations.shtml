@@ -2097,15 +2097,18 @@
    <a name="LocationDivision" id="LocationDivision"></a>
    <h4>Railroad Division</h4>
    <p>
-    The railroad divisions feature allows you to create prototypical car movements for your railroad. To use
-    this feature create at least one division for your railroad by using the "Edit" button. You can
-    assign multiple locations to the same division, and you can create several divisions for your
-    railroad. Cars that are assigned a home division will return to the yard at their home division
-    when their load state becomes empty. Cars with a home division will also return to an industry (<a
+    The railroad divisions feature allows you to create prototypical car movements for your
+    railroad. To use this feature create and then select at least one division for your railroad by
+    using the "Edit" button in the "Division" section of the "Edit Location" window. You can assign
+    multiple locations to the same division, and you can create several divisions for your railroad.
+    Cars that are assigned a
+    <a href="#HomeDivision">home division</a> will return to the yard at their home division when
+    their load state becomes empty. Cars with a home division will also return to an industry (<a
      href="#Sidings">spur</a>) at their home division when loaded from an industry outside of their
     home division. Cars loaded at their home division can travel to any industry on the railroad.
-    The program will use <a href="#Interchange">interchange</a> tracks to route the cars to
-    industries that require multiple trains.
+    The program will use
+    <a href="#Interchange">interchange</a> tracks to route the cars to industries that require
+    multiple trains.
    </p>
 
    <a name="LocationRollingStock" id="LocationRollingStock"></a>
