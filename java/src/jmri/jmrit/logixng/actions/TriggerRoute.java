@@ -319,7 +319,7 @@ public class TriggerRoute extends AbstractDigitalAction implements VetoableChang
         // Variables used in lambda must be effectively final
         Operation theOper = oper;
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (theOper == Operation.TriggerRoute) {
                 route.setRoute();
             } else {

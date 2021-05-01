@@ -119,7 +119,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     }
     
     @Test
-    public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+    public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException, JmriException {
         AnalogActionMemory action = (AnalogActionMemory)_base;
         action.setValue(0.0d);
         Assert.assertTrue("Memory has correct value", 0.0d == (Double)_memory.getValue());

@@ -373,6 +373,8 @@
 
         <li>Eddie Delozier, who write the TCS M1 decoder file.</li>
 
+        <li>Luca Dentella, who contributed the CmdMapper script.</li>
+
         <li>Kevin Dickerson, who figured out the ECoS protocol so
         JMRI could connect to one and wrote code for ECoS throttles
         and turnouts, added turnout monitoring to the ECoS support,

@@ -322,7 +322,7 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
         // Variables used in lambda must be effectively final
         TurnoutLock theLock = lock;
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (theLock == TurnoutLock.Lock) {
                 turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
             } else if (theLock == TurnoutLock.Unlock) {

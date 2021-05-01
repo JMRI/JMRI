@@ -306,6 +306,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         speedPanel.setClosable(true);
         speedPanel.setIconifiable(true);
         speedPanel.setTitle(Bundle.getMessage("ThrottleMenuViewSpeedPanel"));
+        speedPanel.addInternalFrameListener(frameListener);
         speedPanel.pack();
 
         addressPanel = new AddressPanel();
