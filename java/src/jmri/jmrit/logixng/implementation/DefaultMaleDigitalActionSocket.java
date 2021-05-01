@@ -43,10 +43,12 @@ public class DefaultMaleDigitalActionSocket
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((DigitalActionBean)getObject()).execute();
-        } catch (JmriMultiLineException e) {
-            handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
+            if (e.getErrors() != null) {
+                handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
+            } else {
+                handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
+            }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
         }
