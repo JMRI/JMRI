@@ -47,7 +47,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set lock for turnout IT1 to Lock ::: Log error%n");
+        return String.format("Set lock for turnout IT1 to Lock ::: Use default%n");
     }
     
     @Override
@@ -56,7 +56,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set lock for turnout IT1 to Lock ::: Log error%n");
+                "         Set lock for turnout IT1 to Lock ::: Use default%n");
     }
     
     @Override

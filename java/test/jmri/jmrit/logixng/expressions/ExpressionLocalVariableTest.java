@@ -48,7 +48,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Local variable myVar is equal to \"\" ::: Log error%n   ::: Local variable \"myVar\", init to String \"\"%n");
+        return String.format("Local variable myVar is equal to \"\" ::: Use default%n   ::: Local variable \"myVar\", init to String \"\"%n");
     }
     
     @Override
@@ -57,12 +57,12 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Always execute ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Local variable myVar is equal to \"\" ::: Log error%n" +
+                "               Local variable myVar is equal to \"\" ::: Use default%n" +
                 "                  ::: Local variable \"myVar\", init to String \"\"%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

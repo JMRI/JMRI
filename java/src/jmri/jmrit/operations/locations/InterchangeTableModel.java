@@ -39,6 +39,16 @@ public class InterchangeTableModel extends TrackTableModel {
             tef.setTitle(Bundle.getMessage("EditInterchange"));
         });
     }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("InterchangeName");
+            default:
+                return super.getColumnName(col);
+        }
+    }
 
     // this table listens for changes to a location and its interchanges
     @Override

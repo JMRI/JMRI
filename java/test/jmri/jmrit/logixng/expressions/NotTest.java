@@ -53,7 +53,7 @@ public class NotTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Not ::: Log error%n" +
+                "Not ::: Use default%n" +
                 "   ? E%n" +
                 "      Socket not connected%n");
     }
@@ -64,13 +64,13 @@ public class NotTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Execute on change ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Not ::: Log error%n" +
+                "               Not ::: Use default%n" +
                 "                  ? E%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

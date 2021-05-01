@@ -61,9 +61,9 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "String Formula: E1 ::: Log error%n" +
+                "String Formula: E1 ::: Use default%n" +
                 "   ?* E1%n" +
-                "      Get string constant \"Something\" ::: Log error%n" +
+                "      Get string constant \"Something\" ::: Use default%n" +
                 "   ?* E2%n" +
                 "      Socket not connected%n");
     }
@@ -74,15 +74,15 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A ::: Log error%n" +
+                "         Read string E and set string A ::: Use default%n" +
                 "            ?s E%n" +
-                "               String Formula: E1 ::: Log error%n" +
+                "               String Formula: E1 ::: Use default%n" +
                 "                  ?* E1%n" +
-                "                     Get string constant \"Something\" ::: Log error%n" +
+                "                     Get string constant \"Something\" ::: Use default%n" +
                 "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !s A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override

@@ -11,6 +11,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
+import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog_MultiLine;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
@@ -29,7 +30,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LogError;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.Default;
     private boolean _catchAbortExecution;
     private boolean _listen = true;     // By default, actions and expressions listen
 
@@ -189,10 +190,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         _object.setComment(comment);
     }
 
+    @Override
     public boolean getListen() {
         return _listen;
     }
 
+    @Override
     public void setListen(boolean listen)
     {
         _listen = listen;
@@ -550,6 +553,49 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
+                });
+                if (abort) throw new AbortConditionalNGExecutionException();
+                break;
+
+            case LogError:
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                break;
+
+            case LogErrorOnce:
+                LoggingUtil.warnOnce(log, "item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                break;
+
+            case ThrowException:
+                throw e;
+
+            case AbortExecution:
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                throw new AbortConditionalNGExecutionException(e);
+
+            default:
+                throw e;
+        }
+    }
+
+    public void handleError(
+            Base item,
+            String message,
+            List<String> messageList,
+            JmriMultiLineException e,
+            Logger log)
+            throws JmriException {
+
+        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        if (errorHandlingType == ErrorHandlingType.Default) {
+            errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
+                    .getErrorHandlingType();
+        }
+
+        switch (errorHandlingType) {
+            case ShowDialogBox:
+                boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
+                    ErrorHandlingDialog_MultiLine dialog = new ErrorHandlingDialog_MultiLine();
+                    return dialog.showDialog(item, message, messageList);
                 });
                 if (abort) throw new AbortConditionalNGExecutionException();
                 break;

@@ -52,9 +52,9 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "On change to true ::: Log error%n" +
+                "On change to true ::: Use default%n" +
                 "   ! A%n" +
-                "      Set turnout '' to state Thrown ::: Log error%n");
+                "      Set turnout '' to state Thrown ::: Use default%n");
     }
     
     @Override
@@ -63,13 +63,13 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Logix ::: Log error%n" +
+                "         Logix ::: Use default%n" +
                 "            ? E%n" +
-                "               Sensor '' is Active ::: Log error%n" +
+                "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               On change to true ::: Log error%n" +
+                "               On change to true ::: Use default%n" +
                 "                  ! A%n" +
-                "                     Set turnout '' to state Thrown ::: Log error%n");
+                "                     Set turnout '' to state Thrown ::: Use default%n");
     }
     
     @Override
