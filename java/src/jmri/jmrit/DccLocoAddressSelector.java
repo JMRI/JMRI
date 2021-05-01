@@ -213,14 +213,12 @@ public class DccLocoAddressSelector extends JPanel {
         // also fit vertically
         double fieldHeight = text.getSize().height;
         int stringHeight = text.getFontMetrics(text.getFont()).getHeight();
-        if (stringHeight > fieldHeight) { // component has shrunk vertically
-            while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN)) {
-                fontSize -= 2;
-                Font f = new Font("", Font.PLAIN, fontSize);
-                text.setFont(f);
-                stringHeight = text.getFontMetrics(text.getFont()).getHeight();
-            }
-        }
+        while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN)) {  // component has shrunk vertically
+            fontSize -= 2;
+            Font f = new Font("", Font.PLAIN, fontSize);
+            text.setFont(f);
+            stringHeight = text.getFontMetrics(text.getFont()).getHeight();
+        }        
     }
 
     /*
