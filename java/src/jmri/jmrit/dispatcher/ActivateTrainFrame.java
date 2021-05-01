@@ -1140,8 +1140,13 @@ public class ActivateTrainFrame {
 
     private TrainInfo dialogToTrainInfo() {
         TrainInfo info = new TrainInfo();
-        info.setTransitName(transitSelectBox.getSelectedItem().getDisplayName());
-        info.setTransitId(transitSelectBox.getSelectedItem().getDisplayName());
+        int index = transitSelectBox.getSelectedIndex();
+        if (index < 0) {
+            log.error("No Transit.");
+        } else {
+            info.setTransitName(transitSelectBox.getSelectedItem().getDisplayName());
+            info.setTransitId(transitSelectBox.getSelectedItem().getDisplayName());
+        }
         if (_TrainsFromRoster || _TrainsFromOperations) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
             info.setDccAddress(" ");
@@ -1151,7 +1156,7 @@ public class ActivateTrainFrame {
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
-        int index = startingBlockBox.getSelectedIndex();
+        index = startingBlockBox.getSelectedIndex();
         if (index < 0) {
             log.error("No Starting Block.");
         } else {
