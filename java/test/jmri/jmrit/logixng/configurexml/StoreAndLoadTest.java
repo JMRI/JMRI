@@ -556,18 +556,6 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(actionScript);
-        maleSocket.setEnabled(false);
-        actionManySocket.getChild(indexAction++).connect(maleSocket);
-
-        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        actionScript.setComment("A comment");
-        actionScript.setScript("import java\n");
-        maleSocket = digitalActionManager.registerAction(actionScript);
-        actionManySocket.getChild(indexAction++).connect(maleSocket);
-
-
         ActionSimpleScript simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(simpleScript);
         maleSocket.setEnabled(false);
@@ -2898,7 +2886,6 @@ public class StoreAndLoadTest {
 //        }
 
 
-        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
