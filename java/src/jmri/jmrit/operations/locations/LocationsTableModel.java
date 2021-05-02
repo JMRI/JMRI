@@ -39,12 +39,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public static final int LENGTH_COLUMN = 4;
     public static final int USED_LENGTH_COLUMN = 5;
     public static final int ROLLINGSTOCK_COLUMN = 6;
-    public static final int PICKUPS_COLUMN = 7;
-    public static final int DROPS_COLUMN = 8;
-    public static final int DIVISION_COLUMN = 9;
-    public static final int REPORTER_COLUMN = 10;
-    public static final int ACTION_COLUMN = 11;
-    public static final int EDIT_COLUMN = 12;
+    protected static final int CARS_COLUMN = 7;
+    protected static final int LOCOS_COLUMN = 8;
+    public static final int PICKUPS_COLUMN = 9;
+    public static final int DROPS_COLUMN = 10;
+    public static final int DIVISION_COLUMN = 11;
+    public static final int REPORTER_COLUMN = 12;
+    public static final int ACTION_COLUMN = 13;
+    public static final int EDIT_COLUMN = 14;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -111,6 +113,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(USED_LENGTH_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(ROLLINGSTOCK_COLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(getColumnName(ROLLINGSTOCK_COLUMN)).getPreferredSize().width + 10));
+        table.getColumnModel().getColumn(CARS_COLUMN).setPreferredWidth(60);
+        table.getColumnModel().getColumn(LOCOS_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(PICKUPS_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(PICKUPS_COLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(DROPS_COLUMN).setPreferredWidth(
@@ -157,6 +161,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Used");
             case ROLLINGSTOCK_COLUMN:
                 return Bundle.getMessage("RollingStock");
+            case LOCOS_COLUMN:
+                return Bundle.getMessage("Engines");
+            case CARS_COLUMN:
+                return Bundle.getMessage("Cars");
             case PICKUPS_COLUMN:
                 return Bundle.getMessage("Pickups");
             case DROPS_COLUMN:
@@ -187,6 +195,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case LENGTH_COLUMN:
             case USED_LENGTH_COLUMN:
             case ROLLINGSTOCK_COLUMN:
+            case LOCOS_COLUMN:
+            case CARS_COLUMN:
             case PICKUPS_COLUMN:
             case DROPS_COLUMN:
                 return Integer.class;
@@ -233,6 +243,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return location.getUsedLength();
             case ROLLINGSTOCK_COLUMN:
                 return location.getNumberRS();
+            case LOCOS_COLUMN:
+                return location.getNumberEngines();
+            case CARS_COLUMN:
+                return location.getNumberCars();
             case PICKUPS_COLUMN:
                 return location.getPickupRS();
             case DROPS_COLUMN:
