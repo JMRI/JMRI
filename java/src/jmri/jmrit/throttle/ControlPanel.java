@@ -823,6 +823,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     @Override
                     public void componentResized(ComponentEvent e) {
                         changeOrientation();
+                    }
+                });
+        
+        speedPanel.addComponentListener(
+                new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
                         changeFontSizes();
                     }
                 });
