@@ -938,14 +938,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             // fit horizontally
             int fieldWidth = speedControlPanel.getSize().width;
             int stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
-            if (stringWidth > fieldWidth) { // component has shrunk horizontally
-                while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN)) {
-                    fontSize -= 2;
-                    Font f = new Font("", Font.PLAIN, fontSize);
-                    speedSpinner.setFont(f);
-                    stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
-                }
-            }
+            while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN)) { // component has shrunk horizontally
+                fontSize -= 2;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                speedSpinner.setFont(f);
+                stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
+            }            
             speedSpinner.setMinimumSize(new Dimension(stringWidth,stringHeight)); //not sure why this helps here, required
         }
     }
