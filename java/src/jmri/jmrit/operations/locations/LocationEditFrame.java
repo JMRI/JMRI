@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -202,6 +203,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pDivision.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Division")));
         addItem(pDivision, divisionComboBox, 2, 0);
         addItem(pDivision, editDivisionButton, 3, 0);
+        setDivisionButtonText();
 
         // row 5
         panelCheckBoxes.setLayout(new GridBagLayout());
@@ -289,6 +291,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addCheckBoxTrainAction(southCheckBox);
         addCheckBoxTrainAction(eastCheckBox);
         addCheckBoxTrainAction(westCheckBox);
+        
+        addComboBoxAction(divisionComboBox);
 
         // add property listeners
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
@@ -756,6 +760,19 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) == Location.SOUTH);
         eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) == Location.EAST);
         westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) == Location.WEST);
+    }
+    
+    @Override
+    protected void comboBoxActionPerformed(ActionEvent ae) {
+        setDivisionButtonText();
+    }
+    
+    private void setDivisionButtonText() {
+        if (divisionComboBox.getSelectedItem() == null) {
+            editDivisionButton.setText(Bundle.getMessage("Add"));
+        } else {
+            editDivisionButton.setText(Bundle.getMessage("ButtonEdit"));
+        }
     }
 
     @Override
