@@ -38,6 +38,7 @@ public class DccLocoAddressSelector extends JPanel {
 
     private static final int FONT_SIZE_MIN = 12;
     private static final int FONT_SIZE_MAX = 96;
+    private static final int FONT_INCREMENT = 2;
 
     public DccLocoAddressSelector() {
         super();
@@ -196,15 +197,15 @@ public class DccLocoAddressSelector extends JPanel {
         int stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
         int fontSize = text.getFont().getSize();
         if (stringWidth > fieldWidth) { // component has shrunk horizontally
-            while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN)) {
-                fontSize -= 2;
+            while ((stringWidth > fieldWidth) && (fontSize > FONT_SIZE_MIN)) {
+                fontSize -= FONT_INCREMENT;
                 Font f = new Font("", Font.PLAIN, fontSize);
                 text.setFont(f);
                 stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
             }
         } else { // component has grown horizontally
-            while ((fieldWidth - stringWidth > 10) && (fontSize <= FONT_SIZE_MAX)) {
-                fontSize += 2;
+            while ((fieldWidth - stringWidth > 10) && (fontSize < FONT_SIZE_MAX)) {
+                fontSize += FONT_INCREMENT;
                 Font f = new Font("", Font.PLAIN, fontSize);
                 text.setFont(f);
                 stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
@@ -213,8 +214,8 @@ public class DccLocoAddressSelector extends JPanel {
         // also fit vertically
         double fieldHeight = text.getSize().height;
         int stringHeight = text.getFontMetrics(text.getFont()).getHeight();
-        while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN)) {  // component has shrunk vertically
-            fontSize -= 2;
+        while ((stringHeight > fieldHeight) && (fontSize > FONT_SIZE_MIN)) {  // component has shrunk vertically
+            fontSize -= FONT_INCREMENT;
             Font f = new Font("", Font.PLAIN, fontSize);
             text.setFont(f);
             stringHeight = text.getFontMetrics(text.getFont()).getHeight();
