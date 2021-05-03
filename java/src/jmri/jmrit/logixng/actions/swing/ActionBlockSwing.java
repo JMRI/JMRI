@@ -58,8 +58,6 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
     private JTextField _blockDataLocalVariableTextField;
     private JTextField _blockDataFormulaTextField;
 
-    private JPanel _panelStateCombo;
-
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionBlock action = (ActionBlock)object;
