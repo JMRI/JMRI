@@ -43,7 +43,9 @@ public class ErrorHandlingDialog {
         
         contentPanel.add(new JLabel(Bundle.getMessage(
                 "ErrorHandlingDialog_Name", item.getShortDescription())));
+        contentPanel.add(Box.createVerticalStrut(10));
         contentPanel.add(new JLabel(errorMessage));
+        contentPanel.add(Box.createVerticalStrut(10));
         
         contentPanel.add(_disableConditionalNGCheckBox);
         _disableConditionalNGCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
