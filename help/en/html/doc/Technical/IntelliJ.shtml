@@ -670,7 +670,7 @@
           To add the path to SpotBugs for Ant in your <code>local.properties</code> file to match the place where the
           SpotBugs application is located on your computer add these lines:<br>
           <code># configure SpotBugs<br>
-            spotbugs.home=/Users/you/Apps/spotbugs-4.2.3</code><br>
+            spotbugs.home=/Users/you/Apps/spotbugs-3.1.12</code><br>
           See the <a href="SpotBugs.shtml">JMRI SpotBugs help</a>.
         </li>
         <li>Next, from the <b>Ant Build</b> tab select the <b>spotbugs</b> ant task, wait for

@@ -302,9 +302,9 @@
         Si n&#233;cessaire, cr&#233;ez le fichier local.properties dans le m&#234;me r&#233;pertoire que
         le fichier JMRI build.xml. Dans le fichier local.properties, ajouter la variable
         spotbugs.home avec un chemin vers l'ex&#233;cutable spotbugs, tels que: </p>
-		<p style="font-family: monospace"> spotbugs.home=C:/spotbugs-4.2.3</p>
+		<p style="font-family: monospace"> spotbugs.home=C:/spotbugs-3.1.1</p>
 		<p>ou</p>
-		<p style="font-family: monospace">spotbugs.home =/opt/spotbugs-4.2.3</p>
+		<p style="font-family: monospace">spotbugs.home =/opt/spotbugs-3.1.1</p>
 		<p>Pour ex&#233;cuter l'outil SpotBugs sur le code JMRI,ex&#233;cutez la cible ant "spotbugs"
 		qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli
 		par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "SpotBugs".

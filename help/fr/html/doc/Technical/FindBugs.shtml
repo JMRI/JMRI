@@ -202,7 +202,7 @@ Pour ex&#233;cuter la t&#226;che:
     <li> soit ex&#233;cuter
  
 <code>
-ant-Dspotbugs.home=C:/SpotBugs-4.2.3 spotbugs ( rempla&#233;ant le param&#232;tre de votre emplacement d'installation )
+ant-Dspotbugs.home=C:/SpotBugs-3.1.1 spotbugs ( rempla&#233;ant le param&#232;tre de votre emplacement d'installation )
 </code>
 
 ou modifier le build.xml et modifier le param&#232;tre comment&#233;
