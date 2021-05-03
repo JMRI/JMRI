@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import java.awt.GraphicsEnvironment;
+import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
+
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.Block;
@@ -19,6 +23,8 @@ import org.jdom2.Element;
  * @author Dave Sand Copyright (C) 2021
  */
 public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logixng.actions.ActionBundle");
 
     public ActionBlockXml() {
     }
@@ -53,13 +59,14 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
         element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getLockFormula()));
+        element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
 
-        element.addContent(new Element("blockConstant").addContent(p.getBlockConstant()));
-        NamedBeanHandle<Memory> blockMemory = p.getBlockMemory();
-        if (blockMemory != null) {
-            element.addContent(new Element("blockMemory").addContent(blockMemory.getName()));
-        }
+        element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
+        element.addContent(new Element("dataReference").addContent(p.getDataReference()));
+        element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
+        element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
+
+        element.addContent(new Element("blockValue").addContent(p.getBlockValue()));
 
         return element;
     }
@@ -102,7 +109,12 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
 
             elem = shared.getChild("operationDirect");
             if (elem != null) {
-                h.setOperationDirect(ActionBlock.DirectOperation.valueOf(elem.getTextTrim()));
+                String oper = elem.getTextTrim();
+                // deprecated 4.23.5 remove 4.25.1
+                if (oper.equals("SetToConstant") || oper.equals("CopyFromMemory") || oper.equals("CopyToMemory")) {
+                    oper = "SetValue";
+                }
+                h.setOperationDirect(ActionBlock.DirectOperation.valueOf(oper));
             }
 
             elem = shared.getChild("operationReference");
@@ -114,11 +126,41 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
             elem = shared.getChild("operationFormula");
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
 
-            elem = shared.getChild("blockConstant");
-            if (elem != null) h.setBlockConstant(elem.getTextTrim());
 
+            elem = shared.getChild("dataAddressing");
+            if (elem != null) {
+                h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("dataReference");
+            if (elem != null) h.setDataReference(elem.getTextTrim());
+
+            elem = shared.getChild("dataLocalVariable");
+            if (elem != null) h.setDataLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("dataFormula");
+            if (elem != null) h.setDataFormula(elem.getTextTrim());
+
+
+            elem = shared.getChild("blockValue");
+            if (elem != null) h.setBlockValue(elem.getTextTrim());
+
+            // deprecated 4.23.5 remove 4.25.1
+            elem = shared.getChild("blockConstant");
+            if (elem != null) h.setBlockValue(elem.getTextTrim());
+
+            // deprecated 4.23.5 remove 4.25.1
             elem = shared.getChild("blockMemory");
-            if (elem != null) h.setBlockMemory(elem.getTextTrim());
+            if (elem != null) {
+                String memoryName = elem.getTextTrim();
+                h.setBlockValue(">>> " + elem.getTextTrim() + " <<<");
+                if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
+                    JOptionPane.showMessageDialog(null,
+                            rb.getString("ActionBlock_MemoryChange"),
+                            rb.getString("ActionBlock_MemoryTitle") + " " + memoryName,
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
