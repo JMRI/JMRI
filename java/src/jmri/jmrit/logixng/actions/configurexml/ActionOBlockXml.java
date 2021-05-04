@@ -53,13 +53,14 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
         element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getLockFormula()));
+        element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
 
-        element.addContent(new Element("oblockConstant").addContent(p.getOBlockConstant()));
-        NamedBeanHandle<Memory> oblockMemory = p.getOBlockMemory();
-        if (oblockMemory != null) {
-            element.addContent(new Element("oblockMemory").addContent(oblockMemory.getName()));
-        }
+        element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
+        element.addContent(new Element("dataReference").addContent(p.getDataReference()));
+        element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
+        element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
+
+        element.addContent(new Element("oblockValue").addContent(p.getOBlockValue()));
 
         return element;
     }
@@ -114,11 +115,24 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
             elem = shared.getChild("operationFormula");
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
 
-            elem = shared.getChild("oblockConstant");
-            if (elem != null) h.setOBlockConstant(elem.getTextTrim());
 
-            elem = shared.getChild("oblockMemory");
-            if (elem != null) h.setOBlockMemory(elem.getTextTrim());
+            elem = shared.getChild("dataAddressing");
+            if (elem != null) {
+                h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("dataReference");
+            if (elem != null) h.setDataReference(elem.getTextTrim());
+
+            elem = shared.getChild("dataLocalVariable");
+            if (elem != null) h.setDataLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("dataFormula");
+            if (elem != null) h.setDataFormula(elem.getTextTrim());
+
+
+            elem = shared.getChild("oblockValue");
+            if (elem != null) h.setOBlockValue(elem.getTextTrim());
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
