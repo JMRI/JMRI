@@ -18,7 +18,8 @@ exemptLabels: []
 staleLabel: "Pending closure"
 
 # Label to use when an issue has been closed
-closedLabel: "Closed due to inactivity"
+close-issue-label: "Closed due to inactivity"
+close-pr-label: "Closed due to inactivity"
 
 # Comment to post when marking an issue as stale. Set to `false` to disable
 markComment: >
