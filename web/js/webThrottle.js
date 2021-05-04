@@ -735,7 +735,7 @@ var defineTurnoutsRoutes = function(listTurnoutsRoutes) {
 		bodyFrameInner.append(trCell);
 		trCell.append($('<div>').text(item.data.name + ((item.data.userName) ? ' - ' + item.data.userName : '')).addClass('trName'));
 		trCell.append($('<div>').text('').addClass('trStatus').attr('id',encodeId(item.data.name)).attr('state', -1).on('click', function(event) {trChangeStatus(event, item.type, item.data.name);}));
-		$jmri.getJMRI(item.type == 'turnouts' ? 'turnout' : 'route', item.data.name);
+		$jmri.getJMRI( item.type.startsWith ('turnout') ? 'turnout' : 'route', item.data.name);
 	});
 };
 
@@ -1716,7 +1716,7 @@ var trChangeStatus = function(e, type, name) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	var lastState = Number($('#' + encodeId(name)).attr('state'));
-	if (type == 'turnouts') {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
+	if (type.startsWith ('turnout')) {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
 		switch (lastState) {
 			case $jmri.turnoutTHROWN:
 				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED}, "post");
@@ -1729,7 +1729,7 @@ var trChangeStatus = function(e, type, name) {
 				break;
 		}
 	} else {	// 0(unknown) 2(Active) 4(Inactive) 8(inconsistent) - Can only activate
-		$jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE});
+		$jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE}, "post");
 	}
 };
 
