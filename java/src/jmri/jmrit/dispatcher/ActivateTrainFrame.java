@@ -4,7 +4,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -79,8 +81,7 @@ public class ActivateTrainFrame {
     //private String selectedTrain = "";
     private JmriJFrame initiateFrame = null;
     private JPanel initiatePane = null;
-    private final JComboBox<String> transitSelectBox = new JComboBox<>();
-    private final List<Transit> transitBoxList = new ArrayList<>();
+    private final jmri.swing.NamedBeanComboBox<Transit> transitSelectBox = new jmri.swing.NamedBeanComboBox<>(_TransitManager);
     private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
     private final JComboBox<String> trainSelectBox = new JComboBox<>();
     private final List<RosterEntry> trainBoxList = new ArrayList<>();
@@ -505,7 +506,7 @@ public class ActivateTrainFrame {
         if (index < 0) {
             return;
         }
-        Transit t = transitBoxList.get(index);
+        Transit t = transitSelectBox.getSelectedItem();
         if ((t != null) && (t != selectedTransit)) {
             selectedTransit = t;
             initializeStartingBlockCombo();
@@ -806,32 +807,18 @@ public class ActivateTrainFrame {
     }
 
     private void initializeFreeTransitsCombo(List<Transit> transitList) {
-        transitSelectBox.removeAllItems();
-        transitBoxList.clear();
-        if (transitList.isEmpty()) {
-            for (Transit t : _TransitManager.getNamedBeanSet()) {
-                transitList.add(t);
-            }
-
-        }
-        for (Transit t : transitList) {
-            boolean free = true;
-            for (int j = 0; j < _ActiveTrainsList.size(); j++) {
-                ActiveTrain at = _ActiveTrainsList.get(j);
-                if (t == at.getTransit()) {
-                    free = false;
-                }
-            }
-            if (free) {
-                String tName = t.getDisplayName();
-                transitBoxList.add(t);
-                transitSelectBox.addItem(tName);
+        Set<Transit> excludeTransits = new HashSet<>();
+        for (Transit t : _TransitManager.getNamedBeanSet()) {
+            if (t.getState() != Transit.IDLE) {
+                excludeTransits.add(t);
             }
         }
+        transitSelectBox.setExcludedItems(excludeTransits);
         JComboBoxUtil.setupComboBoxMaxRows(transitSelectBox);
-        if (transitBoxList.size() > 0) {
+
+        if (transitSelectBox.getItemCount() > 0) {
             transitSelectBox.setSelectedIndex(0);
-            selectedTransit = transitBoxList.get(0);
+            selectedTransit = transitSelectBox.getItemAt(0);
         } else {
             selectedTransit = null;
         }
@@ -1102,7 +1089,9 @@ public class ActivateTrainFrame {
     }
 
     private void trainInfoToDialog(TrainInfo info) {
-        if (!setComboBox(transitSelectBox, info.getTransitName())) {
+        try {
+            transitSelectBox.setSelectedItemByName(info.getTransitName());
+        } catch (Exception ex) {
             log.warn("Transit {} from file not in Transit menu", info.getTransitName());
             JOptionPane.showMessageDialog(initiateFrame,
                     Bundle.getMessage("TransitWarn", info.getTransitName()),
@@ -1151,8 +1140,13 @@ public class ActivateTrainFrame {
 
     private TrainInfo dialogToTrainInfo() {
         TrainInfo info = new TrainInfo();
-        info.setTransitName((String) transitSelectBox.getSelectedItem());
-        info.setTransitId(selectedTransit.getDisplayName());
+        int index = transitSelectBox.getSelectedIndex();
+        if (index < 0) {
+            log.error("No Transit.");
+        } else {
+            info.setTransitName(transitSelectBox.getSelectedItem().getDisplayName());
+            info.setTransitId(transitSelectBox.getSelectedItem().getDisplayName());
+        }
         if (_TrainsFromRoster || _TrainsFromOperations) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
             info.setDccAddress(" ");
@@ -1162,7 +1156,7 @@ public class ActivateTrainFrame {
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
-        int index = startingBlockBox.getSelectedIndex();
+        index = startingBlockBox.getSelectedIndex();
         if (index < 0) {
             log.error("No Starting Block.");
         } else {

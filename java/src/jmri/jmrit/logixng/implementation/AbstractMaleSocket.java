@@ -581,7 +581,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             Base item,
             String message,
             List<String> messageList,
-            JmriMultiLineException e,
+            JmriException e,
             Logger log)
             throws JmriException {
 

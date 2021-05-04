@@ -44,9 +44,12 @@ public class ErrorHandlingDialog_MultiLine {
         
         contentPanel.add(new JLabel(Bundle.getMessage(
                 "ErrorHandlingDialog_Name", item.getShortDescription())));
+        contentPanel.add(Box.createVerticalStrut(10));
         contentPanel.add(new JLabel(errorMessage));
+        contentPanel.add(Box.createVerticalStrut(10));
         String errorMsg = String.join("<br>", errorMessageList);
         contentPanel.add(new JLabel("<html>"+errorMsg+"</html>"));
+        contentPanel.add(Box.createVerticalStrut(10));
         
         contentPanel.add(_disableConditionalNGCheckBox);
         _disableConditionalNGCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);

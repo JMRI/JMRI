@@ -58,17 +58,23 @@
                     <xs:enumeration value="Other"/>
                     <xs:enumeration value="Allocated"/>
                     <xs:enumeration value="ValueMatches"/>
-                    <xs:enumeration value="MemoryMatches"/>
+                    <xs:enumeration value="MemoryMatches"/>     <!-- deprecated 4.23.5 remove 4.25.1 -->
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-
               <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="blockConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="blockMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="blockConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>       <!-- deprecated 4.23.5 remove 4.25.1 -->
+              <xs:element name="blockMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>      <!-- deprecated 4.23.5 remove 4.25.1 -->
+
+              <xs:element name="blockValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
