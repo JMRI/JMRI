@@ -927,7 +927,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             int fieldHeight = speedControlPanel.getSize().height;
             int stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16;
             if (stringHeight > fieldHeight) { // component has shrunk vertically
-                while ((stringHeight > fieldHeight) && (fontSize > FONT_SIZE_MIN)) {
+                while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) {
                     fontSize -= FONT_INCREMENT;
                     Font f = new Font("", Font.PLAIN, fontSize);
                     speedSpinner.setFont(f);
@@ -938,17 +938,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     fontSize += FONT_INCREMENT;
                     Font f = new Font("", Font.PLAIN, fontSize);
                     speedSpinner.setFont(f);
-                    stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() ;
+                    stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16 ;
                 }
             }
             // fit horizontally
             int fieldWidth = speedControlPanel.getSize().width; 
-            int stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
-            while ((stringWidth > fieldWidth) && (fontSize > FONT_SIZE_MIN)) { // component has shrunk horizontally
+            int stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 24 ;
+            while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) { // component has shrunk horizontally
                 fontSize -= FONT_INCREMENT;
                 Font f = new Font("", Font.PLAIN, fontSize);
                 speedSpinner.setFont(f);
-                stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 16 ;
+                stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 24 ;
             }            
             speedSpinner.setMinimumSize(new Dimension(stringWidth,stringHeight)); //not sure why this helps here, required
         }
