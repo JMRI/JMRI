@@ -43,7 +43,6 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalhead-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalmast-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-simple-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-turnout-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-warrant-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/false-4.23.1.xsd"/>
@@ -89,7 +88,7 @@
             <xs:element name="ExpressionSensor"   type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionSignalHead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionSignalMast"  type="LogixNG_DigitalExpression_ExpressionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="ExpressionSimpleScript"  type="LogixNG_DigitalExpression_ExpressionSimpleScriptType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionSimpleScript"  type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" /> <!-- Kept temporary. Remove for 4.26 -->
             <xs:element name="ExpressionTurnout"  type="LogixNG_DigitalExpression_ExpressionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionWarrant"  type="LogixNG_DigitalExpression_ExpressionWarrantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="False"              type="LogixNG_DigitalExpression_FalseType" minOccurs="0" maxOccurs="unbounded" />

@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.expressions.swing;
+package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -10,18 +10,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.expressions.ExpressionSimpleScript;
+import jmri.jmrit.logixng.actions.ActionScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Configures an SimpleScript object with a Swing JPanel.
+ * Configures an ActionScript object with a Swing JPanel.
  * 
  * @author Daniel Bergqvist 2021
  */
-public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing {
+public class ActionScriptSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     
@@ -31,7 +31,7 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
     private JPanel _panelOperationTypeLocalVariable;
     private JPanel _panelOperationTypeFormula;
     
-    private JComboBox<ExpressionSimpleScript.OperationType> _operationComboBox;
+    private JComboBox<ActionScript.OperationType> _operationComboBox;
     private JTextField _scriptOperationReferenceTextField;
     private JTextField _scriptOperationLocalVariableTextField;
     private JTextField _scriptOperationFormulaTextField;
@@ -51,7 +51,7 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        ExpressionSimpleScript action = (ExpressionSimpleScript)object;
+        ActionScript action = (ActionScript)object;
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -76,26 +76,26 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
         _tabbedPaneOperationType.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationTypeFormula);
         
         _operationComboBox = new JComboBox<>();
-        for (ExpressionSimpleScript.OperationType e : ExpressionSimpleScript.OperationType.values()) {
+        for (ActionScript.OperationType e : ActionScript.OperationType.values()) {
             _operationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
-        _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("SimpleScript_Operation")));
+        _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("ActionScript_Operation")));
         _panelOperationTypeDirect.add(_operationComboBox);
         
         _scriptOperationReferenceTextField = new JTextField();
         _scriptOperationReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeReference.add(new JLabel(Bundle.getMessage("SimpleScript_Operation")));
+        _panelOperationTypeReference.add(new JLabel(Bundle.getMessage("ActionScript_Operation")));
         _panelOperationTypeReference.add(_scriptOperationReferenceTextField);
         
         _scriptOperationLocalVariableTextField = new JTextField();
         _scriptOperationLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeLocalVariable.add(new JLabel(Bundle.getMessage("SimpleScript_Operation")));
+        _panelOperationTypeLocalVariable.add(new JLabel(Bundle.getMessage("ActionScript_Operation")));
         _panelOperationTypeLocalVariable.add(_scriptOperationLocalVariableTextField);
         
         _scriptOperationFormulaTextField = new JTextField();
         _scriptOperationFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeFormula.add(new JLabel(Bundle.getMessage("SimpleScript_Operation")));
+        _panelOperationTypeFormula.add(new JLabel(Bundle.getMessage("ActionScript_Operation")));
         _panelOperationTypeFormula.add(_scriptOperationFormulaTextField);
         
         
@@ -138,23 +138,23 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
         JPanel _scriptTextPanel = new JPanel();
         _scriptTextPanel.setLayout(new BoxLayout(_scriptTextPanel, BoxLayout.Y_AXIS));
         _scriptTextField = new JTextField(30);
-        _scriptTextPanel.add(new JLabel(Bundle.getMessage("SimpleScript_Script")));
+        _scriptTextPanel.add(new JLabel(Bundle.getMessage("ActionScript_Script")));
         _scriptTextPanel.add(_scriptTextField);
         _panelScriptTypeDirect.add(_scriptTextPanel);
         
         _scriptReferenceTextField = new JTextField();
         _scriptReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelScriptTypeReference.add(new JLabel(Bundle.getMessage("SimpleScript_Script")));
+        _panelScriptTypeReference.add(new JLabel(Bundle.getMessage("ActionScript_Script")));
         _panelScriptTypeReference.add(_scriptReferenceTextField);
         
         _scriptLocalVariableTextField = new JTextField();
         _scriptLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelScriptTypeLocalVariable.add(new JLabel(Bundle.getMessage("SimpleScript_Script")));
+        _panelScriptTypeLocalVariable.add(new JLabel(Bundle.getMessage("ActionScript_Script")));
         _panelScriptTypeLocalVariable.add(_scriptLocalVariableTextField);
         
         _scriptFormulaTextField = new JTextField();
         _scriptFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelScriptTypeFormula.add(new JLabel(Bundle.getMessage("SimpleScript_Script")));
+        _panelScriptTypeFormula.add(new JLabel(Bundle.getMessage("ActionScript_Script")));
         _panelScriptTypeFormula.add(_scriptFormulaTextField);
         
         
@@ -190,26 +190,17 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
         };
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("SimpleScript_Components"), components);
+                Bundle.getMessage("ActionScript_Components"), components);
         
         for (JComponent c : componentList) actionPanel.add(c);
         panel.add(actionPanel);
-        
-/*        
-        panel.add(new JLabel("If you use Direct addressing of the signal head and Direct addressing of the appearance,"));
-        panel.add(new JLabel(" you need to first select the signal head, then click Create/OK to save the settings, and"));
-        panel.add(new JLabel(" then edit the signal head action again and select the appearance."));
-        panel.add(new JLabel("If you do not use Direct addressing of the signal head but are using Direct addressing of"));
-        panel.add(new JLabel("the appearance, you need to select an example signal head. The example signal head is used"));
-        panel.add(new JLabel("to tell JMRI which aspects the indirect addressed signal head may show."));
-*/        
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        ExpressionSimpleScript action = new ExpressionSimpleScript("IQDA1", null);
+        ActionScript action = new ActionScript("IQDA1", null);
         
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
@@ -242,23 +233,23 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ExpressionSimpleScript expression = new ExpressionSimpleScript(systemName, userName);
-        updateObject(expression);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
+        ActionScript action = new ActionScript(systemName, userName);
+        updateObject(action);
+        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ExpressionSimpleScript)) {
-            throw new IllegalArgumentException("object must be an SimpleScript but is a: "+object.getClass().getName());
+        if (! (object instanceof ActionScript)) {
+            throw new IllegalArgumentException("object must be an ActionScript but is a: "+object.getClass().getName());
         }
-        ExpressionSimpleScript action = (ExpressionSimpleScript)object;
+        ActionScript action = (ActionScript)object;
         
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
                 action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationType((ExpressionSimpleScript.OperationType)_operationComboBox.getSelectedItem());
+                action.setOperationType((ActionScript.OperationType)_operationComboBox.getSelectedItem());
             } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
                 action.setOperationAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference(_scriptOperationReferenceTextField.getText());
@@ -295,7 +286,7 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("SimpleScript_Short");
+        return Bundle.getMessage("ActionScript_Short");
     }
     
     @Override
@@ -303,6 +294,6 @@ public class ExpressionSimpleScriptSwing extends AbstractDigitalExpressionSwing 
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSimpleScriptSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionScriptSwing.class);
     
 }

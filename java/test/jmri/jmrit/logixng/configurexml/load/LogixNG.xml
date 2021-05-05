@@ -77,7 +77,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="11:04 PM">
+    <memory value="3:55 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -135,7 +135,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue May 04 23:04:29 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed May 05 15:54:59 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -4200,6 +4200,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionReference>
     <ExpressionScript class="jmri.jmrit.logixng.expressions.configurexml.ExpressionScriptXml">
       <systemName>IQDE:AUTO:0062</systemName>
+      <operationAddressing>Direct</operationAddressing>
+      <operationType>JythonCommand</operationType>
+      <operationReference />
+      <operationLocalVariable />
+      <operationFormula />
+      <scriptAddressing>Direct</scriptAddressing>
+      <script />
+      <scriptReference />
+      <scriptLocalVariable />
+      <scriptFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -4250,6 +4260,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionScript class="jmri.jmrit.logixng.expressions.configurexml.ExpressionScriptXml">
       <systemName>IQDE:AUTO:0063</systemName>
       <comment>A comment</comment>
+      <operationAddressing>Direct</operationAddressing>
+      <operationType>JythonCommand</operationType>
+      <operationReference />
+      <operationLocalVariable />
+      <operationFormula />
+      <scriptAddressing>Direct</scriptAddressing>
+      <script>import jmri
+</script>
+      <scriptReference />
+      <scriptLocalVariable />
+      <scriptFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -9467,7 +9488,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </ActionPower>
-    <ActionSimpleScript class="jmri.jmrit.logixng.actions.configurexml.ActionSimpleScriptXml">
+    <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
       <systemName>IQDA:AUTO:0040</systemName>
       <operationAddressing>Direct</operationAddressing>
       <operationType>JythonCommand</operationType>
@@ -9525,8 +9546,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </ActionSimpleScript>
-    <ActionSimpleScript class="jmri.jmrit.logixng.actions.configurexml.ActionSimpleScriptXml">
+    </ActionScript>
+    <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
       <systemName>IQDA:AUTO:0041</systemName>
       <comment>A comment</comment>
       <operationAddressing>Direct</operationAddressing>
@@ -9586,8 +9607,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </ActionSimpleScript>
-    <ActionSimpleScript class="jmri.jmrit.logixng.actions.configurexml.ActionSimpleScriptXml">
+    </ActionScript>
+    <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
       <systemName>IQDA:AUTO:0042</systemName>
       <comment>A comment</comment>
       <operationAddressing>Formula</operationAddressing>
@@ -9646,8 +9667,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </ActionSimpleScript>
-    <ActionSimpleScript class="jmri.jmrit.logixng.actions.configurexml.ActionSimpleScriptXml">
+    </ActionScript>
+    <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
       <systemName>IQDA:AUTO:0043</systemName>
       <comment>A comment</comment>
       <operationAddressing>LocalVariable</operationAddressing>
@@ -9707,8 +9728,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </ActionSimpleScript>
-    <ActionSimpleScript class="jmri.jmrit.logixng.actions.configurexml.ActionSimpleScriptXml">
+    </ActionScript>
+    <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
       <systemName>IQDA:AUTO:0044</systemName>
       <comment>A comment</comment>
       <operationAddressing>Reference</operationAddressing>
@@ -9768,7 +9789,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </ActionSimpleScript>
+    </ActionScript>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0045</systemName>
       <addressing>Direct</addressing>
@@ -16429,9 +16450,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue May 04 23:04:42 CEST 2021</date>
+      <date>Wed May 05 15:55:02 CEST 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.23.5ish+daniel+2021-05-04T21:02:55Z+RUNKNOWN on Tue May 04 23:04:42 CEST 2021-->
+  <!--Written by JMRI version 4.23.5ish+daniel+2021-05-05T13:51:59Z+RUNKNOWN on Wed May 05 15:55:02 CEST 2021-->
 </layout-config>

@@ -1,9 +1,9 @@
-package jmri.jmrit.logixng.actions;
+package jmri.jmrit.logixng.expressions;
 
+import java.beans.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nonnull;
 import javax.script.Bindings;
@@ -19,12 +19,18 @@ import jmri.script.JmriScriptEngineManager;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
 /**
  * Executes a script.
+ * The method evaluate() creates a MutableBoolean with the value "false" and
+ * then sends that value as the variable "result" to the script. The script
+ * then sets the value by the code: "result.setValue(value)"
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionSimpleScript extends AbstractDigitalAction {
+public class ExpressionScript extends AbstractDigitalExpression
+        implements PropertyChangeListener {
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.JythonCommand;
@@ -40,18 +46,22 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     private String _scriptFormula = "";
     private ExpressionNode _scriptExpressionNode;
 
-    public ActionSimpleScript(String sys, String user)
+    private String _registerScript = "";
+    private String _unregisterScript = "";
+
+
+    public ExpressionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
-        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionSimpleScript copy = new ActionSimpleScript(sysName, userName);
+        ExpressionScript copy = new ExpressionScript(sysName, userName);
         copy.setComment(getComment());
         copy.setScript(_script);
         copy.setOperationAddressing(_operationAddressing);
@@ -63,7 +73,9 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         copy.setScriptFormula(_scriptFormula);
         copy.setScriptLocalVariable(_scriptLocalVariable);
         copy.setScriptReference(_scriptReference);
-        return manager.registerAction(copy);
+        copy.setRegisterListenerScript(_registerScript);
+        copy.setUnregisterListenerScript(_unregisterScript);
+        return manager.registerExpression(copy);
     }
     
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -179,6 +191,24 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         }
     }
     
+    public void setRegisterListenerScript(String script) {
+        if (script == null) _registerScript = "";
+        else _registerScript = script;
+    }
+    
+    public String getRegisterListenerScript() {
+        return _registerScript;
+    }
+    
+    public void setUnregisterListenerScript(String script) {
+        if (script == null) _unregisterScript = "";
+        else _unregisterScript = script;
+    }
+    
+    public String getUnregisterListenerScript() {
+        return _unregisterScript;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -255,7 +285,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     
     /** {@inheritDoc} */
     @Override
-    public void execute() throws JmriException {
+    public boolean evaluate() throws JmriException {
         
         OperationType operation = getOperation();
         String script = getTheScript();
@@ -263,7 +293,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
         
         Bindings bindings = new SimpleBindings();
-//        ScriptParams params = new ScriptParams(this);
+        MutableBoolean result = new MutableBoolean(false);
         
         // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
         bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
@@ -274,7 +304,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
         bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
         
-//        bindings.put("params", params);    // Give the script access to the local variable 'params'
+        bindings.put("result", result);     // Give the script access to the local variable 'result'
         
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (operation) {
@@ -303,6 +333,8 @@ public class ActionSimpleScript extends AbstractDigitalAction {
                     throw new IllegalArgumentException("invalid _stateAddressing state: " + _scriptAddressing.name());
             }
         });
+        
+        return result.booleanValue();
     }
 
     @Override
@@ -317,7 +349,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "SimpleScript_Short");
+        return Bundle.getMessage(locale, "ExpressionScript_Short");
     }
 
     @Override
@@ -368,9 +400,9 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         }
         
         if (_operationAddressing == NamedBeanAddressing.Direct) {
-            return Bundle.getMessage(locale, "SimpleScript_Long", operation, script);
+            return Bundle.getMessage(locale, "ExpressionScript_Long", operation, script);
         } else {
-            return Bundle.getMessage(locale, "SimpleScript_LongUnknownOper", operation, script);
+            return Bundle.getMessage(locale, "ExpressionScript_LongUnknownOper", operation, script);
         }
     }
     
@@ -385,6 +417,36 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
+            
+            if (!_registerScript.trim().isEmpty()) {
+                JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+                
+                Bindings bindings = new SimpleBindings();
+                MutableBoolean result = new MutableBoolean(false);
+                
+                // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
+                bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
+                bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
+                bindings.put("digitalActions", InstanceManager.getNullableDefault(DigitalActionManager.class));
+                bindings.put("digitalBooleanActions", InstanceManager.getNullableDefault(DigitalBooleanActionManager.class));
+                bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
+                bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
+                bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
+                
+                bindings.put("result", result);     // Give the script access to the local variable 'result'
+                
+                bindings.put("self", this);         // Give the script access to myself with the local variable 'self'
+                
+                ThreadingUtil.runOnLayout(() -> {
+                    try {
+                        String theScript = String.format("import jmri%n") + _registerScript;
+                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
+                                .eval(theScript, bindings);
+                    } catch (RuntimeException | ScriptException e) {
+                        log.warn("cannot execute script during registerListeners", e);
+                    }
+                });
+            }
         }
     }
     
@@ -393,35 +455,57 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _listenersAreRegistered = false;
+            
+            if (!_unregisterScript.trim().isEmpty()) {
+                JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+                
+                Bindings bindings = new SimpleBindings();
+                MutableBoolean result = new MutableBoolean(false);
+                
+                // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
+                bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
+                bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
+                bindings.put("digitalActions", InstanceManager.getNullableDefault(DigitalActionManager.class));
+                bindings.put("digitalBooleanActions", InstanceManager.getNullableDefault(DigitalBooleanActionManager.class));
+                bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
+                bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
+                bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
+                
+                bindings.put("result", result);     // Give the script access to the local variable 'result'
+                
+                bindings.put("self", this);         // Give the script access to myself with the local variable 'self'
+                
+                ThreadingUtil.runOnLayout(() -> {
+                    try {
+                        String theScript = String.format("import jmri%n") + _unregisterScript;
+                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
+                                .eval(theScript, bindings);
+                    } catch (RuntimeException | ScriptException e) {
+                        log.warn("cannot execute script during registerListeners", e);
+                    }
+                });
+            }
         }
     }
     
     /** {@inheritDoc} */
     @Override
-    public void firePropertyChange(String p, Object old, Object n) {
-        super.firePropertyChange(p, old, n);
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (getTriggerOnChange()) {
+            getConditionalNG().execute();
+        }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
         // Do nothing
     }
     
-/*    
-    public static class ScriptParams {
-        
-        public final DigitalAction _parentAction;
-        
-        public ScriptParams(DigitalAction parentExpression) {
-            _parentAction = parentExpression;
-        }
-    }
-*/    
     
     public enum OperationType {
-        RunScript(Bundle.getMessage("SimpleScript_RunScript")),
-        JythonCommand(Bundle.getMessage("SimpleScript_JythonCommand"));
+        RunScript(Bundle.getMessage("ExpressionScript_RunScript")),
+        JythonCommand(Bundle.getMessage("ExpressionScript_JythonCommand"));
         
         private final String _text;
         
@@ -437,6 +521,6 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSimpleScript.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionScript.class);
     
 }

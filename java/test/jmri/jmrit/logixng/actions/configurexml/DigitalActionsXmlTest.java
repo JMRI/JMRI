@@ -35,7 +35,7 @@ public class DigitalActionsXmlTest {
         // If the ActionScript is in a panel file, it will be replaced with
         // the ActionSimpleScript. That's why the ActionScriptXml class is
         // still there.
-        b = new ActionScriptXml();
+        b = new ActionSimpleScriptXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

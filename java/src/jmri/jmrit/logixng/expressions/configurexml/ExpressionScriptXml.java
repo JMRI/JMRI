@@ -4,7 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
-import jmri.jmrit.logixng.expressions.ExpressionSimpleScript;
+import jmri.jmrit.logixng.expressions.ExpressionScript;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -15,9 +15,9 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2021
  */
-public class ExpressionSimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ExpressionScriptXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public ExpressionSimpleScriptXml() {
+    public ExpressionScriptXml() {
     }
     
     /**
@@ -28,9 +28,9 @@ public class ExpressionSimpleScriptXml extends jmri.managers.configurexml.Abstra
      */
     @Override
     public Element store(Object o) {
-        ExpressionSimpleScript p = (ExpressionSimpleScript) o;
+        ExpressionScript p = (ExpressionScript) o;
 
-        Element element = new Element("ExpressionSimpleScript");
+        Element element = new Element("ExpressionScript");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
@@ -55,7 +55,7 @@ public class ExpressionSimpleScriptXml extends jmri.managers.configurexml.Abstra
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ExpressionSimpleScript h = new ExpressionSimpleScript(sys, uname);
+        ExpressionScript h = new ExpressionScript(sys, uname);
 
         loadCommon(h, shared);
 
@@ -67,7 +67,7 @@ public class ExpressionSimpleScriptXml extends jmri.managers.configurexml.Abstra
             
             Element queryType = shared.getChild("operationType");
             if (queryType != null) {
-                h.setOperationType(ExpressionSimpleScript.OperationType.valueOf(queryType.getTextTrim()));
+                h.setOperationType(ExpressionScript.OperationType.valueOf(queryType.getTextTrim()));
             }
             
             elem = shared.getChild("operationReference");
@@ -111,5 +111,5 @@ public class ExpressionSimpleScriptXml extends jmri.managers.configurexml.Abstra
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSimpleScriptXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionScriptXml.class);
 }

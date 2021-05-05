@@ -1336,8 +1336,8 @@ public class ImportConditional {
     
     
     private DigitalActionBean getScriptAction(@Nonnull ConditionalAction ca) throws JmriException {
-        ActionSimpleScript action =
-                new ActionSimpleScript(InstanceManager.getDefault(DigitalActionManager.class)
+        ActionScript action =
+                new ActionScript(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
         
         action.setOperationAddressing(NamedBeanAddressing.Direct);
@@ -1353,11 +1353,11 @@ public class ImportConditional {
         
         switch (ca.getType()) {
             case RUN_SCRIPT:
-                action.setOperationType(ActionSimpleScript.OperationType.RunScript);
+                action.setOperationType(ActionScript.OperationType.RunScript);
                 break;
                 
             case JYTHON_COMMAND:
-                action.setOperationType(ActionSimpleScript.OperationType.JythonCommand);
+                action.setOperationType(ActionScript.OperationType.JythonCommand);
                 break;
                 
             default:
