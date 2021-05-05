@@ -2000,7 +2000,9 @@ public class StoreAndLoadTest {
 
         expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
         expressionScript.setComment("A comment");
-        expressionScript.setScript("import jmri\n");
+        expressionScript.setScript("result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )");
+        expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
+        expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(indexExpr++).connect(maleSocket);
 

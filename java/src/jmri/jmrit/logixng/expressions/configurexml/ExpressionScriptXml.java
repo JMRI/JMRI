@@ -48,6 +48,9 @@ public class ExpressionScriptXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("scriptLocalVariable").addContent(p.getScriptLocalVariable()));
         element.addContent(new Element("scriptFormula").addContent(p.getScriptFormula()));
         
+        element.addContent(new Element("registerListenerScript").addContent(p.getRegisterListenerScript()));
+        element.addContent(new Element("unregisterListenerScript").addContent(p.getUnregisterListenerScript()));
+        
         return element;
     }
     
@@ -87,11 +90,7 @@ public class ExpressionScriptXml extends jmri.managers.configurexml.AbstractName
             
             Element scriptElement = shared.getChild("script");
             if (scriptElement != null) {
-                try {
-                    h.setScript(scriptElement.getText());
-                } catch (NumberFormatException e) {
-                    log.error("cannot parse script: " + scriptElement.getTextTrim(), e);
-                }
+                h.setScript(scriptElement.getText());
             }
             
             elem = shared.getChild("scriptReference");
@@ -102,6 +101,16 @@ public class ExpressionScriptXml extends jmri.managers.configurexml.AbstractName
             
             elem = shared.getChild("scriptFormula");
             if (elem != null) h.setScriptFormula(elem.getTextTrim());
+            
+            Element registerListenerScriptElement = shared.getChild("registerListenerScript");
+            if (registerListenerScriptElement != null) {
+                h.setRegisterListenerScript(registerListenerScriptElement.getText());
+            }
+            
+            Element unregisterListenerScriptElement = shared.getChild("unregisterListenerScript");
+            if (unregisterListenerScriptElement != null) {
+                h.setUnregisterListenerScript(unregisterListenerScriptElement.getText());
+            }
             
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
