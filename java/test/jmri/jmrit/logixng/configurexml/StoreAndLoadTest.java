@@ -2006,17 +2006,16 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
-        ExpressionScript expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
+        ExpressionSimpleScript expressionScript = new ExpressionSimpleScript(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
-        expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
+        expressionScript = new ExpressionSimpleScript(digitalExpressionManager.getAutoSystemName(), null);
         expressionScript.setComment("A comment");
         expressionScript.setScript("import jmri\n");
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(indexExpr++).connect(maleSocket);
-        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
 
 
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);

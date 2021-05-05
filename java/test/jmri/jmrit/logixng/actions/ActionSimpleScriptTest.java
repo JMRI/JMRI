@@ -139,7 +139,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testDescription() {
-        Assert.assertEquals("Execute simple script", actionScript.getShortDescription());
+        Assert.assertEquals("Script", actionScript.getShortDescription());
         Assert.assertEquals("Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", actionScript.getLongDescription());
     }
     
