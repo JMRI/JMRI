@@ -77,7 +77,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="3:55 PM">
+    <memory value="1:15 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -135,7 +135,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed May 05 15:54:59 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu May 06 01:15:08 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -4210,6 +4210,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <scriptReference />
       <scriptLocalVariable />
       <scriptFormula />
+      <registerListenerScript />
+      <unregisterListenerScript />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -4266,11 +4268,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <operationLocalVariable />
       <operationFormula />
       <scriptAddressing>Direct</scriptAddressing>
-      <script>import jmri
-</script>
+      <script>result.setValue( sensors.provideSensor("IS1").getState() == ACTIVE )</script>
       <scriptReference />
       <scriptLocalVariable />
       <scriptFormula />
+      <registerListenerScript>sensors.provideSensor("IS1").addPropertyChangeListener(self)</registerListenerScript>
+      <unregisterListenerScript>sensors.provideSensor("IS1").removePropertyChangeListener(self)</unregisterListenerScript>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -16450,9 +16453,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Wed May 05 15:55:02 CEST 2021</date>
+      <date>Thu May 06 01:15:11 CEST 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.23.5ish+daniel+2021-05-05T13:51:59Z+RUNKNOWN on Wed May 05 15:55:02 CEST 2021-->
+  <!--Written by JMRI version 4.23.5ish+daniel+2021-05-05T23:14:51Z+RUNKNOWN on Thu May 06 01:15:11 CEST 2021-->
 </layout-config>
