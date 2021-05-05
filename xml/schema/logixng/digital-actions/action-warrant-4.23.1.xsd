@@ -52,7 +52,6 @@
               <xs:element name="operationDirect" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="None"/>
                     <xs:enumeration value="AllocateWarrantRoute"/>
                     <xs:enumeration value="DeallocateWarrant"/>
                     <xs:enumeration value="SetRouteTurnouts"/>
@@ -68,6 +67,11 @@
               <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="trainIdName" type="xs:string" minOccurs="0" maxOccurs="1"/>
 

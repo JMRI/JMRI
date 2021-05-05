@@ -53,7 +53,12 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
         element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getLockFormula()));
+        element.addContent(new Element("operationFormula").addContent(p.getOperFormula()));
+
+        element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
+        element.addContent(new Element("dataReference").addContent(p.getDataReference()));
+        element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
+        element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
 
         element.addContent(new Element("trainIdName").addContent(p.getTrainIdName()));
         element.addContent(new Element("controlAutoTrain").addContent(p.getControlAutoTrain().name()));
@@ -110,6 +115,22 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
 
             elem = shared.getChild("operationFormula");
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
+
+
+            elem = shared.getChild("dataAddressing");
+            if (elem != null) {
+                h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("dataReference");
+            if (elem != null) h.setDataReference(elem.getTextTrim());
+
+            elem = shared.getChild("dataLocalVariable");
+            if (elem != null) h.setDataLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("dataFormula");
+            if (elem != null) h.setDataFormula(elem.getTextTrim());
+
 
             elem = shared.getChild("trainIdName");
             if (elem != null) h.setTrainIdName(elem.getTextTrim());
