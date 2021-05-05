@@ -263,7 +263,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
         
         Bindings bindings = new SimpleBindings();
-        ScriptParams params = new ScriptParams(this);
+//        ScriptParams params = new ScriptParams(this);
         
         // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
         bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
@@ -274,7 +274,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
         bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
         
-        bindings.put("params", params);    // Give the script access to the local variable 'params'
+//        bindings.put("params", params);    // Give the script access to the local variable 'params'
         
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (operation) {
@@ -408,11 +408,8 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         // Do nothing
     }
     
-    
+/*    
     public static class ScriptParams {
-        
-        public final AtomicReference<AbstractScriptDigitalAction> _scriptClass
-                = new AtomicReference<>();
         
         public final DigitalAction _parentAction;
         
@@ -420,7 +417,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
             _parentAction = parentExpression;
         }
     }
-    
+*/    
     
     public enum OperationType {
         RunScript(Bundle.getMessage("SimpleScript_RunScript")),

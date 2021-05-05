@@ -23,7 +23,7 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionBlock object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist  Copyright 2021
  * @author Dave Sand         Copyright 2021
  */
@@ -51,11 +51,15 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
     private JTextField _blockStateLocalVariableTextField;
     private JTextField _blockStateFormulaTextField;
 
-    private JPanel _panelStateCombo;
-    private JPanel _panelBlockConstant;
-    private JPanel _panelMatchMemory;
-    private JTextField _blockConstantTextField;
-    private BeanSelectPanel<Memory> _blockMemoryBeanPanel;
+    private JTabbedPane _tabbedPaneBlockData;
+    private JPanel _panelBlockDataDirect;
+    private JPanel _panelBlockDataReference;
+    private JPanel _panelBlockDataLocalVariable;
+    private JPanel _panelBlockDataFormula;
+    private JTextField _blockDataDirectTextField;
+    private JTextField _blockDataReferenceTextField;
+    private JTextField _blockDataLocalVariableTextField;
+    private JTextField _blockDataFormulaTextField;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -108,23 +112,6 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneBlockState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelBlockStateLocalVariable);
         _tabbedPaneBlockState.addTab(NamedBeanAddressing.Formula.toString(), _panelBlockStateFormula);
 
-        // Create an empty strut panel that sits to the left of the container
-        JPanel directSpacer = new JPanel();
-        directSpacer.setLayout(new BoxLayout(directSpacer, BoxLayout.Y_AXIS));
-        directSpacer.add(Box.createVerticalStrut(100));
-
-        // The container holds 3 panels, two of which are based on selections
-        JPanel directContainer = new JPanel();
-        directContainer.setLayout(new BoxLayout(directContainer, BoxLayout.Y_AXIS));
-
-        _panelStateCombo = new JPanel();
-        _panelBlockConstant = new JPanel();
-        _panelMatchMemory = new JPanel();
-
-        _panelBlockConstant.setVisible(false);
-        _panelMatchMemory.setVisible(false);
-
-        // Populate the container sub-panels
         _stateComboBox = new JComboBox<>();
         for (BlockState e : BlockState.values()) {
             _stateComboBox.addItem(e);
@@ -132,24 +119,9 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
 
         _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
-            setPanelDetailVisibility();
+            setDataPanelState();
         });
-        _panelStateCombo.add(_stateComboBox);
-
-        _blockConstantTextField = new JTextField();
-        _blockConstantTextField.setColumns(25);
-        _panelBlockConstant.add(_blockConstantTextField);
-
-        _blockMemoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _panelMatchMemory.add(_blockMemoryBeanPanel);
-
-        directContainer.add(_panelStateCombo);
-        directContainer.add(_panelBlockConstant);
-        directContainer.add(_panelMatchMemory);
-
-        _panelBlockStateDirect.add(directSpacer);
-        _panelBlockStateDirect.add(directContainer);
-        // direct container done
+        _panelBlockStateDirect.add(_stateComboBox);
 
         _blockStateReferenceTextField = new JTextField();
         _blockStateReferenceTextField.setColumns(30);
@@ -163,6 +135,36 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         _blockStateFormulaTextField.setColumns(30);
         _panelBlockStateFormula.add(_blockStateFormulaTextField);
 
+
+        _tabbedPaneBlockData = new JTabbedPane();
+        _panelBlockDataDirect = new javax.swing.JPanel();
+        _panelBlockDataReference = new javax.swing.JPanel();
+        _panelBlockDataLocalVariable = new javax.swing.JPanel();
+        _panelBlockDataFormula = new javax.swing.JPanel();
+
+        _tabbedPaneBlockData.addTab(NamedBeanAddressing.Direct.toString(), _panelBlockDataDirect);
+        _tabbedPaneBlockData.addTab(NamedBeanAddressing.Reference.toString(), _panelBlockDataReference);
+        _tabbedPaneBlockData.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelBlockDataLocalVariable);
+        _tabbedPaneBlockData.addTab(NamedBeanAddressing.Formula.toString(), _panelBlockDataFormula);
+
+        _blockDataDirectTextField = new JTextField();
+        _blockDataDirectTextField.setColumns(30);
+        _panelBlockDataDirect.add(_blockDataDirectTextField);
+
+        _blockDataReferenceTextField = new JTextField();
+        _blockDataReferenceTextField.setColumns(30);
+        _panelBlockDataReference.add(_blockDataReferenceTextField);
+
+        _blockDataLocalVariableTextField = new JTextField();
+        _blockDataLocalVariableTextField.setColumns(30);
+        _panelBlockDataLocalVariable.add(_blockDataLocalVariableTextField);
+
+        _blockDataFormulaTextField = new JTextField();
+        _blockDataFormulaTextField.setColumns(30);
+        _panelBlockDataFormula.add(_blockDataFormulaTextField);
+
+
+        setDataPanelState();
 
         if (expression != null) {
             switch (expression.getAddressing()) {
@@ -186,23 +188,33 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
                 case Reference: _tabbedPaneBlockState.setSelectedComponent(_panelBlockStateReference); break;
                 case LocalVariable: _tabbedPaneBlockState.setSelectedComponent(_panelBlockStateLocalVariable); break;
                 case Formula: _tabbedPaneBlockState.setSelectedComponent(_panelBlockStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getStateAddressing().name());
             }
             _stateComboBox.setSelectedItem(expression.getBeanState());
             _blockStateReferenceTextField.setText(expression.getStateReference());
             _blockStateLocalVariableTextField.setText(expression.getStateLocalVariable());
             _blockStateFormulaTextField.setText(expression.getStateFormula());
 
-            _blockConstantTextField.setText(expression.getBlockConstant());
-            if (expression.getBlockMemory() != null) {
-                _blockMemoryBeanPanel.setDefaultNamedBean(expression.getBlockMemory().getBean());
+            switch (expression.getDataAddressing()) {
+                case Direct: _tabbedPaneBlockData.setSelectedComponent(_panelBlockDataDirect); break;
+                case Reference: _tabbedPaneBlockData.setSelectedComponent(_panelBlockDataReference); break;
+                case LocalVariable: _tabbedPaneBlockData.setSelectedComponent(_panelBlockDataLocalVariable); break;
+                case Formula: _tabbedPaneBlockData.setSelectedComponent(_panelBlockDataFormula); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getDataAddressing().name());
             }
+            _blockDataDirectTextField.setText(expression.getBlockValue());
+            _blockDataReferenceTextField.setText(expression.getDataReference());
+            _blockDataLocalVariableTextField.setText(expression.getDataLocalVariable());
+            _blockDataFormulaTextField.setText(expression.getDataFormula());
+
+            setDataPanelState();
         }
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneBlock,
             _is_IsNot_ComboBox,
-            _tabbedPaneBlockState};
+            _tabbedPaneBlockState,
+            _tabbedPaneBlockData};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionBlock_Components"), components);
@@ -210,19 +222,25 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         for (JComponent c : componentList) panel.add(c);
     }
 
-    private void setPanelDetailVisibility() {
-        _panelBlockConstant.setVisible(false);
-        _panelMatchMemory.setVisible(false);
-        if (_stateComboBox.getSelectedItem() == BlockState.ValueMatches) {
-            _panelBlockConstant.setVisible(true);
-        } else if (_stateComboBox.getSelectedItem() == BlockState.MemoryMatches) {
-            _panelMatchMemory.setVisible(true);
-        }
+    private void setDataPanelState() {
+        boolean newState = _stateComboBox.getSelectedItem() == BlockState.ValueMatches;
+        _tabbedPaneBlockData.setEnabled(newState);
+        _blockDataDirectTextField.setEnabled(newState);
+        _blockDataReferenceTextField.setEnabled(newState);
+        _blockDataLocalVariableTextField.setEnabled(newState);
+        _blockDataFormulaTextField.setEnabled(newState);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        validateBlockSection(errorMessages);
+        validateStateSection(errorMessages);
+        validateDataSection(errorMessages);
+        return errorMessages.isEmpty();
+    }
+
+    private void validateBlockSection(List<String> errorMessages) {
         // Create a temporary expression to test formula
         ExpressionBlock expression = new ExpressionBlock("IQDE1", null);
 
@@ -232,16 +250,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             }
         } catch (IllegalArgumentException e) {
             errorMessages.add(e.getMessage());
-            return false;
-        }
-
-        try {
-            if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateReference) {
-                expression.setStateReference(_blockStateReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
+            return;
         }
 
         try {
@@ -261,23 +270,83 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
 
-        if (_blockBeanPanel == null || _blockBeanPanel.getNamedBean() == null) {
-            errorMessages.add(Bundle.getMessage("Block_ErrorBlock"));
-        }
-
-        BlockState oper = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
-        if (oper == BlockState.ValueMatches) {
-            if (_blockConstantTextField.getText().isEmpty()) {
-                errorMessages.add(Bundle.getMessage("Block_ErrorConstant"));
-            }
-        } else if (oper == BlockState.MemoryMatches) {
-            if (_blockMemoryBeanPanel.getNamedBean() == null) {
-                errorMessages.add(Bundle.getMessage("Block_ErrorMemory"));
+        if (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect) {
+            if (_blockBeanPanel == null || _blockBeanPanel.getNamedBean() == null) {
+                errorMessages.add(Bundle.getMessage("Block_ErrorBlock"));
             }
         }
 
-        if (!errorMessages.isEmpty()) return false;
-        return true;
+    }
+
+    private void validateStateSection(List<String> errorMessages) {
+        // Create a temporary expression to test formula
+        ExpressionBlock expression = new ExpressionBlock("IQDE2", null);
+
+        try {
+            if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateReference) {
+                expression.setStateReference(_blockStateReferenceTextField.getText());
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessages.add(e.getMessage());
+            return;
+        }
+
+        try {
+            expression.setStateFormula(_blockStateFormulaTextField.getText());
+            if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateDirect) {
+                expression.setAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateReference) {
+                expression.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateLocalVariable) {
+                expression.setAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateFormula) {
+                expression.setAddressing(NamedBeanAddressing.Formula);
+            } else {
+                throw new IllegalArgumentException("_tabbedPane has unknown selection");
+            }
+        } catch (ParserException e) {
+            errorMessages.add("Cannot parse formula: " + e.getMessage());
+        }
+    }
+
+    private void validateDataSection(List<String> errorMessages) {
+        // Create a temporary expression to test formula
+        ExpressionBlock expression = new ExpressionBlock("IQDE3", null);
+
+        try {
+            if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataReference) {
+                expression.setDataReference(_blockDataReferenceTextField.getText());
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessages.add(e.getMessage());
+            return;
+        }
+
+        try {
+            expression.setDataFormula(_blockDataFormulaTextField.getText());
+            if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataDirect) {
+                expression.setAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataReference) {
+                expression.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataLocalVariable) {
+                expression.setAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataFormula) {
+                expression.setAddressing(NamedBeanAddressing.Formula);
+            } else {
+                throw new IllegalArgumentException("_tabbedPane has unknown selection");
+            }
+        } catch (ParserException e) {
+            errorMessages.add("Cannot parse formula: " + e.getMessage());
+        }
+
+        if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataDirect) {
+            BlockState state = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
+            if (state == BlockState.ValueMatches) {
+                if (_blockDataDirectTextField.getText().isEmpty()) {
+                    errorMessages.add(Bundle.getMessage("Block_ErrorValue"));
+                }
+            }
+        }
     }
 
     /** {@inheritDoc} */
@@ -300,16 +369,18 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         if (! (object instanceof ExpressionBlock)) {
             throw new IllegalArgumentException("object must be an ExpressionBlock but is a: "+object.getClass().getName());
         }
+
         ExpressionBlock expression = (ExpressionBlock) object;
-            if (_blockBeanPanel != null && !_blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
-                Block block = _blockBeanPanel.getNamedBean();
-                if (block != null) {
-                    NamedBeanHandle<Block> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(block.getDisplayName(), block);
-                    expression.setBlock(handle);
-                }
+        if (_blockBeanPanel != null && !_blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
+            Block block = _blockBeanPanel.getNamedBean();
+            if (block != null) {
+                NamedBeanHandle<Block> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(block.getDisplayName(), block);
+                expression.setBlock(handle);
             }
+        }
+
         try {
             if (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect) {
                 expression.setAddressing(NamedBeanAddressing.Direct);
@@ -331,20 +402,6 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);
                 expression.setBeanState((BlockState)_stateComboBox.getSelectedItem());
-
-                // Handle optional data fields
-                if (expression.getBeanState() == BlockState.ValueMatches) {
-                    expression.setBlockConstant(_blockConstantTextField.getText());
-                } else if (expression.getBeanState() == BlockState.MemoryMatches) {
-                    Memory memory = _blockMemoryBeanPanel.getNamedBean();
-                    if (memory != null) {
-                        NamedBeanHandle<Memory> handle
-                                = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                        .getNamedBeanHandle(memory.getDisplayName(), memory);
-                        expression.setBlockMemory(handle);
-                    }
-                }
-
             } else if (_tabbedPaneBlockState.getSelectedComponent() == _panelBlockStateReference) {
                 expression.setStateAddressing(NamedBeanAddressing.Reference);
                 expression.setStateReference(_blockStateReferenceTextField.getText());
@@ -357,23 +414,29 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             } else {
                 throw new IllegalArgumentException("_tabbedPaneBlockState has unknown selection");
             }
+
+            if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataDirect) {
+                expression.setDataAddressing(NamedBeanAddressing.Direct);
+                // Handle optional data field
+                if (expression.getBeanState() == BlockState.ValueMatches) {
+                    expression.setBlockValue(_blockDataDirectTextField.getText());
+                }
+            } else if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataReference) {
+                expression.setDataAddressing(NamedBeanAddressing.Reference);
+                expression.setDataReference(_blockDataReferenceTextField.getText());
+            } else if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataLocalVariable) {
+                expression.setDataAddressing(NamedBeanAddressing.LocalVariable);
+                expression.setDataLocalVariable(_blockDataLocalVariableTextField.getText());
+            } else if (_tabbedPaneBlockData.getSelectedComponent() == _panelBlockDataFormula) {
+                expression.setDataAddressing(NamedBeanAddressing.Formula);
+                expression.setDataFormula(_blockDataFormulaTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneBlockData has unknown selection");
+            }
+
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
-    }
-
-
-    /**
-     * Create Block object for the expression
-     *
-     * @param reference Block application description
-     * @return The new output as Block object
-     */
-    protected Block getBlockFromPanel(String reference) {
-        if (_blockBeanPanel == null) {
-            return null;
-        }
-        return _blockBeanPanel.getNamedBean();
     }
 
     /** {@inheritDoc} */

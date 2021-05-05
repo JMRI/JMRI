@@ -34,14 +34,19 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     private ExpressionNode _expressionNode;
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.None;
+    private DirectOperation _operationDirect = DirectOperation.Deallocate;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
     private ExpressionNode _operationExpressionNode;
 
-    private String _oblockConstant = "";
-    private NamedBeanHandle<Memory> _oblockMemoryHandle;
+    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
+    private String _dataReference = "";
+    private String _dataLocalVariable = "";
+    private String _dataFormula = "";
+    private ExpressionNode _dataExpressionNode;
+
+    private String _oblockValue = "";
 
     public ActionOBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -61,13 +66,19 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         copy.setReference(_reference);
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
+
         copy.setOperationAddressing(_operationAddressing);
         copy.setOperationDirect(_operationDirect);
         copy.setOperationReference(_operationReference);
         copy.setOperationLocalVariable(_operationLocalVariable);
         copy.setOperationFormula(_operationFormula);
-        copy.setOBlockConstant(_oblockConstant);
-        if (_oblockMemoryHandle != null) copy.setOBlockMemory(_oblockMemoryHandle);
+
+        copy.setDataAddressing(_dataAddressing);
+        copy.setDataReference(_dataReference);
+        copy.setDataLocalVariable(_dataLocalVariable);
+        copy.setDataFormula(_dataFormula);
+        copy.setOBlockValue(_oblockValue);
+
         return manager.registerAction(copy);
     }
 
@@ -154,9 +165,10 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         }
     }
 
+
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
-        parseLockFormula();
+        parseOperationFormula();
     }
 
     public NamedBeanAddressing getOperationAddressing() {
@@ -192,14 +204,14 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
 
     public void setOperationFormula(@Nonnull String formula) throws ParserException {
         _operationFormula = formula;
-        parseLockFormula();
+        parseOperationFormula();
     }
 
-    public String getLockFormula() {
+    public String getOperationFormula() {
         return _operationFormula;
     }
 
-    private void parseLockFormula() throws ParserException {
+    private void parseOperationFormula() throws ParserException {
         if (_operationAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
 
@@ -210,57 +222,63 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         }
     }
 
-    public void setOBlockConstant(@Nonnull String constant) {
-        _oblockConstant = constant;
+
+     public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _dataAddressing = addressing;
+        parseDataFormula();
     }
 
-    public String getOBlockConstant() {
-        return _oblockConstant;
+    public NamedBeanAddressing getDataAddressing() {
+        return _dataAddressing;
     }
 
-    public void setOBlockMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setOBlockMemory");
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            setOBlockMemory(memory);
+    public void setDataReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _dataReference = reference;
+    }
+
+    public String getDataReference() {
+        return _dataReference;
+    }
+
+    public void setDataLocalVariable(@Nonnull String localVariable) {
+        _dataLocalVariable = localVariable;
+    }
+
+    public String getDataLocalVariable() {
+        return _dataLocalVariable;
+    }
+
+    public void setDataFormula(@Nonnull String formula) throws ParserException {
+        _dataFormula = formula;
+        parseDataFormula();
+    }
+
+    public String getDataFormula() {
+        return _dataFormula;
+    }
+
+    private void parseDataFormula() throws ParserException {
+        if (_dataAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _dataExpressionNode = parser.parseExpression(_dataFormula);
         } else {
-            removeOBlockMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
+            _dataExpressionNode = null;
         }
     }
 
-    public void setOBlockMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setOBlockMemory");
-        setOBlockMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    public void setOBlockValue(@Nonnull String value) {
+        _oblockValue = value;
     }
 
-    public void setOBlockMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setOBlockMemory");
-        _oblockMemoryHandle = handle;
-        addRemoveVetoListener();
+    public String getOBlockValue() {
+        return _oblockValue;
     }
 
-    public NamedBeanHandle<Memory> getOBlockMemory() {
-        return _oblockMemoryHandle;
-    }
-
-    public void removeOBlockMemory() {
-        assertListenersAreNotRegistered(log, "removeOBlockMemory");
-        if (_oblockMemoryHandle != null) {
-            _oblockMemoryHandle = null;
-            addRemoveVetoListener();
-        }
-    }
-
-    private void addRemoveVetoListener() {
-        if ((_oblockMemoryHandle != null)) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
@@ -269,12 +287,6 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
                 if (evt.getOldValue().equals(getOBlock().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("ActionOBlock_OBlockInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getOBlockMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionOBlock_MemoryInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -292,7 +304,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         return true;
     }
 
-    private String getNewLock() throws JmriException {
+    private String getNewOperation() throws JmriException {
 
         switch (_operationAddressing) {
             case Reference:
@@ -315,6 +327,34 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
                 throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
         }
     }
+
+    private String getNewData() throws JmriException {
+
+        switch (_dataAddressing) {
+            case Direct:
+                return _oblockValue;
+
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _dataReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
+
+            case Formula:
+                return _operationExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _dataExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
+        }
+    }
+
 
     /** {@inheritDoc} */
     @Override
@@ -358,7 +398,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         }
 
         String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
+                ? getNewOperation() : null;
 
         DirectOperation oper;
         if ((_operationAddressing == NamedBeanAddressing.Direct)) {
@@ -367,49 +407,34 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
             oper = DirectOperation.valueOf(name);
         }
 
-        if (_operationDirect != DirectOperation.None) {
 
-            // Variables used in lambda must be effectively final
-            DirectOperation theOper = oper;
+        // Variables used in lambda must be effectively final
+        DirectOperation theOper = oper;
 
-            ThreadingUtil.runOnLayoutWithJmriException(() -> {
-                switch (theOper) {
-                    case None:
-                        break;
-                    case Deallocate:
-                        oblock.deAllocate(null);
-                        break;
-                    case SetValue:
-                        oblock.setValue(_oblockConstant);
-                        break;
-                    case SetError:
-                        oblock.setError(true);
-                        break;
-                    case ClearError:
-                        oblock.setError(false);
-                        break;
-                    case SetOutOfService:
-                        oblock.setOutOfService(true);
-                        break;
-                    case ClearOutOfService:
-                        oblock.setOutOfService(false);
-                        break;
-                    case CopyFromMemory:
-                        if (_oblockMemoryHandle != null) {
-                            oblock.setValue(_oblockMemoryHandle.getBean().getValue());
-                        }
-                        break;
-                    case CopyToMemory:
-                        if (_oblockMemoryHandle != null) {
-                            Memory memory = _oblockMemoryHandle.getBean();
-                            memory.setValue(oblock.getValue());
-                        }
-                        break;
-                    default:
-                        throw new IllegalArgumentException("invalid oper state: " + theOper.name());
-                }
-            });
-        }
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
+            switch (theOper) {
+                case Deallocate:
+                    oblock.deAllocate(null);
+                    break;
+                case SetValue:
+                    oblock.setValue(getNewData());
+                    break;
+                case SetError:
+                    oblock.setError(true);
+                    break;
+                case ClearError:
+                    oblock.setError(false);
+                    break;
+                case SetOutOfService:
+                    oblock.setOutOfService(true);
+                    break;
+                case ClearOutOfService:
+                    oblock.setOutOfService(false);
+                    break;
+                default:
+                    throw new IllegalArgumentException("invalid oper state: " + theOper.name());
+            }
+        });
     }
 
     @Override
@@ -462,13 +487,19 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         switch (_operationAddressing) {
             case Direct:
                 if (_operationDirect == DirectOperation.SetValue) {
-                    return Bundle.getMessage(locale, "ActionOBlock_Long_Value", namedBean, _oblockConstant);
-                } else if (_operationDirect == DirectOperation.CopyFromMemory) {
-                    String fromName = _oblockMemoryHandle == null ? "" : _oblockMemoryHandle.getName();
-                    return Bundle.getMessage(locale, "ActionOBlock_Long_FromMemory", namedBean, fromName);
-                } else if (_operationDirect == DirectOperation.CopyToMemory) {
-                    String toName = _oblockMemoryHandle == null ? "" : _oblockMemoryHandle.getName();
-                    return Bundle.getMessage(locale, "ActionOBlock_Long_ToMemory", toName, namedBean);
+                    String bundleKey = "ActionOBlock_Long_Value";
+                    switch (_dataAddressing) {
+                        case Direct:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, _oblockValue);
+                        case Reference:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
+                        case LocalVariable:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+                        case Formula:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
+                        default:
+                            throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+                    }
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
                 }
@@ -515,15 +546,12 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     }
 
     public enum DirectOperation {
-        None(""),
         Deallocate(Bundle.getMessage("ActionOBlock_Deallocate")),
         SetValue(Bundle.getMessage("ActionOBlock_SetValue")),
         SetError(Bundle.getMessage("ActionOBlock_SetError")),
         ClearError(Bundle.getMessage("ActionOBlock_ClearError")),
         SetOutOfService(Bundle.getMessage("ActionOBlock_SetOutOfService")),
-        ClearOutOfService(Bundle.getMessage("ActionOBlock_ClearOutOfService")),
-        CopyFromMemory(Bundle.getMessage("ActionOBlock_CopyFromMemory")),
-        CopyToMemory(Bundle.getMessage("ActionOBlock_CopyToMemory"));
+        ClearOutOfService(Bundle.getMessage("ActionOBlock_ClearOutOfService"));
 
         private final String _text;
 
@@ -543,9 +571,6 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionOBlock: bean = {}, report = {}", cdl, report);
         if (getOBlock() != null && bean.equals(getOBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-        if (getOBlockMemory() != null && bean.equals(getOBlockMemory().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }
