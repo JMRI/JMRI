@@ -122,7 +122,7 @@ public final class ImportLogixFrame extends JmriJFrame {
         panel5.setLayout(new FlowLayout());
 
         // Import
-        JButton _importLogix = new JButton(Bundle.getMessage("Import_ButtonImport"));    // NOI18N
+        _importLogix = new JButton(Bundle.getMessage("Import_ButtonImport"));    // NOI18N
         panel5.add(_importLogix);
         _importLogix.addActionListener((ActionEvent e) -> {
             doImport();
