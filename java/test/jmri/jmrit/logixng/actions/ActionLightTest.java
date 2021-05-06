@@ -65,7 +65,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set light IL1 to state On ::: Log error%n");
+        return String.format("Set light IL1 to state On ::: Use default%n");
     }
     
     @Override
@@ -74,7 +74,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set light IL1 to state On ::: Log error%n");
+                "         Set light IL1 to state On ::: Use default%n");
     }
     
     @Override

@@ -213,7 +213,7 @@ abstract public class PositionableTestBase {
     }
 
     @Test
-    public void testShow() {
+    public void testShow() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame jf = new jmri.util.JmriJFrame("Positionable Target Panel");

@@ -18,18 +18,20 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSignalHead;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSignalHead object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     
     private JTabbedPane _tabbedPaneSignalHead;
-    private BeanSelectCreatePanel<SignalHead> _signalHeadBeanPanel;
+    private BeanSelectPanel<SignalHead> _signalHeadBeanPanel;
     private JPanel _panelSignalHeadDirect;
     private JPanel _panelSignalHeadReference;
     private JPanel _panelSignalHeadLocalVariable;
@@ -60,7 +62,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
     private JTextField _signalHeadAppearanceLocalVariableTextField;
     private JTextField _signalHeadAppearanceFormulaTextField;
     
-    private BeanSelectCreatePanel<SignalHead> _exampleSignalHeadBeanPanel;
+    private BeanSelectPanel<SignalHead> _exampleSignalHeadBeanPanel;
     
     
     @Override
@@ -73,7 +75,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
         innerExamplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        _exampleSignalHeadBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
+        _exampleSignalHeadBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
         innerExamplePanel.add(_exampleSignalHeadBeanPanel);
         
         JPanel actionPanel = new JPanel();
@@ -95,7 +97,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             enableDisableExampleSignalHeadBeanPanel();
         });
         
-        _signalHeadBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
+        _signalHeadBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
         _panelSignalHeadDirect.add(_signalHeadBeanPanel);
         
         _signalHeadReferenceTextField = new JTextField();
@@ -375,39 +377,31 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSignalHead but is a: "+object.getClass().getName());
         }
         ActionSignalHead action = (ActionSignalHead)object;
-        try {
-            if (!_signalHeadBeanPanel.isEmpty() && (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)) {
-                SignalHead signalHead = _signalHeadBeanPanel.getNamedBean();
-                if (signalHead != null) {
-                    NamedBeanHandle<SignalHead> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                    action.setSignalHead(handle);
-                }
-            } else {
-                action.removeSignalHead();
+        if (!_signalHeadBeanPanel.isEmpty() && (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)) {
+            SignalHead signalHead = _signalHeadBeanPanel.getNamedBean();
+            if (signalHead != null) {
+                NamedBeanHandle<SignalHead> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                action.setSignalHead(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalHead", ex);
+        } else {
+            action.removeSignalHead();
         }
         
-        try {
-            if (!_exampleSignalHeadBeanPanel.isEmpty()
-                    && (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
-                    && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
-                
-                SignalHead signalHead = _exampleSignalHeadBeanPanel.getNamedBean();
-                if (signalHead != null) {
-                    NamedBeanHandle<SignalHead> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                    action.setExampleSignalHead(handle);
-                }
-            } else {
-                action.removeExampleSignalHead();
+        if (!_exampleSignalHeadBeanPanel.isEmpty()
+                && (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
+                && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
+
+            SignalHead signalHead = _exampleSignalHeadBeanPanel.getNamedBean();
+            if (signalHead != null) {
+                NamedBeanHandle<SignalHead> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                action.setExampleSignalHead(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalHead", ex);
+        } else {
+            action.removeExampleSignalHead();
         }
         
         try {
@@ -489,6 +483,6 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalHeadSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalHeadSwing.class);
     
 }

@@ -13,6 +13,8 @@ import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Class providing the basic logic of the LogixNG_Manager interface.
  * 
@@ -196,18 +198,29 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, Locale.getDefault(), writer, indent, lineNumber);
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         for (LogixNG logixNG : getNamedBeanSet()) {
-            logixNG.printTree(settings, locale, writer, indent, "");
+            logixNG.printTree(settings, locale, writer, indent, "", lineNumber);
             writer.println();
         }
-        InstanceManager.getDefault(ModuleManager.class).printTree(settings, locale, writer, indent);
+        InstanceManager.getDefault(ModuleManager.class).printTree(settings, locale, writer, indent, lineNumber);
         InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
     }
     

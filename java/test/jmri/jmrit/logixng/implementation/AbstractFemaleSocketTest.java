@@ -9,6 +9,7 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,17 +20,17 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test AbstractFemaleSocket
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class AbstractFemaleSocketTest {
-    
+
     private FemaleSocketListener _listener;
 /*
     @Test
     public void testPropertyChangeListeners() {
         MyFemaleSocket socket = new MyFemaleSocket(null, null, "A1");
-        
+
         boolean hasThrown = false;
         try {
             socket.addPropertyChangeListener(null);
@@ -38,7 +39,7 @@ public class AbstractFemaleSocketTest {
             Assert.assertEquals("Error message is correct", "Not supported", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
+
         hasThrown = false;
         try {
             socket.addPropertyChangeListener("", null);
@@ -47,7 +48,7 @@ public class AbstractFemaleSocketTest {
             Assert.assertEquals("Error message is correct", "Not supported", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
+
         hasThrown = false;
         try {
             socket.getPropertyChangeListeners();
@@ -56,7 +57,7 @@ public class AbstractFemaleSocketTest {
             Assert.assertEquals("Error message is correct", "Not supported", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
+
         hasThrown = false;
         try {
             socket.getPropertyChangeListeners("");
@@ -65,7 +66,7 @@ public class AbstractFemaleSocketTest {
             Assert.assertEquals("Error message is correct", "Not supported", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
+
         hasThrown = false;
         try {
             socket.removePropertyChangeListener(null);
@@ -74,7 +75,7 @@ public class AbstractFemaleSocketTest {
             Assert.assertEquals("Error message is correct", "Not supported", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
+
         hasThrown = false;
         try {
             socket.removePropertyChangeListener("", null);
@@ -84,102 +85,102 @@ public class AbstractFemaleSocketTest {
         }
         Assert.assertTrue("Exception thrown", hasThrown);
     }
-*/    
+*/
     @Test
     public void testIsActive() {
         MyBase base = new MyBase();
         MyFemaleSocket socket = new MyFemaleSocket(base, _listener, "A1");
-        
+
         // Check isActive when parent is not null
-        
+
         Assert.assertNotNull("Parent is not null", socket.getParent());
-        
+
         base._active = false;
         socket._enabled = false;
         Assert.assertFalse("Socket is not active", socket.isActive());
-        
+
         base._active = true;
         socket._enabled = false;
         Assert.assertFalse("Socket is not active", socket.isActive());
-        
+
         base._active = false;
         socket._enabled = true;
         Assert.assertFalse("Socket is not active", socket.isActive());
-        
+
         base._active = true;
         socket._enabled = true;
         Assert.assertTrue("Socket is active", socket.isActive());
-        
-/*        
+
+/*
         // Check isActive when parent is null
-        
+
         socket.setParent(null);
         Assert.assertNull("Parent is null", socket.getParent());
-        
+
         socket._enabled = false;
         Assert.assertFalse("Socket is not active", socket.isActive());
-        
+
         socket._enabled = true;
         Assert.assertTrue("Socket is active", socket.isActive());
-*/        
+*/
     }
-    
+
     @Test
     public void testUnsupportedMethods() {
         MyBase base = new MyBase();
         MyFemaleSocket socket = new MyFemaleSocket(base, _listener, "A1");
-        
+
         PropertyChangeListener l = (PropertyChangeEvent evt) -> {};
-        
+
         Throwable thrown = catchThrowable( () -> socket.addPropertyChangeListener(l, "name", "ref"));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-        
+
         thrown = catchThrowable( () -> socket.addPropertyChangeListener("propName", l, "name", "ref"));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-        
+
         thrown = catchThrowable( () -> socket.updateListenerRef(l, "name"));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-        
+
         thrown = catchThrowable( () -> socket.vetoableChange(null));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-        
+
         thrown = catchThrowable( () -> socket.getListenerRef(l));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-        
+
         thrown = catchThrowable( () -> socket.getListenerRefs());
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-/*        
+/*
         thrown = catchThrowable( () -> socket.getNumPropertyChangeListeners());
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
-*/        
+*/
         thrown = catchThrowable( () -> socket.getPropertyChangeListenersByReference("ref"));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
@@ -187,7 +188,7 @@ public class AbstractFemaleSocketTest {
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
     }
-    
+
     // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
@@ -217,12 +218,12 @@ public class AbstractFemaleSocketTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     private static class MyFemaleSocket extends AbstractFemaleSocket {
 
         private boolean _enabled = false;
-        
+
         public MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
@@ -231,7 +232,7 @@ public class AbstractFemaleSocketTest {
         public boolean isEnabled() {
             return _enabled;
         }
-        
+
         @Override
         public void disposeMe() {
             throw new UnsupportedOperationException("Not supported");
@@ -256,19 +257,19 @@ public class AbstractFemaleSocketTest {
         public String getLongDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
-    
+
+
     private static class MyBase implements Base {
 
         private boolean _active = false;
-        
+
         @Override
         public boolean isActive() {
             return _active;
         }
-        
+
         @Override
         public String getSystemName() {
             throw new UnsupportedOperationException("Not supported");
@@ -375,17 +376,17 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported");
         }
 
@@ -478,7 +479,16 @@ public class AbstractFemaleSocketTest {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-    
+
+        @Override
+        public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+            throw new UnsupportedOperationException("Not supported");
+        }
     }
-    
+
 }

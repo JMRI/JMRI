@@ -60,7 +60,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         border.setTitle(Bundle.getMessage("MenuItemSignalTable")); // Signal Heads
         signalHeadPanel.setBorder(border);
         add(signalHeadPanel);
-        
+
         includeUsed.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,14 +75,14 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         disabledAspectsScroll.setBorder(disableborder);
         add(disabledAspectsScroll);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     @Nonnull public String getPaneName() {
         return Bundle.getMessage("HeadCtlMast");
     }
-    
-    
+
+
     JPanel signalHeadPanel = new JPanel();
     ArrayList<NamedBeanComboBox<SignalHead>> headList = new ArrayList<>(5);
     JCheckBox includeUsed = new JCheckBox(Bundle.getMessage("IncludeUsedHeads"));
@@ -94,7 +94,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
 
     SignalHeadSignalMast currentMast = null;
     Set<SignalHead> alreadyUsed = new HashSet<>();
-    DefaultSignalAppearanceMap map; 
+    DefaultSignalAppearanceMap map;
 
     /** {@inheritDoc} */
     @Override
@@ -102,7 +102,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         log.debug("setAspectNames(...)");
 
         map = (DefaultSignalAppearanceMap)newMap;
-        
+
         int count = map.getAspectSettings(map.getAspects().nextElement()).length;
         log.trace(" head count is {}", count);
 
@@ -143,16 +143,16 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
     public boolean canHandleMast(@Nonnull SignalMast mast) {
         return mast instanceof SignalHeadSignalMast;
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void setMast(SignalMast mast) { 
+    public void setMast(SignalMast mast) {
         log.debug("setMast({})", mast);
-        if (mast == null) { 
-            currentMast = null; 
-            return; 
+        if (mast == null) {
+            currentMast = null;
+            return;
         }
-        
+
         if (! (mast instanceof SignalHeadSignalMast) ) {
             log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
             return;
@@ -171,7 +171,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             headList.add(head);
 
             head.setEnabled(false);
-            head.setSelectedItem(currentMast.getHeadsUsed().get(i).getBean().getDisplayName()); // must match NamedBeanComboBox above
+            head.setSelectedItem(currentMast.getHeadsUsed().get(i).getBean()); // must match NamedBeanComboBox above
             signalHeadPanel.add(head);
         }
         signalHeadPanel.add(includeUsed);
@@ -185,9 +185,9 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
                 }
             }
         }
-        
+
         allowUnLit.setSelected(currentMast.allowUnLit());
- 
+
         log.trace("setMast {} end", mast);
     }
 
@@ -206,7 +206,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
                 }
                 name = build.toString();
                 log.debug("add signal: {}", name);
-                
+
                 // see if it exists (remember, we're not handling a current mast)
                 SignalMast m = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
                 if (m != null) {
@@ -237,9 +237,9 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         if (!username.equals("")) {
             currentMast.setUserName(username);
         }
-        
+
         currentMast.setAllowUnLit(allowUnLit.isSelected());
-        
+
         return true;
     }
 
@@ -260,7 +260,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             head.setExcludedItems(alreadyUsed);
         }
     }
-    
+
     void handleCreateException(String sysName) {
         JOptionPane.showMessageDialog(null,
                 Bundle.getMessage("ErrorSignalMastAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),

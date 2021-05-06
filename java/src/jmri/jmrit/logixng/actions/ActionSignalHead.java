@@ -18,7 +18,7 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * Evaluates the state of a SignalHead.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalHead extends AbstractDigitalAction
@@ -30,29 +30,29 @@ public class ActionSignalHead extends AbstractDigitalAction
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
-    
+
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.Appearance;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
     private ExpressionNode _operationExpressionNode;
-    
+
     private NamedBeanAddressing _appearanceAddressing = NamedBeanAddressing.Direct;
     private int _signalHeadAppearance = SignalHead.DARK;
     private String _appearanceReference = "";
     private String _appearanceLocalVariable = "";
     private String _appearanceFormula = "";
     private ExpressionNode _appearanceExpressionNode;
-    
+
     private NamedBeanHandle<SignalHead> _exampleSignalHeadHandle;
-    
-    
+
+
     public ActionSignalHead(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -79,7 +79,7 @@ public class ActionSignalHead extends AbstractDigitalAction
         copy.setExampleSignalHead(_exampleSignalHeadHandle);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     public void setSignalHead(@Nonnull String signalHeadName) {
         assertListenersAreNotRegistered(log, "setSignalHead");
         SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
@@ -90,19 +90,19 @@ public class ActionSignalHead extends AbstractDigitalAction
             log.warn("signalHead \"{}\" is not found", signalHeadName);
         }
     }
-    
+
     public void setSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
         assertListenersAreNotRegistered(log, "setSignalHead");
         _signalHeadHandle = handle;
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
     }
-    
+
     public void setSignalHead(@Nonnull SignalHead signalHead) {
         assertListenersAreNotRegistered(log, "setSignalHead");
         setSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
     }
-    
+
     public void removeSignalHead() {
         assertListenersAreNotRegistered(log, "setSignalHead");
         if (_signalHeadHandle != null) {
@@ -110,11 +110,11 @@ public class ActionSignalHead extends AbstractDigitalAction
             _signalHeadHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<SignalHead> getSignalHead() {
         return _signalHeadHandle;
     }
-    
+
     public void setExampleSignalHead(@Nonnull String signalHeadName) {
         assertListenersAreNotRegistered(log, "setExampleSignalHead");
         SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
@@ -125,19 +125,19 @@ public class ActionSignalHead extends AbstractDigitalAction
             log.warn("signalHead \"{}\" is not found", signalHeadName);
         }
     }
-    
+
     public void setExampleSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
         assertListenersAreNotRegistered(log, "setExampleSignalHead");
         _exampleSignalHeadHandle = handle;
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
     }
-    
+
     public void setExampleSignalHead(@Nonnull SignalHead signalHead) {
         assertListenersAreNotRegistered(log, "setExampleSignalHead");
         setExampleSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
     }
-    
+
     public void removeExampleSignalHead() {
         assertListenersAreNotRegistered(log, "removeExampleSignalHead");
         if (_exampleSignalHeadHandle != null) {
@@ -145,72 +145,72 @@ public class ActionSignalHead extends AbstractDigitalAction
             _exampleSignalHeadHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<SignalHead> getExampleSignalHead() {
         return _exampleSignalHeadHandle;
     }
-    
+
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
         _addressing = addressing;
         parseFormula();
     }
-    
+
     public NamedBeanAddressing getAddressing() {
         return _addressing;
     }
-    
+
     public void setReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _reference = reference;
     }
-    
+
     public String getReference() {
         return _reference;
     }
-    
+
     public void setLocalVariable(@Nonnull String localVariable) {
         _localVariable = localVariable;
     }
-    
+
     public String getLocalVariable() {
         return _localVariable;
     }
-    
+
     public void setFormula(@Nonnull String formula) throws ParserException {
         _formula = formula;
         parseFormula();
     }
-    
+
     public String getFormula() {
         return _formula;
     }
-    
+
     private void parseFormula() throws ParserException {
         if (_addressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _expressionNode = parser.parseExpression(_formula);
         } else {
             _expressionNode = null;
         }
     }
-    
+
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
         parseOperationFormula();
     }
-    
+
     public NamedBeanAddressing getOperationAddressing() {
         return _operationAddressing;
     }
-    
+
     public void setOperationType(OperationType operationType) {
         _operationType = operationType;
     }
-    
+
     public OperationType getOperationType() {
         return _operationType;
     }
@@ -221,95 +221,95 @@ public class ActionSignalHead extends AbstractDigitalAction
         }
         _operationReference = reference;
     }
-    
+
     public String getOperationReference() {
         return _operationReference;
     }
-    
+
     public void setOperationLocalVariable(@Nonnull String localVariable) {
         _operationLocalVariable = localVariable;
     }
-    
+
     public String getOperationLocalVariable() {
         return _operationLocalVariable;
     }
-    
+
     public void setOperationFormula(@Nonnull String formula) throws ParserException {
         _operationFormula = formula;
         parseOperationFormula();
     }
-    
+
     public String getOperationFormula() {
         return _operationFormula;
     }
-    
+
     private void parseOperationFormula() throws ParserException {
         if (_operationAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _operationExpressionNode = parser.parseExpression(_operationFormula);
         } else {
             _operationExpressionNode = null;
         }
     }
-    
+
     public void setAppearanceAddressing(NamedBeanAddressing addressing) throws ParserException {
         _appearanceAddressing = addressing;
         parseAppearanceFormula();
     }
-    
+
     public NamedBeanAddressing getAppearanceAddressing() {
         return _appearanceAddressing;
     }
-    
+
     public void setAppearance(int appearance) {
         _signalHeadAppearance = appearance;
     }
-    
+
     public int getAppearance() {
         return _signalHeadAppearance;
     }
-    
+
     public void setAppearanceReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _appearanceReference = reference;
     }
-    
+
     public String getAppearanceReference() {
         return _appearanceReference;
     }
-    
+
     public void setAppearanceLocalVariable(@Nonnull String localVariable) {
         _appearanceLocalVariable = localVariable;
     }
-    
+
     public String getAppearanceLocalVariable() {
         return _appearanceLocalVariable;
     }
-    
+
     public void setAppearanceFormula(@Nonnull String formula) throws ParserException {
         _appearanceFormula = formula;
         parseAppearanceFormula();
     }
-    
+
     public String getAppearanceFormula() {
         return _appearanceFormula;
     }
-    
+
     private void parseAppearanceFormula() throws ParserException {
         if (_appearanceAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _appearanceExpressionNode = parser.parseExpression(_appearanceFormula);
         } else {
             _appearanceExpressionNode = null;
         }
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -338,7 +338,7 @@ public class ActionSignalHead extends AbstractDigitalAction
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -350,65 +350,65 @@ public class ActionSignalHead extends AbstractDigitalAction
     public boolean isExternal() {
         return true;
     }
-    
+
     private int getAppearanceFromName(String name) {
         if (_signalHeadHandle == null) throw new UnsupportedOperationException("_signalHeadHandle is null");
-        
+
         SignalHead sh = _signalHeadHandle.getBean();
         String[] keys = sh.getValidStateKeys();
         for (int i=0; i < keys.length; i++) {
             if (name.equals(keys[i])) return sh.getValidStates()[i];
         }
-        
+
         throw new IllegalArgumentException("Appearance "+name+" is not valid for signal head "+sh.getSystemName());
     }
-    
+
     private int getNewAppearance() throws JmriException {
-        
+
         switch (_appearanceAddressing) {
             case Direct:
                 return _signalHeadAppearance;
-                
+
             case Reference:
                 return getAppearanceFromName(ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _appearanceReference));
-                
+
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return getAppearanceFromName(TypeConversionUtil
                         .convertToString(symbolTable.getValue(_appearanceLocalVariable), false));
-                
+
             case Formula:
                 return _appearanceExpressionNode != null
                         ? getAppearanceFromName(TypeConversionUtil.convertToString(
                                 _appearanceExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false))
                         : -1;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _aspectAddressing state: " + _appearanceAddressing.name());
         }
     }
-    
+
     private OperationType getOperation() throws JmriException {
-        
+
         String oper = "";
         try {
             switch (_operationAddressing) {
                 case Direct:
                     return _operationType;
-                    
+
                 case Reference:
                     oper = ReferenceUtil.getReference(
                             getConditionalNG().getSymbolTable(), _operationReference);
                     return OperationType.valueOf(oper);
-                    
+
                 case LocalVariable:
                     SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                     oper = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_operationLocalVariable), false);
                     return OperationType.valueOf(oper);
-                    
+
                 case Formula:
                     if (_appearanceExpressionNode != null) {
                         oper = TypeConversionUtil.convertToString(
@@ -425,33 +425,33 @@ public class ActionSignalHead extends AbstractDigitalAction
             throw new JmriException("Unknown operation: "+oper, e);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         SignalHead signalHead;
-        
+
 //        System.out.format("ActionSignalHead.execute: %s%n", getLongDescription());
-        
+
         switch (_addressing) {
             case Direct:
                 signalHead = _signalHeadHandle != null ? _signalHeadHandle.getBean() : null;
                 break;
-                
+
             case Reference:
                 String ref = ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _reference);
                 signalHead = InstanceManager.getDefault(SignalHeadManager.class)
                         .getNamedBean(ref);
                 break;
-                
+
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 signalHead = InstanceManager.getDefault(SignalHeadManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
                 break;
-                
+
             case Formula:
                 signalHead = _expressionNode != null ?
                         InstanceManager.getDefault(SignalHeadManager.class)
@@ -460,22 +460,22 @@ public class ActionSignalHead extends AbstractDigitalAction
                                                 getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        
+
 //        System.out.format("ActionSignalHead.execute: sensor: %s%n", sensor);
-        
+
         if (signalHead == null) {
 //            log.warn("signalHead is null");
             return;
         }
-        
+
         OperationType operation = getOperation();
-        
+
         AtomicReference<JmriException> ref = new AtomicReference<>();
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
+        jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
             try {
                 switch (operation) {
                     case Appearance:
@@ -532,7 +532,7 @@ public class ActionSignalHead extends AbstractDigitalAction
         String namedBean;
         String operation;
         String appearance;
-        
+
         switch (_addressing) {
             case Direct:
                 String sensorName;
@@ -543,23 +543,23 @@ public class ActionSignalHead extends AbstractDigitalAction
                 }
                 namedBean = Bundle.getMessage(locale, "AddressByDirect", sensorName);
                 break;
-                
+
             case Reference:
                 namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
                 break;
-                
+
             case LocalVariable:
                 namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
-                
+
             case Formula:
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        
+
         switch (_operationAddressing) {
             case Direct:
                 operation = Bundle.getMessage(locale, "AddressByDirect", _operationType._text);
@@ -580,7 +580,7 @@ public class ActionSignalHead extends AbstractDigitalAction
             default:
                 throw new IllegalArgumentException("invalid _operationAddressing state: " + _operationAddressing.name());
         }
-        
+
         switch (_appearanceAddressing) {
             case Direct:
                 String a = "";
@@ -589,23 +589,23 @@ public class ActionSignalHead extends AbstractDigitalAction
                 }
                 appearance = Bundle.getMessage(locale, "AddressByDirect", a);
                 break;
-                
+
             case Reference:
                 appearance = Bundle.getMessage(locale, "AddressByReference", _appearanceReference);
                 break;
-                
+
             case LocalVariable:
                 appearance = Bundle.getMessage(locale, "AddressByLocalVariable", _appearanceLocalVariable);
                 break;
-                
+
             case Formula:
                 appearance = Bundle.getMessage(locale, "AddressByFormula", _appearanceFormula);
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _appearanceAddressing.name());
         }
-        
+
         if (_operationAddressing == NamedBeanAddressing.Direct) {
             if (_operationType == OperationType.Appearance) {
                 return Bundle.getMessage(locale, "SignalHead_LongAppearance", namedBean, appearance);
@@ -616,51 +616,62 @@ public class ActionSignalHead extends AbstractDigitalAction
             return Bundle.getMessage(locale, "SignalHead_LongUnknownOper", namedBean, operation, appearance);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
-    
+
+
+
     public enum OperationType {
         Appearance(Bundle.getMessage("SignalHeadOperationType_Appearance")),
         Lit(Bundle.getMessage("SignalHeadOperationType_Lit")),
         NotLit(Bundle.getMessage("SignalHeadOperationType_NotLit")),
         Held(Bundle.getMessage("SignalHeadOperationType_Held")),
         NotHeld(Bundle.getMessage("SignalHeadOperationType_NotHeld"));
-        
+
         private final String _text;
-        
+
         private OperationType(String text) {
             this._text = text;
         }
-        
+
         @Override
         public String toString() {
             return _text;
         }
-        
+
     }
-    
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionSignalHead: bean = {}, report = {}", cdl, report);
+        if (getSignalHead() != null && bean.equals(getSignalHead().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
+        if (getExampleSignalHead() != null && bean.equals(getExampleSignalHead().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalHead.class);
-    
+
 }

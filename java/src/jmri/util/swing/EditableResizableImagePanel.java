@@ -17,7 +17,6 @@ import javax.swing.JPopupMenu;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
 
-import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -220,33 +219,37 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                         in = new BufferedInputStream(httpcon.getInputStream());
                         srcIsFile = false;
                     }
-                    // maybe we don't need to copy?
-                    boolean shouldCopy = true;
-                    if ( dest.exists() && (srcIsFile) && (dest.length() == src.length()) ) {
-                        out = new BufferedInputStream( dest.toURI().toURL().openStream() );
-                        byte dataBufferIn[] = new byte[4096];
-                        byte dataBufferOut[] = new byte[4096];
-                        int bytesReadIn;
-                        int bytesReadOut;
-                        shouldCopy = false;
-                        // file comparison loop
-                        while ((bytesReadIn = in.read(dataBufferIn, 0, 4096)) != -1) {
-                            bytesReadOut = out.read(dataBufferOut, 0, 4096);
-                            if ( (bytesReadIn != bytesReadOut) || ( ! Arrays.equals(dataBufferIn, dataBufferOut) ) ) {
-                                shouldCopy = true;
-                                break;
+                    // guess destination name and check if does not already exist
+                    int i = 0;
+                    while (dest.exists()) {
+                        // is it already there?
+                        boolean alreadyThere = false;
+                        if ( (srcIsFile) && (dest.length() == src.length()) ) {
+                            out = new BufferedInputStream( dest.toURI().toURL().openStream() );
+                            byte dataBufferIn[] = new byte[4096];
+                            byte dataBufferOut[] = new byte[4096];
+                            int bytesReadIn;
+                            int bytesReadOut;
+                            alreadyThere = true;
+                            // file comparison loop
+                            while ((bytesReadIn = in.read(dataBufferIn, 0, 4096)) != -1) {
+                                bytesReadOut = out.read(dataBufferOut, 0, 4096);
+                                if ( (bytesReadIn != bytesReadOut) || ( ! Arrays.equals(dataBufferIn, dataBufferOut) ) ) {
+                                    alreadyThere = false;
+                                    break;
+                                }
                             }
+                            out.close();
                         }
-                        out.close();
-                    } 
-                    if (shouldCopy) {
-                        // avoid overwrite
-                        int i = 0;
-                        while (dest.exists()) {
-                            i++;
-                            dest = new File(dropFolder + File.separatorChar + i+"-"+src.getName());
+                        if (alreadyThere) {
+                            break;
                         }
-                        // finally create file and copy data
+                        // else try next one
+                        i++;
+                        dest = new File(dropFolder + File.separatorChar + i+"-"+src.getName());                        
+                    }
+                    // finally, if needed, create file and copy data                        
+                    if ( ! dest.exists()) {
                         fileOutputStream = new FileOutputStream(dest);                    
                         byte dataBuffer[] = new byte[4096];
                         int bytesRead;

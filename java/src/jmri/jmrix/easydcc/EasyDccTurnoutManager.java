@@ -42,13 +42,20 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return (EasyDccSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        Turnout t;
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new EasyDccTurnout(getSystemPrefix(), addr, getMemo());
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Could not create EasyDCC Turnout Systemname '"+systemName+"' .");
+        }
+        Turnout t = new EasyDccTurnout(getSystemPrefix(), addr, getMemo());
         t.setUserName(userName);
-
         return t;
     }
 

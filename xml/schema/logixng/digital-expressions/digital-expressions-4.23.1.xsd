@@ -27,6 +27,8 @@
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/and-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/antecedent-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/digital-call-module-4.23.4.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-block-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-clock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-conditional-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-entryexit-4.23.1.xsd"/>
@@ -64,12 +66,14 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        
+
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-            
+
             <xs:element name="And"                type="LogixNG_DigitalExpression_AndType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Antecedent"         type="LogixNG_DigitalExpression_AntecedentType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="CallDigitalExpressionModule"  type="LogixNG_DigitalExpression_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionBlock"    type="LogixNG_DigitalExpression_ExpressionBlock" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionClock"    type="LogixNG_DigitalExpression_ExpressionClockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionConditional"  type="LogixNG_DigitalExpression_ExpressionConditionalType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionEntryExit"    type="LogixNG_DigitalExpression_ExpressionEntryExit" minOccurs="0" maxOccurs="unbounded" />
@@ -96,7 +100,7 @@
             <xs:element name="Timer"              type="LogixNG_DigitalExpression_TimerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TriggerOnce"        type="LogixNG_DigitalExpression_TriggerOnceType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="True"               type="LogixNG_DigitalExpression_TrueType" minOccurs="0" maxOccurs="unbounded" />
-            
+
           </xs:choice>
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>

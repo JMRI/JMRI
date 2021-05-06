@@ -50,9 +50,9 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Or ::: Log error%n" +
+                "Or ::: Use default%n" +
                 "   ? E1%n" +
-                "      Always true ::: Log error%n" +
+                "      Always true ::: Use default%n" +
                 "   ? E2%n" +
                 "      Socket not connected%n");
     }
@@ -63,11 +63,11 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Trigger action ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Or ::: Log error%n" +
+                "               Or ::: Use default%n" +
                 "                  ? E1%n" +
-                "                     Always true ::: Log error%n" +
+                "                     Always true ::: Use default%n" +
                 "                  ? E2%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +

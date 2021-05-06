@@ -6,6 +6,8 @@ import java.util.Locale;
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Manager for LogixNG
  * 
@@ -115,9 +117,14 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * 
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public default void printTree(PrintWriter writer, String indent) {
-        printTree(new PrintTreeSettings(), writer, indent);
+    public default void printTree(
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(new PrintTreeSettings(), writer, indent, lineNumber);
     }
     
     /**
@@ -126,8 +133,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param settings settings for what to print
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber);
     
     /**
      * Print the tree to a stream.
@@ -135,12 +147,15 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
     public default void printTree(
             Locale locale,
             PrintWriter writer,
-            String indent) {
-        printTree(new PrintTreeSettings(), locale, writer, indent);
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(new PrintTreeSettings(), locale, writer, indent, lineNumber);
     }
     
     /**
@@ -150,8 +165,14 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber);
     
     /**
      * Test if parameter is a properly formatted system name.

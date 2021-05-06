@@ -51,7 +51,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Log error%n");
+                "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n");
     }
     
     @Override
@@ -60,11 +60,11 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Continuous action ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Sensor IS1 is Active ::: Log error%n" +
+                "               Sensor IS1 is Active ::: Use default%n" +
                 "            ! Then%n" +
-                "               Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Log error%n" +
+                "               Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -316,7 +316,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         
         ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.ContinuousAction);
+        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);

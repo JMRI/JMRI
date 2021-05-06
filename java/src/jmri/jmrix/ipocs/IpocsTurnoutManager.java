@@ -13,16 +13,20 @@ import javax.annotation.Nonnull;
  */
 public class IpocsTurnoutManager extends AbstractTurnoutManager {
 
-  public IpocsTurnoutManager(SystemConnectionMemo memo) {
-    super(memo);
-  }
+    public IpocsTurnoutManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
-  private IpocsPortController getPortController() {
-    return ((IpocsSystemConnectionMemo)memo).getPortController();
-  }
+    private IpocsPortController getPortController() {
+        return ((IpocsSystemConnectionMemo)memo).getPortController();
+    }
 
-  @Override
-  protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-    return new IpocsTurnout(getPortController(), systemName, userName);
-  }
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
+    @Override
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+      return new IpocsTurnout(getPortController(), systemName, userName);
+    }
 }

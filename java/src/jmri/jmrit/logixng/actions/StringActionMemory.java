@@ -3,33 +3,28 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 
 /**
  * Sets a Memory.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class StringActionMemory extends AbstractStringAction
         implements VetoableChangeListener {
 
     private NamedBeanHandle<Memory> _memoryHandle;
-    
+
     public StringActionMemory(String sys, String user) {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         StringActionManager manager = InstanceManager.getDefault(StringActionManager.class);
@@ -41,7 +36,7 @@ public class StringActionMemory extends AbstractStringAction
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         return manager.registerAction(copy);
     }
-    
+
     public void setMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setMemory");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
@@ -52,19 +47,19 @@ public class StringActionMemory extends AbstractStringAction
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
-    
+
     public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
-    
+
     public void setMemory(@Nonnull Memory memory) {
         assertListenersAreNotRegistered(log, "setMemory");
         setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(memory.getDisplayName(), memory));
     }
-    
+
     public void removeMemory() {
         assertListenersAreNotRegistered(log, "setMemory");
         if (_memoryHandle != null) {
@@ -72,11 +67,11 @@ public class StringActionMemory extends AbstractStringAction
             _memoryHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setValue(String value) {
@@ -102,7 +97,7 @@ public class StringActionMemory extends AbstractStringAction
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
@@ -148,22 +143,31 @@ public class StringActionMemory extends AbstractStringAction
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: StringActionMemory: bean = {}, report = {}", cdl, report);
+        if (getMemory() != null && bean.equals(getMemory().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemory.class);
 
 }

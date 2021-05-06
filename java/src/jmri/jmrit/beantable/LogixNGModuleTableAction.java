@@ -52,6 +52,8 @@ import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.ModuleEditor;
 import jmri.jmrit.logixng.ModuleManager;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Swing action to create and register a LogixNG Table.
  * <p>
@@ -147,7 +149,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     @Override
     protected String getBeanText(Module bean) {
         StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ");
+        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
     }
 

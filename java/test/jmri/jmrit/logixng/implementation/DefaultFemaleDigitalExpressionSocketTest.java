@@ -21,14 +21,14 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Test DefaultFemaleDigitalExpressionSocket
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBase {
 
     private ConditionalNG _conditionalNG;
     private MyExpressionTurnout _expression;
-    
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -36,18 +36,18 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(DigitalExpressionManager.class);
     }
-    
+
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
-    
+
     @Test
     public void testGetDescription() {
         Assert.assertTrue("String matches", "?".equals(_femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "? E1".equals(_femaleSocket.getLongDescription()));
     }
-    
+
     @Override
     protected FemaleSocket getFemaleSocket(String name) {
         return new DefaultFemaleDigitalExpressionSocket(null, new FemaleSocketListener() {
@@ -60,12 +60,12 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
             }
         }, name);
     }
-    
+
     @Override
     protected boolean hasSocketBeenSetup() {
         return _expression._hasBeenSetup;
     }
-    
+
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
@@ -84,12 +84,13 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         t.setState(Turnout.THROWN);
         Assert.assertTrue("turnout is thrown", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
     }
-    
+
     @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
-        
+
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionBlock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionClock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionConditional.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionEntryExit.class);
@@ -106,7 +107,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionTurnout.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionWarrant.class);
         map.put(Category.ITEM, classes);
-        
+
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.And.class);
         classes.add(jmri.jmrit.logixng.expressions.Antecedent.class);
@@ -114,19 +115,20 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.Not.class);
         classes.add(jmri.jmrit.logixng.expressions.Or.class);
         map.put(Category.COMMON, classes);
-        
+
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
         classes.add(jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression.class);
         classes.add(jmri.jmrit.logixng.expressions.TriggerOnce.class);
         classes.add(jmri.jmrit.logixng.expressions.True.class);
         map.put(Category.OTHER, classes);
-        
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -137,7 +139,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
@@ -166,22 +168,22 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyExpressionTurnout extends ExpressionTurnout {
-        
+
         private boolean _hasBeenSetup = false;
-        
+
         public MyExpressionTurnout(String systemName) {
             super(systemName, null);
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public void setup() {
             _hasBeenSetup = true;
         }
     }
-    
+
 }

@@ -10,21 +10,23 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Abstract female socket.
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public abstract class AbstractFemaleSocket implements FemaleSocket {
-    
+
     private Base _parent;
     protected final FemaleSocketListener _listener;
     private MaleSocket _socket = null;
     private String _name = null;
     private boolean _listenersAreRegistered = false;
     boolean _enableListeners = true;
-    
-    
+
+
     public AbstractFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
         if (!validateName(name)) {
             throw new IllegalArgumentException("the name is not valid: " + name);
@@ -34,31 +36,31 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         _listener = listener;
         _name = name;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setEnableListeners(boolean enable) {
         _enableListeners = enable;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean getEnableListeners() {
         return _enableListeners;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Base getParent() {
         return _parent;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setParent(@Nonnull Base parent) {
         _parent = parent;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setParentForAllChildren() {
@@ -67,7 +69,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             getConnectedSocket().setParentForAllChildren();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Lock getLock() {
@@ -77,7 +79,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             throw new UnsupportedOperationException("Socket is not connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setLock(Lock lock) {
@@ -87,27 +89,27 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             throw new UnsupportedOperationException("Socket is not connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
         if (socket == null) {
             throw new NullPointerException("socket cannot be null");
         }
-        
+
         if (_listenersAreRegistered) {
             throw new UnsupportedOperationException("A socket must not be connected when listeners are registered");
         }
-        
+
         if (isConnected()) {
             throw new SocketAlreadyConnectedException("Socket is already connected");
         }
-        
+
         if (!isCompatible(socket)) {
             throw new IllegalArgumentException("Socket "+socket.getClass().getName()+" is not compatible with "+this.getClass().getName());
 //            throw new IllegalArgumentException("Socket "+socket.getClass().getName()+" is not compatible with "+this.getClass().getName()+". Socket.getObject: "+socket.getObject().getClass().getName());
         }
-        
+
         _socket = socket;
         _socket.setParent(this);
         _listener.connected(this);
@@ -119,15 +121,15 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     @Override
     public void disconnect() {
         MaleSocket maleSocket = _socket;
-        
+
         if (_socket == null) {
             return;
         }
-        
+
         if (_listenersAreRegistered) {
             throw new UnsupportedOperationException("A socket must not be disconnected when listeners are registered");
         }
-        
+
         _socket.setParent(null);
         _socket = null;
         _listener.disconnected(this);
@@ -140,26 +142,26 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     public MaleSocket getConnectedSocket() {
         return _socket;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isConnected() {
         return _socket != null;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final boolean validateName(String name) {
         if (name.isEmpty()) return false;
         if (!Character.isLetter(name.charAt(0))) return false;
         for (int i=0; i < name.length(); i++) {
-            if (!Character.isLetterOrDigit(name.charAt(i)) || (name.charAt(i) == '_')) {
+            if (!Character.isLetterOrDigit(name.charAt(i)) && (name.charAt(i) != '_')) {
                 return false;
             }
         }
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setName(String name) {
@@ -177,14 +179,14 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     }
 
     abstract public void disposeMe();
-    
+
     /** {@inheritDoc} */
     @Override
     public final void dispose() {
         if (_listenersAreRegistered) {
             throw new UnsupportedOperationException("This is not currently supported");
         }
-        
+
         if (isConnected()) {
             MaleSocket aSocket = getConnectedSocket();
             disconnect();
@@ -202,7 +204,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     protected void registerListenersForThisClass() {
         // Do nothing
     }
-    
+
     /**
      * Unregister listeners if this object needs that.
      * <P>
@@ -212,41 +214,41 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     protected void unregisterListenersForThisClass() {
         // Do nothing
     }
-    
+
     /**
      * Register listeners if this object needs that.
      */
     @Override
     public void registerListeners() {
         if (!_enableListeners) return;
-        
+
         _listenersAreRegistered = true;
         registerListenersForThisClass();
         if (isConnected()) {
             getConnectedSocket().registerListeners();
         }
     }
-    
+
     /**
      * Register listeners if this object needs that.
      */
     @Override
     public void unregisterListeners() {
         if (!_enableListeners) return;
-        
+
         unregisterListenersForThisClass();
         if (isConnected()) {
             getConnectedSocket().unregisterListeners();
         }
         _listenersAreRegistered = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
         return isEnabled() && ((_parent == null) || _parent.isActive());
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -300,54 +302,84 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     public String getSystemName() {
         throw new UnsupportedOperationException("Not supported.");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final ConditionalNG getConditionalNG() {
         if (_parent == null) return null;
         return _parent.getConditionalNG();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
         if (_parent == null) return null;
         return _parent.getLogixNG();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
         if (_parent == null) return null;
         return _parent.getRoot();
     }
-    
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
+
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         throw new UnsupportedOperationException("Not supported.");
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         throw new UnsupportedOperationException("Not supported.");
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (isConnected()) {
-            getConnectedSocket().printTree(settings, locale, writer, indent, currentIndent+indent);
+            getConnectedSocket().printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
         } else {
+            if (settings._printLineNumbers) {
+                writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+            }
             writer.append(currentIndent);
             writer.append(indent);
             if (settings._printNotConnectedSockets) writer.append("Socket not connected");
@@ -355,8 +387,24 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("** {} :: {}", level, this.getLongDescription());
+        level++;
+
+        if (isConnected()) {
+            getConnectedSocket().getUsageTree(level, bean, report, cdl);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+    }
+
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    
+
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
@@ -447,6 +495,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         throw new UnsupportedOperationException("Not supported");
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
-    
+   private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
+
 }

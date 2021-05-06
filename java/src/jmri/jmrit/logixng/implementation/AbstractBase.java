@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.*;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 
 /**
@@ -22,7 +24,7 @@ public abstract class AbstractBase
         implements Base {
 
     protected boolean _listenersAreRegistered = false;
-    
+
     public AbstractBase(String sys) throws BadSystemNameException {
         super(sys);
     }
@@ -31,14 +33,14 @@ public abstract class AbstractBase
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         for (int i=0; i < original.getChildCount(); i++) {
             // Copy the name of the socket
             getChild(i).setName(original.getChild(i).getName());
-            
+
             // Copy the child
             if (original.getChild(i).isConnected()) {
                 Base childTree = original.getChild(i).getConnectedSocket().getDeepCopy(systemNames, userNames);
@@ -47,7 +49,7 @@ public abstract class AbstractBase
         }
         return this;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNG() {
@@ -55,7 +57,7 @@ public abstract class AbstractBase
         if (getParent() == null) return null;
         return getParent().getConditionalNG();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
@@ -63,7 +65,7 @@ public abstract class AbstractBase
         if (getParent() == null) return null;
         return getParent().getLogixNG();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
@@ -73,7 +75,7 @@ public abstract class AbstractBase
         }
         return item;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final void setParentForAllChildren() {
@@ -87,7 +89,7 @@ public abstract class AbstractBase
             }
         }
     }
-    
+
     /**
      * Register listeners if this object needs that.
      * <P>
@@ -95,7 +97,7 @@ public abstract class AbstractBase
      * this method must ensure that listeners are not registered more than once.
      */
     abstract protected void registerListenersForThisClass();
-    
+
     /**
      * Unregister listeners if this object needs that.
      * <P>
@@ -103,7 +105,7 @@ public abstract class AbstractBase
      * this method must ensure that listeners are not unregistered more than once.
      */
     abstract protected void unregisterListenersForThisClass();
-    
+
     /** {@inheritDoc} */
     @Override
     public final void registerListeners() {
@@ -114,7 +116,7 @@ public abstract class AbstractBase
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final void unregisterListeners() {
@@ -123,44 +125,86 @@ public abstract class AbstractBase
             getChild(i).unregisterListeners();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
         return isEnabled() && ((getParent() == null) || getParent().isActive());
     }
-    
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
+
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent, "");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
-        printTree(settings, locale, writer, indent, "");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
         
+        printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, locale, writer, indent, "", lineNumber);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
+
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent);
+            getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
         }
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("## {} :: {}", level, this.getLongDescription());
+        level++;
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).getUsageTree(level, bean, report, cdl);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+    }
+
     /**
-     * {@inheritDoc} 
-     * 
+     * {@inheritDoc}
+     *
      * Do a string comparison.
      */
     @CheckReturnValue
@@ -168,14 +212,14 @@ public abstract class AbstractBase
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         return suffix1.compareTo(suffix2);
     }
-    
+
     /**
      * Dispose this class.
      * Listeners do not need to be unregistered by this method since they are
      * unregistered by dispose().
      */
     abstract protected void disposeMe();
-    
+
     /** {@inheritDoc} */
     @Override
     public final void dispose() {
@@ -186,7 +230,7 @@ public abstract class AbstractBase
         unregisterListeners();
         disposeMe();
     }
-    
+
     protected void assertListenersAreNotRegistered(Logger log, String method) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
@@ -194,5 +238,6 @@ public abstract class AbstractBase
             throw e;
         }
     }
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBase.class);
 }

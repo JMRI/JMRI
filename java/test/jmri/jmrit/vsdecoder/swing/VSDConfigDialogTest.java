@@ -21,7 +21,7 @@ public class VSDConfigDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VSDConfigDialog t = new VSDConfigDialog(new JPanel(), "test", new VSDConfig(), false);
+        VSDConfigDialog t = new VSDConfigDialog(new JPanel(), "test", new VSDConfig(), false, false);
         Assert.assertNotNull("exists", t);
         
         // this created an audio manager, clean that up

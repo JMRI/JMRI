@@ -204,7 +204,22 @@
       to use SignalMast Logic via the Dispatcher's <a href=
       "../../package/jmri/jmrit/dispatcher/Options.shtml"><strong>Options</strong></a> menu.</p>
 
-
+      <p>With stubs (UK sidings), a special procedure has been adopted. 
+      When working with signal mast logic, transits work best when 
+      the sections are all FORWARDS. If a reverse section is used 
+      the transit sometimes works, but sometimes does not. There is 
+      no signal mast section facing out of a stub, and a block section 
+      at the stub has been found to work well in transits emanating 
+      from the stub.</p>
+      
+      <p>When signal mast logic is automatically called, block sections 
+      for all stubs are also produced. Transits produced with the transit 
+      Create Tool (reached by right clicking signal masts in sequence), 
+      automatically use these block sections. Care must be taken to 
+      use the block sections (as opposed to using a signal mast logic 
+      section in the reverse direction) when using the 'Add Transit' 
+      method accessed by clicking the Transits option in the Tools Menu.</p> 
+      
       <h2>Requirements</h2>
 
       <p>Sections build on JMRI's Blocks and Path structures. So before attempting to

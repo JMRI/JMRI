@@ -1,9 +1,6 @@
 package jmri.jmrit.throttle;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -33,6 +30,7 @@ import jmri.jmrit.symbolicprog.ProgDefault;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
+import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -72,7 +70,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Constructor
      */
     public AddressPanel() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }  
         initGUI();
+        applyPreferences();
     }
 
     public void destroy() { // Handle disposing of the throttle
@@ -365,58 +368,29 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Create, initialize and place the GUI objects.
      */
     private void initGUI() {
-        mainPanel = new JPanel();
-        this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        this.setContentPane(mainPanel);
 
-        mainPanel.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.CENTER;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.insets = new Insets(2, 2, 2, 2);
-        constraints.weightx = 1;
-        constraints.weighty = 0;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-
-        constraints.ipadx = -16;
-        if (jmri.util.SystemType.isLinux()) {
-            constraints.ipady = 0;
-        } else {
-            constraints.ipady = -16;
-        }
+        // center: address input
         addrSelector.setVariableSize(true);
-        mainPanel.add(addrSelector.getCombinedJPanel(), constraints);
-
-        setButton = new JButton(Bundle.getMessage("ButtonSet"));
-        constraints.gridx = GridBagConstraints.RELATIVE;
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.weightx = 0;
-        constraints.ipadx = constraints.ipady = 0;
-        mainPanel.add(setButton, constraints);
-
-        setButton.addActionListener(e -> {
-            consistAddress = null;
-            changeOfAddress();
-        });
-        
+        mainPanel.add(addrSelector.getCombinedJPanel(), BorderLayout.CENTER);
         addrSelector.getTextField().addActionListener(e -> {
             consistAddress = null;
             changeOfAddress();
         });
         
+        // top : roster and consists selectors
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+        
         rosterBox = new RosterEntrySelectorPanel();
         getRosterEntrySelector().setNonSelectedItem(Bundle.getMessage("NoLocoSelected"));
         getRosterEntrySelector().setToolTipText(Bundle.getMessage("SelectLocoFromRosterTT"));
         getRosterEntrySelector().addPropertyChangeListener("selectedRosterEntries", pce -> rosterItemSelected());
-
-        constraints.gridx = 0;
-        constraints.gridy = GridBagConstraints.RELATIVE;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1;
-        constraints.weighty = 0;
-        constraints.gridwidth = GridBagConstraints.REMAINDER;
-        mainPanel.add(getRosterEntrySelector(), constraints);
+        getRosterEntrySelector().setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+        topPanel.add(getRosterEntrySelector());
 
         conRosterBox = InstanceManager.getDefault(NceConsistRoster.class).fullRosterComboBox();
         if (InstanceManager.getDefault(NceConsistRoster.class).numEntries() > 0) {
@@ -424,16 +398,20 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             conRosterBox.setSelectedIndex(0);
             conRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
             conRosterBox.addActionListener(e -> consistRosterSelected());
-            constraints.gridx = 0;
-            constraints.gridy = GridBagConstraints.RELATIVE;
-            constraints.fill = GridBagConstraints.HORIZONTAL;
-            constraints.weightx = 1;
-            constraints.weighty = 0;
-            mainPanel.add(conRosterBox, constraints);
+            topPanel.add(conRosterBox);
         }
+        
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
+        // bottom : buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));        
+
+        progButton = new JButton(Bundle.getMessage("ButtonProgram"));
+        buttonPanel.add(progButton);
+        progButton.setEnabled(false);
+        progButton.addActionListener(e -> openProgrammer());
+        
         dispatchButton = new JButton(Bundle.getMessage("ButtonDispatch"));
         buttonPanel.add(dispatchButton);
         dispatchButton.setEnabled(false);
@@ -444,17 +422,14 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         releaseButton.setEnabled(false);
         releaseButton.addActionListener(e -> releaseAddress());
 
-        progButton = new JButton(Bundle.getMessage("ButtonProgram"));
-        buttonPanel.add(progButton);
-        progButton.setEnabled(false);
-        progButton.addActionListener(e -> openProgrammer());
-
-        constraints.gridx = 0;
-        constraints.gridy = GridBagConstraints.RELATIVE;
-        constraints.gridwidth = 2;
-        constraints.weighty = 0;
-        constraints.insets = new Insets(0, 0, 0, 0);
-        mainPanel.add(buttonPanel, constraints);
+        setButton = new JButton(Bundle.getMessage("ButtonSet"));
+        setButton.addActionListener(e -> {
+            consistAddress = null;
+            changeOfAddress();
+        });
+        buttonPanel.add(setButton);        
+        
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         pack();
     }
@@ -734,5 +709,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }        
     }
     
+    void applyPreferences() {
+        // nothing to do, for now
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(AddressPanel.class);
+
 }
+

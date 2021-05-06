@@ -16,9 +16,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
@@ -52,7 +53,6 @@ public class NodeIdentity {
     private UUID uuid = null;
     private String networkIdentity = null;
     private String storageIdentity = null;
-    private Random random = null;
     private final Map<Profile, String> profileStorageIdentities = new HashMap<>();
 
     private static NodeIdentity instance = null;
@@ -321,10 +321,7 @@ public class NodeIdentity {
         if (this.networkIdentity == null) {
             log.info("No MAC addresses found, generating a random multicast MAC address as per RFC 4122.");
             byte[] randBytes = new byte[6];
-            if (random == null) {
-                random = new Random();
-            }
-            random.nextBytes(randBytes);
+            ThreadLocalRandom.current().nextBytes(randBytes);
             // set multicast bit in first octet
             randBytes[0] = (byte) (randBytes[0] | 0x01);
             this.networkIdentity = this.createNetworkIdentity(randBytes);

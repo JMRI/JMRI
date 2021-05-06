@@ -151,7 +151,7 @@ public class DefaultLogixNGManagerTest {
                 "jmri.jmrit.logixng.implementation.DefaultMaleDigitalActionSocket",
                 maleSocket2.getClass().getName());
         Assert.assertEquals("action is of correct class",
-                "If Then Else. Trigger action",
+                "If Then Else. Execute on change",
                 maleSocket2.getLongDescription());
     }
     

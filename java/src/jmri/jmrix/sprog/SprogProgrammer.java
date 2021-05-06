@@ -56,6 +56,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     static final int NOTPROGRAMMING = 0;    // is notProgramming
     static final int COMMANDSENT = 2;       // read/write command sent, waiting reply
     int _val; // remember the value being read/written for confirmative reply
+    String _cv;
+    int _startVal;
+    jmri.ProgListener _progListener;
 
     /** 
      * {@inheritDoc}
@@ -63,9 +66,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     @Override
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        if (log.isDebugEnabled()) {
-            log.debug("writeCV {} mode {} listens {}", CV, getMode(), p);
-        }
+        log.debug("writeCV {} mode {} listens {}", CV, getMode(), p);
         useProgrammer(p);
         _val = val;
         startProgramming(_val, CV, 0);
@@ -92,21 +93,19 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      */
     @Override
     public void readCV(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+        _startVal = startVal;
         if (_sv != null) {
-            if (_sv.supportsCVHints()) {
-                // Connected hardware supports CV hint
-                log.debug("Hardware supports hints");
-                readCVWithDefault(CVname, p, startVal);
-            } else {
-                // Fallback to not using a hint
+            if (!_sv.supportsCVHints()) {
                 log.debug("Hardware does not support hints");
-                readCVWithDefault(CVname, p, 0);
+                _startVal = 0;
             }
+            readCVWithDefault(CVname, p, _startVal);
         } else {
-            // The SPROG version is not known yet so request the version for later
-            // and fall back to normal CV read this time
-            log.debug("SPROG version is unknown");
-            readCVWithDefault(CVname, p, 0);
+            // The SPROG version is not known yet so request the version 
+            log.debug("SPROG version is unknown - trying to get it");
+            // save for later
+            _cv = CVname;
+            _progListener = p;
             _memo.getSprogVersionQuery().requestVersion(this);
         }
     }
@@ -121,9 +120,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      */
     synchronized public void readCVWithDefault(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        if (log.isDebugEnabled()) {
-            log.debug("readCV {} mode {} hint {} listens {}", CV, getMode(), startVal, p);
-        }
+        log.debug("readCV {} mode {} hint {} listens {}", CV, getMode(), startVal, p);
         useProgrammer(p);
         _val = -1;
         startProgramming(_val, CV, startVal);
@@ -248,20 +245,23 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     /**
      * Handle a SprogVersion notification.
      * <p>
-     * Decode the SPROG version and populate the console gui appropriately with
-     * the features applicable to the version.
+     * Decode the SPROG version and decode the programming capabilities.
      *
      * @param v The SprogVersion being handled
      */
     @Override
-    synchronized public void notifyVersion(SprogVersion v) {
+    synchronized public void notifyVersion(SprogVersion v) throws jmri.ProgrammerException {
         // Save it for subsequent operations
         _sv = v;
         // Save it for others
         _memo.setSprogVersion(v);
-        if (log.isDebugEnabled()) {
-            log.debug("Found: {}", v.toString());
+        log.debug("Found: {}", v.toString());
+
+        if (!_sv.supportsCVHints()) {
+            log.debug("Hardware does not support hints");
+           _startVal = 0;
         }
+        readCVWithDefault(_cv, _progListener, _startVal);
     }
 
     /** 
