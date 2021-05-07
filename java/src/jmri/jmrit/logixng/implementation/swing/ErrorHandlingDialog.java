@@ -44,7 +44,7 @@ public class ErrorHandlingDialog {
         contentPanel.add(new JLabel(Bundle.getMessage(
                 "ErrorHandlingDialog_Name", item.getShortDescription())));
         contentPanel.add(Box.createVerticalStrut(10));
-        contentPanel.add(new JLabel(errorMessage));
+        contentPanel.add(new JLabel(errorMessage+"     "));   // Use some spaces to get extra space right of the error message
         contentPanel.add(Box.createVerticalStrut(10));
         
         contentPanel.add(_disableConditionalNGCheckBox);

@@ -604,7 +604,7 @@ You might want to edit it, i.e. to add
     - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
 
 
-- Close the [4.23.4 release GitHub Issue](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+%22Create+Test+Release+4.23.4%22) with a note saying that
+- Close the [4.23.4 release GitHub Issue](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+%22Create+Test+Release+4.23.4%22) with a comment saying that
 ```
     JMRI 4.23.4 has been released. Files are available in the GitHub release section.
 
