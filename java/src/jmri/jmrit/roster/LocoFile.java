@@ -240,7 +240,7 @@ public class LocoFile extends XmlFile {
             if (variableModel != null) {
                 for (int i = 0; i < variableModel.getRowCount(); i++) {
                     decoderDef.addContent(new Element("varValue")
-                            .setAttribute("item", variableModel.getLabel(i))
+                            .setAttribute("item", variableModel.getItem(i))
                             .setAttribute("value", variableModel.getValString(i))
                     );
                 }
