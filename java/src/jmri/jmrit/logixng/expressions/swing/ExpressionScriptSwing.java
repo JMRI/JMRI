@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.expressions.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
@@ -47,6 +49,11 @@ public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
     private JTextField _scriptReferenceTextField;
     private JTextField _scriptLocalVariableTextField;
     private JTextField _scriptFormulaTextField;
+    
+    private JLabel _registerListenerLabel;
+    private JLabel _unregisterListenerLabel;
+    private JTextField _registerListener;
+    private JTextField _unregisterListener;
     
     
     @Override
@@ -195,21 +202,46 @@ public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
         for (JComponent c : componentList) actionPanel.add(c);
         panel.add(actionPanel);
         
-/*        
-        panel.add(new JLabel("If you use Direct addressing of the signal head and Direct addressing of the appearance,"));
-        panel.add(new JLabel(" you need to first select the signal head, then click Create/OK to save the settings, and"));
-        panel.add(new JLabel(" then edit the signal head action again and select the appearance."));
-        panel.add(new JLabel("If you do not use Direct addressing of the signal head but are using Direct addressing of"));
-        panel.add(new JLabel("the appearance, you need to select an example signal head. The example signal head is used"));
-        panel.add(new JLabel("to tell JMRI which aspects the indirect addressed signal head may show."));
-*/        
+        JPanel listernerPanel = new JPanel();
+        panel.add(listernerPanel);
+        
+        _registerListenerLabel = new JLabel(Bundle.getMessage("ExpressionScript_RegisterListener"));
+        _unregisterListenerLabel = new JLabel(Bundle.getMessage("ExpressionScript_UnregisterListener"));
+        _registerListener = new JTextField(30);
+        _unregisterListener = new JTextField(30);
+        
+        if (action != null) {
+            _registerListener.setText(action.getRegisterListenerScript());
+            _unregisterListener.setText(action.getUnregisterListenerScript());
+        }
+        
+        listernerPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.EAST;
+        listernerPanel.add(_registerListenerLabel, c);
+        _registerListenerLabel.setLabelFor(_registerListener);
+        c.gridy = 1;
+        listernerPanel.add(_unregisterListenerLabel, c);
+        _unregisterListenerLabel.setLabelFor(_unregisterListener);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.WEST;
+        listernerPanel.add(_registerListener, c);
+//        _registerListener.setToolTipText(Bundle.getMessage("SysNameToolTip", "Y"));
+        c.gridy = 1;
+        listernerPanel.add(_unregisterListener, c);
+//        _unregisterListener.setToolTipText(Bundle.getMessage("SysNameToolTip", "Y"));
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        ExpressionScript action = new ExpressionScript("IQDA1", null);
+        ExpressionScript action = new ExpressionScript("IQDE1", null);
         
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
@@ -290,6 +322,9 @@ public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+        
+        action.setRegisterListenerScript(_registerListener.getText());
+        action.setUnregisterListenerScript(_unregisterListener.getText());
     }
     
     /** {@inheritDoc} */
