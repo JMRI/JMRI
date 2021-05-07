@@ -345,14 +345,16 @@ public class NXFrameTest {
         assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block.getSensor().getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
-        new QueueTool().waitEmpty(10);
+        JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
+//        new QueueTool().waitEmpty(10);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
-        new QueueTool().waitEmpty(10);
+        JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
+//        new QueueTool().waitEmpty(10);
 
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -388,7 +390,8 @@ public class NXFrameTest {
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
         for (int i = 1; i < route.length; i++) {
-            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+            JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
+//            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
 
             OBlock nextBlock = mgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -401,7 +404,8 @@ public class NXFrameTest {
                 nextSensor = null;
             }
             if (sensor != null) {
-                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+                JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
+//                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
                 sensor.setState(Sensor.INACTIVE);
                 NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             }
@@ -410,7 +414,8 @@ public class NXFrameTest {
                 block = nextBlock;
             }
         }
-        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+        JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         return sensor;
     }
 
