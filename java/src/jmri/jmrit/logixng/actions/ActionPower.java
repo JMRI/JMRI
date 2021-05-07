@@ -57,7 +57,7 @@ public class ActionPower extends AbstractDigitalAction {
     @Override
     public void execute() throws JmriException {
         AtomicReference<JmriException> exception = new AtomicReference<>();
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             try {
                 InstanceManager.getDefault(PowerManager.class).setPower(_powerState.getID());
             } catch (JmriException e) {

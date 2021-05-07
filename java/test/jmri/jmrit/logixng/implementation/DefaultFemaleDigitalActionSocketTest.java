@@ -88,19 +88,21 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
 
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionBlock.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionClock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionEntryExit.class);
         classes.add(jmri.jmrit.logixng.actions.ActionLight.class);
         classes.add(jmri.jmrit.logixng.actions.ActionLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionMemory.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionOBlock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionPower.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSimpleScript.class);
-        classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalHead.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalMast.class);
         classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionWarrant.class);
         classes.add(jmri.jmrit.logixng.actions.EnableLogix.class);
         classes.add(jmri.jmrit.logixng.actions.TriggerRoute.class);
         map.put(Category.ITEM, classes);

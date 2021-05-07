@@ -19,7 +19,6 @@ import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import org.junit.*;
@@ -553,18 +552,6 @@ public class StoreAndLoadTest {
         actionPower.setComment("A comment");
         actionPower.setBeanState(ActionPower.PowerState.On);
         maleSocket = digitalActionManager.registerAction(actionPower);
-        actionManySocket.getChild(indexAction++).connect(maleSocket);
-
-
-        ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(actionScript);
-        maleSocket.setEnabled(false);
-        actionManySocket.getChild(indexAction++).connect(maleSocket);
-
-        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        actionScript.setComment("A comment");
-        actionScript.setScript("import java\n");
-        maleSocket = digitalActionManager.registerAction(actionScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -2703,7 +2690,7 @@ public class StoreAndLoadTest {
         // are stored in the panel file.
         femaleRootSocket.forEntireTree((Base b) -> {
             if (b instanceof FemaleSocket) {
-                ((FemaleSocket)b).setName(RandomStringUtils.randomAlphabetic(10));
+                ((FemaleSocket)b).setName(getRandomString(10));
             }
         });
 
@@ -2898,7 +2885,6 @@ public class StoreAndLoadTest {
 //        }
 
 
-        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
@@ -2985,6 +2971,21 @@ public class StoreAndLoadTest {
             maleSocket.addLocalVariable(String.format("A%d", i+1), type, initValues[i]);
             i++;
         }
+    }
+
+
+    private static final PrimitiveIterator.OfInt iterator =
+            new Random(215).ints('a', 'z'+10).iterator();
+
+    private String getRandomString(int count) {
+        StringBuilder s = new StringBuilder();
+        for (int i=0; i < count; i++) {
+            int r = iterator.nextInt();
+            if (i == 0 && r > 'z') r -= 10;     // The first char must be a character, not a digit.
+            char c = (char) (r > 'z' ? r-'z'+'0' : r);
+            s.append(c);
+        }
+        return s.toString();
     }
 
 

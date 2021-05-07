@@ -55,9 +55,9 @@ public class ForTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "For (Init; While; AfterEach) do Do ::: Log error%n" +
+                "For (Init; While; AfterEach) do Do ::: Use default%n" +
                 "   ! Init%n" +
-                "      Many ::: Log error%n" +
+                "      Many ::: Use default%n" +
                 "         ! A1%n" +
                 "            Socket not connected%n" +
                 "   ? While%n" +
@@ -74,9 +74,9 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         For (Init; While; AfterEach) do Do ::: Log error%n" +
+                "         For (Init; While; AfterEach) do Do ::: Use default%n" +
                 "            ! Init%n" +
-                "               Many ::: Log error%n" +
+                "               Many ::: Use default%n" +
                 "                  ! A1%n" +
                 "                     Socket not connected%n" +
                 "            ? While%n" +

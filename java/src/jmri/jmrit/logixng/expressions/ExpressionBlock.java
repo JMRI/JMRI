@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
@@ -24,7 +26,6 @@ import jmri.util.TypeConversionUtil;
  *   <li>Is [not] Other (UNKNOWN, INCONSISTENT, UNDETECTED)</li>
  *   <li>Is [not] Allocated (based on the LayoutBlock useAlternateColor)</li>
  *   <li>Value [not] equals string</li>
- *   <li>Value [not] equals a memory value object.</li>
  * </ul>
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
@@ -38,7 +39,9 @@ public class ExpressionBlock extends AbstractDigitalExpression
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
+
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private BlockState _blockState = BlockState.Occupied;
     private String _stateReference = "";
@@ -46,12 +49,13 @@ public class ExpressionBlock extends AbstractDigitalExpression
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
 
-    private String _blockConstant = "";
-    private NamedBeanHandle<Memory> _blockMemoryHandle;
+    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
+    private String _dataReference = "";
+    private String _dataLocalVariable = "";
+    private String _dataFormula = "";
+    private ExpressionNode _dataExpressionNode;
 
-    private int _eventState = 0;
-    private Object _eventValue = null;
-    private boolean _eventAllocated = false;
+    private String _blockValue = "";
 
     public ExpressionBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -71,14 +75,20 @@ public class ExpressionBlock extends AbstractDigitalExpression
         copy.setReference(_reference);
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
+
         copy.set_Is_IsNot(_is_IsNot);
+
         copy.setStateAddressing(_stateAddressing);
         copy.setBeanState(_blockState);
         copy.setStateReference(_stateReference);
         copy.setStateLocalVariable(_stateLocalVariable);
         copy.setStateFormula(_stateFormula);
-        copy.setBlockConstant(_blockConstant);
-        if (_blockMemoryHandle != null) copy.setBlockMemory(_blockMemoryHandle);
+
+        copy.setDataAddressing(_dataAddressing);
+        copy.setDataReference(_dataReference);
+        copy.setDataLocalVariable(_dataLocalVariable);
+        copy.setDataFormula(_dataFormula);
+        copy.setBlockValue(_blockValue);
         return manager.registerExpression(copy);
     }
 
@@ -166,6 +176,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
         }
     }
 
+
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
     }
@@ -173,6 +184,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
     public Is_IsNot_Enum get_Is_IsNot() {
         return _is_IsNot;
     }
+
 
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
@@ -230,57 +242,64 @@ public class ExpressionBlock extends AbstractDigitalExpression
         }
     }
 
-    public void setBlockConstant(@Nonnull String constant) {
-        _blockConstant = constant;
+
+    public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _dataAddressing = addressing;
+        parseDataFormula();
     }
 
-    public String getBlockConstant() {
-        return _blockConstant;
+    public NamedBeanAddressing getDataAddressing() {
+        return _dataAddressing;
     }
 
-    public void setBlockMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setBlockMemory");
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            setBlockMemory(memory);
+    public void setDataReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _dataReference = reference;
+    }
+
+    public String getDataReference() {
+        return _dataReference;
+    }
+
+    public void setDataLocalVariable(@Nonnull String localVariable) {
+        _dataLocalVariable = localVariable;
+    }
+
+    public String getDataLocalVariable() {
+        return _dataLocalVariable;
+    }
+
+    public void setDataFormula(@Nonnull String formula) throws ParserException {
+        _dataFormula = formula;
+        parseDataFormula();
+    }
+
+    public String getDataFormula() {
+        return _dataFormula;
+    }
+
+    private void parseDataFormula() throws ParserException {
+        if (_dataAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _dataExpressionNode = parser.parseExpression(_dataFormula);
         } else {
-            removeBlockMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
+            _dataExpressionNode = null;
         }
     }
 
-    public void setBlockMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setBlockMemory");
-        setBlockMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
+
+    public void setBlockValue(@Nonnull String value) {
+        _blockValue = value;
     }
 
-    public void setBlockMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setBlockMemory");
-        _blockMemoryHandle = handle;
-        addRemoveVetoListener();
+    public String getBlockValue() {
+        return _blockValue;
     }
 
-    public NamedBeanHandle<Memory> getBlockMemory() {
-        return _blockMemoryHandle;
-    }
-
-    public void removeBlockMemory() {
-        assertListenersAreNotRegistered(log, "removeBlockMemory");
-        if (_blockMemoryHandle != null) {
-            _blockMemoryHandle = null;
-            addRemoveVetoListener();
-        }
-    }
-
-    private void addRemoveVetoListener() {
-        if ((_blockMemoryHandle != null)) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
@@ -289,12 +308,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
                 if (evt.getOldValue().equals(getBlock().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("Block_BlockInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getBlockMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Block_MemoryInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -335,6 +348,45 @@ public class ExpressionBlock extends AbstractDigitalExpression
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
+    }
+
+    private String getNewData() throws JmriException {
+
+        switch (_dataAddressing) {
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _dataReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable =
+                        getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
+
+            case Formula:
+                return _dataExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _dataExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
+        }
+    }
+
+    /**
+     * A block is considered to be allocated if the related layout block has use extra color enabled.
+     * @param block The block whose allocation state is requested.
+     * @return true if the layout block is using the extra color.
+     */
+    public boolean isBlockAllocated(Block block) {
+        boolean result = false;
+        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
+        if (layoutBlock != null) {
+            result = layoutBlock.getUseExtraColor();
+        }
+        return result;
     }
 
     /** {@inheritDoc} */
@@ -387,7 +439,9 @@ public class ExpressionBlock extends AbstractDigitalExpression
             checkBlockState = BlockState.valueOf(getNewState());
         }
 
-        int currentState = _eventState;
+        int currentState = block.getState();
+        Object currentValue = null;
+
         switch (checkBlockState) {
             case Other:
                 if (currentState != Block.OCCUPIED && currentState != Block.UNOCCUPIED) {
@@ -398,20 +452,16 @@ public class ExpressionBlock extends AbstractDigitalExpression
                 break;
 
             case Allocated:
-                currentState = _eventAllocated ? BlockState.Allocated.getID() : 0;
+                boolean cuurrentAllocation = isBlockAllocated(block);
+                currentState = cuurrentAllocation ? BlockState.Allocated.getID() : 0;
                 break;
 
             case ValueMatches:
-                currentState = _blockConstant.equals(_eventValue) ? BlockState.ValueMatches.getID() : 0;
-                break;
-
-            case MemoryMatches:
-                currentState = 0;
-                if (_blockMemoryHandle != null) {
-                    Object memoryObject = _blockMemoryHandle.getBean().getValue();
-                    if (memoryObject != null && memoryObject.equals(_eventValue)) {
-                        currentState = BlockState.MemoryMatches.getID();
-                    }
+                currentValue = block.getValue();
+                if (_dataAddressing == NamedBeanAddressing.Direct) {
+                    currentState = _blockValue.equals(currentValue) ? BlockState.ValueMatches.getID() : 0;
+                } else {
+                    currentState = getNewData().equals(currentValue) ? BlockState.ValueMatches.getID() : 0;
                 }
                 break;
 
@@ -475,24 +525,27 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
         switch (_stateAddressing) {
             case Direct:
-
                 if (_blockState == BlockState.ValueMatches) {
+                    String bundleKey = "Block_Long_Value";
                     String equalsString = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
-                    return Bundle.getMessage(locale, "Block_Long_Value", _blockHandle.getName(), equalsString, _blockConstant);
-
-                } else if (_blockState == BlockState.MemoryMatches) {
-                    String memoryName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    String equalsMemory = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
-                    return Bundle.getMessage(locale, "Block_Long_Memory", namedBean, equalsMemory, memoryName);
-
+                    switch (_dataAddressing) {
+                        case Direct:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, _blockValue);
+                        case Reference:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, Bundle.getMessage("AddressByReference", _dataReference));
+                        case LocalVariable:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+                        case Formula:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, Bundle.getMessage("AddressByFormula", _dataFormula));
+                        default:
+                            throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+                    }
                 } else if (_blockState == BlockState.Other) {
                     state = Bundle.getMessage(locale, "AddressByDirect", _blockState._text);
                     return Bundle.getMessage(locale, "Block_Long", namedBean, "", state);
-
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _blockState._text);
                 }
-
                break;
 
             case Reference:
@@ -542,19 +595,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()) {
-            case "state":
-                _eventState = (int) evt.getNewValue();
-                break;
-            case "value":
-                _eventValue = evt.getNewValue();
-                break;
-            case "allocated":
-                _eventAllocated = (boolean) evt.getNewValue();
-                break;
-            default:
-                return;
-        }
         if (getTriggerOnChange()) {
             getConditionalNG().execute();
         }
@@ -570,8 +610,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
         NotOccupied(4, Bundle.getMessage("Block_StateNotOccupied")),
         Other(-1, Bundle.getMessage("Block_StateOther")),
         Allocated(-2, Bundle.getMessage("Block_Allocated")),
-        ValueMatches(-3, Bundle.getMessage("Block_ValueMatches")),
-        MemoryMatches(-4, Bundle.getMessage("Block_MemoryMatches"));
+        ValueMatches(-3, Bundle.getMessage("Block_ValueMatches"));
 
         private final int _id;
         private final String _text;
@@ -596,9 +635,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionBlock: bean = {}, report = {}", cdl, report);
         if (getBlock() != null && bean.equals(getBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
-        if (getBlockMemory() != null && bean.equals(getBlockMemory().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
         }
     }

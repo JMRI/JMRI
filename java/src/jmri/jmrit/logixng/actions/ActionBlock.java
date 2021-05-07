@@ -36,14 +36,19 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     private ExpressionNode _expressionNode;
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.None;
+    private DirectOperation _operationDirect = DirectOperation.SetOccupied;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
     private ExpressionNode _operationExpressionNode;
 
-    private String _blockConstant = "";
-    private NamedBeanHandle<Memory> _blockMemoryHandle;
+    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
+    private String _dataReference = "";
+    private String _dataLocalVariable = "";
+    private String _dataFormula = "";
+    private ExpressionNode _dataExpressionNode;
+
+    private String _blockValue = "";
 
     public ActionBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -63,13 +68,19 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         copy.setReference(_reference);
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
+
         copy.setOperationAddressing(_operationAddressing);
         copy.setOperationDirect(_operationDirect);
         copy.setOperationReference(_operationReference);
         copy.setOperationLocalVariable(_operationLocalVariable);
         copy.setOperationFormula(_operationFormula);
-        copy.setBlockConstant(_blockConstant);
-        if (_blockMemoryHandle != null) copy.setBlockMemory(_blockMemoryHandle);
+
+        copy.setDataAddressing(_dataAddressing);
+        copy.setDataReference(_dataReference);
+        copy.setDataLocalVariable(_dataLocalVariable);
+        copy.setDataFormula(_dataFormula);
+        copy.setBlockValue(_blockValue);
+
         return manager.registerAction(copy);
     }
 
@@ -156,9 +167,10 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
     }
 
+
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
-        parseLockFormula();
+        parseOperationFormula();
     }
 
     public NamedBeanAddressing getOperationAddressing() {
@@ -194,14 +206,14 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
     public void setOperationFormula(@Nonnull String formula) throws ParserException {
         _operationFormula = formula;
-        parseLockFormula();
+        parseOperationFormula();
     }
 
-    public String getLockFormula() {
+     public String getOperationFormula() {
         return _operationFormula;
     }
 
-    private void parseLockFormula() throws ParserException {
+    private void parseOperationFormula() throws ParserException {
         if (_operationAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
 
@@ -212,57 +224,64 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
     }
 
-    public void setBlockConstant(@Nonnull String constant) {
-        _blockConstant = constant;
+
+     public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _dataAddressing = addressing;
+        parseDataFormula();
     }
 
-    public String getBlockConstant() {
-        return _blockConstant;
+    public NamedBeanAddressing getDataAddressing() {
+        return _dataAddressing;
     }
 
-    public void setBlockMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setBlockMemory");
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            setBlockMemory(memory);
+    public void setDataReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _dataReference = reference;
+    }
+
+    public String getDataReference() {
+        return _dataReference;
+    }
+
+    public void setDataLocalVariable(@Nonnull String localVariable) {
+        _dataLocalVariable = localVariable;
+    }
+
+    public String getDataLocalVariable() {
+        return _dataLocalVariable;
+    }
+
+    public void setDataFormula(@Nonnull String formula) throws ParserException {
+        _dataFormula = formula;
+        parseDataFormula();
+    }
+
+    public String getDataFormula() {
+        return _dataFormula;
+    }
+
+    private void parseDataFormula() throws ParserException {
+        if (_dataAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _dataExpressionNode = parser.parseExpression(_dataFormula);
         } else {
-            removeBlockMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
+            _dataExpressionNode = null;
         }
     }
 
-    public void setBlockMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setBlockMemory");
-        setBlockMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
+
+    public void setBlockValue(@Nonnull String value) {
+        _blockValue = value;
     }
 
-    public void setBlockMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setBlockMemory");
-        _blockMemoryHandle = handle;
-        addRemoveVetoListener();
+    public String getBlockValue() {
+        return _blockValue;
     }
 
-    public NamedBeanHandle<Memory> getBlockMemory() {
-        return _blockMemoryHandle;
-    }
-
-    public void removeBlockMemory() {
-        assertListenersAreNotRegistered(log, "removeBlockMemory");
-        if (_blockMemoryHandle != null) {
-            _blockMemoryHandle = null;
-            addRemoveVetoListener();
-        }
-    }
-
-    private void addRemoveVetoListener() {
-        if ((_blockMemoryHandle != null)) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
@@ -271,12 +290,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                 if (evt.getOldValue().equals(getBlock().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("ActionBlock_BlockInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getBlockMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionBlock_MemoryInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -294,7 +307,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         return true;
     }
 
-    private String getNewLock() throws JmriException {
+    private String getNewOperation() throws JmriException {
 
         switch (_operationAddressing) {
             case Reference:
@@ -315,6 +328,33 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
+        }
+    }
+
+    private String getNewData() throws JmriException {
+
+        switch (_dataAddressing) {
+            case Direct:
+                return _blockValue;
+
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _dataReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
+
+            case Formula:
+                return _operationExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _dataExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
         }
     }
 
@@ -360,7 +400,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
 
         String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
+                ? getNewOperation() : null;
 
         DirectOperation oper;
         if ((_operationAddressing == NamedBeanAddressing.Direct)) {
@@ -369,68 +409,65 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
             oper = DirectOperation.valueOf(name);
         }
 
-        if (_operationDirect != DirectOperation.None) {
 
-            // Variables used in lambda must be effectively final
-            DirectOperation theOper = oper;
+        // Variables used in lambda must be effectively final
+        DirectOperation theOper = oper;
 
-            ThreadingUtil.runOnLayout(() -> {
-                Sensor sensor;
-                LayoutBlock lblk;
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
+            Sensor sensor;
+            LayoutBlock lblk;
 
-                switch (theOper) {
-                    case None:
-                        break;
-                    case SetOccupied:
-                        sensor = block.getSensor();
-                        if (sensor != null) {
-                            try {
-                                sensor.setKnownState(Sensor.ACTIVE);
-                            } catch (JmriException ex) {
-                                log.debug("Exception setting sensor active");
-                            }
+            switch (theOper) {
+                case SetOccupied:
+                    sensor = block.getSensor();
+                    if (sensor != null) {
+                        try {
+                            sensor.setKnownState(Sensor.ACTIVE);
+                        } catch (JmriException ex) {
+                            log.debug("Exception setting sensor active");
                         }
-                        break;
-                    case SetNotOccupied:
-                        sensor = block.getSensor();
-                        if (sensor != null) {
-                            try {
-                                sensor.setKnownState(Sensor.INACTIVE);
-                            } catch (JmriException ex) {
-                                log.debug("Exception setting sensor inactive");
-                            }
+                    } else {
+                        throw new JmriException(Bundle.getMessage("ActionBlock_ErrorSensor", block.getDisplayName()));
+                    }
+                    break;
+                case SetNotOccupied:
+                    sensor = block.getSensor();
+                    if (sensor != null) {
+                        try {
+                            sensor.setKnownState(Sensor.INACTIVE);
+                        } catch (JmriException ex) {
+                            log.debug("Exception setting sensor inactive");
                         }
-                        break;
-                    case SetAltColorOn:
-                        lblk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
-                        if (lblk != null) lblk.setUseExtraColor(true);
-                        break;
-                    case SetAltColorOff:
-                        lblk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
-                        if (lblk != null) lblk.setUseExtraColor(false);
-                        break;
-                    case SetNullValue:
-                        block.setValue(null);
-                        break;
-                    case SetToConstant:
-                        block.setValue(_blockConstant);
-                        break;
-                    case CopyFromMemory:
-                        if (_blockMemoryHandle != null) {
-                            block.setValue(_blockMemoryHandle.getBean().getValue());
-                        }
-                        break;
-                    case CopyToMemory:
-                        if (_blockMemoryHandle != null) {
-                            Memory memory = _blockMemoryHandle.getBean();
-                            memory.setValue(block.getValue());
-                        }
-                        break;
-                    default:
-                        throw new IllegalArgumentException("invalid oper state: " + theOper.name());
-                }
-            });
-        }
+                    } else {
+                        throw new JmriException(Bundle.getMessage("ActionBlock_ErrorSensor", block.getDisplayName()));
+                    }
+                    break;
+                case SetAltColorOn:
+                    lblk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
+                    if (lblk != null) {
+                        lblk.setUseExtraColor(true);
+                    } else {
+                        throw new JmriException(Bundle.getMessage("ActionBlock_ErrorLayoutBlock", block.getDisplayName()));
+                    }
+                    break;
+                case SetAltColorOff:
+                    lblk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
+                    if (lblk != null) {
+                        lblk.setUseExtraColor(false);
+                    } else {
+                        throw new JmriException(Bundle.getMessage("ActionBlock_ErrorLayoutBlock", block.getDisplayName()));
+                    }
+                    break;
+                case SetNullValue:
+                    block.setValue(null);
+                    break;
+                case SetValue:
+                    block.setValue(getNewData());
+                    break;
+                default:
+                    throw new IllegalArgumentException("invalid oper state: " + theOper.name());
+            }
+        });
     }
 
     @Override
@@ -482,14 +519,20 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
         switch (_operationAddressing) {
             case Direct:
-                if (_operationDirect == DirectOperation.SetToConstant) {
-                    return Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
-                } else if (_operationDirect == DirectOperation.CopyFromMemory) {
-                    String fromName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    return Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, fromName);
-                } else if (_operationDirect == DirectOperation.CopyToMemory) {
-                    String toName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    return Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", toName, namedBean);
+                if (_operationDirect == DirectOperation.SetValue) {
+                    String bundleKey = "ActionBlock_Long_Value";
+                    switch (_dataAddressing) {
+                        case Direct:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, _blockValue);
+                        case Reference:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
+                        case LocalVariable:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+                        case Formula:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
+                        default:
+                            throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+                    }
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
                 }
@@ -536,15 +579,12 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     }
 
     public enum DirectOperation {
-        None(""),
         SetOccupied(Bundle.getMessage("ActionBlock_SetOccupied")),
         SetNotOccupied(Bundle.getMessage("ActionBlock_SetNotOccupied")),
         SetAltColorOn(Bundle.getMessage("ActionBlock_SetAltColorOn")),
         SetAltColorOff(Bundle.getMessage("ActionBlock_SetAltColorOff")),
         SetNullValue(Bundle.getMessage("ActionBlock_SetNullValue")),
-        SetToConstant(Bundle.getMessage("ActionBlock_SetConstant")),
-        CopyFromMemory(Bundle.getMessage("ActionBlock_CopyFromMemory")),
-        CopyToMemory(Bundle.getMessage("ActionBlock_CopyToMemory"));
+        SetValue(Bundle.getMessage("ActionBlock_SetValue"));
 
         private final String _text;
 
@@ -564,9 +604,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionBlock: bean = {}, report = {}", cdl, report);
         if (getBlock() != null && bean.equals(getBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-        if (getBlockMemory() != null && bean.equals(getBlockMemory().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }

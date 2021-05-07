@@ -28,6 +28,8 @@ import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JComboBoxUtil;
 
+import org.apache.commons.lang3.mutable.MutableObject;
+
 /**
  * Base class for LogixNG editors
  * 
@@ -48,7 +50,6 @@ public class TreeEditor extends TreeViewer {
     private final JTextField _socketNameTextField = new JTextField(20);
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
-    private final JTextField _addComment = new JTextField(50);
     private final JTextField _usernameField = new JTextField(50);
     
     protected boolean _showReminder = false;
@@ -65,7 +66,6 @@ public class TreeEditor extends TreeViewer {
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
-    private final JLabel _commentLabel = new JLabel(Bundle.getMessage("Comment") + ":");   // NOI18N
     private final String _systemNameAuto = this.getClass().getName() + ".AutoSystemName";             // NOI18N
     private final JLabel _categoryLabel = new JLabel(Bundle.getMessage("Category") + ":");  // NOI18N
     private final JLabel _typeLabel = new JLabel(Bundle.getMessage("Type") + ":");   // NOI18N
@@ -413,6 +413,7 @@ public class TreeEditor extends TreeViewer {
         _showReminder = true;
         // make an Add Item Frame
         if (_addItemDialog == null) {
+            MutableObject<String> commentStr = new MutableObject<>();
             _addSwingConfiguratorInterface = swingConfiguratorInterface;
             // Create item
             _create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
@@ -451,7 +452,7 @@ public class TreeEditor extends TreeViewer {
     //                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
     //                        entry.getKey().updateObject(entry.getValue());
     //                    }
-                        socket.setComment(_addComment.getText());
+                        socket.setComment(commentStr.getValue());
                         try {
                             femaleSocket.connect(socket);
                         } catch (SocketAlreadyConnectedException ex) {
@@ -502,7 +503,7 @@ public class TreeEditor extends TreeViewer {
             _create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
             if (_addSwingConfiguratorInterface != null) {
-                makeAddEditFrame(true, femaleSocket, _create);  // NOI18N
+                makeAddEditFrame(true, femaleSocket, _create, commentStr);
             }
         }
     }
@@ -518,8 +519,8 @@ public class TreeEditor extends TreeViewer {
         _showReminder = true;
         // make an Edit Frame
         if (_editActionExpressionDialog == null) {
-//            _editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
-//            _editSwingConfiguratorInterface.setFrame(this);
+            MutableObject<String> commentStr = new MutableObject<>();
+            
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             _edit.addActionListener((ActionEvent e) -> {
@@ -554,11 +555,7 @@ public class TreeEditor extends TreeViewer {
                             } else {
                                 ((NamedBean)object).setUserName(_addUserName.getText());
                             }
-                            if (_addComment.getText().isEmpty()) {
-                                ((NamedBean)object).setComment(null);
-                            } else {
-                                ((NamedBean)object).setComment(_addComment.getText());
-                            }
+                            ((NamedBean)object).setComment(commentStr.getValue());
                             for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
                                 entry.getKey().updateObject(entry.getValue());
                                 entry.getKey().dispose();
@@ -596,7 +593,7 @@ public class TreeEditor extends TreeViewer {
             });
             _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             
-            makeAddEditFrame(false, femaleSocket, _edit);  // NOI18N
+            makeAddEditFrame(false, femaleSocket, _edit, commentStr);
         }
     }
 
@@ -606,11 +603,13 @@ public class TreeEditor extends TreeViewer {
      * @param addOrEdit true if add, false if edit
      * @param femaleSocket the female socket to which we want to add something
      * @param button a button to add to the dialog
+     * @param commentStr the new comment
      */
     final protected void makeAddEditFrame(
             boolean addOrEdit,
             FemaleSocket femaleSocket,
-            JButton button) {
+            JButton button,
+            MutableObject<String> commentStr) {
         
         JDialog frame  = new JDialog(
                 this,
@@ -638,7 +637,6 @@ public class TreeEditor extends TreeViewer {
             c.gridy = 1;
             p.add(_userNameLabel, c);
             c.gridy = 2;
-            p.add(_commentLabel, c);
             c.gridx = 1;
             c.gridy = 0;
             c.anchor = java.awt.GridBagConstraints.WEST;
@@ -647,8 +645,6 @@ public class TreeEditor extends TreeViewer {
             p.add(_systemName, c);
             c.gridy = 1;
             p.add(_addUserName, c);
-            c.gridy = 2;
-            p.add(_addComment, c);
             if (!femaleSocket.isConnected()) {
                 c.gridx = 2;
                 c.gridy = 1;
@@ -667,23 +663,17 @@ public class TreeEditor extends TreeViewer {
         } else {
             c.gridx = 0;
             c.gridy = 0;
-            p.add(_commentLabel, c);
-            c.gridx = 1;
-            p.add(_addComment, c);
         }
-        _addComment.setToolTipText(Bundle.getMessage("CommentHint"));
         contentPanel.add(p);
         
         if (femaleSocket.isConnected()) {
             _systemName.setText(femaleSocket.getConnectedSocket().getSystemName());
             _systemName.setEnabled(false);
             _addUserName.setText(femaleSocket.getConnectedSocket().getUserName());
-            _addComment.setText(femaleSocket.getConnectedSocket().getComment());
         } else {
             _systemName.setText("");
             _systemName.setEnabled(true);
             _addUserName.setText("");
-            _addComment.setText("");
         }
         
         // set up message
@@ -694,11 +684,13 @@ public class TreeEditor extends TreeViewer {
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         
+        Base object = null;
+        
         // Get panel for the item
         _swingConfiguratorInterfaceList.clear();
         List<JPanel> panels = new ArrayList<>();
         if (femaleSocket.isConnected()) {
-            Base object = femaleSocket.getConnectedSocket();
+            object = femaleSocket.getConnectedSocket();
             while (object instanceof MaleSocket) {
                 SwingConfiguratorInterface swi =
                         SwingTools.getSwingConfiguratorForClass(object.getClass());
@@ -740,6 +732,14 @@ public class TreeEditor extends TreeViewer {
         panel3.add(panel34);
         contentPanel.add(panel3);
         
+        // Edit comment
+        JButton editComment = new JButton(Bundle.getMessage("ButtonEditComment"));    // NOI18N
+        panel5.add(editComment);
+        String comment = object != null ? object.getComment() : "";
+        editComment.addActionListener((ActionEvent e) -> {
+            commentStr.setValue(new EditCommentDialog().showDialog(comment));
+        });
+
         // Function help
         JButton showFunctionHelp = new JButton(Bundle.getMessage("ButtonFunctionHelp"));    // NOI18N
         panel5.add(showFunctionHelp);

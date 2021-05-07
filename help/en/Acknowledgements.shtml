@@ -373,6 +373,8 @@
 
         <li>Eddie Delozier, who write the TCS M1 decoder file.</li>
 
+        <li>Luca Dentella, who contributed the CmdMapper script.</li>
+
         <li>Kevin Dickerson, who figured out the ECoS protocol so
         JMRI could connect to one and wrote code for ECoS throttles
         and turnouts, added turnout monitoring to the ECoS support,
@@ -917,6 +919,9 @@
         decoders</li>
 
         <li>Ian Price who contributed the LocoTracker.py script</li>
+
+        <li>Vladimír Preclík <!-- vpreclik -->
+        who contributed fixes to the panel JavaScript code</li>
 
         <li>Oscar A. Pruitt, who provided the implementation to
         support RFID readers using the EM-18 protocol</li>

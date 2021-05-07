@@ -52,6 +52,13 @@
     taught to move in the panel along with the train from location to location.
    </p>
 
+   <p>
+    OperationsPro&trade; lets you create realistic prototypical car movements through the optional
+    use of <a href="#LocationDivision">railroad divisions</a>. Cars are returned to their home
+    division when their loads are removed, or when a new load is provided by an industry in a
+    foreign division.
+   </p>
+
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
     main menu heading "Tools-&gt;Operations".</p>
 
@@ -133,6 +140,7 @@
 
      <ul>
       <li><a href="#AddLocation">Add or Edit Location</a></li>
+      <li><a href="#LocationDivision">Railroad Divisions</a></li>
 
       <li><a href="#LocationTools">Location Tools</a>
 
@@ -276,6 +284,7 @@
        <ul>
         <li><a href="#ReturnWhenEmpty">Return When Empty</a></li>
         <li><a href="#ReturnWhenLoaded">Return When Loaded</a></li>
+        <li><a href="#HomeDivision">Home Division</a></li>
        </ul></li>
 
       <li><a href="#CarsTools">Cars Tools</a>
@@ -2080,20 +2089,37 @@
 
    <a name="LocationServiceDirection" id="LocationServiceDirection"></a>
    <h4>Location Service Direction</h4>
-   <p>You can decide which train direction the location can service. For example, if only east
-    bound trains can access the location select "East" and deselect the other directions. This can
-    be useful if you want to only support trailing point switching for a given location. If a
-    location can support multiple directions then select the ones that are appropriate.</p>
+   <p>You can decide which train direction the location can service. For example, if only east bound
+   trains can access the location select "East" and deselect the other directions. This can be
+   useful if you want to only support trailing point switching for a given location. If a location
+   can support multiple directions then select the ones that are appropriate.</p>
+   
+   <a name="LocationDivision" id="LocationDivision"></a>
+   <h4>Railroad Division</h4>
+   <p>
+    The railroad divisions feature allows you to create prototypical car movements for your
+    railroad. To use this feature create and then select at least one division for your railroad by
+    using the "Edit" button in the "Division" section of the "Edit Location" window. You can assign
+    multiple locations to the same division, and you can create several divisions for your railroad.
+    Cars that are assigned a
+    <a href="#HomeDivision">home division</a> will return to the yard at their home division when
+    their load state becomes empty. Cars with a home division will also return to an industry (<a
+     href="#Sidings">spur</a>) at their home division when loaded from an industry outside of their
+    home division. Cars loaded at their home division can travel to any industry on the railroad.
+    The program will use
+    <a href="#Interchange">interchange</a> tracks to route the cars to industries that require
+    multiple trains.
+   </p>
 
    <a name="LocationRollingStock" id="LocationRollingStock"></a>
    <h4>Location Rolling Stock</h4>
-   You can control the rolling stock a location can service. Press the "Clear All" button to
+   <p>You can control the rolling stock a location can service. Press the "Clear All" button to
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
    stock you wish the location to accept. After configuring the tracks for a location, you can use
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
    tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car type names that
    a location can service. You can also access the "Edit Car Attributes" window from the edit
-   location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
+   location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.</p>
 
    <h4>Location Comment</h4>
    <p>
@@ -3649,6 +3675,12 @@
    <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
     destination to become active, only when the car is set out by the program will the RWL
     destination and RWL load name become active.</p>
+    
+   <a name="HomeDivision" id="HomeDivision"></a>
+   <h4>Home Division</h4>
+   You can optionally select the car's home division for more prototypical car movements. See
+   <a href="#LocationDivision">railroad divisions</a> in the <a href="#AddLocation">Edit
+    Location</a> help for more information.
 
    <h4>Kernel</h4>
 

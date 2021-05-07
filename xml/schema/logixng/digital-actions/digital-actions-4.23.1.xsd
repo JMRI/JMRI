@@ -26,6 +26,7 @@
         >
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-block-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-clock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-entry-exit-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-listen-on-beans-4.23.1.xsd"/>
@@ -33,6 +34,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-loconet-clear-slots-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-loconet-update-slots-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-memory-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-oblock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-power-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.23.1.xsd"/>
@@ -41,6 +43,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-simple-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-timer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-warrant-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/digital-call-module-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/display-action-positionable-4.23.4.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.23.1.xsd"/>
@@ -74,6 +77,7 @@
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
             <xs:element name="ActionBlock"       type="LogixNG_DigitalAction_ActionBlockType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionClock"       type="LogixNG_DigitalAction_ActionClockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionEntryExit"   type="LogixNG_DigitalAction_ActionEntryExitType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLight"       type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionListenOnBeans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
@@ -81,7 +85,8 @@
             <xs:element name="ActionLoconetClearSlots"  type="LogixNG_DigitalAction_ActionLocoNetClearSlotsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLoconetUpdateSlots"  type="LogixNG_DigitalAction_ActionLocoNetUpdateSlotsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionMemory"      type="LogixNG_DigitalAction_ActionMemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="ActionPower"      type="LogixNG_DigitalAction_ActionPowerType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionOBlock"      type="LogixNG_DigitalAction_ActionOBlockType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionPower"       type="LogixNG_DigitalAction_ActionPowerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionScript"      type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSensor"      type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSignalHead"  type="LogixNG_DigitalAction_ActionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
@@ -89,6 +94,7 @@
             <xs:element name="ActionSimpleScript"      type="LogixNG_DigitalAction_ActionSimpleScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTimer"       type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTurnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionWarrant"     type="LogixNG_DigitalAction_ActionWarrantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="CallModule"        type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DisplayActionPositionable"  type="LogixNG_DigitalAction_DisplayActionPositionableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DoAnalogAction"    type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />

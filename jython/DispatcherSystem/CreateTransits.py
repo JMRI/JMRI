@@ -933,7 +933,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             TrainInfo.setTrainFromRoster(True)
             TrainInfo.setTrainFromTrains(False)
             TrainInfo.setTrainFromUser(False)
-            TrainInfo.setDccAddress(" "))
+            TrainInfo.setDccAddress(" ")
             # special action for stubs
             path_name = e.getItem("path_name")
             if e.getItem("neighbor_is_stub") == False:
