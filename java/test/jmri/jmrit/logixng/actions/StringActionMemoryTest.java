@@ -218,7 +218,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Set memory".equals(_base.getShortDescription()));
+        Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
     
     @Test

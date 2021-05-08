@@ -415,7 +415,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         addItemDialog = new JDialogOperator("Add ? ");  // NOI18N
         // Select ExpressionSensor
         new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.ITEM);
-        new JComboBoxOperator(addItemDialog, 1).selectItem("Get sensor");
+        new JComboBoxOperator(addItemDialog, 1).selectItem("Sensor");
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         // Then we get a dialog that lets us set the system name, user name
@@ -449,7 +449,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
         // Select ExpressionSensor
         new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.ITEM);
-        new JComboBoxOperator(addItemDialog, 1).selectItem("Set turnout");
+        new JComboBoxOperator(addItemDialog, 1).selectItem("Turnout");
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         // Then we get a dialog that lets us set the system name, user name

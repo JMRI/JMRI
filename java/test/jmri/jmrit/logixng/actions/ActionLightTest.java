@@ -492,7 +492,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set light", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Light", _base.getShortDescription());
     }
     
     @Test
