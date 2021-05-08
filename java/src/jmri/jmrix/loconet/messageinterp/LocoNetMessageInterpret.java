@@ -2395,7 +2395,7 @@ public class LocoNetMessageInterpret {
         * <AD_L>. * When <AD_H> is not 0x7D, * Address is a 14 bit
         * value; AD_H{6:0} represent the upper 7 bits * of the 14 bit
         * address.
-         *
+        *
         * Information reverse-engineered by Michael Ricahrdson
         **/
 
@@ -2410,8 +2410,8 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcMultiSenseLong(LocoNetMessage l, String reporterPrefix) {
-        /***************************************************
-        * Multi Sense Long RailCom App DYN message (Loconet OpCode 0xE0)
+         /***************************************************
+         * Multi Sense Long RailCom App DYN message (Loconet OpCode 0xE0)
          * The message bytes as assigned as follows:
          *
          * <0xE0> <0x09> <MSL_I> <BLK_L> <AD_H> <AD_L> <RCDV_H> <RCDV_L> <CHK>
