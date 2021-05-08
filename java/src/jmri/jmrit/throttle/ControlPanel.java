@@ -46,18 +46,36 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JButton idleButton;
     private JPanel buttonPanel;
     private JPanel topButtonPanel;
-    private Document forwardButtonIcon;
-    private Document forwardSelectedButtonIcon;
-    private Document forwardRollButtonIcon;
-    private Document reverseButtonIcon;
-    private Document reverseSelectedButtonIcon;
-    private Document reverseRollButtonIcon;
-    private Document idleButtonIcon;
-    private Document idleSelectedButtonIcon;
-    private Document idleRollButtonIcon;    
-    private Document stopButtonIcon;
-    private Document stopSelectedButtonIcon;
-    private Document stopRollButtonIcon;
+    
+    private Document forwardButtonSvgIcon;
+    private Document forwardSelectedButtonSvgIcon;
+    private Document forwardRollButtonSvgIcon;
+    private ImageIcon forwardButtonImageIcon;
+    private ImageIcon forwardSelectedButtonImageIcon;
+    private ImageIcon forwardRollButtonImageIcon;    
+    
+    private Document reverseButtonSvgIcon;
+    private Document reverseSelectedButtonSvgIcon;
+    private Document reverseRollButtonSvgIcon;
+    private ImageIcon reverseButtonImageIcon;
+    private ImageIcon reverseSelectedButtonImageIcon;
+    private ImageIcon reverseRollButtonImageIcon;    
+        
+    private Document idleButtonSvgIcon;
+    private Document idleSelectedButtonSvgIcon;
+    private Document idleRollButtonSvgIcon;
+    private ImageIcon idleButtonImageIcon;
+    private ImageIcon idleSelectedButtonImageIcon;
+    private ImageIcon idleRollButtonImageIcon;    
+    
+    private Document stopButtonSvgIcon;
+    private Document stopSelectedButtonSvgIcon;
+    private Document stopRollButtonSvgIcon;
+    private ImageIcon stopButtonImageIcon;
+    private ImageIcon stopSelectedButtonImageIcon;
+    private ImageIcon stopRollButtonImageIcon;    
+    
+    
     private boolean internalAdjust = false; // protecting the speed slider, continuous slider and spinner when doing internal adjust
 
     private JPopupMenu popupMenu;
@@ -509,19 +527,72 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             h = DEFAULT_BUTTON_SIZE * 2;
         }
         float f = Math.min( Math.floorDiv(w*2,5), h );
-        forwardButton.setIcon(scaleTo(forwardButtonIcon, f));
-        forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonIcon, f));
-        forwardButton.setRolloverIcon(scaleTo(forwardRollButtonIcon, f));
-        reverseButton.setIcon(scaleTo(reverseButtonIcon, f));
-        reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonIcon, f));
-        reverseButton.setRolloverIcon(scaleTo(reverseRollButtonIcon, f));
+        if (forwardButtonSvgIcon != null ) {
+            forwardButton.setIcon(scaleTo(forwardButtonSvgIcon, f));
+        } else {
+            forwardButton.setIcon(scaleTo(forwardButtonImageIcon, (int)f));
+        }
+        if (forwardSelectedButtonSvgIcon != null) {
+            forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonSvgIcon, f));
+        } else {
+            forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonImageIcon, (int)f));
+        }
+        if (forwardRollButtonSvgIcon!=null) {
+            forwardButton.setRolloverIcon(scaleTo(forwardRollButtonSvgIcon, f));
+        } else {
+            forwardButton.setRolloverIcon(scaleTo(forwardRollButtonImageIcon, (int)f));
+        }
+        if (reverseButtonSvgIcon!=null) {
+            reverseButton.setIcon(scaleTo(reverseButtonSvgIcon, f));
+        } else {
+            reverseButton.setIcon(scaleTo(reverseButtonImageIcon, (int)f));
+        }
+        if (reverseSelectedButtonSvgIcon != null) {
+            reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonSvgIcon, f));
+        } else {
+            reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonImageIcon, (int)f));
+        }
+        if (reverseRollButtonSvgIcon!=null) {
+            reverseButton.setRolloverIcon(scaleTo(reverseRollButtonSvgIcon, f));
+        } else {
+            reverseButton.setRolloverIcon(scaleTo(reverseRollButtonImageIcon, (int)f));
+        }
+        
         f = Math.min( Math.floorDiv(w,5), h/2 );
-        idleButton.setIcon(scaleTo(idleButtonIcon, f));
-        idleButton.setSelectedIcon(scaleTo(idleSelectedButtonIcon, f));
-        idleButton.setRolloverIcon(scaleTo(idleRollButtonIcon, f));
-        stopButton.setIcon(scaleTo(stopButtonIcon, f));
-        stopButton.setSelectedIcon(scaleTo(stopSelectedButtonIcon, f));
-        stopButton.setRolloverIcon(scaleTo(stopRollButtonIcon, f));
+        if (idleButtonSvgIcon!=null) {
+            idleButton.setIcon(scaleTo(idleButtonSvgIcon, f));
+        } else {
+            idleButton.setIcon(scaleTo(idleButtonImageIcon, (int)f));
+        }
+        if (idleSelectedButtonSvgIcon!=null) {
+            idleButton.setSelectedIcon(scaleTo(idleSelectedButtonSvgIcon, f));
+        } else {
+            idleButton.setSelectedIcon(scaleTo(idleSelectedButtonImageIcon, (int)f));
+        }
+        if (idleRollButtonSvgIcon != null) {
+            idleButton.setRolloverIcon(scaleTo(idleRollButtonSvgIcon, f));
+        } else {
+            idleButton.setRolloverIcon(scaleTo(idleRollButtonImageIcon, (int)f));
+        }
+        if (stopButtonSvgIcon!=null) {
+            stopButton.setIcon(scaleTo(stopButtonSvgIcon, f));
+        } else {
+            stopButton.setIcon(scaleTo(stopButtonImageIcon, (int)f));
+        }
+        if (stopSelectedButtonSvgIcon!=null) {
+            stopButton.setSelectedIcon(scaleTo(stopSelectedButtonSvgIcon, f));
+        } else {
+            stopButton.setSelectedIcon(scaleTo(stopSelectedButtonImageIcon, (int)f));
+        }
+        if (stopRollButtonSvgIcon!=null) {
+            stopButton.setRolloverIcon(scaleTo(stopRollButtonSvgIcon, f));
+        } else {
+            stopButton.setRolloverIcon(scaleTo(stopRollButtonImageIcon, (int)f));
+        }
+    }                    
+    
+    private ImageIcon scaleTo(ImageIcon imic, int s ) {
+        return new ImageIcon(imic.getImage().getScaledInstance(s, s, Image.SCALE_SMOOTH));
     }
          
     private ImageIcon scaleTo(Document svgImage, Float f ) {
@@ -626,14 +697,46 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         forwardButton = new JRadioButton();
         reverseButton = new JRadioButton();
         try {
-            forwardButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOff.svg").toString());
-            forwardSelectedButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOn.svg").toString());
-            forwardRollButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdRoll.svg").toString());
-            reverseButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOff.svg").toString());
-            reverseSelectedButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOn.svg").toString());    
-            reverseRollButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckRoll.svg").toString());
-       } catch (IOException ex) {
-            log.debug("while loading directions buttons svg: {}", ex.getMessage());
+            forwardButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOff.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            forwardButtonSvgIcon = null;
+            forwardButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOff256.png"));
+        }
+        try {
+            forwardSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            forwardSelectedButtonSvgIcon = null;
+            forwardSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn256.png"));
+        }
+        try {
+            forwardRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            forwardRollButtonSvgIcon = null;
+            forwardRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdRoll256.png"));
+        }
+        try {
+            reverseButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOff.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            reverseButtonSvgIcon = null;
+            reverseButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOff256.png"));
+        }
+        try {
+            reverseSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            reverseSelectedButtonSvgIcon = null;
+            reverseSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn256.png"));
+        }
+        try {
+            reverseRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            reverseRollButtonSvgIcon = null;
+            reverseRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckRoll256.png"));
         }
                 
         layoutSliderPanel();
@@ -793,14 +896,46 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         stopButton = new JButton();
         idleButton = new JButton();
         try {
-            stopButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estop.svg").toString());
-            stopSelectedButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopOn.svg").toString());
-            stopRollButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopRoll.svg").toString());
-            idleButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stop.svg").toString());
-            idleSelectedButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopOn.svg").toString());
-            idleRollButtonIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopRoll.svg").toString());
-        } catch (IOException ex) {
-            log.debug("while loading stop/idle buttons svg: {}", ex.getMessage());
+            stopButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estop.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            stopButtonSvgIcon = null;
+            stopButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop256.png"));
+        }
+        try {
+            stopSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            stopSelectedButtonSvgIcon = null;
+            stopSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopOn256.png"));
+        }
+        try {
+            stopRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            stopRollButtonSvgIcon = null;
+            stopRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopRoll256.png"));
+        }
+        try {
+            idleButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stop.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            idleButtonSvgIcon = null;
+            idleButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop256.png"));
+        }
+        try {
+            idleSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            idleSelectedButtonSvgIcon = null;
+            idleSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn256.png"));
+        }
+        try {
+            idleRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            idleRollButtonSvgIcon = null;
+            idleRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopRoll256.png"));
         }
                
         stopButton.addActionListener((ActionEvent e) -> {
