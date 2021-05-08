@@ -715,12 +715,12 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        ActionSimpleScript simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        ActionScript simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(simpleScript);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("import java\n");
         simpleScript.setOperationAddressing(NamedBeanAddressing.Direct);
@@ -734,7 +734,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("myFile.py");
         simpleScript.setOperationAddressing(NamedBeanAddressing.Formula);
@@ -748,7 +748,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("import java\n");
         simpleScript.setOperationAddressing(NamedBeanAddressing.LocalVariable);
@@ -762,7 +762,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("import java\n");
         simpleScript.setOperationAddressing(NamedBeanAddressing.Reference);
@@ -2314,10 +2314,11 @@ public class StoreAndLoadTest {
 
         expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
         expressionScript.setComment("A comment");
-        expressionScript.setScript("import jmri\n");
+        expressionScript.setScript("result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )");
+        expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
+        expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(indexExpr++).connect(maleSocket);
-        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
 
 
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
