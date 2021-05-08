@@ -491,7 +491,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set sensor", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Sensor", _base.getShortDescription());
     }
     
     @Test

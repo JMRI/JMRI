@@ -195,7 +195,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionMemory.removeMemory();
-        Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
+        Assert.assertEquals("Memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory '' is equal to \"\"", expressionMemory.getLongDescription());
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");

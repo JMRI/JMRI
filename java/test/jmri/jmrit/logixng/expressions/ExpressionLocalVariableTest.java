@@ -183,7 +183,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
         
         expressionLocalVariable.setLocalVariable("someVar");
-        Assert.assertEquals("Compare local variable", expressionLocalVariable.getShortDescription());
+        Assert.assertEquals("Local variable", expressionLocalVariable.getShortDescription());
         Assert.assertEquals("Local variable someVar is equal to \"\"", expressionLocalVariable.getLongDescription());
         expressionLocalVariable.setLocalVariable("myVar");
         expressionLocalVariable.setConstantValue("A value");
