@@ -48,9 +48,9 @@ public class ActionTimer extends AbstractDigitalAction
     public ActionTimer(String sys, String user) {
         super(sys, user);
         _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStart"));
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionTimerSocketStart"));
         _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStop"));
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionTimerSocketStop"));
         _actionEntries
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
                         .createFemaleSocket(this, this, getNewSocketName())));
@@ -62,9 +62,9 @@ public class ActionTimer extends AbstractDigitalAction
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStart"));
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionTimerSocketStart"));
         _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStop"));
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionTimerSocketStop"));
         setActionData(actionDataList);
     }
     

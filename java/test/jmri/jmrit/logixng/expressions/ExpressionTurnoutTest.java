@@ -189,7 +189,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionTurnout.removeTurnout();
-        Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
+        Assert.assertTrue("Turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);

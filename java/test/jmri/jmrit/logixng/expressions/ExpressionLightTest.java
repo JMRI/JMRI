@@ -189,7 +189,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionLight.removeLight();
-        Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
+        Assert.assertTrue("Light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);

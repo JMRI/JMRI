@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.actions;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nonnull;
 import javax.script.Bindings;
@@ -24,7 +23,7 @@ import jmri.util.TypeConversionUtil;
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionSimpleScript extends AbstractDigitalAction {
+public class ActionScript extends AbstractDigitalAction {
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.JythonCommand;
@@ -40,7 +39,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     private String _scriptFormula = "";
     private ExpressionNode _scriptExpressionNode;
 
-    public ActionSimpleScript(String sys, String user)
+    public ActionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -51,7 +50,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionSimpleScript copy = new ActionSimpleScript(sysName, userName);
+        ActionScript copy = new ActionScript(sysName, userName);
         copy.setComment(getComment());
         copy.setScript(_script);
         copy.setOperationAddressing(_operationAddressing);
@@ -317,7 +316,7 @@ public class ActionSimpleScript extends AbstractDigitalAction {
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "SimpleScript_Short");
+        return Bundle.getMessage(locale, "ActionScript_Short");
     }
 
     @Override
@@ -368,9 +367,9 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         }
         
         if (_operationAddressing == NamedBeanAddressing.Direct) {
-            return Bundle.getMessage(locale, "SimpleScript_Long", operation, script);
+            return Bundle.getMessage(locale, "ActionScript_Long", operation, script);
         } else {
-            return Bundle.getMessage(locale, "SimpleScript_LongUnknownOper", operation, script);
+            return Bundle.getMessage(locale, "ActionScript_LongUnknownOper", operation, script);
         }
     }
     
@@ -408,20 +407,10 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         // Do nothing
     }
     
-/*    
-    public static class ScriptParams {
-        
-        public final DigitalAction _parentAction;
-        
-        public ScriptParams(DigitalAction parentExpression) {
-            _parentAction = parentExpression;
-        }
-    }
-*/    
     
     public enum OperationType {
-        RunScript(Bundle.getMessage("SimpleScript_RunScript")),
-        JythonCommand(Bundle.getMessage("SimpleScript_JythonCommand"));
+        RunScript(Bundle.getMessage("ActionScript_RunScript")),
+        JythonCommand(Bundle.getMessage("ActionScript_JythonCommand"));
         
         private final String _text;
         
@@ -437,6 +426,6 @@ public class ActionSimpleScript extends AbstractDigitalAction {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSimpleScript.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionScript.class);
     
 }
