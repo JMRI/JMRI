@@ -15,7 +15,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
 
-import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -1421,7 +1421,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         @Override
         public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
-            throw new UnsupportedOperationException("Not supported yet."); 
+            //not required here, do nothing
         }
     }
    
