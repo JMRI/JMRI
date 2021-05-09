@@ -2984,12 +2984,9 @@ public class TrainBuilder extends TrainCommon {
             }
             if (carInTrain && rlt.getTrainLength() + length > rlt.getMaxTrainLength()) {
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength"),
-                        new Object[] { car.toString(), length, Setup.getLengthUnit().toLowerCase() }));
-                addLine(_buildReport, FIVE,
-                        MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength2"),
-                                new Object[] { rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
-                                        rlt.getTrainLength() + length - rlt.getMaxTrainLength(), rlt.getName(),
-                                        rlt.getId() }));
+                        new Object[] { car.toString(), length, Setup.getLengthUnit().toLowerCase(),
+                                rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
+                                rlt.getTrainLength() + length - rlt.getMaxTrainLength(), rlt.getName(), rlt.getId() }));
                 return false;
             }
         }
@@ -3469,16 +3466,22 @@ public class TrainBuilder extends TrainCommon {
                 log.debug("Car ({}) at it's home division yard", car.toString());
                 return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
             }
-            // 1st try to send to home division yard, then home division spur
+            // 1st try to send to home division yard, home division staging, then home
+            // division spur
             if (!sendCarToHomeDivisionTrack(car, Track.YARD, HOME_DIVISION)) {
-                return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                if (!sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION)) {
+                    return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                }
             }
-            return true;
         } else {
             log.debug("Car ({}) has division ({}) and load type load", car.toString(), car.getDivisionName());
-            // send car to spur dependent of shipping track division
-            return sendCarToHomeDivisionTrack(car, Track.SPUR, car.getTrack().getDivision() != car.getDivision());
+            // 1st send car to spur dependent of shipping track division, then try staging
+            if (!sendCarToHomeDivisionTrack(car, Track.SPUR, car.getTrack().getDivision() != car.getDivision())) {
+                return sendCarToHomeDivisionTrack(car, Track.STAGING,
+                        car.getTrack().getDivision() != car.getDivision());
+            }
         }
+        return true;
     }
 
     private static final boolean HOME_DIVISION = true;
