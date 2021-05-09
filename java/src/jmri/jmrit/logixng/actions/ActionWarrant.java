@@ -34,7 +34,7 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
     private ExpressionNode _expressionNode;
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.None;
+    private DirectOperation _operationDirect = DirectOperation.AllocateWarrantRoute;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
