@@ -701,42 +701,42 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             forwardButtonSvgIcon = null;
-            forwardButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOff256.png"));
+            forwardButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOff64.png"));
         }
         try {
             forwardSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOn.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             forwardSelectedButtonSvgIcon = null;
-            forwardSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn256.png"));
+            forwardSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn64.png"));
         }
         try {
             forwardRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdRoll.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             forwardRollButtonSvgIcon = null;
-            forwardRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdRoll256.png"));
+            forwardRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdRoll64.png"));
         }
         try {
             reverseButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOff.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             reverseButtonSvgIcon = null;
-            reverseButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOff256.png"));
+            reverseButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOff64.png"));
         }
         try {
             reverseSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOn.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             reverseSelectedButtonSvgIcon = null;
-            reverseSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn256.png"));
+            reverseSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn64.png"));
         }
         try {
             reverseRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckRoll.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             reverseRollButtonSvgIcon = null;
-            reverseRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckRoll256.png"));
+            reverseRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckRoll64.png"));
         }
                 
         layoutSliderPanel();
@@ -900,42 +900,42 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             stopButtonSvgIcon = null;
-            stopButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop256.png"));
+            stopButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop64.png"));
         }
         try {
             stopSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopOn.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             stopSelectedButtonSvgIcon = null;
-            stopSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopOn256.png"));
+            stopSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopOn64.png"));
         }
         try {
             stopRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopRoll.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             stopRollButtonSvgIcon = null;
-            stopRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopRoll256.png"));
+            stopRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopRoll64.png"));
         }
         try {
             idleButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stop.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             idleButtonSvgIcon = null;
-            idleButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop256.png"));
+            idleButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop64.png"));
         }
         try {
             idleSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopOn.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             idleSelectedButtonSvgIcon = null;
-            idleSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn256.png"));
+            idleSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn64.png"));
         }
         try {
             idleRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopRoll.svg").toString());
         } catch (Exception ex) {
             log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
             idleRollButtonSvgIcon = null;
-            idleRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopRoll256.png"));
+            idleRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopRoll64.png"));
         }
                
         stopButton.addActionListener((ActionEvent e) -> {

@@ -189,12 +189,17 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
         for (int i = 0; i < functionButtons.length; i++) {            
             if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
-                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
-                if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
-                    log.debug("Issue loading svg icon, reverting to png" );
-                    functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                try {
+                    functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+                } catch (Exception e) {
+                    log.debug("Exception loading svg icon : "+e.getMessage() );
+                } finally {
+                    if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
+                        log.debug("Issue loading svg icon, reverting to png" );
+                        functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                        functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                    }
                 }
             } else {
                 functionButtons[i].setIconPath(null);
@@ -259,12 +264,17 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 : Throttle.getFunctionString(i) );
             functionButtons[i].setDisplay(true);
             if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
-                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
-                if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
-                    log.debug("Issue loading svg icon, reverting to png" );
-                    functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                try {
+                    functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+                } catch (Exception e) {
+                    log.debug("Exception loading svg icon : "+e.getMessage() );
+                } finally {
+                    if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
+                        log.debug("Issue loading svg icon, reverting to png" );
+                        functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                        functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                    }
                 }
             } else {
                 functionButtons[i].setIconPath(null);
