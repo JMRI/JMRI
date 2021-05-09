@@ -152,21 +152,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         _clipboard.setup();
     }
 
-    /**
-     * Set whenether execute() should run on the LogixNG thread at once or
-     * should dispatch the call until later, for all the ConditionalNGs.
-     * 
-     * @param value true if execute() should run on LogixNG thread delayed,
-     *              false otherwise.
-     */
-    private void setRunDelayed(boolean value) {
-        Set<ConditionalNG> conditionalNGs =
-                InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet();
-        for (ConditionalNG conditionalNG : conditionalNGs) {
-            conditionalNG.setRunDelayed(value);
-        }
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void activateAllLogixNGs() {
