@@ -183,7 +183,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         _enabled = enable;
         if (isActive()) {
             registerListeners();
-            execute();
+            execute(true);
         } else {
             unregisterListeners();
         }
@@ -328,6 +328,14 @@ public class DefaultLogixNG extends AbstractNamedBean
     public void execute() {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             entry._conditionalNG.execute();
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void execute(boolean allowRunDelayed) {
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            entry._conditionalNG.execute(allowRunDelayed);
         }
     }
 

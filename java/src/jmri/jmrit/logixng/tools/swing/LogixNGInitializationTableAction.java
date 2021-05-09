@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a LogixNGEditor object.
+ * Swing action to open the table for LogixNG initialization.
  *
  * @author Daniel Bergqvist Copyright (C) 2021
  */

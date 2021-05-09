@@ -82,6 +82,12 @@ public interface ConditionalNG extends Base, NamedBean {
     public void execute();
     
     /**
+     * Execute the ConditionalNG.
+     * @param allowRunDelayed true if it's ok to run delayed, false otherwise
+     */
+    public void execute(boolean allowRunDelayed);
+    
+    /**
      * Execute the female socket.
      * @param socket the female socket
      */

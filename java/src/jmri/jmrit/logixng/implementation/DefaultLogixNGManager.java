@@ -177,8 +177,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread) {
         
-        setRunDelayed(false);
-        
         _isActive = true;
         
         // This may take a long time so it must not be done on the GUI thread.
@@ -194,7 +192,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             for (LogixNG logixNG : initLogixNGs) {
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
-                    logixNG.execute();
+                    logixNG.execute(false);
                     activeLogixNGs.add(logixNG);
                 } else {
                     logixNG.unregisterListeners();
@@ -214,8 +212,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.unregisterListeners();
                 }
             });
-            
-            setRunDelayed(runDelayed);
         };
         
         if (runOnSeparateThread) new Thread(runnable).start();
