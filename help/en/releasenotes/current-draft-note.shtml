@@ -366,6 +366,12 @@
         <ul>
              <li>Create Train. Fix sort order in Transit Combo.</li>
              <li>Create Train. Fix starting train outside of Transit..</li>
+             <li>Create Train. Use Roster selection combo.</li>
+             <li>Create Train. Allow user to select by roster, by train, or enter a dcc address without changing Dispatcher defaults. Allow override of DCC address for trains from Operations.</li>
+             <li>When allocating by Safe Sections corect a problem selecting Primary or Alternate Section.</li>
+             <li>Correct issue when running under No Signals that caused a train not to relize the next section was now available.</li>
+             <li>When stopping in a multi-block section, pull train as far into section as possible.</li>
+             <li>Do not mix stopping by speed profile and stopping by stopping sensor which was causing trains to run into the next section</li>
         </ul>
 
     <h3>Dispatcher System</h3>

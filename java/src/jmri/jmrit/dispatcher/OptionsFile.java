@@ -5,8 +5,12 @@ import java.util.Set;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ScaleManager;
+import jmri.configurexml.AbstractXmlAdapter.EnumIO;
+import jmri.configurexml.AbstractXmlAdapter.EnumIoNamesNumbers;
+import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -40,6 +44,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     public OptionsFile() {
         super();
     }
+
+    static final EnumIO<DispatcherFrame.TrainsFrom> trainsFromEnumMap = new EnumIoNamesNumbers<>(DispatcherFrame.TrainsFrom.class);
 
     // operational variables
     protected DispatcherFrame dispatcher = null;
@@ -108,23 +114,20 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setUseConnectivity(false);
                         }
                     }
-                    if (options.getAttribute("trainsfromroster") != null) {
-                        dispatcher.setTrainsFromRoster(true);
-                        if (options.getAttribute("trainsfromroster").getValue().equals("no")) {
-                            dispatcher.setTrainsFromRoster(false);
-                        }
+                    if (options.getAttribute("trainsfrom") != null) {
+                        dispatcher.setTrainsFrom(trainsFromEnumMap.inputFromAttribute(options.getAttribute("trainsfrom")));
+                    } else {
+                        log.warn("Old Style dispatcheroptions file found - will be converted when saved");
+                    if (options.getAttribute("trainsfromroster") != null &&
+                            options.getAttribute("trainsfromroster").getValue().equals("yes")) {
+                        dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
+                    } else if (options.getAttribute("trainsfromtrains") != null &&
+                            options.getAttribute("trainsfromtrains").getValue().equals("no")) {
+                        dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMOPS);
+                    } else if (options.getAttribute("trainsfromuser") != null &&
+                            options.getAttribute("trainsfromuser").getValue().equals("no")) {
+                        dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMUSER);
                     }
-                    if (options.getAttribute("trainsfromtrains") != null) {
-                        dispatcher.setTrainsFromTrains(true);
-                        if (options.getAttribute("trainsfromtrains").getValue().equals("no")) {
-                            dispatcher.setTrainsFromTrains(false);
-                        }
-                    }
-                    if (options.getAttribute("trainsfromuser") != null) {
-                        dispatcher.setTrainsFromUser(true);
-                        if (options.getAttribute("trainsfromuser").getValue().equals("no")) {
-                            dispatcher.setTrainsFromUser(false);
-                        }
                     }
                     if (options.getAttribute("autoallocate") != null) {
                         dispatcher.setAutoAllocate(false);
@@ -257,9 +260,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
             options.setAttribute("lename", le.getTitle());
         }
         options.setAttribute("useconnectivity", "" + (dispatcher.getUseConnectivity() ? "yes" : "no"));
-        options.setAttribute("trainsfromroster", "" + (dispatcher.getTrainsFromRoster() ? "yes" : "no"));
-        options.setAttribute("trainsfromtrains", "" + (dispatcher.getTrainsFromTrains() ? "yes" : "no"));
-        options.setAttribute("trainsfromuser", "" + (dispatcher.getTrainsFromUser() ? "yes" : "no"));
+        options.setAttribute("trainsfrom", trainsFromEnumMap.outputFromEnum(dispatcher.getTrainsFrom()));
         options.setAttribute("autoallocate", "" + (dispatcher.getAutoAllocate() ? "yes" : "no"));
         options.setAttribute("autorelease", "" + (dispatcher.getAutoRelease() ? "yes" : "no"));
         options.setAttribute("autoturnouts", "" + (dispatcher.getAutoTurnouts() ? "yes" : "no"));
