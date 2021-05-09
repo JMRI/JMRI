@@ -210,6 +210,20 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
         _panelAspectTypeFormula.add(_signalMastAspectFormulaTextField);
 
 
+        JPanel notePanel = new JPanel();
+        notePanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.white));
+        examplePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+
+        JLabel noteLabel = new JLabel(Bundle.getMessage("SignalExampleText",
+                Bundle.getMessage("SignalExampleMast"),
+                Bundle.getMessage("SignalExampleAspects")));
+        notePanel.add(noteLabel);
+
+
+        examplePanel.add(new JLabel(Bundle.getMessage("ActionSignalMast_ExampleBean")));
+        examplePanel.add(innerExamplePanel);
+
+
         if (action != null) {
             switch (action.getAddressing()) {
                 case Direct: _tabbedPaneSignalMast.setSelectedComponent(_panelSignalMastDirect); break;
@@ -266,16 +280,9 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
                 Bundle.getMessage("ActionSignalMast_Components"), components);
 
         for (JComponent c : componentList) actionPanel.add(c);
+
         panel.add(actionPanel);
-
-
-        panel.add(new JLabel("If you do not use Direct addressing of the signal mast but are using Direct addressing of"));
-        panel.add(new JLabel("the aspect, you need to select an example signal mast. The example signal mast is used"));
-        panel.add(new JLabel("to tell JMRI which aspects the indirect addressed signal mast may show."));
-
-        examplePanel.add(new JLabel(Bundle.getMessage("ActionSignalMast_ExampleBean")));
-        examplePanel.add(innerExamplePanel);
-
+        panel.add(notePanel);
         panel.add(examplePanel);
 
         setGuiEnabledStates();
