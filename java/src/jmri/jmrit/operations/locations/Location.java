@@ -1289,6 +1289,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         return false;
     }
+    
+    public boolean hasWork( ) {
+        return (getDropRS() != 0 || getPickupRS() != 0);
+    }
 
     public boolean hasReporters() {
         for (Track track : getTracksList()) {
