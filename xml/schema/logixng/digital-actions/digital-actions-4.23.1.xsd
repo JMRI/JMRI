@@ -40,7 +40,6 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalhead-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalmast-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-simple-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-timer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-warrant-4.23.1.xsd"/>
@@ -91,7 +90,7 @@
             <xs:element name="ActionSensor"      type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSignalHead"  type="LogixNG_DigitalAction_ActionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSignalMast"  type="LogixNG_DigitalAction_ActionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="ActionSimpleScript"      type="LogixNG_DigitalAction_ActionSimpleScriptType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionSimpleScript"  type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" /> <!-- Kept temporary. Remove for 4.26 -->
             <xs:element name="ActionTimer"       type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTurnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionWarrant"     type="LogixNG_DigitalAction_ActionWarrantType" minOccurs="0" maxOccurs="unbounded" />

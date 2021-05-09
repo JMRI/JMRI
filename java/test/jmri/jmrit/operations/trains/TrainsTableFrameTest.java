@@ -125,7 +125,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertFalse(train.getBuildFailed());
+            Assert.assertFalse(train.isBuildFailed());
         }
 
         // must disable build failure messages or thread lock
@@ -147,7 +147,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertTrue(train.getBuildFailed());
+            Assert.assertTrue(train.isBuildFailed());
         }
 
         JUnitUtil.dispose(f);
@@ -173,7 +173,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertFalse(train.getBuildFailed());
+            Assert.assertFalse(train.isBuildFailed());
             train.setRoute(route);
         }
 
@@ -196,7 +196,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertTrue(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertFalse(train.getBuildFailed());
+            Assert.assertFalse(train.isBuildFailed());
         }
         
         // dialog window asks if user wants to terminate train, answer no
@@ -212,7 +212,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertTrue(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertFalse(train.getBuildFailed());
+            Assert.assertFalse(train.isBuildFailed());
         }
 
      // dialog window asks if user wants to terminate train, answer yes
@@ -228,7 +228,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertFalse(train.getBuildFailed());
+            Assert.assertFalse(train.isBuildFailed());
         }
 
         JUnitUtil.dispose(ttf);
@@ -249,7 +249,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
-            Assert.assertFalse(train.getBuildFailed());
+            Assert.assertFalse(train.isBuildFailed());
         }
 
         JemmyUtil.enterClickAndLeave(f.terminateButton);
