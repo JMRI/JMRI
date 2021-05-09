@@ -1,6 +1,5 @@
 package jmri.jmrit.dispatcher;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -10,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
