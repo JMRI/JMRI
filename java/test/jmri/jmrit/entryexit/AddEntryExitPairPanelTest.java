@@ -40,6 +40,8 @@ public class AddEntryExitPairPanelTest {
     public void testPanelActions() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         // Open the NX window
         AddEntryExitPairAction nxAction = new AddEntryExitPairAction("ENTRY EXIT", panels.get("Alpha"));  // NOI18N
         nxAction.actionPerformed(null);
