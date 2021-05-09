@@ -54,11 +54,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Define the columns.
      * <p>
      * Values understood are: "Name", "Value", "Range",
-     * "Read", "Write", "Comment", "CV", "Mask", "State". 
+     * "Read", "Write", "Comment", "CV", "Mask", "State".
      * <p>
      * For each, a property
      * key in SymbolicProgBundle by the same name allows i18n.
-     * 
+     *
      * @param status variable status.
      * @param h values headers array.
      * @param cvModel cv table model to use.
@@ -1079,13 +1079,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public VariableValue findVar(String name) {
         for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getItem(i))) {
-            log.debug("findVar matched '{}' by Item", name);
+                log.debug("findVar matched '{}' by Item", name);
                 return getVariable(i);
             }
         }
         for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getLabel(i))) {
-            log.warn("findVar matched '{}' by Label rather than Item", name);
+                log.warn("findVar matched '{}' by Label rather than Item", name);
                 return getVariable(i);
             }
         }
