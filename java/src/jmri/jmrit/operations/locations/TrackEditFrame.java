@@ -39,7 +39,7 @@ import jmri.swing.NamedBeanComboBox;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
-public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public abstract class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // Managers
     // LocationManagerXml managerXml = InstanceManager.getDefault(LocationManagerXml.class);
