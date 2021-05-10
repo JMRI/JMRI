@@ -91,7 +91,7 @@ public class LogixNGInitializationTable extends JmriJFrame {
         conditionalTable.setDefaultRenderer(JButton.class, buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         conditionalTable.setDefaultEditor(JButton.class, buttonEditor);
-        JButton testButton = new JButton("XXXXXXXXXXXXX");  // NOI18N
+        JButton testButton = new JButton("XXXXXXXXXX");  // NOI18N
         conditionalTable.setRowHeight(testButton.getPreferredSize().height);
         buttonDeleteColumn.setMinWidth(testButton.getPreferredSize().width);
         buttonDeleteColumn.setMaxWidth(testButton.getPreferredSize().width);
