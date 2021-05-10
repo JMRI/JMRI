@@ -42,6 +42,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     BeanTableDataModel<LogixNG> beanTableDataModel;
     
     LogixNG_Manager _logixNG_Manager = null;
+    ConditionalNG_Manager _conditionalNG_Manager = null;
     LogixNG _curLogixNG = null;
     
     ConditionalNGEditor _treeEdit = null;
@@ -74,7 +75,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     public LogixNGEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
         this.beanTableFrame = f;
         this.beanTableDataModel = m;
-        _logixNG_Manager = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+        _logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        _conditionalNG_Manager = InstanceManager.getDefault(ConditionalNG_Manager.class);
         _curLogixNG = _logixNG_Manager.getBySystemName(sName);
         makeEditLogixNGWindow();
     }
@@ -457,7 +459,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
             }
 
-            ConditionalNG cn = _curLogixNG.getConditionalNGByUserName(_addUserName.getText());
+            ConditionalNG cn = _conditionalNG_Manager.getByUserName(_addUserName.getText());
             if (cn != null) {
                 // Duplicate user name
                 messageDuplicateConditionalNGUserName(cn.getSystemName());
@@ -1013,7 +1015,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         
         private void changeUserName(Object value, int row) {
             String uName = (String) value;
-            ConditionalNG cn = _curLogixNG.getConditionalNGByUserName(uName);
+            ConditionalNG cn = _conditionalNG_Manager.getByUserName(uName);
             if (cn == null) {
                 ConditionalNG cdl = _curLogixNG.getConditionalNG(row);
                 cdl.setUserName(uName.trim()); // N11N
