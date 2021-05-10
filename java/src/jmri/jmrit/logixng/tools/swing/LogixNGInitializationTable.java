@@ -124,7 +124,7 @@ public class LogixNGInitializationTable extends JmriJFrame {
                 new BeanSelectPanel<>(InstanceManager.getDefault(LogixNG_Manager.class), null);
         
         panel5.add(logixNG_SelectPanel);
-        JButton addLogixNG = new JButton(Bundle.getMessage("EditThreadsDialog_ButtonAddThread"));    // NOI18N
+        JButton addLogixNG = new JButton(Bundle.getMessage("LogixNG_Initialization_ButtonAddLogixNG"));    // NOI18N
         panel5.add(addLogixNG);
         addLogixNG.addActionListener((ActionEvent e) -> {
             LogixNG logixNG = logixNG_SelectPanel.getNamedBean();
