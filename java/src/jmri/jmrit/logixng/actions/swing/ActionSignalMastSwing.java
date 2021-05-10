@@ -267,7 +267,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             _signalMastAspectLocalVariableTextField.setText(action.getAspectLocalVariable());
             _signalMastAspectFormulaTextField.setText(action.getAspectFormula());
 
-            setAspectComboBox(action);
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> { setAspectComboBox(action); });
         }
 
         JComponent[] components = new JComponent[]{

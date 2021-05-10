@@ -268,7 +268,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             _signalHeadAppearanceLocalVariableTextField.setText(expression.getAppearanceLocalVariable());
             _signalHeadAppearanceFormulaTextField.setText(expression.getAppearanceFormula());
 
-            setAppearanceComboBox(expression);
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> { setAppearanceComboBox(expression); });
         }
 
         JComponent[] components = new JComponent[]{

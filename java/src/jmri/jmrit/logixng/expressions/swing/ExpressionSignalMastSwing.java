@@ -268,7 +268,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             _signalMastAspectLocalVariableTextField.setText(expression.getAspectLocalVariable());
             _signalMastAspectFormulaTextField.setText(expression.getAspectFormula());
 
-            setAspectComboBox(expression);
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> { setAspectComboBox(expression); });
         }
 
         JComponent[] components = new JComponent[]{

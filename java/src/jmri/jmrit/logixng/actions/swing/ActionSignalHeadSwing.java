@@ -268,7 +268,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             _signalHeadAppearanceLocalVariableTextField.setText(action.getAppearanceLocalVariable());
             _signalHeadAppearanceFormulaTextField.setText(action.getAppearanceFormula());
 
-            setAppearanceComboBox(action);
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> { setAppearanceComboBox(action); });
         }
 
         JComponent[] components = new JComponent[]{
