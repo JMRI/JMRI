@@ -97,6 +97,7 @@ public class StoreAndLoadTest {
         DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
         StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
         StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        LogixNG_InitializationManager logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
 
 
         // Load table turnout_and_signals.csv
@@ -159,6 +160,16 @@ public class StoreAndLoadTest {
                 "A fourth empty conditionalNG", LogixNG_Thread.getThreadID("My other logixng thread"));
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(false);
+
+
+        logixNG = logixNG_Manager.createLogixNG("A logixNG in the initialization table");
+        conditionalNGManager.createConditionalNG("Yet another another conditionalNG");
+        logixNG_InitializationManager.add(logixNG);
+
+
+        logixNG = logixNG_Manager.createLogixNG("Another logixNG in the initialization table");
+        conditionalNGManager.createConditionalNG("Yet another another another conditionalNG");
+        logixNG_InitializationManager.add(logixNG);
 
 
         logixNG = logixNG_Manager.createLogixNG("A logixNG");
@@ -2824,6 +2835,10 @@ public class StoreAndLoadTest {
                 InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(aTable);
             }
 
+            while (! logixNG_InitializationManager.getList().isEmpty()) {
+                logixNG_InitializationManager.delete(0);
+            }
+
             Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
             Assert.assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
             Assert.assertEquals(0, analogActionManager.getNamedBeanSet().size());
@@ -2834,6 +2849,7 @@ public class StoreAndLoadTest {
             Assert.assertEquals(0, stringExpressionManager.getNamedBeanSet().size());
             Assert.assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
             Assert.assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
+            Assert.assertEquals(0, logixNG_InitializationManager.getList().size());
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();

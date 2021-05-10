@@ -6,17 +6,14 @@ import java.util.List;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.Clipboard;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.implementation.ClipboardMany;
 import jmri.jmrit.logixng.implementation.DefaultClipboard;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.ThreadingUtil;
 
@@ -75,6 +72,13 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 logixNGs.addContent(elem);
             }
             
+            Element elemInitializationTable = new Element("InitializationTable");  // NOI18N
+            for (LogixNG logixNG : InstanceManager.getDefault(LogixNG_InitializationManager.class).getList()) {
+                Element e = new Element("LogixNG").addContent(logixNG.getSystemName());   // NOI18N
+                elemInitializationTable.addContent(e);
+            }
+            logixNGs.addContent(elemInitializationTable);
+            
             // Store items on the clipboard
             Element elemClipboard = new Element("Clipboard");  // NOI18N
             Clipboard clipboard = tm.getClipboard();
@@ -120,6 +124,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         // load individual sharedLogix
         loadThreads(sharedLogixNG);
         loadLogixNGs(sharedLogixNG);
+        loadInitializationTable(sharedLogixNG);
         loadClipboard(sharedLogixNG);
         return true;
     }
@@ -205,6 +210,27 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                     }
                     logixNG.setConditionalNG_SystemName(j, systemName);
                 }
+            }
+        }
+    }
+    
+    public void loadInitializationTable(Element sharedLogixNG) {
+        LogixNG_Manager tm =
+                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+        
+        LogixNG_InitializationManager initializationManager =
+                InstanceManager.getDefault(LogixNG_InitializationManager.class);
+        
+        List<Element> initTableList = sharedLogixNG.getChildren("InitializationTable");  // NOI18N
+        if (initTableList.isEmpty()) return;
+        List<Element> logixNGList = initTableList.get(0).getChildren();
+        if (logixNGList.isEmpty()) return;
+        for (Element e : logixNGList) {
+            LogixNG logixNG = tm.getBySystemName(e.getTextTrim());
+            if (logixNG != null) {
+                initializationManager.add(logixNG);
+            } else {
+                log.warn("LogixNG '{}' cannot be found", e.getTextTrim());
             }
         }
     }

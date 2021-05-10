@@ -236,7 +236,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public void printTree(Locale locale, PrintWriter writer, String indent) {
         for (NamedTable namedTable : getNamedBeanSet()) {
-            writer.append(indent);
             if (namedTable instanceof DefaultCsvNamedTable) {
                 DefaultCsvNamedTable csvTable = (DefaultCsvNamedTable)namedTable;
                 writer.append(String.format(
@@ -254,7 +253,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             writer.println();
             writer.println();
         }
-        InstanceManager.getDefault(NamedTableManager.class);
     }
     
     static volatile DefaultNamedTableManager _instance = null;

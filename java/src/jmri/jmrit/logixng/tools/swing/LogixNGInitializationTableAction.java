@@ -20,18 +20,18 @@ public class LogixNGInitializationTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuLogixNGInitializationTable")); // NOI18N
     }
 
-    static ImportLogixFrame importLogixFrame = null;
+    private static LogixNGInitializationTable initializationTableFrame = null;
 
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one ImportLogixFrame")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
-        if (importLogixFrame == null || !importLogixFrame.isVisible()) {
-            importLogixFrame = new ImportLogixFrame();
-            importLogixFrame.initComponents();
+        if (initializationTableFrame == null || !initializationTableFrame.isVisible()) {
+            initializationTableFrame = new LogixNGInitializationTable();
+            initializationTableFrame.initComponents();
         }
-        importLogixFrame.setExtendedState(Frame.NORMAL);
-        importLogixFrame.setVisible(true); // this also brings the frame into focus
+        initializationTableFrame.setExtendedState(Frame.NORMAL);
+        initializationTableFrame.setVisible(true); // this also brings the frame into focus
     }
     
 }

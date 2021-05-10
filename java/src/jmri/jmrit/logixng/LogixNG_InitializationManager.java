@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng;
 
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -18,27 +19,42 @@ public interface LogixNG_InitializationManager {
     void add(LogixNG logixNG);
     
     /**
-     * Removes a LogixNG from the list.
+     * Deletes a LogixNG from the list.
      * @param logixNG the LogixNG
      */
-    void remove(LogixNG logixNG);
+    void delete(LogixNG logixNG);
+    
+    /**
+     * Deletes a LogixNG from the list.
+     * @param index the index of the LogixNG to delete
+     */
+    void delete(int index);
     
     /**
      * Moves the LogixNG up (higher priority)
-     * @param logixNG the LogixNG
+     * @param index the index of the LogixNG to move up
      */
-    void moveUp(LogixNG logixNG);
+    void moveUp(int index);
     
     /**
      * Moves the LogixNG down (lower priority)
-     * @param logixNG the LogixNG
+     * @param index the index of the LogixNG to move down
      */
-    void moveDown(LogixNG logixNG);
+    void moveDown(int index);
     
     /**
      * Returns an unmodifiable list of the initialization LogixNGs
      * @return the list
      */
     List<LogixNG> getList();
+    
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(Locale locale, PrintWriter writer, String indent);
     
 }
