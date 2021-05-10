@@ -457,6 +457,12 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
             }
 
+            ConditionalNG cn = _curLogixNG.getConditionalNGByUserName(_addUserName.getText());
+            if (cn != null) {
+                // Duplicate user name
+                messageDuplicateConditionalNGUserName(cn.getSystemName());
+            }
+
             // Create ConditionalNG
             _curConditionalNG =
                     InstanceManager.getDefault(ConditionalNG_Manager.class)
@@ -1079,7 +1085,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      */
     void messageDuplicateConditionalNGUserName(String svName) {
         JOptionPane.showMessageDialog(null,
-                Bundle.getMessage("Error30", svName),
+                Bundle.getMessage("Error_DuplicateConditionalNG", svName),
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
     }
