@@ -2099,16 +2099,20 @@
    <p>
     The railroad divisions feature allows you to create prototypical car movements for your
     railroad. To use this feature create and then select at least one division for your railroad by
-    using the "Edit" button in the "Division" section of the "Edit Location" window. You can assign
+    using the "Add" button in the "Division" section of the "Edit Location" window. You can assign
     multiple locations to the same division, and you can create several divisions for your railroad.
     Cars that are assigned a
-    <a href="#HomeDivision">home division</a> will return to the yard at their home division when
-    their load state becomes empty. Cars with a home division will also return to an industry (<a
-     href="#Sidings">spur</a>) at their home division when loaded from an industry outside of their
-    home division. Cars loaded at their home division can travel to any industry on the railroad.
-    The program will use
-    <a href="#Interchange">interchange</a> tracks to route the cars to industries that require
-    multiple trains.
+    <a href="#HomeDivision">home division</a> will return to the <a
+     href="#Yards">yard</a> or <a href="#Staging">staging</a> at their home division when their load
+    state becomes empty. If the program can't find a home division yard or staging for the empty
+    car, it will try to send the car directly to an industry (<a
+     href="#Sidings">spur</a>) at the car's home division. Cars with a home division will also
+    return to an industry (<a
+     href="#Sidings">spur</a>) or <a href="#Staging">staging</a> at their home division when loaded
+    from an industry outside of their home division. Cars loaded at their home division can travel
+    to any industry or staging on the railroad. The program will use
+    <a href="#Interchange">interchange</a> tracks to route the cars to yards, industries or staging
+    that require multiple trains.
    </p>
 
    <a name="LocationRollingStock" id="LocationRollingStock"></a>
