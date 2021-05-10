@@ -120,7 +120,9 @@ public class LogixNGInitializationTable extends JmriJFrame {
         panel5.setLayout(new FlowLayout());
         
         // Add LogixNG
-        BeanSelectPanel<LogixNG> logixNG_SelectPanel = new BeanSelectPanel(InstanceManager.getDefault(LogixNG_Manager.class), null);
+        BeanSelectPanel<LogixNG> logixNG_SelectPanel =
+                new BeanSelectPanel<>(InstanceManager.getDefault(LogixNG_Manager.class), null);
+        
         panel5.add(logixNG_SelectPanel);
         JButton addLogixNG = new JButton(Bundle.getMessage("EditThreadsDialog_ButtonAddThread"));    // NOI18N
         panel5.add(addLogixNG);
@@ -223,22 +225,6 @@ public class LogixNGInitializationTable extends JmriJFrame {
                 case BUTTON_MOVE_UP_COLUMN:
                 case BUTTON_MOVE_DOWN_COLUMN:
                     return ""; // no label
-                default:
-                    throw new IllegalArgumentException("Unknown column");
-            }
-        }
-        
-//        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-//                justification = "better to keep cases in column order rather than to combine")
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case SYSTEM_NAME_COLUMN:
-                case USER_NAME_COLUMN:
-                    return new JLabel("aaaaaaaaaaaaaaaaaaaaaaaaaaa").getPreferredSize().width;
-                case BUTTON_DELETE_COLUMN:
-                case BUTTON_MOVE_UP_COLUMN:
-                case BUTTON_MOVE_DOWN_COLUMN:
-                    return new JTextField(6).getPreferredSize().width;
                 default:
                     throw new IllegalArgumentException("Unknown column");
             }
