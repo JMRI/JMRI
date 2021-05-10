@@ -249,7 +249,7 @@
         <output name="11" label="AUX6" maxcurrent="10 mA"/>
         <size length="25.5" width="15.5" height="5" units="mm"/>
       </model>
-      <model model="LD-G-34 plus (wires)" maxInputVolts="24V" maxMotorCurrent="3A" maxTotalCurrent="3A"
+      <model model="LD-G-34 plus" maxInputVolts="24V" maxMotorCurrent="3A" maxTotalCurrent="3A"
              numOuts="11" numFns="30" connector="Wires" productID="LDG34"><!--without wires-->
         <output name="1" label="F0f|(White)" maxcurrent="500 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
@@ -280,7 +280,7 @@
         <size length="27" width="17" height="6" units="mm"/>
       </model>
       <model model="LD-G-34 plus (wires)" maxInputVolts="24V" maxMotorCurrent="3A" maxTotalCurrent="3A"
-             numOuts="11" numFns="30" connector="Wires" productID="LDG34,34-wires"><!--without wires-->
+             numOuts="11" numFns="30" connector="Wires" productID="LDG34,34-wires"><!--wires-->
         <output name="1" label="F0f|(White)" maxcurrent="500 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
           <label xml:lang="nl">F0f|(Wit)</label>
@@ -339,7 +339,7 @@
         <output name="11" label="AUX6" maxcurrent="500 mA"/>
         <size length="27" width="17" height="6" units="mm"/>
       </model>
-      <model model="LD-G-36 plus (wires)" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
+      <model model="LD-G-36 plus" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="12" numFns="30" connector="Wires" productID="LDG36"><!--without wires-->
         <output name="1" label="F0f|(White)" maxcurrent="500 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
