@@ -105,6 +105,16 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     
     public void replaceClipboardItems(ClipboardMany clipboardItems) {
         _clipboardItems = clipboardItems;
+        
+        _femaleSocket.disconnect();
+        
+        try {
+            _femaleSocket.connect(new MaleRootSocket(null));
+        } catch (SocketAlreadyConnectedException ex) {
+            // This should never happen
+            throw new RuntimeException("Program error", ex);
+        }
+        _femaleSocket.setParentForAllChildren();
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
 
