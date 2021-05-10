@@ -1408,11 +1408,13 @@ public class TreeEditor extends TreeViewer {
             
             Clipboard clipboard = InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
             
+            MaleSocket topItem = clipboard.getTopItem();
+            
             boolean isConnected = femaleSocket.isConnected();
             boolean canConnectFromClipboard =
-                    !clipboard.isEmpty()
-                    && femaleSocket.isCompatible(clipboard.getTopItem())
-                    && !femaleSocket.isAncestor(clipboard.getTopItem());
+                    topItem != null
+                    && femaleSocket.isCompatible(topItem)
+                    && !femaleSocket.isAncestor(topItem);
             
             if (_disableRootPopup
                     && (_currentFemaleSocket == _treePane._femaleRootSocket)) {
