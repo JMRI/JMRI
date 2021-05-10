@@ -16,9 +16,7 @@ import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import java.nio.file.Files;
-
-import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -204,11 +202,9 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
         log.debug("Image path is now : {}", _imagePath);
         if (_imagePath != null) {
-            try {
+            try {                
                 File imf = new File(_imagePath);
-                String mt = Files.probeContentType(imf.toPath());
-                log.debug( "Mime type is : {}", mt );
-                if ( (mt != null) && (mt.contains("image/svg")) ) {
+                if ( _imagePath.toUpperCase().endsWith(".SVG") ) {
                     svgImage = createSVGDocument(imf.toURI().toString());
                     image = null;
                 } else {
@@ -216,7 +212,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
                     image = readImage(imf);
                 }
             } catch (IOException ex) {
-                log.error("{} is not a valid image file, exception: ", _imagePath, ex);
+                log.error("{} is not a valid image file.", _imagePath);
                 image = null;
                 svgImage = null;
                 scaledImage = null;
@@ -379,7 +375,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
         @Override
         public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
-            throw new UnsupportedOperationException("Not supported yet.");
+            //not required here, do nothing
         }
     }
 

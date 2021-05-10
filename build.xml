@@ -187,18 +187,25 @@
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
         <pathelement location="${libdir}/org-openide-util-RELEASE113.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
-        <pathelement location="${libdir}/batik-transcoder-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-svg-dom-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-dom-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-util-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-css-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-ext-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-xml-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-bridge-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-gvt-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-script-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-awt-util-1.6-1.jar"/>
-        <pathelement location="${libdir}/batik-parser-1.6-1.jar"/>
+        <pathelement location="${libdir}/batik-transcoder-1.14.jar"/>
+        <pathelement location="${libdir}/batik-svg-dom-1.14.jar"/>
+        <pathelement location="${libdir}/batik-dom-1.14.jar"/>
+        <pathelement location="${libdir}/batik-util-1.14.jar"/>
+        <pathelement location="${libdir}/batik-css-1.14.jar"/>
+        <pathelement location="${libdir}/batik-ext-1.14.jar"/>
+        <pathelement location="${libdir}/batik-xml-1.14.jar"/>
+        <pathelement location="${libdir}/batik-bridge-1.14.jar"/>
+        <pathelement location="${libdir}/batik-gvt-1.14.jar"/>
+        <pathelement location="${libdir}/batik-script-1.14.jar"/>
+        <pathelement location="${libdir}/batik-awt-util-1.14.jar"/>
+        <pathelement location="${libdir}/batik-parser-1.14.jar"/>
+        <pathelement location="${libdir}/batik-anim-1.14.jar"/>
+        <pathelement location="${libdir}/batik-i18n-1.14.jar"/>
+        <pathelement location="${libdir}/batik-constants-1.14.jar"/>
+        <pathelement location="${libdir}/batik-shared-resources-1.14.jar"/>
+        <pathelement location="${libdir}/batik-svggen-1.14.jar"/>
+        <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
+        <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
