@@ -77,7 +77,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="10:07 PM">
+    <memory value="8:36 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -135,7 +135,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 07 22:07:34 CDT 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 10 08:36:37 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -166,11 +166,25 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </LogixNG>
     <LogixNG enabled="no">
       <systemName>IQ:AUTO:0003</systemName>
+      <userName>A logixNG in the initialization table</userName>
+      <ConditionalNGs />
+    </LogixNG>
+    <LogixNG enabled="no">
+      <systemName>IQ:AUTO:0004</systemName>
+      <userName>Another logixNG in the initialization table</userName>
+      <ConditionalNGs />
+    </LogixNG>
+    <LogixNG enabled="no">
+      <systemName>IQ:AUTO:0005</systemName>
       <userName>A logixNG</userName>
       <ConditionalNGs>
-        <systemName>IQC:AUTO:0005</systemName>
+        <systemName>IQC:AUTO:0007</systemName>
       </ConditionalNGs>
     </LogixNG>
+    <InitializationTable>
+      <LogixNG>IQ:AUTO:0003</LogixNG>
+      <LogixNG>IQ:AUTO:0004</LogixNG>
+    </InitializationTable>
     <Clipboard>
       <Many class="jmri.jmrit.logixng.implementation.configurexml.ClipboardManyXml">
         <Socket>
@@ -241,6 +255,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ConditionalNG>
     <ConditionalNG enabled="yes">
       <systemName>IQC:AUTO:0005</systemName>
+      <userName>Yet another another conditionalNG</userName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0006</systemName>
+      <userName>Yet another another another conditionalNG</userName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0007</systemName>
       <userName>Yet another conditionalNG</userName>
       <thread>0</thread>
       <Socket>
@@ -18249,9 +18279,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Fri May 07 22:07:35 CDT 2021</date>
+      <date>Mon May 10 08:36:41 CEST 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.23.5ish+das+20210508T0303Z+Reb0f3d1001 on Fri May 07 22:07:35 CDT 2021-->
+  <!--Written by JMRI version 4.23.5ish+daniel+2021-05-10T06:33:49Z+RUNKNOWN on Mon May 10 08:36:41 CEST 2021-->
 </layout-config>
