@@ -181,51 +181,20 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            JFrameOperator aw = new JFrameOperator("AutoTrains");
-
-            aw.requestClose();
-            dw.requestClose();
-
-            // cleanup window
-            JUnitUtil.dispose(d);
-        }
-
-        @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
-        @Test
-        public void testFwdAndReverse80() throws Exception {
-             jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
-            };
-            // THe train is 40 long and fits in furthers block..
-            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
-            WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-
-            // load layout file
-            java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-            cm.load(f);
-
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-
-            // load dispatcher, with all the correct options
-            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
-            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-            JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-            // running with no signals
-            checkAndSetSpeedsSML();
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-            
-            // trains fills 2 blocks
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            resetSensors(sm);
 
             // *******************************************************************************
             //  Here start left to right train fits in 2 deepest blocks
             // *******************************************************************************
+            
+            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+
             d.loadTrainFromTrainInfo("FWDREV80.xml");
 
             assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
-            ActiveTrain at = d.getActiveTrainsList().get(0);
+            at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
             
             // trains loads and runs, 3 as we are allocating as far as we can
@@ -322,58 +291,25 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 2 inactive.");
 
-            JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
-            bo.push();
+             bo.push();
             // wait for cleanup to finish
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            JFrameOperator aw = new JFrameOperator("AutoTrains");
-
-            aw.requestClose();
-            dw.requestClose();
-
-            // cleanup window
-            JUnitUtil.dispose(d);
-        }
-
-        @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
-        @Test
-        public void testFwdAndReverse120() throws Exception {
-             jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
-            };
-            // THe train is 120 long and just fits in section ..
-            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
-            WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-
-            // load layout file
-            java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-            cm.load(f);
-
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-
-            // load dispatcher, with all the correct options
-            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
-            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-            JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-            // running with no signals
-            checkAndSetSpeedsSML();
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+            resetSensors(sm);
             
-            // train is 3 blocks long
+            // *******************************************************************************
+            //  Here start left to right train fits in all three blocks
+            // *******************************************************************************
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
 
-            // *******************************************************************************
-            //  Here start left to right train fits in all three blocks
-            // *******************************************************************************
             d.loadTrainFromTrainInfo("FWDREV120.xml");
 
             assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
-            ActiveTrain at = d.getActiveTrainsList().get(0);
+            at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
             
             // trains loads and runs, 3 as we are allocating as far as we can
@@ -467,55 +403,23 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 4 inactive.");
 
-            JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
             bo.push();
             // wait for cleanup to finish
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            JFrameOperator aw = new JFrameOperator("AutoTrains");
+            resetSensors(sm);
 
-            aw.requestClose();
-            dw.requestClose();
-
-            // cleanup window
-            JUnitUtil.dispose(d);
-        }
-
-        @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
-        @Test
-        public void testReverseFwd40() throws Exception {
-             jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
-            };
-            // THe train is 40 long and fits in furthers block..
-            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
-            WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-
-            // load layout file
-            java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-            cm.load(f);
-
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-
-            // load dispatcher, with all the correct options
-            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
-            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-            JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-            // running with no signals
-            checkAndSetSpeedsSML();
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-            
+            // *******************************************************************************
+            //  Here start right to left train fits in deepest block
+            // *******************************************************************************
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
 
-            // *******************************************************************************
-            //  Here start left to right train fits in deepest block
-            // *******************************************************************************
             d.loadTrainFromTrainInfo("REVFWD40.xml");
 
             assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
-            ActiveTrain at = d.getActiveTrainsList().get(0);
+            at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
             
             // trains loads and runs, 3 as we are allocating as far as we can
@@ -612,56 +516,24 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 6 inactive.");
 
-            JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
             bo.push();
             // wait for cleanup to finish
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            JFrameOperator aw = new JFrameOperator("AutoTrains");
-
-            aw.requestClose();
-            dw.requestClose();
-
-            // cleanup window
-            JUnitUtil.dispose(d);
-        }
-
-        @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
-        @Test
-        public void testReverseFwd80() throws Exception {
-             jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
-            };
-            // THe train is 40 long and fits in furthers block..
-            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
-            WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-
-            // load layout file
-            java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-            cm.load(f);
-
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-
-            // load dispatcher, with all the correct options
-            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
-            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-            JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-            // running with no signals
-            checkAndSetSpeedsSML();
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+            resetSensors(sm);
             
+            // *******************************************************************************
+            //  Here start right to left train fits in deepest 2 blocks
+            // *******************************************************************************
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
 
-            // *******************************************************************************
-            //  Here start left to right train fits in deepest block
-            // *******************************************************************************
             d.loadTrainFromTrainInfo("REVFWD80.xml");
 
             assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
-            ActiveTrain at = d.getActiveTrainsList().get(0);
+            at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
 
             // trains loads and runs, 3 as we are allocating as far as we can
@@ -756,59 +628,25 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 5 inactive.");
 
-            JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
             bo.push();
             // wait for cleanup to finish
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            JFrameOperator aw = new JFrameOperator("AutoTrains");
-
-            aw.requestClose();
-            dw.requestClose();
-
-            // cleanup window
-            JUnitUtil.dispose(d);
-        }
-
-        @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
-        @Test
-        public void testReverseFwd120() throws Exception {
-             jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
-            };
-            // THe train is 40 long and fits in furthers block..
-            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
-            WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-
-            // load layout file
-            java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-            cm.load(f);
-
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-
-            // load dispatcher, with all the correct options
-            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
-            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-            JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-            // running with no signals
-            checkAndSetSpeedsSML();
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+            resetSensors(sm);
             
-            // train fills start section
+            // *******************************************************************************
+            //  Here start right to left train fits in entire section
+            // *******************************************************************************
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
 
-            // *******************************************************************************
-            //  Here start left to right train fits in deepest section
-            //  
-            // *******************************************************************************
             d.loadTrainFromTrainInfo("REVFWD120.xml");
 
             assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
-            ActiveTrain at = d.getActiveTrainsList().get(0);
+            at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
             
 
@@ -901,20 +739,29 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 6 inactive.");
 
-            JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
             bo.push();
             // wait for cleanup to finish
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            JFrameOperator aw = new JFrameOperator("AutoTrains");
 
+            JFrameOperator aw = new JFrameOperator("AutoTrains");
             aw.requestClose();
             dw.requestClose();
 
             // cleanup window
             JUnitUtil.dispose(d);
         }
+        
+        // reset to inactive all sensors except clock.
+        private void resetSensors(SensorManager sm) {
+            for (Sensor sensor:sm.getNamedBeanSet()) {
+                if (!sensor.getSystemName().equals("ISCLOCKRUNNING")) {
+                    JUnitUtil.setBeanState(sensor, Sensor.INACTIVE);
+                }
+            }
+        }
+        
         private float speedMedium = 0.0f;
         private float speedStopping = 0.0f;
         private float speedSlow = 0.0f;
