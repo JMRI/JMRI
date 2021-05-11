@@ -143,7 +143,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
+        JUnitUtil.initLogixNGManager(true);
         
         mockShutDownManager = new MockShutDownManager();
         InstanceManager.setDefault(ShutDownManager.class, mockShutDownManager);

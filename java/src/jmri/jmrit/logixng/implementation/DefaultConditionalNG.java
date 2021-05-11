@@ -109,8 +109,11 @@ public class DefaultConditionalNG extends AbstractBase
         return _runDelayed;
     }
     
-    private void runOnLogixNG_Thread(@Nonnull ThreadingUtil.ThreadAction ta) {
-        if (_runDelayed) {
+    private void runOnLogixNG_Thread(
+            @Nonnull ThreadingUtil.ThreadAction ta,
+            boolean allowRunDelayed) {
+        
+        if (_runDelayed && allowRunDelayed) {
             _thread.runOnLogixNGEventually(ta);
         } else {
             _thread.runOnLogixNG(ta);
@@ -121,14 +124,22 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void execute() {
         if (_executeLock.once()) {
-            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null));
+            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), true);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void execute(boolean allowRunDelayed) {
+        if (_executeLock.once()) {
+            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), allowRunDelayed);
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public void execute(FemaleDigitalActionSocket socket) {
-        runOnLogixNG_Thread(() -> {internalExecute(this, socket);});
+        runOnLogixNG_Thread(() -> {internalExecute(this, socket);}, true);
     }
     
     private static void internalExecute(ConditionalNG conditionalNG, FemaleDigitalActionSocket femaleSocket) {
