@@ -83,6 +83,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public void activateAllLogixNGs();
     
     /**
+     * Activate all LogixNGs, starts LogixNG processing by connecting all
+     * inputs that are included the ConditionalNGs in this LogixNG.
+     * <p>
+     * A LogixNG must be activated before it will calculate any of its
+     * ConditionalNGs.
+     * 
+     * @param runDelayed true if execute() should run on LogixNG thread delayed,
+     *                   false otherwise.
+     * @param runOnSeparateThread true if the activation should run on a
+     *                            separate thread, false otherwise
+     */
+    public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread);
+    
+    /**
      * DeActivate all LogixNGs, stops LogixNG processing by disconnecting all
      * inputs that are included the ConditionalNGs in this LogixNG.
      * <p>
