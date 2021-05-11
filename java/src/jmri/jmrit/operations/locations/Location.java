@@ -114,6 +114,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
     public static final String LOCATION_REPORTER_PROPERTY = "locationReporterChange"; // NOI18N
+    public static final String LOCATION_DIVISION_PROPERTY = "homeDivisionChange"; // NOI18N
+    
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -648,7 +650,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Division old = _division;
         _division = division;
         if (old != _division) {
-            setDirtyAndFirePropertyChange("homeDivisionChange", old, division);
+            setDirtyAndFirePropertyChange(LOCATION_DIVISION_PROPERTY, old, division);
         }
     }
 

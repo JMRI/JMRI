@@ -102,11 +102,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
-        table.getColumnModel().getColumn(TRACK_COLUMN).setPreferredWidth(
-                Math.max(60,
-                        new JLabel(Bundle.getMessage("Class/Interchange") +
-                                Bundle.getMessage("Spurs") +
-                                Bundle.getMessage("Yards")).getPreferredSize().width + 20));
+        table.getColumnModel().getColumn(TRACK_COLUMN).setPreferredWidth(Math.max(60, new JLabel(
+                Bundle.getMessage("Class/Interchange") + Bundle.getMessage("Spurs") + Bundle.getMessage("Yards"))
+                        .getPreferredSize().width +
+                20));
         table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(LENGTH_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(LENGTH_COLUMN)).getPreferredSize().width + 10));
@@ -117,21 +116,22 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(LOCOS_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(PICKUPS_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(PICKUPS_COLUMN)).getPreferredSize().width + 10));
-        table.getColumnModel().getColumn(DROPS_COLUMN).setPreferredWidth(
-                Math.max(60, new JLabel(getColumnName(DROPS_COLUMN)).getPreferredSize().width + 10));
+        table.getColumnModel().getColumn(DROPS_COLUMN)
+                .setPreferredWidth(Math.max(60, new JLabel(getColumnName(DROPS_COLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(DIVISION_COLUMN).setPreferredWidth(160);
         table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
-        
+
         frame.loadTableDetails(table);
         setColumnsVisible();
     }
-    
+
     protected void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), locationManager.hasDivisions());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN), Setup.isRfidEnabled() && locationManager.hasReporters());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
+                Setup.isRfidEnabled() && locationManager.hasReporters());
     }
 
     @Override
@@ -327,8 +327,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
@@ -342,7 +342,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
             }
-            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_PROPERTY)) {
+            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_PROPERTY) ||
+                    e.getPropertyName().equals(Location.LOCATION_DIVISION_PROPERTY)) {
                 setColumnsVisible();
             }
         }

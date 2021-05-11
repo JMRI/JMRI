@@ -3430,16 +3430,16 @@ public class TrainBuilder extends TrainCommon {
      * <p>
      * If car load is type empty not at car's home division yard: Car is sent to a
      * home division yard. If home division yard not available, then car is sent to
-     * home division spur.
+     * home division staging, then spur (industry).
      * <p>
      * If car load is type empty at a yard at the car's home division: Car is sent
      * to a home division spur.
      * <p>
      * If car load is type load not at car's home division: Car is sent to home
-     * division spur.
+     * division spur, and if spur not available then home division staging.
      * <p>
      * If car load is type load at car's home division: Car is sent to any division
-     * spur.
+     * spur or staging.
      * 
      * @param car the car being checked for a home division
      * @return false if destination track not found for this car
@@ -3486,6 +3486,13 @@ public class TrainBuilder extends TrainCommon {
 
     private static final boolean HOME_DIVISION = true;
 
+    /**
+     * Tries to set a final destination for the car with a home division.
+     * @param car the car
+     * @param trackType One of three track types: Track.SPUR Track.YARD or Track.STAGING
+     * @param home_division If true track's division must match the car's
+     * @return true if car was given a final destination
+     */
     private boolean sendCarToHomeDivisionTrack(Car car, String trackType, boolean home_division) {
         List<Location> locationsNotServiced = new ArrayList<>(); // locations not reachable
         List<Track> tracks = locationManager.getTracksByMoves(trackType);
@@ -3754,9 +3761,19 @@ public class TrainBuilder extends TrainCommon {
         return true; // done, car has a new destination
     }
 
+    /**
+     * Destination track can be yard or staging, NOT a spur.
+     * 
+     * @param car   the car
+     * @param track the car's destination track
+     * @return true if car given a new final destination
+     */
     private boolean sendCarToDestinationTrack(Car car, Track track) {
         if (car.getTrack() == track) {
             return false;
+        }
+        if (track.getTrackType().equals(Track.STAGING) && car.getLocation() == track.getLocation()) {
+            return false; // don't use same staging location
         }
         // is the car's destination the terminal and is that allowed?
         if (!checkThroughCarsAllowed(car, track.getLocation().getName())) {
