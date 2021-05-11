@@ -65,16 +65,18 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             MaleSocket maleSocket = _clipboardItems.getChild(0).getConnectedSocket();
             _clipboardItems.getChild(0).disconnect();
             return maleSocket;
+        } else {
+            return null;
         }
-        throw new UnsupportedOperationException("Not supported");
     }
     
     @Override
     public MaleSocket getTopItem() {
         if (!isEmpty()) {
             return _clipboardItems.getChild(0).getConnectedSocket();
+        } else {
+            return null;
         }
-        throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
@@ -105,6 +107,16 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     
     public void replaceClipboardItems(ClipboardMany clipboardItems) {
         _clipboardItems = clipboardItems;
+        
+        _femaleSocket.disconnect();
+        
+        try {
+            _femaleSocket.connect(new MaleRootSocket(null));
+        } catch (SocketAlreadyConnectedException ex) {
+            // This should never happen
+            throw new RuntimeException("Program error", ex);
+        }
+        _femaleSocket.setParentForAllChildren();
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
 
