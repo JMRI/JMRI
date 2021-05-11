@@ -560,7 +560,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         if (a == null) {
             log.warn("failedThrottleRequest with zero-length listeners: {}", address);
         } else {
-            for (WaitingThrottle waitingThrottle : a) {
+            for (WaitingThrottle waitingThrottle : new ArrayList<>(a)) {
                 ThrottleListener l = waitingThrottle.getListener();
                 l.notifyFailedThrottleRequest(address, reason);
             }
