@@ -18,7 +18,7 @@
   <!-- Version 1.00 - Initial version                           -->
   <decoder>
     <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH">
-      <model model="LD-G-42 (solder)" maxInputVolts="112-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
+      <model model="LD-G-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="7" numFns="30" productID="41-04420"><!--without wires-->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
@@ -40,7 +40,7 @@
         </output>
         <size length="21.8" width="17.2" height="4" units="mm"/>
       </model>
-      <model model="LD-G-42 (wires)" maxInputVolts="18V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
+      <model model="LD-G-42 (wires)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="7" numFns="30" connector="Wires" productID="41-04421"><!-- wires-->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
@@ -62,7 +62,7 @@
         </output>
         <size length="21.8" width="17.2" height="4" units="mm"/>
       </model>
-      <model model="LD-G-42 NEM652" maxInputVolts="18V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
+      <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="7" numFns="30" connector="NEM652" productID="41-04422"><!-- NEM 652 -->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
@@ -84,7 +84,7 @@
         </output>
         <size length="21.8" width="17.2" height="4" units="mm"/>
       </model>
-      <model model="LD-W-42 (solder)" maxInputVolts="112-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
+      <model model="LD-W-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="7" numFns="30" productID="41-05420"><!--without wires-->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
@@ -106,7 +106,7 @@
         </output>
         <size length="21.8" width="17.2" height="4" units="mm"/>
       </model>
-      <model model="LD-W-42 (wires)" maxInputVolts="18V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
+      <model model="LD-W-42 (wires)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="7" numFns="30" connector="Wires" productID="41-05421"><!-- wires-->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
