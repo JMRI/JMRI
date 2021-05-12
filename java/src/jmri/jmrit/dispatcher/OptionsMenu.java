@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -25,6 +27,7 @@ import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -146,6 +149,7 @@ public class OptionsMenu extends JMenu {
             signalTypeBox.setToolTipText(Bundle.getMessage("SignalTypeHint"));
             optionsPane.add(p1);
             JPanel p2 = new JPanel();
+            p2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainsFrom")));
             p2.setLayout(new FlowLayout());
             ButtonGroup trainsGroup = new ButtonGroup();
             p2.add(trainsFromRoster);
@@ -318,9 +322,17 @@ public class OptionsMenu extends JMenu {
         }
         useConnectivityCheckBox.setSelected(dispatcher.getUseConnectivity());
         signalTypeBox.setSelectedIndex(dispatcher.getSignalType());
-        trainsFromRoster.setSelected(dispatcher.getTrainsFromRoster());
-        trainsFromTrains.setSelected(dispatcher.getTrainsFromTrains());
-        trainsFromUser.setSelected(dispatcher.getTrainsFromUser());
+        switch (dispatcher.getTrainsFrom()) {
+            case TRAINSFROMROSTER:
+                trainsFromRoster.setSelected(true);
+                break;
+            case TRAINSFROMOPS:
+                trainsFromTrains.setSelected(true);
+                break;
+            case TRAINSFROMUSER:
+            default:
+                trainsFromUser.setSelected(true);
+        }
         detectionCheckBox.setSelected(dispatcher.getHasOccupancyDetection());
         setSSLDirectionalSensorsCheckBox.setSelected(dispatcher.getSetSSLDirectionalSensors());
         autoAllocateCheckBox.setSelected(dispatcher.getAutoAllocate());
@@ -351,9 +363,13 @@ public class OptionsMenu extends JMenu {
             dispatcher.setUseConnectivity(useConnectivityCheckBox.isSelected());
         }
         dispatcher.setSetSSLDirectionalSensors(setSSLDirectionalSensorsCheckBox.isSelected());
-        dispatcher.setTrainsFromRoster(trainsFromRoster.isSelected());
-        dispatcher.setTrainsFromTrains(trainsFromTrains.isSelected());
-        dispatcher.setTrainsFromUser(trainsFromUser.isSelected());
+        if (trainsFromRoster.isSelected()) {
+            dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
+        } else if (trainsFromTrains.isSelected()) {
+            dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMOPS);
+        } else {
+            dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMUSER);
+        }
         dispatcher.setHasOccupancyDetection(detectionCheckBox.isSelected());
         dispatcher.setAutoAllocate(autoAllocateCheckBox.isSelected());
         autoDispatchItem.setSelected(autoAllocateCheckBox.isSelected());
