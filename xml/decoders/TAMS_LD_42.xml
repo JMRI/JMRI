@@ -849,7 +849,7 @@
         <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
         <comment>Range 1-255</comment>
       </variable>
-      <variable CV="112" item="Motor Option 1" comment="Range 1-15 default="3" include="41-05420,41-05421">
+      <variable CV="112" item="Motor Option 1" comment="Range 1-15" default="3" include="41-05420,41-05421">
         <decVal min="1" max="15"/>
         <label>Gain factor</label>
         <label xml:lang="de">Verstärkungsfactor</label>
