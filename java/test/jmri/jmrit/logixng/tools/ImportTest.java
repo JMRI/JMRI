@@ -194,7 +194,7 @@ public class ImportTest {
         Assert.assertTrue(results);
         
         logixManager.activateAllLogixs();
-        logixNG_Manager.activateAllLogixNGs();
+        logixNG_Manager.activateAllLogixNGs(false, false);
         
         
         

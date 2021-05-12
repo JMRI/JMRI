@@ -110,4 +110,10 @@ public interface LogixNG extends Base, NamedBean {
      */
     public void execute();
 
+    /**
+     * Execute all ConditionalNGs if the LogixNG is enabled and activated.
+     * @param allowRunDelayed true if it's ok to run delayed, false otherwise
+     */
+    public void execute(boolean allowRunDelayed);
+
 }

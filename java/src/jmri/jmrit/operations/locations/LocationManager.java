@@ -342,6 +342,13 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         }
     }
 
+    /**
+     * Replace all track car load names for a given type of car
+     * 
+     * @param type type of car
+     * @param oldLoadName load name to replace
+     * @param newLoadName new load name
+     */
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
         List<Location> locs = getList();
         for (Location loc : locs) {
