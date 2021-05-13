@@ -1950,6 +1950,8 @@
 
 <mapID target="html.doc.Technical.Poll2007" url="html/doc/Technical/Poll2007.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_LocationDivision" url="package/jmri/jmrit/operations/Operations.shtml#LocationDivision"/>
+
 <mapID target="html.hardware.cmri.CMRI_L164" url="html/hardware/cmri/CMRI.shtml#L164"/>
 
 <mapID target="html.hardware.cmri.CMRI_L46" url="html/hardware/cmri/CMRI.shtml#L46"/>
@@ -3837,6 +3839,8 @@
 <mapID target="package.jmri.jmrit.beantable.TransitTable" url="package/jmri/jmrit/beantable/TransitTable.shtml"/>
 
 <mapID target="html.hardware.nce.NCE_troubleShoot" url="html/hardware/nce/NCE.shtml#troubleShoot"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_HomeDivision" url="package/jmri/jmrit/operations/Operations.shtml#HomeDivision"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_RouteComment" url="package/jmri/jmrit/operations/Operations.shtml#RouteComment"/>
 
