@@ -132,11 +132,13 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getByUserName(LogixNG logixNG, String name) {
-        for (int i = 0; i < logixNG.getNumConditionalNGs(); i++) {
-            ConditionalNG conditionalNG = logixNG.getConditionalNG(i);
-            if (conditionalNG != null) {
-                if (name.equals(conditionalNG.getUserName())) {
-                    return conditionalNG;
+        if (logixNG != null && name != null) {
+            for (int i = 0; i < logixNG.getNumConditionalNGs(); i++) {
+                ConditionalNG conditionalNG = logixNG.getConditionalNG(i);
+                if (conditionalNG != null) {
+                    if (name.equals(conditionalNG.getUserName())) {
+                        return conditionalNG;
+                    }
                 }
             }
         }
