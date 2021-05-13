@@ -6,6 +6,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,297 +187,44 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         return speed;
     }
 
-    // functions - note that we use the naming for DCC, though that's not the implication;
-    // see also DccThrottle interface
-    // These overides are necassary as protocol 2 functions groups are non standard.
-    // F0-f6 are group 1, f7-f13 are group 2, f14-f20 are group 3 and f21-f28 are group 4. There is no group5.
+    /**
+     * Constants to represent Function Groups.
+     * <p>
+     * The are the same groupings for both normal Functions and Momentary.
+     */
+    public static final int[] EXP_FUNCTION_GROUPS = new int[]{
+            1, 1, 1, 1, 1, 1, 1, /** 0-6 */
+            2, 2, 2, 2, 2, 2, 2, /** 7 - 13 */
+            3, 3, 3, 3, 3, 3, 3, /** 14 -20 */
+            4, 4, 4, 4, 4, 4, 4, 4 /** 11 - 28 */
+    };
+   
+    /**
+     * Send whole (DCC) Function Group for a particular function number.
+     * @param functionNum Function Number
+     * @param momentary False to send normal function status, true to send momentary.
+     */
     @Override
-    public void setF0(boolean f0) {
-        updateFunction(0,f0);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup1();
-        } else {
-            sendExpFunctionGroup1();
+    protected void sendFunctionGroup(int functionNum, boolean momentary){
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
+            super.sendFunctionGroup(functionNum, momentary);
+            return;
         }
-    }
-
-    @Override
-    public void setF1(boolean f1) {
-        updateFunction(1,f1);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup1();
-        } else {
-            sendExpFunctionGroup1();
-        }
-    }
-
-    @Override
-    public void setF2(boolean f2) {
-        updateFunction(2,f2);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup1();
-        } else {
-            sendExpFunctionGroup1();
-        }
-    }
-
-    @Override
-    public void setF3(boolean f3) {
-        updateFunction(3,f3);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup1();
-        } else {
-            sendExpFunctionGroup1();
-        }
-    }
-
-    @Override
-    public void setF4(boolean f4) {
-        updateFunction(4,f4);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup1();
-        } else {
-            sendExpFunctionGroup1();
-        }
-    }
-
-    @Override
-    public void setF5(boolean f5) {
-        updateFunction(5,f5);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup2();
-        } else {
-            sendExpFunctionGroup1();
-        }
-    }
-
-    @Override
-    public void setF6(boolean f6) {
-        updateFunction(6,f6);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup2();
-        } else {
-            sendExpFunctionGroup1();
-        }
-    }
-
-    @Override
-    public void setF7(boolean f7) {
-        updateFunction(7,f7);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup2();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF8(boolean f8) {
-        updateFunction(8,f8);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup2();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF9(boolean f9) {
-        updateFunction(9,f9);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup3();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF10(boolean f10) {
-        updateFunction(10,f10);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup3();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF11(boolean f11) {
-        updateFunction(11,f11);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup3();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF12(boolean f12) {
-        updateFunction(12,f12);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup3();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF13(boolean f13) {
-        updateFunction(13,f13);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup2();
-        }
-    }
-
-    @Override
-    public void setF14(boolean f14) {
-        updateFunction(14,f14);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF15(boolean f15) {
-        updateFunction(15,f15);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF16(boolean f16) {
-        updateFunction(16,f16);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF17(boolean f17) {
-        updateFunction(17,f17);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF18(boolean f18) {
-        updateFunction(18,f18);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF19(boolean f19) {
-        updateFunction(19,f19);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF20(boolean f20) {
-        updateFunction(20,f20);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup4();
-        } else {
-            sendExpFunctionGroup3();
-        }
-    }
-
-    @Override
-    public void setF21(boolean f21) {
-        updateFunction(21,f21);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF22(boolean f22) {
-        updateFunction(22,f22);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF23(boolean f23) {
-        updateFunction(23,f23);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF24(boolean f24) {
-        updateFunction(24,f24);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF25(boolean f25) {
-        updateFunction(25,f25);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF26(boolean f26) {
-        updateFunction(26,f26);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF27(boolean f27) {
-        updateFunction(27,f27);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
-        }
-    }
-
-    @Override
-    public void setF28(boolean f28) {
-        updateFunction(28,f28);
-        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
-            sendFunctionGroup5();
-        } else {
-            sendExpFunctionGroup4();
+        switch (EXP_FUNCTION_GROUPS[functionNum]) {
+            case 1:
+                if (momentary) sendMomentaryFunctionGroup1(); else sendExpFunctionGroup1();
+                break;
+            case 2:
+                if (momentary) sendMomentaryFunctionGroup2(); else sendExpFunctionGroup2();
+                break;
+            case 3:
+                if (momentary) sendMomentaryFunctionGroup3(); else sendExpFunctionGroup3();
+                break;
+            case 4:
+                if (momentary) sendMomentaryFunctionGroup4(); else sendExpFunctionGroup4();
+                break;
+            default:
+                break;
         }
     }
 
@@ -488,11 +236,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup1() {
-        if (slot.getProtocol() == LnConstants.LOCONETPROTOCOL_TWO) {
-            sendExpSpeedAndDirection();
-            sendExpFunctionGroup1();
-            return;
-        }
         int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR) |
                 (getF0() ? LnConstants.DIRF_F0 : 0) |
                 (getF1() ? LnConstants.DIRF_F1 : 0) |
@@ -573,6 +316,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * functions F0, F1, F2, F3, F4, F5, F6
      */
     protected void sendExpFunctionGroup1() {
+            sendExpSpeedAndDirection();
             int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0)
                 | (getF0() ? LnConstants.DIRF_F0 : 0)
                 | (getF1() ? LnConstants.DIRF_F1 : 0)

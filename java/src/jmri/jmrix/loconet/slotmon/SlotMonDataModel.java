@@ -525,7 +525,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F0COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup1(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -533,7 +533,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F1COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup1(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -541,7 +541,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F2COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup1(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -549,7 +549,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F3COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup1(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -557,7 +557,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F4COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup1(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -565,7 +565,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F5COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup2(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -573,7 +573,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F6COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup2(s, col, row);
                 } else {
                     sendExpFunctionGroup1(s, col, row);
@@ -581,7 +581,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F7COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup2(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -589,7 +589,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F8COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup2(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -597,7 +597,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F9COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup3(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -605,7 +605,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F10COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup3(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -613,7 +613,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F11COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup3(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -621,7 +621,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F12COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup3(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -629,7 +629,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F13COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup2(s, col, row);
@@ -637,7 +637,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F14COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -645,7 +645,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F15COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -653,7 +653,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F16COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -661,7 +661,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F17COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -669,7 +669,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F18COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -677,7 +677,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F19COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -685,7 +685,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F20COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup4(s, col, row);
                 } else {
                     sendExpFunctionGroup3(s, col, row);
@@ -693,7 +693,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F21COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -701,7 +701,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F22COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -709,7 +709,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F23COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -717,7 +717,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F24COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -725,7 +725,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F25COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -733,7 +733,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F26COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -741,7 +741,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F27COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
@@ -749,7 +749,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 fireTableRowsUpdated(row, row);
                 break;
             case F28COLUMN:
-                if (s.getSlot() < 128) {
+                if (s.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                     sendFunctionGroup5(s, col, row);
                 } else {
                     sendExpFunctionGroup4(s, col, row);
