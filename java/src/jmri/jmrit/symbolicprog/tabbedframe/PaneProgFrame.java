@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -17,6 +16,7 @@ import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.ShutDownTask;
+import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -181,6 +181,31 @@ abstract public class PaneProgFrame extends JmriJFrame
         exportSubMenu.add(new CsvExportAction(Bundle.getMessage("MenuExportCSV"), cvModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
+
+        // add "Import" submenu; this is heirarchical because
+        // some of the names are so long, and we expect more formats
+        JMenu speedTableSubMenu = new JMenu(Bundle.getMessage("MenuSpeedTable"));
+        fileMenu.add(speedTableSubMenu);
+        ButtonGroup SpeedTableNumbersGroup = new ButtonGroup();
+        UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+        Object speedTableNumbersSelectionObj = upm.getProperty(SpeedTableNumbers.class.getName(), "selection");
+        
+        SpeedTableNumbers speedTableNumbersSelection =
+                speedTableNumbersSelectionObj != null
+                ? SpeedTableNumbers.valueOf(speedTableNumbersSelectionObj.toString())
+                : null;
+        
+        for (SpeedTableNumbers speedTableNumbers : SpeedTableNumbers.values()) {
+            JRadioButtonMenuItem rbMenuItem = new JRadioButtonMenuItem(speedTableNumbers.toString());
+            rbMenuItem.addActionListener((ActionEvent event) -> {
+                rbMenuItem.setSelected(true);
+                upm.setProperty(SpeedTableNumbers.class.getName(), "selection", speedTableNumbers.name());
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("MenuSpeedTable_CloseReopenWindow"));
+            });
+            rbMenuItem.setSelected(speedTableNumbers == speedTableNumbersSelection);
+            speedTableSubMenu.add(rbMenuItem);
+            SpeedTableNumbersGroup.add(rbMenuItem);
+        }
 
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout

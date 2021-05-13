@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
@@ -20,7 +21,11 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.util.CvUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -465,13 +470,25 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             g.setConstraints(b, cs);
             j.add(b, cs);
 
-            cs.gridy++;
-            JLabel num = new JLabel(""+(i+1));
-            num.setToolTipText("Step Number");
+            UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+            Object speedTableNumbersSelectionObj = upm.getProperty(SpeedTableNumbers.class.getName(), "selection");
 
-            g.setConstraints(num, cs);
-            j.add(num, cs);
-  }
+            if (speedTableNumbersSelectionObj != null) {
+                SpeedTableNumbers speedTableNumbersSelection =
+                        SpeedTableNumbers.valueOf(speedTableNumbersSelectionObj.toString());
+
+                if ((speedTableNumbersSelection != SpeedTableNumbers.None)
+                        && (speedTableNumbersSelection.filter(i) || (i==0) || (i+1 == nValues))) {
+
+                    cs.gridy++;
+                    JLabel num = new JLabel(""+(i+1));
+                    num.setToolTipText("Step Number");
+
+                    g.setConstraints(num, cs);
+                    j.add(num, cs);
+                }
+            }
+        }
 
         // add control buttons
         JPanel k = new JPanel();
