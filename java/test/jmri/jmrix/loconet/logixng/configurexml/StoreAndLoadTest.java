@@ -52,7 +52,6 @@ public class StoreAndLoadTest {
         LogixNG logixNG = logixNG_Manager.createLogixNG("A logixNG");
         ConditionalNG conditionalNG =
                 conditionalNGManager.createConditionalNG(logixNG, "A conditionalNG");
-        logixNG.addConditionalNG(conditionalNG);
         logixNG.setEnabled(false);
         conditionalNG.setEnabled(true);
 

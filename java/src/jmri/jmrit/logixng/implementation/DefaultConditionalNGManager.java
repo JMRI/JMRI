@@ -105,7 +105,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNG(String name) {
-        ConditionalNG x = getByUserName(name);
+        ConditionalNG x = getByUserName(getParentLogixNG(name), name);
         if (x != null) {
             return x;
         }

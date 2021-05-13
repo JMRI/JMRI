@@ -422,6 +422,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             this._systemName = systemName;
         }
 
+        @Override
         public String toString() {
             StringBuilder sb = new StringBuilder("ConditionalNG_Entry: name =");
             sb.append(_systemName);
