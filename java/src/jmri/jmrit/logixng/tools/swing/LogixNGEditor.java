@@ -37,33 +37,33 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Bergqvist (c) 2019
  */
 public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
-    
+
     BeanTableFrame<LogixNG> beanTableFrame;
     BeanTableDataModel<LogixNG> beanTableDataModel;
-    
+
     LogixNG_Manager _logixNG_Manager = null;
     LogixNG _curLogixNG = null;
-    
+
     ConditionalNGEditor _treeEdit = null;
     ConditionalNGDebugger _debugger = null;
-    
+
     int _numConditionalNGs = 0;
     boolean _inEditMode = false;
-    
+
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
-    
+
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
     private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";         // NOI18N
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
-    
+
 //    private NamedBeanComboBox<LogixNG> _nameComboBox = null;
-    
-    
+
+
     /**
      * Create a new ConditionalNG List View editor.
      *
@@ -206,20 +206,20 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             buttonEditThreadsColumn.setMinWidth(testButton2.getPreferredSize().width);
             buttonEditThreadsColumn.setMaxWidth(testButton2.getPreferredSize().width);
             buttonEditThreadsColumn.setResizable(false);
-            
+
             JScrollPane conditionalTableScrollPane = new JScrollPane(conditionalTable);
             Dimension dim = conditionalTable.getPreferredSize();
             dim.height = 450;
             conditionalTableScrollPane.getViewport().setPreferredSize(dim);
             contentPane.add(conditionalTableScrollPane);
-            
+
             _showStartupThreadsCheckBox = new JCheckBox("Show startup thread");
             contentPane.add(_showStartupThreadsCheckBox);
             _showStartupThreadsCheckBox.addActionListener((evt) -> {
                 _conditionalNGTableModel.setShowStartupThreads(
                         _showStartupThreadsCheckBox.isSelected());
             });
-            
+
             // add message area between table and buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
@@ -429,11 +429,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         if (checkEditConditionalNG()) {
             return;
         }
-/*        
+/*
         if (!checkConditionalNGReferences(_curLogixNG.getSystemName())) {
             return;
         }
-*/        
+*/
         _showReminder = true;
         logixNG_Data.clear();
         logixNG_Data.put("Delete", _curLogixNG.getSystemName());   // NOI18N
@@ -450,7 +450,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         if (checkEditConditionalNG()) {
             return;
         }
-        
+
         // make an Add Item Frame
         if (showAddLogixNGFrame()) {
             if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
@@ -460,7 +460,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             // Create ConditionalNG
             _curConditionalNG =
                     InstanceManager.getDefault(ConditionalNG_Manager.class)
-                            .createConditionalNG(_systemName.getText(), _addUserName.getText());
+                            .createConditionalNG(_curLogixNG, _systemName.getText(), _addUserName.getText());
 
             if (_curConditionalNG == null) {
                 // should never get here unless there is an assignment conflict
@@ -468,7 +468,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 return;
             }
             // add to LogixNG at the end of the calculate order
-            _curLogixNG.addConditionalNG(_curConditionalNG);
             _conditionalNGTableModel.fireTableRowsInserted(_numConditionalNGs, _numConditionalNGs);
             _conditionalRowNumber = _numConditionalNGs;
             _numConditionalNGs++;
@@ -481,9 +480,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * Create or edit action/expression dialog.
      */
     private boolean showAddLogixNGFrame() {
-        
+
         AtomicBoolean result = new AtomicBoolean(false);
-        
+
         JDialog dialog  = new JDialog(
                 _editLogixNGFrame,
                 Bundle.getMessage("AddConditionalNGDialogTitle"),
@@ -521,11 +520,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName, c);
-        
+
         _systemName.setText("");
         _systemName.setEnabled(true);
         _addUserName.setText("");
-        
+
         _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));    // NOI18N
 //        _addUserName.setToolTipText("LogixNGUserNameHint");    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
@@ -541,16 +540,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         panel31.add(message1);
         JLabel message2 = new JLabel(Bundle.getMessage("AddMessage2"));  // NOI18N
         panel32.add(message2);
-        
+
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
-        
+
         // Get panel for the item
         panel3.add(panel31);
         panel3.add(panel32);
         contentPanel.add(panel3);
-        
+
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
@@ -569,7 +568,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             dialog.dispose();
         });
         create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
-        
+
         panel5.add(create);
 
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -587,17 +586,17 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 //        addLogixNGFrame.setLocationRelativeTo(component);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
-        
+
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
         });
-        
+
         dialog.setVisible(true);
-        
+
         return result.get();
     }
-    
+
     /**
      * Enable/disable fields for data entry when user selects to have system
      * name automatically generated.
@@ -632,7 +631,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         final LogixNGEditor logixNGEditor = this;
         _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
     }
-    
+
     /**
      * Create and/or initialize the Edit Conditional window.
      * <p>
@@ -651,7 +650,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         final LogixNGEditor logixNGEditor = this;
         _debugger.addLogixNGEventListener(new LogixNG_DebuggerEventListenerImpl(logixNGEditor));
     }
-    
+
     // ------------ Methods for Edit ConditionalNG Pane ------------
 
     /**
@@ -765,10 +764,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public static final int BUTTON_DELETE_COLUMN = BUTTON_DEBUG_COLUMN + 1;
         public static final int BUTTON_EDIT_THREADS_COLUMN = BUTTON_DELETE_COLUMN + 1;
         public static final int NUM_COLUMNS = BUTTON_EDIT_THREADS_COLUMN + 1;
-        
+
         private boolean _showStartupThreads;
-        
-        
+
+
         public ConditionalNGTableModel() {
             super();
             updateConditionalNGListeners();
@@ -798,7 +797,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _showStartupThreads = showStartupThreads;
             fireTableRowsUpdated(0, _curLogixNG.getNumConditionalNGs()-1);
         }
-        
+
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {  // NOI18N
@@ -976,7 +975,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 javax.swing.SwingUtilities.invokeLater(t);
             }
         }
-        
+
         private void buttomDebugClicked(int row, int col) {
             if (_inReorderMode) {
                 swapConditionalNG(row);
@@ -999,12 +998,12 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 javax.swing.SwingUtilities.invokeLater(t);
             }
         }
-        
+
         private void deleteConditionalNG(int row) {
             DeleteBeanWorker worker = new DeleteBeanWorker(_curLogixNG.getConditionalNG(row), row);
             worker.execute();
         }
-        
+
         private void changeUserName(Object value, int row) {
             String uName = (String) value;
             ConditionalNG cn = _curLogixNG.getConditionalNGByUserName(uName);
@@ -1040,7 +1039,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 }
             }
         }
-        
+
         @Override
         public void setValueAt(Object value, int row, int col) {
             if ((row > _numConditionalNGs) || (_curLogixNG == null)) {
@@ -1071,7 +1070,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             }
         }
     }
-    
+
     /**
      * Send a duplicate Conditional user name message for Edit Logix pane.
      *
@@ -1083,12 +1082,12 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
     }
-    
+
     protected String getClassName() {
         return LogixNGEditor.class.getName();
     }
-    
-    
+
+
     // ------------ LogixNG Notifications ------------
     // The ConditionalNG views support some direct changes to the parent logix.
     // This custom event is used to notify the parent LogixNG that changes are requested.
@@ -1105,18 +1104,18 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         void logixNGEventOccurred();
     }
-    
+
     /**
      * Maintain a list of listeners -- normally only one.
      */
     List<EditorEventListener> listenerList = new ArrayList<>();
-    
+
     /**
      * This contains a list of commands to be processed by the listener
      * recipient.
      */
     private HashMap<String, String> logixNG_Data = new HashMap<>();
-    
+
     /**
      * Add a listener.
      *
@@ -1126,7 +1125,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     public void addEditorEventListener(EditorEventListener listener) {
         listenerList.add(listener);
     }
-    
+
     /**
      * Remove a listener -- not used.
      *
@@ -1136,7 +1135,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     public void removeEditorEventListener(EditorEventListener listener) {
         listenerList.remove(listener);
     }
-    
+
     /**
      * Notify the listeners to check for new data.
      */
@@ -1145,16 +1144,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             l.editorEventOccurred(logixNG_Data);
         }
     }
-    
-    
+
+
     private class LogixNGEventListenerImpl implements ConditionalNGEditor.ConditionalNGEventListener {
 
         private final LogixNGEditor _logixNGEditor;
-        
+
         public LogixNGEventListenerImpl(LogixNGEditor logixNGEditor) {
             this._logixNGEditor = logixNGEditor;
         }
-        
+
         @Override
         public void conditionalNGEventOccurred() {
             String lgxName = _curLogixNG.getSystemName();
@@ -1177,17 +1176,17 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             });
         }
     }
-    
-    
+
+
     private class LogixNG_DebuggerEventListenerImpl
             implements ConditionalNGDebugger.ConditionalNGEventListener {
 
         private final LogixNGEditor _logixNGEditor;
-        
+
         public LogixNG_DebuggerEventListenerImpl(LogixNGEditor logixNGEditor) {
             this._logixNGEditor = logixNGEditor;
         }
-        
+
         @Override
         public void conditionalNGEventOccurred() {
             String lgxName = _curLogixNG.getSystemName();
@@ -1210,30 +1209,30 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             });
         }
     }
-    
-    
+
+
     // This class is copied from BeanTableDataModel
     private class DeleteBeanWorker extends SwingWorker<Void, Void> {
-        
+
         private final ConditionalNG _conditionalNG;
         private final int _row;
         MaleSocket _maleSocket;
         boolean _hasDeleted = false;
-        
+
         public DeleteBeanWorker(ConditionalNG conditionalNG, int row) {
             _conditionalNG = conditionalNG;
             _row = row;
             _maleSocket = _conditionalNG.getFemaleSocket().getConnectedSocket();
         }
-        
+
         public int getDisplayDeleteMsg() {
             return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse");
         }
-        
+
         public void setDisplayDeleteMsg(int boo) {
             InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse", boo);
         }
-        
+
         private void findAllChilds(FemaleSocket femaleSocket, List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
             if (!femaleSocket.isConnected()) return;
             MaleSocket maleSocket = femaleSocket.getConnectedSocket();
@@ -1242,13 +1241,13 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 findAllChilds(maleSocket.getChild(i), sockets);
             }
         }
-        
+
         public void doDelete(List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
             try {
                 for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
                     FemaleSocket femaleSocket = entry.getKey();
                     femaleSocket.disconnect();
-                    
+
                     MaleSocket maleSocket = entry.getValue();
                     maleSocket.getManager().deleteBean(maleSocket, "DoDelete");
                 }
@@ -1263,18 +1262,18 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 log.error(e.getMessage());
             }
         }
-        
+
         /**
          * {@inheritDoc}
          */
         @Override
         public Void doInBackground() {
             _conditionalNG.getFemaleSocket().unregisterListeners();
-            
+
             List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
-            
+
             findAllChilds(_conditionalNG.getFemaleSocket(), sockets);
-            
+
             StringBuilder message = new StringBuilder();
             try {
                 InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "CanDelete");  // NOI18N
@@ -1304,18 +1303,18 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
-                    
+
                     String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
                     JLabel question = new JLabel(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt, ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
-                    
+
                     ArrayList<String> listenerRefs = new ArrayList<>();
-                    
+
                     for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
                         listenerRefs.addAll(entry.getValue().getListenerRefs());
                     }
-                    
+
                     if (listenerRefs.size() > 0) {
                         ArrayList<String> listeners = new ArrayList<>();
                         for (int i = 0; i < listenerRefs.size(); i++) {
@@ -1323,7 +1322,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                                 listeners.add(listenerRefs.get(i));
                             }
                         }
-                        
+
                         message.append("<br>");
                         message.append(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ReminderInUse", count));
                         message.append("<ul>");
@@ -1333,7 +1332,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                             message.append("</li>");
                         }
                         message.append("</ul>");
-                        
+
                         JEditorPane pane = new JEditorPane();
                         pane.setContentType("text/html");
                         pane.setText("<html>" + message.toString() + "</html>");
@@ -1349,11 +1348,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                 }
-                
+
                 final JCheckBox remember = new JCheckBox(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("MessageRememberSetting"));
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-                
+
                 JButton yesButton = new JButton(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ButtonYes"));
                 JButton noButton = new JButton(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
@@ -1361,13 +1360,13 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 button.add(yesButton);
                 button.add(noButton);
                 container.add(button);
-                
+
                 noButton.addActionListener((ActionEvent e) -> {
                     //there is no point in remembering this the user will never be
                     //able to delete a bean!
                     dialog.dispose();
                 });
-                
+
                 yesButton.addActionListener((ActionEvent e) -> {
                     if (remember.isSelected()) {
                         setDisplayDeleteMsg(0x02);
@@ -1387,7 +1386,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             if (!_hasDeleted && _conditionalNG.getFemaleSocket().isActive()) _conditionalNG.getFemaleSocket().registerListeners();
             return null;
         }
-        
+
         /**
          * {@inheritDoc} Minimal implementation to catch and log errors
          */
@@ -1400,8 +1399,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             }
         }
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGEditor.class);
 
 }

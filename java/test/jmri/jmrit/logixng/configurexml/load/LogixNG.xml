@@ -77,7 +77,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="10:19 AM">
+    <memory value="3:02 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -118,8 +118,20 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
+    <oblock systemName="OB98" length="0.0" units="false" curve="0" permissive="false" speedNotch="" />
     <oblock systemName="OB99" length="0.0" units="false" curve="0" permissive="false" speedNotch="" />
   </oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <warrant systemName="IW99" userName="Test Warrant" wtype="normal">
+      <blockOrder pathName="" entryName="" exitName="">
+        <block systemName="OB98" />
+      </blockOrder>
+      <blockOrder pathName="" entryName="" exitName="">
+        <block systemName="OB99" />
+      </blockOrder>
+      <train trainId="" runBlind="false" shareRoute="false" noRamp="false" trainName="" />
+    </warrant>
+  </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -135,7 +147,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 10 10:19:37 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu May 13 15:02:20 CDT 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -167,12 +179,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <LogixNG enabled="no">
       <systemName>IQ:AUTO:0003</systemName>
       <userName>A logixNG in the initialization table</userName>
-      <ConditionalNGs />
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0005</systemName>
+      </ConditionalNGs>
     </LogixNG>
     <LogixNG enabled="no">
       <systemName>IQ:AUTO:0004</systemName>
       <userName>Another logixNG in the initialization table</userName>
-      <ConditionalNGs />
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0006</systemName>
+      </ConditionalNGs>
     </LogixNG>
     <LogixNG enabled="no">
       <systemName>IQ:AUTO:0005</systemName>
@@ -5808,6 +5824,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0087</systemName>
       <comment>A comment</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
@@ -5868,6 +5885,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0088</systemName>
       <comment>A comment</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>LocalVariable</addressing>
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
@@ -5928,6 +5946,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0089</systemName>
       <comment>A comment</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Formula</addressing>
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
@@ -5988,6 +6007,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0090</systemName>
       <comment>A comment</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Reference</addressing>
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
@@ -12840,6 +12860,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0090</systemName>
       <comment>Direct / Direct / Direct :: SetTrainName</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -12905,6 +12926,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0091</systemName>
       <comment>Direct / Direct / Direct :: ControlAutoTrain - Resume</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -12970,6 +12992,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0092</systemName>
       <comment>Direct / Direct :: AllocateWarrantRoute</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -13035,6 +13058,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0093</systemName>
       <comment>Direct / LocalVariable</comment>
+      <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -18279,9 +18303,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon May 10 10:19:41 CEST 2021</date>
+      <date>Thu May 13 15:02:22 CDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.23.5ish+daniel+2021-05-10T08:14:10Z+RUNKNOWN on Mon May 10 10:19:41 CEST 2021-->
+  <!--Written by JMRI version 4.23.5ish+das+20210513T1958Z+R40a1df59ba on Thu May 13 15:02:22 CDT 2021-->
 </layout-config>
