@@ -264,11 +264,6 @@
                 <li></li>
             </ul>
 
-        <h4>PIKO</h4>
-            <ul>
-                <li>Added support for Piko SmartDecoder 4.1 Next 18 Series used in N and TT scale engines.</li>
-            </ul>
-
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -364,14 +359,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Create Train. Fix sort order in Transit Combo.</li>
-             <li>Create Train. Fix starting train outside of Transit..</li>
-             <li>Create Train. Use Roster selection combo.</li>
-             <li>Create Train. Allow user to select by roster, by train, or enter a dcc address without changing Dispatcher defaults. Allow override of DCC address for trains from Operations.</li>
-             <li>When allocating by Safe Sections corect a problem selecting Primary or Alternate Section.</li>
-             <li>Correct issue when running under No Signals that caused a train not to relize the next section was now available.</li>
-             <li>When stopping in a multi-block section, pull train as far into section as possible.</li>
-             <li>Do not mix stopping by speed profile and stopping by stopping sensor which was causing trains to run into the next section</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -401,12 +389,6 @@
         <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
-        </ul>
-
-    <h3>LogixNG</h3>
-        <a id="LogixNG" name="LogixNG"></a>
-        <ul>
-          <li>Implement Clock Action and Expression</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -458,7 +440,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling in JMRI native throttle window</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -528,10 +510,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>When "Large speed slider" mode is enabled (in throttle preferences), directions, stop and estop buttons will automatically resize and scale depending on the control panel inner window size : allows for high visibility from far away (for people using a wireless device combined with JMRI native throttles for instance)</li>
-            <li>Function buttons icons, SVG file format now supported, allows for smooth scaling</li>
-            <li>Throttle control panel button icons are now based on SVG files, allows better scaling</li>
-            <li>Throttle preferences are now be applied live, no need to reload the throttle windows or restart the application</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -579,15 +558,12 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Audio buffers and sources now are removed when a VSDecoder is deleted.</li>
-            <li>Deprecated methods in VSDecoderManager: getVSDecoder(String profile_name, String path),
-            getNumberOfDecoders, setDefaultVSDecoder, getDefaultVSDecoder.
-            And in VSDecoder: setDefault, isDefault.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Luca Dentella contributed the new <a href="http://jmri.org/jython/CmdMapper.py">CmdMapper script</a>.</li>
+            <li></li>
         </ul>
 
