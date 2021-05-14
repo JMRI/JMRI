@@ -200,7 +200,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * command station switches
      */
     private final int SLOTS_DCS240 = 433;
-    private int numSlots = SLOTS_DCS240;         // This is the largest number so far it will reset after the commandstation is known value.
+    private int numSlots = SLOTS_DCS240;         // This is the largest number so far.
     /**
      * The network protocol.
      */
@@ -1784,22 +1784,24 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     class ReadAllSlots_Helper implements Runnable {
 
         ReadAllSlots_Helper(List<SlotMapEntry> inputSlotMap, int interval) {
-            this.slotMap = inputSlotMap;
+//            this.slotMap = inputSlotMap;
             this.interval = interval;
         }
 
-        private List<SlotMapEntry> slotMap;
+//        private List<SlotMapEntry> slotMap;
         private int interval;
 
         @Override
         public void run() {
             boolean abort = false;
-            for (SlotMapEntry item : slotMap) {
-                if (abort) {
-                    break;
-                }
-                for (int slot = item.getFrom(); slot < (item.getTo() + 1) && !abort; slot++) {
-                    if (item.getSlotType() != SlotType.UNKNOWN) {
+//            for (SlotMapEntry item : slotMap) {
+//                if (abort) {
+//                    break;
+//                }
+//                for (int slot = item.getFrom(); slot < (item.getTo() + 1) && !abort; slot++) {
+            // read all slots that are not of unknown type
+                for (int slot = 0; slot < getNumSlots() && !abort; slot++) {
+                    if (_slots[slot].getSlotType() != SlotType.UNKNOWN) {
                         sendReadSlot(slot);
                         try {
                             Thread.sleep(this.interval);
@@ -1810,7 +1812,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                         }
                     }
                 }
-            }
+//            }
         }
     }
 

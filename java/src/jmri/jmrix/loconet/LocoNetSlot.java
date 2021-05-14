@@ -842,6 +842,10 @@ public class LocoNetSlot {
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
+        if (slotType != SlotType.LOCO && slotType != SlotType.SYSTEM) {
+            slotType =  SlotType.LOCO;
+            log.warn("Slot [{}] not in map but reports loco, check command station type",slot);
+        }
         switch (l.getOpCode()) {
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
                 if (l.getElement(3) != expandedThrottleControllingID) {
