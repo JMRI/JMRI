@@ -62,13 +62,14 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
             throws IllegalArgumentException;
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
+     * Locate via user name using the LogixNG, then system name if needed. Does not create a new
      * one if nothing found
      *
+     * @param logixNG The LogixNG for the user name match.  If null, only do a system name match.
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public ConditionalNG getConditionalNG(String name);
+    public ConditionalNG getConditionalNG(LogixNG logixNG, String name);
 
     /**
      * Find the LogixNG which has the ConditionalNG system name in its ConditionalNG_Entry list.

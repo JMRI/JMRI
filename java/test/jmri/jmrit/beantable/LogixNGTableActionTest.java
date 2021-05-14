@@ -367,7 +367,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
-        ConditionalNG conditionalNG = jmri.InstanceManager.getDefault(ConditionalNG_Manager.class).getConditionalNG("ConditionalNG 105");  // NOI18N
+        ConditionalNG conditionalNG = jmri.InstanceManager.getDefault(ConditionalNG_Manager.class).getConditionalNG(logixNG, "ConditionalNG 105");  // NOI18N
         Assert.assertNotNull("Verify IQC105 Added", conditionalNG);  // NOI18N
 
 
