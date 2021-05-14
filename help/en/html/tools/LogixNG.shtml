@@ -31,6 +31,9 @@
     <div id="mainContent">
       <h1>JMRI: LogixNG Documentation</h1>
 
+      <p class="noted">LogixNG, along with its documentation, is still evolving.
+      Some of the text is based on the original Logix documents.</p>
+
 	  <p>JMRI has for a long time had the tool Logix which can be
 	  used to setup rules, for example that a signal should go to
 	  green if some turnouts are in a predefined state. Logix does
@@ -85,7 +88,7 @@
 
       <p>LogixNG is similar to Logix&trade;, but is a new design
 	  to make the code easier to manage and extend.</p>
--->	  
+-->
 
 
 	  <a name="contents" id="contents"></a>
@@ -317,7 +320,7 @@
 	  find out that it has the value IT3, and therefore use IT3. This is also true for
 	  tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has the
 	  value 'IT5', the cell IQT1[5,3] will point to IT5.</p>
-	  
+
 	  <p>A table can be used to create a lookup table. It's accessed by either its
 	  system name or its user name, followed by a left square bracket, the name of the
 	  column, a comma, the name of the row, and a right square bracket.</p>
@@ -393,8 +396,8 @@
 	  comma is removed.</p> -->
 
 
-	  
-	  
+
+
 	  <a name="logixng" id="logixng"></a>
 
       <h2>What are LogixNG?</h2>
@@ -436,12 +439,12 @@
           </li>
           <li>
           The second section lets you select a user name selection
-          method.  See the 
+          method.  See the
           <a href="../../package/jmri/jmrit/beantable/LogixNGTable.shtml#logixOptions">
           LogixNG Options</a> menu for details.
           </li>
           <li>
-          The third section lets you select a ConditionalNG Editor.  See the 
+          The third section lets you select a ConditionalNG Editor.  See the
           <a href="../../package/jmri/jmrit/beantable/LogixNGTable.shtml#logixOptions">
           LogixNG Options</a> menu for details.
           </li>
@@ -568,7 +571,7 @@
       alt="ConditionalNG Browser Window" height="296" width="562">
       </a>
       </div>
-      
+
       <p>Selecting the <strong>Copy</strong> item from the drop down
       <strong>select</strong> menu on the LogixNG Table will show a series of
       dialog windows that provide a way to copy the LogixNG and any
@@ -615,7 +618,7 @@
       Variables</a></p>
 
       <p>Logic operators currently available are NOT, AND, AND
-      NOT, OR and OR NOT. The AND operator is set up automatically 
+      NOT, OR and OR NOT. The AND operator is set up automatically
       by the program.
       For each expression, the user selects whether the NOT
       operator is to precede the expression. If the NOT
@@ -868,8 +871,8 @@
       provides an easy way to delete an unneeded ConditionalNG. Click
       <strong>Delete ConditionalNG</strong> to delete the ConditionalNG being
       edited and return to the Edit LogixNG window.</p>
-	  
-	  
+
+
 
 	  <a name="start" id="start"></a>
 
@@ -966,8 +969,8 @@
         tables from the Tools menu), or select <b>Store Panel...</b>
         in the <b>Panel</b> menu. Note that the enabled/disabled
         state of each LogixNG is saved in the configuration file.</p>
-	  
-	  
+
+
 
 	  <a name="enable" id="enable"></a>
 
