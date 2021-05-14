@@ -55,7 +55,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     
     static protected final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9};
     
-    CbusSlotMonitorDataModel(CanSystemConnectionMemo memo, int row, int column) {
+    public CbusSlotMonitorDataModel(CanSystemConnectionMemo memo) {
         
         _mainArray = new ArrayList<>();
 
@@ -854,15 +854,13 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      * disconnect from the CBUS
      */
     public void dispose() {
-        // eventTable.removeAllElements();
-        // eventTable = null;
+        tc.removeCanListener(this);
         
         // stop timers if running
         clearEStopTask();
         clearPowerTask();
         
         tablefeedback.dispose();
-        tc.removeCanListener(this);
 
     }
     private final static Logger log = LoggerFactory.getLogger(CbusSlotMonitorDataModel.class);
