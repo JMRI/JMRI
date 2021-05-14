@@ -1291,7 +1291,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 }
                 message.append(e.getMessage());
             }
-            int count = _maleSocket.getListenerRefs().size();
+            int count = _maleSocket == null ? 0 : _maleSocket.getListenerRefs().size();
             log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
                 doDelete(sockets);
@@ -1341,9 +1341,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         container.add(jScrollPane);
                     }
                 } else {
-                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                    String msg = MessageFormat.format(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt),
-                            new Object[]{_maleSocket.getSystemName()});
+                    String prompt;
+                    String msg;
+                    if (_maleSocket == null) {
+                        prompt = "DeletePrompt";
+                        msg = jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt, _conditionalNG.getDisplayName());
+                    } else {
+                        prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                        msg = MessageFormat.format(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt),
+                                new Object[]{_maleSocket.getSystemName()});
+                    }
                     JLabel question = new JLabel(msg);
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
