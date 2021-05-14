@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  * Test DefaultLogixNG
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultLogixNGManagerTest {
@@ -22,20 +22,20 @@ public class DefaultLogixNGManagerTest {
     @Test
     public void testManager() {
         LogixNG_Manager manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        
+
         Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
         Assert.assertEquals("getBeanTypeHandled() is correct", Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled());
         Assert.assertEquals("getSystemPrefix() is correct", "I", manager.getSystemPrefix());
         Assert.assertEquals("typeLetter() is correct", 'Q', manager.typeLetter());
-        
+
         Assert.assertEquals("bean type is correct", Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled(false));
         Assert.assertEquals("bean type is correct", Bundle.getMessage("BeanNameLogixNGs"), manager.getBeanTypeHandled(true));
     }
-    
+
     @Test
     public void testValidSystemNameFormat() {
         LogixNG_Manager manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        
+
         Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat(""));
         Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ"));
         Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ1"));
@@ -52,11 +52,11 @@ public class DefaultLogixNGManagerTest {
         Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQX1"));
         Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQX1X"));
     }
-    
+
     @Test
     public void testCreateNewLogixNG() {
         LogixNG_Manager manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        
+
         // Correct system name
         LogixNG logixNG = manager.createLogixNG("IQ1", "Some name");
         Assert.assertNotNull("exists", logixNG);
@@ -70,19 +70,19 @@ public class DefaultLogixNGManagerTest {
         Assert.assertEquals("logixNGs are the same", logixNG, logixNG_2);
         logixNG_2 = manager.getLogixNG("Some other name");
         Assert.assertNull("logixNG not found", logixNG_2);
-        
+
         // Correct system name. Neither system name or user name exists already
         logixNG = manager.createLogixNG("IQ2", "Other LogixNG");
         Assert.assertNotNull("exists", logixNG);
-        
+
         // System name exists
         logixNG = manager.createLogixNG("IQ1", "Another name");
         Assert.assertNull("cannot create new", logixNG);
-        
+
         // User name exists
         logixNG = manager.createLogixNG("IQ3", "Other LogixNG");
         Assert.assertNull("cannot create new", logixNG);
-        
+
         // Bad system name
         boolean thrown = false;
         try {
@@ -91,19 +91,19 @@ public class DefaultLogixNGManagerTest {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
-        
+
+
         // Create LogixNG with user name
         logixNG = manager.createLogixNG("Only user name");
         Assert.assertNotNull("exists", logixNG);
         Assert.assertEquals("user name is correct", "Only user name", logixNG.getUserName());
     }
-    
+
     public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
         try {
             DigitalActionManager digitalActionManager =
                     InstanceManager.getDefault(DigitalActionManager.class);
-            
+
             FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
             MaleDigitalActionSocket actionManySocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
@@ -121,20 +121,19 @@ public class DefaultLogixNGManagerTest {
             throw new RuntimeException(e);
         }
     }
-    
+
     @Test
     public void testSetupInitialConditionalNGTree() {
         // Correct system name
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .createLogixNG("IQ1", "Some name");
         Assert.assertNotNull("exists", logixNG);
-        
+
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
         Assert.assertNotNull("exists", conditionalNG);
-        logixNG.addConditionalNG(conditionalNG);
         setupInitialConditionalNGTree(conditionalNG);
-        
+
         FemaleSocket child = conditionalNG.getChild(0);
         Assert.assertEquals("action is of correct class",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
@@ -154,7 +153,7 @@ public class DefaultLogixNGManagerTest {
                 "If Then Else. Execute on change",
                 maleSocket2.getLongDescription());
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -172,5 +171,5 @@ public class DefaultLogixNGManagerTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

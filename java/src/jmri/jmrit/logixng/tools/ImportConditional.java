@@ -57,23 +57,16 @@ public class ImportConditional {
             while ((conditionalNG == null) && counter < 100) {
                 String name = counter > 0 ? " - " + Integer.toString(counter) : "";
                 conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
-                        .createConditionalNG(userName + name);
+                        .createConditionalNG(logixNG, sysName, userName + name);
                 counter++;
             }
 
             if (conditionalNG == null) throw new RuntimeException("Cannot create new ConditionalNG with name: \"" + userName + "\"");
 
             _conditionalNG = conditionalNG;
-
-//            _conditionalNG = InstanceManager.getDefault(
-//                    jmri.jmrit.logixng.ConditionalNG_Manager.class)
-//                    .createConditionalNG(sysName, userName);
         } else {
             _conditionalNG = null;
         }
-
-//        log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
-//        log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());
     }
 
     public ConditionalNG getConditionalNG() {

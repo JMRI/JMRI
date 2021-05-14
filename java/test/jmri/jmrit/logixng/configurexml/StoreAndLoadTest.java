@@ -10,7 +10,9 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
@@ -86,7 +88,15 @@ public class StoreAndLoadTest {
                 .provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
 
         InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class)
+                .register(new OBlock("OB98"));
+        InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class)
                 .register(new OBlock("OB99"));
+
+        InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class)
+                .register(new Warrant("IW99", "Test Warrant"));
+        Warrant warrant = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).getWarrant("IW99");
+        warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB98")));
+        warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB99")));
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -132,8 +142,7 @@ public class StoreAndLoadTest {
         // Create a LogixNG with an empty ConditionalNG
         LogixNG logixNG = logixNG_Manager.createLogixNG("A logixNG with an empty conditionlNG");
         ConditionalNG conditionalNG =
-                conditionalNGManager.createConditionalNG("An empty conditionalNG");
-        logixNG.addConditionalNG(conditionalNG);
+                conditionalNGManager.createConditionalNG(logixNG, "An empty conditionalNG");
         logixNG.setEnabled(false);
         conditionalNG.setEnabled(false);
 
@@ -141,41 +150,37 @@ public class StoreAndLoadTest {
         // Create an empty ConditionalNG on the debug thread
         conditionalNG =
                 conditionalNGManager.createConditionalNG(
-                        "A second empty conditionalNG", LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
-        logixNG.addConditionalNG(conditionalNG);
+                        logixNG, "A second empty conditionalNG", LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
         conditionalNG.setEnabled(false);
 
 
         // Create an empty ConditionalNG on another thread
         LogixNG_Thread.createNewThread(53, "My logixng thread");
         conditionalNG =
-                conditionalNGManager.createConditionalNG("A third empty conditionalNG", 53);
-        logixNG.addConditionalNG(conditionalNG);
+                conditionalNGManager.createConditionalNG(logixNG, "A third empty conditionalNG", 53);
         conditionalNG.setEnabled(false);
 
 
         // Create an empty ConditionalNG on another thread
         LogixNG_Thread.createNewThread("My other logixng thread");
         conditionalNG = conditionalNGManager.createConditionalNG(
-                "A fourth empty conditionalNG", LogixNG_Thread.getThreadID("My other logixng thread"));
-        logixNG.addConditionalNG(conditionalNG);
+                logixNG, "A fourth empty conditionalNG", LogixNG_Thread.getThreadID("My other logixng thread"));
         conditionalNG.setEnabled(false);
 
 
         logixNG = logixNG_Manager.createLogixNG("A logixNG in the initialization table");
-        conditionalNGManager.createConditionalNG("Yet another another conditionalNG");
+        conditionalNGManager.createConditionalNG(logixNG, "Yet another another conditionalNG");
         logixNG_InitializationManager.add(logixNG);
 
 
         logixNG = logixNG_Manager.createLogixNG("Another logixNG in the initialization table");
-        conditionalNGManager.createConditionalNG("Yet another another another conditionalNG");
+        conditionalNGManager.createConditionalNG(logixNG, "Yet another another another conditionalNG");
         logixNG_InitializationManager.add(logixNG);
 
 
         logixNG = logixNG_Manager.createLogixNG("A logixNG");
         conditionalNG =
-                conditionalNGManager.createConditionalNG("Yet another conditionalNG");
-        logixNG.addConditionalNG(conditionalNG);
+                conditionalNGManager.createConditionalNG(logixNG, "Yet another conditionalNG");
         logixNG.setEnabled(false);
         conditionalNG.setEnabled(true);
 
@@ -1166,7 +1171,7 @@ public class StoreAndLoadTest {
         actionWarrant.setComment("Direct / Direct / Direct :: SetTrainName");
 
         actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("warrant");
+        actionWarrant.setWarrant("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.SetTrainName);
@@ -1183,7 +1188,7 @@ public class StoreAndLoadTest {
         actionWarrant.setComment("Direct / Direct / Direct :: ControlAutoTrain - Resume");
 
         actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("warrant");
+        actionWarrant.setWarrant("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.ControlAutoTrain);
@@ -1200,7 +1205,7 @@ public class StoreAndLoadTest {
         actionWarrant.setComment("Direct / Direct :: AllocateWarrantRoute");
 
         actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("warrant");
+        actionWarrant.setWarrant("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.AllocateWarrantRoute);
@@ -1214,7 +1219,7 @@ public class StoreAndLoadTest {
         actionWarrant.setComment("Direct / LocalVariable");
 
         actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("warrant");
+        actionWarrant.setWarrant("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionWarrant.setOperationLocalVariable("index2");
@@ -2645,7 +2650,7 @@ public class StoreAndLoadTest {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setWarrant("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteAllocated);
         expressionWarrant.setAddressing(NamedBeanAddressing.Direct);
         expressionWarrant.setFormula("\"IT\"+index");
@@ -2661,7 +2666,7 @@ public class StoreAndLoadTest {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setWarrant("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteFree);
         expressionWarrant.setAddressing(NamedBeanAddressing.LocalVariable);
         expressionWarrant.setFormula("\"IT\"+index");
@@ -2677,7 +2682,7 @@ public class StoreAndLoadTest {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setWarrant("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteOccupied);
         expressionWarrant.setAddressing(NamedBeanAddressing.Formula);
         expressionWarrant.setFormula("\"IT\"+index");
@@ -2693,7 +2698,7 @@ public class StoreAndLoadTest {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setWarrant("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteSet);
         expressionWarrant.setAddressing(NamedBeanAddressing.Reference);
         expressionWarrant.setFormula("\"IT\"+index");
@@ -2991,7 +2996,6 @@ public class StoreAndLoadTest {
 
         // Check that we have actions/expressions in every managers
         Assert.assertNotEquals(0, logixNG_Manager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, conditionalNGManager.getNamedBeanSet().size());
         Assert.assertNotEquals(0, analogActionManager.getNamedBeanSet().size());
         Assert.assertNotEquals(0, analogExpressionManager.getNamedBeanSet().size());
         Assert.assertNotEquals(0, digitalActionManager.getNamedBeanSet().size());
@@ -3154,7 +3158,6 @@ public class StoreAndLoadTest {
             }
 
             Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
-            Assert.assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
             Assert.assertEquals(0, analogActionManager.getNamedBeanSet().size());
             Assert.assertEquals(0, analogExpressionManager.getNamedBeanSet().size());
             Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
@@ -3216,10 +3219,6 @@ public class StoreAndLoadTest {
 //        }
 
 
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
     }
