@@ -402,6 +402,22 @@
   <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
 
  </indexitem>
+ <indexitem text="LogixNG " target="html.tools.logixng.LogixNG">
+  <indexitem text="LogixNG Table " target="html.tools.logixng.LogixNGTable"/>
+
+  <indexitem text="LogixNG Table Editor " target="html.tools.logixng.LogixNGTableEditor"/>
+
+  <indexitem text="ConditionalNG Editor " target="html.tools.logixng.ConditionalNGEditor"/>
+
+  <indexitem text="LogixNG Module Table " target="html.tools.logixng.LogixNGModuleTable"/>
+
+  <indexitem text="LogixNG Tables Table " target="html.tools.logixng.LogixNGTableTable"/>
+
+  <indexitem text="LogixNG Tables Table Editor " target="html.tools.logixng.LogixNGTableTableEditor"/>
+
+  <indexitem text="LogixNG Initialization Table " target="html.tools.logixng.LogixNGInitializationTable"/>
+
+ </indexitem>
  <indexitem text="LRoute " target="html.tools.LRoutes">
   <indexitem text="Add/Edit LRoute " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 

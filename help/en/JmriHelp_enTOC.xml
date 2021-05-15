@@ -423,6 +423,22 @@
    <tocitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   </tocitem>
+  <tocitem text="LogixNG " target="html.tools.logixng.LogixNG">
+   <tocitem text="LogixNG Table " target="html.tools.logixng.LogixNGTable"/>
+
+   <tocitem text="LogixNG Table Editor " target="html.tools.logixng.LogixNGTableEditor"/>
+
+   <tocitem text="ConditionalNG Editor " target="html.tools.logixng.ConditionalNGEditor"/>
+
+   <tocitem text="LogixNG Module Table " target="html.tools.logixng.LogixNGModuleTable"/>
+
+   <tocitem text="LogixNG Tables Table " target="html.tools.logixng.LogixNGTableTable"/>
+
+   <tocitem text="LogixNG Tables Table Editor " target="html.tools.logixng.LogixNGTableTableEditor"/>
+
+   <tocitem text="LogixNG Initialization Table " target="html.tools.logixng.LogixNGInitializationTable"/>
+
+  </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">
    <tocitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
