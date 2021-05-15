@@ -73,7 +73,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             } else {
                 e.setAttribute("port", Bundle.getMessage("noneSelected"));
             }
-
         }
 
         setOutputInterval(adapter, e);

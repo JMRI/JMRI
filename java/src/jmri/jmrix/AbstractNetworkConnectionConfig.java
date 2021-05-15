@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -79,7 +78,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
-
         portField.addActionListener(e -> {
             try {
                 adapter.setPort(Integer.parseInt(portField.getText()));

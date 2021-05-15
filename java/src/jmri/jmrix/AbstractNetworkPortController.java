@@ -25,11 +25,17 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     protected Socket socketConn = null;
     protected int connTimeout = 0; // connection timeout for read operations.
     // Default is 0, an infinite timeout.
-    // the MQTT Credentials.
 
     protected AbstractNetworkPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         setHostName(""); // give the host name a default value of the empty string.
+    }
+
+    @Override
+    public void connect(String host, int port) throws IOException {
+        setHostName(host);
+        setPort(port);
+        connect();
     }
 
     @Override

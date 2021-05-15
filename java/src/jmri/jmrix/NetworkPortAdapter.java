@@ -11,6 +11,14 @@ package jmri.jmrix;
 public interface NetworkPortAdapter extends PortAdapter {
 
     /**
+     * Connects to the end device using a hostname/ip address and port
+     * @param host hostname / ip address.
+     * @param port network port.
+     * @throws java.io.IOException on connection error.
+     */
+    public void connect(String host, int port) throws java.io.IOException;
+
+    /**
      * Configure all of the other jmrix widgets needed to work with this adapter
      */
     @Override
