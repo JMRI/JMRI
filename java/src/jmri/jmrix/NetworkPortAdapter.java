@@ -11,16 +11,6 @@ package jmri.jmrix;
 public interface NetworkPortAdapter extends PortAdapter {
 
     /**
-     * Connects to the end device using a hostname/ip address and port
-     * @param host hostname / ip address.
-     * @param port network port.
-     * @param mqttuser mqtt username
-     * @param mqttpass mqtt password
-     * @throws java.io.IOException on connection error.
-     */
-    public void connect(String host, int port, String mqttuser, String mqttpass) throws java.io.IOException;
-
-    /**
      * Configure all of the other jmrix widgets needed to work with this adapter
      */
     @Override
@@ -51,14 +41,6 @@ public interface NetworkPortAdapter extends PortAdapter {
     public void setHostName(String hostname);
 
     public String getHostName();
-
-    public void setMqttUsername(String mqttusername);
-
-    public String getMqttUsername();
-
-    public void setMqttPassword(String mqttpassword);
-
-    public String getMqttPassword();
 
     /*
      * Set whether or not this adapter should be

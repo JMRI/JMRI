@@ -74,20 +74,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
                 e.setAttribute("port", Bundle.getMessage("noneSelected"));
             }
 
-            // require a value for the mqtt username
-            if (adapter.getMqttUsername() != null) {
-                e.setAttribute("mqttusername", adapter.getMqttUsername());
-            } else {
-                e.setAttribute("mqttusername", Bundle.getMessage("noneSelected"));
-            }
-
-            // require a value for the mqtt password
-            if (adapter.getMqttPassword() != null) {
-                e.setAttribute("mqttpassword", adapter.getMqttPassword());
-            } else {
-                e.setAttribute("mqttpassword", Bundle.getMessage("noneSelected"));
-            }
-
         }
 
         setOutputInterval(adapter, e);
@@ -168,22 +154,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
                 log.warn("Could not parse port attribute: {}", shared.getAttribute("port"));
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
-
-            // configure mqtt username
-            String mqttUser = null;
-            try {
-                mqttUser = shared.getAttribute("mqttusername").getValue();
-            } catch (NullPointerException ex) {  // considered normal if the attributes are not present
-            }
-            adapter.setMqttUsername(mqttUser);
-
-            // configure mqtt password
-            String mqttPass = null;
-            try {
-                mqttPass = shared.getAttribute("mqttpassword").getValue();
-            } catch (NullPointerException ex) {  // considered normal if the attributes are not present
-            }
-            adapter.setMqttPassword(mqttPass);
         }
 
         loadCommon(shared, perNode, adapter);

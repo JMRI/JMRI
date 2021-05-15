@@ -29,7 +29,13 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
-    
+
+    // 0.1 to get it to the front of the list
+    private final static String MQTT_USERNAME_OPTION = "0.1";
+
+    // 0.2 to get it to the front of the list
+    private final static String MQTT_PASSWORD_OPTION = "0.2";
+
     public boolean retained = true;  // public for script access
     public int      qosflag = 2;     // public for script access
     
@@ -50,8 +56,15 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public MqttAdapter() {
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
-        option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
         
+        options.put(MQTT_USERNAME_OPTION, new Option(Bundle.getMessage("MQTT_Username"),
+                new String[]{""},  Option.Type.TEXT));
+        
+        options.put(MQTT_PASSWORD_OPTION, new Option(Bundle.getMessage("MQTT_Password"),
+                new String[]{""},  Option.Type.TEXT));
+//                new String[]{Bundle.getMessage("MQTT_Password")},  Option.Type.PASSWORD));
+        
+        option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
         options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"), 
                                             new String[]{baseTopic}, Option.Type.TEXT));
                                             
@@ -82,8 +95,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         // Setup the MQTT Connection Options
         MqttConnectOptions mqttConnOpts = new MqttConnectOptions();
         mqttConnOpts.setCleanSession(true);
-        mqttConnOpts.setUserName(getMqttUsername());
-        mqttConnOpts.setPassword(getMqttPassword().toCharArray());
+        mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));
+        mqttConnOpts.setPassword(getOptionState(MQTT_PASSWORD_OPTION).toCharArray());
 
         return mqttConnOpts;
     }
@@ -130,7 +143,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                                         clientID,
                                         new MqttDefaultFilePersistence(tempdirName));
 
-            if ( getMqttUsername() != null || ! "".equals(getMqttUsername())) {
+            if ( getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
                 mqttClient.connect(getMqttConnectionOptions());
             } else {
                 mqttClient.connect();
@@ -233,7 +247,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         if (this.allowConnectionRecovery) {
             log.info("...trying to reconnect");
             try {
-                if ( getMqttUsername() != null || ! "".equals(getMqttUsername())) {
+                if ( getOptionState(MQTT_USERNAME_OPTION) != null
+                        && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
                     mqttClient.connect(getMqttConnectionOptions());
                 } else {
                     mqttClient.connect();
