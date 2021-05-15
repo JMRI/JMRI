@@ -61,8 +61,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 new String[]{""},  Option.Type.TEXT));
         
         options.put(MQTT_PASSWORD_OPTION, new Option(Bundle.getMessage("MQTT_Password"),
-                new String[]{""},  Option.Type.TEXT));
-//                new String[]{Bundle.getMessage("MQTT_Password")},  Option.Type.PASSWORD));
+                new String[]{""},  Option.Type.PASSWORD));
         
         option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
         options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"), 

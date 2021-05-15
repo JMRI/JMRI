@@ -220,6 +220,15 @@ abstract public class AbstractPortController implements PortAdapter {
     }
     
     @Override
+    public boolean isOptionTypePassword(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).getType() == Option.Type.PASSWORD;
+        }
+        log.error("did not find option {} for type", option);
+        return false;
+    }
+    
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "availability was checked before, should never get here")
     public String getOptionDisplayName(String option) {
