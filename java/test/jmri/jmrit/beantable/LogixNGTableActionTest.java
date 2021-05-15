@@ -134,8 +134,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
-        logixNGTable.setEditorMode(AbstractLogixNGTableAction.EditMode.TREEEDIT);
-
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
         Assert.assertNotNull("LogixNG exists", logixNG);
 
