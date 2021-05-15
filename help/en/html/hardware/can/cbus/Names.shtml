@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <meta name="keywords" content="JMRI help CBUS naming long short events event add sensor hex">
-  <title>JMRI Hardware Support - CBUS&trade; - Events</title>
+  <title>JMRI Hardware Support - CBUS&reg; - Events</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
@@ -16,7 +16,7 @@
       <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI Hardware Support: CBUS&trade; - Naming</h1>
+      <h1>JMRI Hardware Support: CBUS - Naming</h1>
 
         <ul class="snav">
         <li><a href="#events">Event Name and Numbering</a></li>
@@ -822,7 +822,7 @@
       </div>
       
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       <!--#include virtual="/Footer.shtml" -->

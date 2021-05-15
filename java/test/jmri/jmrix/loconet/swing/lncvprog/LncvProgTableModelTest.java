@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import javax.swing.*;
 import java.awt.*;
 
-//import static org.junit.jupiter.api.Assertions.*;
-
 class LncvProgTableModelTest {
 
     LocoNetSystemConnectionMemo memo;
@@ -68,9 +66,15 @@ class LncvProgTableModelTest {
         Assert.assertEquals("getValue in cell 0,COUNT_COLUMN", 1, lptm.getValueAt(0, LncvProgTableModel.COUNT_COLUMN));
         Assert.assertEquals("getValue in cell 0,VALUE_COLUMN", 136, lptm.getValueAt(0, LncvProgTableModel.VALUE_COLUMN));
         Assert.assertEquals("getValue in cell 0,ARTICLE_COLUMN", 5033, lptm.getValueAt(0, LncvProgTableModel.ARTICLE_COLUMN));
-        Assert.assertEquals("getValue in cell 0,DEVICENAMECOLUMN", "", lptm.getValueAt(0, LncvProgTableModel.DEVICENAMECOLUMN));
-        Assert.assertEquals("getValue in cell 0,OPENPRGMRBUTTONCOLUMN", Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
+        // Roster should be loaded for match
+        Assert.assertEquals("getValue in cell 0,DEVICENAMECOLUMN", "DR5033", lptm.getValueAt(0, LncvProgTableModel.DEVICENAMECOLUMN));
+        Assert.assertEquals("getValue in cell 0,OPENPRGMRBUTTONCOLUMN", Bundle.getMessage("ButtonCreateEntry"), lptm.getValueAt(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
         lptm.setValueAt(5,0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN); // click should see na action
+
+        lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
+        // should add row 2 to table, unknown article number 0029, no match
+        Assert.assertEquals("getValue in cell 1,COUNT_COLUMN", 2, lptm.getValueAt(1, LncvProgTableModel.COUNT_COLUMN));
+        Assert.assertEquals("getValue in cell 1,OPENPRGMRBUTTONCOLUMN", Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(1, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
     }
 
 //    @Test

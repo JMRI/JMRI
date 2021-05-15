@@ -44,8 +44,8 @@ public class TrainPrintUtilities {
      * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
      * @param fontSize      font size
      */
-    public static void printReport(File file, String name, boolean isPreview, String fontName,
-            boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
+    public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
+            String logoURL, String printerName, String orientation, int fontSize) {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         boolean isLandScape = false;
@@ -64,8 +64,8 @@ public class TrainPrintUtilities {
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try {
-            writer = new HardcopyWriter(new Frame(), name, fontSize, margin, margin, .5, .5,
-                    isPreview, printerName, isLandScape, printHeader, pagesize);
+            writer = new HardcopyWriter(new Frame(), name, fontSize, margin, margin, .5, .5, isPreview, printerName,
+                    isLandScape, printHeader, pagesize);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -142,23 +142,23 @@ public class TrainPrintUtilities {
 
                 // determine if line is a pickup or drop
                 if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
-                        line.startsWith(Setup.getPickupEnginePrefix())) ||
+                        line.startsWith(Setup.getPickupEnginePrefix() + TrainCommon.SPACE)) ||
                         (!Setup.getPickupCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getPickupCarPrefix())) ||
+                                line.startsWith(Setup.getPickupCarPrefix() + TrainCommon.SPACE)) ||
                         (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                                line.startsWith(Setup.getSwitchListPickupCarPrefix() + TrainCommon.SPACE))) {
                     c = Setup.getPickupColor();
                 } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
-                        line.startsWith(Setup.getDropEnginePrefix())) ||
+                        line.startsWith(Setup.getDropEnginePrefix() + TrainCommon.SPACE)) ||
                         (!Setup.getDropCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getDropCarPrefix())) ||
+                                line.startsWith(Setup.getDropCarPrefix() + TrainCommon.SPACE)) ||
                         (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getSwitchListDropCarPrefix()))) {
+                                line.startsWith(Setup.getSwitchListDropCarPrefix() + TrainCommon.SPACE))) {
                     c = Setup.getDropColor();
                 } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
-                        line.startsWith(Setup.getLocalPrefix())) ||
+                        line.startsWith(Setup.getLocalPrefix() + TrainCommon.SPACE)) ||
                         (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getSwitchListLocalPrefix()))) {
+                                line.startsWith(Setup.getSwitchListLocalPrefix() + TrainCommon.SPACE))) {
                     c = Setup.getLocalColor();
                 } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
                     c = TrainCommon.getTextColor(line);
@@ -251,11 +251,11 @@ public class TrainPrintUtilities {
             return;
         }
         PrintWriter out;
-        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(
-                Bundle.getMessage("Report") + " " + name);
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class)
+                .createTrainBuildReportFile(Bundle.getMessage("Report") + " " + name);
         try {
-            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);
+            out = new PrintWriter(new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not create build report file");
             try {

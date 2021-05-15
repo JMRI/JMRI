@@ -35,7 +35,7 @@
       <div class="para">
         <a href=
         "../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"
-        width="619" height="166" align="right"></a>
+        width="619" height="166" align="right" alt="signal mast table"></a>
 
         <p>JMRI Signal Mast objects allow you to display
         prototypical Aspects on signals. For background
@@ -47,7 +47,7 @@
         <p>Signal Masts are configured through the <a href=
         "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
         Signal Mast Table</a>. You access this tool from the
-        <b>Tools &gt; Tables &gt; Signal Masts</b> menu.</p>
+        <b>Tools &rArr; Tables &rArr; Signal Masts</b> menu.</p>
 
         <p>From the table, you can manually set individual Signal
         Masts to any Aspect that they're able to display by
@@ -67,24 +67,24 @@
 
         <h3>Signal Mast Repeaters</h3><img src=
         "images/SignalMastRepeaterPane.png" width="291" height="98"
-        align="right">
-        
-        <p>A Signal Mast Repeater enables one physical (or virtual) signal mast to 
+        align="right" alt="signal mast repeaters">
+
+        <p>A Signal Mast Repeater enables one physical (or virtual) signal mast to
             mimic another signal mast's aspect.</p>
         <p>This can be useful in a number of ways:</p>
         <ul>
-            <li>When one physical signal mast must provide an aspect which is exactly 
-                identical to another physical signal mast.  This could be used to 
-                "repeat" the aspect of a "hard-to-see" signal mast on some other 
-                easy-to-see signal mast, such as one modeled in the fascia of the 
+            <li>When one physical signal mast must provide an aspect which is exactly
+                identical to another physical signal mast.  This could be used to
+                "repeat" the aspect of a "hard-to-see" signal mast on some other
+                easy-to-see signal mast, such as one modeled in the fascia of the
                 layout.</li>
-            <li>When there are multiple different routes between two physical signal masts, 
+            <li>When there are multiple different routes between two physical signal masts,
                 JMRI Signal Mast Logic discovery will only identify logic for one
                 of the routes.  By providing multiple signal masts at the "destination"
                 end of the route, it is possible to manually create and configure
                 Signal Mast Logic for each of the alternate routes, such that the
-                "source" signal mast displays the correct indication to protect the 
-                "destination" signal mast, regardless of which route is selected.</li>            
+                "source" signal mast displays the correct indication to protect the
+                "destination" signal mast, regardless of which route is selected.</li>
         </ul>
         <p>See the <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
             Signal Mast Repeater</a> documentation for more details.</p>
@@ -94,12 +94,11 @@
         <p>The Signal Mast information is kept in your <i>layout
         configuration</i>, along with Turnouts, Lights, Sensors,
         control panel setup etc.<br>
-        To save this information on disk, allowing to <a href=
+        To save this information on disk, allowing you to <a href=
         "../../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> next time you run JMRI, use <b>Store Configuration...</b>
-        in the <b>File</b> menu at the top of the Signal Mast Table (or
-        other tables from the Tools menu), or select <b>Store
-        Panel...</b> in the <b>Panel</b> menu.</p>
+        it</a> next time you run JMRI, see <a href="../../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.</p>
+
         <p>For more information on creating and displaying
         panels, including how to show signals on your panels,
         please see the <a href=

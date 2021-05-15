@@ -83,7 +83,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     AbstractMonFrame self;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    public final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonFrame() {
         super();

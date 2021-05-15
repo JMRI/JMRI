@@ -30,12 +30,16 @@
 
       <h1>JMRI: Routes Documentation</h1>
 
+      <p class="noted">As of JMRI 4.19.2, the type letter for routes was changed from
+      <strong>R</strong> to <strong>O</strong>.  The system name for routes now starts
+      with <strong>IO</strong>.</p>
+
       <h2>What are Routes?</h2>
-      
+
       <p>[After reading this page, see also the <a href="LRoutes.shtml">LRoutes documentation</a>.
-      LRoutes offer extended routing capabilities, transparently implementing them as a series of 
+      LRoutes offer extended routing capabilities, transparently implementing them as a series of
       <a href="Logix.shtml">Logix conditionals</a>. LRoutes are set up similarly to and are
-      capable of performing all of the tasks of Routes - and more. They can even trigger a Route 
+      capable of performing all of the tasks of Routes - and more. They can even trigger a Route
       for complete compatibility.]</p>
 
 
@@ -101,7 +105,7 @@
       defined, and that the <a href=
       "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
       Table</a> contains all Sensors needed.<br>
-      Then select <b>Tools</b> -&gt; <b>Tables</b> -&gt;
+      Then select <b>Tools</b> &rArr; <b>Tables</b> &rArr;
       <b>Routes</b>, and click the <b>Add...</b> button at the
       bottom of the pane to bring up the Add/Edit Route
       pane.</p><a name="addroute" id="addroute"></a>
@@ -110,12 +114,12 @@
 
       <ol>
         <li>
-          <p>Enter a System Name, such as 'IR100' - any short name
+          <p>Enter a System Name, such as 'IO100' - any short name
           can be used provided it is different from the System Name
           of other Routes.</p>
 
-          <p>By convention, System Names usually start with "IR"
-          for <u>I</u>nternal <u>R</u>oute.</p>
+          <p>By convention, System Names usually start with "IO"
+          for <span class="co"><strong>I</strong></span>nternal R<span class="co"><strong>o</strong></span>ute.</p>
         </li>
 
         <li>
@@ -315,12 +319,10 @@
 
       <p>Routes are kept in your <i>layout configuration</i>, along
       with Turnouts, Sensors, Signal Heads, Lights, control panel
-      setup etc. To store this information on disk, allowing to
+      setup etc. To store this information on disk, allowing you to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI, use <b>Store Configuration...</b>
-      in the <b>File</b> menu at the top of the Route Table (or
-      other tables from the Tools menu), or select <b>Store
-      Panel...</b> in the <b>Panel</b> menu. Note that the
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.  Note that the
       enabled/disabled state of each Route is not saved in the
       configuration file. When Routes are loaded from a
       configuration file, they are all enabled.</p>

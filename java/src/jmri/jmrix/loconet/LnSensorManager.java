@@ -91,7 +91,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 
@@ -224,7 +224,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     curAddress, iName);
         } else {
             // Entered in using the old format
-            log.debug("LnSensorManager creating system name for {}", curAddress); // EBR
+            log.debug("LnSensorManager creating system name for {}", curAddress);
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {

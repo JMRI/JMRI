@@ -875,13 +875,13 @@ MTA*&lt;;&gt;qR
 
         <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
-        <li>'f' force function</li>
+        <li>'f' force function. Format f<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'I' idle, which sets the speed to 0</li>
 
         <li>'L' sets a long DCC address.</li>
 
-        <li>'m' momentary</li>
+        <li>'m' momentary. Format m<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'q' ask for current settings, such as speed or
         direction</li>
@@ -966,6 +966,49 @@ MTA*&lt;;&gt;F012
       like lights, are toggle. In both cases, your code should send
       both the push (1) and release (0) and JMRI will map that into
       the correct DCC command or commands, as appropriate.</p>
+
+      <h3>'f' Force Function</h3>
+
+      <p>This command will set the function state regardless of
+      the state before this command. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;f112
+</pre>
+
+      <p>will activate Function 12 if it was off before and will
+      keep F12 active if it was on before. If Function 12 is
+      a momentary function, it will still be activated by this
+      command and stay active.</p>
+      
+      <p>The server will respond with a property change
+      notification only if this command changes the function state.
+      </p>
+
+      <h3>'m' momentary: Set Function to momentary or locking</h3>
+      
+      <p>A function can either be momentary, i.e. active as long as
+      the function key is pushed, or locking, i.e. active until the
+      function key is pushed a second time. By default, JMRI uses the
+      roster information to determine whether a function is momentary
+      or locking for each loco.</p>
+      
+      <p>This command allows a wiThrottle client to override the
+      setting from the roster. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;m112
+</pre>
+      <p>will set function 12 to be momentary from now on, and</p>
+      <pre class="code">
+MTA*&lt;;&gt;m012
+</pre>
+      <p>will set function 12 to be locking from now on. Actually, any
+      value other than '1' will set the function to locking. Although 
+      this example sets/resets the function to momentary on all 'T'
+      throttles, you can set this individually on a per-engine basis
+      by providing the key you used when you added an engine.</p>
+      
+      <p class="note">The global wiThrottle preference "F2 always 
+      momentary" will override this setting for F2</p>
 
       <h3>'R' Set Direction</h3>
 

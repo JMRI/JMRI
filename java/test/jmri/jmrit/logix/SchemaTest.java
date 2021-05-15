@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * Checks of JMRI XML Schema
+ * Checks of JMRI XML Schema.
  *
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
@@ -26,4 +26,5 @@ public class SchemaTest extends SchemaTestBase {
     public void schemaTest(File file, boolean pass) {
         super.validate(file, pass);
     }
+
 }

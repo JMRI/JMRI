@@ -285,19 +285,21 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testQueryAll() {
         tcis.outbound.clear();
+        memo.setOutputInterval(2); // reduce output interval for tests
+        
         Sensor t1 = l.provideSensor("MS+N123E456");
         Sensor t2 = l.provideSensor("MS-N9875E45670");
 
         Assert.assertTrue(tcis.outbound.isEmpty());
 
         l.updateAll();
-
-        // log.warn("size {}",tcis.outbound);
+        JUnitUtil.waitFor(() -> ( 2 == tcis.outbound.size()));
         Assert.assertEquals(2, tcis.outbound.size());
 
         Sensor t3 = l.provideSensor("MSX0A;X5E6DEEF4");
         tcis.outbound.clear();
         l.updateAll();
+        JUnitUtil.waitFor(() -> ( 3 == tcis.outbound.size()));
         Assert.assertEquals(3, tcis.outbound.size());
         Assert.assertNotNull("exists", t1);
         Assert.assertNotNull("exists", t2);

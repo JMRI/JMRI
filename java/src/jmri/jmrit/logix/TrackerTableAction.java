@@ -11,9 +11,9 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
@@ -66,8 +66,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
 
     static int STRUT_SIZE = 10;
 
-    private ArrayList<Tracker> _trackerList = new ArrayList<>();
-    private HashMap<OBlock, ArrayList<Tracker>> _trackerBlocks = new HashMap<>();
+    private final ArrayList<Tracker> _trackerList = new ArrayList<>();
+    private final HashMap<OBlock, ArrayList<Tracker>> _trackerBlocks = new HashMap<>();
     protected TableFrame _frame;
     private ChooseTracker _trackerChooser;
     private boolean _requirePaths;
@@ -153,7 +153,9 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     }
 
     protected void addTracker(Tracker t) {
-        _trackerList.add(t);
+        synchronized(this) {
+            _trackerList.add(t);
+        }
         addBlockListeners(t);
         if (_frame == null) {
             _frame = new TableFrame();
@@ -196,7 +198,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
        _frame.setStatus(msg);
    }
     /**
-     * See if any Trackers are occupying block
+     * See if any Trackers are occupying a given block.
      * @param b Block being queried
      * @return Tracker if found
      */
@@ -216,13 +218,12 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     /**
      * Adds listeners to all blocks in the range of a Tracker. Called when a
      * new tracker is created.
-     * @param tracker Tracker to start
+     * @param tracker Tracker that is about to start
      */
     protected void addBlockListeners(Tracker tracker) {
         List<OBlock> range = tracker.makeRange();
-        Iterator<OBlock> iter = range.iterator();
-        while (iter.hasNext()) {
-            addBlockListener(iter.next(), tracker);
+        for (OBlock oBlock : range) {
+            addBlockListener(oBlock, tracker);
         }
     }
 
@@ -388,10 +389,9 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * Called when a state change has occurred for one the blocks listened
      * to for this tracker. Tracker.move makes the changes to OBlocks to
      * indicate the new occupancy positions of the train. Upon return,
-     * update the listeners for the trains next move
-     * <p>
+     * update the listeners for the trains next move.
      */
-    private void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
+    private synchronized void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
         List<OBlock> oldRange = tracker.makeRange();// total range in effect when state change was detected
         if (tracker.move(block, state)) {   // new total range has been made after move was done.
             if (tracker._statusMessage != null) {
@@ -417,12 +417,14 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     private void stopTrain(Tracker t, OBlock b) {
         t.stop();
         removeBlockListeners(t);
-        _trackerList.remove(t);
+        synchronized(this) {
+            _trackerList.remove(t);
+        }
         long et = (System.currentTimeMillis() - t._startTime) / 1000;
         String location;
         if (b!= null) {
             location = b.getDisplayName(); 
-        }else {
+        } else {
             location = Bundle.getMessage("BeanStateUnknown");
         }
         _frame.setStatus(Bundle.getMessage("TrackerStopped", 
@@ -508,14 +510,13 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
 
     /**
      * Holds a table of Trackers that follow adjacent occupancy. Needs to be a
-     * singleton to be opened and closed for trackers to report to it
+     * singleton to be opened and closed for trackers to report to it.
      *
      * @author Peter Cressman
-     *
      */
     class TableFrame extends JmriJFrame implements MouseListener {
 
-        private TrackerTableModel _model;
+        private final TrackerTableModel _model;
         private JmriJFrame _pickFrame;
         JDialog _dialog;
         JTextField _trainNameBox = new JTextField(30);
@@ -808,7 +809,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         }
 
         @Override
-        public int getRowCount() {
+        public synchronized int getRowCount() {
             return _trackerList.size();
         }
 
@@ -887,6 +888,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) {
             if (type.equals(TrackerTableAction.class)) {
                 return new TrackerTableAction(Bundle.getMessage("MenuTrackers"));
@@ -895,6 +897,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(TrackerTableAction.class);

@@ -657,14 +657,14 @@ public class EcosLocoToRoster implements EcosListener {
                 familyElement = null;
             }
             String famComment = decoders.get(i).getFamilyComment();
-            String verString = decoders.get(i).getVersionsAsString();
+            String verString = decoders.get(i).getVersionsAsString(); // not null
             String hoverText = "";
-            if (famComment == null || famComment.equals("")) {
-                if (verString != null && !verString.equals("")) {
+            if (famComment == null || famComment.isEmpty()) {
+                if (!verString.isEmpty()) {
                     hoverText = "CV7=" + verString;
                 }
             } else {
-                if (verString == null || verString.equals("")) {
+                if (verString.isEmpty()) {
                     hoverText = famComment;
                 } else {
                     hoverText = famComment + "  CV7=" + verString;

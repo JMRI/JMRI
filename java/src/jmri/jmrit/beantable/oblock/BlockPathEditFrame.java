@@ -282,78 +282,13 @@ public class BlockPathEditFrame extends JmriJFrame {
         }
         try { // adapted from BlockPathTableModel setValue
             // set fromPortal
-            if (fromPortalComboBox.getSelectedIndex() <= 0) {
-                // 0 = empty choice, need at least 1 Portal in an OBlockPath
-                log.debug("fromPortal no selection, require 1 so check toPortal is not empty");
-                if (toPortalComboBox.getSelectedIndex() > 0) {
-                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we require at least 1
-                    log.debug("removed fromPortal");
-                } else {
-                    status(Bundle.getMessage("WarnPortalOnPath"), true);
-                    return;
-                }
-            } else {
-                String fromP = (String) fromPortalComboBox.getSelectedItem();
-                log.debug("looking for FromPortal {} (combo item {})", fromP, fromPortalComboBox.getSelectedIndex());
-                Portal fromPortal = _block.getPortalByName(fromP);
-                if (fromPortal == null || pm.getPortal(fromP) == null) {
-                    int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", fromP, _block.getDisplayName()));
-                    if (val == 2) {
-                        return; // abort
-                    }
-                    fromPortal = pm.providePortal(fromP);
-                    if (!fromPortal.setFromBlock(_block, false)) {
-                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", fromP, fromPortal.getFromBlockName()));
-                        if (val == 2) {
-                            return;
-                        }
-                    }
-                    log.debug("fromPortal == null");
-                    fromPortal.setFromBlock(_block, true);
-                }
-                _path.setFromPortal(fromPortal);
-                if (!fromPortal.addPath(_path)) {
-                    status(Bundle.getMessage("AddPathFailed", fromP), true);
-                    return;
-                }
+            if (!setPortal(fromPortalComboBox, toPortalComboBox, true)) {
+                return;
             }
             // set toPortal
-            if (toPortalComboBox.getSelectedIndex() <= 0) {
-                // 0 = empty choice, need at least 1 Portal
-                log.debug("toPortal no selection, require 1 so check fromPortal is not empty");
-                if (fromPortalComboBox.getSelectedIndex() > 0) {
-                    _path.setToPortal(null); // portal can be removed from path by setting to null
-                    log.debug("removed toPortal");
-                } else {
-                    status(Bundle.getMessage("WarnPortalOnPath"), true);
-                    return;
-                }
-            } else {
-                String toP = (String) toPortalComboBox.getSelectedItem();
-                log.debug("looking for ToPortal {} (combo item {})", toP, toPortalComboBox.getSelectedIndex());
-                Portal toPortal = _block.getPortalByName(toP);
-                if (toPortal == null || pm.getPortal(toP) == null) {
-                    int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", toP, _block.getDisplayName()));
-                    if (val == 2) {
-                        return; // abort
-                    }
-                    toPortal = pm.providePortal(toP);
-                    if (!toPortal.setFromBlock(_block, false)) {
-                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", toP, toPortal.getFromBlockName()));
-                        if (val == 2) {
-                            return;
-                        }
-                    }
-                    toPortal.setToBlock(_block, true);
-                    log.debug("toPortal == null");
-                }
-                _path.setToPortal(toPortal);
-                if (!toPortal.addPath(_path)) {
-                    status(Bundle.getMessage("AddPathFailed", toP), true);
-                    return;
-                }
+            if (!setPortal(toPortalComboBox, fromPortalComboBox, false)) {
+                return;
             }
-
             _path.setLength((float) lengthSpinner.getValue() * (cm.isSelected() ? 10.0f : 25.4f)); // stored in mm
             _block.setMetricUnits(cm.isSelected());
         } catch (IllegalArgumentException ex) {
@@ -367,11 +302,64 @@ public class BlockPathEditFrame extends JmriJFrame {
             _pathmodel.fireTableDataChanged();
         }
         _core.setPathEdit(false);
-        log.debug("BlockPathEditFrame.okPressed pathEdit=False");
+        log.debug("BlockPathEditFrame.okPressed complete. pathEdit = false");
         closeFrame();
     }
 
-    protected void closeFrame(){
+    private boolean setPortal(JComboBox<String> portalBox, JComboBox<String> compareBox, boolean isFrom) {
+        if (portalBox.getSelectedIndex() <= 0) {
+            // 0 = empty choice, need at least 1 Portal in an OBlockPath
+            log.debug("fromPortal no selection, require 1 so check toPortal is not empty");
+            if (compareBox.getSelectedIndex() > 0) {
+                if (isFrom) {
+                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we require at least 1
+                } else {
+                    _path.setToPortal(null); // at least 1
+                }
+                log.debug("removed {}Portal", (isFrom ? "From" : "To"));
+            } else {
+                status(Bundle.getMessage("WarnPortalOnPath"), true);
+                return false;
+            }
+        } else {
+            String portalName = (String) portalBox.getSelectedItem();
+            log.debug("looking for {}Portal {} (combo item {})", (isFrom ? "From" : "To"), portalName, portalBox.getSelectedIndex());
+            Portal portal = _block.getPortalByName(portalName);
+            if (portal == null || pm.getPortal(portalName) == null) {
+                int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", portalName, _block.getDisplayName()));
+                if (val == 2) {
+                    return false; // abort
+                }
+                portal = pm.providePortal(portalName);
+                if (isFrom) {
+                    if (!portal.setFromBlock(_block, false)) {
+                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", portalName, portal.getFromBlockName()));
+                    }
+                } else {
+                    if (!portal.setToBlock(_block, false)) {
+                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", portalName, portal.getToBlockName()));
+                    }
+                }
+                if (val == 2) {
+                    return false;
+                }
+                log.debug("fromPortal == null");
+                portal.setFromBlock(_block, true);
+            }
+            if (isFrom) {
+                _path.setFromPortal(portal); // portal can be removed from path by setting to null but we require at least 1
+            } else {
+                _path.setToPortal(portal); // at least 1
+            }
+            if (!portal.addPath(_path)) {
+                status(Bundle.getMessage("AddPathFailed", portalName), true);
+                return false ;
+            }
+        }
+        return true;
+    }
+
+    protected void closeFrame() {
         // remind to save, if Path was created or edited
         if (isDirty) {
             showReminderMessage();

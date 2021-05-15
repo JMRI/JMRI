@@ -461,6 +461,18 @@ public class CbusMessageTest {
     }
     
     @Test
+    public void testgetVerifyCV() {
+        CanMessage m = CbusMessage.getVerifyCV(1,jmri.ProgrammingMode.PAGEMODE,0x57,0x12);
+        Assert.assertEquals("PAGEMODE","[592] A4 FF 00 01 02 57",m.toString());
+        m = CbusMessage.getVerifyCV(255,jmri.ProgrammingMode.DIRECTBITMODE,0x63,0x12);
+        Assert.assertEquals("DIRECTBITMODE","[592] A4 FF 00 FF 01 63",m.toString());
+        m = CbusMessage.getVerifyCV(214,jmri.ProgrammingMode.DIRECTBYTEMODE,0x13,0x12);
+        Assert.assertEquals("DIRECTBYTEMODE","[592] A4 FF 00 D6 00 13",m.toString());
+        m = CbusMessage.getVerifyCV(213,jmri.ProgrammingMode.REGISTERMODE,0xB9,0x12);
+        Assert.assertEquals("REGISTERMODE","[592] A4 FF 00 D5 03 B9",m.toString());
+    }
+    
+    @Test
     public void testgetgetWriteCV() {
         CanMessage m = CbusMessage.getWriteCV(1,211,jmri.ProgrammingMode.PAGEMODE,0x12);
         Assert.assertEquals("PAGEMODE","[592] A2 FF 00 01 02 D3",m.toString());

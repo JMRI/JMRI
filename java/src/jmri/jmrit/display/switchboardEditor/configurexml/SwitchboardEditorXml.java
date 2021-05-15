@@ -141,13 +141,13 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
 
-                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(name);
+                Point prefsWindowLocation = prefsMgr.getWindowLocation(name);
                 if (prefsWindowLocation != null) {
                     x = (int) prefsWindowLocation.getX();
                     y = (int) prefsWindowLocation.getY();
                 }
 
-                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(name);
+                Dimension prefsWindowSize = prefsMgr.getWindowSize(name);
                 if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                     height = (int) prefsWindowSize.getHeight();
                     width = (int) prefsWindowSize.getWidth();
@@ -171,29 +171,13 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             value = false;
         }
         panel.setAllEditable(value);
-
-        value = true;
-        if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("showtooltips")) == null || !a.getValue().equals("no");
         panel.setAllShowToolTip(value);
-
-        value = true;
-        if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("controlling")) == null || !a.getValue().equals("no");
         panel.setAllControlling(value);
-
-        value = false;
-        if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("yes")) {
-            value = true;
-        }
+        value = (a = shared.getAttribute("hide")) != null && a.getValue().equals("yes");
         panel.setShowHidden(value);
-
-        value = true;
-        if ((a = shared.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("panelmenu")) == null || !a.getValue().equals("no");
         panel.setPanelMenuVisible(value);
 
         String state = "both";
@@ -201,17 +185,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             state = a.getValue();
         }
         panel.setScroll(state);
-
-        value = false;
-        if ((a = shared.getAttribute("hideunconnected")) != null && a.getValue().equals("yes")) {
-            value = true;
-        }
+        value = (a = shared.getAttribute("hideunconnected")) != null && a.getValue().equals("yes");
         panel.setHideUnconnected(value);
-
-        value = true;
-        if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("autoitemrange")) == null || !a.getValue().equals("no");
         panel.setAutoItemRange(value);
 
         try {
@@ -234,7 +210,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         shape = shared.getAttribute("shape").getValue();
         panel.setSwitchShape(shape);
 
-        if ((a = shared.getAttribute("columns")) != null) {
+        if (shared.getAttribute("columns") != null) {
             try { // migration of old naming, dropped since 4.21.2
                 rows = shared.getAttribute("columns").getIntValue();
             } catch (org.jdom2.DataConversionException e) {
@@ -242,7 +218,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        if ((a = shared.getAttribute("rows")) != null) {
+        if (shared.getAttribute("rows") != null) {
             try {
                 rows = shared.getAttribute("rows").getIntValue();
             } catch (org.jdom2.DataConversionException e) {
@@ -251,14 +227,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             }
         }
         panel.setRows(rows); // if 0, autoRows is selected (handled in Editor)
-
-        value = true;
-        if ((a = shared.getAttribute("showusername")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("showusername")) == null || !a.getValue().equals("no");
         panel.setShowUserName(value);
 
-        if ((a = shared.getAttribute("iconscale")) != null) {
+        if (shared.getAttribute("iconscale") != null) {
             try {
                 iconscale = shared.getAttribute("iconscale").getIntValue();
             } catch (org.jdom2.DataConversionException e) {

@@ -114,8 +114,8 @@ public class InputWindow extends JPanel {
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(loadButton = new JButton(Bundle.getMessage("ButtonLoad")));
-        p.add(storeButton = new JButton(Bundle.getMessage("ButtonStore")));
+        p.add(loadButton = new JButton(Bundle.getMessage("ButtonLoad_")));
+        p.add(storeButton = new JButton(Bundle.getMessage("ButtonStore_")));
         p.add(this.languages);
         p.add(button = new JButton(Bundle.getMessage("ButtonExecute")));
 

@@ -390,7 +390,6 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JavaSoundAudioBuffer ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioBuffer.class);

@@ -31,7 +31,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     int value;
     ProgListener progListener = null;
 
-    protected DCCppTrafficController tc = null;
+    protected DCCppTrafficController tc;
 
     public DCCppOpsModeProgrammer(int pAddress, DCCppTrafficController controller) {
         tc = controller;
@@ -56,16 +56,17 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         final int CV = Integer.parseInt(CVname);
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, null);
-        /* we need to save the programer and value so we can send messages 
-         back to the screen when the programming screen when we receive
-         something from the command station */
+        /* we need to save the programmer and value so we can send messages
+         back to the programming screen when we receive something from the
+         command station */
         progListener = p;
         value = val;
         progState = DCCppProgrammer.REQUESTSENT;
+        assert msg != null;
         restartTimer(msg.getTimeout());
         /* Issue #2423 (GitHub) -- DCC++ base station does not respond to Ops Mode
          * writes, so waiting for a response just means JMRI times out after a long delay.
-        /* Proposed Fix: Don't go to REQUESTSENT state... just stay in NOTPROGRAMMING
+        /* Proposed Fix: Don't go to REQUESTSENT state... just stay in NOTPROGRAMMING.
          * Risk... the state change introduces a 250ms delay to keep the UI from sending
          * write commands too frequently... so we'd have to do that here too.
         */
@@ -73,13 +74,13 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         // delay for a short time to give the decoder a chance to 
         // process the request.
         try {
-            this.wait(250);
+            this.wait(250); // Spotbugs not happy: WAIT_NOT_IN_LOOP
         } catch (java.lang.InterruptedException ie) {
             log.debug("Interrupted During Delay");
         }
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
-        notifyProgListenerEnd(progListener,value,ProgListener.OK);
+        notifyProgListenerEnd(progListener, value, ProgListener.OK);
     }
 
     /** 
@@ -87,7 +88,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      */
     @Override
     synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
-        notifyProgListenerEnd(p,Integer.parseInt(CVname),ProgListener.NotImplemented);
+        notifyProgListenerEnd(p, Integer.parseInt(CVname), ProgListener.NotImplemented);
     }
 
     /** 
@@ -95,7 +96,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        notifyProgListenerEnd(p,val,ProgListener.NotImplemented);
+        notifyProgListenerEnd(p, val, ProgListener.NotImplemented);
     }
 
     /** 
@@ -106,7 +107,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(ProgrammingMode.OPSBITMODE);
         return ret;
@@ -143,7 +144,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     synchronized protected void timeout() {
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
-        notifyProgListenerEnd(progListener,value,ProgListener.FailedTimeout);
+        notifyProgListenerEnd(progListener, value, ProgListener.FailedTimeout);
     }
 
     // initialize logging

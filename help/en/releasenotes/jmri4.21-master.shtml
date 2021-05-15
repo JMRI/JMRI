@@ -8,17 +8,17 @@
             <ul>
                 <li></li>
             </ul>
-        
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>CBUS</h4>
             <ul>
                 <li></li>
@@ -29,7 +29,7 @@
                 <li></li>
             </ul>
 
-        <h4>DCC++</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li></li>
             </ul>
@@ -298,7 +298,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -391,6 +391,12 @@
           <li></li>
         </ul>
 
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li></li>
+        </ul>
+
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
@@ -424,7 +430,7 @@
             <ul>
                 <li></li>
             </ul>
-   
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -448,7 +454,7 @@
        <ul>
             <li></li>
        </ul>
-       
+
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -480,7 +486,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>

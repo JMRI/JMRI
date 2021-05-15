@@ -29,10 +29,10 @@
       <h1>The Switchboard Editor</h1>
       <span class="since">since 4.7.3</span>
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
-      To create a new Switchboard, from the Panels menu, choose New Panel &gt; Switchboard Editor.<br>
+      To create a new Switchboard, from the Panels menu, choose New Panel &rArr; Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 24 opens.<br>
       If any Turnouts were defined in JMRI beforehand, those switches will immediately show
-      their current state and immediately lets you control them.</p>
+      their current state and immediately let you control them.</p>
       <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="247" height="214"
       align="right" alt="The Switchboard Editor"></a>
       <p>To the left, a small Switchboard Editor pane allows you to refine what this Switchboard will control.
@@ -72,7 +72,7 @@
       Depending on the hardware, the switch label and graphics will change to show the new state.</p>
       <p>A tooltip appears when you hover your mouse over a switch, showing the user name of that item (if it's connected and set).</p>
       <p>Right-click a switch to open a context-menu and:</p>
-      <a href="images/Keyboard.png"><img src="images/Keyboard.png" width="230" height="165" align="right"></a>
+      <a href="images/Keyboard.png"><img src="images/Keyboard.png" width="230" height="165" align="right" alt="SwitchBoard keys"></a>
       <ul>
         <li>Set the user name of a connected item (stored in the item, not in the board)</li>
         <li>Attach a new item to an inactive switch (using the name of the switch and the object type as set in the
@@ -82,6 +82,8 @@
       </ul>
 
       <p>Remember to save your setup and configured items by choosing Store Panels... from the File menu.<br>
+      Note: The menu item changes as of 4.23.3 to <strong>Store ALL table content and panels</strong>.
+      For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.<br>
       You can have your Switchboards open automatically upon startup by setting them as as an "Open File"
       Startup Action under Preferences &gt; Startup.</p>
       <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">PanelPro help page</a>.

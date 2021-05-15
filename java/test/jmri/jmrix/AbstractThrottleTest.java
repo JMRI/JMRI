@@ -717,7 +717,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testNotifyPropertyChangeListener() {
-        instance.notifyPropertyChangeListener("", null, null);
+        instance.firePropertyChange("", null, null);
         JUnitAppender.assertNoErrorMessage();
     }
 
@@ -1560,13 +1560,13 @@ public class AbstractThrottleTest {
     @Test
     public void testGetSpeed_float() {
         Assert.assertEquals("Full Speed", 127, instance.intSpeed(1.0F));
-        float incre = 0.007874016f;
+        float incre = 1.0f / 126.0f;
         float speed = incre;
         // Cannot get speeedStep 1. range is 2 to 127
         int i = 2;
         while (speed < 0.999f) {
             int result = instance.intSpeed(speed);
-            log.debug("speed= {} step= {}",speed,result);
+            log.debug("speed= {} step= {}", speed, result);
             Assert.assertEquals("speed step ", i++, result);
             speed += incre;
         }
@@ -1580,23 +1580,23 @@ public class AbstractThrottleTest {
         float speed = 0.001F;
         int maxStepHi = 127;
         int maxStepLo = 28;
-        Assert.assertEquals("Idle", 0, instance.intSpeed(0.0F, maxStepHi));
-        Assert.assertEquals("Idle", 0, instance.intSpeed(0.0F, maxStepLo));
-        Assert.assertEquals("Emergency", 1, instance.intSpeed(-1.0F, maxStepHi));
-        Assert.assertEquals("Emergency", 1, instance.intSpeed(-1.0F, maxStepLo));
-        Assert.assertEquals("Emergency", 1, instance.intSpeed(-0.001F, maxStepHi));
-        Assert.assertEquals("Emergency", 1, instance.intSpeed(-0.001F, maxStepLo));
-        Assert.assertEquals("Full Speed", maxStepHi, instance.intSpeed(1.0F, maxStepHi));
-        Assert.assertEquals("Full Speed", maxStepLo, instance.intSpeed(1.0F, maxStepLo));
+        Assert.assertEquals("Idle", 0, AbstractThrottle.intSpeed(0.0F, maxStepHi));
+        Assert.assertEquals("Idle", 0, AbstractThrottle.intSpeed(0.0F, maxStepLo));
+        Assert.assertEquals("Emergency", 1, AbstractThrottle.intSpeed(-1.0F, maxStepHi));
+        Assert.assertEquals("Emergency", 1, AbstractThrottle.intSpeed(-1.0F, maxStepLo));
+        Assert.assertEquals("Emergency", 1, AbstractThrottle.intSpeed(-0.001F, maxStepHi));
+        Assert.assertEquals("Emergency", 1, AbstractThrottle.intSpeed(-0.001F, maxStepLo));
+        Assert.assertEquals("Full Speed", maxStepHi, AbstractThrottle.intSpeed(1.0F, maxStepHi));
+        Assert.assertEquals("Full Speed", maxStepLo, AbstractThrottle.intSpeed(1.0F, maxStepLo));
         while (speed < 1.1F) { // loop ~ 1100 times
-            int result = instance.intSpeed(speed, maxStepHi);
+            int result = AbstractThrottle.intSpeed(speed, maxStepHi);
             Assert.assertNotSame(speed + "(" + maxStepHi + " steps) should not idle", 0, result);
             Assert.assertNotSame(speed + "(" + maxStepHi + " steps) should not eStop", 1, result);
-            Assert.assertTrue(speed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= 127);
-            result = instance.intSpeed(speed, maxStepLo);
+            Assert.assertTrue(speed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= maxStepHi);
+            result = AbstractThrottle.intSpeed(speed, maxStepLo);
             Assert.assertNotSame(speed + "(" + maxStepLo + " steps) should not idle", 0, result);
             Assert.assertNotSame(speed + "(" + maxStepLo + " steps) should not eStop", 1, result);
-            Assert.assertTrue(speed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= 127);
+            Assert.assertTrue(speed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= maxStepLo);
             speed = speed + 0.001F;
         }
     }
@@ -1628,23 +1628,23 @@ public class AbstractThrottleTest {
         };
         
         instance.setRosterEntry(re);
-        Assert.assertEquals("No Starting Duration Roster Entry", null, re.getAttribute("OperatingDuration"));
-        Assert.assertEquals("No Last Operated Roster Entry", null, re.getAttribute("LastOperated"));
+        Assertions.assertNull(re.getAttribute("OperatingDuration"), "No Starting Duration Roster Entry");
+        Assertions.assertNull(re.getAttribute("LastOperated"), "No Last Operated Roster Entry");
         Assert.assertEquals("No Starting Duration Throttle", 0, instance.start);
         
         instance.setSpeedSetting(0.777f);
-        Assert.assertEquals("Starting Duration not set, throttle needs to call record(speed) on speed change", true, instance.start > 0);
+        Assertions.assertTrue(instance.start > 0, "Starting Duration not set, throttle needs to call record(speed) on speed change");
         
         instance.start = instance.start - 2011; // make duration about 2 seconds
-        Assert.assertNotNull("instance finds roster entry",instance.getRosterEntry());
+        Assert.assertNotNull("instance finds roster entry", instance.getRosterEntry());
         
         instance.throttleDispose();
         Assert.assertEquals("No Duration in Roster Entry, throttle needs to call finishRecord()", "2", re.getAttribute("OperatingDuration"));
-        Assert.assertNotNull("Last Operated Updated",re.getAttribute("LastOperated"));
+        Assert.assertNotNull("Last Operated Updated", re.getAttribute("LastOperated"));
         
     }
 
-    public final class AbstractThrottleImpl extends AbstractThrottle {
+    public static final class AbstractThrottleImpl extends AbstractThrottle {
 
         private LocoAddress locoAddress;
 

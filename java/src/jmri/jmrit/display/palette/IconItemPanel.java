@@ -487,11 +487,7 @@ public class IconItemPanel extends ItemPanel {
                 l.setLevel(level);
                 return l;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" for \"");
-                sb.append(url);
-                sb.append("\"");
-                return sb.toString();
+                return _itemType + " for \"" + url + "\"";
             }
             return null;
         }

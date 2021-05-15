@@ -271,7 +271,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     }
                     numCols = spinModel.getNumber().intValue();
                 } catch (java.text.ParseException pe) {
-                    log.error("MemoryDnD.createTransferable: {}", pe);
+                    log.error("MemoryDnD.createTransferable: ", pe);
                 }
                 switch (_memType) {
                     case READONLY:
@@ -304,11 +304,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                         break;
                 }
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icons for \"");
-                sb.append(bean.getDisplayName());
-                sb.append("\"");
-                return sb.toString();
+                return _itemType + " icons for \"" + bean.getDisplayName() + "\"";
             }
             return null;
         }

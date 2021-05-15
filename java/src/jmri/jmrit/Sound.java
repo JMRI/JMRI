@@ -206,7 +206,9 @@ public class Sound {
      */
     public void loop(int count) {
         if (streaming) {
-            log.warn("Streaming this audio file, loop() not allowed");
+            Runnable streamSound = new StreamingSound(this.url, count);
+            Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
+            tStream.start();
         } else {
             clipRef.updateAndGet(clip -> {
                 if (clip == null) {
@@ -348,6 +350,7 @@ public class Sound {
         private AudioFormat format = null;
         private SourceDataLine line = null;
         private jmri.Sensor streamingSensor = null;
+        private final int count;
 
         /**
          * A runnable to stream in sound and play it This method does not read
@@ -357,7 +360,20 @@ public class Sound {
          * @param url the URL containing audio media
          */
         public StreamingSound(URL url) {
+            this(url, 1);
+        }
+
+        /**
+         * A runnable to stream in sound and play it This method does not read
+         * in an entire large sound file at one time, but instead reads in
+         * smaller chunks as needed.
+         *
+         * @param url the URL containing audio media
+         * @param count the number of times to loop
+         */
+        public StreamingSound(URL url, int count) {
             this.url = url;
+            this.count = count;
         }
 
         /** {@inheritDoc} */
@@ -432,16 +448,41 @@ public class Sound {
             line.start();
             // read and play chunks of the audio
             try {
-                int offset;
-                while ((numRead = stream.read(buffer, 0, buffer.length)) >= 0) {
-                    offset = 0;
-                    while (offset < numRead) {
-                        offset += line.write(buffer, offset, numRead - offset);
+                if (stream.markSupported()) stream.mark(Integer.MAX_VALUE);
+                
+                int i=0;
+                while (!streamingStop && ((i++ < count) || (count == Clip.LOOP_CONTINUOUSLY))) {
+                    int offset;
+                    while ((numRead = stream.read(buffer, 0, buffer.length)) >= 0) {
+                        offset = 0;
+                        while (offset < numRead) {
+                            offset += line.write(buffer, offset, numRead - offset);
+                        }
+                    }
+                    if (stream.markSupported()) {
+                        stream.reset();
+                    } else {
+                        stream.close();
+                        try {
+                            stream = AudioSystem.getAudioInputStream(url);
+                        } catch (UnsupportedAudioFileException e) {
+                            log.error("AudioFileException {}", e.getMessage());
+                            closeLine();
+                            return;
+                        } catch (IOException e) {
+                            log.error("IOException {}", e.getMessage());
+                            closeLine();
+                            return;
+                        }
                     }
                 }
             } catch (IOException e) {
                 log.error("IOException while reading sound file {}", e.getMessage());
             }
+            closeLine();
+        }
+
+        private void closeLine() {
             // wait until all data is played, then close the line
             line.drain();
             line.stop();

@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 /**
  * This is a parameterized test for Editor object's getIconFrame
  * method.  It tests that the method returns a vaid value for all
- * expected parameters to the method. 
+ * expected parameters to the method.
  *
  * @author Paul Bender Copyright (C) 2018
  */
@@ -76,25 +76,26 @@ public class EditorIconFrameTest {
     // from here down is testing infrastructure
     @Before
     public void setUp(){
-       JUnitUtil.setUp();
-       JUnitUtil.resetProfileManager();
-       JUnitUtil.initInternalSignalHeadManager();
-       if(!GraphicsEnvironment.isHeadless()) {
-          e = new EditorScaffold(inputString + " IconAdder test Editor");
-          e.setVisible(true);
-          jfo = new EditorFrameOperator(e);
-       }
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        if(!GraphicsEnvironment.isHeadless()) {
+            e = new EditorScaffold(inputString + " IconAdder test Editor");
+            e.setVisible(true);
+            jfo = new EditorFrameOperator(e);
+        }
     }
 
     @After
     public void tearDown(){
-       if(!GraphicsEnvironment.isHeadless()) {
-          jfo.requestClose();
-          JUnitUtil.dispose(e);
-       }
-       e = null;
-       JUnitUtil.deregisterBlockManagerShutdownTask();
-       JUnitUtil.tearDown();
+        if(!GraphicsEnvironment.isHeadless()) {
+            jfo.requestClose();
+            JUnitUtil.dispose(e);
+        }
+        e = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 }

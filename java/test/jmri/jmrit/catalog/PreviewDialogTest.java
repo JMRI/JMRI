@@ -35,9 +35,9 @@ public class PreviewDialogTest {
     public void testCTor(@TempDir File folder) {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("PreviewDialog test frame");
-        // the second paramter is a key for the bundle
-        PreviewDialog t = new PreviewDialog(jf,"catalogs",folder,new String[0]);
-        Assert.assertNotNull("exists",t);
+        // the second parameter is a key for the bundle
+        PreviewDialog t = new PreviewDialog(jf,"catalogs", folder, new String[0]);
+        Assert.assertNotNull("exists", t);
         t.dispose();
         jf.dispose();
     }
@@ -46,7 +46,7 @@ public class PreviewDialogTest {
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         long time = System.currentTimeMillis();
-        log.debug("Start testPreviewDialog: time = {}ms",time);
+        log.debug("Start testPreviewDialog: time = {}ms", time);
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             InstanceManager.getDefault(DirectorySearcher.class).searchFS();
         });

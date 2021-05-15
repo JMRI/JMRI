@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,9 +78,11 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
                 elementControlpoint.setAttribute("index", "" + i);
 
                 Point2D pt = view.getBezierControlPoint(i);
-                elementControlpoint.setAttribute("x", String.format("%.1f", pt.getX()));
-                elementControlpoint.setAttribute("y", String.format("%.1f", pt.getY()));
-
+                // correctly working code copied from PositionablePointVewXml:
+                DecimalFormat twoDecFormat = new DecimalFormat("#.##");
+                elementControlpoint.setAttribute("x", ""+Float.valueOf(twoDecFormat.format(pt.getX())));
+                elementControlpoint.setAttribute("y", ""+Float.valueOf(twoDecFormat.format(pt.getY())));
+                // String.format follows the Locale of JMRI, resulting in ',' as decimal separator = invalid xml
                 elementControlpoints.addContent(elementControlpoint);
             }
             element.addContent(elementControlpoints);
@@ -282,7 +285,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         }
 
         if ( getAttributeBooleanValue(element, "hideConLines", false) ) {
-            lv.hideConstructionLines(TrackSegment.HIDECON);
+            lv.hideConstructionLines(TrackSegmentView.HIDECON);
         }
         // load decorations
         Element decorationsElement = element.getChild("decorations");

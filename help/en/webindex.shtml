@@ -750,7 +750,7 @@
 </li>
  
 <li>
-<a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
+<a href="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
 <ul></ul>
 </li>
 
@@ -977,6 +977,12 @@
 
  
 <li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor (Panels) </a>
 <ul></ul>
 </li>
@@ -1037,6 +1043,12 @@
 </li>
 
  
+<li>
+<a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
+<ul></ul>
+</li>
+
+ 
 <li>LocoNet <ul>
   
 <li>
@@ -1077,6 +1089,12 @@
   
 <li>
 <a href="package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">Firmware Downloader </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
 <ul></ul>
 </li>
 
@@ -1402,8 +1420,14 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
+<a href="html/apps/OperationsPro/index.shtml">OperationsPro </a>
 <ul>
+  
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml">Comprehensive Info </a>
+<ul></ul>
+</li>
+
   
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains">Building Trains </a>
@@ -2506,7 +2530,7 @@
 
  
 <li>
-<a href="html/scripts/yaat/YAAT.shtml">YAAT - YetAnotherAutoTrain.py </a>
+<a href="html/scripthelp/yaat/YAAT.shtml">YAAT - YetAnotherAutoTrain.py </a>
 <ul></ul>
 </li>
 

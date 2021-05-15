@@ -42,7 +42,7 @@ public class SignalPairTest {
         Assert.assertNotNull("Portal exists", portal);
         SignalPair sp = new SignalPair(mast, portal);
         Assert.assertNotNull("SignalPair exists", sp);
-        
+
         String msg = sp.getDiscription();
         Assert.assertNotNull("msg exists", msg);
     }
@@ -59,7 +59,7 @@ public class SignalPairTest {
         Assert.assertNotNull("CPE exists", cpe );
         cb = cpe.getCircuitBuilder();
         Assert.assertNotNull("CB exists", cb );
-        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        //fixed: jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
         Assert.assertNotNull("PortMgr exists", portalMgr );
         mastMgr = InstanceManager.getDefault(SignalMastManager.class);
@@ -81,6 +81,7 @@ public class SignalPairTest {
             cpe.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<Runnable> rlist = sm.getRunnables();

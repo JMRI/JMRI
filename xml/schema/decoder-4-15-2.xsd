@@ -918,7 +918,7 @@
             <xs:attribute name="writeOnly" type="yesNoType" default="no" />
             <xs:attribute name="default" type="xs:string"/>
             <xs:attribute name="comment" type="xs:string"/>
-            <xs:attribute name="item" type="xs:string"/><!-- TODO should be use="required" !!! -->
+            <xs:attribute name="item" type="xs:string" use="required"/><!-- required since 4.23.3 -->
             <xs:attribute name="minFn" type="xs:int">
               <xs:annotation><xs:documentation>Only present if the decoder has at least minFn functions defined in numFn</xs:documentation></xs:annotation>
             </xs:attribute>

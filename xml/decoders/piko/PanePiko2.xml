@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - Created as a separate file from Uhlenbrock_73400.xml v2    -->
+<!-- 					Alain Le Marchand (2014-05-09)						-->
+<!-- 	Valid for 731x0, 734x0, 764x0 families (non exhaustive list)        -->
+<!-- 	-->
+<!-- version 2 - Created as a separate file from PaneUhlenbrock.xml v2    -->
+<!-- 					Konrad Malkowski (2021-01-31)						-->
+<!-- 	 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Piko</name>
+  <column>
+    <separator/>
+    <label>
+      <text>Piko configuration</text>
+      <text xml:lang="de">Piko Konfiguration</text>
+      <text xml:lang="nl">Piko Configuratie</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+      <display item="RailCom" format="checkbox"/>	  
+      <display item="RailCom broadcast"/>
+      <display item="RailCom data transmission"/>	  
+    <label>
+      <text> </text>
+    </label>
+      <display item="Selectrix Operation" format="checkbox"/>
+      <display item="Mfx Operation" format="checkbox"/>
+      <display item="DCC Operation" format="checkbox"/>	 
+      <display item="DC Operation" format="checkbox"/>	 
+      <display item="AC Operation" format="checkbox"/>	 
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Braking</text>
+      <text xml:lang="de">Bremsen</text>
+      <text xml:lang="nl">Remmen</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ABC stop with asymmetrical DCC (right rail higher)"/>
+    <display item="ABC stop with asymmetrical DCC (left rail higher)"/>
+    <display item="DC stop when polarity in opposite direction"/>
+    <display item="DC stop when polarity in same direction"/>
+    <display item="ABC stop when moving backward (enabled) or forward (disabled)"/>
+      <!-- CVs 97-98 -->
+    <display item="ABC Braking Value" format="hslider"/> <!--IntelliDrive2-->
+    <display item="ABC Slow Speed" format="hslider"/>    <!--IntelliDrive2-->
+      <group exclude="76560">
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>Constant Distance</text>
+            <text xml:lang="de">Konstanter Bremsweg</text>
+            <text xml:lang="nl">Vaste Remweg</text>
+        </label>
+      </group>
+          <display item="Constant Brakedist Threshold"/>
+          <display item="Constant Brakedist 1"/>
+          <display item="Constant Brakedist 2"/>
+          <display item="Constant Brakedist Max"/>
+          <display item="Constant Brakedist Rest"/>
+          <display item="Constant Brakedist Trigger"/>
+  </column>
+  <column>
+      <label>
+        <text>Coupling</text>
+        <text xml:lang="de">Kupplungen</text>
+        <text xml:lang="nl">Elektr. koppeling</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Coupling option 1"/>
+      <display item="Coupling option 2"/>
+      <display item="Coupling option 3"/>
+      <display item="Coupling option 4"/>
+    <label>
+      <text> </text>
+    </label>
+      <label>
+        <text>Smoke Generator</text>
+        <text xml:lang="de">Rauchgenerator</text>
+        <text xml:lang="nl">Rookgenerator</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Smoke generator option 1"/>
+      <display item="Smoke generator option 2" format="checkbox"/>
+      <display item="Smoke generator option 3"/>
+      <display item="Smoke generator option 4"/>
+      <display item="Smoke generator option 5"/>
+      <display item="Smoke generator option 6"/>
+      <display item="Smoke generator option 7"/>
+  </column>
+  <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Outputs monitoring off 1" format="checkbox"/>
+      <display item="Outputs monitoring off 2" format="checkbox"/>
+      <display item="Outputs monitoring off 3" format="checkbox"/>
+      <display item="Cv51 bit2"/>
+      <display item="Cv51 bit7"/>
+      <display item="Cv51 bit3" format="checkbox"/>
+      <display item="Cv51 bit6" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>		  
+      <label>
+        <text>Errors or Information (Read-Only)</text>
+        <text xml:lang="de">Fehler oder Information (Read-Only)</text>
+        <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
+        <text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
+      </label>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Shutdown Temperature"/>	  
+      <display item="Short circuit supervision"/>
+      <display item="Function Outputs Short Constant"/>
+      <display item="Motor Output Short Constant"/>
+      <display item="Lights Short circuit supervision"/>
+      <display item="Short circuit supervision 1" format="checkbox"/>
+      <display item="Short circuit supervision 2" format="checkbox"/>
+      <display item="Short circuit supervision 3" format="checkbox"/>	  
+      <display item="Error register"/>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Offset Register"/>
+      <display item="Page Register"/>
+      <label>
+          <text> </text>
+      </label>
+      <group exclude="76560"> <!-- only for IntelliDrive2 2017 and later-->
+          <label>
+              <text>PWM</text>
+          </label>
+          <row>
+            <display item="PWM Duration" format="hslider"/>
+          </row>
+          <row>
+            <display item="PWM Wait" format="hslider"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A0"/>
+              <display item="PWM Cross on A0" format="checkbox"/>
+          </row>
+          <row>
+            <display item="PWM Modulation on A1"/>
+            <display item="PWM Cross on A1" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A2"/>
+              <display item="PWM Cross on A2" format="checkbox"/>
+          </row>
+          <label><text>      </text></label>
+          <!-- BEGIN - PWM Phase Grid -->
+          <grid gridy="2" weightx="1" ipadx="1">
+              <!-- BEGIN - Row 1 (headers)-->
+              <group exclude="73115">
+                  <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>AUX0</text></label></griditem>
+                  <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX1</text></label></griditem>
+                  <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
+              </group>
+              <!-- BEGIN - Row 2 (checkboxes)-->
+              <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+                  <display item="PWM Phase A0" format="checkbox">
+                      <label>Flip PWM Phase:</label>
+                      <label xml:lang="de">PWM Phase 180:</label>
+                      <label xml:lang="nl">PWM Fase omkeren:</label>
+                  </display>
+              </griditem>
+              <griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A1" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A2" format="checkbox" label=""/>
+              </griditem>
+          </grid>
+      </group>
+  </column>
+</pane>

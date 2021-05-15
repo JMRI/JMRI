@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -31,6 +32,8 @@ import jmri.jmrit.display.palette.TextItemPanel;
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
     protected Editor _editor = null;
+
+    private String _id;            // user's Id or null if no Id
 
     private ToolTip _tooltip;
     protected boolean _showTooltip = true;
@@ -71,6 +74,20 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         }
         pos.updateSize();
         return pos;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setId(String id) throws Positionable.DuplicateIdException {
+        if (Objects.equals(this._id, id)) return;
+        _editor.positionalIdChange(this, id);
+        this._id = id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getId() {
+        return _id;
     }
 
     @Override

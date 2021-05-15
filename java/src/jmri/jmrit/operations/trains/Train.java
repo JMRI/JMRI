@@ -9,7 +9,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -1003,11 +1002,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return The type names for cars and or engines
      */
     protected String[] getTypeNames() {
-        String[] types = new String[_typeList.size()];
-        for (int i = 0; i < _typeList.size(); i++) {
-            types[i] = _typeList.get(i);
-        }
-        return types;
+        return _typeList.toArray(new String[0]);
     }
 
     public String[] getCarTypeNames() {
@@ -1017,11 +1012,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 list.add(type);
             }
         }
-        String[] types = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            types[i] = list.get(i);
-        }
-        return types;
+        return list.toArray(new String[0]);
     }
 
     public String[] getLocoTypeNames() {
@@ -1031,11 +1022,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 list.add(type);
             }
         }
-        String[] types = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            types[i] = list.get(i);
-        }
-        return types;
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -1045,12 +1032,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param types The type names for cars and or engines
      */
     protected void setTypeNames(String[] types) {
-        if (types.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(types);
-        for (String type : types) {
-            _typeList.add(type);
+        if (types.length > 0) {
+            java.util.Arrays.sort(types);
+            for (String type : types) {
+                _typeList.add(type);
+            }
         }
     }
 
@@ -1131,13 +1117,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     List<String> _roadList = new ArrayList<>();
 
     protected void setRoadNames(String[] roads) {
-        if (roads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(roads);
-        for (String road : roads) {
-            if (!road.isEmpty()) {
-                _roadList.add(road);
+        if (roads.length > 0) {
+            java.util.Arrays.sort(roads);
+            for (String road : roads) {
+                if (!road.isEmpty()) {
+                    _roadList.add(road);
+                }
             }
         }
     }
@@ -1146,17 +1131,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * Provides a list of road names that the train will either service or exclude.
      * See setRoadOption
      *
-     * @return Array of road names as Strings
+     * @return Array of sorted road names as Strings
      */
     public String[] getRoadNames() {
-        String[] roads = new String[_roadList.size()];
-        for (int i = 0; i < _roadList.size(); i++) {
-            roads[i] = _roadList.get(i);
+        String[] roads = _roadList.toArray(new String[0]);
+        if (_roadList.size() > 0) {
+            java.util.Arrays.sort(roads);
         }
-        if (_roadList.size() == 0) {
-            return roads;
-        }
-        java.util.Arrays.sort(roads);
         return roads;
     }
 
@@ -1260,13 +1241,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     List<String> _loadList = new ArrayList<>();
 
     protected void setLoadNames(String[] loads) {
-        if (loads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(loads);
-        for (String load : loads) {
-            if (!load.isEmpty()) {
-                _loadList.add(load);
+        if (loads.length > 0) {
+            java.util.Arrays.sort(loads);
+            for (String load : loads) {
+                if (!load.isEmpty()) {
+                    _loadList.add(load);
+                }
             }
         }
     }
@@ -1278,14 +1258,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Array of load names as Strings
      */
     public String[] getLoadNames() {
-        String[] loads = new String[_loadList.size()];
-        for (int i = 0; i < _loadList.size(); i++) {
-            loads[i] = _loadList.get(i);
+        String[] loads = _loadList.toArray(new String[0]);
+        if (_loadList.size() > 0) {
+            java.util.Arrays.sort(loads);
         }
-        if (_loadList.size() == 0) {
-            return loads;
-        }
-        java.util.Arrays.sort(loads);
         return loads;
     }
 
@@ -1393,14 +1369,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Array of owner names as Strings
      */
     public String[] getOwnerNames() {
-        String[] owners = new String[_ownerList.size()];
-        for (int i = 0; i < _ownerList.size(); i++) {
-            owners[i] = _ownerList.get(i);
+        String[] owners = _ownerList.toArray(new String[0]);
+        if (_ownerList.size() > 0) {
+            java.util.Arrays.sort(owners);
         }
-        if (_ownerList.size() == 0) {
-            return owners;
-        }
-        java.util.Arrays.sort(owners);
         return owners;
     }
 
@@ -1774,6 +1746,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                 .equals(TrainCommon.splitString(rLoc.getName())) &&
                         TrainCommon.splitString(getTrainTerminatesName())
                                 .equals(TrainCommon.splitString(rldest.getName())) &&
+                        !TrainCommon.splitString(getTrainDepartsName())
+                                .equals(TrainCommon.splitString(getTrainTerminatesName())) &&
                         !isLocalSwitcher() &&
                         !car.isCaboose() &&
                         !car.hasFred() &&
@@ -2944,7 +2918,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return true if train build failed.
      */
-    public boolean getBuildFailed() {
+    public boolean isBuildFailed() {
         return _buildFailed;
     }
 
@@ -3026,7 +3000,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public boolean openFile() {
-        File file = createCSVManifestFile();
+        File file = createCsvManifestFile();
         if (file == null || !file.exists()) {
             log.warn("CSV manifest file missing for train {}", getName());
             return false;
@@ -3036,13 +3010,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public boolean runFile() {
-        File file = createCSVManifestFile();
+        File file = createCsvManifestFile();
         if (file == null || !file.exists()) {
             log.warn("CSV manifest file missing for train {}", getName());
             return false;
         }
         // Set up to process the CSV file by the external Manifest program
-        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(file);
+        InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
                 JOptionPane.showMessageDialog(null,
@@ -3056,7 +3030,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    public File createCSVManifestFile() {
+    public File createCsvManifestFile() {
         if (isModified()) {
             new TrainManifest(this);
             try {
@@ -3068,7 +3042,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         File file = InstanceManager.getDefault(TrainManagerXml.class).getTrainCsvManifestFile(getName());
         if (!file.exists()) {
-            log.warn("CSV manifest file was not created for train {}", getName());
+            log.warn("CSV manifest file was not created for train ({})", getName());
             return null;
         }
         return file;
@@ -3367,15 +3341,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().isEmpty()) {
-            Editor editor = null;
-            Set<Editor> panelList = InstanceManager.getDefault(EditorManager.class).getAll();
-            for (Editor panelEditor : panelList) {
-                if (panelEditor.getTitle().equals(Setup.getPanelName()) ||
-                        panelEditor.getTargetFrame().getTitle().equals(Setup.getPanelName())) {
-                    editor = panelEditor;
-                    break;
-                }
-            }
+            Editor editor = InstanceManager.getDefault(EditorManager.class).getTargetFrame(Setup.getPanelName());
             if (editor != null) {
                 try {
                     _trainIcon = editor.addTrainIcon(getIconName());
@@ -3993,7 +3959,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.BUILD_CONSIST, isBuildConsistEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILT, isBuilt() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILD, isBuildEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.BUILD_FAILED, getBuildFailed() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.BUILD_FAILED, isBuildFailed() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILD_FAILED_MESSAGE, getBuildFailedMessage());
         e.setAttribute(Xml.PRINTED, isPrinted() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.MODIFIED, isModified() ? Xml.TRUE : Xml.FALSE);

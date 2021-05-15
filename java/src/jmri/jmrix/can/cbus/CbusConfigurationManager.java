@@ -50,8 +50,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.store(getCbusPreferences(), CbusPreferences.class);
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
         
-        InstanceManager.setDefault(ClockControl.class, getClockControl());
-
         InstanceManager.setSensorManager(getSensorManager());
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
@@ -76,6 +74,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setLightManager(getLightManager());
         
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
+        
+        // Clock Control initialised last so CbusSensorManager is first, not
+        // InternalSensorManager when ISCLOCKRUNNING may be created.
+        InstanceManager.setDefault(ClockControl.class, getClockControl());
         
     }
 
@@ -158,7 +160,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public CbusDccProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new CbusDccProgrammerManager(
-                    new CbusDccProgrammer(adapterMemo.getTrafficController()), adapterMemo);
+                    new CbusDccProgrammer(adapterMemo), adapterMemo);
         }
         return programmerManager;
     }

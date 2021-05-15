@@ -35,7 +35,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
         beanType = InstanceManager.getDefault(MeterManager.class).typeLetter();        
         tc = memo.getDCCppTrafficController();
 
-        updateTask = new MeterUpdateTask(3000, 10000) {
+        updateTask = new MeterUpdateTask(10000, 10000) {
             @Override
             public void requestUpdateFromLayout() {
                 tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
@@ -48,7 +48,9 @@ public class DCCppPredefinedMeters implements DCCppListener {
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
 
         updateTask.initTimer();
-        updateTask.enable(); //enable the send even if no meters exist yet
+        
+        //request one 'c' reply to set up the meters
+        tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);       
     }
 
     public void setDCCppTrafficController(DCCppTrafficController controller) {
@@ -141,7 +143,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
     // Handle message timeout notification, no retry
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message '{}', not retrying");
+        log.debug("Notified of timeout on message '{}', not retrying", msg);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPredefinedMeters.class);

@@ -223,7 +223,7 @@ should include explanatory text:
 
       <p>For a summary of current Javadoc errors in the code, see
       <a href=
-      "http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
+      "https://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
       Builds Jenkins job</a>.</p>
 
       <h2>UML and UmlGraph for Developers</h2>UML is a broad and

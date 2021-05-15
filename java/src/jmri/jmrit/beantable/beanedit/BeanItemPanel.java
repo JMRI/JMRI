@@ -1,12 +1,14 @@
 package jmri.jmrit.beantable.beanedit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 
 /**
  * Hold the information for each bean panel in a structured manner.
+ * The Panel enabled status and Tool-tip are used in the Tab Selection Menu Titles.
  */
 public class BeanItemPanel extends JPanel {
 
@@ -44,20 +46,24 @@ public class BeanItemPanel extends JPanel {
         this.reset = reset;
     }
 
-    AbstractAction save;
-    AbstractAction reset;
+    private AbstractAction save;
+    private AbstractAction reset;
 
-    ArrayList<BeanEditItem> items = new ArrayList<BeanEditItem>();
+    private final ArrayList<BeanEditItem> items = new ArrayList<>();
 
     public void addItem(BeanEditItem bei) {
         items.add(bei);
     }
 
+    /**
+     * Get List of Bean Edit Items
+     * @return unmodifiable List.
+     */
     public List<BeanEditItem> getListOfItems() {
-        return items;
+        return Collections.unmodifiableList(items);
     }
 
-    String name;
+    private String name;
 
     @Override
     public void setName(String name) {

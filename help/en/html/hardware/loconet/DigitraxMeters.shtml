@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
 
 <html lang="en">
 <head>
   <title>JMRI Hardware Support - Digitrax "Meters"</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <meta name="author" content="B. Milhaupt">
-  <meta name="keywords" content=
-  "Digitrax DCS Command Station Meters">
+  <meta name="keywords" content="Digitrax DCS Command Station Meters">
   <!--#include virtual="/Style.shtml" -->
 </head>
 
@@ -19,7 +18,8 @@
 
       <h1>Hardware Support: Digitrax "Meters"</h1>
       <table>
-          <tr><td><img src="images/TrackVoltageMeter.png"/></td><td><img src="images/CurrentMeter.png"/></td></tr>
+          <tr><td><img src="images/TrackVoltageMeter.png" alt="Volt meter screen shot"/></td><td><img
+                  src="images/CurrentMeter.png" alt="Current meter screen shot"/></td></tr>
       </table>
       <div class="toc">
         <ul>
@@ -52,7 +52,7 @@
       <p>The JMRI's LocoNet functionality supports the voltage and current reporting
           from the following Digitrax devices:</p>
       <table border='2'>
-          <tr><td><strong>Device</strong<td>
+          <tr><td><strong>Device</strong><td>
               <td><strong>Typical "name" of voltage meter</strong></td>
               <td><strong>Typical "name" of current meter</strong></td></tr>
           <tr><td>DCS210</td><td>TVDCS210(s/n130)Voltage</td><td>TVDCS210(s/n130)InputCurrent</td></tr>

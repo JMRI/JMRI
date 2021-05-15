@@ -62,7 +62,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s = new Dcc4PcSensor(systemName, userName);
         s.setUserName(userName);
         extractBoardID(systemName);

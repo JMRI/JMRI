@@ -343,6 +343,7 @@ public class LayoutSlipTest {
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -353,7 +354,7 @@ public class LayoutSlipTest {
             lts = new LayoutSingleSlip("single", layoutEditor);
             lvs = new LayoutSingleSlipView(lts, new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
             layoutEditor.addLayoutTrack(lts, lvs);
-            
+
             ltd = new LayoutDoubleSlip("double", layoutEditor);
             lvd = new LayoutDoubleSlipView(ltd, new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
             layoutEditor.addLayoutTrack(ltd, lvd);
@@ -379,6 +380,6 @@ public class LayoutSlipTest {
             lvd = null;
         }
     }
-    
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipTest.class);
 }

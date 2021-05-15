@@ -23,12 +23,12 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {
+    public void checkActiveMsgSent() {
         Assert.assertEquals(("[5f8] 98 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
-    public void checkOffMsgSent() {
+    public void checkInactiveMsgSent() {
         Assert.assertEquals(("[5f8] 99 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
@@ -73,12 +73,12 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         tcis.outbound.clear();
         t.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
-        checkOnMsgSent();
+        checkActiveMsgSent();
 
         tcis.outbound.clear();
         t.setKnownState(Sensor.INACTIVE);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
-        checkOffMsgSent();
+        checkInactiveMsgSent();
         
         tcis.outbound.clear();
         t.setKnownState(Sensor.UNKNOWN);
@@ -89,13 +89,13 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         t.setInverted(true);
         t.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
-        checkOffMsgSent();  
+        checkInactiveMsgSent();
 
         tcis.outbound.clear();
         t.setInverted(true);
         t.setKnownState(Sensor.INACTIVE);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
-        checkOnMsgSent();
+        checkActiveMsgSent();
         
         tcis.outbound.clear();
         t.requestUpdateFromLayout();
@@ -437,6 +437,34 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setRtr(true);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
     
+    }
+    
+    @Test
+    public void checkNoMsgSentOnSetStateUnknownInconsistent() throws jmri.JmriException {
+        
+        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(("tcis 0"),0,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(("tcis 1"),1,(tcis.outbound.size()));
+
+        t.setKnownState(Sensor.UNKNOWN);
+        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(("tcis still 1"),1,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.INACTIVE);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(("tcis 2"),2,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertTrue(t.getKnownState() == Sensor.INCONSISTENT);
+        Assert.assertEquals(("tcis still 2"),2,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(("tcis 3"),3,(tcis.outbound.size()));
+
     }
     
     private TrafficControllerScaffold tcis;

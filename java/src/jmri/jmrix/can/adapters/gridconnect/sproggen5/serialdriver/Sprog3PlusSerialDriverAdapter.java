@@ -1,9 +1,11 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,14 +17,19 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
- * @author Andrew Crosland 2019
+ * @author Andrew Crosland Copyright (C) 2019, 2021
  */
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
         super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        option2Name = "CANID";
+        options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
+        _progMode = ConfigurationManager.ProgModeSwitch.SPROG3PLUS;
     }
 
+    protected ProgModeSwitch _progMode;
+    
     /**
      * Set up all of the other objects to operate with a SPROG Gen 5
      * connected to this port.
@@ -31,10 +38,9 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        // This connection has no actual CAN interface so set a fixed CAN ID
         TrafficController tc = new MergTrafficController();
         try {
-            tc.setCanId(127);
+            tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
             log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
@@ -47,9 +53,11 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
-        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
-        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
-
+        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.CBUS);
+        this.getSystemConnectionMemo().setProgModeSwitch(_progMode);
+        this.getSystemConnectionMemo().setSupportsCVHints(true);
+        this.getSystemConnectionMemo().setPowerOnArst(false);
+        
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();

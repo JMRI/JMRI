@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2020
+ * @author Klaus Killinger Copyright (C) 2018-2021
  */
 // Usage:
 // SteamSound() : constructor
@@ -148,7 +148,7 @@ class SteamSound extends EngineSound {
     @Override
     public void changeThrottle(float t) {
         // Don't do anything, if engine is not started or auto-start is active.
-        if (engine_started) {
+        if (isEngineStarted()) {
             if (t < 0.0f) {
                 // DO something to shut down
                 //t = 0.0f;
@@ -195,6 +195,7 @@ class SteamSound extends EngineSound {
     @Override
     public void shutdown() {
         for (RPMSound rps : rpm_sounds) {
+            if (rps.use_chuff) rps.stopChuff();
             rps.sound.stop();
         }
     }

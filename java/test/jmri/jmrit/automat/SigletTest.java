@@ -26,20 +26,20 @@ public class SigletTest {
             }
         };
         Assert.assertNotNull("exists",t);
-        
+
         t.setName("foo");
         Assert.assertEquals("foo", t.getName());
-        
+
         Assert.assertFalse(defined);
         t.start();
-        
-        JUnitUtil.waitFor( ()->{ return defined; }, "defineIO run"); 
+
+        JUnitUtil.waitFor( ()->{ return defined; }, "defineIO run");
         Assert.assertTrue(output); // first cycle included
 
         output = false;
         is1.setState(Sensor.ACTIVE);
-        
-        JUnitUtil.waitFor( ()->{ return output; }, "setOutput run again"); 
+
+        JUnitUtil.waitFor( ()->{ return output; }, "setOutput run again");
         t.stop();
     }
 
@@ -57,11 +57,13 @@ public class SigletTest {
             }
         };
         Assert.assertNotNull("exists",t);
-        
-        Assert.assertFalse(defined);
-        t.start();
 
-        jmri.util.JUnitAppender.assertErrorMessage("Siglet start invoked (without a name), but no inputs provided"); 
+        Assert.assertFalse(defined);
+        try {
+            t.start();
+        } catch (IllegalArgumentException e) {
+            jmri.util.JUnitAppender.assertErrorMessage("Siglet start invoked (without a name), but no inputs provided");
+        }
         t.stop();
     }
 
@@ -78,14 +80,16 @@ public class SigletTest {
             }
         };
         Assert.assertNotNull("exists",t);
-        
+
         t.setName("foo");
         Assert.assertEquals("foo", t.getName());
-        
-        Assert.assertFalse(defined);
-        t.start();
 
-        jmri.util.JUnitAppender.assertErrorMessage("Siglet start invoked for \"foo\", but no inputs provided"); 
+        Assert.assertFalse(defined);
+        try {
+            t.start();
+        } catch (IllegalArgumentException e) {
+            jmri.util.JUnitAppender.assertErrorMessage("Siglet start invoked for \"foo\", but no inputs provided");
+        }
         t.stop();
     }
 

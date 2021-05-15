@@ -57,6 +57,7 @@ public class MoveSelectionDialogTest {
             moveSelectionDialog = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

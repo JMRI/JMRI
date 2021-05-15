@@ -41,6 +41,8 @@ import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.JTablePersistenceManager;
@@ -319,6 +321,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return 0;
     }
 
+    protected enum TrainsFrom {
+        TRAINSFROMROSTER,
+        TRAINSFROMOPS,
+        TRAINSFROMUSER;
+    }
+
     // Dispatcher options (saved to disk if user requests, and restored if present)
     private LayoutEditor _LE = null;
     public static final int SIGNALHEAD = 0x00;
@@ -329,9 +337,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _UseConnectivity = false;
     private boolean _HasOccupancyDetection = false; // "true" if blocks have occupancy detection
     private boolean _SetSSLDirectionalSensors = true;
-    private boolean _TrainsFromRoster = true;
-    private boolean _TrainsFromTrains = false;
-    private boolean _TrainsFromUser = false;
+    private TrainsFrom _TrainsFrom = TrainsFrom.TRAINSFROMROSTER;
     private boolean _AutoAllocate = false;
     private boolean _AutoRelease = false;
     private boolean _AutoTurnouts = false;
@@ -743,6 +749,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected void queueReleaseOfReservedSections(String trainName) {
         if (_AutoRelease || _AutoAllocate) {
             autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.RELEASE_RESERVED, trainName));
+        }
+    }
+
+    /*
+     * Queue a release all reserved sections for a train.
+     */
+    protected void queueAllocate(AllocationRequest aRequest) {
+        if (_AutoRelease || _AutoAllocate) {
+            autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.ALLOCATE_IMMEDIATE, aRequest));
         }
     }
 
@@ -1427,7 +1442,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         AllocationRequest ar = at.initializeFirstAllocation();
-        if (ar != null) {
+        if (ar == null) {
+            log.debug("First allocation returned null, normal for auotallocate");
+        }
+        // removed. initializeFirstAllocation already does this. 
+        /* if (ar != null) {
             if ((ar.getSection()).containsBlock(at.getStartBlock())) {
                 // Active Train is in the first Section, go ahead and allocate it
                 AllocatedSection als = allocateSection(ar, null);
@@ -1435,7 +1454,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     log.error("Problem allocating the first Section of the Active Train - {}", at.getActiveTrainName());
                 }
             }
-        }
+        } */
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
@@ -1535,10 +1554,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *                          suppress error message dialogs from this method.
      * @param frame             window request is from, or "null" if not from a
      *                          window
+     * @param firstAllocation           True if first allocation                         
      * @return true if successful; false otherwise
      */
     protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
-            int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
+            int seqNumber, boolean showErrorMessages, JmriJFrame frame,boolean firstAllocation) {
         // check input entries
         if (activeTrain == null) {
             if (showErrorMessages) {
@@ -1579,14 +1599,27 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         AllocationRequest ar = findAllocationRequestInQueue(section, seqNumber, direction, activeTrain);
         if (ar == null) {
             ar = new AllocationRequest(section, seqNumber, direction, activeTrain);
-            allocationRequests.add(ar);
-            if (_AutoAllocate) {
-                queueScanOfAllocationRequests();
+            if (!firstAllocation && _AutoAllocate) {
+                allocationRequests.add(ar);
+                if (_AutoAllocate) {
+                    queueScanOfAllocationRequests();
+                }
+            } else if (_AutoAllocate) {  // It is auto allocate and First section
+                queueAllocate(ar);
+            } else {
+                // manual
+                allocationRequests.add(ar);
             }
         }
         activeTrainsTableModel.fireTableDataChanged();
         allocationRequestTableModel.fireTableDataChanged();
         return true;
+    }
+    
+    protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
+            int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
+        return requestAllocation( activeTrain,  section,  direction,
+                 seqNumber,  showErrorMessages,  frame, false);
     }
 
     // ensures there will not be any duplicate allocation requests
@@ -1729,7 +1762,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    nextSection = autoChoice(secList, ar);
+                    nextSection = autoChoice(secList, ar, seqNum);
                 } else {
                     nextSection = dispatcherChoice(secList, ar);
                 }
@@ -1751,7 +1784,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 nextSection = secList.get(0);
             } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    nextSection = autoChoice(secList, ar);
+                    nextSection = autoChoice(secList, ar, nextSectionSeqNo);
                 } else {
                     nextSection = dispatcherChoice(secList, ar);
                 }
@@ -1875,8 +1908,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
         //   if not in the correct position.
         // Note: Turnout checking and/or setting is not performed when allocating an extra section.
+        List<LayoutTrackExpectedState<LayoutTurnout>> expectedTurnOutStates = null;
         if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -99)) {
-            if (!checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection())) {
+            expectedTurnOutStates = checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection());
+            if (expectedTurnOutStates == null) {
                 return null;
             }
             Section preSec = s;
@@ -1889,7 +1924,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     log.debug("Section is beyond held mast do not set turnouts {}", (tmpcur != null ? tmpcur.getDisplayName(USERSYS) : "null"));
                     break;
                 }
-                if (!checkTurnoutStates(tmpcur, tmpSeqNo, se, at, preSec)) {
+                if (checkTurnoutStates(tmpcur, tmpSeqNo, se, at, preSec) == null) {
                     return null;
                 }
                 preSec = tmpcur;
@@ -1903,6 +1938,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
 
         as = allocateSection(at, s, ar.getSectionSeqNumber(), nextSection, nextSectionSeqNo, ar.getSectionDirection());
+        if (as != null) {
+            as.setAutoTurnoutsResponse(expectedTurnOutStates);
+        }
+
         if (intermediateSections.size() > 1 && mastHeldAtSection != s) {
             Section tmpcur = nextSection;
             int tmpSeqNo = nextSectionSeqNo;
@@ -1936,7 +1975,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 ix = i;
             }
         }
-        allocationRequests.remove(ix);
+        if (ix != -1) {
+            allocationRequests.remove(ix);
+        }
         ar.dispose();
         allocationRequestTableModel.fireTableDataChanged();
         activeTrainsTableModel.fireTableDataChanged();
@@ -1950,7 +1991,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             requestNextAllocation(at);
             queueScanOfAllocationRequests();
         }
-
         return as;
     }
 
@@ -1999,8 +2039,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return as;
     }
 
-    boolean checkTurnoutStates(Section s, int sSeqNum, Section nextSection, ActiveTrain at, Section prevSection) {
-        boolean turnoutsOK = true;
+    /**
+     *
+     * @param s Section to check
+     * @param sSeqNum Sequence number of section
+     * @param nextSection section after
+     * @param at the active train
+     * @param prevSection the section before
+     * @return null if error else a list of the turnouts and their expected states.
+     */
+    List<LayoutTrackExpectedState<LayoutTurnout>> checkTurnoutStates(Section s, int sSeqNum, Section nextSection, ActiveTrain at, Section prevSection) {
+        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutsOK;
         if (_AutoTurnouts || at.getAutoRun()) {
             // automatically set the turnouts for this section before allocation
             turnoutsOK = autoTurnouts.setTurnoutsInSection(s, sSeqNum, nextSection,
@@ -2010,9 +2059,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             turnoutsOK = autoTurnouts.checkTurnoutsInSection(s, sSeqNum, nextSection,
                     at, _LE, prevSection);
         }
-        if (!turnoutsOK) {
+        if (turnoutsOK == null) {
             if (_AutoAllocate) {
-                return false;
+                return turnoutsOK;
             } else {
                 // give the manual dispatcher a chance to override turnouts not OK
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
@@ -2020,11 +2069,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
-                    return false;   // return without allocating if "No" response
+                    return null;
                 }
+                // return empty list
+                turnoutsOK = new ArrayList<>();
             }
         }
-        return true;
+        return turnoutsOK;
     }
 
     List<HeldMastDetails> heldMasts = new ArrayList<>();
@@ -2139,7 +2190,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     }
                                 }
                             } else {
-                                for (int i = blas.size(); i >= 0; i--) {
+                                for (int i = blas.size() - 1; i >= 0; i--) {
                                     //The block we get to is occupied therefore the subsequent blocks have not been entered
                                     if (blas.get(i).getState() == Block.OCCUPIED) {
                                         if (ar != null) {
@@ -2165,8 +2216,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     // automatically make a choice of next section
-    private Section autoChoice(List<Section> sList, AllocationRequest ar) {
-        Section tSection = autoAllocate.autoNextSectionChoice(sList, ar);
+    private Section autoChoice(List<Section> sList, AllocationRequest ar, int sectionSeqNo) {
+        Section tSection = autoAllocate.autoNextSectionChoice(sList, ar, sectionSeqNo);
         if (tSection != null) {
             return tSection;
         }
@@ -2449,28 +2500,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected float getMaximumLineSpeed() {
         return maximumLineSpeed;
     }
-    protected boolean getTrainsFromRoster() {
-        return _TrainsFromRoster;
+
+    protected void setTrainsFrom(TrainsFrom value ) {
+        _TrainsFrom = value;
     }
 
-    protected void setTrainsFromRoster(boolean set) {
-        _TrainsFromRoster = set;
-    }
-
-    protected boolean getTrainsFromTrains() {
-        return _TrainsFromTrains;
-    }
-
-    protected void setTrainsFromTrains(boolean set) {
-        _TrainsFromTrains = set;
-    }
-
-    protected boolean getTrainsFromUser() {
-        return _TrainsFromUser;
-    }
-
-    protected void setTrainsFromUser(boolean set) {
-        _TrainsFromUser = set;
+    protected TrainsFrom getTrainsFrom() {
+        return _TrainsFrom;
     }
 
     protected boolean getAutoAllocate() {
@@ -2523,6 +2559,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
+    protected AutoTurnouts getAutoTurnoutsHelper () {
+        return autoTurnouts;
+    }
 
     protected boolean getAutoTurnouts() {
         return _AutoTurnouts;
@@ -2643,7 +2682,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     public ActiveTrain getActiveTrainForRoster(RosterEntry re) {
-        if (!_TrainsFromRoster) {
+        if ( _TrainsFrom != TrainsFrom.TRAINSFROMROSTER) {
             return null;
         }
         for (ActiveTrain at : activeTrainsList) {

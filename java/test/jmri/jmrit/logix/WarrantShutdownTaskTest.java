@@ -17,7 +17,7 @@ public class WarrantShutdownTaskTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantShutdownTask t = new WarrantShutdownTask("test warrant shtudown task");
+        WarrantShutdownTask t = new WarrantShutdownTask("test warrant shutdown task");
         assertThat(t).withFailMessage("exists").isNotNull();
     }
 

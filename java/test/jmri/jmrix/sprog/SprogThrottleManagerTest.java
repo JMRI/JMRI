@@ -39,5 +39,4 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         JUnitUtil.tearDown();
     }
 
-
 }

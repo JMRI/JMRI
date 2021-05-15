@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqDerailerCommand;
 
 public class SetDerailerPacketTest {
-  private byte[] testPacket = { RqDerailerCommand.Passable.value };
+  private final byte[] testPacket = { RqDerailerCommand.Passable.value };
 
   @Test
   public void getIdTest() {

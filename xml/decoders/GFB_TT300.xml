@@ -31,14 +31,14 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Non-DCC operation</label>
       </variable>
-      <variable item="Decoder Version" CV="7" readOnly="yes" default="20">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="20">
         <decVal/>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
         <label>Manufacturer Version No: </label>
       </variable>
-      <variable item="Manufacturer" CV="8" readOnly="yes" default="46">
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="46">
         <decVal/>
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>

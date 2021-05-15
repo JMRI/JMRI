@@ -36,6 +36,8 @@
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.7" lastUpdated="2020/05/02"/>
   <!-- v1.7,  added version 37 firmware capabilities,  Ronald Kuhn, 28 Feb 2018 -->
   <!-- v1.8,  merged MX64x/MX65x-Decoder and added version 39 firmware capabilities,  Ronald Kuhn, 02 May 2020 -->
+  <version author="Pierre Billon   pierre.bln@me.com" version="1.8" lastUpdated="2021/03/06"/>
+  <!-- v1.9,  added sound decoder MX605 (special Kato version for N-scale ICE 4) . Due to the combination with MX605FL & MX605SL installed in same engine, Front/rear lights and FO 1 for interior lighting listed as functons of this decoder,  Pierre Billon, 06 Mar 2021 -->
 
   <decoder>
     <family name="Zimo Unified software (version 39+)" mfg="Zimo">
@@ -523,6 +525,17 @@
         </output>
         <size length="20" width="9.5" height="3.5" units="mm"/>
       </model>
+      <model model="MX605 version 39+" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="189">
+        <output name="1" label="Front Light (MX605SL)">
+          <label xml:lang="de">Lvor (MX605SL)</label>
+        </output>
+        <output name="2" label="Rear Light (MX605SL)">
+          <label xml:lang="de">Lrück (MX605SL)</label>
+        </output>
+        <output name="3" label="FO 1 (MX605FL)">
+          <label xml:lang="de">FA1 (MX605FL)</label>
+        </output>
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -534,13 +547,19 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 39 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
-      <variable CV="7" readOnly="yes" default="39">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="39">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-      </variable> 
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="189" readOnly="yes" include="189">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="190" readOnly="yes" include="190">
         <decVal/>
         <label>Decoder ID 1</label>

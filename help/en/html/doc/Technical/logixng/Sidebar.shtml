@@ -1,0 +1,111 @@
+<!-- Sidebar -->
+<!-- This is the sidebar definition for help/doc/Technical/logixng pages -->
+    <hr class="hide">
+
+	<div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">Code documentation</div>
+	    <dl>
+
+		<dt><h3>LogixNG</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="LogixNG.shtml">LogixNG overview</a>
+			<li><a href="PackageStructure.shtml">Package structure</a>
+			<li><a href="CategoriesEnum.shtml">The Categories enum</a>
+			<li><a href="CreateExpressionsAndActions.shtml">Create Expressions, Actions, and so on</a>
+			<li><a href="Sockets.shtml">Sockets</a>
+			<li><a href="Plugins.shtml">Plugins for LogixNG</a>
+			<li><a href="UnitTesting.shtml">Unit testing of LogixNG</a>
+			</ul>
+		</dd>
+
+		<dt><h3>Development tools</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../getgitcode.shtml">Getting the code via Git</a>
+			<li><a href="../gitdeveloper.shtml">Developing with JMRI Code</a>
+			<li><a href="../GitFAQ.shtml">Git FAQs</a>
+			<li>Building with:
+				<ul>
+				<li><a href="../Ant.shtml">Ant</a>
+				<li><a href="../NetBeans.shtml">NetBeans</a>
+				<li><a href="../Eclipse.shtml">Eclipse</a>
+				<li><a href="../IntelliJ.shtml">IntelliJ IDEA</a>
+				</ul>
+			</li>
+			</ul>
+		</dd>
+
+		<dt><h3>Code Structure</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../IntroStructure.shtml">Introduction</a>
+			<li><a href="../Names.shtml">Names and Naming</a>
+			<li><a href="../AppStructure.shtml">Application Structure</a>
+			<li><a href="../Patterns.shtml">Code Structure Patterns</a>
+			<li><a href="../Swing.shtml">Swing Structure</a>
+			<li><a href="../SystemStructure.shtml">External Connection Structure</a>
+			<li><a href="../AppPreferences.shtml">Application Preferences</a>
+			<li><a href="../Threads.shtml">Threading</a>
+			<li><a href="../XmlUsage.shtml">Use of XML</a>
+			    <ul>
+			    <li><a href="../XmlSchema.shtml">XML Schema</a>
+			    <li><a href="../XmlView.shtml">XSLT Formatting</a>
+			    </ul>
+			<li><a href="../WebSite.shtml">Web Site</a>
+			
+			<li><a href="/JavaDoc/doc">Javadocs</a><ul>
+				<li><a href="/JavaDoc/doc/index-files/index-1.html">Name Index</a>
+				<li><A HREF="/JavaDoc/doc/index.html">Packages</A>
+				<li><A HREF="/JavaDoc/doc/allclasses-frame.html">Classes</A>
+				</ul>
+			</ul>
+		</dd>
+
+		<dt><h3>Techniques and Standards</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../RP.shtml">Recommended Practices</a>
+			<li><a href="../ContinuousIntegration.shtml">Continuous Integration</a>
+			<li><a href="../I8N.shtml">Internationalization</a>
+			<li><a href="../Logging.shtml">Logging &amp; Error Handling</a>
+			<li><a href="../JUnit.shtml">Unit testing with JUnit</a>
+			<li><a href="../Javadoc.shtml">Documentation with Javadoc and UML</a>
+			<li><a href="../SpotBugs.shtml">Run the SpotBugs static analysis tool</a>
+			<li><a href="../Help.shtml">Providing help with JavaHelp</a>
+			<li><a href="../FileNames.shtml">Portable Filename Method</a>
+			<li><a href="../XmlPersistance.shtml">XML Persistance</a>
+			</ul>
+		</dd>
+
+		<dt><h3>How To</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../plugins.shtml">Extend JMRI</a>
+			<li><a href="../NewSystem.shtml">Add a New System</a>
+			<li><a href="../NewType.shtml">Add a New Type</a>
+			</ul>
+		</dd>
+
+		<dt><h3>Functional Info</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../TurnoutFeedback.shtml">Turnout Feedback</a>
+			<li><a href="../Networking.shtml">Network Connections</a>
+			<li><a href="../StartUpScripts.shtml">How the startup scripts work</a>
+			<li><a href="LogixNG.shtml">LogixNG</a>
+			</ul>
+		</dd>
+
+		<dt><h3>Background Info</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../TechRoadMap.shtml">Technology Roadmap</a>
+			<li><a href="../JVMCapabilities.shtml">Survey of JVM Capabilities</a>
+			<li><a href="../Poll2007.shtml">Usage Poll, Spring 2007</a>
+			</ul>
+		</dd>
+</dl>
+	    
+</div> <!-- closes #side -->
+<!-- /Sidebar -->

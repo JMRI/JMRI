@@ -433,21 +433,21 @@ public class SCWarrant extends Warrant {
         } else if (activeIdx == _idxCurrentOrder) {
             // Unusual case of current block losing detection, then regaining it.  i.e. dirty track, derail etc.
             log.debug("{} Current block becoming active - ignored",_trainName);
-        } else if (activeIdx == _idxCurrentOrder+1) {
+        } else if (activeIdx == _idxCurrentOrder + 1) {
             // not necessary: It is done in the main loop in SCTrainRunner.run:  allocateBlocksAndSetTurnouts(_idxCurrentOrder+1)
             // update our present location
             _idxCurrentOrder++;
             // fire property change (entered new block)
-            firePropertyChange("blockChange", getBlockAt(_idxCurrentOrder-1), getBlockAt(_idxCurrentOrder));
+            firePropertyChange("blockChange", getBlockAt(_idxCurrentOrder - 1), getBlockAt(_idxCurrentOrder));
             // now let the main loop adjust speed.
             synchronized(this) {
-                notify();
+                notifyAll();
             }
         } else {
             log.debug("{} Rogue occupation of block.",_trainName);
             // now let the main loop stop for a train that is coming in our immediate way.
             synchronized(this) {
-                notify();
+                notifyAll();
             }
         }
     }
@@ -479,7 +479,7 @@ public class SCWarrant extends Warrant {
         // now let the main loop stop our train if this means that the train is now entirely within the last block.
         // Or let the train continue if an other train that was in its way has now moved.
         synchronized(this) {
-            notify();
+            notifyAll();
         }
     }
 
@@ -520,7 +520,6 @@ public class SCWarrant extends Warrant {
         }
     }
 
-
     /**
      * Something has fired a property change event.
      * React if:
@@ -542,7 +541,7 @@ public class SCWarrant extends Warrant {
             if (property.equals("Aspect") || property.equals("Appearance")) {
                 // The signal controlling this warrant has changed. Adjust the speed (in runSignalControlledTrain)
                 synchronized(this) {
-                    notify();
+                    notifyAll();
                 }
                 return;
             }
@@ -566,7 +565,7 @@ public class SCWarrant extends Warrant {
                         log.debug(WAIT_UNEXPECTED_EXCEPTION,_trainName,e,e);
                     }
                     // And then let our main loop continue
-                    notify();
+                    notifyAll();
                     return;
                 }
                 if (((NamedBean) evt.getSource()).getDisplayName().equals(getBlockOrderAt(0).getBlock().getDisplayName()) &&

@@ -74,14 +74,14 @@ public class AutomatTableDataModel extends AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case NAMECOL:
-                return "Name";
+                return Bundle.getMessage("ColName");
             case TURNSCOL:
-                return "Cycles";
+                return Bundle.getMessage("ColCycles");
             case KILLCOL:
-                return "Kill";  // problem if this is blank?
+                return Bundle.getMessage("ColKill");  // problem if this is blank?
 
             default:
-                return "unknown";
+                return Bundle.getMessage("ColUnknown");
         }
     }
 

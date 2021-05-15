@@ -34,6 +34,7 @@ public class LengthPanelTest {
 
     @AfterEach
     public void tearDown() {
+        blkMgr.dispose();
         JUnitUtil.tearDown();
     }
 

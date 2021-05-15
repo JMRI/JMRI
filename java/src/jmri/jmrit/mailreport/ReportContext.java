@@ -60,11 +60,9 @@ public class ReportContext {
         ConnectionConfigManager cm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
         if (cm != null) {
             ConnectionConfig[] connList = cm.getConnections();
-            if (connList != null) {
-                for (int x = 0; x < connList.length; x++) {
-                    ConnectionConfig conn = connList[x];
-                    addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
-                }
+            for (int x = 0; x < connList.length; x++) {
+                ConnectionConfig conn = connList[x];
+                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
             }
         } else {
             addString("No connections present");

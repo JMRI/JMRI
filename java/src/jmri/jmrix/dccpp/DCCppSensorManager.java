@@ -4,7 +4,6 @@ import static jmri.jmrix.dccpp.DCCppConstants.MAX_SENSOR_ID;
 
 import java.util.Locale;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -64,7 +63,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));

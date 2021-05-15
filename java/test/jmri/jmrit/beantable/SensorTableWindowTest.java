@@ -55,7 +55,7 @@ public class SensorTableWindowTest {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).enterText("1");
+        new JTextFieldOperator(hwAddressField).typeText("1");
         JButton createButton = JButtonOperator.findJButton(fa, new NameComponentChooser("createButton"));
         createButton.setEnabled(true); // skip validation
 

@@ -90,6 +90,7 @@ public class PointDetailsTest {
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

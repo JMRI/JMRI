@@ -13,7 +13,7 @@ import jmri.jmrit.operations.locations.tools.*;
 public class InterchangeEditFrame extends TrackEditFrame {
 
     public InterchangeEditFrame() {
-        super();
+        super(Bundle.getMessage("AddInterchange"));
     }
 
     @Override

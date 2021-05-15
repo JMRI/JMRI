@@ -1,14 +1,23 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
 
-import jmri.Reporter;
+import javax.annotation.Nonnull;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+import jmri.*;
+import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JFrameOperator;
+
+import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  *
@@ -68,6 +77,52 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
     @Override
     @Disabled("No Edit button on Reporter table")
     public void testEditButton() {
+    }
+    
+    @Test
+    public void testAddFailureCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        InstanceManager.setDefault(ReporterManager.class, new CreateNewReporterAlwaysException());
+        
+        a = new ReporterTableAction();
+        Assume.assumeTrue(a.includeAddButton());
+        
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        // find the "Add... " button and press it.
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).setText("1");
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("ErrorBeanCreateFailed","Reporter", "IR1"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        
+        //and press create
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
+        
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+    
+    private class CreateNewReporterAlwaysException extends InternalReporterManager {
+
+        public CreateNewReporterAlwaysException() {
+            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+            throw new IllegalArgumentException("createNewReporter Exception Text");
+        }
+        
     }
 
     @Override

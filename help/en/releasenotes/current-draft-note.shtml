@@ -29,10 +29,9 @@
                 <li></li>
             </ul>
 
-        <h4>DCC-EX</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>messaging enhancements and cleanup, retry some failed messages</li>
-                <li>allow user to define meters in DCC-EX that display in JMRI</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -72,8 +71,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>New LNCV Programming tool (Uhlenbrock protocol), available from LocoNet menu, with window
-                  specific help.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -111,7 +109,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
             </ul>
@@ -148,8 +146,7 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li>Added hardware connection support for the (LocoNet) Uhlenbrock USB Adapter part #63120.
-                  Manufacturer states their USB drivers only support Windows OS.</li>
+                <li></li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -194,14 +191,12 @@
 
         <h4>Digikeijs (Digirails)</h4>
             <ul>
-                <li>Added DR5033 LocoBoost configuration support, using the new LNCV service mode programming.<br>
-                You can access the DecoderPro programming panes from the LNCV Tool table matched by article number
-                  (5033 in this case).</li>
+                <li></li>
             </ul>
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Allow configuration of more function outputs for FX3 decoders.</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -229,7 +224,7 @@
                 <li></li>
             </ul>
 
-        <h4>LDH</h4>
+        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
                 <li></li>
             </ul>
@@ -321,9 +316,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>New Switch Module 63410 decoder support, using the new LNCV service mode programming.<br>
-                You can access the DecoderPro programming panes from the LNCV Tool table matched by article number
-                (6341 in this case).</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -372,10 +365,7 @@
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
-             <li>In addition to running trains by Signal Masts or Signal Heads you may now run trains by No Signals
-             This is most useful for Automatic engineer, and works best with fast throw switchs, such as snap switchs, as
-             it works solely on whether a section is allocated. If you need to check switch sensors for position you must
-             continue to use SSL or SML signals.</li>
+             <li></li>
         </ul>
 
    <h3>Internationalization</h3>
@@ -404,14 +394,13 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li>default meter digits based on max and resolution of defined meter</li>
+            <li></li>
         </ul>
 
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature for cars, Return When Loaded. Now you can set a load name and destination for a car when
-            it's load status changes to loaded. See operations help for more details.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -439,9 +428,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>The rules for the system connection prefix (one capital followed only by a number, for example D78)
-            are now protected in the Connection Preference panel. Invalid entries are highlighted in red.</li>
-            <li>A bug that could make connection tabs disappear has been fixed.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -501,7 +488,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -517,12 +504,7 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li>Slider and Key switch shapes are drawn on screen instead of loading image files.
-              This increased redraw speed and allows using your custom colors and scaling the size of
-              the graphics to the space available. The old images files for these have been removed.</li>
-          <li>Symbol shapes are still drawn by swapping 2 image files. We added the option to scale them
-            in the Option menu. (Hint: You can replace the supplied image files with your own images as
-            long as they carry identical file names).</li>
+            <li></li>
         </ul>
 
     <h3>Throttle</h3>
@@ -534,7 +516,7 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li>Set the default start time for a new train to match the schedule start time.</li>
+            <li></li>
         </ul>
 
    <h3>Tracker</h3>
@@ -546,9 +528,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>A button to translate the throttle settings to track speed in inches/sec
-            	or millimeters/sec or scale speed on miles/hr or kilometers/hr has been
-            	added to the windows used for editing Warrants or creating NXWarrants.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -584,13 +564,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>YetAnotherAutoTrain.py (YAAT) has been updated to version 2.2.  This version
-            includes support for compiling train definitions for faster startup.  It also includes
-            the ability to create extensions to the command language.  A Help document has been
-            added to the JMRI Help pages.</li>
-            <li>The Comments columns in Tools &rArr; Tables have support for multi-line comments.
-            The <strong>Edit Comment</strong> option has been added to the right click pop-up
-            menu that is normally used to move user names.  A tooltip will be displayed with
-            the comment content.</li>
+            <li></li>
         </ul>
 

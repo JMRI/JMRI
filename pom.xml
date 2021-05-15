@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.21.4-SNAPSHOT</version>
+    <version>4.23.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -23,7 +23,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.26</openlcb.version>
+        <openlcb.version>0.7.28</openlcb.version>
         <netbeans.version>RELEASE113</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -116,7 +116,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.12</version>
+                        <version>4.2.3</version>
                         <configuration>
                             <plugins>
                                 <plugin>
@@ -474,7 +474,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.12</version>
+                <version>4.2.3</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <plugins>
@@ -1627,11 +1627,28 @@
             <artifactId>apiguardian-api</artifactId>
             <version>1.1.0</version>
         </dependency>
-		<dependency>
-        	<groupId>commons-logging</groupId>
-        	<artifactId>commons-logging</artifactId>
-        	<version>1.2</version>
-		</dependency>        
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-transcoder -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.14</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>fop</artifactId>
+                    <groupId>fop</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>   
     </dependencies>
 
     <repositories>

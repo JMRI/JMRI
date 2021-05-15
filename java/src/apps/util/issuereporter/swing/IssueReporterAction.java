@@ -16,7 +16,7 @@ import org.apiguardian.api.API;
 public class IssueReporterAction extends AbstractAction {
 
     public IssueReporterAction() {
-        super(Bundle.getMessage("IssueReporterAction.title"));
+        super(Bundle.getMessage("IssueReporterAction.title", "..."));
     }
 
     @Override

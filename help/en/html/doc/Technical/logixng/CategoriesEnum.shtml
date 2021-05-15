@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: LogixNG Documentation</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="keywords" content=
+  "logixng model railroad JMRI LogixNG PanelPro"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+    <!--#include virtual="/Header" -->
+
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+
+      <div id="mainContent">
+        <!-- Page Body -->
+
+        <h1>LogixNG - The Categories enum</h1>
+
+		<h2>The Categories enum</h2>
+
+		<p>Every type of expression and action has a predefined category to
+		which the expression or action belongs to. The main usage of
+		categories is to sort expressions by category when the user adds a new
+		expression or action and therefore selects which to add.</p>
+
+		<ul>
+		<li><strong>ITEM</strong><br>An item on the layout, for example turnout,
+		sensor or signal mast.</li>
+		<li><strong>COMMON</strong><br>Commonly used items. For example the
+		expressions And, Or and Timer, and the actions Many and IfThen.</li>
+		<li><strong>OTHER</strong><br>All other expressions and actions which
+		don't fit in the above categories.</li>
+		<li><strong>EXRAVAGANZA</strong><br>Things seldom used, included mostly
+		for fun, but maybe useful in some cases. These are partly included to
+		demonstrate the possibilities that LogixNG offers.</li>
+		</ul>
+
+        <!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div><!-- closes #container -->
+</body>
+</html>

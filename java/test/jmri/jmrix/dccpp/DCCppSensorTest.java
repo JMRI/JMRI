@@ -22,11 +22,11 @@ public class DCCppSensorTest extends jmri.implementation.AbstractSensorTestBase 
     }
 
     @Override
-    public void checkOnMsgSent() {
+    public void checkActiveMsgSent() {
     }
 
     @Override
-    public void checkOffMsgSent() {
+    public void checkInactiveMsgSent() {
     }
 
     @Override

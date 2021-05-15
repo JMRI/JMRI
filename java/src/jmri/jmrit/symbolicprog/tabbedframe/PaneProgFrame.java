@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -1109,14 +1110,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 String namePrimary = (pnames.get(0)).getValue(); // get non-localised name
 
                 // check if there is a same-name pane in decoder file
-                for (int j = 0; j < decoderPaneList.size(); j++) {
+                // start at end to prevent concurrentmodification error on remove
+                for (int j = decoderPaneList.size() - 1; j >= 0; j--) {
                     List<Element> dnames = decoderPaneList.get(j).getChildren("name");
                     if (dnames.size() > 0) {
                         String namePrimaryDecoder = (dnames.get(0)).getValue(); // get non-localised name
                         if (namePrimary.equals(namePrimaryDecoder)) {
                             // replace programmer pane with same-name decoder pane
                             temp = decoderPaneList.get(j);
-                            decoderPaneList.remove(j);
+                            decoderPaneList.remove(j); // safe, not suspicious as we work end - front
                             isProgPane = false;
                         }
                     }

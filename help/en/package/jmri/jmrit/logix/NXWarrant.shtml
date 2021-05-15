@@ -52,7 +52,7 @@
       Warrant</b> window is displayed:</p>
 
       <a href="images/NxWarrantCreate1.png"><img
-      src="images/NxWarrantCreate1.png" align="right" width="547"
+      src="images/NxWarrantCreate1.png" class="floatRight" width="547"
       height="347" alt="Warrants Preferences pane in in JMRI 4.10"></a>
 
       <h3>Set the Route</h3>
@@ -117,8 +117,8 @@
       <p>Once the route has been chosen, the window changes to
       show choices for the running parameters of the NX Warrant:<br>
       <a href="images/NxWarrantCreate2.png"><img
-      src="images/NxWarrantCreate2.png" align="right" width="591"
-      height="330" hspace="0" vspace="0" alt="Warrants Preferences
+      src="images/NxWarrantCreate2.png" class="floatRight" width="591"
+      height="330" alt="Warrants Preferences
       pane in in JMRI 4.10"></a>
       </p>
 
@@ -318,14 +318,14 @@
       other Warrant parameters can be set.</p>
 
       <a href="images/WarrantsPrefs.png"><img
-      src="images/WarrantsPrefs.png" align="right" width="629"
-      height="428" hspace="0" vspace="0" alt="Warrants Preferences
+      src="images/WarrantsPrefs.png" class="floatRight" width="629"
+      height="428" alt="Warrants Preferences
       pane in in JMRI 4.10"></a>
 
       <a name="prefs" id="prefs"></a>
       <h2>Warrant Preferences</h2>
       <p>From the general JMRI Preferences, select the Warrants tab
-      and check the options set for:
+        and check the options set for:</p>
       <ul>
         <li><b>Layout Scale</b> - Setting the modeling scale
         of your layout is essential so conversion to scale speeds
@@ -349,7 +349,7 @@
         prototype but visually OK. Observe how trains behave
         starting up and stopping with NX Warrants and adjust
         accordingly.</li>
-      </ul></p>
+      </ul>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

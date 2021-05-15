@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import org.junit.Test;
 
 public class ConnectionResponsePacketTest {
-  private byte[] testPacket = { 0x01, 0x23 };
+  private final byte[] testPacket = { 0x01, 0x23 };
 
   @Test
   public void getIdTest() {

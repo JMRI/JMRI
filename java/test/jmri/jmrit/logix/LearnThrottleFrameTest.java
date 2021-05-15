@@ -37,4 +37,5 @@ public class LearnThrottleFrameTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

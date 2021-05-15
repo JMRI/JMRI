@@ -13,9 +13,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="John Crellin" version="1" lastUpdated="20200924"/>
+  <version author="Marc Fournier" version="2" lastUpdated="20210206"/>
   <!-- Version 1 -->
+  <!-- Version 2  - Added CV22, Added low/high value 1 for CV7 -->
   <decoder>
-    <family name="Rolling Stock Lighting" mfg="North Coast Engineering" >
+    <family name="Rolling Stock Lighting" mfg="North Coast Engineering" lowVersionID="1" highVersionID="1" >
       <model model="Athearn Genesis Caboose" numOuts="6" formFactor="HO"/>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -35,7 +37,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <!-- NCE-caboose specific variables -->
       <variable CV="11" item="Packet Time-out Value">

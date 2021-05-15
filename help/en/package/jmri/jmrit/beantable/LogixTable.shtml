@@ -26,7 +26,7 @@
 
       <div style="margin-left: 2em;"><p><code>if (logical expression) then
       (action).</code></p></div>
-      
+
       The "logical expression" part of a Conditional tests the state of a group
       of user-specified conditions on the layout, for example, whether certain
       turnouts are closed or thrown, or whether a block is occupied. The
@@ -108,13 +108,9 @@
       <p>The <strong>File</strong> menu at the top of the Logix Table
       provides for printing this table and for storing the Logixs
       and their Conditionals in a layout configuration file.
-      Selecting either store option will bring up a dialog for
-      naming a configuration file for writing Logix information and
-      all other configuration information (e.g., sensors, lights,
-      turnouts, signal heads, routes etc.). If you are updating an
-      existing file, simply click its name, and it will be copied
-      into the name entry.</p>
-      
+      For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+
       <a name="logixOptions" id="logixOptions"></a>
       <p>The <strong>Options</strong> menu has 3 sections.<br>
       <div style="margin-left: 2em">

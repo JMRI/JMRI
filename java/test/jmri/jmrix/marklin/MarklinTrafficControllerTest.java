@@ -5,8 +5,6 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 /**
- * MarklinTrafficControllerTest.java
- *
  * Test for the jmri.jmrix.marklin.MarklinTrafficController class
  *
  * @author Paul Bender Copyright (C) 2012,2016
@@ -23,9 +21,8 @@ public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Override
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
         JUnitUtil.tearDown();
-
     }
 
 }

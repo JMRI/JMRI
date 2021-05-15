@@ -2,8 +2,8 @@ package jmri.jmrix.dccpp.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring DCCppSensorManagers.

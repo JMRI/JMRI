@@ -33,7 +33,7 @@
       and work your way into more complex details. The sections below discuss various aspects of scripting
       that will help you to understand the more complex scripts found in the <a href="Examples.shtml" target="_blank">
       JMRI examples library</a> included in the distribution and online:</p>
-	  
+
       <ul>
 	  <li><a href="#helloworld">Running "Hello World"</a></li>
       <li><a href="#debugging">Basic debugging tools in JMRI</a></li>
@@ -41,17 +41,17 @@
 	  <li><a href="#objects">Access to JMRI Objects</a></li>
 	  <li><a href="#scripts">Script files, listeners, and classes</a></li>
 	  </ul>
-      
+
 	  <h4>CAUTION: Python and its Jython variant do not use braces, brackets, or parentheses to
-	  indicate program structure, but rather rely on formatting, specifically indentation.  To avoid 
+	  indicate program structure, but rather rely on formatting, specifically indentation.  To avoid
 	  confusion, it is STRONGLY recommended that you DO NOT USE TABS but rather use spaces (four is typical)
 	  to show statements that part of a class or controlled structure where you might have used some bracketing.
 	  Most program editors have a setting to automatically changes tabs to a set number of spaces to make this easier.</h4>
-	  
+
       <h2><a id="helloworld" name="helloworld">Running "Hello World"</a></h2>
-      
+
       <div class="para">
-      
+
       There are several ways to use
       Python scripts with JMRI. The easiest is to use the built-in
       support in the standard JMRI applications: PanelPro,
@@ -64,27 +64,29 @@
         <img src=
         "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
         width="250" height="136" align="right" alt="JMRI Jython Script Window"></a>From the
-        "Panels" menu, select "Script Entry". This will give you a
+        <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} menu,
+        select <strong>Script Entry</strong>. This will give you a
         window where you can type one or more commands to execute.
         (Note that it might take a little while the first time you
         do this as the program finds its libraries; it will be
         faster the next time) The commands stay in the window, so
         you can edit them and rerun them until you like them.</li>
 
-        <li>From the "Panels" menu, select "Script Output". This
+        <li>From the <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} menu,
+        select <strong>Script Output</strong>. This
         creates a window that shows the output from the script
         commands you issue.</li>
 
         <li>To see this in operation, type
           <pre  style="font-family: monospace;">
         print "Hello World"
-        
+
 </pre>in the input window, and click "Execute". You should see the
 output in the Script Output window immediately:
           <pre  style="font-family: monospace;">
         &gt;&gt;&gt; print "Hello World"
         Hello World
-        
+
 </pre>
         </li>
 
@@ -93,52 +95,54 @@ output in the Script Output window immediately:
         and enter
           <pre style="font-family: monospace;">
         print 1+2
-        
+
 </pre>then click execute. The output window should then show
 something like:
           <pre style="font-family: monospace;">
         &gt;&gt;&gt; print 1+2
         3
-        
+
 </pre>
         </li>
       </ul>
 
     <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
-    </div>  
-  
+    </div>
+
       <h2><a id="debugging" name="debugging">Basic debugging tools in JMRI</a></h2>
-      <!--Section added by Jerry Grochow 2018-10-18 based on comments found in the JMRI Users online forum from 
+      <!--Section added by Jerry Grochow 2018-10-18 based on comments found in the JMRI Users online forum from
       Cliff in BajaSoCal and Bob Jacobson-->
-      
+
       <div class="para">
       <p>JMRI does not provide a full "development environment," but it does provide some basic information
-      that can help with debugging your scripts.</p>  
-      
-      <p>Open the JMRI System Console window (Help->System Console).
+      that can help with debugging your scripts.</p>
+
+      <p>Open the JMRI System Console window (<strong>Help &rArr; System Console</strong>).
       This will give you instant information pertaining to WARN and ERROR messages. Text can be copied to a
       text editor for further review.</p>
-      
-      <p>Open the Script Output window (Panels->Script Output).  This will display the results of any
+
+      <p>Open the Script Output window (<strong>Scripting</strong> {<em>Old:
+      <strong>Panels</strong></em>}<strong> &rArr; Script Output</strong>).
+      This will display the results of any
       "print" statements in your script as well as some error messages (NOTE that some errors go here and
       some to the System Console so you you should have both windows open when you are debugging).
        Text can be copied to a text editor for further review.
 
-      <p>Investigate the information found in the  
+      <p>Investigate the information found in the
       <a href="../../doc/Technical/Logging.shtml" target="_blank">technical reference</a>
-      to be better able to insert more of your own DEBUG and INFO messages into the session.log file, 
+      to be better able to insert more of your own DEBUG and INFO messages into the session.log file,
       and also the JMRI System Console window.  You might also investigate the "default.lcf" file that is
       described in that link.</p>
-      
+
       <p>Note to Mac OS users: BBEdit and similar tools do some syntax checking. For PC users, Notepad++
       is a good tool for getting indentation correct.</p>
 
-      <p><a href="#StartTopOfPage">[Go to top of page]</a></p>      
+      <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
       </div>
-      
-	  
+
+
       <h2><a id="layoutcommands">Sample layout commands</a></h2>
-      
+
       <div class="para">
      <pre style="font-family: monospace;">
 
@@ -167,13 +171,13 @@ something like:
       <p>This also shows some of the simplifications that Jython
       and the Python language brings to using JMRI code. The Java
       member function:</p>
-      
+
     <pre style="font-family: monospace;">
         turnout.SetCommandedState(jmri.Turnout.CLOSED);
     </pre>
-      
+
       can also be expressed in Jython as:
-      
+
      <pre style="font-family: monospace;">
         turnout.commandedState = CLOSED
     </pre>
@@ -190,11 +194,11 @@ something like:
 
       <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
       </div>
-      
+
       <h2><a id="objects" name="objects">Access to JMRI Objects</a></h2>
-	  
+
       <div class="para">
-      
+
       JMRI uses the factory-pattern
       extensively to get access to objects. In Java this results in
       verbose code like
@@ -237,7 +241,7 @@ variables, and by shortening certain method calls.
         <li>audio</li>
 
         <li>shutdown (current shutdown manager)</li>
-        
+
         <li>layoutblocks</li>
 
         <li>warrants</li>
@@ -256,11 +260,11 @@ variables, and by shortening certain method calls.
 </pre>
 
 <p>where the assignment is actually invoking the set method.</p>
-        
+
     <p>Also note that THROWN was defined when running the Python script at
         startup;<br> CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are also
-    defined. ( <a 
-    href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/script/JmriScriptEngineManager.java">These 
+    defined. ( <a
+    href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/script/JmriScriptEngineManager.java">These
         shortcut bindings are defined in Java</a> )
     </p>
       <p>A similar mechanism can be used to check the state of
@@ -277,7 +281,7 @@ You can also use the symbols "True" and "False" respectively.
       <p>You can directly invoke more complicated methods, e.g. to
       send a DCC packet to the rails you type:</p>
       <pre  style="font-family: monospace;">
-   
+
     dcc.sendPacket([0x01, 0x03, 0xbb], 4)
 </pre>This sends that three-byte packet four times, and then
 returns to the command line.
@@ -285,16 +289,16 @@ returns to the command line.
 Also see <a href="WhatWhere.shtml#names">JMRI Jython : The difference between System Names and User Names</a>
 
     <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
-    
+
      </div>
 
       <h2><a id="scripts" name="scripts">Script files, listeners, and classes</a></h2>
-	  
+
       <div class="para">
-      
+
       <p>[See also <a href="HowTo.shtml" target="_blank">the scripting "How To" page</a> for more information
       on these topics.]</p>
-      
+
       <p>Scripting would
       not be very interesting if you had to type the commands each
       time. So you can put scripts in a text file and execute them
@@ -335,7 +339,7 @@ Also see <a href="WhatWhere.shtml#names">JMRI Jython : The difference between Sy
       <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
 
       </div>
-      
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

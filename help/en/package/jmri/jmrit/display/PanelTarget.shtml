@@ -137,7 +137,7 @@
 
       <p>If you want to keep your Markers between operating
       sessions, you can store the Panel and the Markers will be
-      stored in your Panel xml file.</p>
+      stored in your PanelPro xml data file.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

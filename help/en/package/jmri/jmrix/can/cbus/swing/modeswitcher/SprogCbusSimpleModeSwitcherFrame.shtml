@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: SPROG CBUS&trade; Simple Mode Switcher Tool</title>
+  <title>JMRI: SPROG CBUS&reg; Simple Mode Switcher Tool</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
   <!--#include virtual="/Style.shtml" -->
@@ -17,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-    <h1>JMRI : CBUS&trade; Simple Mode Switcher Tool</h1>
+    <h1>JMRI : CBUS Simple Mode Switcher Tool</h1>
 
     <p>The mode switcher controls the programming modes that are available for
         the connected command station. Not all CBUS command stations support
@@ -47,7 +47,7 @@
     <p></p>
 
     <h2></h2>
-    <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+    <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       
     <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

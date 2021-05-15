@@ -1,16 +1,13 @@
 package jmri.jmrix.loconet.hexfile;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,8 +61,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * @param file the file to be read
      */
     public void load(File file) {
-            log.debug("file: {}", file); // NOI18N
-
+        log.debug("file: {}", file); // NOI18N
         // create the pipe stream for output, also store as the input stream if somebody wants to send
         // (This will emulate the LocoNet echo)
         try {
@@ -97,7 +93,9 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 // Wait for a file to be available. We have nothing else to do, so we can sleep
                 // until we are interrupted
                 try {
-                    Thread.sleep(10000);
+                    synchronized (this) {
+                        wait(1000);
+                    }
                 } catch (InterruptedException e) {
                     log.info("LnHexFilePort.run: woken from sleep"); // NOI18N
                     if (sFile == null) {
@@ -126,7 +124,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                     int len = s.length();
                     for (int i = 0; i < len; i += 3) {
                         // parse as hex into integer, then convert to byte
-                        int ival = Integer.valueOf(s.substring(i, i + 2), 16).intValue();
+                        int ival = Integer.valueOf(s.substring(i, i + 2), 16);
                         // send each byte to the output pipe (input to consumer)
                         byte bval = (byte) ival;
                         outpipe.writeByte(bval);
@@ -136,7 +134,10 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                     outpipe.flush();
 
                     // finished that line, wait
-                    Thread.sleep(delay);
+                    synchronized (this) {
+                        wait(delay);
+                    }
+                    //Thread.sleep(delay);
                 }
 
                 // here we're done processing the file
@@ -162,7 +163,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * Provide a new message delay value, but don't allow it to go below 2 msec.
      *
      * @param newDelay delay, in milliseconds
-     */
+     **/
     public void setDelay(int newDelay) {
         delay = Math.max(2, newDelay);
     }
@@ -171,7 +172,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
 
     /**
      * {@inheritDoc}
-     */
+     **/
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
@@ -182,7 +183,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
 
     /**
      * {@inheritDoc}
-     */
+     **/
     @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
@@ -193,7 +194,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
 
     /**
      * {@inheritDoc}
-     */
+     **/
     @Override
     public boolean status() {
         return (pout != null) && (pin != null);
@@ -210,10 +211,8 @@ public class LnHexFilePort extends LnPortController implements Runnable {
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
     private DataInputStream pin = null;  // this is provided to classes who want data from us
-
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
-    //private DataInputStream inpipe = null;  // feed pout
 
     @Override
     public boolean okToSend() {
@@ -291,6 +290,66 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         super.configureOption3(value);
         log.debug("configureOption3: {}", value); // NOI18N
         setTurnoutHandling(value);
+    }
+
+    private boolean simReply = false;
+
+    /**
+     * Turn on/off replying to LocoNet messages to simulate devices.
+     * @param state new state for simReplies
+     */
+    public void simReply(boolean state) {
+        simReply = state;
+        log.debug("SimReply is {}", simReply);
+    }
+
+    public boolean simReply() {
+        return simReply;
+    }
+
+    /**
+     * Choose from a subset of hardware replies to send in HexFile simulator mode in response to specific messages.
+     * Supported message types:
+     * <ul>
+     *     <li>LN SV rev2 {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
+     *     <li>LNCV {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
+     * </ul>
+     * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI box to turn this option on/off
+     *
+     * @param m the message to respond to
+     * @return an appropriate reply by type and values
+     */
+    static public LocoNetMessage generateReply(LocoNetMessage m) {
+        LocoNetMessage reply = null;
+        //log.debug("generateReply for {}", m.toMonitorString());
+
+        if (LnSv2MessageContents.isSupportedSv2Message(m)) {
+            //log.debug("generate reply for SV2 message");
+            LnSv2MessageContents c = new LnSv2MessageContents(m);
+            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
+                log.debug("generate LNSV2 query reply message");
+                int dest = 1; // keep it simple, don't fetch src from m
+                int myId = 11; // a random value
+                int mf = 129; // Digitrax
+                int dev = 1;
+                int type = 3055;
+                int serial = 111;
+                reply = LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+            }
+        } else if (LncvMessageContents.isSupportedLncvMessage(m)) {
+            if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
+                // generate READ REPLY
+                reply = LncvMessageContents.createLncvReadReply(m);
+            } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
+                // generate WRITE reply LACK
+                reply = new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
+            } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_PROG_START) {
+                // generate STARTPROGALL reply
+                reply = LncvMessageContents.createLncvProgStartReply(m);
+            }
+            // ignore LncvMessageContents.LncvCommand.LNCV_PROG_END, no response expected
+        }
+        return reply;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);

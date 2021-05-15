@@ -101,6 +101,7 @@ filter = Enum of which categories apply in CbusFilter.java
   <CbusOpc hex="9F" minPri="3" name="EXTC3" decode=": ,%1, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFMISC,CFOTHER"/>
   <CbusOpc hex="A0" minPri="2" name="RDCC4" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
   <CbusOpc hex="A2" minPri="2" name="WCVS" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="A4" minPri="2" name="VCVS" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
   <CbusOpc hex="B0" minPri="3" name="ACON1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED1"/>
   <CbusOpc hex="B1" minPri="3" name="ACOF1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED1"/>
   <CbusOpc hex="B2" minPri="3" name="REQEV" decode="$4, ~OPC_EV~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>

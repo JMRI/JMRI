@@ -32,7 +32,7 @@ public class StealingThrottleManager extends DebugThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the steal callback.
-        notifyDecisionRequest(a,ThrottleListener.DecisionType.STEAL);
+        notifyDecisionRequest(a, ThrottleListener.DecisionType.STEAL);
     }
     
     /**
@@ -40,7 +40,7 @@ public class StealingThrottleManager extends DebugThrottleManager {
      */
     @Deprecated
     @Override
-    public void stealThrottleRequest(LocoAddress a, ThrottleListener l,boolean steal){
+    public void stealThrottleRequest(LocoAddress a, ThrottleListener l, boolean steal){
         if(steal) {
             responseThrottleDecision(a, l, ThrottleListener.DecisionType.STEAL);
         } else {

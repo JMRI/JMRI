@@ -56,9 +56,9 @@
         the layout changes the value.</p>
 
         <h2>The Sensor Table</h2>
-        
+
         Sensors can be viewed and configured using the <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">
-        Sensor Table</a>. The following columns are displayed by default (additional columns may be displayed by 
+        Sensor Table</a>. The following columns are displayed by default (additional columns may be displayed by
         right-clicking in the column header and checking by their names, or checking the boxes at the bottom of the
         window):
 
@@ -74,16 +74,16 @@
 
           <li>Inverted (checkbox)</li>
         </ul>
-       
-        <p>The Sensor State column can be displayed either as text or as icons.  This can be set as a global preferences 
-        via a display setting in the main <strong>Preferences</strong> menu under <strong>Display.</strong> 
+
+        <p>The Sensor State column can be displayed either as text or as icons.  This can be set as a global preferences
+        via a display setting in the main <strong>Preferences</strong> menu under <strong>Display.</strong>
 
         <h3>Saving Sensors to disk</h3>
 
         <p>Sensors are kept in your <i>layout configuration</i>, along with Turnouts, Lights, Signal Heads, control panel
         setup etc. To store this information on disk, allowing you to <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> the next time you run JMRI, use one of the <strong>Store </strong> options in the <strong>File</strong> menu (both options will save sensors)
-        or select <strong>Store Panel...</strong> in the <strong>Panel</strong> menu.  [See <a href="../apps/StoringYourWork.shtml">here</a> for more information on storing your work between JMRI sessions.]
+        it</a> the next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.
         </p>
 
         <a name="add" id="add"></a>
@@ -93,8 +93,8 @@
 
         <ol>
           <li>
-            Click <strong>Tools&rArr;Tables&rArr;Sensors</strong> to display the <a href=
-            "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> pane. Next, click the 
+            Click <strong>Tools &rArr; Tables &rArr; Sensors</strong> to display the <a href=
+            "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> pane. Next, click the
             <a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><strong>Add...</strong></a>
             button at the bottom of the pane to bring up the "Add/Edit Sensor" window.
           </li>
@@ -120,7 +120,7 @@
           </li>
 
           <li>
-            You can add a number of Sensors at once by clicking on the <strong>Add a Range</strong> checkbox and 
+            You can add a number of Sensors at once by clicking on the <strong>Add a Range</strong> checkbox and
             then entering the <strong>Number to Add.</strong> JMRI will increment the hardware number for each additional
             sensor.  If a hardware address already exists in the Sensors range that is being added, then JMRI will skip
             that address. If you have entered a User Name, then a number will be appended for each additional sensor to
@@ -140,7 +140,7 @@
             You will then see the current status of the sensor (or sensors) in the main Sensor Table panel.
           </li>
         </ol>
-        
+
         <p>For additional information about working with the Sensor Table,
         <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">click here.</a>
 
@@ -155,10 +155,10 @@
           <li><a href="#Debounce">Global Debounce Delay</a>: to set debounce time on a system-wide basis (unless overridden). See also below.</li>
 
           <li>Initial Sensor State (for Internal Sensors only): lets you choose what state Internal Sensors (system name beginning with
-       "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI, 
+       "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI,
        although you can use a <a href="scripting/index.shtml">script</a> to set them.</li>
         </ul>
-        
+
         <h2><a name="Debounce" id="Debounce"></a>Sensor Debounce Delay</h2>
 
         <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the system and
@@ -167,7 +167,7 @@
         or electrical interference.</p>
 
         <p>You can assign a delay in milliseconds before any sensor change is registered with the rest
-        of the system. If after that period the state has not changed compared to the original state, the Sensor state 
+        of the system. If after that period the state has not changed compared to the original state, the Sensor state
         will be passed onto the rest of the system.<br>
         However if the Sensor's state is different after the delay
         has passed, then the system will restart the process,
@@ -178,13 +178,13 @@
         delay has passed.</p>
 
         <h2>Sensor Groups</h2>
-        
+
         <p>A Sensor Group is a group of sensors of which at most one can be active at a time.  When one member of the group
         becomes active, all others are set to inactive.</p>
-        
+
         <p>Sensor Groups are configured via the <a href="../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">
         Sensor Group Tool</a>.</p>
-            
+
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->

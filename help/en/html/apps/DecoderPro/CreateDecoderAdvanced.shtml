@@ -921,15 +921,23 @@ selects the different algorithm needed here.
           </li>
       </ul>
 
-      The original technique of specifying a "CV" and a "highCV" is not appropriate
-      in cases where many more CVs are needed. Alternative more concise methods of specifying
-      multiple CVs (contiguous or not) in the "CV" variable parameter are now available:
+      The CVs to be used are specified in the CV attribute
+      and masks (if required) in the mask attribute. For example: 
+      
+      <pre style="font-family: monospace;">
+    &lt;variable CV="1,27,13" mask="XXVVVVVV XXXXXVVV XXXXXVVV" item="Sample Item"&gt;
+        &lt;splitVal/&gt;
+    &lt;/variable&gt;
+      </pre>
+
+      in cases where a number of complex or contiguous CVs are used, there are a number of alternative
+      more concise methods of specifying in the "CV" variable parameter:
       <ul>
           <li>
               The available methods (with example strings) are detailed under
-              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.String-" target="_blank">expandCvList</a>
+              <a href="https://www.jmri.org/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList(java.lang.String)" target="_blank">expandCvList</a>
               on this
-              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.String-" target="_blank">JavaDoc page</a>.
+              <a href="https://www.jmri.org/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList(java.lang.String)" target="_blank">JavaDoc page</a>.
           </li>
           <li>
               For example, this
@@ -944,7 +952,7 @@ selects the different algorithm needed here.
           <li>
               The following example reads the RailCom&reg; Production Date as per
               <a href="http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">
-              NMRA standard 9.3.2</a>:
+              NMRA standard 9.3.2</a> from 4 contiguous indexed CVs.
           </li>
       </ul>
       
@@ -955,6 +963,8 @@ selects the different algorithm needed here.
     &lt;/variable&gt;
       </pre>
 
+      Note that if only one mask is specified, it will apply to all CVs. 
+      If fewer masks than CVs are specified, the last mask will apply to the remaining CVs. 
 
       <a name="splitvalExample" id="splitvalExample"></a>
       <h4>splitVal example - "long" addresses over 2 CVs</h4>
@@ -970,17 +980,27 @@ selects the different algorithm needed here.
       <p>Long addresses can be accessed via "splitVal" type, as in
       the following example:</p>
       <pre style="font-family: monospace;">
-    &lt;variable CV="1" item="Short Address" default="1" minOut="1"&gt;
-        &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
+    &lt;variable CV="1,9" mask="XXVVVVVV XXXXXVVV" item="Short Address" default="1" minOut="1"&gt;
+        &lt;splitVal/&gt;
         &lt;label&gt;Accessory Address&lt;/label&gt;
     &lt;/variable&gt;
 </pre>
 
-      <p>The declared "CV" is the LSB (Least Significant Byte)
-      whereas the "highCV" is the MSB (Most Significant Byte).</p>
+      <ul>
+          <li>
+              CV1 is the Least Significant Byte (LSB) of the address and contains
+              the six least significant bits of the accessory decoder's address in bits 0-5.
+          </li>
+          <li>
+              CV9 is the (Most Significant Byte) MSB of the address and contains
+              the three most significant bits of the accessory decoder's address in bits 0-3.
+          </li>
+      </ul>
 
-      <p>splitVal actually has two parameters, a "Factor" and an
-      "Offset":</p>
+      <h4>splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
+
+      <p>For special purposes, splitVal and splitHexVal have two optional parameters, a "factor" and an
+      "offset":</p>
 
       <ul>
         <li>Value to put in CVs = ((value in text field) -
@@ -990,13 +1010,14 @@ selects the different algorithm needed here.
         + Offset</li>
       </ul>
       <pre style="font-family: monospace;">
-    &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
+    &lt;splitVal factor="4" offset="-3"/&gt;
 </pre>
 
-      <p>For an example, see the <a href=
-      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6.xml"
-      target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
-      file.</p>
+      <p>
+          For usage examples, see the
+          <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_SwitchPilot.xml"
+             target="_blank">xml/decoders/ESU_SwitchPilot.xml</a> file.
+      </p>
 
       
       <a name="conditional" id="conditional"></a>

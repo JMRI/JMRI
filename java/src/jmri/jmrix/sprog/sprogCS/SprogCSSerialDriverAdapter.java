@@ -18,6 +18,10 @@ public class SprogCSSerialDriverAdapter
 
     public SprogCSSerialDriverAdapter() {
         super(SprogMode.OPS);
+        options.put("NumSlots", // NOI18N
+                new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("NumSlotOptions")), // NOI18N
+                        new String[]{"16", "8", "32", "48", "64"}, true));
+
         options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
                 new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
                 true)); // first element (TrackPowerState) NOI18N
@@ -25,6 +29,23 @@ public class SprogCSSerialDriverAdapter
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogCSTitle"));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
+    /**
+     * Set up all of the other objects to operate with an Sprog command station
+     * connected to this port.
+     */
+    @Override
+    public void configure() {
+        String slots = getOptionState("NumSlots");
+        try {
+            numSlots = Integer.parseInt(slots);
+        }
+        catch (NumberFormatException e) {
+            numSlots = 16;
+        }
+        
+        super.configure();
+    }
+
+    //private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
 
 }

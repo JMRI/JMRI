@@ -165,4 +165,10 @@
     <enumChoice>
           <choice>Canadian Centennial Horn (Oh Canada)</choice>
     </enumChoice>
+	<enumChoice>
+          <choice>Leslie S3LR</choice>
+    </enumChoice>
+	<enumChoice>
+          <choice>Leslie RS3K</choice>
+    </enumChoice>
 </enumChoiceGroup>

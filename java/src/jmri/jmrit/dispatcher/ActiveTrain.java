@@ -1,16 +1,21 @@
 package jmri.jmrit.dispatcher;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Section;
 import jmri.Transit;
+import jmri.beans.PropertyChangeProvider;
 
-import org.python.modules._marshal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,7 +109,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class ActiveTrain {
+public class ActiveTrain implements PropertyChangeProvider {
 
     private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
 
@@ -682,6 +687,8 @@ public class ActiveTrain {
             if (InstanceManager.getDefault(DispatcherFrame.class).getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
             }
+            // notify anyone interested
+            pcs.firePropertyChange("sectionallocated",as , null);
             refreshPanel();
         } else {
             log.error("Null Allocated Section reference in addAllocatedSection of ActiveTrain");
@@ -740,6 +747,7 @@ public class ActiveTrain {
         }
         for (AllocatedSection as : sectionsToRelease) {
             InstanceManager.getDefault(DispatcherFrame.class).releaseAllocatedSection(as, true); // need to find Allocated Section
+            InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty(); //ensure release processed before proceding.
             as.getSection().setState(jmri.Section.FREE);
         }
         if (mLastAllocatedSection != null) {
@@ -1006,7 +1014,7 @@ public class ActiveTrain {
             return null;
         }
         if (!InstanceManager.getDefault(DispatcherFrame.class).requestAllocation(this,
-                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null)) {
+                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null, true)) {
             log.error("Allocation request failed for first allocation of {}", getActiveTrainName());
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getRosterEntryInBlock() && getRosterEntry() != null) {
@@ -1158,18 +1166,41 @@ public class ActiveTrain {
     }
 
     // Property Change Support
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
+    @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class);

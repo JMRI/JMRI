@@ -825,6 +825,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             String userName,
             Throwable exception) {
         // format and log a message (note reordered from arguments)
+//        System.out.format("creationErrorEncountered: %s%n", exception.getMessage());
+//        System.out.format("creationErrorEncountered: %s, %s, %s, %s, %s, %s%n", adapter, operation, description, systemName, userName, exception == null ? null : exception.getMessage());
         ErrorMemo e = new ErrorMemo(
                 adapter, operation, description,
                 systemName, userName, exception, "loading");

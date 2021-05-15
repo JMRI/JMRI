@@ -41,7 +41,9 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
     @Override
     synchronized public void setSpeedSetting(float speed) {
         log.debug("set Speed to: {} Current step mode is: {}",speed,this.speedStepMode);
-        this.speedSetting = speed;
+        synchronized(this) {
+            this.speedSetting = speed;
+        }
         record(speed);
         if (speed < 0) {
             /* we're sending an emergency stop to this locomotive only */
@@ -65,7 +67,9 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
      */
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
-        this.speedSetting = speed;
+        synchronized(this) {
+            this.speedSetting = speed;
+        }
         record(speed);
     }
 
@@ -218,7 +222,7 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
         queueMessage(msg7, THROTTLEIDLE);
     }
 
-    // The Roco Doesn't support the XpressNet directed emergency stop
+    // The Roco doesn't support the XpressNet directed emergency stop
     // instruction, so override sendEmergencyStop in the parent, and
     // just send speed step 0.
     @Override
@@ -276,7 +280,7 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
      * the last user.
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         stopStatusTimer();
         finishRecord();

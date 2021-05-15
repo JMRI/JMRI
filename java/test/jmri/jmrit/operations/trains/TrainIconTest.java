@@ -15,7 +15,7 @@ import jmri.util.JUnitUtil;
  * @author Paul Bender Copyright (C) 2017
  */
 public class TrainIconTest extends OperationsTestCase {
-        
+
     private jmri.jmrit.display.EditorScaffold editor = null;
     private TrainIcon trainicon = null;
 
@@ -32,7 +32,7 @@ public class TrainIconTest extends OperationsTestCase {
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
         trainicon.setTrain(train1);
         Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon.getTrain().getName());
-    } 
+    }
 
     @Test
     public void testTrainIconColorChangeAttributes() {
@@ -86,6 +86,7 @@ public class TrainIconTest extends OperationsTestCase {
         editor = null;
         trainicon = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

@@ -29,6 +29,8 @@ import javax.annotation.Nonnull;
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
  * methods that use ints for CV addresses will later be deprecated.
+ * <p>
+ * Added possibility to supply CV value hint to the system
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -43,6 +45,7 @@ import javax.annotation.Nonnull;
  * @see jmri.GlobalProgrammerManager
  * @see jmri.AddressedProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author Andrew Crosland (C) 2021
  */
 public interface Programmer {
 
@@ -67,7 +70,7 @@ public interface Programmer {
      * @param p   the listener that will be notified of the write
      * @throws jmri.ProgrammerException if unable to communicate
      */
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
+    void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
      * Perform a CV read in the system-specific manner, and using the specified
@@ -89,7 +92,39 @@ public interface Programmer {
      * @param p  the listener that will be notified of the read
      * @throws jmri.ProgrammerException if unable to communicate
      */
-    public void readCV(String CV, ProgListener p) throws ProgrammerException;
+    void readCV(String CV, ProgListener p) throws ProgrammerException;
+
+    /**
+     * Perform a CV read in the system-specific manner, and using the specified
+     * programming mode, possibly using a hint of the current value to speed up
+     * programming.
+     * <p>
+     * Handles a general address space through a String address. Each programmer
+     * defines the acceptable formats.
+     * <p>
+     * On systems that support it, the startVal is a hint as to what the current
+     * value of the CV might be (e.g. the value from the roster). This could be
+     * verified immediately in direct byte mode to speed up the read process.
+     * <p>
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Defaults to the normal read method if not overridden in a specific implementation.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
+     * prevented earlier)
+     *
+     * @param CV the CV to read
+     * @param p  the listener that will be notified of the read
+     * @param startVal  a hint of what the current value might be, or 0
+     * @throws jmri.ProgrammerException if unable to communicate
+     */
+    public default void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
+        readCV(CV, p);
+    }
 
     /**
      * Confirm the value of a CV using the specified programming mode. On some
@@ -112,7 +147,7 @@ public interface Programmer {
      * @param p   the listener that will be notified of the confirmation
      * @throws jmri.ProgrammerException if unable to communicate
      */
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
+    void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
      * Get the list of {@link ProgrammingMode} supported by this Programmer. If
@@ -121,7 +156,7 @@ public interface Programmer {
      * @return the list of supported modes or an empty list
      */
     @Nonnull
-    public List<ProgrammingMode> getSupportedModes();
+    List<ProgrammingMode> getSupportedModes();
 
     /**
      * Set the programmer to a particular mode.
@@ -134,7 +169,7 @@ public interface Programmer {
      * @param p a valid node returned by {@link #getSupportedModes()} or null;
      *          null is ignored if {@link #getSupportedModes()} is not empty
      */
-    public void setMode(ProgrammingMode p);
+    void setMode(ProgrammingMode p);
 
     /**
      * Get the current programming mode
@@ -142,14 +177,14 @@ public interface Programmer {
      * @return the current mode or null if none is defined and no default mode
      *         is defined
      */
-    public ProgrammingMode getMode();
+    ProgrammingMode getMode();
 
     /**
      * Checks the general read capability, regardless of mode
      *
      * @return true if the programmer is capable of reading; false otherwise
      */
-    public boolean getCanRead();
+    boolean getCanRead();
 
     /**
      * Checks the general read capability, regardless of mode, for a specific
@@ -158,14 +193,14 @@ public interface Programmer {
      * @param addr the address to read
      * @return true if the address can be read; false otherwise
      */
-    public boolean getCanRead(String addr);
+    boolean getCanRead(String addr);
 
     /**
      * Checks the general write capability, regardless of mode
      *
      * @return true if the programmer is capable of writing; false otherwise
      */
-    public boolean getCanWrite();
+    boolean getCanWrite();
 
     /**
      * Checks the general write capability, regardless of mode, for a specific
@@ -174,7 +209,7 @@ public interface Programmer {
      * @param addr the address to write to
      * @return true if the address can be written to; false otherwise
      */
-    public boolean getCanWrite(String addr);
+    boolean getCanWrite(String addr);
 
     /**
      * Learn about whether the programmer does any kind of verification of write
@@ -186,7 +221,7 @@ public interface Programmer {
      *         in some cases)
      */
     @Nonnull
-    public WriteConfirmMode getWriteConfirmMode(String addr);
+    WriteConfirmMode getWriteConfirmMode(String addr);
 
     enum WriteConfirmMode {
         /**
@@ -211,19 +246,19 @@ public interface Programmer {
      * @param value result value
      * @param status code from jmri.ProgListener 
      */
-    default public void notifyProgListenerEnd(ProgListener p, int value, int status) {
+    default void notifyProgListenerEnd(ProgListener p, int value, int status) {
         if ( p != null ) {
            p.programmingOpReply(value, status);
         }
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener p);
+    void addPropertyChangeListener(PropertyChangeListener p);
 
-    public void removePropertyChangeListener(PropertyChangeListener p);
+    void removePropertyChangeListener(PropertyChangeListener p);
 
     // error handling on request is via exceptions
     // results are returned via the ProgListener callback
     @Nonnull
-    public String decodeErrorCode(int i);
+    String decodeErrorCode(int i);
 
 }

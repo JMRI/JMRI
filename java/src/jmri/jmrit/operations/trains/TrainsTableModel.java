@@ -100,13 +100,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
             if (!isShowAll()) {
                 // filter out trains not checked
-                SwingUtilities.invokeLater(() -> {
-                    for (int i = sysList.size() - 1; i >= 0; i--) {
-                        if (!sysList.get(i).isBuildEnabled()) {
-                            sysList.remove(i);
-                        }
+                for (int i = sysList.size() - 1; i >= 0; i--) {
+                    if (!sysList.get(i).isBuildEnabled()) {
+                        sysList.remove(i);
                     }
-                });
+                }
             }
         }
 
@@ -130,8 +128,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         initTable();
     }
 
-    // Train frame table column widths (13), starts with id column and ends with
-    // edit
+    // Train frame table column widths, starts with id column and ends with edit
     private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90,
             70 };
 
@@ -245,6 +242,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILDBOX_COLUMN:
                 return Boolean.class;
             case ID_COLUMN:
+                return Integer.class;
             case TIME_COLUMN:
             case NAME_COLUMN:
             case DESCRIPTION_COLUMN:
@@ -291,7 +289,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         switch (col) {
             case ID_COLUMN:
-                return train.getId();
+                return Integer.parseInt(train.getId());
             case TIME_COLUMN:
                 return train.getDepartureTime();
             case NAME_COLUMN:
@@ -357,7 +355,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("Build");
             }
             case ACTION_COLUMN: {
-                if (train.getBuildFailed()) {
+                if (train.isBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
                 if (train.getCurrentRouteLocation() == train.getTrainTerminatesRouteLocation() &&
@@ -499,7 +497,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         Train train = getTrainByRow(row);
         // move button becomes report if failure
-        if (train.getBuildFailed()) {
+        if (train.isBuildFailed()) {
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
@@ -588,25 +586,21 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
                 (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
-            updateList();
             SwingUtilities.invokeLater(() -> {
+                updateList();
                 fireTableDataChanged();
             });
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
-            int row;
             synchronized (this) {
-                row = sysList.indexOf(train);
-                if (Control.SHOW_PROPERTY) {
-                    log.debug("Update train table row: {} name: {}", row, train.getName());
-                }
-                if (row >= 0 && _table != null) {
-                    SwingUtilities.invokeLater(() -> {
+                SwingUtilities.invokeLater(() -> {
+                    int row = sysList.indexOf(train);
+                    if (row >= 0  && _table != null) {
                         fireTableRowsUpdated(row, row);
                         int viewRow = _table.convertRowIndexToView(row);
                         _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-                    });
-                }
+                    }
+                });
             }
         }
     }

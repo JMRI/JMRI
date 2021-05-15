@@ -147,7 +147,7 @@ Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont 
 <li>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
 <li>M Bus de contr&#244;le du r&#233;seau ferroviaire y compris
       <a href="../../hardware/openlcb/index.shtml">OpenLCB</a> et
-      <a href="../../hardware/can/cbus/index.shtml">CBUS&trade;</a>.		
+      <a href="../../hardware/can/cbus/index.shtml">CBUS&reg;</a>.		
         Utilis&#233; aussi pour la mise en &#339;uvre maitre/esclave <a href="../../hardware/modbus/index.shtml">Modbus</a>.</li>
 <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (aussi <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>)</li>
 <li>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a></li>

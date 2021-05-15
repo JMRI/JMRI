@@ -11,7 +11,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqLevelCrossingState;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 
 public class LevelCrossingStatusPacketTest {
-  private byte[] testPacket = { RqLevelCrossingState.Opening.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
+  private final byte[] testPacket = { RqLevelCrossingState.Opening.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
 
   @Test
   public void getIdTest() {

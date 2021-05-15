@@ -149,6 +149,9 @@ public class AutoAllocate implements Runnable {
                         case SCAN_REQUESTS:
                             scanAllocationRequestList(allocationRequests);
                             break;
+                        case ALLOCATE_IMMEDIATE:
+                            _dispatcher.allocateSection(task.getAllocationRequest(), null);
+                            break;
                         case ABORT:
                             abort = true; //belt an braces
                             break;
@@ -203,8 +206,8 @@ public class AutoAllocate implements Runnable {
                         continue;
                     }
                     // is the train held
-                    if (activeTrain.holdAllocation) {
-                        log.debug("[{}]:Allocation is Holding", trainName);
+                    if (activeTrain.holdAllocation || (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+                        log.debug("[{}]:Allocation is Holding or Delayed", trainName);
                         continue;
                     }
 
@@ -320,6 +323,8 @@ public class AutoAllocate implements Runnable {
 
                             log.trace("ForwardsFree[{}]", areForwardsFree);
                             if (!areForwardsFree) {
+                                // delete all reserves for this train
+                                removeAllReservesForTrain(trainName);
                                 continue;
                             }
                         }
@@ -516,9 +521,10 @@ public class AutoAllocate implements Runnable {
      *
      * @param sList the possible next Sections
      * @param ar    the section being allocated when a choice is needed
+     * @param sectionSeqNo transit sequence number attempting to be allocated
      * @return the allocated section
      */
-    protected Section autoNextSectionChoice(List<Section> sList, AllocationRequest ar) {
+    protected Section autoNextSectionChoice(List<Section> sList, AllocationRequest ar, int sectionSeqNo) {
         // check if AutoAllocate has prepared for this question
         if ((savedAR != null) && (savedAR == ar)) {
             for (int j = 0; j < sList.size(); j++) {
@@ -528,11 +534,24 @@ public class AutoAllocate implements Runnable {
             }
             log.warn("Failure of prepared choice of next Section in AutoAllocate");
         }
+
+        // check to see if AutoAllocate by safesections has reserved a section
+        // already
+        ActiveTrain at = ar.getActiveTrain();
+        for (Section sectionOption : sList) {
+            String reservedTrainName = reservedSections.get(sectionOption.getSystemName());
+            if (reservedTrainName != null) {
+                if (reservedTrainName.equals(at.getActiveTrainName())) {
+                    return sectionOption;
+                }
+            }
+        }
+
         // Jay Janzen
         // If there is an AP check to see if the AP's target is on the list of
         // choices
         // and if so, return that.
-        ActiveTrain at = ar.getActiveTrain();
+        at = ar.getActiveTrain();
         AllocationPlan ap = getPlanThisTrain(at);
         Section as = null;
         if (ap != null) {
@@ -556,7 +575,8 @@ public class AutoAllocate implements Runnable {
         // primary is unoccupied, the search will select the primary and
         // we wind up skipping right over our end section.
         for (int i = 0; i < sList.size(); i++) {
-            if (at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
+            if (at.getEndBlockSectionSequenceNumber() == sectionSeqNo
+                     && at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
                 return sList.get(i);
             }
         }

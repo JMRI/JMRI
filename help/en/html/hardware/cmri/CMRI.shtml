@@ -46,7 +46,7 @@
   If you are using C/MRI hardware, it is highly recommended that you have access to Bruce Chubb's 
   <a href="https://www.jlcenterprises.net/pages/downloads" target="_blank">C/MRI User Manual,
   Version 3.0</a> which contains detailed hardware documentation not available elsewhere. Since JMRI takes the place of
-  the control software described, you can skip over computer programming details in the manual. Excellent desscriptions
+  the control software described, you can skip over computer programming details in the manual. Excellent descriptions
   of various signaling systems and model railroad layout device controls are also presented in Dr. Chubb's manuals.  
   </p>
   
@@ -147,7 +147,7 @@
       </ul>  
     </li>  
     <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>
-    <li><a href="#L739">JMRIand Third Party Help</a></li>
+    <li><a href="#L739">JMRI and Third Party Help</a></li>
     
   </ul>
   </div>
@@ -469,7 +469,7 @@
 
   <p>Select <strong>SMINI</strong> from the Node Type popup menu.</p>
 	<ul>
-  	<li>Enter the node address in the Node Addressfield.</li>
+  	<li>Enter the node address in the Node Address field.</li>
   	<li>If required, enter Receive Delay value, otherwise leave as Zero.</li>
   	<li>If using twin coil switch motors and a different ON pulse value is required, enter that value, 
   			otherwise leave as 500.</li>
@@ -517,7 +517,7 @@
   	<li>If required, enter Receive Delay value, otherwise leave as Zero.</li>
   	<li>Pulse Width is specified when using twin coil switch motors. If a different value is required, 
   			enter that value, otherwise leave as 500.</li>
-  	<li>You need to define the type of card, by cardaddress (set by switches on the card), 
+  	<li>You need to define the type of card, by card address (set by switches on the card), 
   			and whether the card is an input or an output. For each card installed, 
   			click on "No Card" and select "Input Card"
   			or "Output Card" for that position on the motherboard. Note that the input
@@ -555,7 +555,7 @@
   	<li>If required, enter Receive Delay value, otherwise leave as Zero.</li>
   	<li>Pulse Width is specified when using twin coil switch motors. If a different value is required, 
   			enter that value, otherwise leave as 500.</li>
-  	<li>You need to define the type of card, by cardaddress (set by switches on the card), 
+  	<li>You need to define the type of card, by card address (set by switches on the card), 
   			and whether the card is an input or an output. For each card installed, 
   			click on "No Card" and select "Input Card"
   			or "Output Card" for that position on the motherboard. Note that the input
@@ -1149,7 +1149,7 @@
   <p>If the <strong>Show Timestamps</strong> check box option is checked, each
   message is prefixed with the system time in the form of hh:mm:ss:mss. 
   <p>The
-  message type (e.g Receive) and node address (ua) are displayed next. The "IB"
+  message type (e.g. Receive) and node address (ua) are displayed next. The "IB"
   are the input data bytes.
   Each byte is displayed as a separate hexadecimal number.</p>
 
@@ -1289,7 +1289,7 @@
   and those that are available.</p>
 
   <p>From the PanelPro main menu, select <strong>C/MRI&rArr;List Assignments</strong>, or <strong>C/MRI&rArr;Configure Nodes</strong> and 
-  then <strong>Select&rArr;Bit Assignments</strong> for each node, to bring up up the Bit Assignments window.  Click "Show Input Bits" or
+  then <strong>Select&rArr;Bit Assignments</strong> for each node, to bring up the Bit Assignments window.  Click "Show Input Bits" or
   "Show Output Bits" depending on which you are interested in.</p>
   
   <p><img alt="List Assignments" src="images/menu_List_Assignments.png" width="672" height="217"></p>

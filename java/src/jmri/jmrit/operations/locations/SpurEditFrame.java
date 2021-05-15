@@ -31,7 +31,7 @@ public class SpurEditFrame extends TrackEditFrame {
     JPanel panelSchedule = panelOpt4;
 
     public SpurEditFrame() {
-        super();
+        super(Bundle.getMessage("AddSpur"));
     }
 
     @Override

@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqPointsCommand;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ThrowPointsPacket extends Packet {
   public final static byte IDENT = 10;
-  private RqPointsCommand command;
+  private RqPointsCommand command = null;
 
   @Override
   public byte getId() {

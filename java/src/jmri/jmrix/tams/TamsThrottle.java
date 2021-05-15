@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Kevin Dickerson
  *
  * @author Jan Boen
- *
  */
 public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
@@ -43,7 +42,9 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -166,7 +167,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
@@ -207,7 +208,9 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
@@ -221,7 +224,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         TamsMessage tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);

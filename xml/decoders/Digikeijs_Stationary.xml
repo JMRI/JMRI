@@ -90,7 +90,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
  
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-            <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="10 = FW 1.0, 13 = FW 1.3, Read Only">
+            <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="10 = FW 1.0, 13 = FW 1.3, Read Only">
                 <decVal/>
                 <label>Decoder Version: </label>
                 <label xml:lang="it">Versione Decoder: </label>
@@ -9546,7 +9546,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             *) For information about CV byte or CV bit programming, please consult your control unit’s manual.
           &lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;
-            Diese Programmiermethode wird häufig verwendet aber kann auch kompliziert sein. &lt;br/&gt;
+            Diese Programmiermethode wird häufig verwendet aber kann auch kompliziert sein.&lt;br/&gt;
               &lt;br/&gt;
             Das DR4024 Servo-Modul ist mit einem internen Belastungswiderstand ausgestattet, sodass Sie keinen externen Widerstand an das Modul anschließen müssen.&lt;br/&gt;
             &lt;br/&gt;
@@ -9561,7 +9561,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             *) Weiter Informationen zu CV-Byte- oder CV-Bit-Programmierung finden Sie in der Bedienungsanleitung Ihrer Zentrale.
           &lt;/html&gt;</text>
           <text xml:lang="fr">&lt;html&gt;
-            Cette méthode de programmation est communément utilisée mais peut s’avérer compliquée. &lt;br/&gt;
+            Cette méthode de programmation est communément utilisée mais peut s’avérer compliquée.&lt;br/&gt;
             &lt;br/&gt;
             Le module servo DR4024 est équipé d’une résistance de charge interne. Vous n’avez donc pas besoin de raccorder une résistance externe au module.&lt;br/&gt;
             &lt;br/&gt;
@@ -9575,14 +9575,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             *) Reportez-vous au manuel d’information de votre Centrale de Commande pour plus d’informations sur la programmation CV-byte ou CV-bit.
           &lt;/html&gt;</text>
           <text xml:lang="nl">&lt;html&gt;
-            Deze manier van programmeren wordt veel gebruikt, maar kan ingewikkeld zijn. Volg dus zorgvuldig de volgende stappen: &lt;br/&gt;
+            Deze manier van programmeren wordt veel gebruikt, maar kan ingewikkeld zijn. Volg dus zorgvuldig de volgende stappen:&lt;br/&gt;
               &lt;br/&gt;
             De DR4024 decoder is voorzien van een interne belastingsweerstand, dus U hoeft geen externe belasting aan te sluiten op de module.&lt;br/&gt;
             &lt;br/&gt;
             Stap 1: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
-            Stap 2: Druk de Program schakelaar op de decoder in totdat de rode led blij branden.&lt;br/&gt;
-            Stap 3: Sluit nu zowel power als signal ingang van de decoder aan op de programmeer uitgang van uw centrale.&lt;br/&gt;
-            Stap 4: Nu kunt u de gewenste CV’s wijzigen doormiddel van CV-byte of CV-bit programmering. *)&lt;br/&gt;
+            Stap 2: Druk de Program schakelaar op de decoder in totdat de rode led blijft branden.&lt;br/&gt;
+            Stap 3: Sluit nu zowel power als signal ingang van de decoder aan op de programmeer-uitgang van uw centrale.&lt;br/&gt;
+            Stap 4: Nu kunt u de gewenste CV’s wijzigen door middel van CV-byte of CV-bit programmering. *)&lt;br/&gt;
             Stap 5: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
             Stap 6: Druk de programmeer schakelaar op de module in totdat de led dooft.&lt;br/&gt;
             Stap 7: Uw wijzigingen zijn opgeslagen en de module is klaar voor gebruik.&lt;br/&gt;
@@ -9621,6 +9621,46 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
           <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Belangrijke informatie over DigiKeijs decoders&lt;/h1&gt;&lt;/html&gt;</text>
         </label>
         <separator/>
+      <label>
+        <text>&lt;html&gt;&lt;h3&gt;CV Programming on the Main&lt;/h3&gt;&lt;html&gt;</text>
+        <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Hauptgleis Programmierung&lt;/h3&gt;&lt;/html&gt;</text>
+        <text xml:lang="fr">&lt;html&gt;&lt;h3&gt;Programmer sur Voie Principale&lt;/h3&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;CV Programmeren op de baan (POM)&lt;/h3&gt;&lt;/html&gt;</text>
+      </label>
+      <label>
+        <text>&lt;html&gt;POM programming on the main track requires no changes to the DR4018 connections.&lt;br/&gt;
+        CV readout via POM or Railcom® is not possible.&lt;br/&gt;
+        Step 1: Enter a locomotive &lt;strong&gt;address 9999&lt;/strong&gt; and 128 speed steps DCC on the Basic tab.&lt;br/&gt;
+        Step 2: Press the PROGRAM button on the DR4018. The red LED is lit continuously to indicate the DR4018 is in "programming mode".&lt;br/&gt;
+        Step 3: Select Programming on Main (aka Addressed). Set options on the tabs and press [Write full sheet].&lt;br/&gt;
+        Step 4: To exit programming mode press the PROGRAM button again. The red LED turns off to indicate programming mode has terminated.&lt;br/&gt;
+        NB: The turnout addresses in the DR4018 are assigned by a turnout command. Use the JMRI Turnout table, not this Programmer.&lt;/html&gt;</text>
+
+        <text xml:lang="de">&lt;html&gt;Für POM Programmierung am Hauptgleis sind keine Änderungen an die Anschlüsse der DR4018 notwendig.&lt;br/&gt;
+        CV auslesen über POM oder Railcom® ist nicht möglich.&lt;br/&gt;
+        1: Gebe als &lt;strong&gt;Lokomotiv-adresse 9999&lt;/strong&gt; und 128 Fahrstufen DCC ein. So lässt sich der DR4018 ähnlich wie eine Lokdecoder programmieren.&lt;br/&gt;
+        2. Betätigen Sie den PROGRAM Taster des DR4018. Die rote LED leuchtet nun ständig und zeigt an, dass sich der DR4018 im „Programmier-Modus“ befindet&lt;br/&gt;
+        3: Wähle Betriebsgleis Programmierung (POM). Die gewünschte CV Werte schreibt man in den DR4018 mit [Diese Seite schreiben].&lt;br/&gt;
+        4: Um den Programmiermodus zu verlassen muss den PROGRAM Taster erneut betätigt werden. Die rote LED erlischt und der Programmiermodus ist beendet.&lt;br/&gt;
+        NB: De wisseladressen in de DR4018 worden via een wisselopdracht (1e adres) toegewezen. Gebruik de JMRI Wissel-tabel, niet deze Programmer.&lt;/html&gt;</text>
+
+        <text xml:lang="fr">&lt;html&gt;La programmation en mode POM est possible sans changement á le câblage du DR4018.&lt;br/&gt;
+        Lecture des CV’s n'est pas possible en mode POM ou avec le RailCom.&lt;br/&gt;
+        1: Entrez l’&lt;strong&gt;adresse de locomotive 9999&lt;/strong&gt; en 128 crans de vitesses. Le DR4018 peut être programmé comme un décodeur.&lt;br/&gt;
+        2: Appuyez sur le bouton PROGRAM du DR4018. La LED rouge allume q'indique que le DR4018 est en "mode de programmation".&lt;br/&gt;
+        3: Sélectionnez la mode de programmation Programmer sur Voie Principale en DecoderPro. Les valeurs souhaitées peut être écrite avec le bouton [Écrire tous cet onglet].&lt;br/&gt;
+        4: Pour quitter le mode de programmation, appuyez à nouveau sur le bouton PROGRAM. La LED rouge s'éteint et le mode de programmation est terminé.&lt;br/&gt;
+        NB:  L‘adresse de départ (l‘aiguillage) dans le DR4018 est attribuée via une commande d‘aiguillage. Utilizez le JMRI Tableau Aiguillage, pas cet Programmeur.&lt;/html&gt;</text>
+
+        <text xml:lang="nl">&lt;html&gt;Voor POM-programmering op het hoofdspoor (Addressed) zijn geen wijzigingen van de DR4018-aansluitingen nodig.&lt;br/&gt;
+        CV's uitlezen via POM of Railcom® is niet mogelijk.&lt;br/&gt;
+        Stap 1: Stel als lang adres op het tabblad Basis het &lt;strong&gt;adres 9999&lt;/strong&gt; en 128 snelheidsstappen DCC in.&lt;br/&gt;
+        Stap 2: Druk op het PROGRAM-knopje op de DR4018. De rode LED brandt nu continu om aan te geven dat de DR4018 in “programmeermodus” staat.&lt;br/&gt;
+        Stap 3: Selecteer de functie Programmering op de Baan (POM). Op de div. tabs stelt u opties inKlik dan op [Schrijf naar Decoder].&lt;br/&gt;
+        Stap 4: Om de programmeermodus te verlaten drukt u het PROGRAM-knopje weer in. De rode LED dooft en de programmeermodus is beëindigd.&lt;br/&gt;
+        NB: De wisseladressen in de DR4018 worden via een wisselopdracht (1e adres) toegewezen. Gebruik de JMRI Wissel-tabel, niet deze Programmer.&lt;/html&gt;</text>
+      </label>
+        <separator/>
         <label>
           <text>&lt;html&gt;&lt;h3&gt;CV Programming/reading through the programming track&lt;/h3&gt;&lt;html&gt;</text>
           <text xml:lang="de">&lt;html&gt;&lt;h3&gt;CV-Programmierung / Lesen auf dem Programmiergleis&lt;/h3&gt;&lt;/html&gt;</text>
@@ -9635,7 +9675,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             The resistor ensures that there is a resistance on the programming track, which your control unit requires as confirmation that a module is present&lt;br/&gt;
             and that the programming commands have been received from the control unit.&lt;br/&gt;
             Unfortunately, no two control units are the same and it is possible that the attached resistor does not provide enough, or provides too much,&lt;br/&gt;
-            resistance. If this happens, consult your control unit’s manual to find out what resistance is required.&lt;br/&gt;
+            resistance. If this happens, consult your control unit's manual to find out what resistance is required.&lt;br/&gt;
             In most cases using a bulb (12 Volt—60 mA) works well.&lt;br/&gt;
             &lt;br/&gt;
             Step 1: Connect both the power and signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;
@@ -9649,10 +9689,11 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             *) For information about CV byte or CV bit programming, please consult your control unit’s manual.
           &lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;
-            Diese Programmiermethode wird häufig verwendet aber kann auch kompliziert sein. &lt;br/&gt;
+            Diese Programmiermethode wird häufig verwendet aber kann auch kompliziert sein.&lt;br/&gt;
             &lt;br/&gt;
             Als erstes muss der Decoder vorbereitet werden, indem ein 150—270 Ohm Widerstand an den Ausgang 1 angeschlossen wird (zwischen OUT1 1 und C).&lt;br/&gt;
-            Der Widerstand sorgt dafür, dass es einen Widerstand am Programmiergleis gibt. Dies benötigt die Kontrolleinheit als Bestätigung, dass das Modul vorhanden ist und dass die Programmiervorgaben von der Kontrolleinheit erhalten worden sind.&lt;br/&gt;
+            Der Widerstand garandiert dass genügend Strom durch den Programmiergleis führt. Dies braucht die Kontrolleinheit als Bestätigung,
+            dass das Modul vorhanden ist und dass die Programmiervorgaben von der Kontrolleinheit erhalten worden sind.&lt;br/&gt;
             Leider sind alle Kontrolleinheiten unterschiedlich und es kann also sein, dass der angeschlossenen Widerstand nicht genug, oder zu viel Widerstand leistet.&lt;br/&gt;
             Wenn dies der Fall ist, dann prüfen Sie im Handbuch Ihrer Kontrolleinheit nach welcher Widerstand benötigt wird.&lt;br/&gt;
             In den meisten Fällen kann man auch eine Glühbirne (12 Volt—60 mA) verwenden.&lt;br/&gt;
@@ -9668,7 +9709,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             *) Weiter Informationen zu CV-Byte- oder CV-Bit-Programmierung finden Sie in der Bedienungsanleitung Ihrer Zentrale.
           &lt;/html&gt;</text>
           <text xml:lang="fr">&lt;html&gt;
-            Cette méthode de programmation est communément utilisée mais peut s’avérer compliquée. &lt;br/&gt;
+            Cette méthode de programmation est communément utilisée mais peut s’avérer compliquée.&lt;br/&gt;
             &lt;br/&gt;
             Le décodeur doit d’abord être préparé en utilisant une résistance de 150-270 ohms reliée à la sortie 1 (entre OUT1 1 et C).&lt;br/&gt;
             La résistance simule un consommateur de courant sur le rail de programma on. L’unité de contrôle nécessite une confirmation lui permettant&lt;br/&gt;
@@ -9687,7 +9728,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             *) Reportez-vous au manuel d’information de votre Centrale de Commande pour plus d’informations sur la programmation CV-byte ou CV-bit.
           &lt;/html&gt;</text>
           <text xml:lang="nl">&lt;html&gt;
-            Deze manier van programmeren wordt veel gebruikt, maar kan ingewikkeld zijn. Volg dus zorgvuldig de volgende stappen: &lt;br/&gt;
+            Deze manier van programmeren wordt veel gebruikt, maar kan ingewikkeld zijn. Volg dus zorgvuldig de volgende stappen:&lt;br/&gt;
             &lt;br/&gt;
               Eerst moet u de decoder voorbereiden door het plaatsen van een belastingsweerstand van 150 of 270 Ohm tussen uitgang 1 (1 op OUT1) en common (C op OUT1).&lt;br/&gt;
               De weerstand zorgt er voor dat er een belasting op het programmeerspoor ontstaat die uw centrale nodig heeft als bevestiging dat er een module aanwezig is&lt;br/&gt;
@@ -9697,9 +9738,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
               In de meeste gevallen werkt een gloeilampje (12 Volt - 60 mA).&lt;br/&gt;
               &lt;br/&gt;
             Stap 1: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
-            Stap 2: Druk de Program schakelaar op de decoder in totdat de rode led blij branden.&lt;br/&gt;
-            Stap 3: Sluit nu zowel power als signal ingang van de decoder aan op de programmeer uitgang van uw centrale.&lt;br/&gt;
-            Stap 4: Nu kunt u de gewenste CV’s wijzigen doormiddel van CV-byte of CV-bit programmering. *)&lt;br/&gt;
+            Stap 2: Druk de Program schakelaar op de decoder in totdat de rode led blijft branden.&lt;br/&gt;
+            Stap 3: Sluit nu zowel power als signal ingang van de decoder aan op de programmeer-uitgang van uw centrale.&lt;br/&gt;
+            Stap 4: Nu kunt u de gewenste CV’s wijzigen door middel van CV-byte of CV-bit programmering. *)&lt;br/&gt;
             Stap 5: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
             Stap 6: Druk de programmeer schakelaar op de module in totdat de led dooft.&lt;br/&gt;
             Stap 7: Uw wijzigingen zijn opgeslagen en de module is klaar voor gebruik.&lt;br/&gt;
@@ -9712,6 +9753,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
           <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
           <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
         </label>
+      <label>
+        <text>Attribution for the instructions and translations on this page: Digikeijs manuals, edited by JMRI</text>
+      </label>
     </column>
 </pane>
 <!-- End of Readme Pane 4018-->

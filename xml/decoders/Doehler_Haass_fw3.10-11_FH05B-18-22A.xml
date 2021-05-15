@@ -12,6 +12,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="4.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+  <!--  Removed Firmware pane (outdated since fw 3.06 and
+        introduction of CVs260-265: fw info now on "DH Info" page)
+        -->
+  <version version="4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
+  <!--  Added update paths to newest fw 3.12.050 -->
   <version version="3" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2020-05-05"/>
   <!--  (new firmware 3.10 and 3.11 and including of FH18A)
         -->
@@ -25,7 +31,7 @@
         -->
   <decoder>
     <family name="Function Decoders (2018)" mfg="Doehler und Haass">
-      <model model="FH05B v3.10.48 (firmware 3.10+)" lowVersionID="48" highVersionID="48" numOuts="6" numFns="16" productID="FH05B_2018.04" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from April 2018" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B v3.10.48 (firmware 3.10+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="6" numFns="16" productID="FH05B_2018.04" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from April 2018" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -66,7 +72,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH18A v3.10.48 (firmware 3.10+)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH18A_2018.04" comment="FH18A with update from April 2018" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
+      <model model="FH18A v3.10.48 (firmware 3.10+)" replacementModel="FH18A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH18A_2018.04" comment="FH18A with update from April 2018" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -113,7 +119,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH22A v3.10.48 (firmware 3.10+)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH22A_2018.04" comment="FH22A with update from April 2018" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A v3.10.48 (firmware 3.10+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH22A_2018.04" comment="FH22A with update from April 2018" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -162,7 +168,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH05B v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="FH05B_2018.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2018" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B v3.11.98 (firmware 3.11+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="FH05B_2018.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2018" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -177,7 +183,7 @@
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-          <label xml:lang="ca">AUX 2</label>       
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
@@ -203,7 +209,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH18A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH18A_2018.10" comment="FH18A with update from October 2018" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
+      <model model="FH18A v3.11.98 (firmware 3.11+)" replacementModel="FH18A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH18A_2018.10" comment="FH18A with update from October 2018" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -250,7 +256,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH22A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH22A_2018.10" comment="FH22A with update from October 2018" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A v3.11.98 (firmware 3.11+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH22A_2018.10" comment="FH22A with update from October 2018" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -376,7 +382,6 @@
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common_fw3.10.xml"/>
 <!-- relevant für FH ??? Ende-->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
   <!-- Pane(s) valid for some decoders only  -->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>

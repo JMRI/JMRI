@@ -23,7 +23,8 @@
 
       <h1>JMRI: Tables Servlet</h1>
       <p>The JMRI Tables Servlet provides web access to information about
-      JMRI objects such as Turnouts and Sensors. This servlet responds to the following URL patterns:</p>
+      JMRI objects such as Turnouts and Sensors.</p>
+      <p>This servlet responds to the following URL patterns:</p>
 
       <dl>
         <dt>/tables/</dt>
@@ -33,7 +34,9 @@
 
         <dt>/tables/&lt;type&gt;</dt>
         <dd>Displays an operating list of objects of that type (or "No data for this table." in case of an empty
-          list). Click the State column entry to toggle the state of an item in JMRI.<br>
+          list).<br />
+          The table updates dynamically to reflect changes in JMRI.
+          Click the State column entry to toggle the state of that item in JMRI.<br />
           <em>&lt;type&gt;</em> is one of: <em>turnout</em>, <em>sensor</em>, <em>route</em>, <em>reporter</em> etc.</dd>
 
       </dl><!--#include virtual="/Footer.shtml" -->

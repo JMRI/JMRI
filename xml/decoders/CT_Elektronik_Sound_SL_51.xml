@@ -58,7 +58,7 @@
         <label xml:lang="fr">Vmoy</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
       </variable>
-      <variable CV="7" default="15" readOnly="yes" item="Decoder Version">
+      <variable CV="7" default="15" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version</label>
         <label xml:lang="it">Versione Decoder: </label>

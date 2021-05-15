@@ -7,7 +7,7 @@
 
   <title>JMRI: Lights Documentation</title>
   <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords" content="light lights hardware variable timed intensity automated 
+  <meta name="keywords" content="light lights hardware variable timed intensity automated
     layout control controls effect lighting model railroad JMRI CMRI panelpro tools dmx512">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -30,7 +30,7 @@
     <h1>JMRI: Lights Documentation</h1>
     <p>Lights are digital output bits that function as on/off switches. Some hardware also
     provides for variable intensity Lights.</p>
-    
+
     <dl class="toc">
 		<dt><a href="#what">What are Lights and how are they used?</a></dt>
         <dt><a href="#table">What is the Light Table?</a></dt>
@@ -55,29 +55,29 @@
         </dd>
         <dt><a href="#variablelight">What are variable intensity lights?</a></dt>
         <dd>
-            <ul> 
+            <ul>
                <li><a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml#varLight">
                    Adding/editing variable intensity Lights</a></li>
             </ul>
         </dd>
         <dt><a href="#ref">Links to all JMRI Lights Help</a></dt>
  	</dl>
-  
+
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
     <h2><a name="what" id="what">What are Lights and How Are They Used?</a></h2>
 
-      <p>Lights were created to provide an easy way to control fascia panel lights and scenery 
-      lighting.  They can be used for any purpose that requires an on/off switch, for example, 
+      <p>Lights were created to provide an easy way to control fascia panel lights and scenery
+      lighting.  They can be used for any purpose that requires an on/off switch, for example,
       to activate an electromagnetic decoupler for a pre-determined time in response to a fascia
-      panel button, or to play a layout sound via a stationary decoder, or to start or stop an 
+      panel button, or to play a layout sound via a stationary decoder, or to start or stop an
       animation triggered by a sensor.  In general, Lights provide simple mechanism to control any
       on/off task on the railroad.</p>
-      
+
       <p>Originally developed for use with <a href="../hardware/cmri/CMRI.shtml">C/MRI</a>, Lights
       are also implemented on many other hardware types, including <a href="../hardware/powerline/index.shtml">
       Powerline X10</a> and <a href="../hardware/anyma/index.shtml">Anyma DMX512 </a>systems.</p>
-      
+
       <p>Lights share available digital output bits with Turnouts.
       Either a Light or a Turnout, but not both, can control a
       specific digital output bit. Since Lights lack the feedback
@@ -91,10 +91,10 @@
       mechanism to control scenery lighting or panel lights, or for
       other on/off tasks where the control mechanisms of Lights fit
       the need.</p>
-      
-      <p>Lights can be turned on or off by clicking the status column in the 
+
+      <p>Lights can be turned on or off by clicking the status column in the
       <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">
-      Lights Table.</a> They can aslo be automatically controlled:</p> 
+      Lights Table.</a> They can aslo be automatically controlled:</p>
 
       <ul>
         <li>by a single Sensor</li>
@@ -103,21 +103,21 @@
         <li>by the JMRI Fast Clock</li>
         <li>or switched on for a specified time by a Sensor.</li>
       </ul>
-      
+
       <p>One or more of these controls may be specified when the Light is created or edited
-      (in the Light Table} as an easy way of setting up basic logic and interfacing  with 
+      (in the Light Table} as an easy way of setting up basic logic and interfacing  with
       Sensors, Turnouts or a Fast Clock. When a Light is created, or when it is read from a
       configuration file, the Light is 'activated'; it is set up to monitor automatically
       any changes in state of these controls. When the controlling Sensor, Turnout, or Fast
-      Clock changes, the Light is switched on or off. Lights can also be controlled by 
-      <a href="LogixTable.shtml">Logix</a> if more complicated control logic is needed.</p>   
-      
+      Clock changes, the Light is switched on or off. Lights can also be controlled by
+      <a href="Logix.shtml">Logix</a> if more complicated control logic is needed.</p>
+
       <p>Depending on the hardware interfacing with your Lights, they can be specified as
       <a href="#variablelight">variable intensity</a> (brightness) rather than just on/off.
-      This is commonly used with the Fast Clock to produce gradual transition between day 
+      This is commonly used with the Fast Clock to produce gradual transition between day
       and night scenes.</p>
-   
-      
+
+
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
     <h2><a name="table" id="table">The Light Table</a></h2>
@@ -135,23 +135,23 @@
         <li>Comment (optional, double click to edit)</li>
         <li>Enabled (Automated Light Control excluding Logix)</li>
         <li>Intensity (availble in certain hardware only)</li>
-      </ul>  
-      
+      </ul>
+
       <p>There is also an <b>Add...</b> button on the bottom left of the window
       and <b>Delete</b> and <b>Edit</b> buttons on each row.</p>
 
-      
+
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      
+
    <h2><a name="addedit" id="addedit">Adding and Editing a Light</a></h2>
 
    <h3><a name="addLight" id="addLight">Adding a new Light</a></h3>
-    
+
         <p>Light are added to the Light Table <b>(Tools</b> -&gt; <b>Tables</b> -&gt;
         <b>Lights)</b> via a window accessed by clicking the <a href=
         "../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add...</a>
         button at the bottom left of the Light Table window.</p>
-        
+
         <p>In this window you can</p>
         <ul>
         <li>Set the System Name</li>
@@ -160,40 +160,38 @@
         </ul>
 
     <h3>Editing an existing Light</h3>
-        
+
         <p>To edit an existing Light, click on the <b>Edit</b> button in the
-        <a href= "../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a> 
-        row for that Light.  This will open the 
+        <a href= "../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>
+        row for that Light.  This will open the
         <a href= "../../package/jmri/jmrit/beantable/LightAddEdit.shtml#editLight">Add/Edit
         Light window</a>.</p>
 
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-        
+
     <h2><a name="saving" id="saving">Saving and Loading Lights</a></h2>
 
       <p>Like other JMRI objects such as turnouts and sensors, the Lights in your Light Table
-      are kept in your  <i>layout configuration</i> xml file. To save this information, allowing 
-      you to <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next 
-      time you run JMRI, use <b>Store Configuration...</b> in the <b>File</b> menu at the top of 
-      the Light Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
-      in the <b>Panel</b> menu.</p>
-       
-      <p>The Light Control is enabled on loading, so will automatically monitor any changes in 
+      are kept in your  <i>layout configuration</i> xml file. To save this information, allowing
+      you to <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next
+      time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.
+
+      <p>The Light Control is enabled on loading, so will automatically monitor any changes in
       state of its control sensor, turnout, or fast clock.  When a Light with no Light Control
       is loaded into the Light Table, it will default to an Off state.</p>
-      
-      <p class="note">The enabled/disabled state of a Light is not saved in the configuration file. 
-      When Lights are loaded from a configuration file, they are all enabled.</p>    
- 
+
+      <p class="note">The enabled/disabled state of a Light is not saved in the configuration file.
+      When Lights are loaded from a configuration file, they are all enabled.</p>
+
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
     <h2><a name="lightcontrol" id="lightcontrol">Controlling Lights - Setting On/Off/Intensity</a></h2>
-    
+
     <p>There are several ways to turn a light on or off, both manual and automated. Lights can be
     turned on or off manually by clicking the button in the State column of the Light Table. A Light
     can also be controlled by one or more of the following:</p>
-    
+
       <ul>
         <li>the state of a track switch (Turnout), On when the Turnout is Closed, and Off when it
         is Thrown, or vice versa</li>
@@ -201,9 +199,9 @@
         inactive, or vice versa</li>
         <li>a fascia panel button if a Sensor for that button is defined as the control Sensor. </li>
         <li>the JMRI Fast Clock, On for a specified time period, then Off</li>
-        <li>two Sensors, On when either of the two Sensors is Active (or Inactive); two sensor 
+        <li>two Sensors, On when either of the two Sensors is Active (or Inactive); two sensor
         control is useful in controlling layout sounds or crossing gates</li>
-        <li>a Logix, as the action of one of its conditionals; <a href="LogixTable.shtml">Logix</a>
+        <li>a Logix, as the action of one of its conditionals; <a href="Logix.shtml">Logix</a>
         should be considered if you need more complex logic to control your Lights</li>
       </ul>
 
@@ -220,10 +218,10 @@
       respond according to those options.  See <a href="#variablelight"> below </a>
       for more information on variable Lights.</p>
 
-      <h4>Summay of Light On/Off Control Methods</h4> 
-      
+      <h4>Summay of Light On/Off Control Methods</h4>
+
       <p>The various ways to control Lights are listed here.  They may be used in combinations for a:</p>
-    
+
     <dl>
       <dt><strong>Manual:</strong></dt>
       <dd>
@@ -235,8 +233,8 @@
       Light Control Tool:</a> Lights can be set On, Off, or to a particular intensity
       in the Light Control Tool.</li>
          </ul>
-      </dd>  
-      
+      </dd>
+
       <dt><strong>Automated:</strong></dt>
       <dd>
         <ul>
@@ -244,7 +242,7 @@
       Light controlled by Turnout:</a> A Light can follow the state of a Turnout, changing state in
       reaction to Thrown or Closed.</li>
         <li><a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolonesensor">
-      Light controlled by Sensor:</a> A Light can follow the state of a Sensor, changing state in 
+      Light controlled by Sensor:</a> A Light can follow the state of a Sensor, changing state in
       reaction to Active or Inactive.</li>
          <li><a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontroltwosensor">
       Light controlled by TWO Sensors:</a> A Light can follow the state of 2 Sensors, changing state
@@ -256,7 +254,7 @@
       Light controlled by Timer:</a> Following a Sensor active trigger, Light will turn On for a
       specified time period, then Off.</li>
          <li><a href="Logix.shtml">Light controlled by Logix:</a>
-      Conditional actions can be used to set the Light status. Logix can also set actions for 
+      Conditional actions can be used to set the Light status. Logix can also set actions for
       setting Light intensity and transition (fade) time duration.</li>
          <li><a title="Jython" href="scripting/Start.shtml">Jython Scripting:</a>
       Lights can be easily manipulated with custom Jython scripting for maximum control.</li>
@@ -265,19 +263,19 @@
         </ul>
         </dd>
     </dl>
- 
-      
+
+
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
     <h2><a name="variablelight" id="variablelight">Variable Lights</a></h2>
-      
+
       <p>A <a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml#varLight">
       variable intensity light</a> allows for a variable number of
       intensities between on and off. The typical use would be for
       layout lighting simulating the changes for the time of day
       and night.</p>
-      
+
       <p>Only some forms of Lights have the ability to be
       variable. Examples would include Internal and PowerLine
       devices.</p>
@@ -294,8 +292,8 @@
       will not be needed again as long as <b>only</b> intensity
       setting commands are used. Mixing on/off commands may require
       the initialization to occur again.</p>
-      
-      <p>The status button for a variable Light in the Light Table will also be a status 
+
+      <p>The status button for a variable Light in the Light Table will also be a status
       indication of the variable Light. When it is not On or Off it will show if the last
       change in intensity was moving higher or lower. The intensity displayed will be the
       current intensity, not the target intensity, when transition effects are enabled.</p>
@@ -327,14 +325,14 @@
       </dl>
 
     <h3><a name="VariableLightSettings" id="VariableLightSettings">Variable Light Settings</a></h3>
-      
+
       <p>These settings adjust how the 'set intensity' command is used.</p>
 
       <dl>
         <dt><b>Minimum Intensity:</b></dt>
 
         <dd>A value 0 to 100 (percent) that sets the lowest amount
-        of light that will be output by a dim command. 
+        of light that will be output by a dim command.
         <br>An explicit Off command will ignore this value.</dd>
 
         <dt><b>Maximum Intensity:</b></dt>
@@ -346,31 +344,31 @@
         <dt><b>Transition Time:</b></dt>
 
         <dd>Number of Fast Clock minutes to go from 0% to 100%
-        intensity. 
+        intensity.
         <br>A value of zero will cause the device to change
         from one intensity to new intensity as fast as the device
         is able to do so.</dd>
       </dl>
- 
+
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
- 
+
     <h2><a name="ref" id="ref">Other Light Reading</a></h2>
-    
+
         <p><a href="../../package/jmri/jmrit/beantable/LightTable.shtml">
         Light Table Help</a></p>
-        
+
         <p><a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">
         Add/editing Lights</a><</p>
-        
+
         <p><a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrol">
         Editing automated Light Controls</a></p>
-        
+
         <p><a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml#varLight">
         Adding/editing variable intensity Lights</a></p>
-        
+
         <p><a href="../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">
         Manual Light Control Tool</a></p>
-        
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

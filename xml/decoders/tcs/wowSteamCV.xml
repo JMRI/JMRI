@@ -450,130 +450,95 @@
 		<decVal max="126"/>
 		<label>Random Sound Cutout Speed Step</label>
 	</variable>
-		<variable item="Sound Group 5 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXXVX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Rod clank enable</label>
-		</variable>
-		<variable item="Sound Group 5 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXVXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Idling sound enable</label>
-		</variable>
-		<variable item="Sound Group 5 Checkbox 5" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXVXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Forward whistles enable</label>
-		</variable>
-		<variable item="Sound Group 5 Checkbox 6" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXVXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Reverse whistles enable</label>
-		</variable>
-		<variable item="Sound Group 5 Checkbox 7" CV="T2CV.4.12" default="0" mask="XXXXXXXXXVXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Stop whistles enable</label>
-		</variable>
-		<variable item="Sound Group 5 Checkbox 8" CV="T2CV.4.12" default="1" mask="XXXXXXXXVXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Direction change enable</label>
-		</variable>
-		<variable item="Sound Group 6 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXVXXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Random Sound 1 enable</label>
-		</variable> 
-		<variable item="Sound Group 6 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXVXXXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Random Sound 2 enable</label>
-		</variable> 
-		<variable item="Sound Group 6 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXVXXXXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Random Sound 3 enable</label>
-		</variable> 
-		<variable item="Sound Group 6 Checkbox 4" CV="T2CV.4.12" default="1" mask="XXXXVXXXXXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Random Sound 4 enable</label>
-		</variable> 
-		<variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
-			<decVal max="126"/>
-		</variable>
-		<variable label="Dual function F0F" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXXV" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F0R" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXVX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F1" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXXVXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F2" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXVXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F3" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXVXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F4" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXVXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F5" CV="T2CV.4.14" default="0" mask="XXXXXXXXXVXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F6" CV="T2CV.4.14" default="0" mask="XXXXXXXXVXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F7" CV="T2CV.4.14" default="0" mask="XXXXXXXVXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		</variable>
-		<variable label="Dual function F8" CV="T2CV.4.14" default="1" mask="XXXXXXVXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		</variable>
-		<variable label="Dual function F9" CV="T2CV.4.14" default="0" mask="XXXXXVXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		</variable>
-		<variable label="Dual function F10" CV="T2CV.4.14" default="0" mask="XXXXVXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		</variable>
-		<variable label="Dual function F11" CV="T2CV.4.14" default="0" mask="XXXVXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		</variable>
-		<variable label="Dual function F12" CV="T2CV.4.14" default="0" mask="XXVXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		</variable>
-		<variable label="Chuff rate adjustment" CV="T2CV.4.16" default="100" tooltip="Default 100%, Increase value to increase chuff rate, decrease value to decrease chuff rate">
+  <variable item="Sound Group 5 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXXVX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Rod clank enable</label>
+  </variable>
+  <variable item="Sound Group 5 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Idling sound enable</label>
+  </variable>
+  <variable item="Sound Group 5 Checkbox 5" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Forward whistles enable</label>
+  </variable>
+  <variable item="Sound Group 5 Checkbox 6" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Reverse whistles enable</label>
+  </variable>
+  <variable item="Sound Group 5 Checkbox 7" CV="T2CV.4.12" default="0" mask="XXXXXXXXXVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Stop whistles enable</label>
+  </variable>
+  <variable item="Sound Group 5 Checkbox 8" CV="T2CV.4.12" default="1" mask="XXXXXXXXVXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Direction change enable</label>
+  </variable>
+  <variable item="Sound Group 6 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXVXXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Random Sound 1 enable</label>
+  </variable>
+  <variable item="Sound Group 6 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXVXXXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Random Sound 2 enable</label>
+  </variable>
+  <variable item="Sound Group 6 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXVXXXXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Random Sound 3 enable</label>
+  </variable>
+  <variable item="Sound Group 6 Checkbox 4" CV="T2CV.4.12" default="1" mask="XXXXVXXXXXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Random Sound 4 enable</label>
+  </variable>
+  <variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
+    <decVal max="126"/>
+    <!--    label applied in pane-->
+  </variable>
+
+  <xi:include href="http://jmri.org/xml/decoders/tcs/wow_dual_f0_f12.xml"/>
+  <variable item="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dual function F13</label>
+  </variable>
+  <variable item="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dual function F14</label>
+  </variable>
+
+  <variable item="Chuff rate adjustment" CV="T2CV.4.16" default="100" tooltip="Default 100%, Increase value to increase chuff rate, decrease value to decrease chuff rate">
 			<decVal max="200"/>
-		</variable>
-		<variable item="Sound Setting 32" CV="T2CV.4.18" default="256"  mask="VVVVVVVVVVVVVVVV">
-			<decVal max="65535"/>
-		<label>Cylinder cocks auto turn on time</label>
-		</variable>
-		<variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXXV">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Cam enable</label>
-		</variable>
-		<variable item="Sound Group 7 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXVXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Mute on startup</label>
-		</variable>
-		<variable item="Sound Group 7 Checkbox 4" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXVXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Articulated chuff slip</label>
-		</variable>
-		<variable item="Sound Group 7 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXVXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Rotate Whistle Audio Feedback</label>
-		</variable>
-		<variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Light Mode/Sound Mode Audio Feedback</label>
-		</variable>
-		<variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="0" mask="XXXXXXXXXVXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-			<label>Audio Auto Shutoff Timer</label>
-		</variable>
-		<variable item="Sound Setting 36" CV="T2CV.4.20" default="240" mask="VVVVVVVVVVVVVVVV">
-			<decVal max="65535"/>
-			<label>Articulated Chuff Slip Rate</label>
-		</variable>
+    <label>Chuff rate adjustment</label>
+  </variable>
+  <variable item="Sound Setting 32" CV="T2CV.4.18" default="256"  mask="VVVVVVVVVVVVVVVV">
+    <decVal max="65535"/>
+  <label>Cylinder cocks auto turn on time</label>
+  </variable>
+  <variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Cam enable</label>
+  </variable>
+  <variable item="Sound Group 7 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Mute on startup</label>
+  </variable>
+  <variable item="Sound Group 7 Checkbox 4" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Articulated chuff slip</label>
+  </variable>
+  <variable item="Sound Group 7 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Rotate Whistle Audio Feedback</label>
+  </variable>
+  <variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Light Mode/Sound Mode Audio Feedback</label>
+  </variable>
+  <variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="0" mask="XXXXXXXXXVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Audio Auto Shutoff Timer</label>
+  </variable>
+  <variable item="Sound Setting 36" CV="T2CV.4.20" default="240" mask="VVVVVVVVVVVVVVVV">
+    <decVal max="65535"/>
+    <label>Articulated Chuff Slip Rate</label>
+  </variable>
 </variables>

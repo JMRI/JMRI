@@ -42,6 +42,7 @@ public class DetectionPanelTest {
     public void tearDown() {
         ip = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

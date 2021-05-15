@@ -66,6 +66,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         final JmriJFrame addFrame = new RouteAddFrame();
         // display the window
         addFrame.setVisible(true);
+        addFrame.setEscapeKeyClosesWindow(true);
     }
 
     @Override

@@ -20,7 +20,7 @@
 
       <a name="top" id="top"></a>
       <h1>Hardware Support: MQTT</h1>
-      <img src="images/mqtt-logo.png" alt="MQTT logo" align="center">
+      <img src="images/mqtt-logo.png" alt="MQTT logo" class="floatRight">
       
       <p><a href="https://mqtt.org" target="_blank">MQTT </a>is a "client-server publish-subscribe" protocol, meaning that JMRI connects
       to an MQTT server and subscribes to receive messages on certain topics.  JMRI also publishes messages to the MQTT server
@@ -133,8 +133,9 @@
     </p>
     
     <p>
-    Using the defaults in the JMRI Preferences Connection pane <a href="images/MQTT_Preferences rel4-21-2.png">
-    <img src="images/MQTT_Preferences rel4-21-2.png" alt="MQTT preferences rel 4.21.2" align="right" height="278" width="278">shown in the picture to the right</a>,
+    Using the defaults in the JMRI Preferences Connection pane <a href="images/MQTT_Preferences_rel4_21_2.png">
+    <img src="images/MQTT_Preferences_rel4_21_2.png" alt="MQTT preferences rel 4.21.2" class="floatRight" height="278"
+         width="278">shown in the picture to the right</a>,
     JMRI constructs the MQTT topic to send status of a Turnout with system name "MTabcd" by concatenating:
     </p>
     
@@ -186,7 +187,7 @@
     <ul>
     <li><strong>Sensors</strong>: JMRI expects to receive sensor state on the "Sensor receive topic." It sends state on the "Sensor send topic" if a user changes sensor state
     by clicking on a panel or table.</li>
-    <li><strong>Turnouts</strong>: JMRI sends on the "Tunrout send topic" if a user commands a turnout change by clicking on a panel or table.  Additionally, if a Turnout has been
+    <li><strong>Turnouts</strong>: JMRI sends on the "Turnout send topic" if a user commands a turnout change by clicking on a panel or table.  Additionally, if a Turnout has been
     created in either the Direct mode or Monitoring mode (see <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout documentation</a>),
     JMRI expects to received turnout state on the "Turnout receive topic."</li>
     <li><strong>Lights</strong>: JMRI sends on the "Light send topic" if a user commands a Light change by clicking on a panel or table.   JMRI also acts on Light state messages sent
@@ -319,8 +320,8 @@
             
             <p>
             <a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target="_blank">Retained Messages</a> indicates to the MQTT message
-            broker whether to retain the last message received for a certain topic.  JMRI publishes messages with the retain option on.  This allows any new s
-            ubscriber to automatically receive the last message send to a topic (often the state of a JMRI object) when that new subscriber starts up.
+            broker whether to retain the last message received for a certain topic.  JMRI publishes messages with the retain option on.  This allows any new
+            subscriber to automatically receive the last message send to a topic (often the state of a JMRI object) when that new subscriber starts up.
             </p>
             
             <p>
@@ -336,9 +337,11 @@
 
     <a href="http://test.mosquitto.org" target="_blank">
     <img src="https://mosquitto.org/stickers/mosquitto-mono.png" alt="Mosquitto logo" height="80" width="80" align="right"></a>
+    <p>
     If you don't already run an MQTT broker and want to test with this connection type, you can use a publicly-available (non-JMRI) test server.
     Enter "test.mosquitto.org" as the Host Name on the Preferences Connections page to connect to the host provided by mosquitto.org (for more 
     information, type <a href="https://test.mosquitto.org" target="_blank">test.mosquitto.org</a> into a browser.
+    </p>
 
     <p>
     You can also install the <a href="https://mosquitto.org/download/" target="_blank">mosquitto tools</a> on your own machine.  You can then publish and subscribe to
@@ -357,11 +360,25 @@
 
     These commands can be run on the same machine as JMRI, or on a separate machine.
     
+    <p>
     You can also install a copy of the mosquitto broker by typing:
 <pre>
     mosquitto -v   
 </pre>    
-   and enter "localhost" as your Host Name to JMRI.
+   and enter "localhost" as the Host Name on the JMRI Connection for MQTT.  If you are using version 2.0 of mosquitto or later, you will need to provide a
+   "configuration file": 
+<pre>
+    mosquitto -c "[location of your config file]/mosquitto.conf"
+</pre>
+
+    Include at least the following lines in mosquitto.conf:
+<pre>
+    log_type all                 #Equivalent to setting -v (verbose mode)
+    listener 1883                #To ensure listening on the appropriate port
+    allow_anonymous true         #Allows JMRI to subscribe without an ID or password
+</pre>    
+    See the <a href="https://mosquitto.org/man/mosquitto-conf-5.html" target="_blank">mosquitto documentation</a> for more information.   
+
    
    <p>
    There are also MQTT tools available for 

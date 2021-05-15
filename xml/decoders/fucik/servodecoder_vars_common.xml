@@ -29,19 +29,19 @@
         <label xml:lang="cs">Adresa:</label>
     </variable>
 
-    <variable item="Decoder Version" CV="7" readOnly="yes" default="30" include="4 ServoDecoder v3.0,4 ServoDecoder v3.5,ServoDecoder v5.x">
+    <variable CV="7" item="Decoder Version" readOnly="yes" default="30" include="4 ServoDecoder v3.0,4 ServoDecoder v3.5,ServoDecoder v5.x">
         <decVal/>
         <label>Decoder Version:</label>
         <label xml:lang="cs">Verze software:</label>
     </variable>
 
-    <variable item="Decoder Version" CV="7" readOnly="yes" default="32" include="2 ServoDecoder v3.2">
+    <variable CV="7" item="Decoder Version" readOnly="yes" default="32" include="2 ServoDecoder v3.2">
         <decVal/>
         <label>Decoder Version:</label>
         <label xml:lang="cs">Verze software:</label>
     </variable>
 
-    <variable item="Decoder Version" CV="7" readOnly="yes" default="34" include="1 ServoDecoder v3.4">
+    <variable CV="7" item="Decoder Version" readOnly="yes" default="34" include="1 ServoDecoder v3.4">
         <decVal/>
         <label>Decoder Version:</label>
         <label xml:lang="cs">Verze software:</label>

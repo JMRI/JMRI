@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Egbert Broerse 2021
  */
 public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -281,23 +282,34 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
     }
 
+    SerialTrafficController tcis;
+    TmccSystemConnectionMemo memo;
+    SerialThrottleManager tm;
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        SerialTrafficController tcis = new SerialTrafficControlScaffold(null);
-        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo(tcis);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new SerialThrottleManager(memo));
+        tcis = new SerialTrafficControlScaffold(null);
+        memo = new TmccSystemConnectionMemo(tcis);
+        tm = new SerialThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // no need to dispose of instance
+        if (tm != null) {
+            tm.dispose();
+        }
+        memo.dispose();
+        memo = null;
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
-
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SerialThrottleTest.class);

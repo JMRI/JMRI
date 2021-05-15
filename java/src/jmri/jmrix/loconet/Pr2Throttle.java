@@ -93,9 +93,10 @@ public class Pr2Throttle extends AbstractThrottle {
     public void writeData() {
         // convert contents
         int stat = 0;
-
-        int speed = intSpeed(speedSetting);
-
+        int speed;
+        synchronized(this) {
+            speed = intSpeed(speedSetting);
+        }
         int dirf = 0; // contains dir, f0, f4-1
         if (getF0()) {
             dirf |= (1 << 4);
@@ -207,7 +208,7 @@ public class Pr2Throttle extends AbstractThrottle {
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
@@ -251,7 +252,7 @@ public class Pr2Throttle extends AbstractThrottle {
      * {@inheritDoc}
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

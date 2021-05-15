@@ -243,7 +243,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     /**
      * initmessage is a package proteceted class which allows the Manger to send
-     * a feedback message at initilization without changing the state of the
+     * a feedback message at initialization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
      *

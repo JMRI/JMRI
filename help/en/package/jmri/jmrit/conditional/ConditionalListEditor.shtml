@@ -286,25 +286,23 @@
       See <a href="../beantable/LogixTable.shtml#logixOptions">
       Conditional Name Selection Method</a>.</p>
 
-      <ul>
-         Note:<br>
-         As an advanced feature, the name of an entity can be entered as
+      <p class="important">Note:
+         <br>As an advanced feature, the name of an entity can be entered as
          an "indirect reference" to a memory location.  By that we mean, 
          rather than naming the action directly, the value of a memory  
          location is used for the name of the action. To do this you enter  
-         the name of the memory entity preceded with the "@" symbol.
-         
-         <p>For example, suppose an Input Memory icon or a ComboBox Memory
+           the name of the memory entity preceded with the "@" symbol.
+        <br>
+         For example, suppose an Input Memory icon or a ComboBox Memory
          icon sets the value of memory <em>MyMemory10</em> to a turnout name. 
          Also let an action entity of type turnout be named <em>@MyMemory10</em>. 
          Also let its action type be "Set Turnout Position Thrown" when 
          the change option is "On Change to True".
          When the logical expression changes to true, the turnout named
-         in the current value of memory MyMemory10 will be thrown.</p> 
-
-         <p>The Name Selection method must be a picklist in order 
+          in the current value of memory MyMemory10 will be thrown.
+        <br>
+         The Name Selection method must be a picklist in order
          to use this feature.</p>
-      </ul>
 
       <p>The data items needed to completely specify the
       action will appear to the right of the type box. If you don't
@@ -360,13 +358,9 @@
       <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">
       main Logix documentation</a>.</p>
       
-      
       <h2>Logix Documentation Pages Logically Listed</h2>
 
       <!--#include virtual="LogixDocList.shtml" -->
-
-
-      
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

@@ -58,12 +58,19 @@
 
       <p>LNCV Responses coming back from the layout will be listed in the table. When your Roster contains (exactly)
       one entry for a decoder of this article number and address, it will be listed in the table as shown below.<br>
-      When no match was found in your Roster, the tool wil allow you to create a new entry for this module. Be sure
-      to complete the Entry creation process by clicking [Save to Roster] on the Roster Entry tab.</p>
+      When no match was found in your Roster but a matching definition was found in the JMRI Decoder Index, a [Create
+      Entry] button will show. Be sure to complete the Entry creation process by clicking [Save to Roster] on the
+      Roster Entry tab. If your device reponded to a general call but is not yet supported, the button will read [No
+      Match in Roster] (and it won't work). Once you have a Roster Entry, the button will read [Program] and will
+      directly open the entry tabs.</p>
 
       <img src="images/LNCVToolEntry.png"
            alt="LNCV Programming Tool ask for a name for the new Entry when you click Add Entry">
+
       <img src="images/LNCVTool3.png" alt="LNCV Programming Tool found a Decoder Entry and shows Program button">
+
+      <img src="../../../../../../html/hardware/loconet/images/LncvProgrammer/LncvProgrammerPane.png"
+           alt="LNCV Programming Tool can't find a matching definition">
 
       <h2>Broadcast LNCV Programming</h2>
       <p>Older LNCV devices may not have their own address, or even no article ID. They can be programmed using
@@ -81,6 +88,9 @@
       added to the table. Once you have the report back from the layout, click [Close Broadcast Session] to exit the
       general access.<br>
       Click on one of the rows to copy the address to the top, and click [Start Module Programming] to continue.</p>
+
+      <h2>Direct Mode</h2>
+      <p> Check the 'Direct Mode' checkbox to access 16 state buttons to set LEDs etc. on Track-Control items.</p>
 
       <h2>LNCV Decoder definitions</h2>
       With an LNCV Module Programming session (to a specific device) running, you can use the Roster entry programming

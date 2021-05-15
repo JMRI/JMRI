@@ -14,6 +14,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private EasyDccTrafficControlScaffold tc = null;
     private EasyDccSystemConnectionMemo memo = null;
+    private EasyDccThrottleManager tm;
 
     @Test
     public void testCTor() {
@@ -214,14 +215,19 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // infrastructure objects
         tc = new EasyDccTrafficControlScaffold(null);
         memo = new EasyDccSystemConnectionMemo(tc);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new EasyDccThrottleManager(memo));
+        tm = new EasyDccThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100, true));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
+        if (tm != null) {
+            tm.dispose();
+        }
         tc.terminateThreads();
+        tc = null;
         memo = null;
         JUnitUtil.tearDown();
     }

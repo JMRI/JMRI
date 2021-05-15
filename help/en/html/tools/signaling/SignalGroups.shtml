@@ -142,13 +142,10 @@
       "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
       Signal Head Table</a>.</p>
 
-      <h2>Saving and Reloading Configuration</h2>The Signal Groups
-      information is saved as part of the JMRI configuration in an
+      <h2>Saving and Reloading Configuration</h2>
+      <p>The Signal Groups information is saved as part of the JMRI configuration in an
       XML file, along with control panel setup and similar stuff.
-      To store your panels in the same file (recommended), select
-      <b>File &gt; Store &gt; Store Configuration and Panels To
-      File...</b> or select <b>Panels &gt; Store Panels...</b> in
-      the main JMRI window.
+      See <a href="../../apps/LoadStoreWork.shtml"> Loading and Storing Your Work</a>.</p>
 
       <p>For more information on creating and displaying panels,
       including how to show Signals on your Panels, please see the
