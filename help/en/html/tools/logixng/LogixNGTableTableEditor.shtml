@@ -5,7 +5,7 @@
 
 <!-- Copyright Dave Sand 2021 -->
 
-  <title>JMRI: LogixNG Table Editor</title>
+  <title>JMRI: LogixNG Tables Table Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng tables editor">
 
@@ -18,7 +18,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1>JMRI: LogixNG Table Editor</h1>
+      <h1>JMRI: LogixNG Tables Table Editor</h1>
 
         <p>Details about using the LogixNG tables editor</p>
 

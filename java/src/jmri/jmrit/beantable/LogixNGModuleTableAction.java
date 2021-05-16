@@ -85,12 +85,12 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
 
     @Override
     protected void enableAll(boolean enable) {
-        JOptionPane.showMessageDialog(null, "Module enable is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Not used by the module table
     }
 
     @Override
     protected void setEnabled(Module bean, boolean enable) {
-        JOptionPane.showMessageDialog(null, "Module enable is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Not used by the module table
     }
 
     @Override

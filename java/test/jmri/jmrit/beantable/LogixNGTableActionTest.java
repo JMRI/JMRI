@@ -513,7 +513,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ103", "LogixNG 103");
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ104", "LogixNG 104");
 
-        helpTarget = "package.jmri.jmrit.beantable.LogixNGTable";
+        helpTarget = "html.tools.logixng.LogixNGTable";
         a = new LogixNGTableAction();
     }
 

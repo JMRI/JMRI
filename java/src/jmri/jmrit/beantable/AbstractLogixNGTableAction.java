@@ -314,19 +314,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
         }
 
-        JMenuItem r = new JMenuItem(Bundle.getMessage("EnableAllLogixNGs"));  // NOI18N
-        r.addActionListener((ActionEvent e) -> {
-            enableAll(true);
-        });
-        menu.add(r);
+        // Do not include this menu for Module or Table tables
+        if (this instanceof LogixNGTableAction) {
+            JMenuItem r = new JMenuItem(Bundle.getMessage("EnableAllLogixNGs"));  // NOI18N
+            r.addActionListener((ActionEvent e) -> {
+                enableAll(true);
+            });
+            menu.add(r);
 
-        r = new JMenuItem(Bundle.getMessage("DisableAllLogixNGs"));  // NOI18N
-        r.addActionListener((ActionEvent e) -> {
-            enableAll(false);
-        });
-        menu.add(r);
+            r = new JMenuItem(Bundle.getMessage("DisableAllLogixNGs"));  // NOI18N
+            r.addActionListener((ActionEvent e) -> {
+                enableAll(false);
+            });
+            menu.add(r);
 
-        menuBar.add(menu, pos + offset);
+            menuBar.add(menu, pos + offset);
+            offset++;
+        }
 
         menu = new JMenu(Bundle.getMessage("MenuTools"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_T);
@@ -337,7 +341,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         });
         menu.add(item);
 
-        menuBar.add(menu, pos + offset + 1);  // add this menu to the right of the previous
+        menuBar.add(menu, pos + offset);  // add this menu to the right of the previous
     }
 
     /**

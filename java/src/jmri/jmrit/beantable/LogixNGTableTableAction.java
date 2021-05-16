@@ -84,12 +84,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected void enableAll(boolean enable) {
-        JOptionPane.showMessageDialog(null, "Tables enable is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Not used by the tables table
     }
 
     @Override
     protected void setEnabled(NamedTable bean, boolean enable) {
-        JOptionPane.showMessageDialog(null, "Tables enable is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Not used by the tables table
     }
 
     @Override
