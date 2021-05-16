@@ -242,6 +242,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                if (!(getManager() instanceof jmri.jmrit.logixng.LogixNG_Manager)) {
+                    table.getColumnModel().getColumn(2).setMinWidth(0);
+                    table.getColumnModel().getColumn(2).setMaxWidth(0);
+                }
                 super.configureTable(table);
             }
 
