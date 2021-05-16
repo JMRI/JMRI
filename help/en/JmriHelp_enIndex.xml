@@ -403,19 +403,19 @@
 
  </indexitem>
  <indexitem text="LogixNG " target="html.tools.logixng.LogixNG">
-  <indexitem text="LogixNG Table " target="html.tools.logixng.LogixNGTable"/>
+  <indexitem text="LogixNG Table " target="package.jmri.jmrit.logixng.LogixNGTable"/>
 
-  <indexitem text="LogixNG Table Editor " target="html.tools.logixng.LogixNGTableEditor"/>
+  <indexitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>
 
-  <indexitem text="ConditionalNG Editor " target="html.tools.logixng.ConditionalNGEditor"/>
+  <indexitem text="ConditionalNG Editor " target="package.jmri.jmrit.logixng.ConditionalNGEditor"/>
 
-  <indexitem text="LogixNG Module Table " target="html.tools.logixng.LogixNGModuleTable"/>
+  <indexitem text="LogixNG Module Table " target="package.jmri.jmrit.logixng.LogixNGModuleTable"/>
 
-  <indexitem text="LogixNG Tables Table " target="html.tools.logixng.LogixNGTableTable"/>
+  <indexitem text="LogixNG Tables Table " target="package.jmri.jmrit.logixng.LogixNGTableTable"/>
 
-  <indexitem text="LogixNG Tables Table Editor " target="html.tools.logixng.LogixNGTableTableEditor"/>
+  <indexitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
 
-  <indexitem text="LogixNG Initialization Table " target="html.tools.logixng.LogixNGInitializationTable"/>
+  <indexitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
 
  </indexitem>
  <indexitem text="LRoute " target="html.tools.LRoutes">

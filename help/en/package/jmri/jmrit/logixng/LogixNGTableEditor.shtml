@@ -5,9 +5,9 @@
 
 <!-- Copyright Dave Sand 2021 -->
 
-  <title>JMRI: LogixNG Tables Table Editor</title>
+  <title>JMRI: LogixNG Table Editor</title>
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="JMRI logixng tables editor">
+  <meta name="keywords" content="JMRI logixng conditionalng">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -15,12 +15,13 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI: LogixNG Tables Table Editor</h1>
+      <h1>JMRI: LogixNG Table Editor</h1>
 
-        <p>Details about using the LogixNG tables editor</p>
+        <p>Details about using the LogixNG table editor</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

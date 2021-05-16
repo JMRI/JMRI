@@ -358,7 +358,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     @Override
     protected String helpTarget() {
-        return "html.tools.logixng.LogixNGTable";  // NOI18N
+        return "package.jmri.jmrit.logixng.LogixNGTable";  // NOI18N
     }
 
     // ------------ variable definitions ------------
@@ -911,7 +911,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      */
     void makeBrowserWindow() {
         JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
-        condBrowserFrame.addHelpMenu("html.tools.logixNG.LogixNGTable", true);            // NOI18N
+        condBrowserFrame.addHelpMenu("package.jmri.jmrit.logixng.LogixNGTable", true);            // NOI18N
 
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override

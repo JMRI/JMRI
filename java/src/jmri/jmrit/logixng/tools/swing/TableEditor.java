@@ -137,7 +137,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
                         false);
             }
             _editLogixNGFrame.addHelpMenu(
-                    "html.tools.logixng.LogixNGTableEditor", true);  // NOI18N
+                    "package.jmri.jmrit.logixng.LogixNGTableEditor", true);  // NOI18N
             _editLogixNGFrame.setLocation(100, 30);
             Container contentPane = _editLogixNGFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

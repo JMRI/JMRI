@@ -15,7 +15,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: LogixNG Tables Table</h1>

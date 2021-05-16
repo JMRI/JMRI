@@ -133,7 +133,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         false);
             }
             _editLogixNGFrame.addHelpMenu(
-                    "html.tools.logixng.LogixNGTableEditor", true);  // NOI18N
+                    "package.jmri.jmrit.logixng.LogixNGTableEditor", true);  // NOI18N
             _editLogixNGFrame.setLocation(100, 30);
             Container contentPane = _editLogixNGFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -627,7 +627,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         _inEditConditionalNGMode = true;
         _editConditionalNGFrame = _treeEdit;
         _editConditionalNGFrame.addHelpMenu(
-                "html.tools.logixng.ConditionalNGEditor", true);  // NOI18N
+                "package.jmri.jmrit.logixng.ConditionalNGEditor", true);  // NOI18N
 
         final LogixNGEditor logixNGEditor = this;
         _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));

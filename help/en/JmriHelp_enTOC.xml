@@ -424,19 +424,19 @@
 
   </tocitem>
   <tocitem text="LogixNG " target="html.tools.logixng.LogixNG">
-   <tocitem text="LogixNG Table " target="html.tools.logixng.LogixNGTable"/>
+   <tocitem text="LogixNG Table " target="package.jmri.jmrit.logixng.LogixNGTable"/>
 
-   <tocitem text="LogixNG Table Editor " target="html.tools.logixng.LogixNGTableEditor"/>
+   <tocitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>
 
-   <tocitem text="ConditionalNG Editor " target="html.tools.logixng.ConditionalNGEditor"/>
+   <tocitem text="ConditionalNG Editor " target="package.jmri.jmrit.logixng.ConditionalNGEditor"/>
 
-   <tocitem text="LogixNG Module Table " target="html.tools.logixng.LogixNGModuleTable"/>
+   <tocitem text="LogixNG Module Table " target="package.jmri.jmrit.logixng.LogixNGModuleTable"/>
 
-   <tocitem text="LogixNG Tables Table " target="html.tools.logixng.LogixNGTableTable"/>
+   <tocitem text="LogixNG Tables Table " target="package.jmri.jmrit.logixng.LogixNGTableTable"/>
 
-   <tocitem text="LogixNG Tables Table Editor " target="html.tools.logixng.LogixNGTableTableEditor"/>
+   <tocitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
 
-   <tocitem text="LogixNG Initialization Table " target="html.tools.logixng.LogixNGInitializationTable"/>
+   <tocitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">

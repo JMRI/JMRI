@@ -127,7 +127,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
 
     @Override
     protected String helpTarget() {
-        return "html.tools.logixng.LogixNGModuleTable";  // NOI18N
+        return "package.jmri.jmrit.logixng.LogixNGModuleTable";  // NOI18N
     }
 
     /**
@@ -142,7 +142,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "html.tools.logixng.LogixNGModuleTable", true);     // NOI18N
+                "package.jmri.jmrit.logixng.LogixNGModuleTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

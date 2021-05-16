@@ -42,7 +42,7 @@ public class LogixNGInitializationTable extends JmriJFrame {
         // build menu
        JMenuBar menuBar = new JMenuBar();
        setJMenuBar(menuBar);
-       addHelpMenu("html.tools.logixng.LogixNGInitializationTable", true); // NOI18N
+       addHelpMenu("package.jmri.jmrit.logixng.LogixNGInitializationTable", true); // NOI18N
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
