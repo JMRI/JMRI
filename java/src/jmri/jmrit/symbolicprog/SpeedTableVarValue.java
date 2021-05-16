@@ -466,12 +466,15 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             j.add(b, cs);
 
             cs.gridy++;
-            JLabel num = new JLabel(""+(i+1));
-            num.setToolTipText("Step Number");
+            JLabel num;
+            // every 3rd step
+            if ( (i == 0) || ( (i+1)%3 == 1) )  num = new JLabel(""+(i+1));
+            else num = new JLabel("");
+            num.setToolTipText(Bundle.getMessage("SpeedStepNumber", (i+1) ) );
 
             g.setConstraints(num, cs);
             j.add(num, cs);
-  }
+        }
 
         // add control buttons
         JPanel k = new JPanel();
