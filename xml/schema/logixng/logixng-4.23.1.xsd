@@ -79,7 +79,16 @@
 <!--            <xs:attribute name="order" type="xs:nonNegativeInteger" /> -->
           </xs:complexType>
         </xs:element>
-        
+
+
+        <xs:element name="InitializationTable" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LogixNG" type="systemNameType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
 
         <xs:element name="Clipboard" minOccurs="0" maxOccurs="1">
           <xs:complexType>

@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 
 /**
  * TrainInfo is a temporary object specifying New Train information just read
@@ -158,6 +159,32 @@ public class TrainInfo {
 
     public int getDestinationBlockSeq() {
         return destinationBlockSeq;
+    }
+
+    public void setTrainsFrom(TrainsFrom value) {
+        trainFromRoster = false;
+        trainFromTrains = false;
+        trainFromUser = false;
+        switch (value) {
+            case TRAINSFROMROSTER:
+                trainFromRoster = true;
+                break;
+            case TRAINSFROMOPS:
+                trainFromTrains = true;
+                break;
+            case TRAINSFROMUSER:
+            default:
+                trainFromUser = true;
+        }
+    }
+
+    public TrainsFrom getTrainsFrom() {
+        if (trainFromRoster) {
+            return TrainsFrom.TRAINSFROMROSTER;
+        } else if (trainFromTrains) {
+            return TrainsFrom.TRAINSFROMOPS;
+        }
+        return TrainsFrom.TRAINSFROMUSER;
     }
 
     public void setTrainFromRoster(boolean b) {

@@ -484,7 +484,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set lock for turnout", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Turnout, lock", _base.getShortDescription());
     }
     
     @Test

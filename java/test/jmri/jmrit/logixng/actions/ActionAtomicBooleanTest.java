@@ -170,7 +170,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set the atomic boolean", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Atomic boolean", _base.getShortDescription());
     }
     
     @Test
