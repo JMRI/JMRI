@@ -55,6 +55,11 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     
     static protected final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9};
     
+    /**
+     * Create a New CbusSlotMonitorDataModel.
+     * Public access for user scripting.
+     * @param memo CAN System Connection to monitor.
+     */
     public CbusSlotMonitorDataModel(CanSystemConnectionMemo memo) {
         
         _mainArray = new ArrayList<>();
