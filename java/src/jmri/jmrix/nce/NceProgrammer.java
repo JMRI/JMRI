@@ -103,7 +103,8 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 && ((tc != null)
                 && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
                 || (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
-                || (tc.getCommandOptions() == NceTrafficController.OPTION_2006))));
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2006)))
+                && (!tc.isPwrProVer060203orLater()));
     }
 
     // members for handling the programmer interface

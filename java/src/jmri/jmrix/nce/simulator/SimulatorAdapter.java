@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
 
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
@@ -14,6 +15,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceTurnoutMonitor;
 import jmri.util.ImmediatePipedOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,6 +125,8 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
      */
     public SimulatorAdapter() {
         super(new NceSystemConnectionMemo());
+        option1Name = "Eprom"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("EpromLabel"), option1Values, false));
     }
 
     /**
@@ -143,6 +147,10 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         opened = true;
         return null; // indicates OK return
     }
+
+    // Warning: EPROM revision must match option1Values array index value.
+    String[] option1Values = new String[]{"2006 to Mar 1 2007", "Mar 3 2007 to Jan 24 2008", "Feb 2 2008 to Jan 30 2021", "Feb 22 2021 on"}; // NOI18N
+    int epromRevision = -1;
 
     /**
      * Set up all of the other objects to simulate operation with an NCE command
@@ -166,6 +174,11 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
                 | NceTrafficController.CMDS_CLOCK
                 | NceTrafficController.CMDS_ALL_SYS);
         tc.setUsbSystem(NceTrafficController.USB_SYSTEM_NONE);
+
+        epromRevision = Arrays.asList(option1Values).indexOf(getOptionState(option1Name));
+        if (epromRevision == -1) {
+            epromRevision = 1;  // default revision if no match
+        }
 
         this.getSystemConnectionMemo().configureManagers();
 
@@ -308,8 +321,7 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
     private NceReply generateReply(NceMessage m) {
         NceReply reply = new NceReply(this.getSystemConnectionMemo().getNceTrafficController());
         int command = m.getElement(0);
-        if (command < 0x80) // NOTE: NCE command station does not respond to
-        {
+        if (command < 0x80) {  // NOTE: NCE command station does not respond to
             return null;      // command less than 0x80 (times out)
         }
         if (command > 0xBF) { // Command is out of range
@@ -318,9 +330,9 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         }
         switch (command) {
             case NceMessage.SW_REV_CMD:  // Get Eprom revision
-                reply.setElement(0, 0x06);    // Send Eprom revision 6 2 1
+                reply.setElement(0, 0x06);    // Send Eprom revision based on Preference setting
                 reply.setElement(1, 0x02);
-                reply.setElement(2, 0x01);
+                reply.setElement(2, epromRevision);
                 break;
             case NceMessage.READ_CLOCK_CMD: // Read clock
                 reply.setElement(0, 0x12);   // Return fixed time

@@ -64,6 +64,7 @@ public class NceConnectionStatus implements NceListener {
 
     private static final int mm_2007a = 1; // Revision of May 2007 EPROM VV.MM.mm = 6.2.1
     private static final int mm_2008 = 2; // Revision of 2008 EPROM VV.MM.mm = 6.2.2
+    private static final int mm_2021 = 3; // Revision of 2021 EPROM VV.MM.mm = 6.2.3
 
     private static final int VV_2012 = 7; // Revision 2012 EPROM VV.MM.mm = 7.2.0
     private static final int MM_2012 = 2;
@@ -289,6 +290,11 @@ public class NceConnectionStatus implements NceListener {
             if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
                 setNceEpromMarch2007(true);
                 epromState = WARN2_STATE;
+            }
+
+            // check for Power Pro 2021 or later 
+            if (VV == VV_2007 && MM == MM_2007 && mm >= mm_2021) {
+                tc.setPwrProVer060203orLater(true);
             }
 
             // Confirm that user selected correct revision of EPROM, check for old EPROM installed, new EPROM
