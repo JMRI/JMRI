@@ -50,37 +50,61 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         
         trains_dispatched.append(str(train_name))
         
+        count_path = 0
+        
         for e in paths:
             
             # need to check whether: 
             #   last block of previous edge and current first block 
             #   are the same
             
-            # if the same the tranist must change direction
+            # if the same the train must change direction. as we are going in and out the same path
             #
+            previous_edge = train["edge"]
+            penultimate_block_name = train["penultimate_block_name"]
+            previous_direction = train["direction"]
             current_edge = e
             neighbor_name = e.getItem("neighbor_name")
-            if self.logLevel > 1: print train
-            if self.logLevel > 1: print "neighbor_name = ", neighbor_name
-            if self.logLevel > 1: print "penultimate_block_name" , penultimate_block_name
+            if self.logLevel > -1: print train
+            if self.logLevel > -1: print "neighbor_name = ", neighbor_name
+            if self.logLevel > -1: print "penultimate_block_name" , penultimate_block_name
             
-            if penultimate_block_name == neighbor_name:
-                transit_instruction = "change"
+            
+            #following is wrong
+            # if penultimate_block_name == neighbor_name:
+                # transit_instruction = "buffer"
+            # else:
+                # transit_instruction = "straight on"
+            # if self.logLevel > -1: print "transit_instruction=",transit_instruction
+            
+            # if transit_instruction == "buffer":
+                # if previous_direction == "forward":
+                    # transit_direction = "reverse"
+                # else:
+                    # transit_direction = "forward"
+            # else:
+                # transit_direction = previous_direction
+                
+            # if self.logLevel > 1: print "transit_direction",transit_direction
+            
+            BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
+            previous_block = BlockManager.getBlock(penultimate_block_name)
+            current_block = BlockManager.getBlock(previous_edge.getItem("last_block_name"))
+            next_block = BlockManager.getBlock(current_edge.getItem("second_block_name"))            
+            if count_path == 0:
+                # we are on a new path and must determine the direction
+                [transit_direction, transit_instruction]  = self.set_direction(previous_block, current_block, next_block, previous_direction)
             else:
-                transit_instruction = "same"
-            if self.logLevel > 1: print "transit_instruction=",transit_instruction
-            
-            if transit_instruction == "change":
-                if previous_direction == "forward":
-                    transit_direction = "reverse"
+                # if there are several edges in a path, then we are on an express route, and there is a change in direction at each junction
+                if previous_block.getUserName() == next_block.getUserName() : #we are at a stub/siding
+                    if previous_direction == "forward":
+                        transit_direction = "reverse"
+                    else:
+                        transit_direction = "forward"
+                    transit_instruction = "stub"
                 else:
-                    transit_direction = "forward"
-            else:
-                transit_direction = previous_direction
-                
-            if self.logLevel > 1: print "transit_direction",transit_direction
-                
-            result = self.move(e, transit_direction, train_name)
+                    [transit_direction, transit_instruction] = self.set_direction(previous_block, current_block, next_block, previous_direction)
+            result = self.move(e, transit_direction, transit_instruction,  train_name)
             if self.logLevel > 1: print "returned from self.move, result = ", result
             if result == False:
                 trains_dispatched.remove(str(train_name))
@@ -89,12 +113,30 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             train["edge"] = e
             train["penultimate_block_name"] = e.getItem("penultimate_block_name")
             train["direction"] = transit_direction
+            count_path +=1
+            
         if self.logLevel > 1: print "transit finished, removing train from dispatch list"
         if str(train_name) in trains_dispatched:    
             trains_dispatched.remove(str(train_name))
         if self.logLevel > 1: print "trains_dispatched", trains_dispatched
+        
+    def set_direction(self, previous_block, current_block, next_block, previous_direction):
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+        current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
+        if current_layout_block.validThroughPath(previous_block, next_block):
+            transit_instruction = "same"
+        else:
+            transit_instruction = "change"
+        if transit_instruction == "change":
+            if previous_direction == "forward":
+                transit_direction = "reverse"
+            else:
+                transit_direction = "forward"
+        else:
+            transit_direction = previous_direction
+        return [transit_direction, transit_instruction]
 
-    def move(self, e, direction, train):
+    def move(self, e, direction, instruction, train):
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         if self.logLevel > 1: print e, "Target", e.getTarget()
         if self.logLevel > 1: print e, "Source", e.getSource()
@@ -106,7 +148,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         
         self.set_sensor(sensor_move_name, "active")
         speech_reqd = self.speech_required_flag()
-        self.announce( from_name, to_name, speech_reqd)
+        self.announce( from_name, to_name, speech_reqd, direction, instruction)
         if self.logLevel > 1: print "***************************"
         result = self.call_dispatch(e, direction, train)
         if self.logLevel > 1: print "______________________"
@@ -564,13 +606,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         java.lang.Runtime.getRuntime().exec(my_dir+'/nircmd speak text "' + msg +'"')
         return
         
-    def announce(self, fromblockname, toblockname, speak_on): 
+    def announce(self, fromblockname, toblockname, speak_on, direction, instruction): 
 
         from_station = self.get_station_name(fromblockname)
         to_station = self.get_station_name(toblockname)
 
         if speak_on == True:
-            self.speak("The train in "+ from_station + " is due to depart to " + to_station)
+            #self.speak("The train in "+ from_station + " is due to depart to " + to_station + " " + direction + " " + instruction )
+            self.speak("The train in "+ from_station + " is due to depart to " + to_station )
             
     def get_station_name(self, block_name):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
