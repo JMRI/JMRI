@@ -21,6 +21,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         InstanceManager.store(this, MqttSystemConnectionMemo.class);
     }
 
+    @Override
     public void configureManagers() {
 //        setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
 //        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
