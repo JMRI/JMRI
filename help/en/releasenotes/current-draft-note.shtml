@@ -91,7 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Support MQTT Username and Password for Broker Authentication</li>
             </ul>
 
         <h4>MRC</h4>
@@ -558,7 +558,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added the option "dynamic gain" for steam1. See the
+            <a href="https://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#dynamic-gain">documentation</a>
+            for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>

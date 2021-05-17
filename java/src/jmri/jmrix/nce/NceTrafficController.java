@@ -62,10 +62,10 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
 
-        if (NmraPacket.isAccSignalDecoderPkt(packet)
+        if (isUsb && NmraPacket.isAccSignalDecoderPkt(packet)
                 && (NmraPacket.getAccSignalDecoderPktAddress(packet) > 0)
-                && (NmraPacket.getAccSignalDecoderPktAddress(packet) < 2048)) {
-            // intercept only those NMRA signal cmds we can handle with NCE binary commands
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) <= 2044)) {
+            // intercept NMRA signal cmds to USB systems
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
             log.debug("isAccSignalDecoderPkt(packet) sigAddr ={}, aspect ={}", addr, aspect);
@@ -164,6 +164,25 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private int commandOptions = OPTION_2006;
     public boolean commandOptionSet = false;
+    private boolean pwrProVer060203orLater = false;
+
+    /**
+     * Ask whether Power Pro firmware version is 6.2.3 or later.
+     *
+     * @return {@code true} if it does, otherwise {@code false}
+     */
+    public boolean isPwrProVer060203orLater() {
+        return pwrProVer060203orLater;
+    }
+
+    /**
+     * Specify whether Power Pro firmware version is 6.2.3 or later.
+     *
+     * @param isTrue {@code true} if it does, otherwise {@code false}
+     */
+    public void setPwrProVer060203orLater(boolean isTrue) {
+        pwrProVer060203orLater = isTrue;
+    }
 
     /**
      * Control which command format should be used for various commands: ASCII

@@ -134,8 +134,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
-        logixNGTable.setEditorMode(AbstractLogixNGTableAction.EditMode.TREEEDIT);
-
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
         Assert.assertNotNull("LogixNG exists", logixNG);
 
@@ -515,7 +513,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ103", "LogixNG 103");
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ104", "LogixNG 104");
 
-        helpTarget = "package.jmri.jmrit.beantable.LogixNGTable";
+        helpTarget = "package.jmri.jmrit.logixng.LogixNGTable";
         a = new LogixNGTableAction();
     }
 
