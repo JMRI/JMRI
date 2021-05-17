@@ -26,44 +26,27 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Bergqvist Copyright (C) 2021
  */
 public class LogixNGInitializationTable extends JmriJFrame {
-    
+
     private static final int panelWidth700 = 700;
     private static final int panelHeight500 = 500;
-    
+
     private final LogixNG_InitializationManager _initManager =
             InstanceManager.getDefault(LogixNG_InitializationManager.class);
-    
+
     private InitializationTableModel _initTableModel = null;
-    
-    
+
+
     @Override
     public void initComponents() {
         super.initComponents();
         // build menu
-//        JMenuBar menuBar = new JMenuBar();
-//        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-//        toolMenu.add(new CreateNewLogixNGAction("Create a LogixNG"));
-/*        
-        toolMenu.add(new CreateNewLogixNGAction(Bundle.getMessage("TitleOptions")));
-        toolMenu.add(new PrintOptionAction());
-        toolMenu.add(new BuildReportOptionAction());
-        toolMenu.add(new BackupFilesAction(Bundle.getMessage("Backup")));
-        toolMenu.add(new RestoreFilesAction(Bundle.getMessage("Restore")));
-        toolMenu.add(new LoadDemoAction(Bundle.getMessage("LoadDemo")));
-        toolMenu.add(new ResetAction(Bundle.getMessage("ResetOperations")));
-        toolMenu.add(new ManageBackupsAction(Bundle.getMessage("ManageAutoBackups")));
-*/      
-//        menuBar.add(toolMenu);
-//        menuBar.add(new jmri.jmrit.operations.OperationsMenu());
-        
-//        setJMenuBar(menuBar);
-//        addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
-        
-        
-        
+       JMenuBar menuBar = new JMenuBar();
+       setJMenuBar(menuBar);
+       addHelpMenu("package.jmri.jmrit.logixng.LogixNGInitializationTable", true); // NOI18N
+
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        
+
         _initTableModel = new InitializationTableModel();
         JTable conditionalTable = new JTable(_initTableModel);
         conditionalTable.setRowSelectionAllowed(false);
@@ -108,21 +91,21 @@ public class LogixNGInitializationTable extends JmriJFrame {
         dim.height = 450;
         conditionalTableScrollPane.getViewport().setPreferredSize(dim);
         contentPane.add(conditionalTableScrollPane);
-        
+
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-        
+
         contentPane.add(panel3);
 
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
-        
+
         // Add LogixNG
         BeanSelectPanel<LogixNG> logixNG_SelectPanel =
                 new BeanSelectPanel<>(InstanceManager.getDefault(LogixNG_Manager.class), null);
-        
+
         panel5.add(logixNG_SelectPanel);
         JButton addLogixNG = new JButton(Bundle.getMessage("LogixNG_Initialization_ButtonAddLogixNG"));    // NOI18N
         panel5.add(addLogixNG);
@@ -147,28 +130,20 @@ public class LogixNGInitializationTable extends JmriJFrame {
             _initManager.add(logixNG);
             _initTableModel.fireTableStructureChanged();
         });
-        
+
         contentPane.add(panel5);
-        
+
         pack();
-        
+
         initMinimumSize(new Dimension(panelWidth700, panelHeight500));
     }
-    
+
     public void initMinimumSize(Dimension dimension) {
         setMinimumSize(dimension);
         pack();
         setVisible(true);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     // ------------ Table Models ------------
 
     /**
@@ -182,15 +157,15 @@ public class LogixNGInitializationTable extends JmriJFrame {
         public static final int BUTTON_MOVE_UP_COLUMN = BUTTON_DELETE_COLUMN + 1;
         public static final int BUTTON_MOVE_DOWN_COLUMN = BUTTON_MOVE_UP_COLUMN + 1;
         public static final int NUM_COLUMNS = BUTTON_MOVE_DOWN_COLUMN + 1;
-        
+
         private final List<LogixNG> _logixNGs;
-        
-        
+
+
         public InitializationTableModel() {
             super();
             _logixNGs = _initManager.getList();
         }
-        
+
         @Override
         public Class<?> getColumnClass(int c) {
             if ((c == BUTTON_DELETE_COLUMN) || (c == BUTTON_MOVE_UP_COLUMN) || (c == BUTTON_MOVE_DOWN_COLUMN)) {
@@ -198,22 +173,22 @@ public class LogixNGInitializationTable extends JmriJFrame {
             }
             return String.class;
         }
-        
+
         @Override
         public int getColumnCount() {
             return NUM_COLUMNS;
         }
-        
+
         @Override
         public int getRowCount() {
             return _logixNGs.size();
         }
-        
+
         @Override
         public boolean isCellEditable(int r, int c) {
             return ((c == BUTTON_DELETE_COLUMN) || (c == BUTTON_MOVE_UP_COLUMN) || (c == BUTTON_MOVE_DOWN_COLUMN));
         }
-        
+
         @Override
         public String getColumnName(int col) {
             switch (col) {
@@ -229,7 +204,7 @@ public class LogixNGInitializationTable extends JmriJFrame {
                     throw new IllegalArgumentException("Unknown column");
             }
         }
-        
+
         @Override
         public Object getValueAt(int row, int col) {
             if (row > _logixNGs.size()) {
@@ -250,22 +225,22 @@ public class LogixNGInitializationTable extends JmriJFrame {
                     throw new IllegalArgumentException("Unknown column");
             }
         }
-        
+
         private void deleteLogixNG(int row) {
             _initManager.delete(row);
             fireTableRowsDeleted(row, row);
         }
-        
+
         private void moveUp(int row) {
             _initManager.moveUp(row);
             fireTableRowsDeleted(row, row);
         }
-        
+
         private void moveDown(int row) {
             _initManager.moveDown(row);
             fireTableRowsDeleted(row, row);
         }
-        
+
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (row > _logixNGs.size()) {
@@ -290,7 +265,4 @@ public class LogixNGInitializationTable extends JmriJFrame {
             }
         }
     }
-    
-    
-    
 }

@@ -35,6 +35,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Matthew Harris copyright (c) 2009  (ConditionalListEdit)
  * @author Dave Sand copyright (c) 2017  (ConditionalListEdit)
  * @author Daniel Bergqvist (c) 2019
+ * @author Dave Sand (c) 2021
  */
 public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
@@ -60,8 +61,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";         // NOI18N
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
-
-//    private NamedBeanComboBox<LogixNG> _nameComboBox = null;
 
 
     /**
@@ -134,7 +133,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         false);
             }
             _editLogixNGFrame.addHelpMenu(
-                    "package.jmri.jmrit.conditional.ConditionalNGListEditor", true);  // NOI18N
+                    "package.jmri.jmrit.logixng.LogixNGTableEditor", true);  // NOI18N
             _editLogixNGFrame.setLocation(100, 30);
             Container contentPane = _editLogixNGFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -345,7 +344,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     }
 
     /**
-     * Responds to the Calculate Button in the Edit LogixNG window.
+     * Responds to the Execute Button in the Edit LogixNG window.
      *
      * @param e The event heard
      */
@@ -627,6 +626,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         _treeEdit.setVisible(true);
         _inEditConditionalNGMode = true;
         _editConditionalNGFrame = _treeEdit;
+        _editConditionalNGFrame.addHelpMenu(
+                "package.jmri.jmrit.logixng.ConditionalNGEditor", true);  // NOI18N
 
         final LogixNGEditor logixNGEditor = this;
         _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
@@ -1011,27 +1012,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 ConditionalNG cdl = _curLogixNG.getConditionalNG(row);
                 cdl.setUserName(uName.trim()); // N11N
                 fireTableRowsUpdated(row, row);
-/*
-                // Update any conditional references
-                ArrayList<String> refList = InstanceManager.getDefault(jmri.ConditionalNGManager.class).getWhereUsed(sName);
-                if (refList != null) {
-                    for (String ref : refList) {
-                        ConditionalNG cRef = _conditionalManager.getBySystemName(ref);
-                        List<ConditionalNGVariable> varList = cRef.getCopyOfStateVariables();
-                        for (ConditionalNGVariable var : varList) {
-                            // Find the affected conditional variable
-                            if (var.getName().equals(sName)) {
-                                if (uName.length() > 0) {
-                                    var.setGuiName(uName);
-                                } else {
-                                    var.setGuiName(sName);
-                                }
-                            }
-                        }
-                        cRef.setStateVariables(varList);
-                    }
-                }
-*/
             } else {
                 // Duplicate user name
                 if (cn != _curLogixNG.getConditionalNG(row)) {

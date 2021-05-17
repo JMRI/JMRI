@@ -163,6 +163,10 @@
           control, combine the logical reasoning of a Logix with
           the powerful output controls of a Route.</dd>
 
+          <dd><h3><a href="logixng/LogixNG.shtml">LogixNG</a></h3></dd>
+          <dd>The Next Generation of Logix capabilities with a modular structure for
+          extending and the ability to create more complex logic without scripting.</dd>
+
         </dl>
 
         <h2><a name="othertools" id="othertools">Other Tools</a></h2>
