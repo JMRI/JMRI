@@ -100,6 +100,7 @@ public class DefaultConditionalNGTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setInstallDebugger(false);
         JUnitUtil.initLogixNGManager();
     }
 

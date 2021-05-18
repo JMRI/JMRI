@@ -70,18 +70,10 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     
     /** {@inheritDoc} */
     @Override
-    public void register(MaleSocket maleSocket) {
-        if (!(maleSocket instanceof MaleDigitalActionSocket)) {
-            throw new IllegalArgumentException("maleSocket is not a MaleDigitalActionSocket");
-        }
-        register((MaleDigitalActionSocket)maleSocket);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void register(MaleDigitalActionSocket maleSocket) {
-        super.register(maleSocket);
+    public MaleDigitalActionSocket registerBean(MaleDigitalActionSocket maleSocket) {
+        MaleDigitalActionSocket bean = super.registerBean(maleSocket);
         _lastRegisteredBean = maleSocket;
+        return bean;
     }
     
     /**
@@ -109,8 +101,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         
         // save in the maps
         MaleDigitalActionSocket maleSocket = createMaleActionSocket(action);
-        register(maleSocket);
-        return maleSocket;
+        return registerBean(maleSocket);
     }
     
     @Override
