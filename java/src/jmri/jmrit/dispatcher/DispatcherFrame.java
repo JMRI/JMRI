@@ -482,10 +482,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!newTrainActive) {
-                        atFrame.initiateTrain(e);
+                        getActiveTrainFrame().initiateTrain(e);
                         newTrainActive = true;
                     } else {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                     }
                 }
             });
@@ -508,11 +508,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (!newTrainActive) {
                         cancelRestart(e);
                     } else if (restartingTrainsList.size() > 0) {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                         JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage("Message2"),
                                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                     }
                 }
             });
@@ -525,11 +525,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (!newTrainActive) {
                         terminateTrain(e);
                     } else if (activeTrainsList.size() > 0) {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                         JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage("Message1"),
                                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                     }
                 }
             });
@@ -2716,6 +2716,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             else if (at.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
                 fastClockWarn(false);
             }
+        }
+        if (atFrame != null) {
+            atFrame.setVisible(false);
+            atFrame.dispose();
+            atFrame = null;
         }
         newTrainActive = false;
     }
