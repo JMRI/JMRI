@@ -106,11 +106,17 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     
     @Override
     public void register(@Nonnull E s) {
+        throw new RuntimeException("Use BaseManager.registerBean() instead");
+    }
+    
+    @Override
+    public E registerBean(@Nonnull E s) {
         E bean = s;
         for (MaleSocketFactory<E> factory : _maleSocketFactories) {
             bean = factory.encapsulateMaleSocket(this, bean);
         }
         super.register(bean);
+        return bean;
     }
     
     @Override
