@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.5ish+jake+20210512T2249Z+R15167d1bed on Wed May 12 18:50:37 EDT 2021-->
-  <decoderIndex version="1052">
+  <!--Written by JMRI version 4.23.6ish+jake+20210520T1224Z+Rb5322577e7 on Thu May 20 07:24:48 CDT 2021-->
+  <decoderIndex version="1054">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -28024,6 +28024,118 @@
           <output name="10" label="AUX5" maxcurrent="10 mA" />
           <output name="11" label="AUX6" maxcurrent="10 mA" />
           <size length="30" width="15.5" height="5" units="mm" />
+        </model>
+      </family>
+      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" file="TAMS_LD_42.xml">
+        <model model="LD-G-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" productID="41-04420">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-G-42 (wires)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="Wires" productID="41-04421">
+          <!-- wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="NEM652" productID="41-04422">
+          <!-- NEM 652 -->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-W-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" productID="41-05420">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay 0ff">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-W-42 (wires)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="Wires" productID="41-05421">
+          <!-- wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
         </model>
       </family>
       <family name="Digital LED Boards (WIB)" mfg="Tams Elektronik GmbH" lowVersionID="14" comment="Tams WIB-31, WIB-32, WIB-33" file="TAMS_WIB-30.xml">
