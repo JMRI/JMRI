@@ -333,17 +333,12 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertFalse(turnout.getLocked(Turnout.CABLOCKOUT));
         // Test Lock
-        System.out.format("aaa: %s, %b, %b, %s%n", turnout.getSystemName(), turnout.getLocked(Turnout.CABLOCKOUT), turnout.getLocked(Turnout.PUSHBUTTONLOCKOUT), turnout.getClass().getName());
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
-        System.out.format("bbb: %s, %b, %b%n", turnout.getSystemName(), turnout.getLocked(Turnout.CABLOCKOUT), turnout.getLocked(Turnout.PUSHBUTTONLOCKOUT));
         actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
-        System.out.format("ccc: %s, %b, %b%n", turnout.getSystemName(), turnout.getLocked(Turnout.CABLOCKOUT), turnout.getLocked(Turnout.PUSHBUTTONLOCKOUT));
         // Execute the conditional
         conditionalNG.execute();
-        System.out.format("ddd: %s, %b, %b%n", turnout.getSystemName(), turnout.getLocked(Turnout.CABLOCKOUT), turnout.getLocked(Turnout.PUSHBUTTONLOCKOUT));
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
-        System.out.format("eee%n");
         
         // Test reference by memory addressing
         actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);

@@ -370,7 +370,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
 //        System.out.format("fn_1: %s%n", symbolTable.getValue("fn_1"));
 //        System.out.format("fn: %s%n", symbolTable.getValue("fn"));
 //        System.out.format("result: %s%n", symbolTable.getValue("result"));
-        System.out.format("result: %s%n", result.getValue());
+//        System.out.format("result: %s%n", result.getValue());
         
 //        System.out.format("%n%n%ndebug: %s%n", debug.getValue());
         

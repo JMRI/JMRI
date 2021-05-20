@@ -15,6 +15,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 /**
  *
  * @author B. Milhaupt Copyright (C) 2018
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LocoNetMessageInterpretTest {
 
@@ -395,7 +396,130 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] { 0xD0, 0x62, 0x0C, 0x53, 0x00, 0x12});
         Assert.assertEquals("BXPA1 Normal",
                 "BXPA1 (Board ID 100/104) Power Status Report  - Normal\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
 
+    @Test
+    public void testMultiSenseStandardRailCom() {
+        LocoNetMessage l;
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x00, 0x00, 0x03, 0x62});
+        Assert.assertEquals("MSS App Dyn index 7 value 0",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 7 (QoS) with a value of 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x0E, 0x00, 0x03, 0x6C});
+        Assert.assertEquals("MSS App Dyn index 7 value 14",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 7 (QoS) with a value of 14.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x40, 0x6A, 0x4F, 0x7F, 0x35});
+        Assert.assertEquals("MSS App Dyn index 0 value 106",
+                "Transponder address 10239 reporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x40, 0x04, 0x00, 0x03, 0x68});
+        Assert.assertEquals("MSS App Dyn index 0 value 4",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 0 (Speed) with a value of 4.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x5F, 0x7F, 0x4F, 0x7F, 0x3F});
+        Assert.assertEquals("MSS App Dyn index 15 value 255 - Unknown index and max value",
+                "Transponder address 10239 reporting RailCom App:Dyn Index 15 (Unknown) with a value of 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
+
+    @Test
+    public void testMultiSenseLong() {
+        LocoNetMessage l;
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        LnReporterManager lnrm = new LnReporterManager(lnis.getSystemConnectionMemo());
+
+        jmri.InstanceManager.setReporterManager(lnrm);
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x5B});
+        Assert.assertEquals("MSL minimum values",
+                "Transponder address 1 (short) facing East absent at LR1 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x10, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address",
+                "Transponder address 10239 facing West absent at LR2176 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x1F, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address and reporter, absent",
+                "Transponder address 10239 facing West absent at LR4096 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x00, 0x00, 0x01, 0x00, 0x00, 0x5B});
+        Assert.assertEquals("MSL minimum values but present",
+                "Transponder address 1 (short) facing East present at LR1 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x25, 0x7D, 0x0A, 0x40, 0x00, 0x24});
+        Assert.assertEquals("MSL short address 10 West Present",
+                "Transponder address 10 (short) (or long address 16010) facing West present at LR38 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        ((LnReporter) lnrm.provideReporter("LR9")).setUserName("DepotBlock");
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x08, 0x1D, 0x5B, 0x00, 0x00, 0x78});
+        Assert.assertEquals("MSL long address 3803 west present with Friendly Name",
+                "Transponder address 3803 facing East present at LR9 (DepotBlock).\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x30, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address and reporter, present",
+                "Transponder address 10239 facing West present at LR2176 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x3F, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address and reporter, present",
+                "Transponder address 10239 facing West present at LR4096 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x11, 0x20, 0x0D, 0x1D, 0x5B, 0x40, 0x00, 0x3D});
+        Assert.assertEquals("MSL unhandled length as not 0x09",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x0B, 0x7D, 0x03, 0x0E, 0x0E, 0x23});
+        Assert.assertEquals("MSL App Dyn index 7 value 14",
+                "Transponder address 3 (short) (or long address 16003) facing East present at LR12 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 7 (QoS) with a value of 14.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x1F, 0x4F, 0x7F, 0x40, 0x6A, 0x53});
+        Assert.assertEquals("MSL App Dyn index 0 value 106",
+                "Transponder address 10239 facing West present at LR32 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x1F, 0x4F, 0x7F, 0x5F, 0x7F, 0x59});
+        Assert.assertEquals("MSL App Dyn index 15 value 255 - Unknown index and max value",
+                "Transponder address 10239 facing West present at LR32 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 15 (Unknown) with a value of 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x6F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
+        Assert.assertEquals("MSL with unknown 0x60 type",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x00, 0x00, 0x00, 0x01, 0x3F, 0x00, 0x5B});
+        Assert.assertEquals("MSL absent with unexpected values in byte 6 (bits 5-0)",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x00, 0x00, 0x00, 0x01, 0x7F, 0x00, 0x5B});
+        Assert.assertEquals("MSL present with unexpected values in byte 6 (bits 5-0)",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x00, 0x00, 0x01, 0x40, 0x7f, 0x5B});
+        Assert.assertEquals("MSL present with unexpected values in byte 7",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test
