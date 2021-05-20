@@ -3,7 +3,7 @@
 
 <head>
   <title>JMRI Help</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <!--#include virtual="/Style.shtml" -->
 </head>
 
