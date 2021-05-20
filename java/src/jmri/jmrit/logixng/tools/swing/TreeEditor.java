@@ -34,9 +34,9 @@ import org.apache.commons.lang3.mutable.MutableObject;
 public class TreeEditor extends TreeViewer {
     
     // Enums used to configure TreeEditor
-    public enum EnableClipboard { EnableClipboard, DisableClipboard };
-    public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy };
-    public enum EnableRootPopup { EnableRootPopup, DisableRootPopup };
+    public enum EnableClipboard { EnableClipboard, DisableClipboard }
+    public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy }
+    public enum EnableRootPopup { EnableRootPopup, DisableRootPopup }
     
     
     private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
