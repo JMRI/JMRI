@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
  * Continuously checks and confirms that the communication link to the NCE
  * Command Station is operational by reading the revision number of the EPROM.
  * Only invokes the EPROM read when the interface experiences a timeout.
- *
+ * <p>
  * Checks revision of NCE CS by reading the 3 byte revision. Sends a warning
  * message NCE EPROM found & preferences are not correct for revision selected.
- *
+ * <p>
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *
  * @author Daniel Boudreau (C) 2007, 2010, 2012
@@ -264,13 +264,14 @@ public class NceConnectionStatus implements NceListener {
             byte VV = (byte) r.getElement(0);
             byte MM = (byte) r.getElement(1);
             byte mm = (byte) r.getElement(2);
+            tc.setPwrProVers(VV, MM, mm);
 
             // Is the reply valid? Check major revision, there are only three valid responses
             // note that VV_2004 = VV_2007 = VV_USB
             if (VV != VV_2012 && VV != VV_2004 && VV != VV_1999) {
                 log.error("Wrong major revision: {}", Integer.toHexString(VV & 0xFF));
                 // show the entire revision number
-                log.info("NCE EPROM revision = {}.{}.{}", Integer.toHexString(VV & 0xFF), Integer.toHexString(MM & 0xFF), Integer.toHexString(mm & 0xFF));
+                log.info("NCE EPROM revision = {}", tc.getPwrProVersHexText());
                 return;
             }
 
@@ -284,7 +285,7 @@ public class NceConnectionStatus implements NceListener {
             epromChecked = true;
 
             // Send to log file the NCE EPROM revision
-            log.info("NCE EPROM revision = {}.{}.{}", Integer.toHexString(VV & 0xFF), Integer.toHexString(MM & 0xFF), Integer.toHexString(mm & 0xFF));
+            log.info("NCE EPROM revision = {}", tc.getPwrProVersHexText());
 
             // Warn about the March 2007 CS EPROM
             if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
@@ -292,7 +293,7 @@ public class NceConnectionStatus implements NceListener {
                 epromState = WARN2_STATE;
             }
 
-            // check for Power Pro 2021 or later 
+            // check for Power Pro 2021 or later
             if (VV == VV_2007 && MM == MM_2007 && mm >= mm_2021) {
                 tc.setPwrProVer060203orLater(true);
             }
@@ -300,7 +301,7 @@ public class NceConnectionStatus implements NceListener {
             // Confirm that user selected correct revision of EPROM, check for old EPROM installed, new EPROM
             // preferences
             if ((VV <= VV_2007 && MM < MM_2007) && (tc.getCommandOptions() >= NceTrafficController.OPTION_2006)) {
-                log.error("Wrong revision ({}.{}.{}) of the NCE Command Station EPROM selected in Preferences", Integer.toHexString(VV & 0xFF), Integer.toHexString(MM & 0xFF), Integer.toHexString(mm & 0xFF));
+                log.error("Wrong revision ({}) of the NCE Command Station EPROM selected in Preferences", tc.getPwrProVersHexText());
                 epromState = ERROR1_STATE;
             }
 
@@ -308,7 +309,7 @@ public class NceConnectionStatus implements NceListener {
             // preferences
             boolean eprom2007orNewer = ((VV == VV_2007) && (MM >= MM_2007));
             if (((VV > VV_2007) || eprom2007orNewer) && (tc.getCommandOptions() < NceTrafficController.OPTION_2006)) {
-                log.error("Wrong revision ({}.{}.{}) of the NCE Command Station EPROM selected in Preferences", Integer.toHexString(VV & 0xFF), Integer.toHexString(MM & 0xFF), Integer.toHexString(mm & 0xFF));
+                log.error("Wrong revision ({}) of the NCE Command Station EPROM selected in Preferences", tc.getPwrProVersHexText());
                 epromState = ERROR2_STATE;
             }
 
@@ -376,4 +377,3 @@ public class NceConnectionStatus implements NceListener {
     private final static Logger log = LoggerFactory.getLogger(NceConnectionStatus.class);
 
 }
-

@@ -165,6 +165,33 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     private int commandOptions = OPTION_2006;
     public boolean commandOptionSet = false;
     private boolean pwrProVer060203orLater = false;
+    private final int[] pwrProVers = new int[3];
+
+    /**
+     * Return the Power Pro firmware version as user-friendly hex text.
+     *
+     * @return period-separated firmware version
+     */
+    public String getPwrProVersHexText() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.toHexString(pwrProVers[0] & 0xFF)).append(".");
+        sb.append(Integer.toHexString(pwrProVers[1] & 0xFF)).append(".");
+        sb.append(Integer.toHexString(pwrProVers[2] & 0xFF));
+        return sb.toString();
+    }
+
+    /**
+     * Store the Power Pro firmware version.
+     *
+     * @param VV major version
+     * @param MM intermediate version
+     * @param mm minor version
+     */
+    public void setPwrProVers(byte VV, byte MM, byte mm) {
+        this.pwrProVers[0] = VV & 0xFF;
+        this.pwrProVers[1] = MM & 0xFF;
+        this.pwrProVers[2] = mm & 0xFF;
+    }
 
     /**
      * Ask whether Power Pro firmware version is 6.2.3 or later.
@@ -235,8 +262,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     /**
-     * Default when a NCE USB isn't selected in user system preferences.
-     * Also the case when Serial or Simulator is selected.
+     * Default when a NCE USB isn't selected in user system preferences. Also
+     * the case when Serial or Simulator is selected.
      */
     public static final int USB_SYSTEM_NONE = 0;
 
@@ -529,7 +556,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      *
-     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
+     * @param adaptermemo the SystemConnectionMemo to associate with this
+     *                    TrafficController
      */
     public void setAdapterMemo(NceSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
