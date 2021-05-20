@@ -47,7 +47,11 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
     public ModuleEditor(BeanTableFrame<Module> f,
             BeanTableDataModel<Module> m, String sName) {
         
-        super(setupRootSocket(null, sName), true, true, false);
+        super(setupRootSocket(null, sName),
+                EnableClipboard.EnableClipboard,
+                EnableRootRemoveCutCopy.DisableRootRemoveCutCopy,
+                EnableRootPopup.EnableRootPopup
+        );
         
         this.beanTableDataModel = m;
         
@@ -62,9 +66,13 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
         _module = (Module) _treePane._femaleRootSocket.getConnectedSocket().getObject();
         
         if (_module.getUserName() == null) {
-            setTitle(Bundle.getMessage("TitleEditModule", _module.getSystemName()));
+            ModuleEditor.this.setTitle(
+                    Bundle.getMessage("TitleEditModule", _module.getSystemName()));
         } else {
-            setTitle(Bundle.getMessage("TitleEditModule2", _module.getSystemName(), _module.getUserName()));
+            ModuleEditor.this.setTitle(
+                    Bundle.getMessage("TitleEditModule2",
+                            _module.getSystemName(),
+                            _module.getUserName()));
         }
     }
     

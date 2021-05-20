@@ -43,14 +43,19 @@ public class ConditionalNGEditor extends TreeEditor {
         super(InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(null, new FemaleSocketListener(){
             @Override
             public void connected(FemaleSocket socket) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                throw new UnsupportedOperationException("Not supported");
             }
 
             @Override
             public void disconnected(FemaleSocket socket) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                throw new UnsupportedOperationException("Not supported");
             }
-        }, "A"), false, false, false);
+        }, "A"),
+                EnableClipboard.EnableClipboard,
+                EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
+                EnableRootPopup.EnableRootPopup
+        );
+        
         _conditionalNG = null;
     }
     
@@ -60,14 +65,23 @@ public class ConditionalNGEditor extends TreeEditor {
      * @param conditionalNG the ConditionalNG to be edited
      */
     public ConditionalNGEditor(@Nonnull ConditionalNG conditionalNG) {
-        super(conditionalNG.getFemaleSocket(), true, false, false);
+        super(conditionalNG.getFemaleSocket(),
+                EnableClipboard.EnableClipboard,
+                EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
+                EnableRootPopup.EnableRootPopup
+        );
         
         _conditionalNG = conditionalNG;
         
         if (_conditionalNG.getUserName() == null) {
-            setTitle(Bundle.getMessage("TitleEditConditionalNG", _conditionalNG.getSystemName()));
+            ConditionalNGEditor.this.setTitle(
+                    Bundle.getMessage("TitleEditConditionalNG",
+                            _conditionalNG.getSystemName()));
         } else {
-            setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
+            ConditionalNGEditor.this.setTitle(
+                    Bundle.getMessage("TitleEditConditionalNG2", 
+                            _conditionalNG.getSystemName(),
+                            _conditionalNG.getUserName()));
         }
     }
     

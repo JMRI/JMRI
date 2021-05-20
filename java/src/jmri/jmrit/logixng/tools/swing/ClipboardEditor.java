@@ -29,11 +29,15 @@ public class ClipboardEditor extends TreeEditor {
      * Construct a ConditionalEditor.
      */
     public ClipboardEditor() {
-        super(InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().getFemaleSocket(), false, false, true);
+        super(InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().getFemaleSocket(),
+                EnableClipboard.DisableClipboard,
+                EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
+                EnableRootPopup.DisableRootPopup
+        );
         
-        setTitle(Bundle.getMessage("TitleClipboardEditor"));
+        ClipboardEditor.this.setTitle(Bundle.getMessage("TitleClipboardEditor"));
         
-        setRootVisible(false);
+        ClipboardEditor.this.setRootVisible(false);
     }
     
     /** {@inheritDoc} */

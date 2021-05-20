@@ -32,7 +32,13 @@ import org.apache.commons.lang3.mutable.MutableObject;
  * @author Daniel Bergqvist 2020
  */
 public class TreeEditor extends TreeViewer {
-
+    
+    // Enums used to configure TreeEditor
+    public enum EnableClipboard { EnableClipboard, DisableClipboard };
+    public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy };
+    public enum EnableRootPopup { EnableRootPopup, DisableRootPopup };
+    
+    
     private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
     
     ClipboardEditor _clipboardEditor = null;
@@ -81,23 +87,24 @@ public class TreeEditor extends TreeViewer {
     
     
     /**
-     * Construct a ConditionalEditor.
+     * Construct a TreeEditor.
      *
-     * @param femaleRootSocket the root of the tree
-     * @param enableClipboard true if clipboard should be on the menu
-     * @param disableRootRemoveCutCopy  true if the popup menu items remove,
-     *                                  cut and copy should be disabled
-     * @param disableRootPopup          true if the popup menu should be disabled
+     * @param femaleRootSocket         the root of the tree
+     * @param enableClipboard          should clipboard be enabled on the menu?
+     * @param enableRootRemoveCutCopy  should the popup menu items remove,
+     *                                 cut and copy be enabled or disabled?
+     * @param enableRootPopup          should the popup menu be disabled for root?
      */
     public TreeEditor(
             @Nonnull FemaleSocket femaleRootSocket,
-            boolean enableClipboard,
-            boolean disableRootRemoveCutCopy,
-            boolean disableRootPopup) {
+            EnableClipboard enableClipboard,
+            EnableRootRemoveCutCopy enableRootRemoveCutCopy,
+            EnableRootPopup enableRootPopup) {
+        
         super(femaleRootSocket);
-        _enableClipboard = enableClipboard;
-        _disableRootRemoveCutCopy = disableRootRemoveCutCopy;
-        _disableRootPopup = disableRootPopup;
+        _enableClipboard = enableClipboard == EnableClipboard.EnableClipboard;
+        _disableRootRemoveCutCopy = enableRootRemoveCutCopy == EnableRootRemoveCutCopy.DisableRootRemoveCutCopy;
+        _disableRootPopup = enableRootPopup == EnableRootPopup.DisableRootPopup;
     }
     
     @Override
