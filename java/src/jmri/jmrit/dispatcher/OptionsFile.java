@@ -10,7 +10,6 @@ import jmri.configurexml.AbstractXmlAdapter.EnumIoNamesNumbers;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
