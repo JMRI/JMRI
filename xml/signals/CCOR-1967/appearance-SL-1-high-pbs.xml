@@ -10,12 +10,12 @@
     <year>2019</year>
     <holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -30,14 +30,14 @@
         <date>2020-06-11</date>
         <authorinitials>MKZ</authorinitials>
         <revremark>fix Approach aspect mapping</revremark>
-    </revision>	
+    </revision>
 </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
   <name>Single head permissive signal</name>
   <reference>http://www.gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
   <description>Appearances for one-head high-mast permissive block signal</description>
-  
+
   <appearances>
 
     <appearance>
