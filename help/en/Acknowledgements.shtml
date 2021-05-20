@@ -5,13 +5,14 @@
   <title>JMRI: Acknowledgements</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "java model railroad JMRI decoderpro panelpro cmri loconet lenz nce easydcc dcc nmra">
+  "java model railroad JMRI decoderpro panelpro names people credits">
   <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" --> <!-- might be improved to show an Alphabet sidebar + some nav? -->
     <div id="mainContent">
 
       <h2>Acknowledgements: People who've contributed to JMRI</h2>
