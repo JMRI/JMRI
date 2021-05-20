@@ -1231,6 +1231,9 @@
         <li>Luis Zamora, who done a lot of work on the
         Catalan translation</li><!-- eldelinux -->
 
+        <li>Mark Ziebell, who worked on signal systems.
+        </li><!-- zie0013 -->
+
         <li>david zuhn, who provided instructions for installing
         the comm libraries on Linux, wrote startup scripts and
         configured Ant for compiling with warnings</li>
