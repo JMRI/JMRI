@@ -29,9 +29,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
-     *
+     * <p>
      * NCE programming modes available depend on settings
      */
     @Override
@@ -76,7 +76,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -86,7 +86,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -116,7 +116,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -128,7 +128,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         useProgrammer(p);
         // prevent writing Prog Track mode CV > 256 on PowerPro 2007C and earlier
         if (!getCanWrite(CV)) {
-            throw new jmri.ProgrammerException("CV number not supported");
+            log.error("Write {} CV {} unsupported by NCE EPROM revision {}", getMode(), CV, tc.getPwrProVersHexText());
+            progState = NOTPROGRAMMING;
+            cleanup();
+            notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
+            return;
         }
         _progRead = false;
         // set state
@@ -148,7 +152,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -156,7 +160,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         readCV(CV, p);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -224,7 +228,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -232,7 +236,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         log.error("message received unexpectedly: {}", m.toString());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -282,9 +286,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
-     *
+     * <p>
      * Internal routine to handle a timeout
      */
     @Override
