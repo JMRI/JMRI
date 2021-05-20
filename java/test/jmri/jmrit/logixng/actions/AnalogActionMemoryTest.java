@@ -119,7 +119,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     }
     
     @Test
-    public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+    public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException, JmriException {
         AnalogActionMemory action = (AnalogActionMemory)_base;
         action.setValue(0.0d);
         Assert.assertTrue("Memory has correct value", 0.0d == (Double)_memory.getValue());
@@ -213,7 +213,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Set memory".equals(_base.getShortDescription()));
+        Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
     
     @Test
@@ -273,7 +273,8 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
     }
 
     @After

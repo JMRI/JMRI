@@ -11,7 +11,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.YardEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -33,7 +33,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
 
         Track track = loc.getTrackByName("NI Yard", null);
 
-        TrackEditFrame tf = new TrackEditFrame("test");
+        YardEditFrame tf = new YardEditFrame();
         tf.initComponents(loc, track);
         Assert.assertNotNull("exists", tf);
 
@@ -55,7 +55,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
 
         Track track = loc.getTrackByName("NI Yard", null);
 
-        TrackEditFrame tef = new TrackEditFrame("test");
+        YardEditFrame tef = new YardEditFrame();
         tef.initComponents(loc, track);
         Assert.assertNotNull("exists", tef);
         

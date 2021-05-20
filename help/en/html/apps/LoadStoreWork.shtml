@@ -19,7 +19,7 @@
       <h1>JMRI: Loading and Storing Your Work</h1>
       <p class="subtitle">What Everyone Should Know</p>
 
-      <p class="noted">This page provides the basic informaiton you should know about what commands are used to
+      <p class="noted">This page provides the basic information you should know about what commands are used to
       load and store the data you create and update in JMRI. A companion page with more information for advanced
       users about when, how, and where JMRI stores data is available <a href="DataManagement.shtml"> here.</a></p>
 

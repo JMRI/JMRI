@@ -269,7 +269,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set memory", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
     
     @Test

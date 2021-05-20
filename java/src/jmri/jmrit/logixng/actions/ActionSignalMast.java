@@ -462,7 +462,7 @@ public class ActionSignalMast extends AbstractDigitalAction
         OperationType operation = getOperation();
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
+        jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
             try {
                 switch (operation) {
                     case Aspect:

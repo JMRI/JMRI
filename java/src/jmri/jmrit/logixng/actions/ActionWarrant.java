@@ -34,11 +34,17 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
     private ExpressionNode _expressionNode;
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.None;
+    private DirectOperation _operationDirect = DirectOperation.AllocateWarrantRoute;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
     private ExpressionNode _operationExpressionNode;
+
+    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
+    private String _dataReference = "";
+    private String _dataLocalVariable = "";
+    private String _dataFormula = "";
+    private ExpressionNode _dataExpressionNode;
 
     private String _trainIdName = "";
     private ControlAutoTrain _controlAutoTrain = ControlAutoTrain.Halt;
@@ -61,13 +67,21 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         copy.setReference(_reference);
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
+
         copy.setOperationAddressing(_operationAddressing);
         copy.setOperationDirect(_operationDirect);
         copy.setOperationReference(_operationReference);
         copy.setOperationLocalVariable(_operationLocalVariable);
         copy.setOperationFormula(_operationFormula);
+
+        copy.setDataAddressing(_dataAddressing);
+        copy.setDataReference(_dataReference);
+        copy.setDataLocalVariable(_dataLocalVariable);
+        copy.setDataFormula(_dataFormula);
+
         copy.setTrainIdName(_trainIdName);
         copy.setControlAutoTrain(_controlAutoTrain);
+
         return manager.registerAction(copy);
     }
 
@@ -105,6 +119,7 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
     public NamedBeanHandle<Warrant> getWarrant() {
         return _warrantHandle;
     }
+
 
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
         _addressing = addressing;
@@ -154,9 +169,10 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         }
     }
 
+
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
-        parseLockFormula();
+        parseOperFormula();
     }
 
     public NamedBeanAddressing getOperationAddressing() {
@@ -192,14 +208,14 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
 
     public void setOperationFormula(@Nonnull String formula) throws ParserException {
         _operationFormula = formula;
-        parseLockFormula();
+        parseOperFormula();
     }
 
-    public String getLockFormula() {
+    public String getOperFormula() {
         return _operationFormula;
     }
 
-    private void parseLockFormula() throws ParserException {
+    private void parseOperFormula() throws ParserException {
         if (_operationAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
 
@@ -209,6 +225,56 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
             _operationExpressionNode = null;
         }
     }
+
+
+    public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _dataAddressing = addressing;
+        parseDataFormula();
+    }
+
+    public NamedBeanAddressing getDataAddressing() {
+        return _dataAddressing;
+    }
+
+    public void setDataReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _dataReference = reference;
+    }
+
+    public String getDataReference() {
+        return _dataReference;
+    }
+
+    public void setDataLocalVariable(@Nonnull String localVariable) {
+        _dataLocalVariable = localVariable;
+    }
+
+    public String getDataLocalVariable() {
+        return _dataLocalVariable;
+    }
+
+    public void setDataFormula(@Nonnull String formula) throws ParserException {
+        _dataFormula = formula;
+        parseDataFormula();
+    }
+
+    public String getDataFormula() {
+        return _dataFormula;
+    }
+
+    private void parseDataFormula() throws ParserException {
+        if (_dataAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _dataExpressionNode = parser.parseExpression(_dataFormula);
+        } else {
+            _dataExpressionNode = null;
+        }
+    }
+
 
     public void setTrainIdName(@Nonnull String trainIdName) {
         _trainIdName = trainIdName;
@@ -250,7 +316,8 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         return true;
     }
 
-    private String getNewLock() throws JmriException {
+
+    private String getNewOper() throws JmriException {
 
         switch (_operationAddressing) {
             case Reference:
@@ -273,6 +340,42 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
                 throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
         }
     }
+
+    private String getNewData() throws JmriException {
+
+        switch (_dataAddressing) {
+            case Direct:
+                switch(_operationDirect) {
+                    case SetTrainId:
+                    case SetTrainName:
+                        return _trainIdName;
+                    case ControlAutoTrain:
+                        return _controlAutoTrain.name();
+                    default:
+                        return "";
+                }
+
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _dataReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
+
+            case Formula:
+                return _operationExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _dataExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
+        }
+    }
+
 
     /** {@inheritDoc} */
     @Override
@@ -316,7 +419,7 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         }
 
         String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
+                ? getNewOper() : null;
 
         DirectOperation oper;
         if ((_operationAddressing == NamedBeanAddressing.Direct)) {
@@ -325,90 +428,83 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
             oper = DirectOperation.valueOf(name);
         }
 
-        if (_operationDirect != DirectOperation.None) {
+        // Variables used in lambda must be effectively final
+        DirectOperation theOper = oper;
 
-            // Variables used in lambda must be effectively final
-            DirectOperation theOper = oper;
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
+            String msg;
+            String err;
 
-            ThreadingUtil.runOnLayout(() -> {
-                String msg;
-                String err;
-                switch (theOper) {
-                    case None:
-                        break;
-                    case AllocateWarrantRoute:
-                        msg = warrant.allocateRoute(false, null);
-                        if (msg != null) {
-                            log.warn("Warrant {} - {}", warrant.getDisplayName(), msg);  // NOI18N
+            switch (theOper) {
+                case AllocateWarrantRoute:
+                    msg = warrant.allocateRoute(false, null);
+                    if (msg != null) {
+                        log.warn("Warrant {} - {}", warrant.getDisplayName(), msg);  // NOI18N
+                    }
+                    break;
+
+                case DeallocateWarrant:
+                    warrant.deAllocate();
+                    break;
+
+                case SetRouteTurnouts:
+                    msg = warrant.setRoute(false, null);
+                    if (msg != null) {
+                        log.warn("Warrant {} unable to Set Route - {}", warrant.getDisplayName(), msg);  // NOI18N
+                    }
+                    break;
+
+                case AutoRunTrain:
+                    jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
+                    err = frame.runTrain(warrant, Warrant.MODE_RUN);
+                    if (err != null) {
+                        warrant.stopWarrant(true, true);
+                        throw new JmriException("runAutoTrain error - " + err);  // NOI18N
+                    }
+                    break;
+
+                case ManuallyRunTrain:
+                        err = warrant.setRoute(false, null);
+                        if (err == null) {
+                            err = warrant.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                         }
-                        break;
-
-                    case DeallocateWarrant:
-                        warrant.deAllocate();
-                        break;
-
-                    case SetRouteTurnouts:
-                        msg = warrant.setRoute(false, null);
-                        if (msg != null) {
-                            log.warn("Warrant {} unable to Set Route - {}", warrant.getDisplayName(), msg);  // NOI18N
-                        }
-                        break;
-
-                    case AutoRunTrain:
-                        jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
-                        err = frame.runTrain(warrant, Warrant.MODE_RUN);
                         if (err != null) {
-//                             errorList.add("runAutoTrain error - " + err);  // NOI18N
-                            log.warn("runAutoTrain error - {}", err);  // NOI18N
-                            warrant.stopWarrant(true, true);
+                            throw new JmriException("runManualTrain error - " + err);  // NOI18N
                         }
-                        break;
+                    break;
+// can control use the other data tabs?
+                case ControlAutoTrain:
+                    int controlAction = 0;
+                    switch (_controlAutoTrain) {
+                        case Halt:
+                            controlAction = Warrant.HALT;
+                            break;
+                        case Resume:
+                            controlAction = Warrant.RESUME;
+                            break;
+                        case Abort:
+                            controlAction = Warrant.ABORT;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("invalid train control action: " + _controlAutoTrain);
+                    }
+                    if (!warrant.controlRunTrain(controlAction)) {
+                        log.warn("Train {} not running  - {}", warrant.getSpeedUtil().getRosterId(), warrant.getDisplayName());  // NOI18N
+                    }
+                    break;
+                case SetTrainId:
+                    if(!warrant.getSpeedUtil().setAddress(getNewData())) {
+                        throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
+                    }
+                    break;
+                case SetTrainName:
+                    warrant.setTrainName(getNewData());
+                    break;
 
-                    case ManuallyRunTrain:
-                            err = warrant.setRoute(false, null);
-                            if (err == null) {
-                                err = warrant.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
-                            }
-                            if (err != null) {
-//                                 errorList.add("runManualTrain error - " + err);  // NOI18N
-                                log.warn("runManualTrain error - {}", err);  // NOI18N
-                            }
-                        break;
-
-                    case ControlAutoTrain:
-                        int controlAction = 0;
-                        switch (_controlAutoTrain) {
-                            case Halt:
-                                controlAction = Warrant.HALT;
-                                break;
-                            case Resume:
-                                controlAction = Warrant.RESUME;
-                                break;
-                            case Abort:
-                                controlAction = Warrant.ABORT;
-                                break;
-                            default:
-                                throw new IllegalArgumentException("invalid train control action: " + _controlAutoTrain);
-                        }
-                        if (!warrant.controlRunTrain(controlAction)) {
-                            log.warn("Train {} not running  - {}", warrant.getSpeedUtil().getRosterId(), warrant.getDisplayName());  // NOI18N
-                        }
-                        break;
-                    case SetTrainId:
-                        if(!warrant.getSpeedUtil().setAddress(_trainIdName)) {
-//                             errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
-                            log.warn("invalid train ID in action - {}", warrant.getDisplayName());  // NOI18N
-                        }
-                        break;
-                    case SetTrainName:
-                        warrant.setTrainName(_trainIdName);
-                        break;
-
-                    default:
-                        throw new IllegalArgumentException("invalid oper state: " + theOper.name());
-                }
-            });
-        }
+                default:
+                    throw new IllegalArgumentException("invalid oper state: " + theOper.name());
+            }
+        });
     }
 
     @Override
@@ -461,9 +557,11 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         switch (_operationAddressing) {
             case Direct:
                 if (_operationDirect == DirectOperation.SetTrainId) {
-                    return Bundle.getMessage(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainIdName);
+                    return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainIdName);
                 } else if (_operationDirect == DirectOperation.SetTrainName) {
-                    return Bundle.getMessage(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
+                    return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
+                } else if (_operationDirect == DirectOperation.ControlAutoTrain) {
+                    return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
                 }
@@ -486,6 +584,21 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         }
 
         return Bundle.getMessage(locale, "ActionWarrant_Long", namedBean, state);
+    }
+
+    private String getLongDataDescription(Locale locale, String bundleKey, String namedBean, String value) {
+        switch (_dataAddressing) {
+            case Direct:
+                return Bundle.getMessage(locale, bundleKey, namedBean, value);
+            case Reference:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
+            case LocalVariable:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+            case Formula:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
+            default:
+                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+        }
     }
 
     /** {@inheritDoc} */

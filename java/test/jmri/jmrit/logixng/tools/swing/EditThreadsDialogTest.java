@@ -12,18 +12,20 @@ import org.junit.Test;
 
 /**
  * Test EditThreadsDialog
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class EditThreadsDialogTest {
 
     @Test
     public void testCtor() {
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(null);
+        jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                .createLogixNG("A logixNG with an empty conditionlNG");
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
         EditThreadsDialog t = new EditThreadsDialog(conditionalNG);
         Assert.assertNotNull("not null", t);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -35,5 +37,5 @@ public class EditThreadsDialogTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

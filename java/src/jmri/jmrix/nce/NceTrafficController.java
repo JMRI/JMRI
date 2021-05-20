@@ -62,10 +62,10 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
 
-        if (NmraPacket.isAccSignalDecoderPkt(packet)
+        if (isUsb && NmraPacket.isAccSignalDecoderPkt(packet)
                 && (NmraPacket.getAccSignalDecoderPktAddress(packet) > 0)
-                && (NmraPacket.getAccSignalDecoderPktAddress(packet) < 2048)) {
-            // intercept only those NMRA signal cmds we can handle with NCE binary commands
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) <= 2044)) {
+            // intercept NMRA signal cmds to USB systems
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
             log.debug("isAccSignalDecoderPkt(packet) sigAddr ={}, aspect ={}", addr, aspect);
@@ -164,6 +164,52 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private int commandOptions = OPTION_2006;
     public boolean commandOptionSet = false;
+    private boolean pwrProVer060203orLater = false;
+    private final int[] pwrProVers = new int[3];
+
+    /**
+     * Return the Power Pro firmware version as user-friendly hex text.
+     *
+     * @return period-separated firmware version
+     */
+    public String getPwrProVersHexText() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.toHexString(pwrProVers[0] & 0xFF)).append(".");
+        sb.append(Integer.toHexString(pwrProVers[1] & 0xFF)).append(".");
+        sb.append(Integer.toHexString(pwrProVers[2] & 0xFF));
+        return sb.toString();
+    }
+
+    /**
+     * Store the Power Pro firmware version.
+     *
+     * @param VV major version
+     * @param MM intermediate version
+     * @param mm minor version
+     */
+    public void setPwrProVers(byte VV, byte MM, byte mm) {
+        this.pwrProVers[0] = VV & 0xFF;
+        this.pwrProVers[1] = MM & 0xFF;
+        this.pwrProVers[2] = mm & 0xFF;
+    }
+
+    /**
+     * Ask whether Power Pro firmware version is 6.2.3 or later.
+     *
+     * @return {@code true} if it does, otherwise {@code false}
+     */
+    public boolean isPwrProVer060203orLater() {
+        return pwrProVer060203orLater;
+    }
+
+    /**
+     * Specify whether Power Pro firmware version is 6.2.3 or later.
+     *
+     * @param isTrue {@code true} if it does, otherwise {@code false}
+     */
+    public void setPwrProVer060203orLater(boolean isTrue) {
+        pwrProVer060203orLater = isTrue;
+    }
 
     /**
      * Control which command format should be used for various commands: ASCII
@@ -216,8 +262,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     /**
-     * Default when a NCE USB isn't selected in user system preferences.
-     * Also the case when Serial or Simulator is selected.
+     * Default when a NCE USB isn't selected in user system preferences. Also
+     * the case when Serial or Simulator is selected.
      */
     public static final int USB_SYSTEM_NONE = 0;
 
@@ -510,7 +556,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      *
-     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
+     * @param adaptermemo the SystemConnectionMemo to associate with this
+     *                    TrafficController
      */
     public void setAdapterMemo(NceSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;

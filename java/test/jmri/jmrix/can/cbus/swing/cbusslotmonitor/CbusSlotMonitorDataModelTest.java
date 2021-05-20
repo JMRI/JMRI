@@ -160,7 +160,7 @@ public class CbusSlotMonitorDataModelTest {
         Assert.assertTrue("table listening",1 == tcis.numListeners());
         t.dispose();
         Assert.assertEquals("no listener after didpose",0,tcis.numListeners());
-        t = new CbusSlotMonitorDataModel(memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
+        t = new CbusSlotMonitorDataModel(memo);
         Assert.assertTrue("table listening again",1 == tcis.numListeners());     
     }
     
@@ -532,7 +532,7 @@ public class CbusSlotMonitorDataModelTest {
         tcis = new jmri.jmrix.can.TrafficControllerScaffold();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
-        t = new CbusSlotMonitorDataModel(memo,5,5);
+        t = new CbusSlotMonitorDataModel(memo);
     }
 
     @AfterEach

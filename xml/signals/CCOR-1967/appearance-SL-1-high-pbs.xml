@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
+        <email>cpunclejoe@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-12-21</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2020-06-11</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix Approach aspect mapping</revremark>
+    </revision>	
+</revhistory>
+
+  <aspecttable>CCOR-1967</aspecttable>
+  <name>Single head permissive signal</name>
+  <reference>http://www.gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
+  <description>Appearances for one-head high-mast permissive block signal</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Page 53</reference>
+      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240E.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>flashyellow</show>
+      <reference>Page 54</reference>
+      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240F.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>Page 53</reference>
+      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240D.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>red</show>
+      <reference>Page 53</reference>
+      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240B.gif</imagelink>
+    </appearance>
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop and Proceed</aspect>
+    </danger>
+    <permissive>
+      <aspect>Stop and Proceed</aspect>
+    </permissive>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear Alt</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Advance Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+	  <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting Lunar</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting Lunar Div</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Flashing Stop and Proceed Div</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Flashing Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+
+</appearancetable>

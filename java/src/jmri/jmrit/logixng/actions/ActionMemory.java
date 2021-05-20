@@ -346,7 +346,7 @@ public class ActionMemory extends AbstractDigitalAction
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
             switch (_memoryOperation) {
                 case SetToNull:

@@ -320,7 +320,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("Get memory as string value", _base.getShortDescription());
+        Assert.assertEquals("Memory as string value", _base.getShortDescription());
     }
     
     @Test

@@ -21,7 +21,7 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Test ExpressionTimer
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
@@ -29,7 +29,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     private String _memorySystemName;
     private Memory _memory;
     private MyStringActionMemory _action;
-    
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -37,25 +37,25 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(StringActionManager.class);
     }
-    
+
     @Test
     public void testBundleClass() {
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
         Assert.assertEquals("bundle is correct", "Generic", Bundle.getMessage(Locale.US, "SocketTypeGeneric"));
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc"));
     }
-    
+
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "A1".equals(_femaleSocket.getName()));
     }
-    
+
     @Test
     public void testGetDescription() {
         Assert.assertTrue("String matches", "!s".equals(_femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "!s A1".equals(_femaleSocket.getLongDescription()));
     }
-    
+
     @Override
     protected FemaleSocket getFemaleSocket(String name) {
         return new DefaultFemaleStringActionSocket(null, new FemaleSocketListener() {
@@ -68,12 +68,12 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
             }
         }, name);
     }
-    
+
     @Override
     protected boolean hasSocketBeenSetup() {
         return _action._hasBeenSetup;
     }
-    
+
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
@@ -82,26 +82,26 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         // Test setValue() when not connected
         ((DefaultFemaleStringActionSocket)_femaleSocket).setValue("");
     }
-    
+
     @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
-        
+
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.StringActionMemory.class);
         map.put(Category.ITEM, classes);
-        
+
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.StringMany.class);
         map.put(Category.COMMON, classes);
-        
+
         classes = new ArrayList<>();
         map.put(Category.OTHER, classes);
-        
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -112,10 +112,12 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("An empty conditionalNG");
-        
+                .createConditionalNG(logixNG, "An empty conditionalNG");
+
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -144,22 +146,22 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyStringActionMemory extends StringActionMemory {
-        
+
         private boolean _hasBeenSetup = false;
-        
+
         public MyStringActionMemory(String systemName) {
             super(systemName, null);
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public void setup() {
             _hasBeenSetup = true;
         }
     }
-    
+
 }

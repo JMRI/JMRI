@@ -21,7 +21,7 @@ import org.netbeans.jemmy.operators.*;
 
 /**
  * Test ActionLightSwing
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
@@ -29,21 +29,21 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         ActionLightSwing t = new ActionLightSwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertTrue("panel is not null",
             null != new ActionLightSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new ActionLightSwing().getConfigPanel(new ActionLight("IQDA1", null), new JPanel()));
     }
-    
+
     @Test
     public void testDialogUseExistingLight() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -51,21 +51,23 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         Light l1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         InstanceManager.getDefault(LightManager.class).provide("IL2");
 
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
-        
+        jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                .createLogixNG("A logixNG with an empty conditionlNG");
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
+
         ActionLight action = new ActionLight("IQDA1", null);
         MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         conditionalNG.getChild(0).connect(maleSocket);
-        
+
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
-        
+
         new JComboBoxOperator(jdo, 0).setSelectedItem(l1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
-        
+
         JUnitUtil.waitFor(() -> {return action.getLight() != null;});
         JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getBeanState();});
-        
+
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
     }
@@ -88,5 +90,5 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

@@ -163,7 +163,11 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
+            //ask command station to forget this cab
+            DCCppMessage msg = DCCppMessage.makeForgetCabMessage(t.getLocoAddress().getNumber());
+            tc.sendDCCppMessage(msg, this);            
+            //release the "register" for this cab
+            tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());            
             if (t instanceof DCCppThrottle) {
                 DCCppThrottle lnt = (DCCppThrottle) t;
                 throttles.remove(lnt.getLocoAddress()); // remove from throttles map.

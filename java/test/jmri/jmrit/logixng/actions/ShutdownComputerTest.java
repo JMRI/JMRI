@@ -42,7 +42,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Shutdown computer: Shut down JMRI ::: Use default%n");
+        return String.format("Shutdown JMRI/computer: Shut down JMRI ::: Use default%n");
     }
     
     @Override
@@ -51,7 +51,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Shutdown computer: Shut down JMRI ::: Use default%n");
+                "         Shutdown JMRI/computer: Shut down JMRI ::: Use default%n");
     }
     
     @Override
@@ -143,7 +143,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
+        JUnitUtil.initLogixNGManager(true);
         
         mockShutDownManager = new MockShutDownManager();
         InstanceManager.setDefault(ShutDownManager.class, mockShutDownManager);
