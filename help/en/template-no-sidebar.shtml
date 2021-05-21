@@ -12,7 +12,7 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div class="no-sidebar" id="mBody">
     <div id="mainContent">
 
       <h1>JMRI: Page Title???</h1>Content???? This file shows the
