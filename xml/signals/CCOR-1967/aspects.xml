@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>CCOR-1967</name>
+  <date>1967</date>
+  <reference>www.gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+	<holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >  
+    <author>
+        <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
+        <email>cpunclejoe@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-12-21</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2020-07-02</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Medium speed element to Diverging Clear</revremark>
+    </revision>
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 240A</rule>
+      <indication>Stop.</indication>
+      <reference>Page 53</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+   </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 240B</rule>
+      <indication>Stop before any part of train or engine passes the signal then proceed at restricted speed through the entire block.</indication>
+      <reference>Page 53</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Flashing Stop and Proceed</name>
+      <rule>Rule 240C</rule>
+      <indication>Stop. Block occupied. Proceed at restricted speed.</indication>
+      <reference>Page 53, RULE 240C</reference>
+	  <speed>Slow</speed>
+      <speed2>Restricted</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Flashing Stop and Proceed Div</name>
+      <rule>Rule 240C</rule>
+      <indication>Stop. Block occupied. Proceed at restricted speed.</indication>
+      <reference>Page 53, RULE 240C Fig.2</reference>
+	  <comment>Unofficial Name to provide for Diverging aspect in route-signal system</comment>
+	  <speed>Slow</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 240D</rule>
+      <indication>Proceed prepared to stop before any part of train or engine passes the next signal. Trains exceeding 40 MPH must immediately reduce to that speed.</indication>
+      <reference>Page 53</reference>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 240E</rule>
+      <indication>Proceed.</indication>
+      <reference>Page 53</reference>
+      <speed>Maximum</speed>
+      <speed2>Maximum</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 240F</rule>
+      <indication>Proceed prepared to pass next signal at not exceeding 40 miles per hour.</indication>
+      <reference>Page 54</reference>
+      <speed>Maximum</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach Alt</name>
+      <rule>Rule 240F</rule>
+      <indication>Proceed prepared to pass next signal at not exceeding 40 miles per hour.</indication>
+      <reference>Page 54, RULE 240F Figs. 9,10</reference>
+      <comment>Alternate Advance Approach aspect</comment>
+      <speed>Maximum</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Diverging</name>
+      <rule>Rule 240G</rule>
+      <indication>Approach next signal prepared to proceed on diverging route at prescribed speed.</indication>
+      <reference>Page 54</reference>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule 240M</rule>
+      <indication>Proceed on diverging route at prescribed speed.</indication>
+      <reference>Page 54</reference>
+      <reference>Diverging indication for medium speed route, in route-signaling system</reference>
+      <speed>Limited</speed>
+      <speed>Medium</speed>
+      <speed2>Maximum</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear Alt</name>
+      <rule>Rule 240M</rule>
+      <indication>Proceed on diverging route at prescribed speed.</indication>
+      <reference>Page 54, RULE 240M Fig.4</reference>
+      <reference>Diverging indication for lower speed route, in route-signaling system</reference>
+      <comment>Alternate Diverging Clear aspect for lower-speed route</comment>
+      <speed>Medium</speed>
+      <speed>Slow</speed>
+      <speed2>Maximum</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Advance Approach</name>
+      <rule>Rule 240K</rule>
+      <indication>Proceed on diverging route at prescribed speed prepared to pass next signal at not exceeding 40 MPH.</indication>
+      <reference>Page 54</reference>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule 240L</rule>
+      <indication>Proceed on diverging route at prescribed speed prepared to stop before any part of train or engine passes the next signal.</indication>
+      <reference>Page 54</reference>
+      <speed>Limited</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 240N</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 55, RULE 240N</reference>
+      <speed>Slow</speed>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting Lunar</name>
+      <rule>Rule 240N</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 55  RULE 240N  Figs. 6, 8</reference>
+      <reference>Unofficial Name for restricting indication on normal route, in route-signaling system</reference>
+	 <comment>Unofficial Name to provide for Normal aspect in route-signal system</comment>
+      <speed>Slow</speed>
+      <speed2>Restricted</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting Lunar Div</name>
+      <rule>Rule 240N</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 55  RULE 240N  Figs. 2-5</reference>
+      <reference>Unofficial Name for restricting indication on diverging route, in route-signaling system</reference>
+	 <comment>Unofficial Name to provide for Diverging aspect in route-signal system</comment>
+      <speed>Slow</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+    </aspect>
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-SL-1-dwarf.xml"/>
+    <appearancefile href="appearance-SL-1-high-abs.xml"/>
+    <appearancefile href="appearance-SL-1-high-pbs.xml"/>
+    <appearancefile href="appearance-SL-2-dwarf.xml"/>
+    <appearancefile href="appearance-SL-2-high-abs.xml"/>
+    <appearancefile href="appearance-SL-2-high-pbs.xml"/>
+    <appearancefile href="appearance-SL-2-low.xml"/>
+    <appearancefile href="appearance-SL-3-high.xml"/>
+  </appearancefiles>
+  
+</aspecttable>
+  

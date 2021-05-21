@@ -1309,6 +1309,55 @@
 </li>
   
 <li>
+<a href="html/tools/logixng/LogixNG.shtml">LogixNG </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/logixng/LogixNGTable.shtml">LogixNG Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logixng/LogixNGTableEditor.shtml">LogixNG Table Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logixng/ConditionalNGEditor.shtml">ConditionalNG Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logixng/LogixNGModuleTable.shtml">LogixNG Module Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logixng/LogixNGTableTable.shtml">LogixNG Tables Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml">LogixNG Tables Table Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml">LogixNG Initialization Table </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
 <a href="html/tools/LRoutes.shtml">LRoutes </a>
 <ul>
    
