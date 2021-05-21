@@ -2098,22 +2098,29 @@
    <h4>Railroad Division</h4>
    <p>
     The railroad divisions feature allows you to create prototypical car movements for your
-    railroad. To use this feature create and then select at least one division for your railroad by
-    using the "Add" button in the "Division" section of the "Edit Location" window. You can assign
-    multiple locations to the same division, and you can create several divisions for your railroad.
-    Cars that are assigned a
-    <a href="#HomeDivision">home division</a> will return to the <a
-     href="#Yards">yard</a> or <a href="#Staging">staging</a> at their home division when their load
-    state becomes empty. If the program can't find a home division yard or staging for the empty
-    car, it will try to send the car directly to an industry (<a
-     href="#Sidings">spur</a>) at the car's home division. Cars with a home division will also
-    return to an industry (<a
+    railroad. To use this feature first create and then select at least one division for your
+    railroad by using the "Add" button in the "Division" section of the "Edit Location" window. You
+    can assign multiple locations to the same division, and you can create several divisions for
+    your railroad. Cars that are assigned a <a href="#HomeDivision">home division</a> will return to
+    the <a href="#Yards">yard</a> or <a href="#Staging">staging</a> at their home division when
+    their load state becomes empty. If the program can't find a home division yard or staging for
+    the empty car, it will try to send the car directly to an industry (<a href="#Sidings">spur</a>)
+    at the car's home division. Cars with a home division will also return to an industry (<a
      href="#Sidings">spur</a>) or <a href="#Staging">staging</a> at their home division when loaded
-    from an industry outside of their home division. Cars loaded at their home division can travel
-    to any industry or staging on the railroad. The program will use
-    <a href="#Interchange">interchange</a> tracks to route the cars to yards, industries or staging
-    that require multiple trains.
+    from an industry or staging outside of their home division. Cars loaded at their home division can travel
+    to any industry or staging on the railroad. The program will use <a href="#Interchange">interchange</a>
+    tracks to route the cars to yards, industries or staging that require multiple trains.
    </p>
+
+   <p>When setting up railroad divisions, it is best if there's at least one division yard for
+    empty cars to migrate to, and at least one industry (spur) to service cars loaded outside of the
+    division. Staging can be used as a substitute for industries.</p>
+
+   <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
+    but it can also reduce car movement since the rules for car movement have to be enforced by the
+    program. It is recommended that you start off by only providing a home division to a limited
+    number of cars and then determine if the restricted car movements meet your expectations.
+    Prototypical car movement doesn't necessarily mean better for model railroads.</p>
 
    <a name="LocationRollingStock" id="LocationRollingStock"></a>
    <h4>Location Rolling Stock</h4>
@@ -3679,12 +3686,15 @@
    <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
     destination to become active, only when the car is set out by the program will the RWL
     destination and RWL load name become active.</p>
-    
+
    <a name="HomeDivision" id="HomeDivision"></a>
    <h4>Home Division</h4>
    You can optionally select the car's home division for more prototypical car movements. See
    <a href="#LocationDivision">railroad divisions</a> in the <a href="#AddLocation">Edit
-    Location</a> help for more information.
+    Location</a> help for more information. You can use the
+   <a href="#SetCars">Set Cars</a> feature to quickly assign a home division to multiple cars.
+   <p>Use the "Edit" button to modify an existing division or if a division isn't selected to
+    create a new one.</p>
 
    <h4>Kernel</h4>
 
@@ -3799,19 +3809,21 @@
 
    <a name="SetCars" id="SetCars"></a>
    <h4>Set Cars</h4>
-   If you want to change the status, location, return when empty, load, kernel, destinations or
-   train assignment for a group of cars use the "Set Cars" tool found under "Tools" in the <a
-    href="#Cars">Cars</a> window. The tool works the same way as the <a href="#CarsSet">Set Car</a>
-   as described above, except that multiple cars are modified. Select the cars you want to change in
-   the table by highlighting them, and then select "Set Cars". Note that you can use the "Control"
-   or "Ctrl" key on your keyboard to select individual cars in the table, and the "Shift" key allows
-   you to select a range of cars. The first car selected becomes the default, and if you press the
-   "Change" button, all of the other selected cars will have the same settings as the default car.
+   If you want to change the status, location, return when empty, return when loaded, home division,
+   load, kernel, destinations or train assignment for a group of cars use the "Set Cars" tool found
+   under "Tools" in the
+   <a href="#Cars">Cars</a> window. The tool works the same way as the
+   <a href="#CarsSet">Set Car</a> as described above, except that multiple cars are modified. Select
+   the cars you want to change in the table by highlighting them, and then select "Set Cars". Note
+   that you can use the "Control" or "Ctrl" key on your keyboard to select individual cars in the
+   table, and the "Shift" key allows you to select a range of cars. Use "Ctrl A" to select all of
+   the cars in the table. The first car in the table becomes the default, and if you press the
+   "Apply" button, all of the other selected cars will have the same settings as the default car.
 
    <p>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
-    values once you press the "Change" button. However, if you want to change only one or two of the
+    values once you press the "Apply" button. However, if you want to change only one or two of the
     fields shown in the Set Cars window, select the ignore checkbox for the fields you don't want
-    changed by the "Change" button. Only the fields that don't have the "ignore" selected will
+    changed by the "Apply" button. Only the fields that don't have the "ignore" selected will
     change.</p>
 
    <p>After making your changes, be sure to press "Save" in the Cars window if you want to keep
