@@ -41,11 +41,15 @@ public class DefaultMaleDigitalExpressionSocketSwing extends AbstractMaleSocketS
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof DefaultMaleDigitalExpressionSocket)) {
+        Base obj = object;
+        while (((obj instanceof MaleSocket)) && (! (obj instanceof DefaultMaleDigitalExpressionSocket))) {
+            obj = ((MaleSocket)obj).getObject();
+        }
+        if (! (obj instanceof DefaultMaleDigitalExpressionSocket)) {
             throw new IllegalArgumentException("object is not an DefaultMaleDigitalExpressionSocket: " + object.getClass().getName());
         }
 
-        DefaultMaleDigitalExpressionSocket maleSocket = (DefaultMaleDigitalExpressionSocket)object;
+        DefaultMaleDigitalExpressionSocket maleSocket = (DefaultMaleDigitalExpressionSocket)obj;
         maleSocket.setListen(_listenCheckBox.isSelected());
     }
 
