@@ -1,13 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
-
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: XML Persistance</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
@@ -267,5 +262,6 @@ To restore the value on load:
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

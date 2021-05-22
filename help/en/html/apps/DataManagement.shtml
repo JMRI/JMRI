@@ -1,8 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
   <title>JMRI: Understanding the Data Management</title>
   <meta name="Author" content="Jerry Grochow">
   <!--#include virtual="/Style.shtml" -->
@@ -553,6 +552,7 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
 

@@ -4216,7 +4216,7 @@
 
 <mapID target="html.doc.Technical.JUnit_Reporting" url="html/doc/Technical/JUnit.shtml#Reporting"/>
 
-<mapID target="TemplatePlain" url="TemplatePlain.shtml"/>
+<mapID target="TemplatePlain" url="template-no-sidebar.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_SPROG_Console" url="manual/DecoderPro/Main_SPROG.shtml#Console"/>
 

@@ -100,7 +100,7 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
 
         // build menu
         setJMenuBar(new JMenuBar());
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Divisions", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_LocationDivision", true); // NOI18N
 
         // set frame size and division for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight200));
