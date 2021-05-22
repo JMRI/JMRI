@@ -165,7 +165,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private int commandOptions = OPTION_2006;
     public boolean commandOptionSet = false;
-    private static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
+    private boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
     private boolean pwrProVer060203orLater = false;
     private final int[] pwrProVers = new int[3];
     private boolean simulatorRunning = false; // true if simulator is running
