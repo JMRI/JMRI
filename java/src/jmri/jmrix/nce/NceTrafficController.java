@@ -1,5 +1,8 @@
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.NmraPacket;
@@ -7,8 +10,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from NCE messages. The "NceInterface" side
@@ -164,8 +165,10 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private int commandOptions = OPTION_2006;
     public boolean commandOptionSet = false;
+    private static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
     private boolean pwrProVer060203orLater = false;
     private final int[] pwrProVers = new int[3];
+    private boolean simulatorRunning = false; // true if simulator is running
 
     /**
      * Return the Power Pro firmware version as user-friendly hex text.
@@ -209,6 +212,22 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public void setPwrProVer060203orLater(boolean isTrue) {
         pwrProVer060203orLater = isTrue;
+    }
+    
+    public boolean isNceEpromMarch2007() {
+        return nceEpromMarch2007;
+    }
+
+    public void setNceEpromMarch2007(boolean b) {
+        nceEpromMarch2007 = b;
+    }
+    
+    public boolean isSimulatorRunning() {
+        return simulatorRunning;
+    }
+    
+    public void setSimulatorRunning(boolean b) {
+        simulatorRunning = b;
     }
 
     /**

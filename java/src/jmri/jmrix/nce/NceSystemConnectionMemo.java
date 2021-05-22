@@ -76,7 +76,7 @@ public class NceSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (getDisabled()) {
             return null;
         }
-        return (NceProgrammerManager) classObjectMap.computeIfAbsent(NceProgrammerManager.class,(Class c) -> new NceProgrammerManager(this));
+        return (NceProgrammerManager) classObjectMap.computeIfAbsent(NceProgrammerManager.class,(Class<?> c) -> new NceProgrammerManager(this));
     }
 
     public void setProgrammerManager(NceProgrammerManager p) {
@@ -98,6 +98,7 @@ public class NceSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      * Configure the common managers for NCE connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         log.trace("configureManagers() with: {} ", getNceUsbSystem());
         PowerManager powerManager = new jmri.jmrix.nce.NcePowerManager(this);
