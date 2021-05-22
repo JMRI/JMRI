@@ -1,10 +1,12 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head><title>JMRI: Redirected Page</title>
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="Refresh" CONTENT="6; URL=LoadStoreWork.shtml ">
 </head>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
 <body>
 <p>This page has been moved to another location
 (<a href="LoadStoreWork">LoadStoreWork.shtml</a>)
@@ -14,4 +16,3 @@ as part of updating our web site.</p>
 <p>You should be redirected to the new location within 6 seconds, or click the link above.</p>
 </body>
 </html>
-

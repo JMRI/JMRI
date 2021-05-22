@@ -26,5 +26,6 @@
          <!--#include virtual="../../../parts/SidebarTail.shtml" -->  
           
         </div>
- 
- <!-- /Sidebar.shtml -->
+  <!-- button is in /Header -->
+  <script src="/js/side.js"></script>
+<!-- /Sidebar.shtml -->

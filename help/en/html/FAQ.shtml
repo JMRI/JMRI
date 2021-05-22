@@ -1,13 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta name="author" content="Jerry Grochow">
-
   <title>JMRI: Frequently Asked Questions (General)</title>
-
+  <meta name="author" content="Jerry Grochow">
   <!--#include virtual="/Style.shtml" -->
-
+  <!-- special inline FAQ styles -->
   <style type="text/css">
 * {
   box-sizing: border-box;
@@ -237,5 +235,6 @@
   <!-- FAQ-Tail -->
   <script type="text/javascript" src="/web/js/faq.js">
   </script><!-- /FAQ-Tail -->
+  <script src="/js/main.js"></script>
 </body>
 </html>
