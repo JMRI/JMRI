@@ -26,7 +26,7 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Save and load 'Enable Polling at Startup' and description when using C/MRI over network</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>

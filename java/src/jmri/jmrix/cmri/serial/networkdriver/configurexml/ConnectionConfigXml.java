@@ -73,6 +73,25 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
             n.addContent(makeParameter("cardtypelocation", value.toString()));
 
+            // CMRInet Options
+            value = new StringBuilder("");
+            for (int i = 0; i < SerialNode.NUMCMRINETOPTS; i++) {
+                value.append(Integer.toHexString((node.getCMRInetOpts(i) & 0xF)));
+            }
+            n.addContent(makeParameter("cmrinetoptions", value.toString().toUpperCase()));
+
+            // cpNode Options  Classic CMRI nodes do not have options
+            if (node.getNodeType() == SerialNode.CPNODE || node.getNodeType() == SerialNode.CPMEGA) {
+                value = new StringBuilder();
+                for (int i = 0; i < SerialNode.NUMCPNODEOPTS; i++) {
+                    value.append(Integer.toHexString((node.getcpnodeOpts(i) & 0xF)));
+                }
+                n.addContent(makeParameter("cpnodeoptions", value.toString().toUpperCase()));
+            }
+
+            // node description
+            n.addContent(makeParameter("cmrinodedesc", node.getcmriNodeDesc()));
+
             // look for the next node
             node = (SerialNode) tc.getNode(index);
             index++;
@@ -111,12 +130,45 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             node.setNum2LSearchLights(num2l);
             node.setPulseWidth(pulseWidth);
 
+            String opts = "";
+            if (findParmValue(n, "cmrinetoptions") != null) {
+                opts = findParmValue(n, "cmrinetoptions");
+                // Convert and load the  value into the node options array
+                for (int j = 0; j < SerialNode.NUMCMRINETOPTS; j++) {
+                    node.setCMRInetOpts(j, (opts.charAt(j) - '0'));
+                }
+
+            } else {
+                // This must be the first time the nodes were loaded into a cpNode
+                // supported version.  Set the Auto Poll option to avoid confusion
+                // with installed configurations.
+                for (int j = 0; j < SerialNode.NUMCMRINETOPTS; j++) {
+                    node.setCMRInetOpts(j, 0);
+                }
+                node.setOptNet_AUTOPOLL(1);
+            }
+
             for (int j = 0; j < slb.length(); j++) {
                 node.setLocSearchLightBits(j, (slb.charAt(j) - '0'));
             }
 
             for (int j = 0; j < ctl.length(); j++) {
                 node.setCardTypeLocation(j, (ctl.charAt(j) - '0'));
+            }
+
+            if (type == SerialNode.CPNODE || type == SerialNode.CPMEGA) {
+                // cpNode Options
+                if (findParmValue(n, "cpnodeoptions") != null) {
+                    opts = findParmValue(n, "cpnodeoptions");
+                    // Convert and load the  value into the node options array
+                    for (int j = 0; j < SerialNode.NUMCPNODEOPTS; j++) {
+                        node.setcpnodeOpts(j, (opts.charAt(j) - '0'));
+                    }
+                }
+            }
+
+            if (findParmValue(n, "cmrinodedesc") != null) {
+                node.setcmriNodeDesc(findParmValue(n, "cmrinodedesc"));
             }
 
             // Trigger initialization of this Node to reflect these parameters
