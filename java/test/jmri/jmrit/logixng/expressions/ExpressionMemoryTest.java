@@ -492,7 +492,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         expressionMemory.setMemory(memory);
         memory.setValue("");
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

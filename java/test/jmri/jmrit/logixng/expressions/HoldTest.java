@@ -378,7 +378,7 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

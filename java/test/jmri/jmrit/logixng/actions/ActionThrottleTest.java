@@ -448,7 +448,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         conditionalNG_2.getChild(0).connect(maleSocket2);
 
         logixNG.setEnabled(true);
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         // Test execute when no children are connected
         actionThrottle2.execute();
@@ -589,7 +589,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
         conditionalNG_2.getChild(0).connect(maleSocket2);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         int locoAddress = 1234;
         AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
@@ -731,7 +731,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _base = actionThrottle;
         _baseMaleSocket = maleSocket;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

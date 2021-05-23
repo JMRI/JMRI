@@ -318,7 +318,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _base = _actionTimer;
         _baseMaleSocket = maleSocket;
         
-        if (! _logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

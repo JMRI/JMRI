@@ -6,6 +6,7 @@ import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -79,6 +80,10 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         List<String> errors = new ArrayList<>();
                         if (! logixNG_Manager.setupAllLogixNGs(errors)) {
                             for (String s : errors) log.error(s);
+                            JOptionPane.showMessageDialog(null,
+                                    String.join("<br>", errors),
+                                    Bundle.getMessage("TitleError"),
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
                             logixNG_Manager.activateAllLogixNGs();

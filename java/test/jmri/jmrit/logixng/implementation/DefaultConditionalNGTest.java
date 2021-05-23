@@ -69,7 +69,7 @@ public class DefaultConditionalNGTest {
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
-        if (! conditionalNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         

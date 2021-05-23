@@ -433,7 +433,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         expressionLight.setLight(light);
         light.setCommandedState(Light.ON);
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

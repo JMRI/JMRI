@@ -303,7 +303,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         _base = expressionScript;
         _baseMaleSocket = socketExpressionScript;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

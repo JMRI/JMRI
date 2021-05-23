@@ -339,7 +339,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
         _base = action;
         _baseMaleSocket = maleSocket;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

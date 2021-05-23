@@ -534,7 +534,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         _base = actionTurnoutLock;
         _baseMaleSocket = socket;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

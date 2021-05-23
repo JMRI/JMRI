@@ -424,7 +424,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 .registerAction(new DigitalMany(
                         InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null)));
         
-        if (! _logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

@@ -133,7 +133,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         _base = actionListenOnBeans;
         _baseMaleSocket = socket;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

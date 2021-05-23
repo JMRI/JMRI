@@ -254,7 +254,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

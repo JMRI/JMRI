@@ -255,10 +255,10 @@ public abstract class FemaleSocketTestBase {
     @Test
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        if (! _femaleSocket.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
         _femaleSocket.connect(maleSocket);
-        if (! _femaleSocket.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
     }
 

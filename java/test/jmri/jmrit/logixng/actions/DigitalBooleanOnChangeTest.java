@@ -341,7 +341,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         _base = _actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

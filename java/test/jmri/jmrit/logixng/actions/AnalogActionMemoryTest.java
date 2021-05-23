@@ -271,7 +271,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         _base = analogActionMemory;
         _baseMaleSocket = maleSocketAnalogActionMemory;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
         
         InstanceManager.getDefault(LogixNG_Manager.class)

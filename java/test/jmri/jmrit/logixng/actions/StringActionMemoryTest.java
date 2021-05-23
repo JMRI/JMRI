@@ -271,7 +271,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         _base = stringActionMemory;
         _baseMaleSocket = maleSocketStringActionMemory;
         
-        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

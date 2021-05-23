@@ -120,6 +120,7 @@ public abstract class AppsBase {
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         java.util.List<String> errors = new ArrayList<>();
         if (!logixNG_Manager.setupAllLogixNGs(errors)) {
+            for (String s : errors) log.error(s);
             JOptionPane.showMessageDialog(null,
                     String.join("<br>", errors),
                     Bundle.getMessage("TitleError"),
