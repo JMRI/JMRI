@@ -14,7 +14,7 @@
 
     <p style="padding-left: 1em;">
       <a href="/donations.shtml">
-      <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="LEFT" alt="Donate to JMRI" />
+      <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" style="float: left" alt="Donate to JMRI" />
       Donate to JMRI.org</a>
     </p>
 
@@ -23,8 +23,8 @@
     <p>&nbsp;</p>
 
     <!-- JS to highlight items in the sidebar -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
+    <script src="/web/js/jquery-2.0.3.min.js"></script>
+    <script src="/web/js/here.js"></script>
 
 
     <!-- /SidebarTail.shtml -->
