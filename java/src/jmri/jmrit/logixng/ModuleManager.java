@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 import jmri.Manager;
@@ -68,7 +69,7 @@ public interface ModuleManager extends Manager<Module> {
      * This method ensures that everything in the Module tree has a pointer
      * to its parent.
      */
-    public void resolveAllTrees();
+    public boolean resolveAllTrees(List<String> errors);
 
     /**
      * Setup all Modules. This method is called after a configuration file is

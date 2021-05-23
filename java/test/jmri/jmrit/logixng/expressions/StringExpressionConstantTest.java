@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -268,7 +269,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

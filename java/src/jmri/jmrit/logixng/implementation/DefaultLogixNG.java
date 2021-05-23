@@ -314,13 +314,15 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    public void setParentForAllChildren() {
+    public boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             if (entry._conditionalNG != null) {
                 entry._conditionalNG.setParent(this);
-                entry._conditionalNG.setParentForAllChildren();
+                result = result && entry._conditionalNG.setParentForAllChildren(errors);
             }
         }
+        return result;
     }
 
     /** {@inheritDoc} */

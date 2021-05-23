@@ -6,7 +6,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
@@ -116,7 +118,13 @@ public abstract class AppsBase {
         
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-        logixNG_Manager.setupAllLogixNGs();
+        java.util.List<String> errors = new ArrayList<>();
+        if (!logixNG_Manager.setupAllLogixNGs(errors)) {
+            JOptionPane.showMessageDialog(null,
+                    String.join("<br>", errors),
+                    Bundle.getMessage("TitleError"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
             logixNG_Manager.activateAllLogixNGs();
         }

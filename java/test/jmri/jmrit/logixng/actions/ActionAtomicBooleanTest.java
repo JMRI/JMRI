@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -220,7 +221,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         _base = actionAtomicBoolean;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

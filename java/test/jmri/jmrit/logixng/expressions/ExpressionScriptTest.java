@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
+
 import jmri.jmrit.logixng.actions.*;
 import jmri.InstanceManager;
 import jmri.*;
@@ -301,7 +303,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         _base = expressionScript;
         _baseMaleSocket = socketExpressionScript;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

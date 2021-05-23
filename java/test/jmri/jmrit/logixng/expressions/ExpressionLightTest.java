@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -432,7 +433,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         expressionLight.setLight(light);
         light.setCommandedState(Light.ON);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

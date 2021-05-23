@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import java.util.List;
+
 /**
  * The clipboard with actions and expressions
  * 
@@ -21,7 +23,7 @@ public interface Clipboard {
      * 
      * @param maleSocket the item to add on the clipboard
      */
-    public void add(MaleSocket maleSocket);
+    public boolean add(MaleSocket maleSocket, List<String> errors);
     
     /**
      * Get the top item on the clipboard and remove it from the clipboard.

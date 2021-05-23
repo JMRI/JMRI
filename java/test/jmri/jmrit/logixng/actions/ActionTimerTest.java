@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
@@ -316,7 +318,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _base = _actionTimer;
         _baseMaleSocket = maleSocket;
         
-        _logixNG.setParentForAllChildren();
+        if (! _logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

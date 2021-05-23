@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -337,7 +339,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         _base = actionScript;
         _baseMaleSocket = socketActionSimpleScript;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

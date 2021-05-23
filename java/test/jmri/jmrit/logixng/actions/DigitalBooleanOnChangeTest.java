@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
@@ -339,7 +341,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         _base = _actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

@@ -348,7 +348,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
         _base = action;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 
