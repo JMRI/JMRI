@@ -65,12 +65,18 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * <P>
      * This method ensures that everything in the LogixNG tree has a pointer
      * to its parent.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
     public boolean resolveAllTrees(List<String> errors);
 
     /**
      * Setup all LogixNGs. This method is called after a configuration file is
      * loaded.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
     public boolean setupAllLogixNGs(List<String> errors);
 

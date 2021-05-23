@@ -282,6 +282,7 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Set the parent for all the children.
+     * 
      * @param errors a list of potential errors
      * @return true if success, false otherwise
      */

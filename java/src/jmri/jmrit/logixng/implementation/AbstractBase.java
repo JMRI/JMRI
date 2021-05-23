@@ -87,12 +87,17 @@ public abstract class AbstractBase
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 if ((connectedSocket.getParent() != null)
                         && (connectedSocket.getParent() != femaleSocket)) {
+                    errors.add(String.format(
+                            "The child %s already has the parent %s so it cannot be added to %s",
+                            connectedSocket.getSystemName(),
+                            connectedSocket.getParent().getSystemName(),
+                            getSystemName()));
                     log.error("The child {} already has the parent {} so it cannot be added to {}",
                             connectedSocket.getSystemName(),
                             connectedSocket.getParent().getSystemName(),
                             getSystemName());
                     femaleSocket.disconnect();
-                    throw new RuntimeException("Child already has a parent: "+connectedSocket.getLongDescription());
+                    result = false;
                 } else {
                     connectedSocket.setParent(femaleSocket);
                     result = result && connectedSocket.setParentForAllChildren(errors);

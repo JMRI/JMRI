@@ -364,7 +364,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (!logixNG_Manager.setupAllLogixNGs(errors)) {
             for (String s : errors) log.error(s);
             JOptionPane.showMessageDialog(this,
-                    String.join("<br>", errors),
+                    "<html>"+String.join("<br>", errors)+"</html>",
                     Bundle.getMessage("TitleError"),
                     JOptionPane.ERROR_MESSAGE);
         }

@@ -68,6 +68,9 @@ public interface ModuleManager extends Manager<Module> {
      * <P>
      * This method ensures that everything in the Module tree has a pointer
      * to its parent.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
     public boolean resolveAllTrees(List<String> errors);
 

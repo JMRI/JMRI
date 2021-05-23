@@ -22,6 +22,8 @@ public interface Clipboard {
      * The last added item is on the top of the clipboard.
      * 
      * @param maleSocket the item to add on the clipboard
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
     public boolean add(MaleSocket maleSocket, List<String> errors);
     
