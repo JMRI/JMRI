@@ -127,6 +127,7 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         super(new NceSystemConnectionMemo());
         option1Name = "Eprom"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("EpromLabel"), option1Values, false));
+        setOptionState(option1Name, option1Values[1]);
     }
 
     /**
