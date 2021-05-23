@@ -2,31 +2,31 @@
 <!-- SidebarCompact.shtml -->
 <!-- This is the common sidebar definition for Help system pages -->
 	<hr class="hide">
-	
+
     <div id="side"> <!-- Block of text on left side of page -->
      <div style="text-align: center">JMRI&reg; is...</div>
       <dl>
 
         <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
-        <dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
+        <dt><a href="/help/en/html/tools/">Tools</a></dt>
 	<dd>JMRI provides powerful tools for working with your layout.</dd>
-        
-        <dt><h3><a href="/help/en/html/tools/automation/">Layout Automation</a></h3></dt>
+
+        <dt><a href="/help/en/html/tools/automation/">Layout Automation</a></dt>
 	<dd>Use JMRI to automate parts of your layout, from simply controlling a crossing gate
 		to running trains in the background.</dd>
-        
-        <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
-        <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
-        
-        <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/setup/">Installing JMRI</a></h3></dt>
-        <dd>JMRI can be installed on a variety of hardware and operating systems.</dd>
-		
-      </dl>
-      
 
-    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->   
-    
+        <dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
+        <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
+
+        <dt><a href="/help/en/html/setup/">Installing JMRI</a></dt>
+        <dd>JMRI can be installed on a variety of hardware and operating systems.</dd>
+
+      </dl>
+
+
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
+
     </div> <!-- closes #side -->
   <!-- button is in /Header -->
   <script src="/js/side.js"></script>

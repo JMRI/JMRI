@@ -7,15 +7,15 @@
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
 <dl><!-- main table of contents -->
-<dt><h3>Setup JMRI</h3></dt>
+<dt class="dtheader">Setup JMRI</dt>
 	  <dd>
     <ul>
 	  <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     </ul>
     </dd>
-     
-<dt><h3>Getting Started</h3></dt>
-    <dd>    
+
+<dt class="dtheader">Getting Started</dt>
+    <dd>
     <ul>
     <li><a href="Start_DCC.shtml">What is DCC?</a>
     <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro work with?</a>
@@ -25,15 +25,15 @@
     <li><a href="Start_Preferences.shtml">How do I set up my Preferences?</a>
     </ul>
     </dd>
-   
-<dt><h3>Using DecoderPro</h3></dt>   
+
+<dt class="dtheader">Using DecoderPro</dt>
     <dd>
     <ul>
     <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a>
     </ul>
     </dd>
- 
-<dt><h3>DecoderPro Programming Modes</h3></dt>   
+
+<dt class="dtheader">DecoderPro Programming Modes</dt>
     <dd>
     <ul>
     <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
@@ -41,8 +41,8 @@
     <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
     </ul>
     </dd>
-   
-<dt><h3>The Basic Programmer</h3></dt>    
+
+<dt class="dtheader">The Basic Programmer</dt>
     <dd>
     <ul>
     <li><a href="Basic_Start.shtml">Entering Locomotives in the "Roster"</a></li>
@@ -54,7 +54,7 @@
     <li><a href="Basic_BasicPane.shtml#DoMore">What if I need to do more?</a></li>
     </ul>
     </dd>
-<dt><h3>The Comprehensive Programmer</h3></dt>   
+<dt class="dtheader">The Comprehensive Programmer</dt>
     <dd>
     <ul>
     <li><a href="Comp_Setup_Roster.shtml">Setup and Roster Panes</a></li>
@@ -74,15 +74,15 @@
     <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
     </ul>
     </dd>
-    
-<dt><h3>Advanced Features</h3></dt> 
+
+<dt class="dtheader">Advanced Features</dt>
 	   <dd>
      <ul>
        <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
        <li><a href="RosterMedia.shtml">Roster Media</a></li>
      </ul>
      </dd>
-<dt><h3>DecoderPro&reg; Main Window</h3></dt>    
+<dt class="dtheader">DecoderPro&reg; Main Window</dt>
     <dd>
     <ul>
       <li><a href="dp3_menubar.shtml">Menu Bar</a></li>
@@ -91,15 +91,15 @@
       <li><a href="dp3_decoderInfo.shtml">Decoder Information</a></li>
       <li><a href="dp3_Main_Main.shtml#status">Status Bar</a></li>
     </ul>
-    </dd>  
-    
-<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
+    </dd>
+
+<dt class="dtheader"><a name="Error"></a>Error Messages</dt>
     <dd>
     <ul>
       <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
     </ul>
     </dd>
-    
+
 </dl>
 </div>
 <!-- /Sidebar -->

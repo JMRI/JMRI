@@ -1,12 +1,12 @@
 <!-- SidebarHardwareLocalPart.shtml for cmri -->
 
-<dt><h3 style="padding-left: 1em;"><a href="CMRI.shtml">C/MRI</a></h3></dt>
+<dt><a href="CMRI.shtml">C/MRI</a></dt>
 		<dd>
 		   <ul>
 			<li><a href="Signals.shtml">C/MRI Signals</a></li>
 			<li><a href="../arduino/index.shtml#CMRI">Arduino as C/MRI Node</a></li>
 		   </ul>
-				
+
 		</dd>
-    
+
     <!-- /SidebarHardwareLocalPart.shtml -->

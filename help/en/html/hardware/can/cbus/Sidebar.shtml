@@ -5,26 +5,26 @@
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; connects to...</div>
 	    <dl>
-               
-               <dt><h3 style="padding-left: 1em;"><a href="../index.shtml">Controller Area Networks (CAN)</a></h3></dt>
+
+               <dt><a href="../index.shtml">Controller Area Networks (CAN)</a></dt>
 		  <dd>
 		     <ul>
-                    
+
 		    <li><a href="index.shtml">CBUS&reg;</a></li>
 		    <li><a href="Names.shtml">CBUS Naming</a></li>
             <li><a href="CbusFastClock.shtml">CBUS Fast Clock</a></li>
             <li><a href="../scripting.shtml">CAN Scripting</a></li>
 		      </ul>
-		  </dd>      
-        
-	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" --> 
-            
+		  </dd>
+
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
+
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
-	
+
            </dl>
 
         <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
