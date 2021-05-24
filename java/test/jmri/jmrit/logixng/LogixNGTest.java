@@ -6,6 +6,7 @@ import jmri.jmrit.logixng.actions.DigitalMany;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -304,7 +305,7 @@ public class LogixNGTest {
         MyConditionalNG conditionalNG_3 = new MyConditionalNG("IQC3", null);
         logixNG.addConditionalNG(conditionalNG_3);
         conditionalNG_3.setEnabled(false);
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
@@ -465,7 +466,7 @@ public class LogixNGTest {
         MaleSocket digitalActionBean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         ifThen.getChild(1).connect(digitalActionBean);
 
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         Assert.assertTrue("conditionalng is correct", conditionalNG == digitalActionBean.getConditionalNG());
         Assert.assertTrue("conditionalng is correct", conditionalNG == conditionalNG.getConditionalNG());
@@ -489,7 +490,7 @@ public class LogixNGTest {
         conditionalNG.setSocketSystemName(systemName);
         logixNG.setup();
 
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         Assert.assertTrue("conditionalng child is correct",
                 "Set turnout '' to state Thrown"

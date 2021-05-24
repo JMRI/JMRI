@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -488,7 +489,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         expressionLocalVariable.setLocalVariable("myVar");
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

@@ -1494,7 +1494,13 @@ public class TreeEditor extends TreeViewer {
                                 () -> {
                             Clipboard clipboard =
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
-                            clipboard.add(_currentFemaleSocket.getConnectedSocket());
+                            List<String> errors = new ArrayList<>();
+                            if (!clipboard.add(_currentFemaleSocket.getConnectedSocket(), errors)) {
+                                JOptionPane.showMessageDialog(this,
+                                        String.join("<br>", errors),
+                                        Bundle.getMessage("TitleError"),
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
                             _currentFemaleSocket.disconnect();
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.registerListeners();
@@ -1518,7 +1524,15 @@ public class TreeEditor extends TreeViewer {
                             Map<String, String> systemNames = new HashMap<>();
                             Map<String, String> userNames = new HashMap<>();
                             try {
-                                clipboard.add((MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames));
+                                List<String> errors = new ArrayList<>();
+                                if (!clipboard.add(
+                                        (MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames),
+                                        errors)) {
+                                    JOptionPane.showMessageDialog(this,
+                                            String.join("<br>", errors),
+                                            Bundle.getMessage("TitleError"),
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
                             } catch (JmriException ex) {
                                 log.error("getDeepCopy thrown exception: {}", ex, ex);
                                 ThreadingUtil.runOnGUIEventually(() -> {
@@ -1547,7 +1561,13 @@ public class TreeEditor extends TreeViewer {
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             try {
                                 _currentFemaleSocket.connect(clipboard.fetchTopItem());
-                                _currentFemaleSocket.setParentForAllChildren();
+                                List<String> errors = new ArrayList<>();
+                                if (!_currentFemaleSocket.setParentForAllChildren(errors)) {
+                                    JOptionPane.showMessageDialog(this,
+                                            String.join("<br>", errors),
+                                            Bundle.getMessage("TitleError"),
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
                             } catch (SocketAlreadyConnectedException ex) {
                                 log.error("item cannot be connected", ex);
                             }

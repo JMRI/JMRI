@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.implementation.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jmri.ConfigureManager;
@@ -270,7 +271,10 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
 
             LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
             ClipboardMany anyMany = ((ClipboardManyXml)o).loadItem(clipboardList.get(0));
-            ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany);
+            List<String> errors = new ArrayList<>();
+            if (! ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany, errors)) {
+                for (String s : errors) log.error(s);
+            }
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.error("cannot create object", ex);
         }

@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -118,10 +119,12 @@ public class DefaultModuleManager extends AbstractManager<Module>
 
     /** {@inheritDoc} */
     @Override
-    public void resolveAllTrees() {
+    public boolean resolveAllTrees(List<String> errors) {
+        boolean result = true;
         for (Module logixNG_Module : _tsys.values()) {
-            logixNG_Module.setParentForAllChildren();
+            result = result && logixNG_Module.setParentForAllChildren(errors);
         }
+        return result;
     }
     
     /** {@inheritDoc} */

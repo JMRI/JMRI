@@ -78,16 +78,33 @@ public abstract class AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public final void setParentForAllChildren() {
+    public final boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
             femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
-                connectedSocket.setParent(femaleSocket);
-                connectedSocket.setParentForAllChildren();
+                if ((connectedSocket.getParent() != null)
+                        && (connectedSocket.getParent() != femaleSocket)) {
+                    errors.add(String.format(
+                            "The child %s already has the parent %s so it cannot be added to %s",
+                            connectedSocket.getSystemName(),
+                            connectedSocket.getParent().getSystemName(),
+                            getSystemName()));
+                    log.error("The child {} already has the parent {} so it cannot be added to {}",
+                            connectedSocket.getSystemName(),
+                            connectedSocket.getParent().getSystemName(),
+                            getSystemName());
+                    femaleSocket.disconnect();
+                    result = false;
+                } else {
+                    connectedSocket.setParent(femaleSocket);
+                    result = result && connectedSocket.setParentForAllChildren(errors);
+                }
             }
         }
+        return result;
     }
 
     /**
