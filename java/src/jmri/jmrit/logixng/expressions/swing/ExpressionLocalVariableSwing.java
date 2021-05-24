@@ -177,7 +177,11 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
                 expression.setMemory(handle);
+            } else {
+                expression.removeMemory();
             }
+        } else {
+            expression.removeMemory();
         }
         
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {
