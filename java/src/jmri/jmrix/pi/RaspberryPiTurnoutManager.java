@@ -3,6 +3,8 @@ package jmri.jmrix.pi;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import jmri.JmriException;
+
 /**
  * Implement Pi turnout manager.
  * <p>
@@ -38,14 +40,40 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     }
     
     /**
-     * Validates to Integer Format 0-999 with valid prefix.
-     * eg. PT0 to PT999
+     * Require address portion of SystemName to either start with ":" or be numberic.
+     * {@inheritDoc} 
+     */
+    @Nonnull
+    @Override
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        if (curAddress.substring(0,1).equals (":")) {
+            return prefix + typeLetter() + curAddress;
+        } else {
+            return prefix + typeLetter() + checkNumeric(curAddress);
+        }
+    }
+    
+    /**
+     * Validates to either ":xxx..." (:MCP23017:xxx) or Integer Format 0-999 with valid prefix.
+     * eg. PT0 to PT999, PT:MCP23017:1:32:0
      * {@inheritDoc}
      */
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
-        return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
+        if (name.substring (2,3).equals (":")) {
+            return name;
+        } else {
+            return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
+        }
     }
-
+    
+    /**
+     * Use an updated tool tip to account for extended pins.
+     *  {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddOutputEntryToolTip");
+    }
 }

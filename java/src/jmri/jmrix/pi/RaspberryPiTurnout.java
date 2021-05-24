@@ -54,25 +54,37 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
        if (gpio == null) {
            gpio = _gpio;
        }
-       int address = Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T") + 1));
-       String pinName = "GPIO " + address;
-       Pin p = RaspiPin.getPinByName(pinName);
-       if (p != null) {
-           try {
-            pin = gpio.provisionDigitalOutputPin(p, getSystemName());
-           } catch (java.lang.RuntimeException re) {
-               log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
-               throw new IllegalArgumentException(re.getMessage());
-           }
-           if (pin != null) {
-               pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+       String pinName;
+       int colonIndex = systemName.indexOf (":");
+       if (colonIndex == -1) {
+           int address = Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T") + 1));
+           pinName = "GPIO " + address;
+           Pin p = RaspiPin.getPinByName(pinName);
+           if (p != null) {
+               try {
+                   pin = gpio.provisionDigitalOutputPin(p, getSystemName());
+               } catch (java.lang.RuntimeException re) {
+                   log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+                   throw new IllegalArgumentException(re.getMessage());
+               }
            } else {
-               String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
+               String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
                log.error(msg);
                throw new IllegalArgumentException(msg);
            }
        } else {
-           String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
+           try {
+               pin = RaspberryPiGpioExFactory.provisionOutputPinByName (gpio, getSystemName());
+               pinName = pin.getName();
+           } catch (java.lang.RuntimeException re) {
+               log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+               throw new IllegalArgumentException(re.getMessage());
+           }
+       }
+       if (pin != null) {
+           pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+       } else {
+           String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
            log.error(msg);
            throw new IllegalArgumentException(msg);
        }

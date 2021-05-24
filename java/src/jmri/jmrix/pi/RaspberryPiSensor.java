@@ -74,31 +74,43 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
             gpio = _gpio;
         }
         pull = pRes;
-        int address = Integer.parseInt(systemName.substring(systemName.lastIndexOf("S") + 1));
-        String pinName = "GPIO " + address;
-        Pin p = RaspiPin.getPinByName(pinName);
-        if (p != null) {
-            try {
-                pin = gpio.provisionDigitalInputPin(p, getSystemName(), pull);
-            } catch (java.lang.RuntimeException re) {
-                log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
-                throw new IllegalArgumentException(re.getMessage());
-            }
-            if (pin != null) {
-                pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
-                pin.addListener(this);
-                requestUpdateFromLayout(); // set state to match current value.
+        String pinName;
+        int colonIndex = systemName.indexOf (":");
+        if (colonIndex == -1) {
+            int address = Integer.parseInt(systemName.substring(systemName.lastIndexOf("S") + 1));
+            pinName = "GPIO " + address;
+            Pin p = RaspiPin.getPinByName(pinName);
+            if (p != null) {
+                try {
+                    pin = gpio.provisionDigitalInputPin(p, getSystemName(), pull);
+                } catch (java.lang.RuntimeException re) {
+                    log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+                    throw new IllegalArgumentException(re.getMessage());
+                }
             } else {
-                String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
+                String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
                 log.error(msg);
                 throw new IllegalArgumentException(msg);
             }
         } else {
-            String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
+            try {
+                pin = RaspberryPiGpioExFactory.provisionInputPinByName (gpio, getSystemName());
+                pinName = pin.getName();
+            } catch (java.lang.RuntimeException re) {
+                log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+                throw new IllegalArgumentException(re.getMessage());
+            }
+        }
+        if (pin != null) {
+            pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+            pin.addListener(this);
+            requestUpdateFromLayout(); // set state to match current value.
+        } else {
+            String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }
-    }
+     }
 
     /**
      * Request an update on status by sending an Instruction to the Pi.

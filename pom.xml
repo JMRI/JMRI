@@ -1419,8 +1419,6 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-gpio-extension</artifactId>
             <version>1.2</version>
-            <!-- not used at compile time, may be used at runtime. -->
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
