@@ -1,23 +1,13 @@
 package jmri.jmrix.nce.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 import java.util.Arrays;
-
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NceTurnoutMonitor;
-import jmri.util.ImmediatePipedOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.nce.*;
+import jmri.util.ImmediatePipedOutputStream;
 
 /**
  * The following was copied from the NCE Power Pro System Reference Manual. It
@@ -163,6 +153,7 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
         tc.connectPort(this);
+        tc.setSimulatorRunning(true);
 
         // setting binary mode
         this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
