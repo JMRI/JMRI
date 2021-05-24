@@ -380,14 +380,18 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         }
         ActionWarrant action = (ActionWarrant) object;
 
-        if (_warrantBeanPanel != null && !_warrantBeanPanel.isEmpty() && (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect)) {
+        if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
             Warrant warrant = _warrantBeanPanel.getNamedBean();
             if (warrant != null) {
                 NamedBeanHandle<Warrant> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(warrant.getDisplayName(), warrant);
                 action.setWarrant(handle);
+            } else {
+                action.removeWarrant();
             }
+        } else {
+            action.removeWarrant();
         }
 
         try {

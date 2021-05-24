@@ -226,14 +226,18 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSensor but is a: "+object.getClass().getName());
         }
         ExpressionSensor expression = (ExpressionSensor)object;
-        if (!sensorBeanPanel.isEmpty() && (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect)) {
+        if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
             Sensor sensor = sensorBeanPanel.getNamedBean();
             if (sensor != null) {
                 NamedBeanHandle<Sensor> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(sensor.getDisplayName(), sensor);
                 expression.setSensor(handle);
+            } else {
+                expression.removeSensor();
             }
+        } else {
+            expression.removeSensor();
         }
         try {
             if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {

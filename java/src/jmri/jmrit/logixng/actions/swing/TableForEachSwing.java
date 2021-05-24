@@ -118,14 +118,14 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         
         // Create a temporary action in case we don't have one.
         TableForEach action = (TableForEach)object;
-        if (!tableBeanPanel.isEmpty()) {
-            NamedTable table = tableBeanPanel.getNamedBean();
-            if (table != null) {
-                NamedBeanHandle<NamedTable> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(table.getDisplayName(), table);
-                action.setTable(handle);
-            }
+        NamedTable table = tableBeanPanel.getNamedBean();
+        if (table != null) {
+            NamedBeanHandle<NamedTable> handle
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(table.getDisplayName(), table);
+            action.setTable(handle);
+        } else {
+            action.removeTable();
         }
         action.setTableRowOrColumn((TableForEach.TableRowOrColumn)_tableRowOrColumnComboBox.getSelectedItem());
         action.setRowOrColumnName(_rowOrColumnName.getText());

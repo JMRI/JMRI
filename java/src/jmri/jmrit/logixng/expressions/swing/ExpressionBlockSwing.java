@@ -9,8 +9,6 @@ import javax.swing.*;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.*;
@@ -271,7 +269,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         }
 
         if (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect) {
-            if (_blockBeanPanel == null || _blockBeanPanel.getNamedBean() == null) {
+            if (_blockBeanPanel.getNamedBean() == null) {
                 errorMessages.add(Bundle.getMessage("Block_ErrorBlock"));
             }
         }
@@ -371,14 +369,18 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         }
 
         ExpressionBlock expression = (ExpressionBlock) object;
-        if (_blockBeanPanel != null && !_blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
+        if (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect) {
             Block block = _blockBeanPanel.getNamedBean();
             if (block != null) {
                 NamedBeanHandle<Block> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(block.getDisplayName(), block);
                 expression.setBlock(handle);
+            } else {
+                expression.removeBlock();
             }
+        } else {
+            expression.removeBlock();
         }
 
         try {

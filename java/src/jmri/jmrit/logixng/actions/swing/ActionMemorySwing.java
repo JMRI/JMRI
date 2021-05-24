@@ -196,25 +196,28 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         }
         ActionMemory action = (ActionMemory)object;
         
-        if (!_memoryBeanPanel.isEmpty()) {
-            Memory memory = _memoryBeanPanel.getNamedBean();
-            if (memory != null) {
-                NamedBeanHandle<Memory> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
-            }
+        Memory memory = _memoryBeanPanel.getNamedBean();
+        if (memory != null) {
+            NamedBeanHandle<Memory> handle
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(memory.getDisplayName(), memory);
+            action.setMemory(handle);
+        } else {
+            action.removeMemory();
         }
         
-        if (!_copyMemoryBeanPanel.isEmpty()
-                && (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyMemory)) {
+        if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyMemory) {
             Memory otherMemory = _copyMemoryBeanPanel.getNamedBean();
             if (otherMemory != null) {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
                 action.setOtherMemory(handle);
+            } else {
+                action.removeOtherMemory();
             }
+        } else {
+            action.removeOtherMemory();
         }
         
         try {

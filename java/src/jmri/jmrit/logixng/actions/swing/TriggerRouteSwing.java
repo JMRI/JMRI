@@ -208,14 +208,18 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TriggerRoute but is a: "+object.getClass().getName());
         }
         TriggerRoute action = (TriggerRoute)object;
-        if (!routeBeanPanel.isEmpty() && (_tabbedPaneRoute.getSelectedComponent() == _panelRouteDirect)) {
+        if (_tabbedPaneRoute.getSelectedComponent() == _panelRouteDirect) {
             Route route = routeBeanPanel.getNamedBean();
             if (route != null) {
                 NamedBeanHandle<Route> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(route.getDisplayName(), route);
                 action.setRoute(handle);
+            } else {
+                action.removeRoute();
             }
+        } else {
+            action.removeRoute();
         }
         try {
             if (_tabbedPaneRoute.getSelectedComponent() == _panelRouteDirect) {

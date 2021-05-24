@@ -207,14 +207,18 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TriggerEntryExit but is a: "+object.getClass().getName());
         }
         ActionEntryExit action = (ActionEntryExit)object;
-        if (!entryExitBeanPanel.isEmpty() && (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect)) {
+        if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
             DestinationPoints entryExit = entryExitBeanPanel.getNamedBean();
             if (entryExit != null) {
                 NamedBeanHandle<DestinationPoints> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
                 action.setDestinationPoints(handle);
+            } else {
+                action.removeDestinationPoints();
             }
+        } else {
+            action.removeDestinationPoints();
         }
         try {
             if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
