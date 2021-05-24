@@ -18,4 +18,5 @@
     <enumChoice choice="None"/>
     <enumChoice choice="Local Lockout"/>
     <enumChoice choice="Midpoint"/>
+    <enumChoice choice="Midpoint/Oscilate"/>
 </enumVal>
