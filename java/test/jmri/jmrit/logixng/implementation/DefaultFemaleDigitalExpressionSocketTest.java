@@ -75,7 +75,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Assert.assertFalse("result is false", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
         // Test evaluate() when connected
         _femaleSocket.connect(maleSocket);
-        _conditionalNG.setParentForAllChildren();
+        if (! _conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         _expression.setTurnout(t);
         _expression.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
@@ -117,6 +117,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         map.put(Category.COMMON, classes);
 
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
         classes.add(jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression.class);

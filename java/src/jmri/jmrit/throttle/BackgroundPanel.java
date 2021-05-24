@@ -24,19 +24,21 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     public BackgroundPanel() {
         super();
-        initGUI();
-    }
-    
-    private void initGUI() {
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
         }
+        initGUI();
+        applyPreferences();
+    }
+    
+    private void initGUI() {
         setBackground(Color.GRAY);
         setRespectAspectRatio(true);
-        if (InstanceManager.getDefault(ThrottlesPreferences.class).isResizingWindow()) {
-            setResizingContainer(true);
-        }
+    }
+    
+    public void applyPreferences() {
+        setResizingContainer(InstanceManager.getDefault(ThrottlesPreferences.class).isResizingWindow());
     }
 
     public void setAddressPanel(AddressPanel addressPanel) {

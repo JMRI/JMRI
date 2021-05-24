@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
@@ -46,7 +48,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Read analog E and set analog A ::: Log error%n" +
+                "Read analog E and set analog A ::: Use default%n" +
                 "   ?~ E%n" +
                 "      Socket not connected%n" +
                 "   !~ A%n" +
@@ -59,7 +61,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
                 "            !~ A%n" +
@@ -296,7 +298,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         _base = actionDoAnalogAction;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

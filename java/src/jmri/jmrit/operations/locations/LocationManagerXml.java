@@ -1,16 +1,19 @@
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
-import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
+import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 
 /**
  * Load and stores locations and schedules for operations.
@@ -41,6 +44,7 @@ public class LocationManagerXml extends OperationsXml implements InstanceManager
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
+        InstanceManager.getDefault(DivisionManager.class).store(root);
         InstanceManager.getDefault(LocationManager.class).store(root);
         InstanceManager.getDefault(ScheduleManager.class).store(root);
 
@@ -68,6 +72,7 @@ public class LocationManagerXml extends OperationsXml implements InstanceManager
             return;
         }
 
+        InstanceManager.getDefault(DivisionManager.class).load(root);
         InstanceManager.getDefault(LocationManager.class).load(root);
         InstanceManager.getDefault(ScheduleManager.class).load(root);
 

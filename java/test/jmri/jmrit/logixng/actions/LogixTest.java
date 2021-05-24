@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.True;
@@ -44,11 +46,11 @@ public class LogixTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Logix ::: Log error%n" +
+                "Logix ::: Use default%n" +
                 "   ? E%n" +
-                "      Sensor '' is Active ::: Log error%n" +
+                "      Sensor '' is Active ::: Use default%n" +
                 "   !b A%n" +
-                "      On change ::: Log error%n" +
+                "      On change ::: Use default%n" +
                 "         ! A%n" +
                 "            Socket not connected%n");
     }
@@ -59,11 +61,11 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Logix ::: Log error%n" +
+                "         Logix ::: Use default%n" +
                 "            ? E%n" +
-                "               Sensor '' is Active ::: Log error%n" +
+                "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               On change ::: Log error%n" +
+                "               On change ::: Use default%n" +
                 "                  ! A%n" +
                 "                     Socket not connected%n");
     }
@@ -322,7 +324,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         _base = actionLogix;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

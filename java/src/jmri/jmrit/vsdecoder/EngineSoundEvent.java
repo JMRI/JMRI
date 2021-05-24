@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2020
+ * @author Klaus Killinger Copyright (C) 2018-2021
  */
 public class EngineSoundEvent extends SoundEvent {
 
@@ -123,12 +123,16 @@ public class EngineSoundEvent extends SoundEvent {
     public void guiAction(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(DieselPane.START)) {
             log.debug("GUI Start button changed. New value: {}", evt.getNewValue());
-            if ((Boolean) evt.getNewValue()) {
-                ((EngineSound) parent.getSound("ENGINE")).setEngineStarted(true);
-                ((EngineSound) parent.getSound("ENGINE")).startEngine();
+            if (this.getParent().getEngineSound() != null) {
+                if ((Boolean) evt.getNewValue()) {
+                        this.getParent().getEngineSound().setEngineStarted(true);
+                        this.parent.getEngineSound().startEngine();
+                } else {
+                        this.getParent().getEngineSound().setEngineStarted(false);
+                        this.getParent().getEngineSound().stopEngine();
+                }
             } else {
-                ((EngineSound) parent.getSound("ENGINE")).setEngineStarted(false);
-                ((EngineSound) parent.getSound("ENGINE")).stopEngine();
+                log.warn("Lost context, VSDecoder is null. Quit JMRI and start over.");
             }
         } else if (evt.getPropertyName().equals(DieselPane.VOLUME)) {
             log.debug("decoder volume: {}", evt.getOldValue());
@@ -144,9 +148,9 @@ public class EngineSoundEvent extends SoundEvent {
     public void propertyChange(PropertyChangeEvent event) {
         super.propertyChange(event);
         if (event.getPropertyName().equals(Throttle.SPEEDSETTING)) {
-            ((EngineSound) parent.getSound("ENGINE")).handleSpeedChange((Float) event.getNewValue(), engine_pane);
+            this.getParent().getEngineSound().handleSpeedChange((Float) event.getNewValue(), engine_pane);
         } else if (event.getPropertyName().equals(Throttle.ISFORWARD)) {
-            ((EngineSound) parent.getSound("ENGINE")).changeLocoDirection((Boolean) event.getNewValue() ? 1 : -1);
+            this.getParent().getEngineSound().changeLocoDirection((Boolean) event.getNewValue() ? 1 : -1);
             log.debug("is forward: {}", event.getNewValue());
         } else if (event.getPropertyName().startsWith("F")) {
             String ev = event.getPropertyName();
@@ -157,7 +161,7 @@ public class EngineSoundEvent extends SoundEvent {
                     if (t.getName().equals("ENGINE_STARTSTOP")) {
                         getEnginePane().startButtonClick();
                     } else {
-                        ((EngineSound) parent.getSound("ENGINE")).functionKey(ev, val, t.getName());
+                        this.getParent().getEngineSound().functionKey(ev, val, t.getName());
                         log.debug("event {} is {}", ev, val);
                     }
                 }

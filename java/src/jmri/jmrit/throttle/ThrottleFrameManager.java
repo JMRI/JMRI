@@ -147,7 +147,11 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlesListFrame.setContentPane(throttlesListPanel);
         throttlesListFrame.pack();
     }
-
+    
+    /*
+     * Show JMRI native throttle list window
+     *
+     */
     public void showThrottlesList() {
         if (throttlesListFrame == null) {
             buildThrottleListFrame();
@@ -155,6 +159,10 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlesListFrame.setVisible(!throttlesListFrame.isVisible());
     }
 
+    /*
+     * Show throttle preferences window
+     *
+     */
     public void showThrottlesPreferences() {
         if (throttlePreferencesFrame == null) {
             throttlePreferencesFrame = new ThrottlesPreferencesWindow(Bundle.getMessage("ThrottlePreferencesFrameTitle"));
@@ -168,5 +176,15 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlePreferencesFrame.requestFocus();
     }
 
+    /*
+     * Apply curent throttle preferences to all throttle windows
+     *
+     */
+    public void applyPreferences() {
+        throttleWindows.forEach(frame -> {
+            frame.applyPreferences();
+        });
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

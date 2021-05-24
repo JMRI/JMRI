@@ -11,9 +11,11 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
+import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog_MultiLine;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 
 /**
@@ -28,7 +30,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LogError;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.Default;
     private boolean _catchAbortExecution;
     private boolean _listen = true;     // By default, actions and expressions listen
 
@@ -188,10 +190,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         _object.setComment(comment);
     }
 
+    @Override
     public boolean getListen() {
         return _listen;
     }
 
+    @Override
     public void setListen(boolean listen)
     {
         _listen = listen;
@@ -271,16 +275,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public final void setParentForAllChildren() {
+    public final boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
             femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 connectedSocket.setParent(femaleSocket);
-                connectedSocket.setParentForAllChildren();
+                result = result && connectedSocket.setParentForAllChildren(errors);
             }
         }
+        return result;
     }
 
     /**
@@ -349,9 +355,33 @@ public abstract class AbstractMaleSocket implements MaleSocket {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param currentIndent the current indentation
+     * @param lineNumber the line number
      */
-    protected void printTreeRow(PrintTreeSettings settings, Locale locale, PrintWriter writer, String currentIndent) {
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
         if (!(getObject() instanceof AbstractMaleSocket)) {
+            String comment = getComment();
+            if (comment != null) {
+                comment = comment.replaceAll("\\r\\n", "\\n");
+                comment = comment.replaceAll("\\r", "\\n");
+                for (String s : comment.split("\\n", 0)) {
+                    if (settings._printLineNumbers) {
+                        writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+                    }
+                    writer.append(currentIndent);
+                    writer.append("// ");
+                    writer.append(s);
+                    writer.println();
+                }
+            }
+            if (settings._printLineNumbers) {
+                writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+            }
             writer.append(currentIndent);
             writer.append(getLongDescription(locale));
             if (getUserName() != null) {
@@ -359,10 +389,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(Bundle.getMessage("LabelUserName"));
                 writer.append(" ");
                 writer.append(getUserName());
-            }
-            if (getComment() != null) {
-                writer.append(" ::: ");
-                writer.append(getComment());
             }
 
             if (settings._printErrorHandling) {
@@ -378,11 +404,16 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
 
     protected void printLocalVariable(
+            PrintTreeSettings settings,
             Locale locale,
             PrintWriter writer,
             String currentIndent,
+            MutableInt lineNumber,
             VariableData localVariable) {
 
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append("   ::: ");
         writer.append(Bundle.getMessage(
@@ -396,39 +427,48 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
-        printTree(settings, locale, writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
-    /**
-     * Print the tree to a stream.
-     * This method is the implementation of printTree(PrintStream, String)
-     *
-     * @param writer the stream to print the tree to
-     * @param indent the indentation of each level
-     * @param currentIndent the current indentation
-     */
+    /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(settings, locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (settings._printLocalVariables) {
             for (VariableData localVariable : _localVariables) {
-                printLocalVariable(locale, writer, currentIndent, localVariable);
+                printLocalVariable(settings, locale, writer, currentIndent, lineNumber, localVariable);
             }
         }
 
         if (getObject() instanceof MaleSocket) {
-            getObject().printTree(settings, locale, writer, indent, currentIndent);
+            getObject().printTree(settings, locale, writer, indent, currentIndent, lineNumber);
         } else {
             for (int i=0; i < getChildCount(); i++) {
-                getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent);
+                getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
             }
         }
     }
@@ -515,6 +555,49 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
+                });
+                if (abort) throw new AbortConditionalNGExecutionException();
+                break;
+
+            case LogError:
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                break;
+
+            case LogErrorOnce:
+                LoggingUtil.warnOnce(log, "item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                break;
+
+            case ThrowException:
+                throw e;
+
+            case AbortExecution:
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                throw new AbortConditionalNGExecutionException(e);
+
+            default:
+                throw e;
+        }
+    }
+
+    public void handleError(
+            Base item,
+            String message,
+            List<String> messageList,
+            JmriException e,
+            Logger log)
+            throws JmriException {
+
+        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        if (errorHandlingType == ErrorHandlingType.Default) {
+            errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
+                    .getErrorHandlingType();
+        }
+
+        switch (errorHandlingType) {
+            case ShowDialogBox:
+                boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
+                    ErrorHandlingDialog_MultiLine dialog = new ErrorHandlingDialog_MultiLine();
+                    return dialog.showDialog(item, message, messageList);
                 });
                 if (abort) throw new AbortConditionalNGExecutionException();
                 break;

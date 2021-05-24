@@ -17,6 +17,7 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -65,6 +66,16 @@ public abstract class AbstractBaseTestBase {
      * @throws jmri.jmrit.logixng.SocketAlreadyConnectedException if socket is already connected
      */
     abstract public boolean addNewSocket() throws SocketAlreadyConnectedException;
+    
+    public static MaleSocket getLastMaleSocket(MaleSocket socket) {
+        MaleSocket lastMaleSocket = socket;
+        Base base = socket;
+        while ((base != null) && (base instanceof MaleSocket)) {
+            lastMaleSocket = (MaleSocket) base;
+            base = ((MaleSocket)base).getObject();
+        }
+        return lastMaleSocket;
+    }
     
     @Test
     public void testGetConditionalNG() {
@@ -121,8 +132,15 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetParent() {
-        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == _baseMaleSocket.getObject());
-        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == _baseMaleSocket);
+        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == getLastMaleSocket(_baseMaleSocket).getObject());
+        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == getLastMaleSocket(_baseMaleSocket));
+    }
+    
+    @Test
+    public void testFemaleSocketSystemName() {
+        for (int i=0; i < _base.getChildCount(); i++) {
+            Assert.assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
+        }
     }
     
     /*.*
@@ -200,7 +218,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetPrintTree() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
@@ -209,7 +227,7 @@ public abstract class AbstractBaseTestBase {
         /// Test that the male socket of the item prints the same tree
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
@@ -217,7 +235,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _baseMaleSocket.printTree(printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(printWriter, TREE_INDENT, new MutableInt(0));
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
@@ -227,7 +245,7 @@ public abstract class AbstractBaseTestBase {
         Locale.setDefault(Locale.ENGLISH);
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _baseMaleSocket.printTree(printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(printWriter, TREE_INDENT, new MutableInt(0));
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
         Locale.setDefault(oldLocale);
     }
@@ -242,7 +260,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetPrintTreeFromRoot() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
     }
     
@@ -257,7 +275,7 @@ public abstract class AbstractBaseTestBase {
         
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         String originalTree = stringWriter.toString();
         
         Base copy = _base.getDeepCopy(systemNames, userNames);
@@ -267,7 +285,7 @@ public abstract class AbstractBaseTestBase {
         
         Assert.assertTrue(copy != null);
         
-        copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         String copyTree = stringWriter.toString();
         
         if (! originalTree.equals(copyTree)) {
@@ -330,7 +348,7 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testIsActive() {
-        Assert.assertEquals(_base.getParent(), _baseMaleSocket);
+        Assert.assertEquals(_base.getParent(), getLastMaleSocket(_baseMaleSocket));
         
         Assert.assertTrue("_base is active", _base.isActive());
         _baseMaleSocket.setEnabled(false);
@@ -524,7 +542,6 @@ public abstract class AbstractBaseTestBase {
         
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
-        System.out.format("%s: New value: %s%n", _base.getClass().getName(), ar.get().getNewValue());
         Assert.assertTrue(ar.get().getNewValue() instanceof List);
         List list = (List)ar.get().getNewValue();
         for (Object o : list) {

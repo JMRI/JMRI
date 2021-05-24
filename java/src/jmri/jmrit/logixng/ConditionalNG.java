@@ -61,8 +61,9 @@ public interface ConditionalNG extends Base, NamedBean {
      * Set whenether execute() should run on the LogixNG thread at once or
      * should dispatch the call until later.
      * Most tests turns off the delay to simplify the tests.
+     * 
      * @param value true if execute() should run on LogixNG thread delayed,
-     * false otherwise.
+     *              false otherwise.
      */
     public void setRunDelayed(boolean value);
     
@@ -79,6 +80,12 @@ public interface ConditionalNG extends Base, NamedBean {
      * Execute the ConditionalNG.
      */
     public void execute();
+    
+    /**
+     * Execute the ConditionalNG.
+     * @param allowRunDelayed true if it's ok to run delayed, false otherwise
+     */
+    public void execute(boolean allowRunDelayed);
     
     /**
      * Execute the female socket.

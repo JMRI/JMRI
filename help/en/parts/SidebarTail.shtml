@@ -1,21 +1,30 @@
 <!-- SidebarTail.shtml -->
     <!-- Final items in typical sidebar -->
-      <h3 style="padding-left: 1em;"><p class="noted" align="center">
-      JMRI Help:<br>
-       <a href="/help/en/webtoc.shtml">Contents</a>/
-       <a href="/help/en/webindex.shtml">Index</a>
-       <br><a href="/help/en/glossary/index.shtml">Glossary</a>/
-       <a href="/help/en/html/FAQ.shtml">FAQ</a>
-     </p></h3>
-     <p style="padding-left: 1em;">
-       <a href="/donations.shtml">
-       <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="LEFT" alt="Donate to JMRI" />
-       Donate to JMRI.org</a>
-     </p>
+
+    <div class="noted">
+      <h3 style="padding-left: 2em;">JMRI Help:</h3>
+      <p>
+        <a href="/help/en/webtoc.shtml">Contents</a>
+        <a href="/help/en/webindex.shtml">Index</a>
+        <br>
+        <a href="/help/en/glossary/index.shtml">Glossary</a>
+        <a href="/help/en/html/FAQ.shtml">FAQ</a>
+      </p>
+    </div>
+
+    <p style="padding-left: 1em;">
+      <a href="/donations.shtml">
+      <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" style="float: left" alt="Donate to JMRI" />
+      Donate to JMRI.org</a>
+    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
     <!-- JS to highlight items in the sidebar -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
-    
-    
+    <script src="/web/js/jquery-2.0.3.min.js"></script>
+    <script src="/web/js/here.js"></script>
+
+
     <!-- /SidebarTail.shtml -->

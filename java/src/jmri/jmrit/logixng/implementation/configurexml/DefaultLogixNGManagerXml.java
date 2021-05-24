@@ -2,21 +2,19 @@ package jmri.jmrit.logixng.implementation.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.Clipboard;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.implementation.ClipboardMany;
 import jmri.jmrit.logixng.implementation.DefaultClipboard;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.ThreadingUtil;
 
@@ -50,7 +48,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 e.addContent(new Element("name").addContent(thread.getThreadName()));
                 logixNGs.addContent(e);
             }
-            
+
             for (LogixNG logixNG : tm.getNamedBeanSet()) {
                 log.debug("logixng system name is " + logixNG.getSystemName());  // NOI18N
                 boolean enabled = logixNG.isEnabled();
@@ -62,19 +60,22 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
 
                 Element e = new Element("ConditionalNGs");
                 for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
-                    if (logixNG.getConditionalNG(i) != null) {
-                        e.addContent(new Element("systemName").addContent(logixNG.getConditionalNG(i).getSystemName()));
-                    } else {
-                        e.addContent(new Element("systemName").addContent(logixNG.getConditionalNG_SystemName(i)));
-                    }
+                    e.addContent(new Element("systemName").addContent(logixNG.getConditionalNG(i).getSystemName()));
                 }
                 elem.addContent(e);
 
                 elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
-                
+
                 logixNGs.addContent(elem);
             }
-            
+
+            Element elemInitializationTable = new Element("InitializationTable");  // NOI18N
+            for (LogixNG logixNG : InstanceManager.getDefault(LogixNG_InitializationManager.class).getList()) {
+                Element e = new Element("LogixNG").addContent(logixNG.getSystemName());   // NOI18N
+                elemInitializationTable.addContent(e);
+            }
+            logixNGs.addContent(elemInitializationTable);
+
             // Store items on the clipboard
             Element elemClipboard = new Element("Clipboard");  // NOI18N
             Clipboard clipboard = tm.getClipboard();
@@ -120,6 +121,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         // load individual sharedLogix
         loadThreads(sharedLogixNG);
         loadLogixNGs(sharedLogixNG);
+        loadInitializationTable(sharedLogixNG);
         loadClipboard(sharedLogixNG);
         return true;
     }
@@ -134,19 +136,19 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
     public void loadThreads(Element sharedLogixNG) {
         List<Element> threads = sharedLogixNG.getChildren("Thread");  // NOI18N
         log.debug("Found " + threads.size() + " threads");  // NOI18N
-        
+
         for (int i = 0; i < threads.size(); i++) {
-            
+
             Element threadElement = threads.get(i);
-            
+
             int threadId = Integer.parseInt(threadElement.getChild("id").getTextTrim());
             String threadName = threadElement.getChild("name").getTextTrim();
-            
+
             log.debug("create thread: " + Integer.toString(threadId) + ", " + threadName);  // NOI18N
             LogixNG_Thread.createNewThread(threadId, threadName);
         }
     }
-    
+
     /**
      * Utility method to load the individual LogixNG objects. If there's no
      * additional info needed for a specific logixng type, invoke this with the
@@ -160,7 +162,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
 
         for (int i = 0; i < logixNGList.size(); i++) {
-            
+
             Element logixNG_Element = logixNGList.get(i);
 
             String sysName = getSystemName(logixNG_Element);
@@ -192,12 +194,12 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                         logixNG.setEnabled(false);
                     }
                 }
-                
+
                 List<Element> conditionalNGList =
                         logixNG_Element.getChild("ConditionalNGs").getChildren();  // NOI18N
-                
+
                 for (int j = 0; j < conditionalNGList.size(); j++) {
-                    
+
                     Element systemNameElement = conditionalNGList.get(j);
                     String systemName = null;
                     if (systemNameElement != null) {
@@ -208,16 +210,37 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             }
         }
     }
-    
+
+    public void loadInitializationTable(Element sharedLogixNG) {
+        LogixNG_Manager tm =
+                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+
+        LogixNG_InitializationManager initializationManager =
+                InstanceManager.getDefault(LogixNG_InitializationManager.class);
+
+        List<Element> initTableList = sharedLogixNG.getChildren("InitializationTable");  // NOI18N
+        if (initTableList.isEmpty()) return;
+        List<Element> logixNGList = initTableList.get(0).getChildren();
+        if (logixNGList.isEmpty()) return;
+        for (Element e : logixNGList) {
+            LogixNG logixNG = tm.getBySystemName(e.getTextTrim());
+            if (logixNG != null) {
+                initializationManager.add(logixNG);
+            } else {
+                log.warn("LogixNG '{}' cannot be found", e.getTextTrim());
+            }
+        }
+    }
+
     public void loadClipboard(Element sharedLogixNG) {
         List<Element> clipboardList = sharedLogixNG.getChildren("Clipboard");  // NOI18N
         if (clipboardList.isEmpty()) return;
         List<Element> clipboardSubList = clipboardList.get(0).getChildren();
         if (clipboardSubList.isEmpty()) return;
-        
+
         String className = clipboardSubList.get(0).getAttribute("class").getValue();
 //        log.error("className: " + className);
-        
+
         Class<?> clazz;
         try {
             clazz = Class.forName(className);
@@ -225,7 +248,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             log.error("cannot load class " + className, ex);
             return;
         }
-        
+
         Constructor<?> c;
         try {
             c = clazz.getConstructor();
@@ -233,10 +256,10 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             log.error("cannot create constructor", ex);
             return;
         }
-        
+
         try {
             Object o = c.newInstance();
-            
+
             if (o == null) {
                 log.error("class is null");
                 return;
@@ -245,10 +268,13 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 log.error("class has wrong type: " + o.getClass().getName());
                 return;
             }
-            
+
             LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
             ClipboardMany anyMany = ((ClipboardManyXml)o).loadItem(clipboardList.get(0));
-            ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany);
+            List<String> errors = new ArrayList<>();
+            if (! ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany, errors)) {
+                for (String s : errors) log.error(s);
+            }
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.error("cannot create object", ex);
         }

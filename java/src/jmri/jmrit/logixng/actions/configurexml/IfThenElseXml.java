@@ -91,8 +91,10 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         Remove TRIGGER_ACTION and CONTINOUS_ACTION in if-then-else-4.23.1.xsd
         as well.
         */
-        if ("TRIGGER_ACTION".equals(typeStr)) typeStr = "TriggerAction";
-        if ("CONTINOUS_ACTION".equals(typeStr)) typeStr = "ContinuousAction";
+        if ("TRIGGER_ACTION".equals(typeStr)) typeStr = "ExecuteOnChange";
+        if ("CONTINOUS_ACTION".equals(typeStr)) typeStr = "AlwaysExecute";
+        if ("TriggerAction".equals(typeStr)) typeStr = "ExecuteOnChange";
+        if ("ContinuousAction".equals(typeStr)) typeStr = "AlwaysExecute";
         
         IfThenElse.Type type = IfThenElse.Type.valueOf(typeStr);
         

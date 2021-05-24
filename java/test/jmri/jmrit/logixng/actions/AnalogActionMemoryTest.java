@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -43,7 +44,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory IM1 ::: Log error%n");
+        return String.format("Set memory IM1 ::: Use default%n");
     }
     
     @Override
@@ -52,11 +53,11 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
                 "            !~ A%n" +
-                "               Set memory IM1 ::: Log error%n");
+                "               Set memory IM1 ::: Use default%n");
     }
     
     @Override
@@ -119,7 +120,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     }
     
     @Test
-    public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+    public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException, JmriException {
         AnalogActionMemory action = (AnalogActionMemory)_base;
         action.setValue(0.0d);
         Assert.assertTrue("Memory has correct value", 0.0d == (Double)_memory.getValue());
@@ -213,7 +214,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Set memory".equals(_base.getShortDescription()));
+        Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
     
     @Test
@@ -270,10 +271,11 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         _base = analogActionMemory;
         _baseMaleSocket = maleSocketAnalogActionMemory;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
     }
 
     @After

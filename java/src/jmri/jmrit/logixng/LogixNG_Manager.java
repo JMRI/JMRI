@@ -1,10 +1,13 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Manager for LogixNG
@@ -62,14 +65,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * <P>
      * This method ensures that everything in the LogixNG tree has a pointer
      * to its parent.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void resolveAllTrees();
+    public boolean resolveAllTrees(List<String> errors);
 
     /**
      * Setup all LogixNGs. This method is called after a configuration file is
      * loaded.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void setupAllLogixNGs();
+    public boolean setupAllLogixNGs(List<String> errors);
 
     /**
      * Activate all LogixNGs, starts LogixNG processing by connecting all
@@ -79,6 +88,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * ConditionalNGs.
      */
     public void activateAllLogixNGs();
+    
+    /**
+     * Activate all LogixNGs, starts LogixNG processing by connecting all
+     * inputs that are included the ConditionalNGs in this LogixNG.
+     * <p>
+     * A LogixNG must be activated before it will calculate any of its
+     * ConditionalNGs.
+     * 
+     * @param runDelayed true if execute() should run on LogixNG thread delayed,
+     *                   false otherwise.
+     * @param runOnSeparateThread true if the activation should run on a
+     *                            separate thread, false otherwise
+     */
+    public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread);
     
     /**
      * DeActivate all LogixNGs, stops LogixNG processing by disconnecting all
@@ -115,9 +138,14 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * 
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public default void printTree(PrintWriter writer, String indent) {
-        printTree(new PrintTreeSettings(), writer, indent);
+    public default void printTree(
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(new PrintTreeSettings(), writer, indent, lineNumber);
     }
     
     /**
@@ -126,8 +154,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param settings settings for what to print
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber);
     
     /**
      * Print the tree to a stream.
@@ -135,12 +168,15 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
     public default void printTree(
             Locale locale,
             PrintWriter writer,
-            String indent) {
-        printTree(new PrintTreeSettings(), locale, writer, indent);
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(new PrintTreeSettings(), locale, writer, indent, lineNumber);
     }
     
     /**
@@ -150,8 +186,14 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
+     * @param lineNumber the line number
      */
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber);
     
     /**
      * Test if parameter is a properly formatted system name.

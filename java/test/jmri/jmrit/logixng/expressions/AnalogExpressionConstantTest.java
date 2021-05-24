@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -50,7 +51,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get analog constant 10.2 ::: Log error%n");
+        return String.format("Get analog constant 10.2 ::: Use default%n");
     }
     
     @Override
@@ -59,11 +60,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
-                "               Get analog constant 10.2 ::: Log error%n" +
+                "               Get analog constant 10.2 ::: Use default%n" +
                 "            !~ A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override
@@ -188,7 +189,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get analog constant", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Analog constant", _base.getShortDescription());
     }
     
     @Test
@@ -253,7 +254,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -54,7 +55,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1 as analog value ::: Log error%n");
+        return String.format("Get memory IM1 as analog value ::: Use default%n");
     }
     
     @Override
@@ -63,11 +64,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
-                "               Get memory IM1 as analog value ::: Log error%n" +
+                "               Get memory IM1 as analog value ::: Use default%n" +
                 "            !~ A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override
@@ -317,7 +318,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("Get memory as analog value", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Memory as analog value", _base.getShortDescription());
     }
     
     @Test
@@ -385,7 +386,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         _base = expressionMemory;
         _baseMaleSocket = socketExpression;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

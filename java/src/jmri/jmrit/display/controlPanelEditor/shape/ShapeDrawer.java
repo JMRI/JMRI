@@ -183,7 +183,12 @@ public class ShapeDrawer {
                 shape.updateSize();
                 _drawFrame.closingEvent(false);       // close opening create prompt frame
                 _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
-                ed.putItem(shape);
+                try {
+                    ed.putItem(shape);
+                } catch (Positionable.DuplicateIdException e) {
+                    // This should never happen
+                    log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                }
                 return true;
             }
         }
@@ -202,7 +207,12 @@ public class ShapeDrawer {
                     shape.updateSize();
                     _drawFrame.closingEvent(false);       // close opening create prompt frame
                     _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
-                    ed.putItem(shape);
+                    try {
+                        ed.putItem(shape);
+                    } catch (Positionable.DuplicateIdException e) {
+                        // This should never happen
+                        log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                    }
                     return true;
                 }
             }

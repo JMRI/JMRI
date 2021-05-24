@@ -40,32 +40,32 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Bergqvist (c) 2019
  */
 public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
-    
+
 //    BeanTableFrame<NamedTable> beanTableFrame;
     BeanTableDataModel<NamedTable> beanTableDataModel;
-    
+
     NamedTableManager _tableManager = null;
     NamedTable _curTable = null;
-    
+
 //    ConditionalNGEditor _treeEdit = null;
-    
+
 //    int _numConditionalNGs = 0;
     boolean _inEditMode = false;
-    
+
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
-    
+
 //    private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
 //    private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
 //    private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
 //    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";         // NOI18N
 //    private final JTextField _systemName = new JTextField(20);
 //    private final JTextField _addUserName = new JTextField(20);
-    
+
 //    private NamedBeanComboBox<NamedTable> _nameComboBox = null;
-    
-    
+
+
     /**
      * Create a new ConditionalNG List View editor.
      *
@@ -137,7 +137,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
                         false);
             }
             _editLogixNGFrame.addHelpMenu(
-                    "package.jmri.jmrit.conditional.ConditionalNGListEditor", true);  // NOI18N
+                    "package.jmri.jmrit.logixng.LogixNGTableEditor", true);  // NOI18N
             _editLogixNGFrame.setLocation(100, 30);
             Container contentPane = _editLogixNGFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -411,11 +411,11 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
 //        if (checkEditConditionalNG()) {
 //            return;
 //        }
-/*        
+/*
         if (!checkConditionalNGReferences(_curLogixNG.getSystemName())) {
             return;
         }
-*/        
+*/
         _showReminder = true;
         tableData.clear();
         tableData.put("Delete", _curTable.getSystemName());   // NOI18N
@@ -428,11 +428,11 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
      *
      * @param e The event heard
      *./
-    void newConditionalNGPressed(ActionEvent e) {        
+    void newConditionalNGPressed(ActionEvent e) {
         if (checkEditConditionalNG()) {
             return;
         }
-        
+
         // make an Add Item Frame
         if (showAddLogixNGFrame()) {
             if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
@@ -463,9 +463,9 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
      * Create or edit action/expression dialog.
      *./
     private boolean showAddLogixNGFrame() {
-        
+
         AtomicBoolean result = new AtomicBoolean(false);
-        
+
         JDialog dialog  = new JDialog(
                 _editLogixNGFrame,
                 Bundle.getMessage("AddConditionalNGDialogTitle"),
@@ -503,11 +503,11 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName, c);
-        
+
         _systemName.setText("");
         _systemName.setEnabled(true);
         _addUserName.setText("");
-        
+
         _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));    // NOI18N
 //        _addUserName.setToolTipText("LogixNGUserNameHint");    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
@@ -523,16 +523,16 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
         panel31.add(message1);
         JLabel message2 = new JLabel(Bundle.getMessage("AddMessage2"));  // NOI18N
         panel32.add(message2);
-        
+
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
-        
+
         // Get panel for the item
         panel3.add(panel31);
         panel3.add(panel32);
         contentPanel.add(panel3);
-        
+
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
@@ -551,7 +551,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
             dialog.dispose();
         });
         create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
-        
+
         panel5.add(create);
 
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -569,17 +569,17 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
 //        addLogixNGFrame.setLocationRelativeTo(component);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
-        
+
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
         });
-        
+
         dialog.setVisible(true);
-        
+
         return result.get();
     }
-    
+
     /*.*
      * Enable/disable fields for data entry when user selects to have system
      * name automatically generated.
@@ -607,19 +607,19 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
         // deactivate this Logix
         _curTable.deActivateLogixNG();
         _conditionalUserName.setText(_curConditionalNG.getUserName());
-        
+
         // Create a new NamedTable edit view, add the listener.
 //        if (_editMode == LogixNGTableAction.EditMode.TREEEDIT) {
             _treeEdit = new ConditionalNGEditor(_curConditionalNG);
             _treeEdit.initComponents();
             _treeEdit.setVisible(true);
             _inEditMode = true;
-            
+
             final TableEditor logixNGEditor = this;
             _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
 //        }
     }
-    
+
     // ------------ Methods for Edit ConditionalNG Pane ------------
 
     /**
@@ -628,7 +628,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
      * @param rx index (row number) of ConditionalNG to be edited
      */
     void editConditionalNGPressed(int rx) {
-/*        
+/*
         if (_inEditConditionalNGMode) {
             // Already editing a ConditionalNG, ask for completion of that edit
             JOptionPane.showMessageDialog(_editConditionalNGFrame,
@@ -646,7 +646,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
         _conditionalRowNumber = rx;
         // get action variables
         makeEditConditionalNGWindow();
-*/        
+*/
     }
 
     /*.*
@@ -890,7 +890,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
                 }
             } else if (col == UNAME_COLUMN) {
                 throw new UnsupportedOperationException("Not implemented yet");
-/*                
+/*
                 String uName = (String) value;
                 ConditionalNG cn = _curTable.getConditionalNGByUserName(uName);
                 if (cn == null) {
@@ -924,11 +924,11 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
                         messageDuplicateConditionalNGUserName(cn.getSystemName());
                     }
                 }
-*/                
+*/
             }
         }
     }
-    
+
     /*.*
      * Send a duplicate Conditional user name message for Edit Logix pane.
      *
@@ -940,12 +940,12 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
     }
-*/    
+*/
     protected String getClassName() {
         return TableEditor.class.getName();
     }
-    
-    
+
+
     // ------------ NamedTable Notifications ------------
     // The ConditionalNG views support some direct changes to the parent logix.
     // This custom event is used to notify the parent NamedTable that changes are requested.
@@ -962,18 +962,18 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
 
         void tableEventOccurred();
     }
-    
+
     /**
      * Maintain a list of listeners -- normally only one.
      */
     List<EditorEventListener> listenerList = new ArrayList<>();
-    
+
     /**
      * This contains a list of commands to be processed by the listener
      * recipient.
      */
     private HashMap<String, String> tableData = new HashMap<>();
-    
+
     /**
      * Add a listener.
      *
@@ -983,7 +983,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
     public void addEditorEventListener(EditorEventListener listener) {
         listenerList.add(listener);
     }
-    
+
     /**
      * Remove a listener -- not used.
      *
@@ -993,7 +993,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
     public void removeEditorEventListener(EditorEventListener listener) {
         listenerList.remove(listener);
     }
-    
+
     /**
      * Notify the listeners to check for new data.
      */
@@ -1002,18 +1002,18 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
             l.editorEventOccurred(tableData);
         }
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableEditor.class);
 /*
     private class LogixNGEventListenerImpl implements ConditionalNGEditor.LogixNGEventListener {
 
         private final TableEditor _logixNGEditor;
-        
+
         public LogixNGEventListenerImpl(TableEditor logixNGEditor) {
             this._logixNGEditor = logixNGEditor;
         }
-        
+
         @Override
         public void logixNGEventOccurred() {
             String lgxName = _curTable.getSystemName();

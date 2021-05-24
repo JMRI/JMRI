@@ -53,14 +53,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Define the columns.
      * <p>
-     * Values understood are: "Name", "Value", "Range",
-     * "Read", "Write", "Comment", "CV", "Mask", "State". 
+     * Values understood are: "Name", "Value", "Range", "Read", "Write",
+     * "Comment", "CV", "Mask", "State".
      * <p>
-     * For each, a property
-     * key in SymbolicProgBundle by the same name allows i18n.
-     * 
-     * @param status variable status.
-     * @param h values headers array.
+     * For each, a property key in SymbolicProgBundle by the same name allows
+     * i18n.
+     *
+     * @param status  variable status.
+     * @param h       values headers array.
      * @param cvModel cv table model to use.
      */
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
@@ -392,7 +392,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * If there are any modifier elements, process them by e.g. setting
      * attributes on the VariableValue.
      *
-     * @param e Element that's source of info
+     * @param e        Element that's source of info
      * @param variable Variable to load
      */
     protected void processModifierElements(final Element e, final VariableValue variable) {
@@ -412,9 +412,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     /**
-     * If there's a "default" attribute, or matching defaultItem element, set that value to start.
+     * If there's a "default" attribute, or matching defaultItem element, set
+     * that value to start.
      *
-     * @param e Element that's source of info
+     * @param e        Element that's source of info
      * @param variable Variable to load
      * @return true if the value was set
      */
@@ -466,7 +467,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * <p>
      * Adapted from handleEnumValChildren for use in LocoIO Legacy tool.
      *
-     * @param e Element that's source of info
+     * @param e   Element that's source of info
      * @param var Variable to load
      */
     protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
@@ -539,7 +540,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
      *
-     * @param e Element that's source of info
+     * @param e   Element that's source of info
      * @param var Variable to load
      */
     protected void handleEnumValChildren(Element e, EnumVariableValue var) {
@@ -709,7 +710,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("min")) != null) {
             extra3 = a.getValue();
         }
-        String extra4 = Long.toUnsignedString(~0,16);
+        String extra4 = Long.toUnsignedString(~0, 16);
         if ((a = child.getAttribute("max")) != null) {
             extra4 = a.getValue();
         }
@@ -805,7 +806,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             uppermask = a.getValue();
         }
         String extra1 = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
-                                                // Java epoch is "1970-01-01T00:00:00"
+        // Java epoch is "1970-01-01T00:00:00"
         if ((a = child.getAttribute("base")) != null) {
             extra1 = a.getValue();
         }
@@ -856,7 +857,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     public void setButtonModeFromProgrammer() {
         if (_cvModel.getProgrammer() == null || !_cvModel.getProgrammer().getCanRead()) {
-            for (JButton b : _readButtons) b.setEnabled(false);
+            for (JButton b : _readButtons) {
+                b.setEnabled(false);
+            }
         }
     }
 
@@ -937,14 +940,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     /**
      * Programmatically create a new DecVariableValue from parameters.
-     * @param name variable name.
-     * @param CV CV string.
-     * @param comment variable comment.
-     * @param mask CV mask.
-     * @param readOnly true if read only, else false.
-     * @param infoOnly true if information only, else false.
+     *
+     * @param name      variable name.
+     * @param CV        CV string.
+     * @param comment   variable comment.
+     * @param mask      CV mask.
+     * @param readOnly  true if read only, else false.
+     * @param infoOnly  true if information only, else false.
      * @param writeOnly true if write only, else false.
-     * @param opsOnly true if ops only, else false.
+     * @param opsOnly   true if ops only, else false.
      */
     public void newDecVariableValue(String name, String CV, String comment, String mask,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly) {
@@ -1040,6 +1044,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Represents any change to values, etc, hence rewriting the file is
      * desirable.
+     *
      * @return true if dirty, else false.
      */
     public boolean fileDirty() {
@@ -1054,6 +1059,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Check for change to values, etc, hence rewriting the decoder is
      * desirable.
+     *
      * @return true if dirty, else false.
      */
     public boolean decoderDirty() {
@@ -1079,9 +1085,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public VariableValue findVar(String name) {
         for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getItem(i))) {
+                log.debug("findVar matched '{}' by Item", name);
                 return getVariable(i);
             }
+        }
+        for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getLabel(i))) {
+                log.warn("findVar matched '{}' by Label rather than Item", name);
                 return getVariable(i);
             }
         }

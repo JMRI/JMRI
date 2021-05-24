@@ -210,9 +210,19 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
 
+    @Override
     public boolean isOptionTypeText(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getType() == Option.Type.TEXT;
+        }
+        log.error("did not find option {} for type", option);
+        return false;
+    }
+    
+    @Override
+    public boolean isOptionTypePassword(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).getType() == Option.Type.PASSWORD;
         }
         log.error("did not find option {} for type", option);
         return false;
@@ -242,7 +252,8 @@ abstract public class AbstractPortController implements PortAdapter {
 
         public enum Type {
             JCOMBOBOX,
-            TEXT
+            TEXT,
+            PASSWORD
         }
         
         String currentValue = null;

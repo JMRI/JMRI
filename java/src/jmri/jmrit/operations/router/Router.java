@@ -80,7 +80,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      * @return true if the car can be routed to the track
      */
     public boolean isCarRouteable(Car car, Train train, Track track, PrintWriter buildReport) {
-        addLine(buildReport, SEVEN, BLANK_LINE);
         addLine(buildReport, SEVEN,
                 MessageFormat.format(Bundle.getMessage("RouterIsCarRoutable"),
                         new Object[] { car.toString(), car.getLocationName(), car.getTrackName(), car.getLoadName(),

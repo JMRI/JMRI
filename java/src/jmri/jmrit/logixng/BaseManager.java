@@ -22,11 +22,12 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      * The non-system-specific SignalHeadManagers use this method extensively.
      *
      * @param maleSocket the bean
+     * @return the registered bean with attached male sockets
      * @throws NamedBean.DuplicateSystemNameException if a different bean with the same
      *                                                system name is already registered in
      *                                                the manager
      */
-    public void register(@Nonnull MaleSocket maleSocket);
+    public E registerBean(@Nonnull E maleSocket);
     
     /**
      * Method for a UI to delete a bean.

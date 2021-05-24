@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -52,7 +53,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory IM1 to \"\" ::: Log error%n");
+        return String.format("Set memory IM1 to \"\" ::: Use default%n");
     }
     
     @Override
@@ -61,7 +62,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set memory IM1 to \"\" ::: Log error%n");
+                "         Set memory IM1 to \"\" ::: Use default%n");
     }
     
     @Override
@@ -269,7 +270,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set memory", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
     
     @Test
@@ -333,7 +334,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         _base = actionMemory;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

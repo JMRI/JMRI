@@ -58,7 +58,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "And ::: Log error%n" +
+                "And ::: Use default%n" +
                 "   ? E1%n" +
                 "      Socket not connected%n");
     }
@@ -69,9 +69,9 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Trigger action ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               And ::: Log error%n" +
+                "               And ::: Use default%n" +
                 "                  ? E1%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
@@ -386,7 +386,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         _base = expression;
         _baseMaleSocket = maleSocket2;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

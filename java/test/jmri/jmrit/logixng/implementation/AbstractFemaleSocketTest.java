@@ -9,6 +9,7 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -330,7 +331,7 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public void setParentForAllChildren() {
+        public boolean setParentForAllChildren(List<String> errors) {
             throw new UnsupportedOperationException("Not supported");
         }
 
@@ -375,17 +376,17 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported");
         }
 
         @Override
-        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent, MutableInt lineNumber) {
             throw new UnsupportedOperationException("Not supported");
         }
 

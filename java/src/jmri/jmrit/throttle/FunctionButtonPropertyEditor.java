@@ -121,20 +121,24 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         propertyPanel.add(new JLabel(Bundle.getMessage("OnIcon")), constraints);
 
         constraints.gridy ++;
-        constraints.gridx = 0;
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weighty = 100;
+        constraints.gridx = 0;        
         _imageFilePath = new EditableResizableImagePanel("", BUT_IMG_SIZE, BUT_IMG_SIZE);
-        _imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
+        _imageFilePath.setDropFolder(FileUtil.getUserResourcePath()); // will be updated later on if curent throttle is in roster db
         _imageFilePath.setBackground(new Color(0, 0, 0, 0));
         _imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
-        _imageFilePath.addMenuItemBrowseFolder(Bundle.getMessage("OpenSystemFileBrowserOnJMRIfnButtonsRessources"), FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
+        _imageFilePath.addMenuItemBrowseFolder(Bundle.getMessage("OpenSystemFileBrowserOnJMRIfnButtonsRessources"), FileUtil.getExternalFilename("resources/icons/functionicons"));
+        _imageFilePath.addComponentListener(_imageFilePath); // listen to itself, will rescale image when need
         propertyPanel.add(_imageFilePath, constraints);
 
         constraints.gridx = 1;
         _imagePressedFilePath = new EditableResizableImagePanel("", BUT_IMG_SIZE, BUT_IMG_SIZE);
-        _imagePressedFilePath.setDropFolder(FileUtil.getUserResourcePath());
+        _imagePressedFilePath.setDropFolder(FileUtil.getUserResourcePath()); // will be updated later on if curent throttle is in roster db
         _imagePressedFilePath.setBackground(new Color(0, 0, 0, 0));
         _imagePressedFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
-        _imagePressedFilePath.addMenuItemBrowseFolder(Bundle.getMessage("OpenSystemFileBrowserOnJMRIfnButtonsRessources"), FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
+        _imagePressedFilePath.addMenuItemBrowseFolder(Bundle.getMessage("OpenSystemFileBrowserOnJMRIfnButtonsRessources"), FileUtil.getExternalFilename("resources/icons/functionicons"));
+        _imagePressedFilePath.addComponentListener(_imagePressedFilePath);  // listen to itself, will rescale image when needed
         propertyPanel.add(_imagePressedFilePath, constraints);
 
         JPanel buttonPanel = new JPanel();
@@ -267,5 +271,16 @@ public final class FunctionButtonPropertyEditor extends JDialog {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Set the folder where droped images in Property panel will be stored
+     * 
+     * @param dropFolder the folder path
+     * 
+     */
+    void setDropFolder(String dropFolder) {
+        _imageFilePath.setDropFolder(dropFolder);
+        _imagePressedFilePath.setDropFolder(dropFolder);
     }
 }

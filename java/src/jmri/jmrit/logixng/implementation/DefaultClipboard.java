@@ -39,7 +39,9 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             // This should never happen
             throw new RuntimeException("Program error", ex);
         }
-        _femaleSocket.setParentForAllChildren();
+        if (!_femaleSocket.setParentForAllChildren(new ArrayList<>())) {
+            throw new RuntimeException("Failed to set parent for all children");
+        }
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
     
@@ -49,11 +51,11 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     }
 
     @Override
-    public void add(MaleSocket maleSocket) {
+    public boolean add(MaleSocket maleSocket, List<String> errors) {
         _clipboardItems.ensureFreeSocketAtTop();
         try {
             _clipboardItems.getChild(0).connect(maleSocket);
-            _clipboardItems.setParentForAllChildren();
+            return _clipboardItems.setParentForAllChildren(errors);
         } catch (SocketAlreadyConnectedException ex) {
             throw new RuntimeException("Cannot add socket", ex);
         }
@@ -65,16 +67,18 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             MaleSocket maleSocket = _clipboardItems.getChild(0).getConnectedSocket();
             _clipboardItems.getChild(0).disconnect();
             return maleSocket;
+        } else {
+            return null;
         }
-        throw new UnsupportedOperationException("Not supported");
     }
     
     @Override
     public MaleSocket getTopItem() {
         if (!isEmpty()) {
             return _clipboardItems.getChild(0).getConnectedSocket();
+        } else {
+            return null;
         }
-        throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
@@ -103,9 +107,20 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         _clipboardItems.setup();
     }
     
-    public void replaceClipboardItems(ClipboardMany clipboardItems) {
+    public boolean replaceClipboardItems(ClipboardMany clipboardItems, List<String> errors) {
         _clipboardItems = clipboardItems;
+        
+        _femaleSocket.disconnect();
+        
+        try {
+            _femaleSocket.connect(new MaleRootSocket(null));
+        } catch (SocketAlreadyConnectedException ex) {
+            // This should never happen
+            throw new RuntimeException("Program error", ex);
+        }
+        boolean result = _femaleSocket.setParentForAllChildren(errors);
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
+        return result;
     }
 
     @Override

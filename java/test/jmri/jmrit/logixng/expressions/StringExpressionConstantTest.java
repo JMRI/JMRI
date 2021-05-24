@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -51,7 +52,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get string constant \"Something\" ::: Log error%n");
+        return String.format("Get string constant \"Something\" ::: Use default%n");
     }
     
     @Override
@@ -60,11 +61,11 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A ::: Log error%n" +
+                "         Read string E and set string A ::: Use default%n" +
                 "            ?s E%n" +
-                "               Get string constant \"Something\" ::: Log error%n" +
+                "               Get string constant \"Something\" ::: Use default%n" +
                 "            !s A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override
@@ -268,7 +269,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

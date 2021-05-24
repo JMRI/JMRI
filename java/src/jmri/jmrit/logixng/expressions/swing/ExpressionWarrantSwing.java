@@ -226,14 +226,18 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionWarrant but is a: "+object.getClass().getName());
         }
         ExpressionWarrant expression = (ExpressionWarrant)object;
-        if (!warrantBeanPanel.isEmpty() && (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect)) {
+        if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
             Warrant warrant = warrantBeanPanel.getNamedBean();
             if (warrant != null) {
                 NamedBeanHandle<Warrant> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(warrant.getDisplayName(), warrant);
                 expression.setWarrant(handle);
+            } else {
+                expression.removeWarrant();
             }
+        } else {
+            expression.removeWarrant();
         }
         try {
             if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {

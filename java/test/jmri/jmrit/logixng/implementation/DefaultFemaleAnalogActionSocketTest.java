@@ -21,7 +21,7 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Test ExpressionTimer
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
@@ -29,7 +29,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     private String _memorySystemName;
     private Memory _memory;
     private MyAnalogActionMemory _action;
-    
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -37,25 +37,25 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(AnalogActionManager.class);
     }
-    
+
     @Test
     public void testBundleClass() {
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
         Assert.assertEquals("bundle is correct", "Generic", Bundle.getMessage(Locale.US, "SocketTypeGeneric"));
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc"));
     }
-    
+
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "A1".equals(_femaleSocket.getName()));
     }
-    
+
     @Test
     public void testGetDescription() {
         Assert.assertEquals("String matches", "!~", _femaleSocket.getShortDescription());
         Assert.assertEquals("String matches", "!~ A1", _femaleSocket.getLongDescription());
     }
-    
+
     @Override
     protected FemaleSocket getFemaleSocket(String name) {
         return new DefaultFemaleAnalogActionSocket(null, new FemaleSocketListener() {
@@ -68,12 +68,12 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
             }
         }, name);
     }
-    
+
     @Override
     protected boolean hasSocketBeenSetup() {
         return _action._hasBeenSetup;
     }
-    
+
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
@@ -82,34 +82,34 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         // Test setValue() when not connected
         ((DefaultFemaleAnalogActionSocket)_femaleSocket).setValue(0.0);
     }
-    
+
     @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
-        
+
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.AnalogActionMemory.class);
         map.put(Category.ITEM, classes);
-        
+
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.AnalogMany.class);
         map.put(Category.COMMON, classes);
-        
+
         classes = new ArrayList<>();
         map.put(Category.OTHER, classes);
-        
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
-/*    
+/*
     @Test
     public void testCategory() {
         // Test that the classes method getCategory() returns the same value as
         // the factory.
         Map<Category, List<Class<? extends Base>>> map = femaleSocket.getConnectableClasses();
-        
+
         for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
-            
+
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
@@ -119,7 +119,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
             }
         }
     }
-*/    
+*/
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -130,9 +130,12 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -161,22 +164,22 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyAnalogActionMemory extends AnalogActionMemory {
-        
+
         private boolean _hasBeenSetup = false;
-        
+
         public MyAnalogActionMemory(String systemName) {
             super(systemName, null);
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public void setup() {
             _hasBeenSetup = true;
         }
     }
-    
+
 }

@@ -2,6 +2,8 @@ package jmri.jmrit.throttle;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.EnumSet;
 
 import javax.swing.*;
@@ -13,8 +15,13 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
 
-import org.jdom2.Attribute;
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
+import org.apache.batik.transcoder.*;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.jdom2.Element;
+import org.jdom2.Attribute;
+import org.w3c.dom.Document;
 
 /**
  * A JInternalFrame that contains a JSlider to control loco speed, and buttons
@@ -39,14 +46,36 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JButton idleButton;
     private JPanel buttonPanel;
     private JPanel topButtonPanel;
-    private ImageIcon forwardButtonIcon;
-    private ImageIcon forwardSelectedButtonIcon;
-    private ImageIcon reverseButtonIcon;
-    private ImageIcon reverseSelectedButtonIcon;    
-    private ImageIcon idleButtonIcon;
-    private ImageIcon idleSelectedButtonIcon;    
-    private ImageIcon stopButtonIcon;
-    private ImageIcon stopSelectedButtonIcon;
+    
+    private Document forwardButtonSvgIcon;
+    private Document forwardSelectedButtonSvgIcon;
+    private Document forwardRollButtonSvgIcon;
+    private ImageIcon forwardButtonImageIcon;
+    private ImageIcon forwardSelectedButtonImageIcon;
+    private ImageIcon forwardRollButtonImageIcon;    
+    
+    private Document reverseButtonSvgIcon;
+    private Document reverseSelectedButtonSvgIcon;
+    private Document reverseRollButtonSvgIcon;
+    private ImageIcon reverseButtonImageIcon;
+    private ImageIcon reverseSelectedButtonImageIcon;
+    private ImageIcon reverseRollButtonImageIcon;    
+        
+    private Document idleButtonSvgIcon;
+    private Document idleSelectedButtonSvgIcon;
+    private Document idleRollButtonSvgIcon;
+    private ImageIcon idleButtonImageIcon;
+    private ImageIcon idleSelectedButtonImageIcon;
+    private ImageIcon idleRollButtonImageIcon;    
+    
+    private Document stopButtonSvgIcon;
+    private Document stopSelectedButtonSvgIcon;
+    private Document stopRollButtonSvgIcon;
+    private ImageIcon stopButtonImageIcon;
+    private ImageIcon stopSelectedButtonImageIcon;
+    private ImageIcon stopRollButtonImageIcon;    
+    
+    
     private boolean internalAdjust = false; // protecting the speed slider, continuous slider and spinner when doing internal adjust
 
     private JPopupMenu popupMenu;
@@ -63,6 +92,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     final public static int SLIDERDISPLAYCONTINUOUS = 2;
 
     final public static int DEFAULT_BUTTON_SIZE = 24;
+    private static final String LONGEST_SS_STRING="999";
+    private static final int FONT_SIZE_MIN=12;
+    private static final int FONT_INCREMENT = 2;    
 
     private int _displaySlider = SLIDERDISPLAY;
 
@@ -101,6 +133,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
         }
         initGUI();
+        applyPreferences();
     }
 
     /*
@@ -392,8 +425,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public boolean getHideSpeedStep() {
         return hideSpeedStep;
-    }
-    
+    }    
 
     /**
      * Set the GUI to match that the loco speed.
@@ -408,7 +440,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         internalAdjust = true;
         //Translate the speed sent in to the max allowed by any set speed limit
         speedSlider.setValue(java.lang.Math.round(speed / speedIncrement));
-         log.debug("SpeedSlider value: {}", speedSlider.getValue());
+        log.debug("SpeedSlider value: {}", speedSlider.getValue());
         // Spinner Speed should be the raw integer speed value
         if (speedSpinner != null) {
             speedSpinnerModel.setValue(speedSlider.getValue());
@@ -420,6 +452,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSliderContinuous.setValue(-( speedSlider.getValue()));
             }
         }
+        stopButton.setSelected((speed == -1 ));
+        idleButton.setSelected((speed == 0 ));       
         internalAdjust = false;
     }
 
@@ -454,103 +488,166 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         GridBagConstraints constraints = makeDefaultGridBagConstraints();
         if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             resizeButtons();
-            constraints.fill = GridBagConstraints.CENTER;                           
             constraints.insets =  new Insets(0, 0, 0, 0);
-            constraints.gridheight = 20;
-            constraints.gridwidth = 20;
+            constraints.gridheight = 2;
+            constraints.gridwidth = 2;
             constraints.gridy = 0;
-            constraints.gridx = 30;
-            buttonPanel.add(forwardButton, constraints);
-            
             constraints.gridx = 0;
             buttonPanel.add(reverseButton, constraints);
-
-            constraints.gridheight = 10;
-            constraints.gridwidth = 10;
-            constraints.gridy = 0;
-            constraints.gridx = 20;            
-            buttonPanel.add(idleButton, constraints);
-
-            constraints.gridy = 10;
-            buttonPanel.add(stopButton, constraints);           
-            
-        } else {
-            constraints.fill = GridBagConstraints.NONE;               
-            
-            constraints.gridy = 10;
+            constraints.gridx = 3;
             buttonPanel.add(forwardButton, constraints);
-
-            constraints.gridy = 20;
-            buttonPanel.add(reverseButton, constraints);
-
-            constraints.gridy = 30;
+            
+            constraints.gridheight = 1;
+            constraints.gridwidth = 1;
+            constraints.gridx = 2;
+            constraints.gridy = 0;
             buttonPanel.add(idleButton, constraints);
-
-            constraints.gridy = 40;
+            constraints.gridy = 1;
+            buttonPanel.add(stopButton, constraints);
+        } else {
+            constraints.fill = GridBagConstraints.NONE;                           
+            constraints.gridy = 1;
+            buttonPanel.add(forwardButton, constraints);
+            constraints.gridy = 2;
+            buttonPanel.add(reverseButton, constraints);
+            constraints.gridy = 3;
+            buttonPanel.add(idleButton, constraints);
+            constraints.gridy = 4;
             buttonPanel.add(stopButton, constraints);
         }
     }
 
-    private void resizeButtons() {        
+    private void resizeButtons() {       
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
         int w = buttonPanel.getWidth();
         int h = buttonPanel.getHeight();        
-        if (buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0) {
+        if ((buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0)
+                || !(preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) ){
             w = DEFAULT_BUTTON_SIZE * 5;
             h = DEFAULT_BUTTON_SIZE * 2;
         }
-        forwardButton.setIcon(scaleTo(forwardButtonIcon, Math.floorDiv(w * 2, 5), h));
-        forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonIcon, Math.floorDiv(w * 2, 5), h));
-        reverseButton.setIcon(scaleTo(reverseButtonIcon, Math.floorDiv(w * 2, 5), h));
-        reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonIcon, Math.floorDiv(w * 2, 5), h));
-        idleButton.setIcon(scaleTo(idleButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
-        idleButton.setSelectedIcon(scaleTo(idleSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
-        idleButton.setRolloverIcon(scaleTo(idleSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
-        stopButton.setIcon(scaleTo(stopButtonIcon, Math.floorDiv(w, 5), h / 2));
-        stopButton.setRolloverIcon(scaleTo(stopSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
-        stopButton.setSelectedIcon(scaleTo(stopSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
+        float f = Math.min( Math.floorDiv(w*2,5), h );
+        if (forwardButtonSvgIcon != null ) {
+            forwardButton.setIcon(scaleTo(forwardButtonSvgIcon, f));
+        } else {
+            forwardButton.setIcon(scaleTo(forwardButtonImageIcon, (int)f));
+        }
+        if (forwardSelectedButtonSvgIcon != null) {
+            forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonSvgIcon, f));
+        } else {
+            forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonImageIcon, (int)f));
+        }
+        if (forwardRollButtonSvgIcon!=null) {
+            forwardButton.setRolloverIcon(scaleTo(forwardRollButtonSvgIcon, f));
+        } else {
+            forwardButton.setRolloverIcon(scaleTo(forwardRollButtonImageIcon, (int)f));
+        }
+        if (reverseButtonSvgIcon!=null) {
+            reverseButton.setIcon(scaleTo(reverseButtonSvgIcon, f));
+        } else {
+            reverseButton.setIcon(scaleTo(reverseButtonImageIcon, (int)f));
+        }
+        if (reverseSelectedButtonSvgIcon != null) {
+            reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonSvgIcon, f));
+        } else {
+            reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonImageIcon, (int)f));
+        }
+        if (reverseRollButtonSvgIcon!=null) {
+            reverseButton.setRolloverIcon(scaleTo(reverseRollButtonSvgIcon, f));
+        } else {
+            reverseButton.setRolloverIcon(scaleTo(reverseRollButtonImageIcon, (int)f));
+        }
+        
+        f = Math.min( Math.floorDiv(w,5), h/2 );
+        if (idleButtonSvgIcon!=null) {
+            idleButton.setIcon(scaleTo(idleButtonSvgIcon, f));
+        } else {
+            idleButton.setIcon(scaleTo(idleButtonImageIcon, (int)f));
+        }
+        if (idleSelectedButtonSvgIcon!=null) {
+            idleButton.setSelectedIcon(scaleTo(idleSelectedButtonSvgIcon, f));
+        } else {
+            idleButton.setSelectedIcon(scaleTo(idleSelectedButtonImageIcon, (int)f));
+        }
+        if (idleRollButtonSvgIcon != null) {
+            idleButton.setRolloverIcon(scaleTo(idleRollButtonSvgIcon, f));
+        } else {
+            idleButton.setRolloverIcon(scaleTo(idleRollButtonImageIcon, (int)f));
+        }
+        if (stopButtonSvgIcon!=null) {
+            stopButton.setIcon(scaleTo(stopButtonSvgIcon, f));
+        } else {
+            stopButton.setIcon(scaleTo(stopButtonImageIcon, (int)f));
+        }
+        if (stopSelectedButtonSvgIcon!=null) {
+            stopButton.setSelectedIcon(scaleTo(stopSelectedButtonSvgIcon, f));
+        } else {
+            stopButton.setSelectedIcon(scaleTo(stopSelectedButtonImageIcon, (int)f));
+        }
+        if (stopRollButtonSvgIcon!=null) {
+            stopButton.setRolloverIcon(scaleTo(stopRollButtonSvgIcon, f));
+        } else {
+            stopButton.setRolloverIcon(scaleTo(stopRollButtonImageIcon, (int)f));
+        }
+    }                    
+    
+    private ImageIcon scaleTo(ImageIcon imic, int s ) {
+        return new ImageIcon(imic.getImage().getScaledInstance(s, s, Image.SCALE_SMOOTH));
     }
-     
-    private ImageIcon scaleTo(ImageIcon imic, int w, int h ) {
-        return new ImageIcon(imic.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-    }
+         
+    private ImageIcon scaleTo(Document svgImage, Float f ) {
+        MyTranscoder transcoder = new MyTranscoder();
+        TranscodingHints hints = new TranscodingHints();
+        hints.put(ImageTranscoder.KEY_WIDTH, f );
+        hints.put(ImageTranscoder.KEY_HEIGHT, f );
+        transcoder.setTranscodingHints(hints);
+        try {
+            transcoder.transcode(new TranscoderInput(svgImage), null);
+        } catch (TranscoderException ex) {
+            // log it, but continue
+            log.debug("Exception while transposing : {}", ex.getMessage());
+        }
+        return new ImageIcon(transcoder.getImage());
+    }    
 
     private void layoutSliderPanel() {
         sliderPanel.setLayout(new GridBagLayout());
-
-        GridBagConstraints constraints = makeDefaultGridBagConstraints();
-
-        sliderPanel.add(speedSlider, constraints);
+        sliderPanel.add(speedSlider, makeDefaultGridBagConstraints());
     }
 
     private void layoutSpeedSliderContinuous() {
         speedSliderContinuousPanel.setLayout(new GridBagLayout());
-
-        GridBagConstraints constraints = makeDefaultGridBagConstraints();
-
-        speedSliderContinuousPanel.add(speedSliderContinuous, constraints);
+        speedSliderContinuousPanel.add(speedSliderContinuous, makeDefaultGridBagConstraints());
     }
 
     private void layoutSpinnerPanel() {
         spinnerPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = makeDefaultGridBagConstraints();
-
         constraints.fill = GridBagConstraints.HORIZONTAL;
         spinnerPanel.add(speedSpinner, constraints);
     }
 
-    private void setupButton(AbstractButton button, final ThrottlesPreferences preferences, final ImageIcon icon,
-        final ImageIcon selectedIcon, final String message) {
-        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+    private void setupButton(AbstractButton button, final ThrottlesPreferences preferences, final String message) {
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setVerticalAlignment(SwingConstants.CENTER);
+        button.setToolTipText(Bundle.getMessage(message));
+        if (preferences!=null && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+            button.setBorder(null);
             button.setBorderPainted(false);
-            button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setContentAreaFilled(false);
             button.setText(null);
-            button.setIcon(icon);
-            button.setSelectedIcon(selectedIcon);
-            button.setToolTipText(Bundle.getMessage(message));
+            button.setRolloverEnabled(true);
             button.setFocusable(false);
         } else {
+            button.setBorder((new JButton()).getBorder());
+            button.setBorderPainted(true);
+            button.setContentAreaFilled(true);
             button.setText(Bundle.getMessage(message));
+            button.setIcon(null);
+            button.setSelectedIcon(null);
+            button.setRolloverIcon(null);            
+            button.setRolloverEnabled(false);
+            button.setFocusable(true);
         }
     }
 
@@ -558,7 +655,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Create, initialize and place GUI components.
      */
     private void initGUI() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         mainPanel = new JPanel(new BorderLayout());        
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -580,41 +676,69 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         sliderPanel.setOpaque(false);
         
         speedSlider = new JSlider(0, intSpeedSteps);
-        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
-            speedSlider.setUI(new ControlPanelCustomSliderUI(speedSlider));
-        }
         speedSlider.setOpaque(false);
         speedSlider.setValue(0);
         speedSlider.setFocusable(false);
 
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
-        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
-            speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSlider));
-        }
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setOpaque(false);
         speedSliderContinuous.setFocusable(false);
 
         speedSpinner = new JSpinner();
-
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
+        speedSpinner.setMinimumSize(new Dimension(20,20));
 
         EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
-
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
 
         forwardButton = new JRadioButton();
-        forwardButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOff512.png"));
-        forwardSelectedButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn512.png"));
-        setupButton(forwardButton, preferences, forwardButtonIcon, forwardSelectedButtonIcon, "ButtonForward");
-        
         reverseButton = new JRadioButton();
-        reverseButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOff512.png"));
-        reverseSelectedButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn512.png"));        
-        setupButton(reverseButton, preferences, reverseButtonIcon, reverseSelectedButtonIcon, "ButtonReverse");
-        
+        try {
+            forwardButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOff.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            forwardButtonSvgIcon = null;
+            forwardButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOff64.png"));
+        }
+        try {
+            forwardSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            forwardSelectedButtonSvgIcon = null;
+            forwardSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn64.png"));
+        }
+        try {
+            forwardRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirFwdRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            forwardRollButtonSvgIcon = null;
+            forwardRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdRoll64.png"));
+        }
+        try {
+            reverseButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOff.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            reverseButtonSvgIcon = null;
+            reverseButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOff64.png"));
+        }
+        try {
+            reverseSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            reverseSelectedButtonSvgIcon = null;
+            reverseSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn64.png"));
+        }
+        try {
+            reverseRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/dirBckRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            reverseRollButtonSvgIcon = null;
+            reverseRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckRoll64.png"));
+        }
+                
         layoutSliderPanel();
         speedControlPanel.add(sliderPanel);
         speedSlider.setOrientation(JSlider.VERTICAL);
@@ -624,7 +748,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(maxSpeed, new JLabel("100%"));
         labelTable.put(0, new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
-        paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         // remove old actions
         speedSlider.addChangeListener((ChangeEvent e) -> {
             if (!internalAdjust) {
@@ -672,7 +795,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(-maxSpeed / 2, new JLabel("-50%"));
         labelTable.put(-maxSpeed, new JLabel("-100%"));
         speedSliderContinuous.setLabelTable(labelTable);
-        paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         // remove old actions
         speedSliderContinuous.addChangeListener((ChangeEvent e) -> {
             if (!internalAdjust) {
@@ -737,7 +859,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         });
 
-
         speedStepBox.addActionListener((ActionEvent e) -> {
             SpeedStepMode s = (SpeedStepMode)speedStepBox.getSelectedItem();
             setSpeedStepsMode(s);
@@ -745,8 +866,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
               throttle.setSpeedStepMode(s);
             }
         });
-        hideSpeedStep = ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
-        speedStepBox.setVisible(! hideSpeedStep);
         
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
@@ -773,20 +892,55 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSliderContinuous.setValue(-java.lang.Math.abs(speedSliderContinuous.getValue()));
             }
         });
-       
-        stopButton = new JButton();
-        stopButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop512.png"));
-        stopSelectedButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopOn512.png"));       
-        setupButton(stopButton, preferences, stopButtonIcon, stopSelectedButtonIcon, "ButtonEStop");
 
+        stopButton = new JButton();
+        idleButton = new JButton();
+        try {
+            stopButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estop.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            stopButtonSvgIcon = null;
+            stopButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop64.png"));
+        }
+        try {
+            stopSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            stopSelectedButtonSvgIcon = null;
+            stopSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopOn64.png"));
+        }
+        try {
+            stopRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/estopRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            stopRollButtonSvgIcon = null;
+            stopRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estopRoll64.png"));
+        }
+        try {
+            idleButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stop.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            idleButtonSvgIcon = null;
+            idleButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop64.png"));
+        }
+        try {
+            idleSelectedButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopOn.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            idleSelectedButtonSvgIcon = null;
+            idleSelectedButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn64.png"));
+        }
+        try {
+            idleRollButtonSvgIcon = createSVGDocument(FileUtil.findURI("resources/icons/throttles/stopRoll.svg").toString());
+        } catch (Exception ex) {
+            log.debug("Issue loading svg icon, reverting to png : {}", ex.getMessage());
+            idleRollButtonSvgIcon = null;
+            idleRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopRoll64.png"));
+        }
+               
         stopButton.addActionListener((ActionEvent e) -> {
             stop();
         });
-
-        idleButton = new JButton();
-        idleButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop512.png"));
-        idleSelectedButtonIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn512.png"));           
-        setupButton(idleButton, preferences, idleButtonIcon, idleSelectedButtonIcon, "ButtonIdle");
 
         idleButton.addActionListener((ActionEvent e) -> {
             speedSlider.setValue(0);
@@ -806,6 +960,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         changeOrientation();
                     }
                 });
+        
+        speedPanel.addComponentListener(
+                new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        changeFontSizes();
+                    }
+                });
 
         layoutButtonPanel();
         layoutTopButtonPanel();
@@ -815,6 +977,19 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
+    }
+    
+  /**
+   * Use the SAXSVGDocumentFactory to parse the given URI into a DOM.
+   * 
+   * @param uri The path to the SVG file to read.
+   * @return A Document instance that represents the SVG file.
+   * @throws IOException The file could not be read.
+   */
+    private Document createSVGDocument( String uri ) throws IOException {
+      String parser = XMLResourceDescriptor.getXMLParserClassName();
+      SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory( parser );
+      return factory.createDocument( uri );
     }    
 
     /**
@@ -841,15 +1016,19 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * The user has resized the Frame. Possibly change from Horizontal to
      * Vertical layout.
      */
-    private void changeOrientation() {
+    private void changeOrientation() {       
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         if (mainPanel.getWidth() > mainPanel.getHeight()) {
             speedSlider.setOrientation(JSlider.HORIZONTAL);
             if (speedSliderContinuous != null) {
                 speedSliderContinuous.setOrientation(JSlider.HORIZONTAL);
             }
-            if ( preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider() ) {
-                buttonPanel.setSize(mainPanel.getHeight()*5/2, mainPanel.getHeight());
+            if ( preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon() && preferences.isUsingLargeSpeedSlider() ) {
+                int bpw = mainPanel.getHeight()*5/2;
+                if (bpw > mainPanel.getWidth()/2) {
+                    bpw = mainPanel.getWidth()/2;
+                }
+                buttonPanel.setSize(bpw, mainPanel.getHeight());
                 resizeButtons();
             }
             mainPanel.remove(buttonPanel);
@@ -859,12 +1038,54 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             if (speedSliderContinuous != null) {
                 speedSliderContinuous.setOrientation(JSlider.VERTICAL);
             }
-            if ( preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider() ) {
-                buttonPanel.setSize(mainPanel.getWidth(), mainPanel.getWidth()*2/5);
+            if ( preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon() && preferences.isUsingLargeSpeedSlider() ) {
+                int bph = mainPanel.getWidth()*2/5;
+                if (bph > mainPanel.getHeight()/2) {
+                    bph = mainPanel.getHeight()/2;
+                }
+                buttonPanel.setSize(mainPanel.getWidth(), bph);
                 resizeButtons();
             }
             mainPanel.remove(buttonPanel);
             mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        }
+    }
+
+    /**
+     * A resizing has occurred, so determine the optimum font size for the speed spinner text font.
+     */
+    private void changeFontSizes() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        if ( preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider() ) {
+            int fontSize = speedSpinner.getFont().getSize();
+            // fit vertically
+            int fieldHeight = speedControlPanel.getSize().height;
+            int stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16;
+            if (stringHeight > fieldHeight) { // component has shrunk vertically
+                while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) {
+                    fontSize -= FONT_INCREMENT;
+                    Font f = new Font("", Font.PLAIN, fontSize);
+                    speedSpinner.setFont(f);
+                    stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16;
+                }
+            } else { // component has grown vertically
+                while (fieldHeight - stringHeight > 10) {
+                    fontSize += FONT_INCREMENT;
+                    Font f = new Font("", Font.PLAIN, fontSize);
+                    speedSpinner.setFont(f);
+                    stringHeight = speedSpinner.getFontMetrics(speedSpinner.getFont()).getHeight() + 16 ;
+                }
+            }
+            // fit horizontally
+            int fieldWidth = speedControlPanel.getSize().width; 
+            int stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 24 ;
+            while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) { // component has shrunk horizontally
+                fontSize -= FONT_INCREMENT;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                speedSpinner.setFont(f);
+                stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 24 ;
+            }            
+            speedSpinner.setMinimumSize(new Dimension(stringWidth,stringHeight)); //not sure why this helps here, required
         }
     }
 
@@ -894,26 +1115,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
-            internalAdjust = true;
             float speed = ((Float) e.getNewValue());
-            // multiply by MAX_SPEED, and round to find the new
-            //slider setting.
-            int newSliderSetting = java.lang.Math.round(speed * maxSpeed);
-            if (log.isDebugEnabled()) {
-                log.debug("propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting);
-            }
-            speedSlider.setValue(newSliderSetting);
-            if (speedSpinner != null) {
-                speedSpinner.setValue(newSliderSetting);
-            }
-            if (speedSliderContinuous != null) {
-                if (forwardButton.isSelected()) {
-                    speedSliderContinuous.setValue(( speedSlider.getValue()));
-                } else {
-                    speedSliderContinuous.setValue(-( speedSlider.getValue()));
-                }
-            }
-            internalAdjust = false;
+            setSpeedValues( throttle.getSpeedIncrement(), speed);
         } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedStepsMode(steps);
@@ -932,6 +1135,37 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
         log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
+    }
+
+    /**
+     * Apply current throttles preferences to this panel
+     */
+    void applyPreferences() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        
+        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
+             speedSlider.setUI(new ControlPanelCustomSliderUI(speedSlider));
+             speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSliderContinuous));
+             changeFontSizes();
+        } else {
+            speedSlider.setUI((new JSlider()).getUI());
+            speedSliderContinuous.setUI((new JSlider()).getUI());
+            speedSpinner.setFont(new JSpinner().getFont());            
+        }
+        paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
+        paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
+        hideSpeedStep = ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+        speedStepBox.setVisible(! hideSpeedStep);
+        
+        setupButton(stopButton, preferences, "ButtonEStop");
+        setupButton(idleButton, preferences, "ButtonIdle");
+        setupButton(forwardButton, preferences, "ButtonForward");
+        setupButton(reverseButton, preferences, "ButtonReverse");                
+        buttonPanel.removeAll();
+        layoutButtonPanel();
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+            changeOrientation(); // force buttons resizing
+        }        
     }
 
     /**
@@ -1098,20 +1332,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
         log.debug("control panel received new throttle");
-        this.throttle = t;
-        this.setEnabled(true);
-        this.setIsForward(throttle.getIsForward());
-        this.setSpeedValues(throttle.getSpeedIncrement(),
-                throttle.getSpeedSetting());
+        throttle = t;
+        setEnabled(true);
+        setIsForward(throttle.getIsForward());
+        setSpeedStepsMode(throttle.getSpeedStepMode());
+        setSpeedValues(throttle.getSpeedIncrement(), throttle.getSpeedSetting());
 
-        // Set speed steps
-        this.setSpeedStepsMode(throttle.getSpeedStepMode());
-
-        this.throttle.addPropertyChangeListener(this);
-        if (log.isDebugEnabled()) {
-            jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
-            log.debug("new address is {}", Address.toString());
-        }
+        throttle.addPropertyChangeListener(this);
 
         if ((addressPanel != null) && (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getShuntingFunction() != null)) {
             prevShuntingFn = getSwitchSliderFunction();
@@ -1119,6 +1346,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             setSwitchSliderFunction(switchSliderFunction); // reset slider
         }
+        
+        if (log.isDebugEnabled()) {
+            jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
+            log.debug("new address is {}", Address.toString());
+        }        
     }
 
     @Override
@@ -1131,9 +1363,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
-        if (log.isDebugEnabled()) {
-            log.debug("control panel received consist throttle");
-        }
+        log.debug("control panel received consist throttle");        
         notifyAddressThrottleFound(throttle);
     }
 
@@ -1179,6 +1409,22 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         Roster.getDefault().writeRoster();
     }
 
+   private static class MyTranscoder extends ImageTranscoder {
+        private BufferedImage image = null;
+        @Override
+        public BufferedImage createImage(int w, int h) {
+            image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            return image;
+        }
+        public BufferedImage getImage() {
+            return image;
+        }
+        @Override
+        public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
+            //not required here, do nothing
+        }
+    }
+   
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }

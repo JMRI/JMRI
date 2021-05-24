@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -45,7 +46,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set turnout IT1 to state Thrown ::: Log error%n");
+        return String.format("Set turnout IT1 to state Thrown ::: Use default%n");
     }
     
     @Override
@@ -54,7 +55,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set turnout IT1 to state Thrown ::: Log error%n");
+                "         Set turnout IT1 to state Thrown ::: Use default%n");
     }
     
     @Override
@@ -491,7 +492,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set turnout", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Turnout", _base.getShortDescription());
     }
     
     @Test
@@ -543,7 +544,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         _base = actionTurnout;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

@@ -56,9 +56,9 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Analog Formula: E1 ::: Log error%n" +
+                "Analog Formula: E1 ::: Use default%n" +
                 "   ?* E1%n" +
-                "      Get analog constant 1 ::: Log error%n" +
+                "      Get analog constant 1 ::: Use default%n" +
                 "   ?* E2%n" +
                 "      Socket not connected%n");
     }
@@ -69,15 +69,15 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A ::: Log error%n" +
+                "         Read analog E and set analog A ::: Use default%n" +
                 "            ?~ E%n" +
-                "               Analog Formula: E1 ::: Log error%n" +
+                "               Analog Formula: E1 ::: Use default%n" +
                 "                  ?* E1%n" +
-                "                     Get analog constant 1 ::: Log error%n" +
+                "                     Get analog constant 1 ::: Use default%n" +
                 "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !~ A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override
@@ -732,7 +732,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         MaleSocket socketAnalogActionMemory = InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
         doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

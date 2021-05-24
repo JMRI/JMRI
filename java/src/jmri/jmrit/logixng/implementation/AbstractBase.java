@@ -12,6 +12,7 @@ import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.*;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 
 /**
@@ -77,16 +78,33 @@ public abstract class AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public final void setParentForAllChildren() {
+    public final boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
             femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
-                connectedSocket.setParent(femaleSocket);
-                connectedSocket.setParentForAllChildren();
+                if ((connectedSocket.getParent() != null)
+                        && (connectedSocket.getParent() != femaleSocket)) {
+                    errors.add(String.format(
+                            "The child %s already has the parent %s so it cannot be added to %s",
+                            connectedSocket.getSystemName(),
+                            connectedSocket.getParent().getSystemName(),
+                            getSystemName()));
+                    log.error("The child {} already has the parent {} so it cannot be added to {}",
+                            connectedSocket.getSystemName(),
+                            connectedSocket.getParent().getSystemName(),
+                            getSystemName());
+                    femaleSocket.disconnect();
+                    result = false;
+                } else {
+                    connectedSocket.setParent(femaleSocket);
+                    result = result && connectedSocket.setParentForAllChildren(errors);
+                }
             }
         }
+        return result;
     }
 
     /**
@@ -131,7 +149,16 @@ public abstract class AbstractBase
         return isEnabled() && ((getParent() == null) || getParent().isActive());
     }
 
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
@@ -139,23 +166,41 @@ public abstract class AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
-        printTree(settings, locale, writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent);
+            getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
         }
     }
 

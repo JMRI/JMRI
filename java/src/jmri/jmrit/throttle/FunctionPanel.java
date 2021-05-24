@@ -14,6 +14,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.FileUtil;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
@@ -42,6 +43,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
         }
         initGUI();
+        applyPreferences();
     }
 
     public void destroy() {
@@ -175,6 +177,55 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
+    
+    public void applyPreferences() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        RosterEntry re = null;
+        if (mThrottle != null) {
+            if (addressPanel == null) {
+                return;
+            }
+            re = addressPanel.getRosterEntry();
+        }
+        for (int i = 0; i < functionButtons.length; i++) {            
+            if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                try {
+                    functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+                } catch (Exception e) {
+                    log.debug("Exception loading svg icon : "+e.getMessage() );
+                } finally {
+                    if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
+                        log.debug("Issue loading svg icon, reverting to png" );
+                        functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                        functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                    }
+                }
+            } else {
+                functionButtons[i].setIconPath(null);
+                functionButtons[i].setSelectedIconPath(null);
+            }
+            if (re != null) {
+                if (re.getFunctionLabel(i) != null) {
+                    functionButtons[i].setDisplay(true);
+                    functionButtons[i].setButtonLabel(re.getFunctionLabel(i));
+                    if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                        functionButtons[i].setIconPath(re.getFunctionImage(i));
+                        functionButtons[i].setSelectedIconPath(re.getFunctionSelectedImage(i));
+                    } else {
+                        functionButtons[i].setIconPath(null);
+                        functionButtons[i].setSelectedIconPath(null);
+                    }
+                    functionButtons[i].setIsLockable(re.getFunctionLockable(i));
+                } else {
+                    functionButtons[i].setDisplay( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
+                    functionButtons[i].setVisible( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
+                }
+            }
+            functionButtons[i].updateLnF();
+        }
+    }
+    
     private void rebuildFnButons() {
         mainPanel.removeAll();
         if (this.mThrottle == null) {
@@ -201,10 +252,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * loaded from a roster entry, update buttons accordingly
      */
     public void resetFnButtons() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         rebuildFnButons();
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
         // Buttons names, ids,
-        for (int i = 0; i < functionButtons.length; i++) {                      
+        for (int i = 0; i < functionButtons.length; i++) {  
             functionButtons[i].setThrottle(mThrottle);
             functionButtons[i].setIdentity(i);
             functionButtons[i].addFunctionListener(this);
@@ -213,8 +264,18 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 : Throttle.getFunctionString(i) );
             functionButtons[i].setDisplay(true);
             if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");                
+                try {
+                    functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+                } catch (Exception e) {
+                    log.debug("Exception loading svg icon : "+e.getMessage() );
+                } finally {
+                    if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
+                        log.debug("Issue loading svg icon, reverting to png" );
+                        functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                        functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                    }
+                }
             } else {
                 functionButtons[i].setIconPath(null);
                 functionButtons[i].setSelectedIconPath(null);
@@ -247,7 +308,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 functionButtons[i].setThrottle(mThrottle);
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
                 functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
+                functionButtons[i].setDropFolder(FileUtil.getUserResourcePath());
                 if (rosterEntry != null) { // from here, update button text with roster data
+                    functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
                     boolean needUpdate = false;
                     String imgButtonSize = rosterEntry.getAttribute("function"+i+"_ThrottleImageButtonSize");
                     if (imgButtonSize != null) {
@@ -430,4 +493,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
     
     private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
+
 }

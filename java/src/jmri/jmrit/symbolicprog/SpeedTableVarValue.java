@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
@@ -20,7 +21,11 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.util.CvUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -257,7 +262,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         }
 
         // don't do the match if this step isn't checked,
-        // which is necessary to keep from an infinite 
+        // which is necessary to keep from an infinite
         // recursion
         if (!stepCheckBoxes.get(modifiedStepIndex).isSelected()) {
             return;
@@ -360,7 +365,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         return buf.toString();
     }
 
-    /** 
+    /**
      * Set value from a String value.
      * <p>
      * Requires the format written by getValueString, not implemented yet
@@ -465,6 +470,24 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             g.setConstraints(b, cs);
             j.add(b, cs);
 
+            UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+            Object speedTableNumbersSelectionObj = upm.getProperty(SpeedTableNumbers.class.getName(), "selection");
+
+            if (speedTableNumbersSelectionObj != null) {
+                SpeedTableNumbers speedTableNumbersSelection =
+                        SpeedTableNumbers.valueOf(speedTableNumbersSelectionObj.toString());
+
+                if ((speedTableNumbersSelection != SpeedTableNumbers.None)
+                        && (speedTableNumbersSelection.filter(i) || (i==0) || (i+1 == nValues))) {
+
+                    cs.gridy++;
+                    JLabel num = new JLabel(""+(i+1));
+                    num.setToolTipText("Step Number");
+
+                    g.setConstraints(num, cs);
+                    j.add(num, cs);
+                }
+            }
         }
 
         // add control buttons

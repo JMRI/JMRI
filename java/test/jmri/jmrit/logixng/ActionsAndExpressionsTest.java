@@ -110,13 +110,20 @@ public class ActionsAndExpressionsTest {
                 configureSwing = (SwingConfiguratorInterface)configClass.getDeclaredConstructor().newInstance();
                 configureSwing.getConfigPanel(new JPanel());
                 MaleSocket socket = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
-                Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", socket.getObject().getClass().getName(), packageName+"."+file);
+                MaleSocket lastMaleSocket = socket;
+                Base base = socket;
+                while ((base != null) && (base instanceof MaleSocket)) {
+                    lastMaleSocket = (MaleSocket) base;
+                    base = ((MaleSocket)base).getObject();
+                }
+                Assert.assertNotNull(base);
+                Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", base.getClass().getName(), packageName+"."+file);
 //                System.out.format("Swing: %s, Class: %s, class: %s%n", configureSwing.toString(), socket.getShortDescription(), socket.getObject().getClass().getName());
                 Assert.assertEquals("Swing class has correct name", socket.getShortDescription(), configureSwing.toString());
 //                System.out.format("MaleSocket class: %s, socket class: %s%n",
 //                        configureSwing.getManager().getMaleSocketClass().getName(),
 //                        socket.getClass().getName());
-                Assert.assertTrue(configureSwing.getManager().getMaleSocketClass().isAssignableFrom(socket.getClass()));
+                Assert.assertTrue(configureSwing.getManager().getMaleSocketClass().isAssignableFrom(lastMaleSocket.getClass()));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
 //            if (configureSwing == null) {
@@ -262,6 +269,7 @@ public class ActionsAndExpressionsTest {
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

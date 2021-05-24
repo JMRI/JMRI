@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
@@ -45,7 +47,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Timer ::: Log error%n" +
+                "Timer ::: Use default%n" +
                 "   ? Start%n" +
                 "      Socket not connected%n" +
                 "   ? Stop%n" +
@@ -60,7 +62,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Timer ::: Log error%n" +
+                "         Timer ::: Use default%n" +
                 "            ? Start%n" +
                 "               Socket not connected%n" +
                 "            ? Stop%n" +
@@ -316,7 +318,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _base = _actionTimer;
         _baseMaleSocket = maleSocket;
         
-        _logixNG.setParentForAllChildren();
+        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

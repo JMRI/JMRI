@@ -12,7 +12,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.YardEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -26,7 +26,7 @@ public class TrackLoadEditActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        YardEditFrame tf = new YardEditFrame();
         TrackLoadEditAction t = new TrackLoadEditAction(tf);
         Assert.assertNotNull("exists",t);
     }
@@ -38,7 +38,7 @@ public class TrackLoadEditActionTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location location = lManager.getLocationById("20");
         Track track = location.getTrackById("20s1");
-        TrackEditFrame tf = new TrackEditFrame();
+        YardEditFrame tf = new YardEditFrame();
         tf.initComponents(location, track);
         
         TrackLoadEditAction a = new TrackLoadEditAction(tf);

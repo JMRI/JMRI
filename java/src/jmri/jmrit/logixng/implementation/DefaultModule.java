@@ -17,6 +17,8 @@ import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * The default implementation of Module.
  *
@@ -192,22 +194,40 @@ public class DefaultModule extends AbstractBase
 */
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
-        printTree(settings, locale, writer, indent, "");
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
-        _femaleRootSocket.printTree(settings, locale, writer, indent, currentIndent+indent);
+        _femaleRootSocket.printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
     }
 /*
     @Override
@@ -306,7 +326,7 @@ public class DefaultModule extends AbstractBase
             if (_socketSystemName != null) {
                 try {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
+                            _rootSocketType.getManager()
                                     .getBySystemName(_socketSystemName);
                     if (maleSocket != null) {
                         _femaleRootSocket.connect(maleSocket);

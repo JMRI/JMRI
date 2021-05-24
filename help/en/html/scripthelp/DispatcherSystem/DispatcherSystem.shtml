@@ -1,15 +1,451 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CATS.shtml,v 1.1 2008-05-23 16:39:46 jacobsen Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
-<head><title>JMRI: Redirected Page</title>
-<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
-<!-- CHANGE FOLLOWING LINE -->
-<META HTTP-EQUIV="Refresh" CONTENT="6; URL=../../apps/DispatcherSystem/DispatcherSystem.shtml ">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2016 -->
+
+  <title>JMRI: Dispatcher System</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
+
 <body>
-<p>This page you requested, DispatcherSystem.shtml, is in the process of being moved to scripthelp from its old location:</p>
-<p><a href="../../apps/DispatcherSystem/DispatcherSystem.shtml">/help/en/html/apps/DispatcherSystem/DispatcherSystem.shtml</a>)</p>
-<p>as part of updating and reorganizing our web site.</p>
-<p>You should be redirected to the old location within 6 seconds, or click the link above.</p> 
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>Dispatcher System</h1>
+
+      <p>The Dispatcher System is a set of Python tools to extend the capabilities of the
+      Dispatcher.</p>
+
+      <div class="toc">
+        <ul>
+          <li><a href="#introduction">Introduction</a>
+            <ul>
+              <li><a href="#steps">Steps in setting up the system</a></li>
+              <li><a href="#requirements">System Requirements</a></li>
+            </ul>
+          </li>
+          <li><a href="#stage1">Running Stage 1 &mdash; Editing the panel</a></li>
+          <li><a href="#stage2">Running Stage 2 &mdash; Producing the transits</a></li>
+          <li><a href="#stage3">Running Stage 3 &mdash; Final checks</a></li>
+          <li><a href="#runningprogram">Running the Program</a>
+            <ul>
+              <li><a href="#RegisteraTrain">Register a Train</a></li>
+              <li><a href="#Setupadispatch">Set up a dispatch</a></li>
+              <li><a href="#SetupaRoute">Setup a Route</a></li>
+              <li><a href="#RunRoute">Run Route</a></li>
+              <li><a href="#ScheduleRoute">Schedule Route</a></li>
+              <li><a href="#running">Run scheduled trains</a></li>
+              <li><a href="#Setupadispatch">Setup a dispatch</a></li>
+            </ul>
+          </li>
+          <li><a href="#FeaturesSystem">Features of the Dispatcher System</a></li>
+        </ul>
+      </div>
+
+      <a name="introduction" id="introduction"></a>
+      <h2>Introduction</h2>
+      <p>This is an automated system designed to enable you to run trains using the Dispatcher
+      system between locations (normally sidings or stations, but really any set of blocks)
+      designated by yourself.</p>
+
+      <p>Provided you have set up a system as described in System Requirements, by pressing
+      a few buttons on theSystem Generation Panel, a complete system will be set 
+      up for you complete with Transits, Train Info files, and buttons for you to press 
+      which will route trains across your layout.</p>
+
+      <p>A network will be set up behind the scenes which will find the best 
+          route from
+      the train's location to the required location, and set  in place a set of 
+      transits
+      which will guide the train to the required location.</p>
+
+      <p>The train will either stop at all stations on the route, or travel 
+          without
+      stopping at intermediate stops, depending on whether express or stopping 
+      mode is
+      selected</p>
+
+      <p>Provision is made for multiple train operation, the trains stopping 
+          for each other.
+      This is a feature of Dispatcher, but the system allows easy selecting of 
+      each train
+      to control each one.</p>
+
+      <a  name="steps" id="steps"></a>
+      <h3>Steps in setting up the system</h3>
+
+      <p>There are several stages to set up the system for automatic train 
+          running:</p>
+
+      <p>Fulfil the prerequisites, which include having speed profiled your 
+          locos that you wish to run with the system</p>
+
+      <ul>
+        <li>Start JMRI with no panel displayed. </span></li>
+        <li>The panel should have:
+          <ul>
+            <li>SignalMasts</li>
+            <li>SignalMast Logic</li>
+            <li>No Transits (if there are any they will be deleted)</li>
+            <li>No Train Info Files (if there are any they will be deleted)</li>
+            <li>SignalMasts</li>
+          </ul>
+        </li>
+        <li>Bring up the Dispatcher System Panel</li>
+        <li>Run Stage1 to generate an intermediate panel with icons to move 
+            trains</li>
+        <li>Restart</li>
+        <li>Run Stage2 to generate a run system panel</li>
+        <li>Restart</li>
+        <li>Run Stage3 to check the dispatcher options</li>
+        <li>Check the system logic produced automaticlly and modify by hand</li>
+        <li>Save in a modified run panel</li>
+        <li>Run the train</li>
+      </ul>
+
+      <a name="requirements" id="requirements"></a>
+      <h3>System Requirements</h3>
+
+      <p>To use the Dispatcher System there are several prerequisites</p>
+      <ul>
+        <li>You should have set up the system with signal masts</li>
+        <li>The locos you want to run on the system should be:
+          <ul>
+            <li>entered in the Roster</li>
+            <li>set up with a speed profile</li>
+          </ul>
+        </li>
+        <li>the required stopping places (blocks) should be indicated by 
+            entering stop in the comments field for the appropriate block</li>
+        <li>Provision is made for a station announcement to be made when a train 
+            departs from a station.</li>
+        <li>If the block name is unpronounceable, a good stop name can be 
+            entered in the comments field for the departure announcements</li>
+        <li>Typical blocks comments would be</li>
+        <li><img src="images/NewItem31.png" alt="" /></li>
+      </ul>
+
+      <a name="stage1" id="stage1"></a>
+      <h2>Running Stage1 &mdash; Editing the panel</h2>
+
+      <p>Run DispatcherSystem.py in the main jython directory. You will get 
+          something like this:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem3.png"></p>
+      <p>You are prompted to run Stage1 which adds all the icons required to run 
+          the system on a new panel.</p>
+      <p>if the old panel name was WR.xml, the new panel will be WR_icons.xml</p>
+      <p>Some checks are done first</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem4.png"></p>
+      <p>The following checks are made</p>
+      <ul>
+        <li>All blocks have a sensor</li>
+        <li>No two blocks have the same sensor</li>
+        <li>stops are set up</li>
+        <li>all blocks have lengths</li>
+      </ul>
+      <p>If no trains are present in the roster with speed profiles, this will 
+          be picked up, and can be corrected at run time.</p>
+      <p>When the icons file is produced, a message similar to the following 
+          will be produced:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem34.png"></p>
+      <p>A new panel has been created. You should close down and load the new 
+          panel, instead of the original.</p>
+      <p>Note:</p>
+      <p>The panel will have been created by loading the original xml file (in
+          this case WR.ml), editing the details and saving to a new file 
+          (WR_icons.xml). </p>
+      <p>If there were any unsaved edits in the original file these will not be 
+          present in the new file, but you will not lose them provided you save 
+          them either to the original file or another file once Stage1 has 
+          completed. We advise saving all edits before running Stage1, so they 
+          are picked up.</p>
+
+
+      <a name="stage2" id="stage2"></a>
+      <h2>Running Stage2 Producing the signal logic, transits and train info files</h2>
+
+      <p>PanelPro should be restarted and the icons file produced in stage 1 should be loaded.</p>
+      <p>A screen similar to the following will be produced:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem6.png"></p>
+      <p>Once the Stage2 button is pressed one gets a confirmatory messages:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem55.png"></p>
+      <p>The signal logic is produced, then the following confirmatory message appears:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem7.png"></p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem8.png"></p>
+      <p>Transits required to move the train from stop to stop will be produced, and corresponding
+      train-info files which contain the information required for running the train are produced.
+      Some of the information is overwritten when the train-info files are used such as the train name,
+      so train info files do not have to be produced for each train.</p>
+      <p>Train-info files are produced for each route allowed, and all routes are allowed which
+      are physically possible to travel. Train-info files are produced for forward and reverse operation,
+      so there can be quite a number produced.</p>
+      <p>Once the transits and train-info files are produced we get a message:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem35.png"></p>
+      <p>You should then restart JMRI and load the run panel instead of the 
+          icons panel, in this example WR_run.xml</p>
+
+      <a name="stage3" id="stage3"></a>
+      <h2>Running Stage3 Final Checks</h2>
+
+      <p></p>
+      <p>Restart JMRI and load the newly produced run panel, in our example 
+          WR_run.xml</p>
+      <p">Run dispatcher System again to get</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem11.png"></p>
+      <p>Click Stage3 and one gets two screens opening,the Dispatcher options 
+          screen and another
+      saying the options that need to be set for the Dispatcher system to work</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem12.png"></p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem13.png"></p>
+      <p>Set the required option and we get a message reminding you to save the 
+          changed options</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem14.png"></p>
+      <p>Select the dispatcher window that has opened automatically and click 
+          =&gt; Save Options</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem32.png"></p>
+      
+      
+      <a name="runningprogram" id="runningprogram"></a>
+      <h2>Running the Program</h2>
+      
+      
+      <p>To run the system it is advised to have the thread monitor running 
+          (Panels =&gt; Thread Monitor)</p>
+      <p>You will notice several buttons in the top RH corner.</p>
+      <p><img src="images/NewItem38.png" alt="NewItem38" /></p>
+      <p>The first two start and end the threads required for the program to 
+          run. The threads need to be in operation for the other buttons to 
+          work. The threads can be viewed by clicking Panels | Thread Monitor on 
+          the PanelPro Window.</p>
+      <p><img src="images/NewItem40.png" alt="NewItem40" /></p>
+      <p>To run the system the following needs to be set up</p>
+      <ol>
+      <li>Place a train on the layout. If you wish to simulate the train to get 
+          an idea of how the system will operate click the bottom left button of 
+          a station which will make the station occupied.</li>
+      <li>Register the train with the dispatcher system telling the system what 
+          way it s facing so the system knows what trainsit to use to move the 
+          train (forwards or backwards). Press the 'Setup Train in Section' 
+          button to do this.</li>
+      <li>&nbsp;Set up a dispatch. This can be done in several ways.</li>
+      <ol>
+      <li>Click the Run Dispatch Button and click a station button and specify 
+          which registered train will move towards that station</li>
+      <li>Setup a Route and run the route. A Route consists of a path joining 
+          several stations. The stations joined can be anywhere on the layout 
+          no matter how far apart they are, and the system will find valid paths 
+          between the stations.The station buttons can be used to either setup a 
+          dispatch or setup a route depending upon whether "Setup Route or "Run 
+          Dispatch" is selected. The route is run by pressing the "Run Route" 
+          button.</li>
+      <li>Setup routes, Setup Scheduled Trains and then start the scheduler.</li>
+      </ol>
+      <li>If a physical train is on the layout at the start of the dispatch the 
+          train should move. If you have just made the block occupied with no 
+          physical train you can press the 'Simulate the Dispatched Train' 
+          button to get an idea of how the train will run. The train will 
+          simulate much quicker than a real train and takes no account of the 
+          train length.</li>
+      <li>Announcements can be activated by pressing the 'Enable Announcements' 
+          button. This is off by default as they can get a but irritating.</li>
+      </ol>
+      <p>Press the run button. The Express Train and the Run Dispatch options 
+          will be highlighted and the run Dispatch option will cause the 
+          following prompt to be displayed:</p>
+      <p><img src="images/NewItem39.png" alt="NewItem39" /></p>
+      
+      <a name="RegisteraTrain" id="RegisteraTrain"></a>
+      <h2>Register a Train</h2>
+      
+      
+      <p>The first step is to register a train in a siding or at a stop. If you 
+          are simulating the system to see whether it will work before running 
+          trains you may press the bottom left hand small button which will make 
+          the section occupied. Drive a train to the required stop, and press 
+          Setup Train in Siding.</p>
+      <p>We need to tell the system which way the train is pointing.</p>
+      <ul>
+      <li>At a siding it's easy there is one direction the train can go, and we 
+          say which way it is facing out of the siding</li>
+      <li>At another stop we have to indicate which way we are talking about and 
+          we highlight one direction</li>
+      </ul>
+      <p>suppose we have the following layout</p>
+      <p><img src="images/NewItem16.png" alt="NewItem16" width="617" height="140" /></p>
+      <p>Choosing the Train</p>
+      <p>We click SetupTrain in siding</p>
+      <p>If the train is siding 1b as indicated one gets the following message</p>
+      <p><img src="images/NewItem17.png" alt="NewItem17" /></p>
+      <p>Where if we click the dropdown we get all the trains in the system with 
+          a speed profile. We choose the required train and click OK</p>
+      <p>Register the Direction the train is facing</p>
+      <p>The following message then pops up</p>
+      <p><img src="images/NewItem18.png" alt="NewItem18" /></p>
+      <p>Select the correct direction and click OK.</p>
+      <p>The train will appear in the memory location for the block</p>
+      <p><img src="images/NewItem20.png" alt="NewItem20" width="629" height="140" /></p>
+      
+      <a name="Setupadispatch" id="Setupadispatch"></a>
+      <h2>Set up a dispatch</h2>
+      
+      
+      <p>To set up a dispatch a train (or several trains bust be registered with 
+          the system, and located in a stop).</p>
+      <p>Clicking a red button will allow a dispatch to be set up to that location.</p>
+      <p>Suppose one has the following layout with a train in siding1. Click the 
+          Passing Loop button as indicated to set up a dispatch to Passing Loop.</p>
+      <p><img src="images/NewItem24.png" alt="NewItem24" width="681" height="304" /></p>
+      <p>There is an express icon. If set the train type will default to express 
+          (moves without stopping at intermediate stations), If unset, will 
+          default to stopping as shown.</p>
+      <p><img src="images/NewItem26.png" alt="NewItem26" /></p>
+      <p><img src="images/NewItem25.png" alt="NewItem25" /></p>
+      <p>Select the required train from the drop down, and a dispatch will be 
+          set up to the next stop (Siding1A).</p>
+      <p><img src="images/NewItem27.png" alt="NewItem27" width="692" height="157" /></p>
+      <p>The train will start moving, and the speed indicated in the Auto trains 
+          window.</p>
+      <p><img src="images/NewItem28.png" alt="NewItem28" /></p>
+      <p>The train will move to Siding1B, stop and the dispatch will terminate, 
+          another dispatch will start up to the next stop which will be to 
+          passing loop.</p>
+      
+      <a name="SetupaRoute" id="SetupaRoute"></a>
+      <h2>Setup a Route</h2>
+      
+      
+      <p>Click 'Setup Route'. The following message will be displayed:</p>
+      <p><img src="images/NewItem41.png" alt="NewItem41" /></p>
+      <p>You now press the red section (station) buttons to set the route. The 
+          first button will be the start of the route.</p>
+      <p><img src="images/NewItem46.png" alt="NewItem46" /></p>
+      <p>The subsequent buttons will be the intermediate stations. At each 
+          station you will be asjked:</p>
+      <p><img src="images/NewItem44.png" alt="NewItem44" /></p>
+      <p>You will be told what station you have selected and be asked whether to:</p>
+      <ul>
+      <li>select another station</li>
+      <li>select no more stations and complete the route</li>
+      <li>cancel</li>
+      </ul>
+      <p>If you press complete route, a route will be automatically set up with 
+          the name being the amalgam of the start station and the end section. 
+          If a route already exists with that name, an index will be appended. 
+          The name of the route can be changed bu clicking the 'View / Edit Route' 
+          button or the View Route button on the pop-up.</p>
+      <p><img src="images/NewItem45.png" alt="NewItem45" /></p>
+      
+      <a name="RunRoute" id="RunRoute"></a>
+      <h2>Run Route</h2>
+      
+      
+      <p>To run a route a route must already have been set up. Click Run Route</p>
+      <p><img src="images/NewItem47.png" alt="NewItem47" /></p>
+      <p>You will be prompted with all the routes you have set up</p>
+      <p><img src="images/NewItem48.png" alt="NewItem48" /></p>
+      <p>Choose the required route and click OK.</p>
+      <p>If you have no train in a station registered with the system, or 
+          all trains registered are being dispatched you will get the 
+          following message:</p>
+      <p><img src="images/NewItem49.png" alt="NewItem49" /></p>
+      <p>Put a train in a station, register it and try again. In the below 
+          example we have one train available 'Class 20'</p>
+      <p><img src="images/NewItem50.png" alt="NewItem50" /></p>
+      <p>You will then get the following message:</p>
+      <p><img src="images/NewItem51.png" alt="NewItem51" /></p>
+      <ol>
+      <li>Stop at End of Route: The train will travel from its current 
+          position to the start of the route, travel along the route, then stop</li>
+      <li>return to start position: The train will travel from its current 
+          position to the start of the route, travel along the route, then 
+          return to the start position</li>
+      <li>return to start position and repeat: As (2) but repeat forever</li>
+      </ol>
+      
+      <a name="ScheduleRoute" id="ScheduleRoute"></a>
+      <h2>Schedule Route</h2>
+      
+      
+      <p>To store the routes we have used the mechanism provided by Operations 
+          which normally provides instructions to move trains manually. To 
+          schedule the trains we use the scheduling mechanism of Operations.</p>
+      <p>To check that we have some routes setup we press 'View/Edit Routes'.</p>
+      <p>To schedule these routes we press 'View/Edit Scheduled Trains'. 
+          Here we have set up 3 trains to be scheduled.</p>
+      <p><img src="images/NewItem42.png" alt="NewItem42" width="770" height="181" /></p>
+      <p>To setup a new train press 'Add...'. To see the route press Edit for the 
+          particular train. For instructions on how to set up the trains you can l
+          ook at the help for Operations which can be seen by pressing Help | Window Help.</p>
+      <p>The mechanism is quite straightforward and you probably can setup the 
+          train without any further help.</p>
+      <p>On Add train you will get the following pop-up</p>
+      <p><img src="images/NewItem43.png" alt="NewItem43" /></p>
+      <p>Note that you have to fill in</p>
+      <ol>
+      <li>Train Name (this is arbitrary. The actual train that will run is the 
+          train sitting in the start position of the route</li>
+      <li>Description (this can be left blank, but if the following key words are 
+          entered (any order) they will have the following effect</li>
+      <ol>
+      <li>skip : the train will be ignored when scheduling takes place</li>
+      <li>repeat : the train will go along the route, then repeat forever</li>
+      <li>stopping : the train will normally go direct from station to station on 
+          the route. Stopping will cause the train to stop at any station it 
+          passes on the route</li>
+      </ol>
+
+      </ol>
+      <p>All other entries can be ignored as the Dispatcher System does not use them.</p>
+      
+      <a name="running" id="running"></a>
+      <h2>Run scheduled trains</h2>
+      
+      
+      <p>If the trains have been scheduled in the Operations scheduler as described 
+          above pressing the 'Start Scheduler' button will start the scheduler at a 
+          midnight on a fast clock 1 times the normal speed.</p>
+      <p><img src="images/NewItem53.png" alt="NewItem53" /></p>
+      <p>If you wish to change the start time (trains may start later) or wish to 
+          change other parameters press Set scheduler start time.</p>
+      <p><img src="images/NewItem54.png" alt="NewItem54" /></p>
+      <p>I recommend changing the fast clock to 10 times normal speed, and the fast 
+          clock time to whatever you require, but at least a few minutes before the 
+          first train to be scheduled.</p>
+      <p>You may wish to view the fast clock. I like the analog clock so there is a 
+          button 'Show Analog Clock', but if you wish to see another clock change 
+          the code or use the menu on PanelPro | Tools | Clocks.</p>
+      <p>To start the scheduler press 'Start Scheduler' and the clock will start 
+          and the trains set up to be dispatched will start when the fast clock 
+          gets to the correct time.</p>
+      
+      <a name="FeaturesSystem" id="FeaturesSystem"></a>
+      <h2>Features of the Dispatcher System</h2>
+      
+      
+      <ol>
+      <li>The Dispatcher system is designed to run trains from station to station. 
+          The system has been set up with a network graph which allows the system 
+          to get the shortest path between two stations, and this is used to get 
+          the route between the two stations. At present if a train is in a station 
+          en route, the system will not re-route to avoid the train, and the train 
+          may get stuck. Care must be taken when running trains.</li>
+      
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

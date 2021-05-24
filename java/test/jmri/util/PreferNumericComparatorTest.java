@@ -37,6 +37,13 @@ public class PreferNumericComparatorTest {
     }
 
     @Test
+    public void testBigNumber() {  // these should default to lexical compares
+        Comparator<String> c = new PreferNumericComparator();
+        Assert.assertEquals(" 99999999999999 = 99999999999999", 0, c.compare("99999999999999", "99999999999999"));
+        Assert.assertEquals(" 99999999999999 < 99999999999998", -1, c.compare("99999999999998", "99999999999999"));
+    }
+
+    @Test
     public void testCompareNestedNumeric() {
         Comparator<String> c = new PreferNumericComparator();
         Assert.assertEquals(" 1.1.0 < 2.1.0", -1, c.compare("1.1.0", "2.1.0"));

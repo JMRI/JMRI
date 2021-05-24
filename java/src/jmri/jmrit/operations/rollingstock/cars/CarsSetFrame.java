@@ -29,6 +29,7 @@ public class CarsSetFrame extends CarSetFrame {
     // Ignore checkbox states
     private static boolean ignoreStatusCheckBoxSelected = false;
     private static boolean ignoreLocationCheckBoxSelected = false;
+    private static boolean ignoreDivisionCheckBoxSelected = false;
     private static boolean ignoreRWECheckBoxSelected = false;
     private static boolean ignoreRWLCheckBoxSelected = false;
     private static boolean ignoreLoadCheckBoxSelected = false;
@@ -45,14 +46,14 @@ public class CarsSetFrame extends CarSetFrame {
 
         setTitle(Bundle.getMessage("TitleSetCars"));
         addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
-        // modify Save button text to "Change";
-        // as the changes entered in the panel is directly applied, use ButtonApply
+        // modify Save button text to "Apply";
         saveButton.setText(Bundle.getMessage("ButtonApply"));
         // disable edit load button if no cars selected
         editLoadButton.setEnabled(false);
         // show ignore checkboxes
         ignoreStatusCheckBox.setVisible(true);
         ignoreLocationCheckBox.setVisible(true);
+        ignoreDivisionCheckBox.setVisible(true);
         ignoreRWECheckBox.setVisible(true);
         ignoreRWLCheckBox.setVisible(true);
         ignoreLoadCheckBox.setVisible(true);
@@ -65,6 +66,7 @@ public class CarsSetFrame extends CarSetFrame {
         // set the last state
         ignoreStatusCheckBox.setSelected(ignoreStatusCheckBoxSelected);
         ignoreLocationCheckBox.setSelected(ignoreLocationCheckBoxSelected);
+        ignoreDivisionCheckBox.setSelected(ignoreDivisionCheckBoxSelected);
         ignoreRWECheckBox.setSelected(ignoreRWECheckBoxSelected);
         ignoreRWLCheckBox.setSelected(ignoreRWLCheckBoxSelected);
         ignoreLoadCheckBox.setSelected(ignoreLoadCheckBoxSelected);
@@ -94,6 +96,7 @@ public class CarsSetFrame extends CarSetFrame {
     protected void ignoreAll(boolean b) {
         ignoreStatusCheckBox.setSelected(!locationUnknownCheckBox.isSelected() & b);
         ignoreLocationCheckBox.setSelected(b);
+        ignoreDivisionCheckBox.setSelected(b);
         ignoreRWECheckBox.setSelected(b);
         ignoreRWLCheckBox.setSelected(b);
         ignoreLoadCheckBox.setSelected(b);
@@ -111,6 +114,7 @@ public class CarsSetFrame extends CarSetFrame {
         // save ignore states
         ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();
         ignoreLocationCheckBoxSelected = ignoreLocationCheckBox.isSelected();
+        ignoreDivisionCheckBoxSelected = ignoreDivisionCheckBox.isSelected();
         ignoreRWECheckBoxSelected = ignoreRWECheckBox.isSelected();
         ignoreRWLCheckBoxSelected = ignoreRWLCheckBox.isSelected();
         ignoreLoadCheckBoxSelected = ignoreLoadCheckBox.isSelected();

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -56,7 +57,7 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Always true ::: Log error%n");
+        return String.format("Always true ::: Use default%n");
     }
     
     @Override
@@ -65,11 +66,11 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Trigger action ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Always true ::: Log error%n" +
+                "               Always true ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -192,7 +193,7 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

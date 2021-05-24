@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -63,7 +64,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Memory IM1 is equal to \"\" ::: Log error%n");
+        return String.format("Memory IM1 is equal to \"\" ::: Use default%n");
     }
     
     @Override
@@ -72,11 +73,11 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Continuous action ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Memory IM1 is equal to \"\" ::: Log error%n" +
+                "               Memory IM1 is equal to \"\" ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -195,7 +196,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionMemory.removeMemory();
-        Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
+        Assert.assertEquals("Memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory '' is equal to \"\"", expressionMemory.getLongDescription());
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");
@@ -469,7 +470,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         logixNG.addConditionalNG(conditionalNG);
         
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.ContinuousAction);
+        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
@@ -491,7 +492,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         expressionMemory.setMemory(memory);
         memory.setValue("");
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

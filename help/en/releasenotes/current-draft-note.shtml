@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCCppOverTCP server now forwards all messages, even those with unknown or invalid syntax</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -109,7 +109,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
             </ul>
@@ -131,7 +131,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Added startup action to open SPROG Slot Monitor</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -353,9 +353,7 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li>The CTC Editor windows location and size settings have been moved to the
-            standard JMRI location within the current profile.  The AwtWindowProperies.txt
-            file in the ctc directory at the user files location is no longer used.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -391,14 +389,6 @@
         <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
-        </ul>
-
-    <h3>LogixNG</h3>
-        <a id="LogixNG" name="LogixNG"></a>
-        <ul>
-          <li>Add Actions and Expressions for Blocks.</li>
-          <li>Add support for WhereUsed bean usage searches.</li>
-          <li>Add WhereUsed reports for Blocks and Sensors.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -462,8 +452,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed Duplication of Sensors in Sensor Table views. Bug introduced in 4.23.3</li>
-            <li>Fixed Sensor Table sort issues with Delay to Active, Delay to InActive columns.</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -521,7 +510,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>When &quot;Use large speed slider and control buttons&quot; is enabled, throttle control panel buttons (and slider) will resize automatically to leverage available space in throttle control panel</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -551,7 +540,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li>Add support for searching LogixNG for bean usage.</li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>

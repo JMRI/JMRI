@@ -10,6 +10,8 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Abstract female socket.
  *
@@ -61,11 +63,12 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public void setParentForAllChildren() {
+    public boolean setParentForAllChildren(List<String> errors) {
         if (isConnected()) {
             getConnectedSocket().setParent(this);
-            getConnectedSocket().setParentForAllChildren();
+            return getConnectedSocket().setParentForAllChildren(errors);
         }
+        return true;
     }
 
     /** {@inheritDoc} */
@@ -153,7 +156,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         if (name.isEmpty()) return false;
         if (!Character.isLetter(name.charAt(0))) return false;
         for (int i=0; i < name.length(); i++) {
-            if (!Character.isLetterOrDigit(name.charAt(i)) || (name.charAt(i) == '_')) {
+            if (!Character.isLetterOrDigit(name.charAt(i)) && (name.charAt(i) != '_')) {
                 return false;
             }
         }
@@ -298,7 +301,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public String getSystemName() {
-        throw new UnsupportedOperationException("Not supported.");
+        return getParent().getSystemName();
     }
 
     /** {@inheritDoc} */
@@ -322,7 +325,16 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         return _parent.getRoot();
     }
 
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
+    protected void printTreeRow(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        if (settings._printLineNumbers) {
+            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+        }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
@@ -330,24 +342,45 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         throw new UnsupportedOperationException("Not supported.");
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         throw new UnsupportedOperationException("Not supported.");
     }
 
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent,
+            MutableInt lineNumber) {
+        
+        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (isConnected()) {
-            getConnectedSocket().printTree(settings, locale, writer, indent, currentIndent+indent);
+            getConnectedSocket().printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
         } else {
+            if (settings._printLineNumbers) {
+                writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
+            }
             writer.append(currentIndent);
             writer.append(indent);
             if (settings._printNotConnectedSockets) writer.append("Socket not connected");

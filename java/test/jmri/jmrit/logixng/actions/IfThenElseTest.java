@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
@@ -7,7 +9,6 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.True;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -44,11 +45,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "If Then Else. Trigger action ::: Log error%n" +
+                "If Then Else. Execute on change ::: Use default%n" +
                 "   ? If%n" +
-                "      Sensor '' is Active ::: Log error%n" +
+                "      Sensor '' is Active ::: Use default%n" +
                 "   ! Then%n" +
-                "      Set turnout '' to state Thrown ::: Log error%n" +
+                "      Set turnout '' to state Thrown ::: Use default%n" +
                 "   ! Else%n" +
                 "      Socket not connected%n");
     }
@@ -59,11 +60,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Trigger action ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Sensor '' is Active ::: Log error%n" +
+                "               Sensor '' is Active ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set turnout '' to state Thrown ::: Log error%n" +
+                "               Set turnout '' to state Thrown ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -81,17 +82,17 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         IfThenElse t = new IfThenElse("IQDA321", null);
-        t.setType(IfThenElse.Type.TriggerAction);
+        t.setType(IfThenElse.Type.ExecuteOnChange);
         Assert.assertNotNull("exists",t);
         t = new IfThenElse("IQDA321", null);
-        t.setType(IfThenElse.Type.ContinuousAction);
+        t.setType(IfThenElse.Type.AlwaysExecute);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCtorAndSetup1() {
         IfThenElse expression = new IfThenElse("IQDA321", null);
-        expression.setType(IfThenElse.Type.TriggerAction);
+        expression.setType(IfThenElse.Type.ExecuteOnChange);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
@@ -164,7 +165,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtorAndSetup2() {
         IfThenElse expression = new IfThenElse("IQDA321", null);
-        expression.setType(IfThenElse.Type.TriggerAction);
+        expression.setType(IfThenElse.Type.ExecuteOnChange);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
@@ -240,7 +241,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         MaleSocket childSocket2 = m1.registerAction(new ActionMemory("IQDA594", null));
         
         IfThenElse expression = new IfThenElse("IQDA321", null);
-        expression.setType(IfThenElse.Type.TriggerAction);
+        expression.setType(IfThenElse.Type.ExecuteOnChange);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
@@ -330,14 +331,14 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Test
     public void testToString() {
         IfThenElse action = new IfThenElse("IQDA321", null);
-        action.setType(IfThenElse.Type.TriggerAction);
+        action.setType(IfThenElse.Type.ExecuteOnChange);
         Assert.assertEquals("strings are equal", "If Then Else", action.getShortDescription());
-        Assert.assertEquals("strings are equal", "If Then Else. Trigger action", action.getLongDescription());
+        Assert.assertEquals("strings are equal", "If Then Else. Execute on change", action.getLongDescription());
         
         action = new IfThenElse("IQDA321", null);
-        action.setType(IfThenElse.Type.ContinuousAction);
+        action.setType(IfThenElse.Type.AlwaysExecute);
         Assert.assertEquals("strings are equal", "If Then Else", action.getShortDescription());
-        Assert.assertEquals("strings are equal", "If Then Else. Continuous action", action.getLongDescription());
+        Assert.assertEquals("strings are equal", "If Then Else. Always execute", action.getLongDescription());
     }
     
     @Test
@@ -373,7 +374,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         actionIfThenElse = new IfThenElse("IQDA321", null);
-        actionIfThenElse.setType(IfThenElse.Type.TriggerAction);
+        actionIfThenElse.setType(IfThenElse.Type.ExecuteOnChange);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
@@ -391,7 +392,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         _base = actionIfThenElse;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

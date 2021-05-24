@@ -80,7 +80,11 @@ public class SprogVersionQuery implements SprogListener {
         }
         if (state == QueryState.DONE) {
             // Reply immediately
-            l.notifyVersion(ver);
+            try {
+                l.notifyVersion(ver);
+            } catch (jmri.ProgrammerException e) {
+                log.error("Programmer Exception in non-programming context", e);
+            }
             return;
         }
         // Remember this listener
@@ -106,7 +110,11 @@ public class SprogVersionQuery implements SprogListener {
         ver = v;
         for (SprogVersionListener listener : getCopyOfListeners()) {
             try {
-                listener.notifyVersion(ver);
+                try {
+                    listener.notifyVersion(ver);
+                } catch (jmri.ProgrammerException e) {
+                    log.error("Programmer Exception in non-programming context", e);
+                }
                 versionListeners.remove(listener);
             } catch (Exception e) {
                 log.warn("notify: During dispatch to {}", listener, e);

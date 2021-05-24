@@ -1,4 +1,4 @@
-!-- Sidebar.shtml -->
+<!-- Sidebar.shtml -->
 <!-- Common sidebar for html/apps/[subdirectory] pages, mimics html/apps/Sidebar.shtml -->
 <!-- NOTE: each subdirectory MUST have a SidebarAppLocalPart.shtml -->
 
@@ -28,5 +28,6 @@
     <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
 
 </div> <!-- close #side -->
-
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

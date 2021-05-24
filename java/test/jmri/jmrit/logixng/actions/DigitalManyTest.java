@@ -48,7 +48,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Many ::: Log error%n" +
+                "Many ::: Use default%n" +
                 "   ! A1%n" +
                 "      Socket not connected%n");
     }
@@ -59,7 +59,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Many ::: Log error%n" +
+                "         Many ::: Use default%n" +
                 "            ! A1%n" +
                 "               Socket not connected%n");
     }
@@ -339,7 +339,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
         _base = action;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

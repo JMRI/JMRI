@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -52,7 +53,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1 as string value ::: Log error%n");
+        return String.format("Get memory IM1 as string value ::: Use default%n");
     }
     
     @Override
@@ -61,11 +62,11 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A ::: Log error%n" +
+                "         Read string E and set string A ::: Use default%n" +
                 "            ?s E%n" +
-                "               Get memory IM1 as string value ::: Log error%n" +
+                "               Get memory IM1 as string value ::: Use default%n" +
                 "            !s A%n" +
-                "               Set memory IM2 ::: Log error%n");
+                "               Set memory IM2 ::: Use default%n");
     }
     
     @Override
@@ -320,7 +321,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("Get memory as string value", _base.getShortDescription());
+        Assert.assertEquals("Memory as string value", _base.getShortDescription());
     }
     
     @Test
@@ -385,7 +386,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         MaleSocket socketAction = InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
         maleSocketDoStringAction.getChild(1).connect(socketAction);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

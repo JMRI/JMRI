@@ -203,6 +203,18 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     }
 
     /**
+     * Get the editor with the given title.
+     *
+     * @param title the title of the editor
+     * @return the editor with the given title or null if no editor by that title
+     * exists
+     */
+    @CheckForNull
+    public Editor get(@Nonnull String title) {
+        return getAll().stream().filter(e -> e.getTitle().equals(title)).findFirst().orElse(null);
+    }
+
+    /**
      * Get the editor with the given name.
      *
      * @param name the name of the editor
@@ -210,8 +222,8 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * exists
      */
     @CheckForNull
-    public Editor get(@Nonnull String name) {
-        return getAll().stream().filter(e -> e.getTitle().equals(name)).findFirst().orElse(null);
+    public Editor getByName(@Nonnull String name) {
+        return getAll().stream().filter(e -> e.getName().equals(name)).findFirst().orElse(null);
     }
 
     /**

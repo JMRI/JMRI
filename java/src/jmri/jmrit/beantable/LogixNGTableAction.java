@@ -19,6 +19,8 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 /**
  * Swing action to create and register a LogixNG Table.
  * <p>
@@ -27,20 +29,13 @@ import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
  * <p>
- * Two additional action and variable name selection methods have been added:
- * <ol>
- *     <li>Single Pick List
- *     <li>Combo Box Selection
- * </ol>
- * The traditional tabbed Pick List with text entry is the default method.
- * The Options menu has been expanded to list the 3 methods.
- * Mar 27, 2017 - Dave Sand
  *
  * @author Dave Duchamp Copyright (C) 2007 (LogixTableAction)
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011 (LogixTableAction)
  * @author Matthew Harris copyright (c) 2009 (LogixTableAction)
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
+ * @author Dave Sand copyright (c) 2021
  */
 public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
@@ -86,6 +81,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         for (LogixNG x : getManager().getNamedBeanSet()) {
             x.setEnabled(enable);
         }
+        m.fireTableDataChanged();
     }
 
     @Override
@@ -115,7 +111,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     @Override
     protected String getBeanText(LogixNG e) {
         StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ");
+        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
     }
 
@@ -131,7 +127,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixNGAddEdit", true);     // NOI18N
+                "package.jmri.jmrit.logixng.LogixNGTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

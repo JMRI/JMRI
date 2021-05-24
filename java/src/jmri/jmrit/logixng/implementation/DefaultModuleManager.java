@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -10,6 +11,8 @@ import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 
 /**
@@ -116,10 +119,12 @@ public class DefaultModuleManager extends AbstractManager<Module>
 
     /** {@inheritDoc} */
     @Override
-    public void resolveAllTrees() {
+    public boolean resolveAllTrees(List<String> errors) {
+        boolean result = true;
         for (Module logixNG_Module : _tsys.values()) {
-            logixNG_Module.setParentForAllChildren();
+            result = result && logixNG_Module.setParentForAllChildren(errors);
         }
+        return result;
     }
     
     /** {@inheritDoc} */
@@ -140,15 +145,26 @@ public class DefaultModuleManager extends AbstractManager<Module>
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
-        printTree(settings, Locale.getDefault(), writer, indent);
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
+        printTree(settings, Locale.getDefault(), writer, indent, lineNumber);
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            MutableInt lineNumber) {
+        
         for (Module module : getNamedBeanSet()) {
-            module.printTree(settings, locale, writer, indent, "");
+            module.printTree(settings, locale, writer, indent, "", lineNumber);
             writer.println();
         }
         InstanceManager.getDefault(ModuleManager.class);

@@ -39,7 +39,7 @@ import jmri.swing.NamedBeanComboBox;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
-public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public abstract class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // Managers
     // LocationManagerXml managerXml = InstanceManager.getDefault(LocationManagerXml.class);
@@ -130,8 +130,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
 
-    public TrackEditFrame() {
-        super();
+    public TrackEditFrame(String title) {
+        super(title);
     }
 
     public void initComponents(Location location, Track track) {

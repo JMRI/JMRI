@@ -16,6 +16,9 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
@@ -29,7 +32,7 @@ import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
 /**
  * Frame for user to place car on the layout
  *
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013, 2014
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013, 2014, 2021
  */
 public class CarSetFrame extends RollingStockSetFrame<Car> {
 
@@ -45,6 +48,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     Car _car;
 
     // combo boxes
+    protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
     protected JComboBox<Location> destReturnWhenEmptyBox = InstanceManager.getDefault(LocationManager.class)
             .getComboBox();
     protected JComboBox<Track> trackReturnWhenEmptyBox = new JComboBox<>();
@@ -57,10 +61,12 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
 
     // buttons
+    JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     // check boxes
+    protected JCheckBox ignoreDivisionCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     protected JCheckBox ignoreRWLCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
@@ -72,11 +78,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     private static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
     private static boolean autoReturnWhenLoadedTrackCheckBoxSelected = false;
 
+    // frames
     CarLoadEditFrame lef = null;
+    DivisionEditFrame def = null;
 
     private static boolean enableDestination = false;
 
-    public CarSetFrame(){
+    public CarSetFrame() {
         super(Bundle.getMessage("TitleCarSet"));
     }
 
@@ -92,17 +100,14 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
 
+        // initial caps for some languages i.e. German
         editLoadButton.setToolTipText(
-                MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"), Bundle.getMessage("load"))); // initial
-                                                                                                            // caps for
-                                                                                                            // some
-                                                                                                            // languages
-                                                                                                            // i.e.
-                                                                                                            // German
+                MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"), Bundle.getMessage("load")));
         editKernelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 Bundle.getMessage(KERNEL).toLowerCase()));
 
-        // optional panel load, return when empty, return when loaded, and kernel
+        // optional panel load, return when empty, return when loaded, division, and
+        // kernel
         paneOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
         pOptional.setLayout(new BoxLayout(pOptional, BoxLayout.Y_AXIS));
 
@@ -144,6 +149,15 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         addItem(pReturnWhenLoaded, autoReturnWhenLoadedTrackCheckBox, 4, 1);
         pOptional.add(pReturnWhenLoaded);
 
+        // division field
+        JPanel pDivision = new JPanel();
+        pDivision.setLayout(new GridBagLayout());
+        pDivision.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("HomeDivision")));
+        addItemLeft(pDivision, ignoreDivisionCheckBox, 1, 0);
+        addItem(pDivision, divisionComboBox, 2, 0);
+        addItem(pDivision, editDivisionButton, 3, 0);
+        pOptional.add(pDivision);
+
         // add kernel fields
         JPanel pKernel = new JPanel();
         pKernel.setLayout(new GridBagLayout());
@@ -154,6 +168,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         pOptional.add(pKernel);
 
         // don't show ignore checkboxes
+        ignoreDivisionCheckBox.setVisible(false);
         ignoreRWECheckBox.setVisible(false);
         ignoreRWLCheckBox.setVisible(false);
         ignoreLoadCheckBox.setVisible(false);
@@ -166,9 +181,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         addComboBoxAction(destReturnWhenEmptyBox);
         addComboBoxAction(destReturnWhenLoadedBox);
         addComboBoxAction(loadComboBox);
+        addComboBoxAction(divisionComboBox);
 
         // setup button
         addButtonAction(editLoadButton);
+        addButtonAction(editDivisionButton);
         addButtonAction(editKernelButton);
 
         // setup checkboxes
@@ -177,11 +194,14 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         addCheckBoxAction(autoReturnWhenEmptyTrackCheckBox);
         addCheckBoxAction(autoReturnWhenLoadedTrackCheckBox);
         addCheckBoxAction(ignoreLoadCheckBox);
+        addCheckBoxAction(ignoreDivisionCheckBox);
         addCheckBoxAction(ignoreKernelCheckBox);
 
         // tool tips
         ignoreRWECheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
+        ignoreRWLCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         ignoreLoadCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
+        ignoreDivisionCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         ignoreKernelCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         outOfServiceCheckBox.setToolTipText(Bundle.getMessage("TipCarOutOfService"));
         autoReturnWhenEmptyTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));
@@ -189,6 +209,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // get notified if combo box gets modified
         carLoads.addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
+        InstanceManager.getDefault(DivisionManager.class).addPropertyChangeListener(this);
 
         packFrame();
     }
@@ -199,6 +220,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         updateLoadComboBox();
         updateRweLoadComboBox();
         updateRwlLoadComboBox();
+        updateDivisionComboBox();
         updateKernelComboBox();
     }
 
@@ -224,6 +246,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // If routing is disabled, the RWE and Final Destination fields do not work
         if (!Setup.isCarRoutingEnabled()) {
             ignoreRWECheckBox.setSelected(true);
+            ignoreRWLCheckBox.setSelected(true);
             ignoreFinalDestinationCheckBox.setSelected(true);
         }
 
@@ -244,6 +267,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         ignoreLoadCheckBox.setEnabled(enabled);
         loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected() && enabled);
         editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() && enabled && _car != null);
+        
+        ignoreDivisionCheckBox.setEnabled(enabled);
+        divisionComboBox.setEnabled(!ignoreDivisionCheckBox.isSelected() && enabled);
+        editDivisionButton.setEnabled(!ignoreDivisionCheckBox.isSelected() && enabled && _car != null);
 
         ignoreKernelCheckBox.setEnabled(enabled);
         kernelComboBox.setEnabled(!ignoreKernelCheckBox.isSelected() && enabled);
@@ -299,6 +326,12 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             f.setLocationRelativeTo(this);
             f.addPropertyChangeListener(this);
             f.initComponents(CarAttributeEditFrame.KERNEL, (String) kernelComboBox.getSelectedItem());
+        }
+        if (ae.getSource() == editDivisionButton) {
+            if (def != null) {
+                def.dispose();
+            }
+            def = new DivisionEditFrame((Division) divisionComboBox.getSelectedItem());
         }
     }
 
@@ -363,6 +396,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 }
             }
         }
+        // division
+        if (!ignoreDivisionCheckBox.isSelected()) {
+            car.setDivision((Division) divisionComboBox.getSelectedItem());
+        }
         // kernel
         if (!ignoreKernelCheckBox.isSelected() && kernelComboBox.getSelectedItem() != null) {
             if (kernelComboBox.getSelectedItem().equals(RollingStockManager.NONE)) {
@@ -384,8 +421,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // return when empty fields
         if (!ignoreRWECheckBox.isSelected()) {
             // check that RWE load is valid for this car's type
-            if (carLoads.getNames(car.getTypeName())
-                    .contains(loadReturnWhenEmptyBox.getSelectedItem())) {
+            if (carLoads.getNames(car.getTypeName()).contains(loadReturnWhenEmptyBox.getSelectedItem())) {
                 car.setReturnWhenEmptyLoadName((String) loadReturnWhenEmptyBox.getSelectedItem());
             } else {
                 log.debug("Car ({}) type ({}) doesn't support RWE load ({})", car, car.getTypeName(),
@@ -427,8 +463,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // return when loaded fields
         if (!ignoreRWLCheckBox.isSelected()) {
             // check that RWL load is valid for this car's type
-            if (carLoads.getNames(car.getTypeName())
-                    .contains(loadReturnWhenLoadedBox.getSelectedItem())) {
+            if (carLoads.getNames(car.getTypeName()).contains(loadReturnWhenLoadedBox.getSelectedItem())) {
                 car.setReturnWhenLoadedLoadName((String) loadReturnWhenLoadedBox.getSelectedItem());
             } else {
                 log.debug("Car ({}) type ({}) doesn't support RWL load ({})", car, car.getTypeName(),
@@ -579,8 +614,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setFinalDestinationTrack(_car.getFinalDestinationTrack());
             }
             // update car load
-            if (!ignoreLoadCheckBox.isSelected() &&
-                    carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
+            if (!ignoreLoadCheckBox.isSelected() && carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
                 car.setLoadName(_car.getLoadName());
             }
             // update kernel
@@ -606,6 +640,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (ae.getSource() == autoTrainCheckBox) {
             updateTrainComboBox();
         }
+        if (ae.getSource() == ignoreDestinationCheckBox) {
+            divisionComboBox.setEnabled(!ignoreDestinationCheckBox.isSelected());
+        }
         if (ae.getSource() == ignoreRWECheckBox) {
             destReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
             trackReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
@@ -621,6 +658,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (ae.getSource() == ignoreLoadCheckBox) {
             loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected());
             editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() && _car != null);
+        }
+        if (ae.getSource() == ignoreDivisionCheckBox) {
+            divisionComboBox.setEnabled(!ignoreDivisionCheckBox.isSelected());
+            editDivisionButton.setEnabled(!ignoreDivisionCheckBox.isSelected());
         }
         if (ae.getSource() == ignoreKernelCheckBox) {
             kernelComboBox.setEnabled(!ignoreKernelCheckBox.isSelected());
@@ -709,7 +750,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             loadComboBox.setSelectedItem(_car.getLoadName());
         }
     }
-    
+
     protected void updateRweLoadComboBox() {
         if (_car != null) {
             log.debug("Updating RWE load box for car ({})", _car);
@@ -717,7 +758,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             loadReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyLoadName());
         }
     }
-    
+
     protected void updateRwlLoadComboBox() {
         if (_car != null) {
             log.debug("Updating RWL load box for car ({})", _car);
@@ -730,6 +771,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         carManager.updateKernelComboBox(kernelComboBox);
         if (_car != null) {
             kernelComboBox.setSelectedItem(_car.getKernelName());
+        }
+    }
+    
+    protected void updateDivisionComboBox() {
+        InstanceManager.getDefault(DivisionManager.class).updateComboBox(divisionComboBox);
+        if (_car != null) {
+            divisionComboBox.setSelectedItem(_car.getDivision());
         }
     }
 
@@ -802,6 +850,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Car.KERNEL_NAME_CHANGED_PROPERTY)) {
             updateKernelComboBox();
+        }
+        if (e.getPropertyName().equals(DivisionManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            updateDivisionComboBox();
         }
         if (e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)) {
             enableDestinationFields(!locationUnknownCheckBox.isSelected());
