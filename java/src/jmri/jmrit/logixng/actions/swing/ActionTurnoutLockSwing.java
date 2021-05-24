@@ -208,14 +208,18 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionTurnoutLock but is a: "+object.getClass().getName());
         }
         ActionTurnoutLock action = (ActionTurnoutLock)object;
-        if (!turnoutBeanPanel.isEmpty() && (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect)) {
+        if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
             Turnout turnout = turnoutBeanPanel.getNamedBean();
             if (turnout != null) {
                 NamedBeanHandle<Turnout> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(turnout.getDisplayName(), turnout);
                 action.setTurnout(handle);
+            } else {
+                action.removeTurnout();
             }
+        } else {
+            action.removeTurnout();
         }
         try {
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {

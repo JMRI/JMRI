@@ -214,14 +214,18 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSensor but is a: "+object.getClass().getName());
         }
         ActionSensor action = (ActionSensor)object;
-        if (!sensorBeanPanel.isEmpty() && (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect)) {
+        if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
             Sensor sensor = sensorBeanPanel.getNamedBean();
             if (sensor != null) {
                 NamedBeanHandle<Sensor> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(sensor.getDisplayName(), sensor);
                 action.setSensor(handle);
+            } else {
+                action.removeSensor();
             }
+        } else {
+            action.removeSensor();
         }
         try {
             if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {

@@ -208,14 +208,18 @@ public class EnableLogixSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an EnableLogix but is a: "+object.getClass().getName());
         }
         EnableLogix action = (EnableLogix)object;
-        if (!logixBeanPanel.isEmpty() && (_tabbedPaneLogix.getSelectedComponent() == _panelLogixDirect)) {
+        if (_tabbedPaneLogix.getSelectedComponent() == _panelLogixDirect) {
             Logix logix = logixBeanPanel.getNamedBean();
             if (logix != null) {
                 NamedBeanHandle<Logix> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(logix.getDisplayName(), logix);
                 action.setLogix(handle);
+            } else {
+                action.removeLogix();
             }
+        } else {
+            action.removeLogix();
         }
         try {
             if (_tabbedPaneLogix.getSelectedComponent() == _panelLogixDirect) {
