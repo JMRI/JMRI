@@ -6,26 +6,26 @@
 	    <div style="text-align: center">JMRI&reg; connects to...</div>
 	    <dl>
 
-		<dt><h3 style="padding-left: 1em;"><a href="index.shtml">DCC++</a></h3></dt>
+		<dt><a href="index.shtml">DCC++</a></dt>
 		<dd>
 		    <ul>
 			<li><a href="Sensors.shtml">DCC++ Sensors</a></li>
 			<li><a href="Turnouts.shtml">DCC++ Turnouts</a></li>
 		    </ul>
 		</dd>
-		
-            <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" --> 
-            
+
+            <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
+
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
-	
+
          </dl>
 
         <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
-   
+
 	</div> <!-- closes #side -->
   <!-- button is in /Header -->
   <script src="/js/side.js"></script>

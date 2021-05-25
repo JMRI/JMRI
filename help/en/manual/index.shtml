@@ -17,7 +17,7 @@
 
       <h1>JMRI&reg; Manuals</h1>
 
-      <table border="0" summary="Manual links">
+      <table>
         <tbody>
           <tr>
             <td>Version:<br>
@@ -183,8 +183,8 @@
 
       <!-- image by Egbert Broerse @silverailscolo 2018 -->
       <a href="images/JmriStepByStepDiagram.png"><img
-      src="images/JmriStepByStepDiagram.png" align="right" width="421"
-      height="298" hspace="0" vspace="0" alt="JMRI levels"></a>
+      src="images/JmriStepByStepDiagram.png" width="421" height="298"
+      alt="JMRI levels" style="float: right"></a>
 
       <p>Our general advice is to start with the basics. For that
       we suggest you start setting up a simple track

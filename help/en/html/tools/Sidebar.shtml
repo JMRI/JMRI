@@ -1,7 +1,7 @@
 <!-- Sidebar.shtml -->
 <!-- This is the common sidebar definition for html/tools pages -->
  <hr class="hide">
-	
+
     <div id="side"> <!-- Block of text on left side of page -->
         <div style="text-align: center">JMRI&reg; is...</div>
         <dl>
@@ -9,16 +9,16 @@
         <!--#include virtual="../../parts/SidebarTools.shtml" -->
 
         <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
-	    
-        <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
+
+        <dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
 	<!-- THE ABOVE MUST BE AN ABSOLUTE ADDRESS LINK SO THIS SIDEBAR CAN BE REFERENCED AT MULTIPLE LEVELS IN THE DIRECTORY HIERARCHY -->
         <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
-	<!-- If someday we want to show the whole list, replace the link above with #include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
-	
+	<!-- If someday we want to show the whole list, replace the link above with #include virtual="../../parts/SidebarSupportedHardware.shtml" -->
+
         <!--#include virtual="../../parts/SidebarApplications.shtml" -->
 
          </dl>
-	 
+
     <!--#include virtual="../../parts/SidebarTail.shtml" -->
 
     </div> <!-- closes #side -->
@@ -30,4 +30,4 @@
 <!-- ===**======**======**=====**=======**==========**==========**=====**====**=====  -->
 
 <!-- Use Sidebar in Tools Directory unless something unique to add -->
-<!-- Use an #include virtual="Sidebar.shtml" -->   
+<!-- Use an #include virtual="Sidebar.shtml" -->
