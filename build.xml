@@ -162,6 +162,7 @@
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.2.1.jar"/>
         <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
+        <pathelement location="${libdir}/pi4j-gpio-extension-1.2.jar"/>
         <pathelement location="${libdir}/commons-io-2.6.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>

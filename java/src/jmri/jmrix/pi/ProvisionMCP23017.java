@@ -52,7 +52,7 @@ class providerElement {
 }
 
 public class ProvisionMCP23017 {
-    static ArrayList<providerElement> elementArray = new ArrayList();       // Provider cache
+    static ArrayList<providerElement> elementArray = new ArrayList<providerElement>();       // Provider cache
     
     /**
      * Look up a bus/channel combination in the cache.  If found, use the cached provider; if not,
