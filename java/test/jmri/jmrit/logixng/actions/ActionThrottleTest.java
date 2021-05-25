@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.DccThrottle;
@@ -447,7 +448,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         conditionalNG_2.getChild(0).connect(maleSocket2);
 
         logixNG.setEnabled(true);
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         // Test execute when no children are connected
         actionThrottle2.execute();
@@ -588,7 +589,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
         conditionalNG_2.getChild(0).connect(maleSocket2);
 
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
 
         int locoAddress = 1234;
         AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
@@ -730,7 +731,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _base = actionThrottle;
         _baseMaleSocket = maleSocket;
 
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

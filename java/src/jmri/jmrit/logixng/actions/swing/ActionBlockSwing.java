@@ -260,7 +260,7 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
         }
 
         if (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect) {
-            if (_blockBeanPanel == null || _blockBeanPanel.getNamedBean() == null) {
+            if (_blockBeanPanel.getNamedBean() == null) {
                 errorMessages.add(Bundle.getMessage("ActionBlock_ErrorBlock"));
             }
         }
@@ -353,14 +353,18 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
         }
         ActionBlock action = (ActionBlock) object;
 
-        if (_blockBeanPanel != null && !_blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
+        if (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect) {
             Block block = _blockBeanPanel.getNamedBean();
             if (block != null) {
                 NamedBeanHandle<Block> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(block.getDisplayName(), block);
                 action.setBlock(handle);
+            } else {
+                action.removeBlock();
             }
+        } else {
+            action.removeBlock();
         }
 
         try {

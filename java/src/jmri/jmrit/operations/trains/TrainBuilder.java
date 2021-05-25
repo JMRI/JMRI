@@ -3488,8 +3488,10 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Tries to set a final destination for the car with a home division.
-     * @param car the car
-     * @param trackType One of three track types: Track.SPUR Track.YARD or Track.STAGING
+     * 
+     * @param car           the car
+     * @param trackType     One of three track types: Track.SPUR Track.YARD or
+     *                      Track.STAGING
      * @param home_division If true track's division must match the car's
      * @return true if car was given a final destination
      */
@@ -3502,7 +3504,8 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDivisionTrack"),
                                 new Object[] { track.getTrackTypeName(), track.getLocation().getName(), track.getName(),
-                                        track.getDivisionName(), car.getLoadType().toLowerCase(), car.getLoadName() }));
+                                        track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
+                                        car.getLoadName() }));
                 continue;
             }
             if (locationsNotServiced.contains(track.getLocation())) {
@@ -3923,8 +3926,8 @@ public class TrainBuilder extends TrainCommon {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildNoDivisionTrack"),
                                     new Object[] { track.getTrackTypeName(), track.getLocation().getName(),
-                                            track.getName(), track.getDivisionName(), car.getLoadType().toLowerCase(),
-                                            car.getLoadName() }));
+                                            track.getName(), track.getDivisionName(), car.toString(),
+                                            car.getLoadType().toLowerCase(), car.getLoadName() }));
                     // restore car's load
                     car.setLoadName(oldCarLoad);
                     continue;
@@ -5122,7 +5125,7 @@ public class TrainBuilder extends TrainCommon {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildNoDivisionTrack"),
                                     new Object[] { stageTrack.getTrackTypeName(), stageTrack.getLocation().getName(),
-                                            stageTrack.getName(), stageTrack.getDivisionName(),
+                                            stageTrack.getName(), stageTrack.getDivisionName(), car.toString(),
                                             car.getLoadType().toLowerCase(), car.getLoadName() }));
                     loads.remove(i);
                     continue;

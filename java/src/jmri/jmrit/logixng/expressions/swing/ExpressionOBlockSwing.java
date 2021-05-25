@@ -225,14 +225,18 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionOBlock but is a: "+object.getClass().getName());
         }
         ExpressionOBlock expression = (ExpressionOBlock)object;
-        if (!oblockBeanPanel.isEmpty() && (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect)) {
+        if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
             OBlock oblock = oblockBeanPanel.getNamedBean();
             if (oblock != null) {
                 NamedBeanHandle<OBlock> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(oblock.getDisplayName(), oblock);
                 expression.setOBlock(handle);
+            } else {
+                expression.removeOBlock();
             }
+        } else {
+            expression.removeOBlock();
         }
         try {
             if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {

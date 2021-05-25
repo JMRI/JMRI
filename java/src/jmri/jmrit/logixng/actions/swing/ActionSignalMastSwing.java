@@ -323,7 +323,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
     }
 
     private void setAspectComboBox(ActionSignalMast action) {
-        SignalMast sm = null;
+        SignalMast sm;
         if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
             sm = (SignalMast) _signalMastBeanPanel.getBeanCombo().getSelectedItem();
         } else {
@@ -401,13 +401,15 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSignalMast but is a: "+object.getClass().getName());
         }
         ActionSignalMast action = (ActionSignalMast)object;
-        if (!_signalMastBeanPanel.isEmpty() && (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)) {
+        if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
             SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
             if (signalMast != null) {
                 NamedBeanHandle<SignalMast> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
                 action.setSignalMast(handle);
+            } else {
+                action.removeSignalMast();
             }
         } else {
             action.removeSignalMast();

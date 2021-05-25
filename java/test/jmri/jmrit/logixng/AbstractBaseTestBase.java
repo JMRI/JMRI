@@ -136,6 +136,13 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == getLastMaleSocket(_baseMaleSocket));
     }
     
+    @Test
+    public void testFemaleSocketSystemName() {
+        for (int i=0; i < _base.getChildCount(); i++) {
+            Assert.assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
+        }
+    }
+    
     /*.*
      * Set parent to null for all children to item, and their children.
      *./
