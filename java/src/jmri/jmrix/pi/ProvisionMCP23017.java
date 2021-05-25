@@ -106,7 +106,7 @@ public class ProvisionMCP23017 {
         try {
             parsedPin pp = new parsedPin (SystemName);
             MCP23017GpioProvider provider = getProvider (pp.BusNumber, pp.ChannelNumber);
-            if ((pp.PinNumber >= 0) && (pp.PinNumber <= 15)) {
+            if ((provider != null) && (pp.PinNumber >= 0) && (pp.PinNumber <= 15)) {
                 return SystemName;
             }
         } catch (Exception ex) {
