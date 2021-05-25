@@ -3,7 +3,9 @@ package jmri.jmrix.pi;
 import com.pi4j.gpio.extension.mcp.MCP23017GpioProvider;
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.*;
+import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -17,18 +19,18 @@ import java.util.ArrayList;
 /**
  * Parse and store an MCP23017 Pin address and Pin.
  */
-class parsedPin {
-    int BusNumber;          // I2C Bus Number
-    int ChannelNumber;      // MCP23017 Device Channel on that bus (32-39)
-    int PinNumber;          // Pin Number on that MCP23017 (0-15)
-    Pin Pin;                // Pin as provided by Pi4j
+class ParsedPin {
+    int busNumber;          // I2C Bus Number
+    int channelNumber;      // MCP23017 Device Channel on that bus (32-39)
+    int pinNumber;          // Pin Number on that MCP23017 (0-15)
+    Pin pin;                // Pin as provided by Pi4j
     
-    parsedPin (String SystemName) {
+    ParsedPin (String SystemName) {
         String [] tokens = SystemName.split (":");
-        BusNumber     = Integer.parseInt(tokens[2]);
-        ChannelNumber = Integer.parseInt(tokens[3]);
-        PinNumber     = Integer.parseInt(tokens[4]);
-        Pin           = MCP23017Pin.ALL[PinNumber];
+        busNumber     = Integer.parseInt(tokens[2]);
+        channelNumber = Integer.parseInt(tokens[3]);
+        pinNumber     = Integer.parseInt(tokens[4]);
+        pin           = MCP23017Pin.ALL[pinNumber];
     }
 }
 
@@ -39,20 +41,20 @@ class parsedPin {
  * 
  * @author dmj
  */
-class providerElement {
-    int BusNumber;
-    int ChannelNumber;
-    MCP23017GpioProvider Provider;
+class ProviderElement {
+    int busNumber;
+    int channelNumber;
+    MCP23017GpioProvider provider;
     
-    providerElement (int bus, int chan, MCP23017GpioProvider provider) {
-        BusNumber = bus;
-        ChannelNumber = chan;
-        Provider = provider;
+    ProviderElement (int bus, int chan, MCP23017GpioProvider _provider) {
+        busNumber = bus;
+        channelNumber = chan;
+        provider = _provider;
     }
 }
 
 public class ProvisionMCP23017 {
-    static ArrayList<providerElement> elementArray = new ArrayList<providerElement>();       // Provider cache
+    static ArrayList<ProviderElement> elementArray = new ArrayList<ProviderElement>();       // Provider cache
     
     /**
      * Look up a bus/channel combination in the cache.  If found, use the cached provider; if not,
@@ -61,16 +63,16 @@ public class ProvisionMCP23017 {
     private MCP23017GpioProvider getProvider (int bus, int chan) {
         MCP23017GpioProvider provider;
         for (int i = 0; i < elementArray.size(); i++) {
-            if ((bus == elementArray.get(i).BusNumber) && (chan == elementArray.get(i).ChannelNumber)) {
-                return elementArray.get(i).Provider;
+            if ((bus == elementArray.get(i).busNumber) && (chan == elementArray.get(i).channelNumber)) {
+                return elementArray.get(i).provider;
             }
         }
         try {
             provider = new MCP23017GpioProvider (bus, chan);
-        } catch (Exception ex) {
+        } catch (com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException | IOException ex) {
             return null;
         }
-        elementArray.add (new providerElement (bus, chan, provider));
+        elementArray.add (new ProviderElement (bus, chan, provider));
         return provider;
     }
 
@@ -78,38 +80,33 @@ public class ProvisionMCP23017 {
      * Get an output pin.
      */
     public GpioPinDigitalOutput provisionDigitalOutputPin (GpioController gpio, String SystemName) {
-        try {
-            parsedPin pp = new parsedPin (SystemName);
-            MCP23017GpioProvider provider = getProvider (pp.BusNumber, pp.ChannelNumber);
-            GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(provider, pp.Pin, SystemName, PinState.LOW);
-            return pin;
-        } catch (Exception ex) {
+        ParsedPin pp = new ParsedPin (SystemName);
+        MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
+        if (provider == null) {
             return null;
         }
+        GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(provider, pp.pin, SystemName, PinState.LOW);
+        return pin;
     }
 
     /**
      * Get an input pin.
      */
     public GpioPinDigitalInput provisionDigitalInputPin (GpioController gpio, String SystemName) {
-        try {
-            parsedPin pp = new parsedPin (SystemName);
-            MCP23017GpioProvider provider = getProvider (pp.BusNumber, pp.ChannelNumber);
-            GpioPinDigitalInput pin = gpio.provisionDigitalInputPin(provider, pp.Pin, SystemName);
-            return pin;
-        } catch (Exception ex) {
+        ParsedPin pp = new ParsedPin (SystemName);
+        MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
+        if (provider == null) {
             return null;
         }
+        GpioPinDigitalInput pin = gpio.provisionDigitalInputPin(provider, pp.pin, SystemName);
+        return pin;
     }
     
     public String validateSystemName (GpioController gpio, String SystemName) {
-        try {
-            parsedPin pp = new parsedPin (SystemName);
-            MCP23017GpioProvider provider = getProvider (pp.BusNumber, pp.ChannelNumber);
-            if ((provider != null) && (pp.PinNumber >= 0) && (pp.PinNumber <= 15)) {
-                return SystemName;
-            }
-        } catch (Exception ex) {
+        ParsedPin pp = new ParsedPin (SystemName);
+        MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
+        if ((provider != null) && (pp.pinNumber >= 0) && (pp.pinNumber <= 15)) {
+            return SystemName;
         }
         return null;
     }

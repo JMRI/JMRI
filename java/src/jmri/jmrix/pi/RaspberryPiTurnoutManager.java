@@ -35,8 +35,7 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     @Nonnull
     @Override
     protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
-        Turnout t = new RaspberryPiTurnout(systemName, userName);
-        return t;
+        return new RaspberryPiTurnout(systemName, userName);
     }
     
     /**

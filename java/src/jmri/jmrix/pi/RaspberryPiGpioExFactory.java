@@ -5,9 +5,12 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.Pin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openide.util.Exceptions;
 
 /**
  * Find and load the appropriate class for a given Raspberry Pi extended GPIO pin address. 
@@ -36,7 +39,13 @@ public class RaspberryPiGpioExFactory {
             Class<?> proClass = getProvisionerClass (SystemName);
             Method getPin = proClass.getMethod("provisionDigitalOutputPin", GpioController.class, String.class);
             return (GpioPinDigitalOutput) getPin.invoke(proClass.newInstance(), gpio, SystemName);
-        } catch (Exception ex) {
+        } catch (  ClassNotFoundException
+                 | NoSuchMethodException
+                 | SecurityException
+                 | InstantiationException
+                 | InvocationTargetException
+                 | IllegalArgumentException
+                 | IllegalAccessException ex) {
             return null;
         }
     }
@@ -49,7 +58,13 @@ public class RaspberryPiGpioExFactory {
             Class<?> proClass = getProvisionerClass (SystemName);
             Method getPin = proClass.getMethod("provisionDigitalInputPin", GpioController.class, String.class);
             return (GpioPinDigitalInput) getPin.invoke(proClass.newInstance(), gpio, SystemName);
-        } catch (Exception ex) {
+        } catch (  ClassNotFoundException
+                 | NoSuchMethodException
+                 | SecurityException
+                 | InstantiationException
+                 | InvocationTargetException
+                 | IllegalArgumentException
+                 | IllegalAccessException ex) {
             return null;
         }
     }
