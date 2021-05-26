@@ -30,7 +30,9 @@ class ParsedPin {
         busNumber     = Integer.parseInt(tokens[2]);
         channelNumber = Integer.parseInt(tokens[3]);
         pinNumber     = Integer.parseInt(tokens[4]);
-        pin           = MCP23017Pin.ALL[pinNumber];
+        if ((pinNumber >= 0) && (pinNumber <= 15)) {
+            pin = MCP23017Pin.ALL[pinNumber];
+        }
     }
 }
 
@@ -102,7 +104,7 @@ public class ProvisionMCP23017 {
         return pin;
     }
     
-    public String validateSystemName (GpioController gpio, String SystemName) {
+    public String validateSystemNameFormat (GpioController gpio, String SystemName) {
         ParsedPin pp = new ParsedPin (SystemName);
         MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
         if ((provider != null) && (pp.pinNumber >= 0) && (pp.pinNumber <= 15)) {

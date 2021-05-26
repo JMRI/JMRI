@@ -25,8 +25,16 @@ public class RaspberryPiGpioExFactory {
      * and use Class.forName to load it.
      */
     private static Class<?> getProvisionerClass (String SystemName) throws ClassNotFoundException {
-        String proName = SystemName.substring(SystemName.indexOf(":")+1);
-        proName = proName.substring(0, proName.indexOf(":"));
+        int colonIx = SystemName.indexOf (":");
+        if (colonIx < 0) {
+            throw new ClassNotFoundException();    
+        }
+        String proName = SystemName.substring(colonIx+1);
+        colonIx = proName.indexOf (":");
+        if (colonIx < 1) {
+            throw new ClassNotFoundException();    
+        }
+        proName = proName.substring(0, colonIx);
         String className = "jmri.jmrix.pi.Provision" + proName;
         return Class.forName(className);
     }
