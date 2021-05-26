@@ -15,10 +15,6 @@ import org.junit.jupiter.api.*;
  */
 public class ProvisionMCP23017Test {
 
-    private GpioController gpio = null;
-
-    private GpioProvider myProvider;
-
     @Test
     public void testBadNameFormat() {
         ProvisionMCP23017 Pinstance = new ProvisionMCP23017 ();
@@ -29,9 +25,6 @@ public class ProvisionMCP23017Test {
     @BeforeEach
     public void setUp() {
        JUnitUtil.setUp();
-       myProvider = new PiGpioProviderScaffold();
-       GpioFactory.setDefaultProvider(myProvider);
-       gpio = GpioFactory.getInstance ();
     }
     
     @AfterEach
