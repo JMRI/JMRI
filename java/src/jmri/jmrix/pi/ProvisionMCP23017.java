@@ -104,11 +104,14 @@ public class ProvisionMCP23017 {
         return pin;
     }
     
-    public String validateSystemNameFormat (GpioController gpio, String SystemName) {
-        ParsedPin pp = new ParsedPin (SystemName);
-        MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
-        if ((provider != null) && (pp.pinNumber >= 0) && (pp.pinNumber <= 15)) {
-            return SystemName;
+    public String validateSystemNameFormat (String SystemName) {
+        try {
+            ParsedPin pp = new ParsedPin (SystemName);
+            MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
+            if ((provider != null) && (pp.pinNumber >= 0) && (pp.pinNumber <= 15)) {
+                return SystemName;
+            }
+        } catch (Exception ex) {
         }
         return null;
     }

@@ -76,5 +76,18 @@ public class RaspberryPiGpioExFactory {
             return null;
         }
     }
-
+    
+    public static String validateSystemNameFormat (String SystemName) throws jmri.NamedBean.BadSystemNameException {
+        Class<?> proClass = null;
+        try {
+            proClass = getProvisionerClass (SystemName);
+            Method validateName = proClass.getMethod ("validateSystemNameFormat");
+            String validName = (String) validateName.invoke (proClass.newInstance(), SystemName);
+            if (validName != null) {
+                return validName;
+            }
+        } catch (Exception Ex) {
+        }
+        throw new jmri.NamedBean.BadSystemNameException ();
+    }
 }

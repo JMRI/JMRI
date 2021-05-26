@@ -73,12 +73,13 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
      */
     @Override
     @Nonnull
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException, IllegalArgumentException {
-        if (name.length() < 3) {
-            throw new IllegalArgumentException();
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        int prefixLen = getSystemNamePrefix().length();
+        if (name.length() <= prefixLen) {
+            throw new jmri.NamedBean.BadSystemNameException();
         }
-        if (name.substring (2,3).equals (":")) {
-            return name;
+        if (name.substring (prefixLen, prefixLen+1).equals (":")) {
+            return RaspberryPiGpioExFactory.validateSystemNameFormat (name);
         } else {
             return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
         }

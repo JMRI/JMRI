@@ -53,18 +53,19 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     }
     
     /**
-     * Validates to either ":xxx..." (:MCP23017:xxx) or Integer Format 0-999 with valid prefix.
+     * Validates to either ":xxx..." or Integer Format 0-999 with valid prefix.
      * eg. PT0 to PT999, PT:MCP23017:1:32:0
      * {@inheritDoc}
      */
     @Override
     @Nonnull
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException, IllegalArgumentException {
-        if (name.length() < 3) {
-            throw new IllegalArgumentException();
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        int prefixLen = getSystemNamePrefix().length();
+        if (name.length() <= prefixLen) {
+            throw new jmri.NamedBean.BadSystemNameException();
         }
-        if (name.substring (2,3).equals (":")) {
-            return name;
+        if (name.substring (prefixLen, prefixLen+1).equals (":")) {
+            return RaspberryPiGpioExFactory.validateSystemNameFormat (name);
         } else {
             return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
         }

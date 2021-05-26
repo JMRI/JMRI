@@ -22,7 +22,7 @@ public class ProvisionMCP23017Test {
     @Test
     public void testBadNameFormat() {
         ProvisionMCP23017 Pinstance = new ProvisionMCP23017 ();
-        String s = Pinstance.validateSystemNameFormat (gpio, "PT:MCP23017:1:38:17");
+        String s = Pinstance.validateSystemNameFormat ("PT:MCP23017:1:38:17");
         Assert.assertNull(s);
     }
 
