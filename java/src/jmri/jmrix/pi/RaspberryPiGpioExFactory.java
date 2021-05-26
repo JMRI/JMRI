@@ -81,7 +81,7 @@ public class RaspberryPiGpioExFactory {
         Class<?> proClass = null;
         try {
             proClass = getProvisionerClass (SystemName);
-            Method validateName = proClass.getMethod ("validateSystemNameFormat");
+            Method validateName = proClass.getMethod ("validateSystemNameFormat", String.class);
             String validName = (String) validateName.invoke (proClass.newInstance(), SystemName);
             if (validName != null) {
                 return validName;
