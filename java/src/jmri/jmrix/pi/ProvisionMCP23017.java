@@ -25,13 +25,17 @@ class ParsedPin {
     int pinNumber;          // Pin Number on that MCP23017 (0-15)
     Pin pin;                // Pin as provided by Pi4j
     
-    ParsedPin (String SystemName) {
-        String [] tokens = SystemName.split (":");
-        busNumber     = Integer.parseInt(tokens[2]);
-        channelNumber = Integer.parseInt(tokens[3]);
-        pinNumber     = Integer.parseInt(tokens[4]);
-        if ((pinNumber >= 0) && (pinNumber <= 15)) {
-            pin = MCP23017Pin.ALL[pinNumber];
+    ParsedPin (String SystemName) throws Exception {
+        try {
+            String [] tokens = SystemName.split (":");
+            busNumber     = Integer.parseInt(tokens[2]);
+            channelNumber = Integer.parseInt(tokens[3]);
+            pinNumber     = Integer.parseInt(tokens[4]);
+            if ((pinNumber >= 0) && (pinNumber <= 15)) {
+                pin = MCP23017Pin.ALL[pinNumber];
+            }
+        } catch (NumberFormatException ex) {
+            throw new Exception ();
         }
     }
 }
@@ -82,26 +86,34 @@ public class ProvisionMCP23017 {
      * Get an output pin.
      */
     public GpioPinDigitalOutput provisionDigitalOutputPin (GpioController gpio, String SystemName) {
-        ParsedPin pp = new ParsedPin (SystemName);
-        MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
-        if (provider == null) {
+        try {
+            ParsedPin pp = new ParsedPin (SystemName);
+            MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
+            if (provider == null) {
+                return null;
+            }
+            GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(provider, pp.pin, SystemName, PinState.LOW);
+            return pin;
+        } catch (Exception ex) {
             return null;
         }
-        GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(provider, pp.pin, SystemName, PinState.LOW);
-        return pin;
     }
 
     /**
      * Get an input pin.
      */
     public GpioPinDigitalInput provisionDigitalInputPin (GpioController gpio, String SystemName) {
-        ParsedPin pp = new ParsedPin (SystemName);
-        MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
-        if (provider == null) {
+        try {
+            ParsedPin pp = new ParsedPin (SystemName);
+            MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
+            if (provider == null) {
+                return null;
+            }
+            GpioPinDigitalInput pin = gpio.provisionDigitalInputPin(provider, pp.pin, SystemName);
+            return pin;
+        } catch (Exception ex) {
             return null;
         }
-        GpioPinDigitalInput pin = gpio.provisionDigitalInputPin(provider, pp.pin, SystemName);
-        return pin;
     }
     
     public String validateSystemNameFormat (String SystemName) {

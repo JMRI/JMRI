@@ -24,15 +24,15 @@ public class RaspberryPiGpioExFactory {
      * Get the class name from the pin name based on the string between the first two colons
      * and use Class.forName to load it.
      */
-    private static Class<?> getProvisionerClass (String SystemName) throws ClassNotFoundException {
+    private static Class<?> getProvisionerClass (String SystemName) throws Exception {
         int colonIx = SystemName.indexOf (":");
         if (colonIx < 0) {
-            throw new ClassNotFoundException();    
+            throw new Exception();    
         }
         String proName = SystemName.substring(colonIx+1);
         colonIx = proName.indexOf (":");
         if (colonIx < 1) {
-            throw new ClassNotFoundException();    
+            throw new Exception();    
         }
         proName = proName.substring(0, colonIx);
         String className = "jmri.jmrix.pi.Provision" + proName;
@@ -47,13 +47,7 @@ public class RaspberryPiGpioExFactory {
             Class<?> proClass = getProvisionerClass (SystemName);
             Method getPin = proClass.getMethod("provisionDigitalOutputPin", GpioController.class, String.class);
             return (GpioPinDigitalOutput) getPin.invoke(proClass.newInstance(), gpio, SystemName);
-        } catch (  ClassNotFoundException
-                 | NoSuchMethodException
-                 | SecurityException
-                 | InstantiationException
-                 | InvocationTargetException
-                 | IllegalArgumentException
-                 | IllegalAccessException ex) {
+        } catch (Exception ex) {
             return null;
         }
     }
@@ -66,13 +60,7 @@ public class RaspberryPiGpioExFactory {
             Class<?> proClass = getProvisionerClass (SystemName);
             Method getPin = proClass.getMethod("provisionDigitalInputPin", GpioController.class, String.class);
             return (GpioPinDigitalInput) getPin.invoke(proClass.newInstance(), gpio, SystemName);
-        } catch (  ClassNotFoundException
-                 | NoSuchMethodException
-                 | SecurityException
-                 | InstantiationException
-                 | InvocationTargetException
-                 | IllegalArgumentException
-                 | IllegalAccessException ex) {
+        } catch (Exception ex) {
             return null;
         }
     }
@@ -86,7 +74,7 @@ public class RaspberryPiGpioExFactory {
             if (validName != null) {
                 return validName;
             }
-        } catch (Exception Ex) {
+        } catch (Exception ex) {
         }
         throw new jmri.NamedBean.BadSystemNameException ();
     }
