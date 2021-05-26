@@ -39,7 +39,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         }
         // Functions default to false
         this.isForward = true;
-        setSpeedStepMode(speedStepMode.NMRA_DCC_128);
+        this.setSpeedStepMode(speedStepMode.NMRA_DCC_128);
         
 
         //@TODO - this needs a little work. Current implementation looks like it
