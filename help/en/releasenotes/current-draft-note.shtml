@@ -294,6 +294,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Added support for new QuadLN_S Midpoint/Oscillate mode</li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>

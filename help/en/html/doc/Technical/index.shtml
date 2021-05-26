@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -270,24 +270,24 @@
 
       <h2>Visualizations of JMRI Development Activity</h2>
 
-      <p>You can see a summary of the JMRI developer activity 
+      <p>You can see a summary of the JMRI developer activity
       on the GitHub project page for the
       <a href="https://github.com/JMRI/JMRI/graphs/contributors">main code repository</a>
-      and 
+      and
       <a href="https://github.com/JMRI/website/graphs/contributors">the website</a>.
-      
-      <p>The 
+
+      <p>The
       <a href="/community/visuals/codeflower.shtml">JMRI CodeFlower</a>
       provides a dynamic view of the whole GitHub repository.
       It shows the relative size of the code in each file and the
       structure in which the files are stored.
-      
-      <p>More detailed metrics are available on the 
+
+      <p>More detailed metrics are available on the
       <a href="https://www.openhub.net/p/jmri">JMRI OpenHub</a> pages on
       <a href="https://www.openhub.net/p/jmri/contributors/summary">contributors</a>
       and
       <a href="https://www.openhub.net/p/jmri/commits/summary">commits</a>.
-      
+
       <p>Dennis Miller created a <a href=
       "https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm of
       JMRI development</a> that represents activity from inception to January 2009. A
