@@ -7,7 +7,7 @@ daysUntilStale: 45
 daysUntilClose: 15
 
 # Issues with these labels will never be considered stale. Set to `[]` to disable
-exemptLabels: "Bug"
+exemptLabels: ["Bug"]
 
 # exemptLabels:
 #  - "status: accepted"
