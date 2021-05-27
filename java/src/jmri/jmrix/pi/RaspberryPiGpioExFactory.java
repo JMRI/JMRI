@@ -10,11 +10,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmri.NamedBean;
+
 import org.openide.util.Exceptions;
 
 /**
  * Find and load the appropriate class for a given Raspberry Pi extended GPIO pin address. 
- * Invoke the appropriate method on the class to create & provision an input or output pin.
+ * Invoke the appropriate method on the class to create and provision an input or output pin.
  * 
  * @author dmj
  */
@@ -40,7 +42,11 @@ public class RaspberryPiGpioExFactory {
     }
 
     /**
-     * Get an output pin
+     * Get an output pin.
+     * 
+     * @param gpio is the current GpioController
+     * @param SystemName is the name of the pin to be provisioned
+     * @return The provisioned pin or null if the pin could not be obtained
      */
     public static GpioPinDigitalOutput provisionOutputPinByName (GpioController gpio, String SystemName) {
         try {
@@ -53,7 +59,11 @@ public class RaspberryPiGpioExFactory {
     }
     
     /**
-     * Get an input pin
+     * Get an input pin.
+     * 
+     * @param gpio is the current GpioController
+     * @param SystemName is the name of the pin to be provisioned
+     * @return The provisioned pin or null if the pin could not be obtained
      */
     public static GpioPinDigitalInput provisionInputPinByName (GpioController gpio, String SystemName) {
         try {
@@ -65,6 +75,13 @@ public class RaspberryPiGpioExFactory {
         }
     }
     
+    /**
+     * Validate the format of a system name
+     * 
+     * @param SystemName is the name to be validated
+     * @return The validated system name
+     * @throws jmri.NamedBean.NamedBean.BadSystemNameException if the name fails validation
+     */
     public static String validateSystemNameFormat (String SystemName) throws jmri.NamedBean.BadSystemNameException {
         Class<?> proClass = null;
         try {

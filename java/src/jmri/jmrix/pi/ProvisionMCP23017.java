@@ -84,6 +84,10 @@ public class ProvisionMCP23017 {
 
     /**
      * Get an output pin.
+     * 
+     * @param gpio is the current GpioController
+     * @param SystemName is the name of the pin to be provisioned
+     * @return The provisioned pin or null if the pin could not be obtained
      */
     public GpioPinDigitalOutput provisionDigitalOutputPin (GpioController gpio, String SystemName) {
         try {
@@ -101,6 +105,10 @@ public class ProvisionMCP23017 {
 
     /**
      * Get an input pin.
+     * 
+     * @param gpio is the current GpioController
+     * @param SystemName is the name of the pin to be provisioned
+     * @return The provisioned pin or null if the pin could not be obtained
      */
     public GpioPinDigitalInput provisionDigitalInputPin (GpioController gpio, String SystemName) {
         try {
@@ -116,6 +124,12 @@ public class ProvisionMCP23017 {
         }
     }
     
+    /**
+     * Validate the format of a system name
+     * 
+     * @param SystemName is the name to be validated
+     * @return The validated system name or null if the name could not be validated.
+     */
     public String validateSystemNameFormat (String SystemName) {
         try {
             ParsedPin pp = new ParsedPin (SystemName);
