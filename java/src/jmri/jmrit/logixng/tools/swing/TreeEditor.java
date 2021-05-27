@@ -308,7 +308,6 @@ public class TreeEditor extends TreeViewer {
                 for (Class<? extends Base> clazz : classes) {
                     SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
                     if (sci != null) {
-                        sci.setFrame(this);
                         _swingConfiguratorComboBox.addItem(sci);
                     } else {
                         log.error("Class {} has no swing configurator interface", clazz.getName());
@@ -710,7 +709,6 @@ public class TreeEditor extends TreeViewer {
             if (object != null) {
                 _editSwingConfiguratorInterface =
                         SwingTools.getSwingConfiguratorForClass(object.getClass());
-                _editSwingConfiguratorInterface.setFrame(this);
                 panels.add(_editSwingConfiguratorInterface.getConfigPanel(object, panel5));
                 _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(_editSwingConfiguratorInterface, object));
             } else {
@@ -1261,6 +1259,7 @@ public class TreeEditor extends TreeViewer {
         private static final String ACTION_COMMAND_UNLOCK = "unlock";
         private static final String ACTION_COMMAND_LOCAL_VARIABLES = "local_variables";
         private static final String ACTION_COMMAND_CHANGE_USERNAME = "change_username";
+        private static final String ACTION_COMMAND_EXECUTE_EVALUATE = "execute_evaluate";
 //        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
         
         private final JTree _tree;
@@ -1283,6 +1282,7 @@ public class TreeEditor extends TreeViewer {
         private JMenuItem menuItemUnlock;
         private JMenuItem menuItemLocalVariables;
         private JMenuItem menuItemChangeUsername;
+        private JMenuItem menuItemExecuteEvaluate;
 //        private JMenuItem menuItemExpandTree;
         
         PopupMenu() {
@@ -1361,6 +1361,12 @@ public class TreeEditor extends TreeViewer {
             menuItemChangeUsername.addActionListener(this);
             menuItemChangeUsername.setActionCommand(ACTION_COMMAND_CHANGE_USERNAME);
             add(menuItemChangeUsername);
+            
+            addSeparator();
+            menuItemExecuteEvaluate = new JMenuItem();  // The text is set later
+            menuItemExecuteEvaluate.addActionListener(this);
+            menuItemExecuteEvaluate.setActionCommand(ACTION_COMMAND_EXECUTE_EVALUATE);
+            add(menuItemExecuteEvaluate);
 /*            
             addSeparator();
             menuItemExpandTree = new JMenuItem(Bundle.getMessage("PopupMenuExpandTree"));
@@ -1398,8 +1404,6 @@ public class TreeEditor extends TreeViewer {
                                     Rectangle rect = _tree.getPathBounds(path);
                                     if ((e.getY() >= rect.y) && (e.getY() <= rect.y + rect.height)) {
                                         FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
-                                        _tree.getLocationOnScreen();
-                                        _tree.getX();
                                         showPopup(e.getX(), e.getY(), femaleSocket, path);
                                     }
                                 }
@@ -1468,6 +1472,19 @@ public class TreeEditor extends TreeViewer {
             menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
             
             menuItemChangeUsername.setEnabled(femaleSocket.isConnected());
+            
+            menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
+            
+            if (femaleSocket.isConnected()) {
+                Base object = _currentFemaleSocket.getConnectedSocket();
+                if (object == null) throw new NullPointerException("object is null");
+                while (object instanceof MaleSocket) {
+                    object = ((MaleSocket)object).getObject();
+                }
+                menuItemExecuteEvaluate.setText(
+                        SwingTools.getSwingConfiguratorForClass(object.getClass())
+                                .getExecuteEvaluateMenuText());
+            }
             
             show(_tree, x, y);
         }
@@ -1606,6 +1623,17 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_CHANGE_USERNAME:
                     changeUsername(_currentFemaleSocket, _currentPath);
+                    break;
+                    
+                case ACTION_COMMAND_EXECUTE_EVALUATE:
+                    Base object = _currentFemaleSocket.getConnectedSocket();
+                    if (object == null) throw new NullPointerException("object is null");
+                    while (object instanceof MaleSocket) {
+                        object = ((MaleSocket)object).getObject();
+                    }
+                    SwingConfiguratorInterface swi =
+                            SwingTools.getSwingConfiguratorForClass(object.getClass());
+                    swi.executeEvaluate(_currentFemaleSocket.getConnectedSocket());
                     break;
                     
 /*                    

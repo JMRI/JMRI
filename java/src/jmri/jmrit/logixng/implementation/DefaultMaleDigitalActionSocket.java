@@ -174,8 +174,7 @@ public class DefaultMaleDigitalActionSocket
         return _enabled;
     }
     
-
-
+    
     public static class DigitalActionDebugConfig implements MaleSocket.DebugConfig {
         
         // If true, the socket is not executing the action.
