@@ -6,6 +6,7 @@ import jmri.jmrit.logixng.actions.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.display.*;
@@ -553,7 +554,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         _base = actionPositionable;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

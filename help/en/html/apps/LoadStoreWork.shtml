@@ -1,26 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
-<head>
 
+<head>
   <title>JMRI: Loading and Storing Your Work</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="Author" content="Jerry Grochow">
   <!--#include virtual="/Style.shtml" -->
-
 </head>
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
 
-    <div id="mainContent">
+  <div id="mainContent">
 
-        <a id="TopOfPage" name="TopOfPage"></a>
-        <h1>JMRI: Loading and Storing Your Work</h1>
-        <p class="subtitle">What Everyone Should Know</p>
+      <a id="TopOfPage" name="TopOfPage"></a>
+      <h1>JMRI: Loading and Storing Your Work</h1>
+      <p class="subtitle">What Everyone Should Know</p>
 
       <p class="noted">This page provides the basic information you should know about what commands are used to
       load and store the data you create and update in JMRI. A companion page with more information for advanced
@@ -334,5 +331,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

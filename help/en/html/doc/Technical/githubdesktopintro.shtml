@@ -1,15 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>JMRI: Using GitHub Desktop</title>
   <meta name="keywords" content="JMRI Git Github desktop">
   <!--#include virtual="/Style.shtml" -->
 </head>
-<!--#include virtual="/Header.shtml" -->
 
 <body>
+<!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -316,5 +315,6 @@ commit.
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

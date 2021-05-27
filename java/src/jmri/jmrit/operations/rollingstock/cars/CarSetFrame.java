@@ -199,7 +199,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
         // tool tips
         ignoreRWECheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
+        ignoreRWLCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         ignoreLoadCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
+        ignoreDivisionCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         ignoreKernelCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         outOfServiceCheckBox.setToolTipText(Bundle.getMessage("TipCarOutOfService"));
         autoReturnWhenEmptyTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));

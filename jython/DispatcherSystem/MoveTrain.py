@@ -3,7 +3,7 @@
 # class MoveTrain
 # Calls dispatcher to move train from one station to another
 # given engine and start and end positions
-# 
+#
 ###############################################################################
 
 class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
@@ -12,9 +12,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, station_from_name, station_to_name, train_name, graph):
         self.logLevel = 0
-        self.station_from_name = station_from_name 
+        self.station_from_name = station_from_name
         self.station_to_name = station_to_name
-        self.train_name = train_name 
+        self.train_name = train_name
         self.graph = graph
 
     def setup(self):
@@ -47,17 +47,17 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "penultimate_block_name" , penultimate_block_name
         previous_edge = train["edge"]
         previous_direction = train["direction"]
-        
+
         trains_dispatched.append(str(train_name))
-        
+
         count_path = 0
-        
+
         for e in paths:
-            
-            # need to check whether: 
-            #   last block of previous edge and current first block 
+
+            # need to check whether:
+            #   last block of previous edge and current first block
             #   are the same
-            
+
             # if the same the train must change direction. as we are going in and out the same path
             #
             previous_edge = train["edge"]
@@ -68,15 +68,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > -1: print train
             if self.logLevel > -1: print "neighbor_name = ", neighbor_name
             if self.logLevel > -1: print "penultimate_block_name" , penultimate_block_name
-            
-            
+
+
             #following is wrong
             # if penultimate_block_name == neighbor_name:
                 # transit_instruction = "buffer"
             # else:
                 # transit_instruction = "straight on"
             # if self.logLevel > -1: print "transit_instruction=",transit_instruction
-            
+
             # if transit_instruction == "buffer":
                 # if previous_direction == "forward":
                     # transit_direction = "reverse"
@@ -84,13 +84,13 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     # transit_direction = "forward"
             # else:
                 # transit_direction = previous_direction
-                
+
             # if self.logLevel > 1: print "transit_direction",transit_direction
-            
+
             BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
             previous_block = BlockManager.getBlock(penultimate_block_name)
             current_block = BlockManager.getBlock(previous_edge.getItem("last_block_name"))
-            next_block = BlockManager.getBlock(current_edge.getItem("second_block_name"))            
+            next_block = BlockManager.getBlock(current_edge.getItem("second_block_name"))
             if count_path == 0:
                 # we are on a new path and must determine the direction
                 [transit_direction, transit_instruction]  = self.set_direction(previous_block, current_block, next_block, previous_direction)
@@ -114,12 +114,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             train["penultimate_block_name"] = e.getItem("penultimate_block_name")
             train["direction"] = transit_direction
             count_path +=1
-            
+
         if self.logLevel > 1: print "transit finished, removing train from dispatch list"
-        if str(train_name) in trains_dispatched:    
+        if str(train_name) in trains_dispatched:
             trains_dispatched.remove(str(train_name))
         if self.logLevel > 1: print "trains_dispatched", trains_dispatched
-        
+
     def set_direction(self, previous_block, current_block, next_block, previous_direction):
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
@@ -145,7 +145,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         to_name = e.getTarget()
         from_name = e.getSource()
         sensor_move_name = "MoveInProgress"+to_name.replace(" ","_")
-        
+
         self.set_sensor(sensor_move_name, "active")
         speech_reqd = self.speech_required_flag()
         self.announce( from_name, to_name, speech_reqd, direction, instruction)
@@ -153,12 +153,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = self.call_dispatch(e, direction, train)
         if self.logLevel > 1: print "______________________"
         if result == True:
-            #Wait for the Active Trains List to have the 
+            #Wait for the Active Trains List to have the
             DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
             java_active_trains_list = DF.getActiveTrainsList()
             java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
             for t in java_active_trains_Arraylist:
-                if self.logLevel > 1: print "t=",t,t.getActiveTrainName() 
+                if self.logLevel > 1: print "t=",t,t.getActiveTrainName()
             #active_trains_list = java.util.Arrays.asList(java_active_trains_list)
             if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_trains_list", java_active_trains_Arraylist
             active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
@@ -177,7 +177,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             self.set_sensor(sensor_move_name, "inactive")
         return result
-        
+
     def speech_required_flag(self):
         self.sound_sensor = sensors.getSensor("soundSensor")
         if self.sound_sensor is None:
@@ -196,7 +196,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         to_name = e.getTarget()
         from_name = e.getSource()
         if self.logLevel > 1: print ("incall_dispatch: move from " + from_name + " to " + to_name)
-        
+
         if direction == "forward":
             filename = self.get_filename(e, "fwd")
             #filename1 = "From " + from_name + " To " + to_name
@@ -204,36 +204,36 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             filename = self.get_filename(e, "rvs")
             #filename1 = "From " + from_name + " To " + to_name + " reverse"
         #filename = filename.replace(" ","_")
-        
+
         if self.logLevel > 1: print "filename = ", filename, "direction = " , direction
         result = self.doDispatch(filename, "ROSTER", train)
-        if self.logLevel > 1: print "result", result        
+        if self.logLevel > 1: print "result", result
         return result
 
     def get_filename(self, e, suffix):
-    
+
         # suffix is "fwd" or "rvs"
         # graph is g.g_express
         # e is edge
-        
+
         from_station_name = g.g_express.getEdgeSource(e)
         to_station_name = g.g_express.getEdgeTarget(e)
         neighbor_name = e.getItem("neighbor_name")
         index = e.getItem("index")
-        
-        filename = "From " + str(from_station_name) + " To " + str(to_station_name) + " Via " + str(neighbor_name) + " " + str(index) 
+
+        filename = "From " + str(from_station_name) + " To " + str(to_station_name) + " Via " + str(neighbor_name) + " " + str(index)
         filename = filename.replace(" ", "_")
         # filename_fwd = filename + "_fwd.xml"
         # filename_rvs = filename + "_rvs.xml"
         filename = filename + "_" + suffix + ".xml"
 
-        return filename    
-        
+        return filename
+
     #    Dispatch (<filename.xml>, [USER | ROSTER | OPERATIONS >,<dccAddress, RosterEntryName or Operations>
-        
+
     def doDispatch(self, traininfoFileName, type, value):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        #try: 
+        #try:
         if self.logLevel > 1: print "traininfoFileName",traininfoFileName
         result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
         if result == -1:
@@ -246,7 +246,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
             # pass
             # return False
-            
+
     def doDispatchxxxx(self, traininfoFileName, type, train):
         if self.logLevel > 1: print "1"
         info = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
@@ -280,7 +280,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "8"
         DF.newTrainDone(null);
         return True
-            
+
     def doDispatchyy(self, traininfoFileName, type, train):
         if self.logLevel > 1: print "In doDispatch: traininfoFileName",traininfoFileName,"type", type, "train", train
         info = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
@@ -294,7 +294,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 info.resetWhenDone, info.reverseAtEnd,  True, DF, info.allocationMethod)
         if (at == None):
             return  # error message sent by createActiveTrain
-        if info.trainFromRoster == True:    
+        if info.trainFromRoster == True:
             #if (info.tSource == ActiveTrain.ROSTER):
             RosterEntry = jmri.jmrit.roster.Roster.getDefault().getEntryForId(train)
             if (RosterEntry != None):
@@ -303,8 +303,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 if self.logLevel > 1: print("Roster Entry '{}' not found, could not create ActiveTrain '{}'",
                         trainNameToUse, info.getTrainName())
-                return False  
-        at.setStarted()                
+                return False
+        at.setStarted()
         at.setAllocateMethod(info.allocationMethod)
         at.setDelayedStart(info.delayedStart)
         at.setDelayedRestart(info.delayedRestart)
@@ -356,8 +356,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #DF = None
 
         return True
-    
-   
+
+
     def set_sensor(self, sensorName, sensorState):
         sensor = sensors.getSensor(sensorName)
         if sensor is None:
@@ -370,9 +370,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             newState = INACTIVE
         else:
             self.displayMessage('{} - Sensor state, {}, is not valid'.format(self.threadName, sensorState))
-        sensor.setKnownState(newState)    
+        sensor.setKnownState(newState)
         return
-        
+
     def wait_sensor(self, sensorName, sensorState):
         sensor = sensors.getSensor(sensorName)
         if sensor is None:
@@ -389,20 +389,20 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     def load_and_run_TrainInfo(self, traininfoFileName):
 
         # get train frame
-        
+
         # load traininfo
-        
+
         # with robot activate new train
 
         TrainInfo = jmri.jmrit.dispatcher.TrainInfo(traininfoFileName)
-        
+
         self.load_standard_items(e, TrainInfo)
-        
+
         #set reverse flag
         TrainInfo.setRunInReverse(False)
-        
-        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(TrainInfo, filename)            
-            
+
+        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(TrainInfo, filename)
+
     ##
     # Loads a train into the Dispatcher from a traininfo file, overriding
     # trainlength to allow train to stop near buffer
@@ -414,7 +414,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     # @param overRideMaxTrainLen
     # @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
     #
-    
+
     def loadTrainFromTrainInfo(self, traininfoFileName, overRideType, overRideValue, overRideMaxTrainLen = None):
         #read xml data from selected filename and move it into trainfo
         if self.logLevel > 1: print "got here a"
@@ -432,7 +432,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 1: print dir(TrainInfo)
             count = 0
             for method in dir(TrainInfo):
-                # the comma at the end of the print, makes it printing 
+                # the comma at the end of the print, makes it printing
                 # in the same line, 4 times (count)
                 if self.logLevel > 1: print "| {0: <20}".format(method),
                 count += 1
@@ -473,7 +473,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     # @param overRideMaxTrainLen length of train
     #            trainname.
     # @return 0 good, -1 failure
-     
+
     def loadTrainFromTrainInfo2(self, info, overRideType, overRideValue, overRideMaxTrainLen = None):
         if self.logLevel > 1: print "got here 1"
         #log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
@@ -495,7 +495,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "got here 3"
         dccAddressToUse = info.getDccAddress()
         trainNameToUse = info.getTrainName()
-        
+
         OVERRIDETYPE_NONE = "NONE"
         OVERRIDETYPE_USER = "USER"
         OVERRIDETYPE_DCCADDRESS = "DCCADDRESS"
@@ -509,10 +509,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             tSource = jmri.jmrit.dispatcher.ActiveTrain.USER
             dccAddressToUse = overRideValue
             trainNameToUse = overRideValue
-        elif overRideType == OVERRIDETYPE_OPERATIONS:    
+        elif overRideType == OVERRIDETYPE_OPERATIONS:
             tSource = jmri.jmrit.dispatcher.ActiveTrain.OPERATIONS
             trainNameToUse = overRideValue
-        elif overRideType == OVERRIDETYPE_ROSTER:    
+        elif overRideType == OVERRIDETYPE_ROSTER:
             tSource = jmri.jmrit.dispatcher.ActiveTrain.ROSTER
             trainNameToUse = overRideValue
         else:
@@ -526,15 +526,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 info.getDestinationBlockSeq(),
                 info.getAutoRun(), dccAddressToUse, info.getPriority(),
                 info.getResetWhenDone(), info.getReverseAtEnd(), True, None, info.getAllocationMethod())
-        if self.logLevel > 1: print "got here 5"        
+        if self.logLevel > 1: print "got here 5"
         if (at != None):
-            if self.logLevel > 1: print "got here 6a"  
+            if self.logLevel > 1: print "got here 6a"
             if (tSource == jmri.jmrit.dispatcher.ActiveTrain.ROSTER):
                 if self.logLevel > 1: print "got here 6aaz"
                 RosterEntry = jmri.jmrit.roster.Roster.getDefault().getEntryForId(trainNameToUse)
                 if self.logLevel > 1: print "got here 6ab"
                 if (RosterEntry != None):
-                    if self.logLevel > 1: print "got here 6b" 
+                    if self.logLevel > 1: print "got here 6b"
                     at.setRosterEntry(RosterEntry)
                     at.setDccAddress(RosterEntry.getDccAddress())
                 else:
@@ -589,24 +589,24 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             log.warn("failed to create Active Train '{}'", info.getTrainName())
             return -1
         return 0
-            
+
     ## ***********************************************************************************
-    
+
     ## sound routines
-    
-    ## ***********************************************************************************            
-        
-            
+
+    ## ***********************************************************************************
+
+
     # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
     def speak(self,msg) :
         #if self.logLevel > 1: print("about to speak",msg)
-        #java.lang.Runtime.getRuntime().exec('Z:\\ConfigProfiles\\jython\\sound2\\nircmd speak text "' + msg +'"')    
+        #java.lang.Runtime.getRuntime().exec('Z:\\ConfigProfiles\\jython\\sound2\\nircmd speak text "' + msg +'"')
         my_dir = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/programs')
-        if self.logLevel > 1: print "nircmd" + my_dir+'/nircmd'
-        java.lang.Runtime.getRuntime().exec(my_dir+'/nircmd speak text "' + msg +'"')
+#         if self.logLevel > 1: print "nircmd" + my_dir+'/nircmd'
+#         java.lang.Runtime.getRuntime().exec(my_dir+'/nircmd speak text "' + msg +'"')
         return
-        
-    def announce(self, fromblockname, toblockname, speak_on, direction, instruction): 
+
+    def announce(self, fromblockname, toblockname, speak_on, direction, instruction):
 
         from_station = self.get_station_name(fromblockname)
         to_station = self.get_station_name(toblockname)
@@ -614,7 +614,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if speak_on == True:
             #self.speak("The train in "+ from_station + " is due to depart to " + to_station + " " + direction + " " + instruction )
             self.speak("The train in "+ from_station + " is due to depart to " + to_station )
-            
+
     def get_station_name(self, block_name):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
         block = BlockManager.getBlock(block_name)
@@ -626,15 +626,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             station_name = block_name
         return station_name
-        
+
     def get_substring_between_delimeters(self, comment, delimeter):
         start = delimeter
         end = delimeter
         s = comment
         substring = s[s.find(start)+len(start):s.rfind(end)]
         return substring
-        
-        
+
+
     def bell(self, bell_on = "True"):
         if bell_on == "True":
             snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")

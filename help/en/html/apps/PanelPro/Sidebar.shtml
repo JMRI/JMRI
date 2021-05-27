@@ -3,30 +3,31 @@
 <!-- NOTE: each subdirectory MUST have a SidebarAppLocalPart.shtml -->
 
 <hr class="hide">
-    
+
     <div id="side"> <!-- Block of text on left side of page -->
         <div style="text-align: center">JMRI&reg; is...</div>
         <dl>
 
            <!-- To include specific sidebar info for this subdirectory... -->
-           <!--#include virtual="SidebarAppLocalPart.shtml" --> 
-          
+           <!--#include virtual="SidebarAppLocalPart.shtml" -->
+
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
-	    
+
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
-	
-          <dt><h3><a href="/help/en/html/hardware/index.shtml">Supported hardware</a></h3></dt>
+
+          <dt><a href="/help/en/html/hardware/index.shtml">Supported hardware</a></dt>
           <dd>JMRI supports a wide range of devices, DCC systems, command stations, networks, and protocols.</dd>
-	  <!-- If someday we want to show the whole list, use #include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+	  <!-- If someday we want to show the whole list, use #include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
 
    	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
-	
+
          </dl>
 
-    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
 
 </div> <!-- close #side -->
-
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

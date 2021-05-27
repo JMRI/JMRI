@@ -275,16 +275,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public final void setParentForAllChildren() {
+    public final boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
             femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 connectedSocket.setParent(femaleSocket);
-                connectedSocket.setParentForAllChildren();
+                result = result && connectedSocket.setParentForAllChildren(errors);
             }
         }
+        return result;
     }
 
     /**

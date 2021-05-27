@@ -2,14 +2,14 @@
 <!-- This is the common sidebar definition for supported hardware pages -->
 <!-- ALPHABETIC ORDER -->
 
-		<dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
+		<dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
 		<dd>Devices, command stations, networks, and protocols:
 		    <ul>
                 <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a>
 				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
-				<li><a href="/help/en/html/hardware/can/index.shtml">CAN Bus Networks</a>				
+				<li><a href="/help/en/html/hardware/can/index.shtml">CAN Bus Networks</a>
 				<li><a href="/help/en/html/hardware/can/cbus/index.shtml">CBUS&reg;</a>
 				<li><a href="/help/en/html/hardware/cmri/CMRI.shtml">C/MRI</a>
 				<li><a href="/help/en/html/hardware/acela/index.shtml">CTI Electronics (Acela)</a>

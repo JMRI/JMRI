@@ -1,7 +1,8 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -49,10 +50,10 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
         // This female socket has child female sockets, which requires special treatment
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        _femaleSocket.setParentForAllChildren();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
         _femaleSocket.connect(maleSocket);
-        _femaleSocket.setParentForAllChildren();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertEquals("malesocket.getParent() is femaleSocket",
                 _femaleGenericSocket,
                 maleSocket.getParent());

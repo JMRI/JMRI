@@ -1,32 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+<head>
   <title>JMRI: Acknowledgements</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  "java model railroad JMRI decoderpro panelpro names people credits">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="/Sidebar.shtml" --> <!-- might be improved to show an Alphabet sidebar + some nav? -->
     <div id="mainContent">
 
       <h2>Acknowledgements: People who've contributed to JMRI</h2>
+
       <p>A number of people have contributed their effort to JMRI.
       They are listed below in alphabetical order and deserve our
       thanks.<br>
@@ -778,7 +768,7 @@
         1980 signal definition</a>, the
         <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>,
         and
-        the <a href="https:/jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
+        the <a href="https://jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
         </li>
 
         <li>Bob McCown, who helped with the migration of the jmriusers list to
@@ -1231,6 +1221,9 @@
         <li>Luis Zamora, who done a lot of work on the
         Catalan translation</li><!-- eldelinux -->
 
+        <li>Mark Ziebell, who worked on signal systems.
+        </li><!-- zie0013 -->
+
         <li>david zuhn, who provided instructions for installing
         the comm libraries on Linux, wrote startup scripts and
         configured Ant for compiling with warnings</li>
@@ -1273,5 +1266,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

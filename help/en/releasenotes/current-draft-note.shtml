@@ -91,7 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Support MQTT Username and Password for Broker Authentication</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -292,6 +292,11 @@
         <h4>TAMS</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Added support for new QuadLN_S Midpoint/Oscillate mode</li>
             </ul>
 
         <h4>TCS</h4>
@@ -558,9 +563,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added the option "dynamic gain" for steam1. See the
-            <a href="https://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#dynamic-gain">documentation</a>
-            for details.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>

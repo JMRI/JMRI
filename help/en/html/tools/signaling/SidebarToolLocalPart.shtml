@@ -1,6 +1,6 @@
 <!-- This is the local part of the sidebar for signaling -->
 
-<dt><h3><a href="index.shtml">Signaling</a></h3></dt>
+<dt><a href="index.shtml">Signaling</a></dt>
 		<dd>Adding signals to your layout with JMRI.
 		    <ul>
 		    <li><a href="SignalingSetup.shtml">Signaling Quick Start</a>

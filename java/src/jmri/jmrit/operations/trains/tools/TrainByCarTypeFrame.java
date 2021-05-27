@@ -17,10 +17,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
@@ -50,9 +47,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
     // The car currently selected
     Car _car;
-    
+
     /**
      * Show how cars for a train can be serviced
+     * 
      * @param train the selected train
      */
     public TrainByCarTypeFrame(Train train) {
@@ -63,6 +61,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
     /**
      * Show how a car for a given train is serviced
+     * 
      * @param car the car being checked
      */
     public TrainByCarTypeFrame(Car car) {
@@ -194,7 +193,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             if (_car != null && _car.getTrack() != null && !_car.getTrack().isDestinationAccepted(location)) {
                 JLabel locText = new JLabel();
                 locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
-                        new Object[]{_car.toString(), _car.getTrackName(), locationName}));
+                        new Object[] { _car.toString(), _car.getTrackName(), locationName }));
                 addItemWidth(pRoute, locText, 2, 1, y++);
                 if (_car.getLocation() != location)
                     continue;
@@ -336,6 +335,21 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) &&
                         !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName())) {
                     op.setText(Bundle.getMessage("X(TrackCustomLoad)"));
+                    // empty car with a home division
+                } else if (_car != null &&
+                        _car.getDivision() != null &&
+                        _car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY) &&
+                        _car.getDivision() != track.getDivision() &&
+                        !track.isInterchange()) {
+                    op.setText(Bundle.getMessage("X(Division)"));
+                    // loaded car with a home division
+                } else if (_car != null &&
+                        _car.getDivision() != null &&
+                        _car.getLoadType().equals(CarLoad.LOAD_TYPE_LOAD) &&
+                        _car.getDivision() != _car.getTrack().getDivision() &&
+                        _car.getDivision() != track.getDivision() &&
+                        !track.isInterchange()) {
+                    op.setText(Bundle.getMessage("X(Division)"));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
                     op.setText(Bundle.getMessage("ButtonOK"));
                 } else if (rl.isDropAllowed()) {
@@ -377,8 +391,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     si.getTypeName().equals(carType) &&
                     (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                             car == null ||
-                            si.getReceiveLoadName().equals(
-                                    car.getLoadName()))) {
+                            si.getReceiveLoadName().equals(car.getLoadName()))) {
                 return true;
             }
             // check to see if schedule services car type and road
@@ -402,8 +415,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     si.getTypeName().equals(carType) &&
                     (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                             car == null ||
-                            si.getReceiveLoadName().equals(
-                                    car.getLoadName())) &&
+                            si.getReceiveLoadName().equals(car.getLoadName())) &&
                     (si.getRoadName().equals(ScheduleItem.NONE) ||
                             car == null ||
                             si.getRoadName().equals(car.getRoadName())) &&

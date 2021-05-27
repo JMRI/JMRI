@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 import jmri.Manager;
@@ -64,14 +65,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * <P>
      * This method ensures that everything in the LogixNG tree has a pointer
      * to its parent.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void resolveAllTrees();
+    public boolean resolveAllTrees(List<String> errors);
 
     /**
      * Setup all LogixNGs. This method is called after a configuration file is
      * loaded.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void setupAllLogixNGs();
+    public boolean setupAllLogixNGs(List<String> errors);
 
     /**
      * Activate all LogixNGs, starts LogixNG processing by connecting all

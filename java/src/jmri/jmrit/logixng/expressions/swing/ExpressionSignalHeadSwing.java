@@ -326,7 +326,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     }
 
     private void setAppearanceComboBox(ExpressionSignalHead expression) {
-        SignalHead sh = null;
+        SignalHead sh;
         if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
             sh = (SignalHead) _signalHeadBeanPanel.getBeanCombo().getSelectedItem();
         } else {
@@ -408,13 +408,15 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSignalHead but is a: "+object.getClass().getName());
         }
         ExpressionSignalHead expression = (ExpressionSignalHead)object;
-        if (!_signalHeadBeanPanel.isEmpty() && (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)) {
+        if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
             SignalHead signalHead = _signalHeadBeanPanel.getNamedBean();
             if (signalHead != null) {
                 NamedBeanHandle<SignalHead> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
                 expression.setSignalHead(handle);
+            } else {
+                expression.removeSignalHead();
             }
         } else {
             expression.removeSignalHead();

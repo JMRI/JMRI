@@ -132,24 +132,28 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-    public void resolveAllTrees() {
+    public boolean resolveAllTrees(List<String> errors) {
+        boolean result = true;
         for (LogixNG logixNG : _tsys.values()) {
-            logixNG.setParentForAllChildren();
+            result = result && logixNG.setParentForAllChildren(errors);
         }
+        return result;
     }
     
     /** {@inheritDoc} */
     @Override
-    public void setupAllLogixNGs() {
+    public boolean setupAllLogixNGs(List<String> errors) {
+        boolean result = true;
         for (LogixNG logixNG : _tsys.values()) {
             logixNG.setup();
-            logixNG.setParentForAllChildren();
+            result = result && logixNG.setParentForAllChildren(errors);
         }
         for (Module module : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
             module.setup();
-            module.setParentForAllChildren();
+            result = result && module.setParentForAllChildren(errors);
         }
         _clipboard.setup();
+        return result;
     }
 
     /** {@inheritDoc} */

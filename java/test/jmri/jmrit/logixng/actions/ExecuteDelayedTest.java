@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -212,7 +214,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         _base = _executeDelayed;
         _baseMaleSocket = maleSocket;
         
-        _logixNG.setParentForAllChildren();
+        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

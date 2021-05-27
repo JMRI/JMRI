@@ -1,7 +1,7 @@
 <!-- SidebarAppLocalPart.shtml -->
 <!-- This is the local part sidebar definition for html/apps/DecoderPro pages -->
 
-<dt><h3>DecoderPro&reg;</h3></dt>
+<dt class="dtheader">DecoderPro&reg;</dt>
 <dd>
 	<ul>
 	<li><a href="./Tour.shtml">Quick Tour</a></li>
@@ -13,7 +13,7 @@
 	</ul>
 </dd>
 
-<dt><h3>Advanced</h3></dt>
+<dt class="dtheader">Advanced</dt>
 <dd>
 	<ul>
 	<li><a href="./IntroXML.shtml">Intro to XML files</a></li>
