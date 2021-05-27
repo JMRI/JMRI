@@ -10,9 +10,10 @@
                     <li>Command Stations</li>
                     <ul>
                         <li><a href="DCS52.shtml">DCS52</a></li>
+                        <li><a href="DCS210Plus.shtml">DCS210+</a></li>
                         <li><a href="DCS240.shtml">DCS240</a></li>
                         <li><a href="Digitrax.shtml#Setup">Other Command Stations</a></li>
-                        <li><a href="CommandStationConfig.shtml">OpSw Configuration</a></li>
+                        <li><a href="CommandStationConfig.shtml">Command Station OpSw Configuration</a></li>
                     </ul>
                     <li>Programmers &amp; Adapters</li>
                     <ul>

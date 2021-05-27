@@ -10,8 +10,7 @@
   <meta name="keywords" content=
   "Digitrax DCS Command Station DCS52 java model railroad JMRI install windows">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="Content-Type" content= "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -121,9 +120,11 @@
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
         <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
-        <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
+        <tr><td rowspan="7" align="center">Via LocoNet interface<br>
+                (<em>not</em> via DCS52 integrated USB connector!)</td>
             <td rowspan="7" align="center">Computer Connection to something other than the DCS52 USB connector</td>
-            <td rowspan="7" align="center">Something other than "DCS52 USB Interface"</td>
+            <td rowspan="7" align="center">Something other than "DCS52 USB Interface"<br>
+                (perhaps PR3, PR4, LocoBuffer-USB or similar device.)</td>
             <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
             <td rowspan="7" align="center"><a href="#Dcs52ViaAdapter">Configuration help</a></td>
             <td>Program decoder CVs on the dedicated programming track</td></tr>
@@ -383,13 +384,16 @@
       Windows Operating System.  See the Digitrax
       <a href="http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers.
       At the time this help page was written, Digitrax provides Windows drivers
-      for the PR3 device.  Those drivers are suitable for use with the DCS52 USB
+      for the PR3/PR4 device.  Those drivers are suitable for use with the DCS52 USB
       interface.  Make sure to follow any instructions, particularly any instructions
       about the order of installing the drivers and plugging in the
       device.
 
       <p>You don't need to install a separate driver when using
-      current versions of MacOS or Linux.</p>
+      current versions of MacOS or Linux.  When connecting to LocoNet via some 
+      connection other than the DCS52 integrated USB connector, you do not need
+      to load drivers for the DCS52, but you must install any drivers necessary
+      for the hardware interface you actually use.</p>
 
       <h1><a name="SeeAlso" id="SeeAlso">See Also</a></h1>
       <ul>
@@ -407,7 +411,10 @@
                                   "http://www.digitrax.com/tsd/product/DCS52/">DCS52 Support</a> page.</li>
               <li>Drivers for Windows-based machines may be found at the Digitrax
                   <a href="http://www.digitrax.com/downloads/">Downloads</a> page.
-                  Note: Use the Digitrax PR3 drivers with the DCS52 USB interface.</li>
+                  Note: Use the Digitrax PR3 drivers with the DCS52 USB interface.
+                  When connecting to LocoNet using something other than the DCS52 
+                  integrated USB interface, JMRI does not require these drivers to
+                  be loaded.</li>
           </ul>
       </ul>
 
