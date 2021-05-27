@@ -32,7 +32,8 @@ public class ClipboardEditor extends TreeEditor {
         super(InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().getFemaleSocket(),
                 EnableClipboard.DisableClipboard,
                 EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
-                EnableRootPopup.DisableRootPopup
+                EnableRootPopup.DisableRootPopup,
+                EnableExecuteEvaluate.DisableExecuteEvaluate
         );
         
         ClipboardEditor.this.setTitle(Bundle.getMessage("TitleClipboardEditor"));

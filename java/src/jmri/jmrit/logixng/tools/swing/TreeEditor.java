@@ -37,6 +37,7 @@ public class TreeEditor extends TreeViewer {
     public enum EnableClipboard { EnableClipboard, DisableClipboard }
     public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy }
     public enum EnableRootPopup { EnableRootPopup, DisableRootPopup }
+    public enum EnableExecuteEvaluate { EnableExecuteEvaluate, DisableExecuteEvaluate }
     
     
     private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
@@ -84,6 +85,7 @@ public class TreeEditor extends TreeViewer {
     private final boolean _enableClipboard;
     private final boolean _disableRootRemoveCutCopy;
     private final boolean _disableRootPopup;
+    private final boolean _enableExecuteEvaluate;
     
     
     /**
@@ -94,17 +96,20 @@ public class TreeEditor extends TreeViewer {
      * @param enableRootRemoveCutCopy  should the popup menu items remove,
      *                                 cut and copy be enabled or disabled?
      * @param enableRootPopup          should the popup menu be disabled for root?
+     * @param enableExecuteEvaluate    should the popup menu show execute/evaluate?
      */
     public TreeEditor(
             @Nonnull FemaleSocket femaleRootSocket,
             EnableClipboard enableClipboard,
             EnableRootRemoveCutCopy enableRootRemoveCutCopy,
-            EnableRootPopup enableRootPopup) {
+            EnableRootPopup enableRootPopup,
+            EnableExecuteEvaluate enableExecuteEvaluate) {
         
         super(femaleRootSocket);
         _enableClipboard = enableClipboard == EnableClipboard.EnableClipboard;
         _disableRootRemoveCutCopy = enableRootRemoveCutCopy == EnableRootRemoveCutCopy.DisableRootRemoveCutCopy;
         _disableRootPopup = enableRootPopup == EnableRootPopup.DisableRootPopup;
+        _enableExecuteEvaluate = enableExecuteEvaluate == EnableExecuteEvaluate.EnableExecuteEvaluate;
     }
     
     @Override
@@ -1201,6 +1206,11 @@ public class TreeEditor extends TreeViewer {
     }
     
     
+    protected void executeEvaluate(SwingConfiguratorInterface swi, MaleSocket maleSocket) {
+        swi.executeEvaluate(maleSocket);
+    }
+    
+    
     
     private static final class SortedComboBoxModel<E> extends DefaultComboBoxModel<E> {
 
@@ -1362,11 +1372,13 @@ public class TreeEditor extends TreeViewer {
             menuItemChangeUsername.setActionCommand(ACTION_COMMAND_CHANGE_USERNAME);
             add(menuItemChangeUsername);
             
-            addSeparator();
-            menuItemExecuteEvaluate = new JMenuItem();  // The text is set later
-            menuItemExecuteEvaluate.addActionListener(this);
-            menuItemExecuteEvaluate.setActionCommand(ACTION_COMMAND_EXECUTE_EVALUATE);
-            add(menuItemExecuteEvaluate);
+            if (_enableExecuteEvaluate) {
+                addSeparator();
+                menuItemExecuteEvaluate = new JMenuItem();  // The text is set later
+                menuItemExecuteEvaluate.addActionListener(this);
+                menuItemExecuteEvaluate.setActionCommand(ACTION_COMMAND_EXECUTE_EVALUATE);
+                add(menuItemExecuteEvaluate);
+            }
 /*            
             addSeparator();
             menuItemExpandTree = new JMenuItem(Bundle.getMessage("PopupMenuExpandTree"));
@@ -1473,17 +1485,19 @@ public class TreeEditor extends TreeViewer {
             
             menuItemChangeUsername.setEnabled(femaleSocket.isConnected());
             
-            menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
-            
-            if (femaleSocket.isConnected()) {
-                Base object = _currentFemaleSocket.getConnectedSocket();
-                if (object == null) throw new NullPointerException("object is null");
-                while (object instanceof MaleSocket) {
-                    object = ((MaleSocket)object).getObject();
+            if (_enableExecuteEvaluate) {
+                menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
+                
+                if (femaleSocket.isConnected()) {
+                    Base object = _currentFemaleSocket.getConnectedSocket();
+                    if (object == null) throw new NullPointerException("object is null");
+                    while (object instanceof MaleSocket) {
+                        object = ((MaleSocket)object).getObject();
+                    }
+                    menuItemExecuteEvaluate.setText(
+                            SwingTools.getSwingConfiguratorForClass(object.getClass())
+                                    .getExecuteEvaluateMenuText());
                 }
-                menuItemExecuteEvaluate.setText(
-                        SwingTools.getSwingConfiguratorForClass(object.getClass())
-                                .getExecuteEvaluateMenuText());
             }
             
             show(_tree, x, y);
@@ -1653,7 +1667,7 @@ public class TreeEditor extends TreeViewer {
                     }
                     SwingConfiguratorInterface swi =
                             SwingTools.getSwingConfiguratorForClass(object.getClass());
-                    swi.executeEvaluate(_currentFemaleSocket.getConnectedSocket());
+                    executeEvaluate(swi, _currentFemaleSocket.getConnectedSocket());
                     break;
                     
 /*                    

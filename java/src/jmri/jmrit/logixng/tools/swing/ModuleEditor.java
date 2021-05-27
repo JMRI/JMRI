@@ -11,6 +11,9 @@ import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 
 /**
  * Editor of Module
@@ -50,7 +53,8 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
         super(setupRootSocket(null, sName),
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.DisableRootRemoveCutCopy,
-                EnableRootPopup.EnableRootPopup
+                EnableRootPopup.EnableRootPopup,
+                EnableExecuteEvaluate.EnableExecuteEvaluate
         );
         
         this.beanTableDataModel = m;
@@ -74,6 +78,28 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
                             _module.getSystemName(),
                             _module.getUserName()));
         }
+    }
+    
+    @Override
+    protected void executeEvaluate(SwingConfiguratorInterface swi, MaleSocket maleSocket) {
+        Base b = maleSocket;
+        Module module;
+        if (maleSocket.getObject() instanceof Module) {
+            module = (Module)maleSocket.getObject();
+        } else {
+            while ((b != null) && !(b instanceof Module)) b = b.getParent();
+            if (b == null) throw new RuntimeException("Module is not found");
+            module = (Module)b;
+        }
+        
+        LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD).runOnLogixNGEventually(() -> {
+            
+            // We need to create a temporary ConditionalNG to be able to
+            // execute/evaluate a module or a part of a module
+            module.setCurrentConditionalNG(new DefaultConditionalNG("IQC1", null));
+            
+            swi.executeEvaluate(maleSocket);
+        });
     }
     
     private static FemaleSocket setupRootSocket(Base parent, String sName) {

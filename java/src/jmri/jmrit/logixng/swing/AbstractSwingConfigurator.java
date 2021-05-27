@@ -35,7 +35,7 @@ public abstract class AbstractSwingConfigurator implements SwingConfiguratorInte
     /** {@inheritDoc} */
     @Override
     public String getExecuteEvaluateMenuText() {
-        throw new RuntimeException("Not supported");
+        throw new RuntimeException("Not supported. Class: " + this.getClass().getName());
     }
     
     /** {@inheritDoc} */

@@ -53,7 +53,8 @@ public class ConditionalNGEditor extends TreeEditor {
         }, "A"),
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
-                EnableRootPopup.EnableRootPopup
+                EnableRootPopup.EnableRootPopup,
+                EnableExecuteEvaluate.EnableExecuteEvaluate
         );
         
         _conditionalNG = null;
@@ -68,7 +69,8 @@ public class ConditionalNGEditor extends TreeEditor {
         super(conditionalNG.getFemaleSocket(),
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
-                EnableRootPopup.EnableRootPopup
+                EnableRootPopup.EnableRootPopup,
+                EnableExecuteEvaluate.EnableExecuteEvaluate
         );
         
         _conditionalNG = conditionalNG;
