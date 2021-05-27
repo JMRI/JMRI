@@ -80,7 +80,7 @@ public class RaspberryPiGpioExFactory {
      * 
      * @param SystemName is the name to be validated
      * @return The validated system name
-     * @throws jmri.NamedBean.NamedBean.BadSystemNameException if the name fails validation
+     * @throws jmri.NamedBean.BadSystemNameException if the name fails validation
      */
     public static String validateSystemNameFormat (String SystemName) throws jmri.NamedBean.BadSystemNameException {
         Class<?> proClass = null;
