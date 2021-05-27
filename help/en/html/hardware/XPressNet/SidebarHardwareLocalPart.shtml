@@ -1,6 +1,6 @@
 <!-- Sidebar local part for XPressNet files -->
 
-<dt><h3 style="padding-left: 1em;"><a href="index.shtml">XPressNet</a></h3></dt>
+<dt><a href="index.shtml">XPressNet</a></dt>
 		<dd>
 		    <ul>
                     <li><a href="XNetAddressing.shtml">XPressNet Addressing</a>
@@ -10,5 +10,5 @@
                     <li><a href="CreateXNetLogFile.shtml">XPressNet Log</a>
                     </ul>
                 </dd>
-    
+
     <!-- /SidebarHardwareLocalPart.shtml -->
