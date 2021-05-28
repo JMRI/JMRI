@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
 
 import jmri.*;
@@ -119,6 +120,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     }
     
     /** {@inheritDoc} */
+    @OverridingMethodsMustInvokeSuper
     @Override
     public void updateObject(@Nonnull Base object) {
         if (! (object instanceof AbstractMaleSocket)) {
