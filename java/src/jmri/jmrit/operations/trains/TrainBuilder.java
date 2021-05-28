@@ -3775,7 +3775,7 @@ public class TrainBuilder extends TrainCommon {
         if (car.getTrack() == track) {
             return false;
         }
-        if (track.getTrackType().equals(Track.STAGING) && car.getLocation() == track.getLocation()) {
+        if (track.isStaging() && car.getLocation() == track.getLocation()) {
             return false; // don't use same staging location
         }
         // is the car's destination the terminal and is that allowed?
@@ -3791,6 +3791,14 @@ public class TrainBuilder extends TrainCommon {
                     MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
                             new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
                                     car.getLoadName(), status }));
+            return false;
+        }
+        if (!track.isSpaceAvailable(car)) {
+            addLine(_buildReport, SEVEN,
+                    MessageFormat.format(Bundle.getMessage("buildNoDestSpace"),
+                            new Object[] { car.toString(), track.getTrackTypeName(), track.getLocation().getName(),
+                                    track.getName(), track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+                                    Setup.getLengthUnit().toLowerCase() }));
             return false;
         }
         // try to send car to this track
