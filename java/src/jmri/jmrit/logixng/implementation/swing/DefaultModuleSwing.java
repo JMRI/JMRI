@@ -39,6 +39,12 @@ public class DefaultModuleSwing extends AbstractSwingConfigurator {
     @Override
     public void executeEvaluate(@Nonnull Base object) {
         
+        if (! (object instanceof MaleSocket)) {
+            throw new IllegalArgumentException("object is not a MaleSocket");
+        }
+        if (! (((MaleSocket)object).getObject() instanceof Module)) {
+            throw new IllegalArgumentException("((MaleSocket)object).getObject() is not a Module");
+        }
         Module module = (Module)((MaleSocket)object).getObject();
         
         FemaleSocket femaleSocket = module.getRootSocket();
