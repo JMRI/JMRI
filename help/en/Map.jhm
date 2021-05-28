@@ -1962,6 +1962,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_LocationDivision" url="package/jmri/jmrit/operations/Operations.shtml#LocationDivision"/>
 
+<mapID target="template-sidebar" url="template-sidebar.shtml"/>
+
 <mapID target="html.hardware.cmri.CMRI_L164" url="html/hardware/cmri/CMRI.shtml#L164"/>
 
 <mapID target="html.hardware.cmri.CMRI_L46" url="html/hardware/cmri/CMRI.shtml#L46"/>
@@ -2479,6 +2481,8 @@
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_Basic" url="manual/DecoderPro3/Comp_Basic.shtml"/>
+
+<mapID target="template-no-sidebar" url="template-no-sidebar.shtml"/>
 
 <mapID target="html.hardware.digirails.index_limitations" url="html/hardware/digirails/index.shtml#limitations"/>
 
@@ -3171,8 +3175,6 @@
 <mapID target="package.jmri.jmrit.logixng.LogixNGTable" url="package/jmri/jmrit/logixng/LogixNGTable.shtml"/>
 
 <mapID target="html.tools.uss.Conventions" url="html/tools/uss/Conventions.shtml"/>
-
-<mapID target="TemplateBar" url="TemplateBar.shtml"/>
 
 <mapID target="html.hardware.pi.index_hardware" url="html/hardware/pi/index.shtml#hardware"/>
 
@@ -4215,8 +4217,6 @@
 <mapID target="html.hardware.zimo.Zimo_tools" url="html/hardware/zimo/Zimo.shtml#tools"/>
 
 <mapID target="html.doc.Technical.JUnit_Reporting" url="html/doc/Technical/JUnit.shtml#Reporting"/>
-
-<mapID target="TemplatePlain" url="template-no-sidebar.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_SPROG_Console" url="manual/DecoderPro/Main_SPROG.shtml#Console"/>
 
