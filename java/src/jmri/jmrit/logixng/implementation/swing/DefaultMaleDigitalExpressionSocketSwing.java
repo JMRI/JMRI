@@ -41,6 +41,8 @@ public class DefaultMaleDigitalExpressionSocketSwing extends AbstractMaleSocketS
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
+        super.updateObject(object);
+
         Base obj = object;
         while (((obj instanceof MaleSocket)) && (! (obj instanceof DefaultMaleDigitalExpressionSocket))) {
             obj = ((MaleSocket)obj).getObject();
