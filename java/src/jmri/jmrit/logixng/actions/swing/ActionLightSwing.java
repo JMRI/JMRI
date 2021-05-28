@@ -208,14 +208,18 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionLight but is a: "+object.getClass().getName());
         }
         ActionLight action = (ActionLight)object;
-        if (!lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
+        if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
             Light light = lightBeanPanel.getNamedBean();
             if (light != null) {
                 NamedBeanHandle<Light> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(light.getDisplayName(), light);
                 action.setLight(handle);
+            } else {
+                action.removeLight();
             }
+        } else {
+            action.removeLight();
         }
         try {
             if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {

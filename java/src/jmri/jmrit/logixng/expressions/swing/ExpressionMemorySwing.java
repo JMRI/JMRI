@@ -162,14 +162,14 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionMemory but is a: "+object.getClass().getName());
         }
         ExpressionMemory expression = (ExpressionMemory)object;
-        if (!_memoryBeanPanel.isEmpty()) {
-            Memory memory = _memoryBeanPanel.getNamedBean();
-            if (memory != null) {
-                NamedBeanHandle<Memory> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(memory.getDisplayName(), memory);
-                expression.setMemory(handle);
-            }
+        Memory memory = _memoryBeanPanel.getNamedBean();
+        if (memory != null) {
+            NamedBeanHandle<Memory> handle
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(memory.getDisplayName(), memory);
+            expression.setMemory(handle);
+        } else {
+            expression.removeMemory();
         }
         expression.setMemoryOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
         expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
@@ -184,7 +184,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
                 expression.setOtherMemory(handle);
+            } else {
+                expression.removeOtherMemory();
             }
+        } else {
+            expression.removeOtherMemory();
         }
         
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {

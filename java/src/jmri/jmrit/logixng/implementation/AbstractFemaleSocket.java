@@ -63,11 +63,12 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public void setParentForAllChildren() {
+    public boolean setParentForAllChildren(List<String> errors) {
         if (isConnected()) {
             getConnectedSocket().setParent(this);
-            getConnectedSocket().setParentForAllChildren();
+            return getConnectedSocket().setParentForAllChildren(errors);
         }
+        return true;
     }
 
     /** {@inheritDoc} */
@@ -300,7 +301,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public String getSystemName() {
-        throw new UnsupportedOperationException("Not supported.");
+        return getParent().getSystemName();
     }
 
     /** {@inheritDoc} */

@@ -386,7 +386,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         _base = expression;
         _baseMaleSocket = maleSocket2;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

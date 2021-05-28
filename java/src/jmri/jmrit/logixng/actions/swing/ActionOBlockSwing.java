@@ -351,14 +351,18 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         }
         ActionOBlock action = (ActionOBlock) object;
 
-        if (_oblockBeanPanel != null && !_oblockBeanPanel.isEmpty() && (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect)) {
+        if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
             OBlock oblock = _oblockBeanPanel.getNamedBean();
             if (oblock != null) {
                 NamedBeanHandle<OBlock> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(oblock.getDisplayName(), oblock);
                 action.setOBlock(handle);
+            } else {
+                action.removeOBlock();
             }
+        } else {
+            action.removeOBlock();
         }
 
         try {

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
@@ -239,7 +241,7 @@ public class RecursiveModuleTest {
         System.out.println();
 */        
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
     

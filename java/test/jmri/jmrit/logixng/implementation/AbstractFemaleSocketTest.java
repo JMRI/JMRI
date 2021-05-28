@@ -331,7 +331,7 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public void setParentForAllChildren() {
+        public boolean setParentForAllChildren(List<String> errors) {
             throw new UnsupportedOperationException("Not supported");
         }
 

@@ -339,14 +339,15 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                     title = None
                     opt1 = "Select section"
                     s = self.od.customMessage(msg, title, opt1)
+                    print "station_block_name",station_block_name, "s", s
                     if self.od.CLOSED_OPTION == False:
                         msg = "Select section"
                         sections_to_choose = self.get_non_allocated_trains_sections()
-                        new_train_name = self.od.List(msg, sections_to_choose)                 
+                        new_section_name = self.od.List(msg, sections_to_choose)
+                        #print "new_section_name", new_section_name
                         if self.od.CLOSED_OPTION == False:
                             #print "!!!!2"
-                            
-                            msg = "Select the train in " + station_block_name
+                            msg = "Select the train in " + new_section_name
                             trains_to_choose = self.get_non_allocated_trains() 
                             if trains_to_choose == []:
                                 s = OptionDialog().displayMessage("no more trains with speed profiles \nto select")
@@ -358,9 +359,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                                     #new_train_name = modifiableJComboBox(trains_to_choose,msg).return_val()
                                     if new_train_name not in trains_allocated:
                                         trains_allocated.append(new_train_name)
-                                    self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
+                                    self.add_to_train_list_and_set_new_train_location(new_train_name, new_section_name)
                                     if self.od.CLOSED_OPTION == False:  #only do this if have not closed a frame in add_to_train_list_and_set_new_train_location
-                                        self.set_blockcontents(station_block_name, new_train_name)
+                                        self.set_blockcontents(new_section_name, new_train_name)
             else:
                 #allow operator to verify the train
                 # all_trains = self.get_all_roster_entries_with_speed_profile()
@@ -378,6 +379,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 new_train_name = modifiableJComboBox(trains_to_choose,msg).return_val()
                 if new_train_name not in trains_allocated:
                     trains_allocated.append(new_train_name)
+
                 self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
                 self.set_blockcontents(station_block_name, new_train_name)
                 
@@ -454,7 +456,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print ("b")
             msg = "Select train to modify"
             train_name_to_remove = modifiableJComboBox(trains_allocated,msg).return_val()
+
             trains_allocated.remove(train_name_to_remove)
+
             self.new_train_sensor.setKnownState(ACTIVE)
         
     
@@ -487,7 +491,12 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             
         # 2) set the last traversed edge to the edge going into the siding
         edge = None
+        j = 0
+        #print "edge_before" , edge
+        break1 = False
         for e in g.g_stopping.edgeSet():
+            j+=1
+            #print "stopping_edge_set_no",j
             #if self.logLevel > 0: print "************************"
             #if self.logLevel > 0: print e, "Target", e.getTarget()
             #if self.logLevel > 0: print e, "Source", e.getSource()
@@ -495,15 +504,20 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             station_block = LayoutBlockManager.getLayoutBlock(station_block_name)
             number_neighbors = station_block.getNumberOfNeighbours()
             in_siding = (number_neighbors == 1)
+            #print "in_siding", in_siding
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                if self.logLevel > 0: print e.getItem("penultimate_block_name"), "station_block_name",station_block_name,"neighbor_name",neighbor_name
-                if e.getItem("penultimate_block_name") == neighbor_name:
+                #if self.logLevel > -1: print e.getItem("penultimate_block_name"), "station_block_name",station_block_name,"neighbor_name",neighbor_name, i,j
+                if e.getItem("penultimate_block_name") == neighbor_name and e.getItem("last_block_name") == station_block_name:
+                    #print "setting edge", "neighbor_name", neighbor_name, "edge",e
                     edge = e
-                    break
+                    break1 = True
+            if break1 == True: 
+                break 
+        #print "edge_after" , edge
         train["edge"] = edge
         train["penultimate_block_name"] = edge.getItem("penultimate_block_name")
-        if self.logLevel > 0: print 
+
         
         # 3) set direction so can check direction of transit
         
@@ -528,7 +542,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         options = ["forward", "reverse"]
         default = "forward"
         if in_siding:
-            msg = "In block: " + block_name + "\n" +'What way is train facing\nout of junction?'
+            msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards buffer?'
             #msg = 'What way is train facing\nout of junction?'
         else:
             msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards highlighted block?'
@@ -543,11 +557,16 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         #result = OptionDialog().variable_combo_box(options, default, msg, title, type)
         #new_train_name = OptionDialog().List(msg, options)
-
-        if result == "forward":
-            train_direction = "reverse"
+        if in_siding:
+            if result == "reverse":
+                train_direction = "reverse"
+            else:
+                train_direction = "forward"
         else:
-            train_direction = "forward"
+            if result == "forward":
+                train_direction = "reverse"
+            else:
+                train_direction = "forward"
         return train_direction
 
         
@@ -683,6 +702,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitSensorActive(self.stop_master_sensor)
         #stop all threads
         if self.logLevel > 0: print "instancelist", instanceList
+        #stop all threads
         for thread in instanceList:
             if thread is not None:
                 if thread.isRunning():
@@ -691,6 +711,16 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                 else:
                     #need this for scheduler in wait state
                     thread.stop()
+        #optionally remove all transits 
+        msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+        title = "Transits"
+        opt1 = "do not delete transits"
+        opt2 = "delete transits"
+        requested_delete_transits = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        if requested_delete_transits:
+            self.delete_active_transits()
+        
+        
         self.new_train_sensor = sensors.getSensor("startDispatcherSensor")
         self.new_train_sensor.setKnownState(INACTIVE)
         try:
@@ -703,7 +733,14 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             return False
         else:
             return False
-        
+            
+    def delete_active_transits(self):
+    
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        activeTrainsList = DF.getActiveTrainsList()
+        for i in range(0, activeTrainsList.size()) :
+            activeTrain = activeTrainsList.get(i)
+            DF.terminateActiveTrain(activeTrain)       
 
 # End of class StopMaster
 
@@ -989,55 +1026,56 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # sensor, val = button_dict_value
         
     def run_route(self):
-        list_items = ("Run Route", "Cancel")
-        title = "choose option"
-        result = self.od.List(title, list_items)
+        # list_items = ("Run Route", "Cancel")
+        # title = "choose option"
+        # result = self.od.List(title, list_items)
+        # if self.od.CLOSED_OPTION == True:
+            # return
+        # if result == "Run Route":
+        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        list_items = RouteManager.getRoutesByNameList()
+        title = "choose route"
+        s = self.od.List(title, list_items)
         if self.od.CLOSED_OPTION == True:
             return
-        if result == "Run Route":
-            RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-            list_items = RouteManager.getRoutesByNameList()
-            title = "choose route"
-            s = self.od.List(title, list_items)
-            if self.od.CLOSED_OPTION == True:
-                return
-            routeName = str(s)
-            if self.logLevel > 0: print "routeName", routeName
-            route = RouteManager.getRouteByName(routeName)
-            
-            list_items = self.get_list_of_engines_to_move()
-                    # msg = "trains_to_choose" + str(trains_to_choose)
-            if list_items == []:
-                return
-            title = "what train do you want to move?"
-            engine = self.od.List(title, list_items)
-            if self.od.CLOSED_OPTION == True:
-                return
-            station_from = self.get_position_of_train(engine)
-            
-            list_items = ["stop at end of route", "return to start position", "return to start position and repeat", "cancel"]
-            title = "What do you want to do"
-            option = self.od.List(title, list_items)
-            if self.od.CLOSED_OPTION == True:
-                return
+        routeName = str(s)
+        if self.logLevel > 0: print "routeName", routeName
+        route = RouteManager.getRouteByName(routeName)
+        
+        list_items = self.get_list_of_engines_to_move()
+                # msg = "trains_to_choose" + str(trains_to_choose)
+        if list_items == []:
+            return
+        title = "what train do you want to move?"
+        engine = self.od.List(title, list_items)
+        if self.od.CLOSED_OPTION == True:
+            return
+        station_from = self.get_position_of_train(engine)
+        
+        list_items = ["stop at end of route", "return to start position", "return to start position and repeat", "cancel"]
+        title = "What do you want to do"
+        option = self.od.List(title, list_items)
+        if self.od.CLOSED_OPTION == True:
+            return
+        repeat = False
+        dont_run_route = False
+        if option == "stop at end of route":
+            station_to = None
             repeat = False
-            dont_run_route = False
-            if option == "stop at end of route":
-                station_to = None
-                repeat = False
-            elif option == "return to start position":
-                station_to = station_from
-                repeat = False
-            elif option == "return to start position and repeat":
-                station_to = station_from
-                repeat = True
-            else:
-                dont_run_route = True
-            if dont_run_route == False:
-                if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, "repeat",repeat
-                run_train = RunRoute(route, g.g_express, station_from, station_to, repeat)
-                run_train.setName("running_route_" + routeName)
-                run_train.start()
+        elif option == "return to start position":
+            station_to = station_from
+            repeat = False
+        elif option == "return to start position and repeat":
+            station_to = station_from
+            repeat = True
+        else:
+            dont_run_route = True
+        if dont_run_route == False:
+            if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, "repeat",repeat
+            run_train = RunRoute(route, g.g_express, station_from, station_to, repeat)
+            run_train.setName("running_route_" + routeName)
+            instanceList.append(run_train)
+            run_train.start()
 
         
     def get_list_of_engines_to_move(self):
@@ -1134,7 +1172,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     button_dict = {}
     
     def __init__(self):
-        self.logLevel = 1
+        self.logLevel = 0
         global trains_dispatched
         trains_dispatched = []
         #initialise all block_value variables
@@ -1167,7 +1205,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.sensor_active = None
         if self.logLevel > 0: print "finished DispatchMaster setup"
         
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        #DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         self.od = OptionDialog()
         return True
 

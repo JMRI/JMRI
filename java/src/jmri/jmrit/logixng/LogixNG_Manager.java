@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 import jmri.Manager;
@@ -64,14 +65,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * <P>
      * This method ensures that everything in the LogixNG tree has a pointer
      * to its parent.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void resolveAllTrees();
+    public boolean resolveAllTrees(List<String> errors);
 
     /**
      * Setup all LogixNGs. This method is called after a configuration file is
      * loaded.
+     * 
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void setupAllLogixNGs();
+    public boolean setupAllLogixNGs(List<String> errors);
 
     /**
      * Activate all LogixNGs, starts LogixNG processing by connecting all
@@ -81,6 +88,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * ConditionalNGs.
      */
     public void activateAllLogixNGs();
+    
+    /**
+     * Activate all LogixNGs, starts LogixNG processing by connecting all
+     * inputs that are included the ConditionalNGs in this LogixNG.
+     * <p>
+     * A LogixNG must be activated before it will calculate any of its
+     * ConditionalNGs.
+     * 
+     * @param runDelayed true if execute() should run on LogixNG thread delayed,
+     *                   false otherwise.
+     * @param runOnSeparateThread true if the activation should run on a
+     *                            separate thread, false otherwise
+     */
+    public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread);
     
     /**
      * DeActivate all LogixNGs, stops LogixNG processing by disconnecting all

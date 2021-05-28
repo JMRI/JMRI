@@ -1,7 +1,7 @@
 <!-- SidebarAppLocalPart.shtml -->
 <!-- This is the local part sidebar definition for html/apps/PanelPro pages -->
 
-<dt><h3>PanelPro&trade;</h3></dt>
+<dt class="dtheader">PanelPro&trade;</dt>
 <dd>
 <ul>
     <li><a href="GettingStarted.shtml">Getting Started</a></li>

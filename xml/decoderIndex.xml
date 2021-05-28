@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.4ish+jake+20210419T1419Z+R9c5c5a57a2 on Mon Apr 19 10:20:41 EDT 2021-->
-  <decoderIndex version="1050">
+  <!--Written by JMRI version 4.23.7ish+jake+20210527T1332Z+Rdd510f7712 on Thu May 27 09:32:08 EDT 2021-->
+  <decoderIndex version="1056">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -16893,6 +16893,24 @@
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
         <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
+      <family name="PIKO SmartDecoder 4.1" mfg="PIKO" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_4.1_Sound_Next_18_40501-18.xml">
+        <!-- to be checked by hardware owner -->
+        <model model="PIKO40501-18" numOuts="10" numFns="28" maxMotorCurrent="0.8A" formFactor="N" connector="Next18" productID="PIKO40501" comment="Piko SmartDecoder 4.1 Sound Diesel Loco V200.1/BR 221 N Next18 plug and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA" />
+          <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA" />
+          <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA" />
+          <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA" />
+          <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA" />
+          <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="21.5" width="10.5" height="3.7" units="mm" />
+        </model>
+      </family>
       <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="22" highVersionID="22" comment="PpP-Des3 decoder." file="PpP_Des3.xml">
         <model model="PpP-Des3" />
       </family>
@@ -27539,6 +27557,585 @@
           <output name="4" label="Acceleration Delay" />
           <output name="5" label="Shunting gear" />
           <output name="6" label="Shunting light" />
+        </model>
+      </family>
+      <family name="Lokdecoder Serie 30 plus" mfg="Tams Elektronik GmbH" file="TAMS_LD_30.xml">
+        <model model="LD-G-31 plus (wires)" maxInputVolts="18V" maxMotorCurrent="0.6A" maxTotalCurrent="1.2A" numOuts="7" numFns="30" connector="Wires" productID="LDG31">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <size length="19.5" width="9" height="4.5" units="mm" />
+        </model>
+        <model model="LD-G-31 plus NEM652" maxInputVolts="18V" maxMotorCurrent="0.6A" maxTotalCurrent="1.2A" numOuts="7" numFns="30" connector="NEM652" productID="LDG31,31-652">
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <size length="19.5" width="9" height="4.5" units="mm" />
+        </model>
+        <model model="LD-G-31 plus PluX12" maxInputVolts="18V" maxMotorCurrent="0.6A" maxTotalCurrent="1.2A" numOuts="7" numFns="30" connector="PluX12" productID="LDG31,31-12">
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <size length="19.5" width="9" height="7.5" units="mm" />
+        </model>
+        <model model="LD-G-33 plus (wires)" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="12" numFns="30" connector="Wires" productID="LDG33">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <output name="12" label="AUX7" maxcurrent="100 mA" />
+          <size length="25.5" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LD-G-33 plus NEM652" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="12" numFns="30" connector="NEM652" productID="LDG33,33-652">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <output name="12" label="AUX7" maxcurrent="100 mA" />
+          <size length="25.5" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LD-G-33 plus PluX22" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="12" numFns="30" connector="PluX22" productID="LDG33,33-22">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <output name="12" label="AUX7" maxcurrent="100 mA" />
+          <size length="25.5" width="15.5" height="7.5" units="mm" />
+        </model>
+        <model model="LD-G-33 plus 21MTC" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="11" numFns="30" connector="21MTC" productID="LDG33,33-MTC">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="10 mA" />
+          <output name="9" label="AUX4" maxcurrent="10 mA" />
+          <output name="10" label="AUX5" maxcurrent="10 mA" />
+          <output name="11" label="AUX6" maxcurrent="10 mA" />
+          <size length="25.5" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LD-G-33 plus 21-pole" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="11" numFns="30" connector="21MTC" productID="LDG33,33-pole">
+          <!--4 amplified outputs-->
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="10 mA" />
+          <output name="11" label="AUX6" maxcurrent="10 mA" />
+          <size length="25.5" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LD-G-34 plus" maxInputVolts="24V" maxMotorCurrent="3A" maxTotalCurrent="3A" numOuts="11" numFns="30" connector="Wires" productID="LDG34">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <size length="27" width="17" height="6" units="mm" />
+        </model>
+        <model model="LD-G-34 plus (wires)" maxInputVolts="24V" maxMotorCurrent="3A" maxTotalCurrent="3A" numOuts="11" numFns="30" connector="Wires" productID="LDG34,34-wires">
+          <!--wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <size length="27" width="17" height="6" units="mm" />
+        </model>
+        <model model="LD-G-34 plus NEM652" maxInputVolts="24V" maxMotorCurrent="1.5A" maxTotalCurrent="3A" numOuts="11" numFns="30" connector="NEM652" productID="LDG34,34-652">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <size length="27" width="17" height="6" units="mm" />
+        </model>
+        <model model="LD-G-36 plus" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="12" numFns="30" connector="Wires" productID="LDG36">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <output name="12" label="AUX7" maxcurrent="100 mA" />
+          <size length="34.5" width="16" height="6" units="mm" />
+        </model>
+        <model model="LD-G-36 plus NEM652" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="12" numFns="30" connector="NEM652" productID="LDG36,36-652">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <output name="12" label="AUX7" maxcurrent="100 mA" />
+          <size length="34.5" width="16" height="6" units="mm" />
+        </model>
+        <model model="LD-G-36 plus PluX22" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="12" numFns="30" connector="PluX22" productID="LDG36,36-22">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="500 mA" />
+          <output name="11" label="AUX6" maxcurrent="500 mA" />
+          <output name="12" label="AUX7" maxcurrent="100 mA" />
+          <size length="34.5" width="16" height="6" units="mm" />
+        </model>
+        <model model="LD-G-36 plus 21MTC" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="11" numFns="30" connector="21MTC" productID="LDG36,36-MTC">
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="10 mA" />
+          <output name="9" label="AUX4" maxcurrent="10 mA" />
+          <output name="10" label="AUX5" maxcurrent="10 mA" />
+          <output name="11" label="AUX6" maxcurrent="10 mA" />
+          <size length="30" width="15.5" height="5" units="mm" />
+        </model>
+        <model model="LD-G-36 plus 21-pole" maxInputVolts="24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="11" numFns="30" connector="21MTC" productID="LDG36,36-pole">
+          <!--4 amplified outputs-->
+          <output name="1" label="F0f|(White)" maxcurrent="500 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="500 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="500 mA" />
+          <output name="4" label="AUX2" maxcurrent="500 mA" />
+          <output name="5" label="Acceleration|and brake delay">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging </label>
+          </output>
+          <output name="6" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="7" label="Shunting light">
+            <label xml:lang="de">Rangier|licht</label>
+            <label xml:lang="nl">Rangeer|licht</label>
+          </output>
+          <output name="8" label="AUX3" maxcurrent="500 mA" />
+          <output name="9" label="AUX4" maxcurrent="500 mA" />
+          <output name="10" label="AUX5" maxcurrent="10 mA" />
+          <output name="11" label="AUX6" maxcurrent="10 mA" />
+          <size length="30" width="15.5" height="5" units="mm" />
+        </model>
+      </family>
+      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" file="TAMS_LD_42.xml">
+        <model model="LD-G-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" productID="41-04420">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r (Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-G-42 (wires)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="Wires" productID="41-04421">
+          <!-- wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="NEM652" productID="41-04422">
+          <!-- NEM 652 -->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-W-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" productID="41-05420">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay 0ff">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
+        </model>
+        <model model="LD-W-42 (wires)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="Wires" productID="41-05421">
+          <!-- wires-->
+          <output name="1" label="F0f|(White)" maxcurrent="300 mA">
+            <label xml:lang="de">F0f|(Weiss)</label>
+            <label xml:lang="nl">F0f|(Wit)</label>
+          </output>
+          <output name="2" label="F0r|(Yellow)" maxcurrent="300 mA">
+            <label xml:lang="de">F0r|(Gelb)</label>
+            <label xml:lang="nl">F0r|(Geel)</label>
+          </output>
+          <output name="3" label="AUX1" maxcurrent="300 mA" />
+          <output name="4" label="AUX2" maxcurrent="300 mA" />
+          <output name="5" label="Shunting|gear">
+            <label xml:lang="de">Rangier|gang</label>
+            <label xml:lang="nl">Rangeer|gang</label>
+          </output>
+          <output name="6" label="Acceleration|and brake delay off">
+            <label xml:lang="de">Anfahr-/Brems-|verzögerung aus</label>
+            <label xml:lang="nl">Optrek-/rem-|vertraging uit</label>
+          </output>
+          <size length="21.8" width="17.2" height="4" units="mm" />
         </model>
       </family>
       <family name="Digital LED Boards (WIB)" mfg="Tams Elektronik GmbH" lowVersionID="14" comment="Tams WIB-31, WIB-32, WIB-33" file="TAMS_WIB-30.xml">

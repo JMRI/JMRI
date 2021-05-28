@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -189,7 +190,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionLight.removeLight();
-        Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
+        Assert.assertTrue("Light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
@@ -432,7 +433,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         expressionLight.setLight(light);
         light.setCommandedState(Light.ON);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

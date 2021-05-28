@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -218,7 +219,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Set memory".equals(_base.getShortDescription()));
+        Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
     
     @Test
@@ -270,7 +271,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         _base = stringActionMemory;
         _baseMaleSocket = maleSocketStringActionMemory;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

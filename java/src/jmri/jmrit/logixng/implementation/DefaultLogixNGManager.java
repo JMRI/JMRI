@@ -7,7 +7,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
@@ -133,38 +132,79 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-    public void resolveAllTrees() {
+    public boolean resolveAllTrees(List<String> errors) {
+        boolean result = true;
         for (LogixNG logixNG : _tsys.values()) {
-            logixNG.setParentForAllChildren();
+            result = result && logixNG.setParentForAllChildren(errors);
         }
+        return result;
     }
     
     /** {@inheritDoc} */
     @Override
-    public void setupAllLogixNGs() {
+    public boolean setupAllLogixNGs(List<String> errors) {
+        boolean result = true;
         for (LogixNG logixNG : _tsys.values()) {
             logixNG.setup();
-            logixNG.setParentForAllChildren();
+            result = result && logixNG.setParentForAllChildren(errors);
         }
         for (Module module : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
             module.setup();
-            module.setParentForAllChildren();
+            result = result && module.setParentForAllChildren(errors);
         }
         _clipboard.setup();
+        return result;
     }
 
     /** {@inheritDoc} */
     @Override
     public void activateAllLogixNGs() {
+        activateAllLogixNGs(true, true);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread) {
+        
         _isActive = true;
-        for (LogixNG logixNG : _tsys.values()) {
-            if (logixNG.isActive()) {
-                logixNG.registerListeners();
-                logixNG.execute();
-            } else {
-                logixNG.unregisterListeners();
+        
+        // This may take a long time so it must not be done on the GUI thread.
+        // Therefore we create a new thread for this task.
+        Runnable runnable = () -> {
+            Set<LogixNG> activeLogixNGs = new HashSet<>();
+            
+            // Activate and execute the initialization LogixNGs first.
+            List<LogixNG> initLogixNGs =
+                    InstanceManager.getDefault(LogixNG_InitializationManager.class)
+                            .getList();
+            
+            for (LogixNG logixNG : initLogixNGs) {
+                if (logixNG.isActive()) {
+                    logixNG.registerListeners();
+                    logixNG.execute(false);
+                    activeLogixNGs.add(logixNG);
+                } else {
+                    logixNG.unregisterListeners();
+                }
             }
-        }
+            
+            // Activate and execute all the rest of the LogixNGs.
+            _tsys.values().stream()
+                    .sorted()
+                    .filter((logixNG) -> !(activeLogixNGs.contains(logixNG)))
+                    .forEachOrdered((logixNG) -> {
+                
+                if (logixNG.isActive()) {
+                    logixNG.registerListeners();
+                    logixNG.execute();
+                } else {
+                    logixNG.unregisterListeners();
+                }
+            });
+        };
+        
+        if (runOnSeparateThread) new Thread(runnable).start();
+        else runnable.run();
     }
 
     /** {@inheritDoc} */
@@ -222,6 +262,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         }
         InstanceManager.getDefault(ModuleManager.class).printTree(settings, locale, writer, indent, lineNumber);
         InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
+        InstanceManager.getDefault(LogixNG_InitializationManager.class).printTree(locale, writer, indent);
     }
     
     

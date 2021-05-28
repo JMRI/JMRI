@@ -534,11 +534,24 @@ public class AutoAllocate implements Runnable {
             }
             log.warn("Failure of prepared choice of next Section in AutoAllocate");
         }
+
+        // check to see if AutoAllocate by safesections has reserved a section
+        // already
+        ActiveTrain at = ar.getActiveTrain();
+        for (Section sectionOption : sList) {
+            String reservedTrainName = reservedSections.get(sectionOption.getSystemName());
+            if (reservedTrainName != null) {
+                if (reservedTrainName.equals(at.getActiveTrainName())) {
+                    return sectionOption;
+                }
+            }
+        }
+
         // Jay Janzen
         // If there is an AP check to see if the AP's target is on the list of
         // choices
         // and if so, return that.
-        ActiveTrain at = ar.getActiveTrain();
+        at = ar.getActiveTrain();
         AllocationPlan ap = getPlanThisTrain(at);
         Section as = null;
         if (ap != null) {

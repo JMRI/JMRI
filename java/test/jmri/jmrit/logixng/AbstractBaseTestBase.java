@@ -67,6 +67,16 @@ public abstract class AbstractBaseTestBase {
      */
     abstract public boolean addNewSocket() throws SocketAlreadyConnectedException;
     
+    public static MaleSocket getLastMaleSocket(MaleSocket socket) {
+        MaleSocket lastMaleSocket = socket;
+        Base base = socket;
+        while ((base != null) && (base instanceof MaleSocket)) {
+            lastMaleSocket = (MaleSocket) base;
+            base = ((MaleSocket)base).getObject();
+        }
+        return lastMaleSocket;
+    }
+    
     @Test
     public void testGetConditionalNG() {
         if (getConditionalNG() == null) {
@@ -122,8 +132,15 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetParent() {
-        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == _baseMaleSocket.getObject());
-        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == _baseMaleSocket);
+        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == getLastMaleSocket(_baseMaleSocket).getObject());
+        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == getLastMaleSocket(_baseMaleSocket));
+    }
+    
+    @Test
+    public void testFemaleSocketSystemName() {
+        for (int i=0; i < _base.getChildCount(); i++) {
+            Assert.assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
+        }
     }
     
     /*.*
@@ -331,7 +348,7 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testIsActive() {
-        Assert.assertEquals(_base.getParent(), _baseMaleSocket);
+        Assert.assertEquals(_base.getParent(), getLastMaleSocket(_baseMaleSocket));
         
         Assert.assertTrue("_base is active", _base.isActive());
         _baseMaleSocket.setEnabled(false);
@@ -525,7 +542,6 @@ public abstract class AbstractBaseTestBase {
         
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
-        System.out.format("%s: New value: %s%n", _base.getClass().getName(), ar.get().getNewValue());
         Assert.assertTrue(ar.get().getNewValue() instanceof List);
         List list = (List)ar.get().getNewValue();
         for (Object o : list) {

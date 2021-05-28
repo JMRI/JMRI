@@ -287,7 +287,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             e.setItem(signal_mast_list=signal_mast_list)
             e.setItem(first_signal_mast_not_present=first_signal_mast_not_present)
             
-    def neighbor_is_stub(self, first_layout_block, first_signal_mast):
+    def neighbor_is_stub(self, first_layout_block, first_signal_mast):  # UK neighbour_is_siding
         p = 0
         if first_layout_block.getUserName() == "block6" : p = 1
         SignalMastLogicManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
@@ -635,7 +635,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         if transit.getUserName() == None:
             JOptionPane.showMessageDialog(None, 'transit name null', "", JOptionPane.WARNING_MESSAGE)
             print "transit_section_list",transit_section_list
-        temp_name = transit.getUserName() + "_temp"
+        via = e.getItem("first_block_name")
+        temp_name = transit.getUserName() + "_" + via + "_temp"
         TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
         if TransitManager.getTransit(temp_name) == None:
             transit.setUserName(temp_name)

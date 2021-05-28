@@ -17,26 +17,6 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
@@ -60,20 +40,13 @@ import jmri.jmrit.logixng.tools.swing.TableEditor;
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
  * <p>
- * Two additional action and variable name selection methods have been added:
- * <ol>
- *     <li>Single Pick List
- *     <li>Combo Box Selection
- * </ol>
- * The traditional tabbed Pick List with text entry is the default method.
- * The Options menu has been expanded to list the 3 methods.
- * Mar 27, 2017 - Dave Sand
  *
  * @author Dave Duchamp Copyright (C) 2007 (LogixTableAction)
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011 (LogixTableAction)
  * @author Matthew Harris copyright (c) 2009 (LogixTableAction)
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
+ * @author Dave Sand copyright (c) 2021
  */
 public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
@@ -81,7 +54,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     JRadioButton _typeInternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTable"));
     ButtonGroup _buttonGroup = new ButtonGroup();
     JTextField _csvFileName = new JTextField(50);
-    
+
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -91,7 +64,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     public LogixNGTableTableAction(String s) {
         super(s);
     }
-    
+
     /**
      * Create a LogixNGTableAction instance with default title.
      */
@@ -102,36 +75,34 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     @Override
     protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
         return null;
-//        return new TableEditor(m, sName);
     }
-    
+
     @Override
     protected Manager<NamedTable> getManager() {
         return InstanceManager.getDefault(NamedTableManager.class);
     }
-    
+
     @Override
     protected void enableAll(boolean enable) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Not used by the tables table
     }
-    
+
     @Override
     protected void setEnabled(NamedTable bean, boolean enable) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Not used by the tables table
     }
-    
+
     @Override
     protected boolean isEnabled(NamedTable bean) {
         return true;
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     protected NamedTable createBean(String userName) {
         String systemName = InstanceManager.getDefault(NamedTableManager.class).getAutoSystemName();
         return createBean(systemName, userName);
     }
-    
+
     @Override
     protected NamedTable createBean(String systemName, String userName) {
         if (_typeExternalTable.isSelected()) {
@@ -143,11 +114,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             log.error("No table type selected");
             throw new RuntimeException("No table type selected");
         }
-        
+
 //        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, userName);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     protected void deleteBean(NamedTable bean) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -157,7 +128,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     protected String getBeanText(NamedTable bean) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    protected String helpTarget() {
+        return "package.jmri.jmrit.logixng.LogixNGTableTable";  // NOI18N
+    }
+
     /**
      * Create or copy bean frame.
      *
@@ -170,11 +146,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixNGAddEdit", true);     // NOI18N
+                "package.jmri.jmrit.logixng.LogixNGTableTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        
+
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -211,16 +187,16 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName, c);
-        
+
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
         _typeExternalTable.setSelected(true);
         _typeInternalTable.setEnabled(false);
-        
+
         _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
         contentPane.add(p);
-        
+
         JPanel panel98 = new JPanel();
         panel98.setLayout(new FlowLayout());
         JPanel panel99 = new JPanel();
@@ -229,7 +205,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         panel99.add(_typeInternalTable, c);
         panel98.add(panel99);
         contentPane.add(panel98);
-        
+
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));

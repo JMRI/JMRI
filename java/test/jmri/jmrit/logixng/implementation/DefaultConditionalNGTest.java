@@ -69,7 +69,7 @@ public class DefaultConditionalNGTest {
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
-        conditionalNG.setParentForAllChildren();
+        if (! conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -100,6 +100,7 @@ public class DefaultConditionalNGTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setInstallDebugger(false);
         JUnitUtil.initLogixNGManager();
     }
 

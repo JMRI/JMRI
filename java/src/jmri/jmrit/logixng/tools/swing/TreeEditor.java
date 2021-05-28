@@ -4,12 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -81,6 +77,7 @@ public class TreeEditor extends TreeViewer {
     
     private final boolean _enableClipboard;
     private final boolean _disableRootRemoveCutCopy;
+    private final boolean _disableRootPopup;
     
     
     /**
@@ -88,16 +85,19 @@ public class TreeEditor extends TreeViewer {
      *
      * @param femaleRootSocket the root of the tree
      * @param enableClipboard true if clipboard should be on the menu
-     * @param disableRootRemoveCutCopy true if the popup menu items remove,
+     * @param disableRootRemoveCutCopy  true if the popup menu items remove,
      *                                  cut and copy should be disabled
+     * @param disableRootPopup          true if the popup menu should be disabled
      */
     public TreeEditor(
             @Nonnull FemaleSocket femaleRootSocket,
             boolean enableClipboard,
-            boolean disableRootRemoveCutCopy) {
+            boolean disableRootRemoveCutCopy,
+            boolean disableRootPopup) {
         super(femaleRootSocket);
         _enableClipboard = enableClipboard;
         _disableRootRemoveCutCopy = disableRootRemoveCutCopy;
+        _disableRootPopup = disableRootPopup;
     }
     
     @Override
@@ -313,7 +313,9 @@ public class TreeEditor extends TreeViewer {
         
         // Ensure the type combo box gets updated
         _categoryComboBox.setSelectedIndex(-1);
-        _categoryComboBox.setSelectedIndex(0);
+        if (_categoryComboBox.getItemCount() > 0) {
+            _categoryComboBox.setSelectedIndex(0);
+        }
         
         
         _selectItemTypeDialog  = new JDialog(
@@ -1406,12 +1408,22 @@ public class TreeEditor extends TreeViewer {
             
             Clipboard clipboard = InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
             
+            MaleSocket topItem = clipboard.getTopItem();
+            
             boolean isConnected = femaleSocket.isConnected();
             boolean canConnectFromClipboard =
-                    !clipboard.isEmpty()
-                    && femaleSocket.isCompatible(clipboard.getTopItem())
-                    && !femaleSocket.isAncestor(clipboard.getTopItem());
+                    topItem != null
+                    && femaleSocket.isCompatible(topItem)
+                    && !femaleSocket.isAncestor(topItem);
             
+            if (_disableRootPopup
+                    && (_currentFemaleSocket == _treePane._femaleRootSocket)) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("TreeEditor_RootHasNoPopupMenu"),
+                        Bundle.getMessage("TreeEditor_Info"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             boolean disableForRoot = _disableRootRemoveCutCopy
                     && (_currentFemaleSocket == _treePane._femaleRootSocket);
             
@@ -1482,7 +1494,13 @@ public class TreeEditor extends TreeViewer {
                                 () -> {
                             Clipboard clipboard =
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
-                            clipboard.add(_currentFemaleSocket.getConnectedSocket());
+                            List<String> errors = new ArrayList<>();
+                            if (!clipboard.add(_currentFemaleSocket.getConnectedSocket(), errors)) {
+                                JOptionPane.showMessageDialog(this,
+                                        String.join("<br>", errors),
+                                        Bundle.getMessage("TitleError"),
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
                             _currentFemaleSocket.disconnect();
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.registerListeners();
@@ -1506,7 +1524,15 @@ public class TreeEditor extends TreeViewer {
                             Map<String, String> systemNames = new HashMap<>();
                             Map<String, String> userNames = new HashMap<>();
                             try {
-                                clipboard.add((MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames));
+                                List<String> errors = new ArrayList<>();
+                                if (!clipboard.add(
+                                        (MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames),
+                                        errors)) {
+                                    JOptionPane.showMessageDialog(this,
+                                            String.join("<br>", errors),
+                                            Bundle.getMessage("TitleError"),
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
                             } catch (JmriException ex) {
                                 log.error("getDeepCopy thrown exception: {}", ex, ex);
                                 ThreadingUtil.runOnGUIEventually(() -> {
@@ -1535,7 +1561,13 @@ public class TreeEditor extends TreeViewer {
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             try {
                                 _currentFemaleSocket.connect(clipboard.fetchTopItem());
-                                _currentFemaleSocket.setParentForAllChildren();
+                                List<String> errors = new ArrayList<>();
+                                if (!_currentFemaleSocket.setParentForAllChildren(errors)) {
+                                    JOptionPane.showMessageDialog(this,
+                                            String.join("<br>", errors),
+                                            Bundle.getMessage("TitleError"),
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
                             } catch (SocketAlreadyConnectedException ex) {
                                 log.error("item cannot be connected", ex);
                             }

@@ -348,6 +348,15 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
+     * Is this VSDecoder muted?
+     *
+     * @return true if muted
+     */
+    public boolean isMuted() {
+        return getMuteState();
+    }
+
+    /**
      * Mute or un-mute this VSDecoder
      *
      * @param m (boolean) true to mute, false to un-mute

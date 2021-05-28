@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -183,7 +184,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
         
         expressionLocalVariable.setLocalVariable("someVar");
-        Assert.assertEquals("Compare local variable", expressionLocalVariable.getShortDescription());
+        Assert.assertEquals("Local variable", expressionLocalVariable.getShortDescription());
         Assert.assertEquals("Local variable someVar is equal to \"\"", expressionLocalVariable.getLongDescription());
         expressionLocalVariable.setLocalVariable("myVar");
         expressionLocalVariable.setConstantValue("A value");
@@ -488,7 +489,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         expressionLocalVariable.setLocalVariable("myVar");
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

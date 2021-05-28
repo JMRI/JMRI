@@ -22,13 +22,13 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSignalMast object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
-    
+
     private JTabbedPane _tabbedPaneSignalMast;
     private BeanSelectPanel<SignalMast> _signalMastBeanPanel;
     private JPanel _panelSignalMastDirect;
@@ -38,80 +38,89 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
     private JTextField _signalMastReferenceTextField;
     private JTextField _signalMastLocalVariableTextField;
     private JTextField _signalMastFormulaTextField;
-    
+
     private JTabbedPane _tabbedPaneQueryType;
     private JPanel _panelQueryTypeDirect;
     private JPanel _panelQueryTypeReference;
     private JPanel _panelQueryTypeLocalVariable;
     private JPanel _panelQueryTypeFormula;
-    
+
     private JComboBox<ExpressionSignalMast.QueryType> _operationComboBox;
     private JTextField _signalMastQueryReferenceTextField;
     private JTextField _signalMastQueryLocalVariableTextField;
     private JTextField _signalMastQueryFormulaTextField;
-    
+
     private JTabbedPane _tabbedPaneAspectType;
     private JPanel _panelAspectTypeDirect;
     private JPanel _panelAspectTypeReference;
     private JPanel _panelAspectTypeLocalVariable;
     private JPanel _panelAspectTypeFormula;
-    
+
     private JComboBox<String> _signalMastAspectComboBox;
     private JTextField _signalMastAspectReferenceTextField;
     private JTextField _signalMastAspectLocalVariableTextField;
     private JTextField _signalMastAspectFormulaTextField;
-    
+
     private BeanSelectPanel<SignalMast> _exampleSignalMastBeanPanel;
-    
-    
+
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionSignalMast expression = (ExpressionSignalMast)object;
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        
+
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
         innerExamplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         _exampleSignalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
         innerExamplePanel.add(_exampleSignalMastBeanPanel);
-        
+
+        _exampleSignalMastBeanPanel.getBeanCombo().addActionListener((java.awt.event.ActionEvent e) -> {
+            setAspectComboBox(null);
+        });
+
+
         JPanel expressionPanel = new JPanel();
-        
-        
+
+
         // Set up tabbed pane for selecting the signal head
         _tabbedPaneSignalMast = new JTabbedPane();
         _panelSignalMastDirect = new javax.swing.JPanel();
         _panelSignalMastReference = new javax.swing.JPanel();
         _panelSignalMastLocalVariable = new javax.swing.JPanel();
         _panelSignalMastFormula = new javax.swing.JPanel();
-        
+
         _tabbedPaneSignalMast.addTab(NamedBeanAddressing.Direct.toString(), _panelSignalMastDirect);
         _tabbedPaneSignalMast.addTab(NamedBeanAddressing.Reference.toString(), _panelSignalMastReference);
         _tabbedPaneSignalMast.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSignalMastLocalVariable);
         _tabbedPaneSignalMast.addTab(NamedBeanAddressing.Formula.toString(), _panelSignalMastFormula);
-        
+
         _tabbedPaneSignalMast.addChangeListener((ChangeEvent e) -> {
-            enableDisableExampleSignalMastBeanPanel();
+            setGuiEnabledStates();
         });
-        
+
         _signalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
         _panelSignalMastDirect.add(_signalMastBeanPanel);
-        
+
+        _signalMastBeanPanel.getBeanCombo().addActionListener((java.awt.event.ActionEvent e) -> {
+            setAspectComboBox(null);
+        });
+
         _signalMastReferenceTextField = new JTextField();
         _signalMastReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelSignalMastReference.add(_signalMastReferenceTextField);
-        
+
         _signalMastLocalVariableTextField = new JTextField();
         _signalMastLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelSignalMastLocalVariable.add(_signalMastLocalVariableTextField);
-        
+
         _signalMastFormulaTextField = new JTextField();
         _signalMastFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelSignalMastFormula.add(_signalMastFormulaTextField);
-        
-        
+
+
         // Set up the tabbed pane for selecting the operation
         _tabbedPaneQueryType = new JTabbedPane();
         _panelQueryTypeDirect = new javax.swing.JPanel();
@@ -122,50 +131,46 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         _panelQueryTypeLocalVariable.setLayout(new BoxLayout(_panelQueryTypeLocalVariable, BoxLayout.Y_AXIS));
         _panelQueryTypeFormula = new javax.swing.JPanel();
         _panelQueryTypeFormula.setLayout(new BoxLayout(_panelQueryTypeFormula, BoxLayout.Y_AXIS));
-        
+
         _tabbedPaneQueryType.addTab(NamedBeanAddressing.Direct.toString(), _panelQueryTypeDirect);
         _tabbedPaneQueryType.addTab(NamedBeanAddressing.Reference.toString(), _panelQueryTypeReference);
         _tabbedPaneQueryType.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelQueryTypeLocalVariable);
         _tabbedPaneQueryType.addTab(NamedBeanAddressing.Formula.toString(), _panelQueryTypeFormula);
-        
+
         _tabbedPaneQueryType.addChangeListener((ChangeEvent e) -> {
-            enableDisableExampleSignalMastBeanPanel();
+            setGuiEnabledStates();
         });
-        
+
         _operationComboBox = new JComboBox<>();
         for (ExpressionSignalMast.QueryType e : ExpressionSignalMast.QueryType.values()) {
             _operationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
-        
+
         _operationComboBox.addActionListener(e -> {
-            if ((_operationComboBox.getSelectedItem() == ExpressionSignalMast.QueryType.Aspect)
-                    || (_operationComboBox.getSelectedItem() == ExpressionSignalMast.QueryType.NotAspect)) {
-                setEnableQueryComboBox(true);
-            } else {
-                setEnableQueryComboBox(false);
-            }
+            setGuiEnabledStates();
         });
+
         _panelQueryTypeDirect.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Query")));
         _panelQueryTypeDirect.add(_operationComboBox);
-        
+
         _signalMastQueryReferenceTextField = new JTextField();
         _signalMastQueryReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelQueryTypeReference.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Query")));
         _panelQueryTypeReference.add(_signalMastQueryReferenceTextField);
-        
+
         _signalMastQueryLocalVariableTextField = new JTextField();
         _signalMastQueryLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelQueryTypeLocalVariable.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Query")));
         _panelQueryTypeLocalVariable.add(_signalMastQueryLocalVariableTextField);
-        
+
         _signalMastQueryFormulaTextField = new JTextField();
         _signalMastQueryFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelQueryTypeFormula.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Query")));
         _panelQueryTypeFormula.add(_signalMastQueryFormulaTextField);
-        
-        
-        // Set up the tabbed pane for selecting the appearance
+
+
+        // Set up the tabbed pane for selecting the aspect
         _tabbedPaneAspectType = new JTabbedPane();
         _panelAspectTypeDirect = new javax.swing.JPanel();
         _panelAspectTypeDirect.setLayout(new BoxLayout(_panelAspectTypeDirect, BoxLayout.Y_AXIS));
@@ -175,36 +180,50 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         _panelAspectTypeLocalVariable.setLayout(new BoxLayout(_panelAspectTypeLocalVariable, BoxLayout.Y_AXIS));
         _panelAspectTypeFormula = new javax.swing.JPanel();
         _panelAspectTypeFormula.setLayout(new BoxLayout(_panelAspectTypeFormula, BoxLayout.Y_AXIS));
-        
+
         _tabbedPaneAspectType.addTab(NamedBeanAddressing.Direct.toString(), _panelAspectTypeDirect);
         _tabbedPaneAspectType.addTab(NamedBeanAddressing.Reference.toString(), _panelAspectTypeReference);
         _tabbedPaneAspectType.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelAspectTypeLocalVariable);
         _tabbedPaneAspectType.addTab(NamedBeanAddressing.Formula.toString(), _panelAspectTypeFormula);
-        
+
         _tabbedPaneAspectType.addChangeListener((ChangeEvent e) -> {
-            enableDisableExampleSignalMastBeanPanel();
+            setGuiEnabledStates();
         });
-        
+
         _signalMastAspectComboBox = new JComboBox<>();
         _panelAspectTypeDirect.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Aspect")));
         _panelAspectTypeDirect.add(_signalMastAspectComboBox);
-        
+
         _signalMastAspectReferenceTextField = new JTextField();
         _signalMastAspectReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelAspectTypeReference.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Aspect")));
         _panelAspectTypeReference.add(_signalMastAspectReferenceTextField);
-        
+
         _signalMastAspectLocalVariableTextField = new JTextField();
         _signalMastAspectLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelAspectTypeLocalVariable.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Aspect")));
         _panelAspectTypeLocalVariable.add(_signalMastAspectLocalVariableTextField);
-        
+
         _signalMastAspectFormulaTextField = new JTextField();
         _signalMastAspectFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelAspectTypeFormula.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_Aspect")));
         _panelAspectTypeFormula.add(_signalMastAspectFormulaTextField);
-        
-        
+
+
+        JPanel notePanel = new JPanel();
+        notePanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.white));
+        examplePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+
+        JLabel noteLabel = new JLabel(Bundle.getMessage("SignalExampleText",
+                Bundle.getMessage("SignalExampleMast"),
+                Bundle.getMessage("SignalExampleAspects")));
+        notePanel.add(noteLabel);
+
+
+        examplePanel.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_ExampleBean")));
+        examplePanel.add(innerExamplePanel);
+
+
         if (expression != null) {
             switch (expression.getAddressing()) {
                 case Direct: _tabbedPaneSignalMast.setSelectedComponent(_panelSignalMastDirect); break;
@@ -222,8 +241,8 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             _signalMastReferenceTextField.setText(expression.getReference());
             _signalMastLocalVariableTextField.setText(expression.getLocalVariable());
             _signalMastFormulaTextField.setText(expression.getFormula());
-            
-            
+
+
             switch (expression.getQueryAddressing()) {
                 case Direct: _tabbedPaneQueryType.setSelectedComponent(_panelQueryTypeDirect); break;
                 case Reference: _tabbedPaneQueryType.setSelectedComponent(_panelQueryTypeReference); break;
@@ -235,15 +254,9 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             _signalMastQueryReferenceTextField.setText(expression.getQueryReference());
             _signalMastQueryLocalVariableTextField.setText(expression.getQueryLocalVariable());
             _signalMastQueryFormulaTextField.setText(expression.getQueryFormula());
-            
-            if ((expression.getQueryType() == ExpressionSignalMast.QueryType.Aspect)
-                    || (expression.getQueryType() == ExpressionSignalMast.QueryType.NotAspect)) {
-                setEnableQueryComboBox(true);
-            } else {
-                setEnableQueryComboBox(false);
-            }
-            
-            
+
+
+
             switch (expression.getAspectAddressing()) {
                 case Direct: _tabbedPaneAspectType.setSelectedComponent(_panelAspectTypeDirect); break;
                 case Reference: _tabbedPaneAspectType.setSelectedComponent(_panelAspectTypeReference); break;
@@ -254,75 +267,91 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             _signalMastAspectReferenceTextField.setText(expression.getAspectReference());
             _signalMastAspectLocalVariableTextField.setText(expression.getAspectLocalVariable());
             _signalMastAspectFormulaTextField.setText(expression.getAspectFormula());
-            
-            SignalMast sm = null;
-            if ((_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)
-                    && (expression.getSignalMast() != null)) {
-                sm = expression.getSignalMast().getBean();
-            } else if (expression.getExampleSignalMast() != null) {
-                sm = expression.getExampleSignalMast().getBean();
-            }
-            
-            if (sm != null) {
-                for (String aspect : sm.getValidAspects()) {
-                    _signalMastAspectComboBox.addItem(aspect);
-                    if (aspect.equals(expression.getAspect())) _signalMastAspectComboBox.setSelectedItem(aspect);
-                }
-                JComboBoxUtil.setupComboBoxMaxRows(_signalMastAspectComboBox);
-            }
+
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> { setAspectComboBox(expression); });
         }
-        
+
         JComponent[] components = new JComponent[]{
             _tabbedPaneSignalMast,
             _tabbedPaneQueryType,
             _tabbedPaneAspectType
         };
-        
+
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionSignalMast_Components"), components);
-        
+
         for (JComponent c : componentList) expressionPanel.add(c);
+
         panel.add(expressionPanel);
-        
-        
-        panel.add(new JLabel("If you use Direct addressing of the signal head and Direct addressing of the appearance,"));
-        panel.add(new JLabel(" you need to first select the signal head, then click Create/OK to save the settings, and"));
-        panel.add(new JLabel(" then edit the signal head expression again and select the appearance."));
-        panel.add(new JLabel("If you do not use Direct addressing of the signal head but are using Direct addressing of"));
-        panel.add(new JLabel("the appearance, you need to select an example signal head. The example signal head is used"));
-        panel.add(new JLabel("to tell JMRI which aspects the indirect addressed signal head may show."));
-        
-        enableDisableExampleSignalMastBeanPanel();
-        
-        examplePanel.add(new JLabel(Bundle.getMessage("ExpressionSignalMast_ExampleBean")));
-        examplePanel.add(innerExamplePanel);
-        
+        panel.add(notePanel);
         panel.add(examplePanel);
+
+        setGuiEnabledStates();
     }
-    
-    private void setEnableQueryComboBox(boolean enable) {
-        _tabbedPaneAspectType.setEnabled(enable);
-        _signalMastAspectComboBox.setEnabled(enable);
-        _signalMastAspectReferenceTextField.setEnabled(enable);
-        _signalMastAspectLocalVariableTextField.setEnabled(enable);
-        _signalMastAspectFormulaTextField.setEnabled(enable);
-    }
-    
-    private void enableDisableExampleSignalMastBeanPanel() {
-        if ((_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
-                && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
-            _exampleSignalMastBeanPanel.setEnabled(true);
-        } else {
-            _exampleSignalMastBeanPanel.setEnabled(false);
+
+
+    private void setGuiEnabledStates() {
+        _tabbedPaneAspectType.setEnabled(false);
+        _signalMastAspectComboBox.setEnabled(false);
+        _signalMastAspectReferenceTextField.setEnabled(false);
+        _signalMastAspectLocalVariableTextField.setEnabled(false);
+        _signalMastAspectFormulaTextField.setEnabled(false);
+        _exampleSignalMastBeanPanel.getBeanCombo().setEnabled(false);
+
+        if (_tabbedPaneQueryType.getSelectedComponent() == _panelQueryTypeDirect &&
+                _operationComboBox.getSelectedItem() != ExpressionSignalMast.QueryType.Aspect &&
+                _operationComboBox.getSelectedItem() != ExpressionSignalMast.QueryType.NotAspect) {
+            return;
+        }
+
+        _tabbedPaneAspectType.setEnabled(true);
+
+        if (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect &&
+                _tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect) {
+            _exampleSignalMastBeanPanel.getBeanCombo().setEnabled(true);
+        }
+
+        if (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect) {
+            _signalMastAspectComboBox.setEnabled(true);
+        }
+        if (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeReference) {
+            _signalMastAspectReferenceTextField.setEnabled(true);
+        }
+        if (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeLocalVariable) {
+            _signalMastAspectLocalVariableTextField.setEnabled(true);
+        }
+        if (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeFormula) {
+            _signalMastAspectFormulaTextField.setEnabled(true);
         }
     }
-    
+
+    private void setAspectComboBox(ExpressionSignalMast expression) {
+        SignalMast sm;
+        if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
+            sm = (SignalMast) _signalMastBeanPanel.getBeanCombo().getSelectedItem();
+        } else {
+            sm = (SignalMast) _exampleSignalMastBeanPanel.getBeanCombo().getSelectedItem();
+        }
+
+        if (sm != null) {
+            _signalMastAspectComboBox.removeAllItems();
+            for (String aspect : sm.getValidAspects()) {
+                _signalMastAspectComboBox.addItem(aspect);
+                if (expression != null) {
+                    if (aspect.equals(expression.getAspect())) _signalMastAspectComboBox.setSelectedItem(aspect);
+                }
+            }
+            JComboBoxUtil.setupComboBoxMaxRows(_signalMastAspectComboBox);
+        }
+    }
+
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary expression to test formula
         ExpressionSignalMast expression = new ExpressionSignalMast("IQDE1", null);
-        
+
         try {
             if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastReference) {
                 expression.setReference(_signalMastReferenceTextField.getText());
@@ -331,7 +360,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             errorMessages.add(e.getMessage());
             return false;
         }
-        
+
         try {
             if (_tabbedPaneQueryType.getSelectedComponent() == _panelQueryTypeReference) {
                 expression.setQueryReference(_signalMastQueryReferenceTextField.getText());
@@ -340,7 +369,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             errorMessages.add(e.getMessage());
             return false;
         }
-        
+
         try {
             expression.setFormula(_signalMastFormulaTextField.getText());
             if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
@@ -359,7 +388,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         }
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -367,7 +396,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         updateObject(expression);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -375,18 +404,20 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSignalMast but is a: "+object.getClass().getName());
         }
         ExpressionSignalMast expression = (ExpressionSignalMast)object;
-        if (!_signalMastBeanPanel.isEmpty() && (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)) {
+        if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
             SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
             if (signalMast != null) {
                 NamedBeanHandle<SignalMast> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
                 expression.setSignalMast(handle);
+            } else {
+                expression.removeSignalMast();
             }
         } else {
             expression.removeSignalMast();
         }
-        
+
         if (!_exampleSignalMastBeanPanel.isEmpty()
                 && (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
                 && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
@@ -401,7 +432,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         } else {
             expression.removeExampleSignalMast();
         }
-        
+
         try {
             if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
                 expression.setAddressing(NamedBeanAddressing.Direct);
@@ -417,7 +448,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             } else {
                 throw new IllegalArgumentException("_tabbedPaneSignalMast has unknown selection");
             }
-            
+
             if (_tabbedPaneQueryType.getSelectedComponent() == _panelQueryTypeDirect) {
                 expression.setQueryAddressing(NamedBeanAddressing.Direct);
                 expression.setQueryType((ExpressionSignalMast.QueryType)_operationComboBox.getSelectedItem());
@@ -433,10 +464,10 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             } else {
                 throw new IllegalArgumentException("_tabbedPaneQueryType has unknown selection");
             }
-            
+
             if (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect) {
                 expression.setAspectAddressing(NamedBeanAddressing.Direct);
-                
+
                 if (_signalMastAspectComboBox.getItemCount() > 0) {
                     expression.setAspect(_signalMastAspectComboBox
                             .getItemAt(_signalMastAspectComboBox.getSelectedIndex()));
@@ -457,18 +488,18 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("SignalMast_Short");
     }
-    
+
     @Override
     public void dispose() {
     }
-    
-    
+
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalMastSwing.class);
-    
+
 }

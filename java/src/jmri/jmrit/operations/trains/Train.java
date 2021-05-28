@@ -2918,7 +2918,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return true if train build failed.
      */
-    public boolean getBuildFailed() {
+    public boolean isBuildFailed() {
         return _buildFailed;
     }
 
@@ -3959,7 +3959,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.BUILD_CONSIST, isBuildConsistEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILT, isBuilt() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILD, isBuildEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.BUILD_FAILED, getBuildFailed() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.BUILD_FAILED, isBuildFailed() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILD_FAILED_MESSAGE, getBuildFailedMessage());
         e.setAttribute(Xml.PRINTED, isPrinted() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.MODIFIED, isModified() ? Xml.TRUE : Xml.FALSE);

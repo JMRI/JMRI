@@ -5,11 +5,11 @@ import java.util.HashMap;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterAll;
+import jmri.util.junit.rules.RetryRule;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.jupiter.api.BeforeAll;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -26,6 +26,9 @@ public class AddEntryExitPairPanelTest {
     static HashMap<String, LayoutEditor> panels = new HashMap<>();
     static EntryExitPairs eep;
 
+    //@Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -36,6 +39,8 @@ public class AddEntryExitPairPanelTest {
     @Test
     public void testPanelActions() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // Open the NX window
         AddEntryExitPairAction nxAction = new AddEntryExitPairAction("ENTRY EXIT", panels.get("Alpha"));  // NOI18N

@@ -67,14 +67,14 @@ public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         AnalogActionMemory action = new AnalogActionMemory(systemName, userName);
-        if (!memoryBeanPanel.isEmpty()) {
-            Memory memory = memoryBeanPanel.getNamedBean();
-            if (memory != null) {
-                NamedBeanHandle<Memory> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
-            }
+        Memory memory = memoryBeanPanel.getNamedBean();
+        if (memory != null) {
+            NamedBeanHandle<Memory> handle
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(memory.getDisplayName(), memory);
+            action.setMemory(handle);
+        } else {
+            action.removeMemory();
         }
         return InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
     }
