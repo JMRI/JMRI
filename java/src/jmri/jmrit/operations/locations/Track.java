@@ -533,8 +533,7 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Used to determine if there's space available at this track for the car.
-     * Considers cars en route to this track. Used to prevent overloading the track
-     * with cars from staging or cars with custom loads.
+     * Considers cars en-route to this track. Used to prevent overloading the track.
      *
      * @param car The car to be set out.
      * @return true if space available.
