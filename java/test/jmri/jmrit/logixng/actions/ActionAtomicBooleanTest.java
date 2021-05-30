@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -170,7 +171,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set the atomic boolean", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Atomic boolean", _base.getShortDescription());
     }
     
     @Test
@@ -220,7 +221,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         _base = actionAtomicBoolean;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

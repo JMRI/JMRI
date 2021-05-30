@@ -216,14 +216,18 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionLight but is a: "+object.getClass().getName());
         }
         ExpressionLight expression = (ExpressionLight)object;
-        if (!_lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
+        if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
             Light light = _lightBeanPanel.getNamedBean();
             if (light != null) {
                 NamedBeanHandle<Light> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(light.getDisplayName(), light);
                 expression.setLight(handle);
+            } else {
+                expression.removeLight();
             }
+        } else {
+            expression.removeLight();
         }
         try {
             if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {

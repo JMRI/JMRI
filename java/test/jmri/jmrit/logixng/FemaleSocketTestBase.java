@@ -255,10 +255,10 @@ public abstract class FemaleSocketTestBase {
     @Test
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        _femaleSocket.setParentForAllChildren();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
         _femaleSocket.connect(maleSocket);
-        _femaleSocket.setParentForAllChildren();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
     }
 
@@ -446,15 +446,6 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getSystemName();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-
     }
 
     @Test
@@ -595,7 +586,7 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public void setParentForAllChildren() {
+        public boolean setParentForAllChildren(List<String> errors) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

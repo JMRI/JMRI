@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -189,7 +190,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionSensor.removeSensor();
-        Assert.assertEquals("Get sensor", expressionSensor.getShortDescription());
+        Assert.assertEquals("Sensor", expressionSensor.getShortDescription());
         Assert.assertEquals("Sensor '' is Active", expressionSensor.getLongDescription());
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
@@ -437,7 +438,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         expressionSensor.setSensor(sensor);
         sensor.setCommandedState(Sensor.ACTIVE);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

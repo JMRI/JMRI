@@ -72,18 +72,10 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
     
     /** {@inheritDoc} */
     @Override
-    public void register(MaleSocket maleSocket) {
-        if (!(maleSocket instanceof MaleStringExpressionSocket)) {
-            throw new IllegalArgumentException("maleSocket is not a MaleStringExpressionSocket");
-        }
-        register((MaleStringExpressionSocket)maleSocket);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void register(MaleStringExpressionSocket maleSocket) {
-        super.register(maleSocket);
+    public MaleStringExpressionSocket registerBean(MaleStringExpressionSocket maleSocket) {
+        MaleStringExpressionSocket bean = super.registerBean(maleSocket);
         _lastRegisteredBean = maleSocket;
+        return bean;
     }
     
     /**
@@ -111,8 +103,7 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
         
         // save in the maps
         MaleStringExpressionSocket maleSocket = createMaleStringExpressionSocket(expression);
-        register(maleSocket);
-        return maleSocket;
+        return registerBean(maleSocket);
     }
     
     @Override

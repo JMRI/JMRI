@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -491,7 +492,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set sensor", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Sensor", _base.getShortDescription());
     }
     
     @Test
@@ -543,7 +544,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         _base = actionSensor;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

@@ -8,8 +8,8 @@ There are several content subtrees:
   html - a help-customized version of the web site
   package - package-sensitive help, organized by Java package
   
-The TemplatePlain.shtml and TemplateBar.shtml files are basic templates
-to copy when making a new file.
+The template-no-sidebar.shtml and template-sidebar.shtml files
+are basic templates to copy when making a new file.
 
 For more information on maintaining the various metadata in the 
 help system, please see:

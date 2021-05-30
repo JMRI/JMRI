@@ -370,7 +370,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
 //        System.out.format("fn_1: %s%n", symbolTable.getValue("fn_1"));
 //        System.out.format("fn: %s%n", symbolTable.getValue("fn"));
 //        System.out.format("result: %s%n", symbolTable.getValue("result"));
-        System.out.format("result: %s%n", result.getValue());
+//        System.out.format("result: %s%n", result.getValue());
         
 //        System.out.format("%n%n%ndebug: %s%n", debug.getValue());
         
@@ -424,7 +424,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 .registerAction(new DigitalMany(
                         InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null)));
         
-        _logixNG.setParentForAllChildren();
+        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

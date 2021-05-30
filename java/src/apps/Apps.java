@@ -3,14 +3,14 @@ package apps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
-import java.util.EventObject;
-import java.util.Locale;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
@@ -360,7 +360,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-        logixNG_Manager.setupAllLogixNGs();
+        java.util.List<String> errors = new ArrayList<>();
+        if (!logixNG_Manager.setupAllLogixNGs(errors)) {
+            for (String s : errors) log.error(s);
+            JOptionPane.showMessageDialog(this,
+                    "<html>"+String.join("<br>", errors)+"</html>",
+                    Bundle.getMessage("TitleError"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
             logixNG_Manager.activateAllLogixNGs();
         }

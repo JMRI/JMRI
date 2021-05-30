@@ -50,6 +50,11 @@
        "vsd" to "zip" first.
       </p>
 
+      <p>A general overview of the VSD file and its components can be found
+	    <a href="https://sourceforge.net/p/searchlight2/wiki4/VSD_File_Definition/">
+        here</a>.
+      </p>
+
       <h4>Configuration File</h4>
 
       <p>The <strong>config.xml</strong> file can be created or edited using a
@@ -60,10 +65,43 @@
       <p>A value in XML is described as a <strong>tag</strong>, e.g.
         <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.
       </p>
-      <p>The following sections present some optional configuration features.
-        They are documented as tags, so you can copy and paste it into your 
+      <p>The following sections present important required elements and some optional elements.
+        Most are documented as tags, so you can copy and paste it into your 
         config.xml file, if desired.
       </p>
+
+      <h4>Required configuration elements</h4>
+
+      <p>Structure of config.xml for all locomotive types:</p>
+
+      <pre>
+      &lt;vsdecoder-config&gt;
+
+          &lt;profile name="..."&gt;
+
+              &lt;sound-event name="ENGINE" ...&gt;
+               ...
+              &lt;/sound-event&gt;
+
+              &lt;sound name="ENGINE" type="..."&gt;
+               ...
+              &lt;/sound&gt;
+
+          &lt;/profile&gt;
+
+      &lt;/vsdecoder-config&gt;
+      </pre>
+
+      <p>Note: the config.xml file can contain one or more profiles</p>
+
+      <p>Remarks:</p>
+      <p>
+        Top-speed is the prototype maximum speed in mph.<br>
+        Driver-diameter is the diameter of the prototype driver wheel in inches.
+      </p>
+
+
+      <h4>Optional configuration elements</h4>
 
       <h5>Auto-Start Engine</h5>
 
@@ -183,6 +221,24 @@
       <p>Example:</p>
       <pre>
       &lt;engine-gain&gt;0.6&lt;/engine-gain&gt;
+      </pre>
+
+      <h5><a name="dynamic-gain">Dynamic Gain</a></h5>
+
+      <p>Description:<br>
+      This element allows to activate an option for
+      steam1 engine types.<br>
+      The engine volume is raised a bit when accelerating and
+      lowered a bit when decelerating.<br>
+      Optional. The declaration should be made in the tag
+      <strong>sound name="ENGINE"</strong> right after
+      element engine-gain.<br>
+      Default value: no<br>
+      <em>Since JMRI 4.23.6</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;dynamic-gain&gt;yes&lt;/dynamic-gain&gt;
       </pre>
 
       <h5>Top Speed Reverse</h5>

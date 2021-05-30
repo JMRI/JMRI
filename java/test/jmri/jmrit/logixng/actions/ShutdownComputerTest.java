@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
@@ -42,7 +44,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Shutdown computer: Shut down JMRI ::: Use default%n");
+        return String.format("Shutdown JMRI/computer: Shut down JMRI ::: Use default%n");
     }
     
     @Override
@@ -51,7 +53,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Shutdown computer: Shut down JMRI ::: Use default%n");
+                "         Shutdown JMRI/computer: Shut down JMRI ::: Use default%n");
     }
     
     @Override
@@ -143,7 +145,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
+        JUnitUtil.initLogixNGManager(true);
         
         mockShutDownManager = new MockShutDownManager();
         InstanceManager.setDefault(ShutDownManager.class, mockShutDownManager);
@@ -164,7 +166,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         _base = actionShutdownComputer;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
     

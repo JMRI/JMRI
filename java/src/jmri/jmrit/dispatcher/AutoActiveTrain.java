@@ -59,6 +59,8 @@ public class AutoActiveTrain implements ThrottleListener {
         at.setAutoActiveTrain(this);
         _autoTrainAction = new AutoTrainAction(this);
         _lbManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        // listen for additions in our allocated section table
+        at.addPropertyChangeListener("sectionallocated",this::handleAnotherSectionAllocatedChange);
     }
 
     /* Speed aspects as defined by Douglas A. Kerr - "Rail Signal Aspects and Indications"
@@ -435,6 +437,19 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
+     * Handle notification of allocation added to the ActiveTrain allocatedsections table.
+     * Subtly different from change in a sections status.
+     *
+     * @param evt the allocation that changed
+     */
+    private void handleAnotherSectionAllocatedChange( PropertyChangeEvent evt) {
+        if (waitingOnAllocation || InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SECTIONSALLOCATED) {
+            waitingOnAllocation = false;
+            setSpeedBySignal();
+        }
+    }
+
+    /**
      * Handle notification of changes in section occupancy.
      *
      * @param as the section that changed
@@ -550,7 +565,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 _stoppingByBlockOccupancy = false;
                 _stoppingBlock = null;
-// djd may need more code here
                 if (_needSetSpeed) {
                     _needSetSpeed = false;
                     setSpeedBySignal();
@@ -613,12 +627,6 @@ public class AutoActiveTrain implements ThrottleListener {
         if (!_pausingActive && (_lastAllocatedSection == _currentAllocatedSection)
                 && isStopping() && (_activeTrain.getStatus() == ActiveTrain.RUNNING)) {
             _needSetSpeed = true;
-        }
-        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SECTIONSALLOCATED
-                || waitingOnAllocation ) {
-            log.debug("{}:ClearStop",_activeTrain.getActiveTrainName());
-            waitingOnAllocation = false;
-            setSpeedBySignal();
         }
         
         // request next allocation if appropriate--Dispatcher must decide whether to allocate it and when
@@ -869,6 +877,10 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private void setSpeedBySectionsAllocated() {
+        if (_stoppingByBlockOccupancy && (_stoppingBlock != null && _stoppingBlock.getState() == Block.UNOCCUPIED)) {
+            // we are awaiting a delayed stop
+            return;
+        }
         int sectionsAhead = 0;
         AllocatedSection as = null;
         for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
@@ -908,7 +920,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
         }
-        if (newSpeed > 0 ) {
+        if (newSpeed > 0) {
             log.trace("setSpeedBySectionsAllocated isStopping[{}]",isStopping());
             cancelStopInCurrentSection();
             setTargetSpeed(getThrottleSettingFromSpeed(newSpeed));
@@ -1198,12 +1210,15 @@ public class AutoActiveTrain implements ThrottleListener {
                 });
                 _stoppingBySensor = true;
             }
-        } else if (_currentAllocatedSection.getLength() < _maxTrainLength || _stopBySpeedProfile) {
+        } else if (_useSpeedProfile && _stopBySpeedProfile) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
+            // stopping by speed profile uses section length to stop
+            setStopNow(true);
+        } else if (_currentAllocatedSection.getLength()  < _maxTrainLength) {
+            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow", _activeTrain.getTrainName(),
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
-            // stopping by speed profile uses block length to stop
-            //TODO: don't stop immediately, slow to stop instead
             setStopNow();
         } else if (_resistanceWheels) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
@@ -1221,7 +1236,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
                         _stoppingBlock = tBlock;
-                        setStopByBlockOccupancy();
+                        setStopByBlockOccupancy(false);
                     } else {
                         setStopNow();
                     }
@@ -1232,30 +1247,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 // Section has multiple blocks
                 Block exitBlock = _currentAllocatedSection.getExitBlock();
                 Block enterBlock = _currentAllocatedSection.getEnterBlock(_previousAllocatedSection);
-                if (exitBlock == null) {
-                    // this is the final Section of the Transit
-                    Block testBlock = _currentAllocatedSection.getSection().getEntryBlock();
-                    // skip over unused leading blocks, if any
-                    while ((testBlock != null) && (testBlock != enterBlock)) {
-                        testBlock = _currentAllocatedSection.getSection().getNextBlock();
-                    }
-                    // is there room in the remaining blocks to hold the train?
-                    int testLength = getBlockLength(testBlock);
-                    while (testBlock != null) {
-                        testBlock = _currentAllocatedSection.getSection().getNextBlock();
-                        if (testBlock != null) {
-                            testLength += getBlockLength(testBlock);
-                        }
-                    }
-                    if ((testLength > _maxTrainLength) && (_previousBlock != null)
-                            && (_previousBlock.getState() == Block.OCCUPIED)) {
-                        // fits, pull train entirely into the last Section
-                        _stoppingBlock = _previousBlock;
-                        setStopByBlockOccupancy();
-                    } else {
-                        setStopNow();
-                    }
-                } else if (enterBlock == null) {
+                if (enterBlock == null) {
                     // this is the first Section of the Transit, with train starting in this Section
                     setStopNow();
                 } else if (exitBlock == enterBlock) {
@@ -1263,43 +1255,54 @@ public class AutoActiveTrain implements ThrottleListener {
                     if ((_previousBlock != null) && (_previousBlock.getState() == Block.OCCUPIED)
                             && (getBlockLength(exitBlock) > _maxTrainLength)) {
                         _stoppingBlock = _previousBlock;
-                        setStopByBlockOccupancy();
+                        setStopByBlockOccupancy(false);
                     } else {
                         setStopNow();
                     }
                 } else {
                     // try to move train as far into the Section as it will comfortably fit
-                    int tstLength = getBlockLength(exitBlock);
                     Block tstBlock = exitBlock;
+                    if (tstBlock == null) {
+                        if (_currentAllocatedSection.getDirection() == Section.REVERSE) {
+                            tstBlock = _currentAllocatedSection.getSection().getBlockBySequenceNumber(0);
+                        } else {
+                            tstBlock = _currentAllocatedSection.getSection().getBlockBySequenceNumber(
+                                    _currentAllocatedSection.getSection().getNumBlocks() - 1);
+                        }
+                    }
+                    int tstLength = getBlockLength(tstBlock);
                     int tstBlockSeq = _currentAllocatedSection.getSection().getBlockSequenceNumber(tstBlock);
                     while ((tstLength < _maxTrainLength) && (tstBlock != enterBlock)) {
-                        int newSeqNumber = tstBlockSeq - 1;
+                        int newSeqNumber = 0;
                         if (_currentAllocatedSection.getDirection() == Section.REVERSE) {
                             newSeqNumber = tstBlockSeq + 1;
+                        } else {
+                            newSeqNumber = tstBlockSeq - 1;
                         }
                         tstBlock = _currentAllocatedSection.getSection().getBlockBySequenceNumber(newSeqNumber);
                         tstBlockSeq = newSeqNumber;
                         tstLength += getBlockLength(tstBlock);
                     }
-                    if (tstLength < _maxTrainLength) {
+                    if (_maxTrainLength > tstLength) {
                         setStopNow();
                     } else if (tstBlock == enterBlock) {
                         // train fits, but needs all available Blocks
-                        if ((_previousBlock != null) && (_previousBlock.getState() == Block.OCCUPIED)) {
-                            _stoppingBlock = _previousBlock;
-                            setStopByBlockOccupancy();
+                        Block previousSectionExitBlock = _previousAllocatedSection.getExitBlock();
+                        if ((previousSectionExitBlock != null) && (previousSectionExitBlock.getState() == Block.OCCUPIED)) {
+                            _stoppingBlock = previousSectionExitBlock;
+                            setStopByBlockOccupancy(true);
                         } else {
                             setStopNow();
                         }
                     } else {
                         // train fits, and doesn't need all available Blocks
-                        int xSeqNumber = tstBlockSeq - 1;
-                        if (_currentAllocatedSection.getDirection() == Section.REVERSE) {
-                            xSeqNumber = tstBlockSeq + 1;
+                        int xSeqNumber = tstBlockSeq + 1;
+                        if (_currentAllocatedSection.getDirection() == Section.FORWARD ) {
+                            xSeqNumber = tstBlockSeq - 1;
                         }
                         _stoppingBlock = _currentAllocatedSection.getSection().
                                 getBlockBySequenceNumber(xSeqNumber);
-                        setStopByBlockOccupancy();
+                        setStopByBlockOccupancy(true);
                     }
                 }
             }
@@ -1408,7 +1411,11 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private synchronized void setStopNow() {
-        setTargetSpeedState(STOP_SPEED);
+        setStopNow(false);
+        }
+
+    private synchronized void setStopNow(boolean useSpeedProfile) {
+        setTargetSpeedState(STOP_SPEED,useSpeedProfile);
         if (_currentAllocatedSection == null) {  // this may occur if the train is not in the selected block when initially created and the signal is held.
             _activeTrain.setStatus(ActiveTrain.WAITING);
         } else if (_currentAllocatedSection.getNextSection() == null) {
@@ -1420,10 +1427,13 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    private void setStopByBlockOccupancy() {
+    /*
+     * When multi block stopping, the stopping block may not be occupied yet.
+     */
+    private void setStopByBlockOccupancy(boolean ignoreNotOccupied) {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
-        if (_stoppingBlock.getState() == Block.OCCUPIED) {
+        if (_stoppingBlock.getState() == Block.OCCUPIED || ignoreNotOccupied) {
             setDecreasedSpeedBeforeStop();
             _stoppingByBlockOccupancy = true;
         } else {
@@ -1504,12 +1514,21 @@ public class AutoActiveTrain implements ThrottleListener {
      * @param speedState  Index value
      */
     private synchronized void setTargetSpeedState(int speedState) {
+        setTargetSpeedState(speedState,false);
+    }
+
+    /**
+     * sets the throttle based on an index number into _speedRatio array
+     * @param speedState  Index value
+     * @param stopBySpeedProfile if true use speed profile
+     */
+    private synchronized void setTargetSpeedState(int speedState,boolean stopBySpeedProfile) {
         log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
         if (speedState > STOP_SPEED) {
             cancelStopInCurrentSection();
             _targetSpeed = applyMaxThrottleAndFactor(_speedRatio[speedState]);
-        } else if (useSpeedProfile && _stopBySpeedProfile) {
+        } else if (stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
             _autoEngineer.slowToStop(true);

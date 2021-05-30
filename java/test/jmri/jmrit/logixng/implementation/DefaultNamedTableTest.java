@@ -29,7 +29,7 @@ public class DefaultNamedTableTest {
         
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File file = new File(FileUtil.getUserFilesPath() + "temp/" + "turnout_and_signals.csv");
-        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
+//        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
         table.storeTableAsCSV(file);
         Assert.assertNotNull("exists", table);
     }

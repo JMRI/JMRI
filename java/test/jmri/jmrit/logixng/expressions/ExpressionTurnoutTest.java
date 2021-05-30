@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -189,7 +190,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionTurnout.removeTurnout();
-        Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
+        Assert.assertTrue("Turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
@@ -437,7 +438,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         expressionTurnout.setTurnout(turnout);
         turnout.setCommandedState(Turnout.THROWN);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

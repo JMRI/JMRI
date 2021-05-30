@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -188,7 +189,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get analog constant", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Analog constant", _base.getShortDescription());
     }
     
     @Test
@@ -253,7 +254,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

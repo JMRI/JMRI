@@ -6,22 +6,22 @@
     <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
 
 <dl><!-- main table of contents -->
-<dt><h3>Setup JMRI</h3></dt>
+<dt class="dtheader">Setup JMRI</dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     </ul>
     </dd>
 
-<dt><h3>Starting OperationsPro</h3></dt>
+<dt class="dtheader">Starting OperationsPro</dt>
     <dd>
     <ul>
     <li><a href="Start_DecoderPro.shtml">Starting JMRI&reg;</a></li>
     <li><a href="Start_Preferences.shtml">Set Preferences</a></li>
     </ul>
     </dd>
- 
-<dt><h3><a name="Main"></a>Using OperationsPro</h3></dt>
+
+<dt class="dtheader"><a name="Main"></a>Using OperationsPro</dt>
     <dd>
     <ul>
         <li><a href="Main_Main.shtml">Main Window Menu</a></li>
@@ -38,13 +38,13 @@
      <li><a href="Ops_TripThruOperations.shtml">A Trip through OperationsPro</a></li>
    </ul>
    </dd>
-<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
+<dt class="dtheader"><a name="Error"></a>Error Messages</dt>
     <dd>
     <ul>
       <li><a href="../../html/apps/Errors.shtml">Error Codes explained</a></li>
     </ul>
     </dd>
-  
+
   </dl>
 </div> <!-- close #side -->
 
@@ -53,4 +53,6 @@
     <script type="text/javascript" src="/web/js/here.js"></script>
 <!-- /Sidebar-Tail -->
 
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar -->

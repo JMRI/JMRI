@@ -2984,12 +2984,9 @@ public class TrainBuilder extends TrainCommon {
             }
             if (carInTrain && rlt.getTrainLength() + length > rlt.getMaxTrainLength()) {
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength"),
-                        new Object[] { car.toString(), length, Setup.getLengthUnit().toLowerCase() }));
-                addLine(_buildReport, FIVE,
-                        MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength2"),
-                                new Object[] { rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
-                                        rlt.getTrainLength() + length - rlt.getMaxTrainLength(), rlt.getName(),
-                                        rlt.getId() }));
+                        new Object[] { car.toString(), length, Setup.getLengthUnit().toLowerCase(),
+                                rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
+                                rlt.getTrainLength() + length - rlt.getMaxTrainLength(), rlt.getName(), rlt.getId() }));
                 return false;
             }
         }
@@ -3433,16 +3430,16 @@ public class TrainBuilder extends TrainCommon {
      * <p>
      * If car load is type empty not at car's home division yard: Car is sent to a
      * home division yard. If home division yard not available, then car is sent to
-     * home division spur.
+     * home division staging, then spur (industry).
      * <p>
      * If car load is type empty at a yard at the car's home division: Car is sent
      * to a home division spur.
      * <p>
      * If car load is type load not at car's home division: Car is sent to home
-     * division spur.
+     * division spur, and if spur not available then home division staging.
      * <p>
      * If car load is type load at car's home division: Car is sent to any division
-     * spur.
+     * spur or staging.
      * 
      * @param car the car being checked for a home division
      * @return false if destination track not found for this car
@@ -3469,20 +3466,35 @@ public class TrainBuilder extends TrainCommon {
                 log.debug("Car ({}) at it's home division yard", car.toString());
                 return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
             }
-            // 1st try to send to home division yard, then home division spur
+            // 1st try to send to home division yard, home division staging, then home
+            // division spur
             if (!sendCarToHomeDivisionTrack(car, Track.YARD, HOME_DIVISION)) {
-                return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                if (!sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION)) {
+                    return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                }
             }
-            return true;
         } else {
             log.debug("Car ({}) has division ({}) and load type load", car.toString(), car.getDivisionName());
-            // send car to spur dependent of shipping track division
-            return sendCarToHomeDivisionTrack(car, Track.SPUR, car.getTrack().getDivision() != car.getDivision());
+            // 1st send car to spur dependent of shipping track division, then try staging
+            if (!sendCarToHomeDivisionTrack(car, Track.SPUR, car.getTrack().getDivision() != car.getDivision())) {
+                return sendCarToHomeDivisionTrack(car, Track.STAGING,
+                        car.getTrack().getDivision() != car.getDivision());
+            }
         }
+        return true;
     }
 
     private static final boolean HOME_DIVISION = true;
 
+    /**
+     * Tries to set a final destination for the car with a home division.
+     * 
+     * @param car           the car
+     * @param trackType     One of three track types: Track.SPUR Track.YARD or
+     *                      Track.STAGING
+     * @param home_division If true track's division must match the car's
+     * @return true if car was given a final destination
+     */
     private boolean sendCarToHomeDivisionTrack(Car car, String trackType, boolean home_division) {
         List<Location> locationsNotServiced = new ArrayList<>(); // locations not reachable
         List<Track> tracks = locationManager.getTracksByMoves(trackType);
@@ -3492,7 +3504,8 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDivisionTrack"),
                                 new Object[] { track.getTrackTypeName(), track.getLocation().getName(), track.getName(),
-                                        track.getDivisionName(), car.getLoadType().toLowerCase(), car.getLoadName() }));
+                                        track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
+                                        car.getLoadName() }));
                 continue;
             }
             if (locationsNotServiced.contains(track.getLocation())) {
@@ -3751,9 +3764,19 @@ public class TrainBuilder extends TrainCommon {
         return true; // done, car has a new destination
     }
 
+    /**
+     * Destination track can be yard or staging, NOT a spur.
+     * 
+     * @param car   the car
+     * @param track the car's destination track
+     * @return true if car given a new final destination
+     */
     private boolean sendCarToDestinationTrack(Car car, Track track) {
         if (car.getTrack() == track) {
             return false;
+        }
+        if (track.isStaging() && car.getLocation() == track.getLocation()) {
+            return false; // don't use same staging location
         }
         // is the car's destination the terminal and is that allowed?
         if (!checkThroughCarsAllowed(car, track.getLocation().getName())) {
@@ -3768,6 +3791,14 @@ public class TrainBuilder extends TrainCommon {
                     MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
                             new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
                                     car.getLoadName(), status }));
+            return false;
+        }
+        if (!track.isSpaceAvailable(car)) {
+            addLine(_buildReport, SEVEN,
+                    MessageFormat.format(Bundle.getMessage("buildNoDestSpace"),
+                            new Object[] { car.toString(), track.getTrackTypeName(), track.getLocation().getName(),
+                                    track.getName(), track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+                                    Setup.getLengthUnit().toLowerCase() }));
             return false;
         }
         // try to send car to this track
@@ -3903,8 +3934,8 @@ public class TrainBuilder extends TrainCommon {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildNoDivisionTrack"),
                                     new Object[] { track.getTrackTypeName(), track.getLocation().getName(),
-                                            track.getName(), track.getDivisionName(), car.getLoadType().toLowerCase(),
-                                            car.getLoadName() }));
+                                            track.getName(), track.getDivisionName(), car.toString(),
+                                            car.getLoadType().toLowerCase(), car.getLoadName() }));
                     // restore car's load
                     car.setLoadName(oldCarLoad);
                     continue;
@@ -5102,7 +5133,7 @@ public class TrainBuilder extends TrainCommon {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildNoDivisionTrack"),
                                     new Object[] { stageTrack.getTrackTypeName(), stageTrack.getLocation().getName(),
-                                            stageTrack.getName(), stageTrack.getDivisionName(),
+                                            stageTrack.getName(), stageTrack.getDivisionName(), car.toString(),
                                             car.getLoadType().toLowerCase(), car.getLoadName() }));
                     loads.remove(i);
                     continue;

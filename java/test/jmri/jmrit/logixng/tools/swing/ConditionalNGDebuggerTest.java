@@ -11,7 +11,7 @@ import org.junit.*;
 
 /**
  * Test ConditionalNGDebugger
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class ConditionalNGDebuggerTest {
@@ -19,12 +19,14 @@ public class ConditionalNGDebuggerTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(null);
+
+        jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                .createLogixNG("A logixNG with an empty conditionlNG");
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
         ConditionalNGDebugger t = new ConditionalNGDebugger(conditionalNG);
         Assert.assertNotNull("not null", t);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -36,5 +38,5 @@ public class ConditionalNGDebuggerTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

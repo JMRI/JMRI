@@ -275,16 +275,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public final void setParentForAllChildren() {
+    public final boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
             femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 connectedSocket.setParent(femaleSocket);
-                connectedSocket.setParentForAllChildren();
+                result = result && connectedSocket.setParentForAllChildren(errors);
             }
         }
+        return result;
     }
 
     /**
@@ -528,13 +530,21 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     @Override
     public ErrorHandlingType getErrorHandlingType() {
-        return _errorHandlingType;
+        if (getObject() instanceof MaleSocket) {
+            return ((MaleSocket)getObject()).getErrorHandlingType();
+        } else {
+            return _errorHandlingType;
+        }
     }
 
     @Override
     public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
     {
-        _errorHandlingType = errorHandlingType;
+        if (getObject() instanceof MaleSocket) {
+            ((MaleSocket)getObject()).setErrorHandlingType(errorHandlingType);
+        } else {
+            _errorHandlingType = errorHandlingType;
+        }
     }
 
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
@@ -542,7 +552,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         // Always throw AbortConditionalNGExecutionException exceptions
         if (!_catchAbortExecution && (e instanceof AbortConditionalNGExecutionException)) throw e;
 
-        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        ErrorHandlingType errorHandlingType = getErrorHandlingType();
         if (errorHandlingType == ErrorHandlingType.Default) {
             errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
                     .getErrorHandlingType();
@@ -581,11 +591,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             Base item,
             String message,
             List<String> messageList,
-            JmriMultiLineException e,
+            JmriException e,
             Logger log)
             throws JmriException {
 
-        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        ErrorHandlingType errorHandlingType = getErrorHandlingType();
         if (errorHandlingType == ErrorHandlingType.Default) {
             errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
                     .getErrorHandlingType();
@@ -622,7 +632,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
 
-        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        ErrorHandlingType errorHandlingType = getErrorHandlingType();
         if (errorHandlingType == ErrorHandlingType.Default) {
             errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
                     .getErrorHandlingType();

@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
+import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -48,9 +49,7 @@ public class DispatcherFrameTest {
         // set all options
         d.setLayoutEditor(null);
         d.setUseConnectivity(false);
-        d.setTrainsFromRoster(true);
-        d.setTrainsFromTrains(false);
-        d.setTrainsFromUser(false);
+        d.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
         d.setAutoAllocate(false);
         d.setAutoTurnouts(false);
         d.setHasOccupancyDetection(false);
@@ -63,9 +62,7 @@ public class DispatcherFrameTest {
         // test all options
         Assert.assertNull("LayoutEditor", d.getLayoutEditor());
         Assert.assertFalse("UseConnectivity", d.getUseConnectivity());
-        Assert.assertTrue("TrainsFromRoster", d.getTrainsFromRoster());
-        Assert.assertFalse("TrainsFromTrains", d.getTrainsFromTrains());
-        Assert.assertFalse("TrainsFromUser", d.getTrainsFromUser());
+        Assert.assertEquals(TrainsFrom.TRAINSFROMROSTER, d.getTrainsFrom());
         Assert.assertFalse("AutoAllocate", d.getAutoAllocate());
         Assert.assertFalse("AutoTurnouts", d.getAutoTurnouts());
         Assert.assertFalse("HasOccupancyDetection", d.getHasOccupancyDetection());

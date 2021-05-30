@@ -6,14 +6,14 @@
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
 <dl><!-- main table of contents -->
-<dt><h3>Setup JMRI</h3></dt>
+<dt class="dtheader">Setup JMRI</dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     </ul>
     </dd>
 
-<dt><h3>Getting Started</h3></dt>
+<dt class="dtheader">Getting Started</dt>
     <dd>
     <ul>
     <li><a href="Start_DCC.shtml">What is DCC?</a></li>
@@ -23,15 +23,15 @@
     <li><a href="Start_Preferences.shtml">How do I set up my Preferences?</a></li>
     </ul>
     </dd>
-    
-<dt><h3>Using DecoderPro</h3></dt>
+
+<dt class="dtheader">Using DecoderPro</dt>
     <dd>
     <ul>
     <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a></li>
     </ul>
     </dd>
-    
-<dt><h3>DecoderPro&reg; Programming Modes</h3></dt>
+
+<dt class="dtheader">DecoderPro&reg; Programming Modes</dt>
     <dd>
     <ul>
     <li><a href="Programmer_Start.shtml">What are the Programming Modes?</a></li>
@@ -42,7 +42,7 @@
     </ul>
     </dd>
 
-<dt><h3>The Basic Programmer</h3></dt>
+<dt class="dtheader">The Basic Programmer</dt>
     <dd>
     <ul>
     <li><a href="Basic_Start.shtml">Entering Locomotives in the "Roster"</a></li>
@@ -54,8 +54,8 @@
     <li><a href="Basic_BasicPane.shtml#Do More">What if I need to do more?</a></li>
     </ul>
     </dd>
-    
-<dt><h3>The Comprehensive Programmer</h3></dt>
+
+<dt class="dtheader">The Comprehensive Programmer</dt>
     <dd>
     <ul>
     <li><a href="Comp_Setup_Roster.shtml">Setup and Roster Panes</a></li>
@@ -76,5 +76,8 @@
     </ul>
     </dd>
 </dl>
-</div>
+
+  </div>
+  <!-- button is in /Header -->
+  <script src="/js/side.js"></script>
 <!-- /Sidebar -->

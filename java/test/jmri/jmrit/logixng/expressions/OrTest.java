@@ -387,7 +387,7 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
         _base = expressionOr;
         _baseMaleSocket = maleSocket2;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 
