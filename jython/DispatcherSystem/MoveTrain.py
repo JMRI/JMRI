@@ -608,7 +608,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return "WINDOWS"
         elif "nix" in os or "nux" in os or "aix" in os:
             return "LINUX"
-        elif "mac" in od:
+        elif "mac" in os:
             return "MAC"
         return null
     
@@ -622,11 +622,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.speak_mac(msg)
             
     # # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
-    def speak_windows(self,msg) :  
-        my_dir = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/programs')
-        if self.logLevel > 1: print "nircmd" + my_dir+'/nircmd'
-        java.lang.Runtime.getRuntime().exec(my_dir+'/nircmd speak text "' + msg +'"')
-        return
+    def speak_windows(self,msg) :         
+        cmd1 = "Add-Type -AssemblyName System.Speech"
+        cmd2 = '$SpeechSynthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer'
+        cmd3 = "$SpeechSynthesizer.Speak('" + msg + "')"
+        cmd = cmd1 + ";" + cmd2 + ";" + cmd3
+        os.system("powershell " + cmd )
          
     def speak_mac(self, msg):
         try:
@@ -644,7 +645,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         except:
             msg = "Announcements not working \n spd-say not set up on your linux system"
             JOptionPane.showMessageDialog(None, msg, "Warning", JOptionPane.WARNING_MESSAGE)
-            
                
     def announce(self, fromblockname, toblockname, speak_on, direction, instruction): 
 
