@@ -41,6 +41,7 @@ public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
         setStoreElementClass(expressions);
         StringExpressionManager tm = (StringExpressionManager) o;
         if (tm != null) {
+            if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleStringExpressionSocket expression : tm.getNamedBeanSet()) {
                 log.debug("expression system name is " + expression.getSystemName());  // NOI18N
 //                log.error("expression system name is " + expression.getSystemName() + ", " + expression.getLongDescription());  // NOI18N
