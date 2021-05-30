@@ -115,7 +115,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
     public static final String LOCATION_REPORTER_PROPERTY = "locationReporterChange"; // NOI18N
     public static final String LOCATION_DIVISION_PROPERTY = "homeDivisionChange"; // NOI18N
-    
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -1291,8 +1290,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         return false;
     }
-    
-    public boolean hasWork( ) {
+
+    public boolean hasWork() {
         return (getDropRS() != 0 || getPickupRS() != 0);
     }
 
@@ -1371,6 +1370,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             _name = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+        }
+        // TODO remove the following 3 lines in 2022
+        if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.DIR)) != null) {
