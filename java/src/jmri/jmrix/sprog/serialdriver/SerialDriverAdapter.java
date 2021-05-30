@@ -5,13 +5,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+
+import jmri.jmrix.sprog.*;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogPortController;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.serialdriver.Bundle;
 import jmri.jmrix.sprog.update.SprogType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
@@ -204,7 +206,7 @@ public class SerialDriverAdapter extends SprogPortController {
 
     InputStream serialStream = null;
 
-    protected int numSlots = 1;
+    protected int numSlots = SprogConstants.DEFAULT_MAX_SLOTS;
     
     /**
      * Set up all of the other objects to operate with an Sprog command station
