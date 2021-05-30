@@ -622,12 +622,16 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.speak_mac(msg)
             
     # # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
-    def speak_windows(self,msg) :         
-        cmd1 = "Add-Type -AssemblyName System.Speech"
-        cmd2 = '$SpeechSynthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer'
-        cmd3 = "$SpeechSynthesizer.Speak('" + msg + "')"
-        cmd = cmd1 + ";" + cmd2 + ";" + cmd3
-        os.system("powershell " + cmd )
+    def speak_windows(self,msg) : 
+        try:
+            cmd1 = "Add-Type -AssemblyName System.Speech"
+            cmd2 = '$SpeechSynthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer'
+            cmd3 = "$SpeechSynthesizer.Speak('" + msg + "')"
+            cmd = cmd1 + ";" + cmd2 + ";" + cmd3
+            os.system("powershell " + cmd )
+        except:
+            msg = "Announcements not working \n Only supported on windows versions with powershell and SpeechSynthesizer"
+            JOptionPane.showMessageDialog(None, msg, "Warning", JOptionPane.WARNING_MESSAGE)
          
     def speak_mac(self, msg):
         try:
