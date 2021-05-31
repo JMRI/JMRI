@@ -7,36 +7,23 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
-import jmri.jmrit.logixng.tools.swing.Bundle;
 
 /**
  * Editor for LogixNG Tables
