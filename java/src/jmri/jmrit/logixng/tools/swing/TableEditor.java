@@ -242,19 +242,9 @@ import jmri.jmrit.logixng.tools.swing.Bundle;
             tableTable.getSelectionModel().addListSelectionListener(selectCellListener);
             tableTable.getColumnModel().getSelectionModel().addListSelectionListener(selectCellListener);
             
-            ListModel lm = new AbstractListModel() {
-                @Override
-                public int getSize() {
-                    return _curTable.numRows()-1;
-                }
-                
-                @Override
-                public Object getElementAt(int index) {
-                    return _curTable.getCell(index+1, 0);
-                }
-            };
+            ListModel lm = new RowHeaderListModel();
             
-            JList<Object> rowHeader = new JList<>((ListModel<Object>)lm);
+            JList<Object> rowHeader = new JList<>(lm);
             rowHeader.setFixedCellHeight(
                     tableTable.getRowHeight()
 //                    tableTable.getRowHeight() + tableTable.getRowMargin()
@@ -479,7 +469,19 @@ import jmri.jmrit.logixng.tools.swing.Bundle;
         }
     }
 
-    private static final class RowHeaderRenderer extends JLabel implements ListCellRenderer {
+    private class RowHeaderListModel extends AbstractListModel<Object> {
+        @Override
+        public int getSize() {
+            return _curTable.numRows()-1;
+        }
+
+        @Override
+        public Object getElementAt(int index) {
+            return _curTable.getCell(index+1, 0);
+        }
+    }
+    
+    private static final class RowHeaderRenderer extends JLabel implements ListCellRenderer<Object> {
         
         RowHeaderRenderer(JTable table) {
             JTableHeader header = table.getTableHeader();
