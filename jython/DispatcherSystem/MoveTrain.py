@@ -610,7 +610,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return "LINUX"
         elif "mac" in os:
             return "MAC"
-        return null
+        return None
     
     def speak(self, msg):
         os = self.getOperatingSystem()
@@ -618,7 +618,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.speak_windows(msg)
         elif os == "LINUX":
             self.speak_linux(msg)
-        elif od == "MAC":
+        elif os == "MAC":
             self.speak_mac(msg)
             
     # # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
@@ -635,7 +635,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
          
     def speak_mac(self, msg):
         try:
-            os.system('say %s' % msg)
+            java.lang.Runtime.getRuntime().exec("say {}".format(msg))
         except:
             msg = "Announcements not working \n say not working on your Mac"
             JOptionPane.showMessageDialog(None, msg, "Warning", JOptionPane.WARNING_MESSAGE)
