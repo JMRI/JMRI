@@ -254,7 +254,7 @@ import jmri.jmrit.logixng.tools.swing.Bundle;
                 }
             };
             
-            JList<String> rowHeader = new JList<>(lm);
+            JList<Object> rowHeader = new JList<>(lm);
             rowHeader.setFixedCellHeight(
                     tableTable.getRowHeight()
 //                    tableTable.getRowHeight() + tableTable.getRowMargin()
