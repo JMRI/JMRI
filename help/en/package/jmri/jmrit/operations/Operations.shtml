@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 
 <head>
@@ -1759,8 +1759,7 @@
     information, so you might have to limit the number of car attributes (see <a
      href="#MessageFormats">Message Formats</a> below) in order get the data to fit. The next format
     available is "Two Column (Track)". This format prints the track name in both columns in a header
-    format. The text color options for set outs, pick ups, and local move are not available for the
-    "Two Column" formats.
+    format.
    </p>
 
    <p>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
