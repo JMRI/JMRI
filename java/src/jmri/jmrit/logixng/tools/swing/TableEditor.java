@@ -242,7 +242,7 @@ import jmri.jmrit.logixng.tools.swing.Bundle;
             tableTable.getSelectionModel().addListSelectionListener(selectCellListener);
             tableTable.getColumnModel().getSelectionModel().addListSelectionListener(selectCellListener);
             
-            ListModel lm = new RowHeaderListModel();
+            ListModel<Object> lm = new RowHeaderListModel();
             
             JList<Object> rowHeader = new JList<>(lm);
             rowHeader.setFixedCellHeight(
