@@ -82,6 +82,7 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
     // ------------ NamedTable Variables ------------
     private JmriJFrame _editLogixNGFrame = null;
     private final JTextField editUserName = new JTextField(20);
+    private final JTextField editCsvTableName = new JTextField(40);
 //    private JLabel status = new JLabel(" ");
 
     // ------------ ConditionalNG Variables ------------
@@ -170,7 +171,10 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
                 panel4.setLayout(new FlowLayout());
                 JLabel tableFileNameLabel = new JLabel(Bundle.getMessage("TableEditor_FileName") + ": ");  // NOI18N
                 panel4.add(tableFileNameLabel);
-                panel4.add(new JLabel(((DefaultCsvNamedTable)_curTable).getFileName()));
+//                panel4.add(new JLabel(((DefaultCsvNamedTable)_curTable).getFileName()));
+                editCsvTableName.setText(((DefaultCsvNamedTable)_curTable).getFileName());
+                panel4.add(editCsvTableName);
+//                editCsvTableName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
                 contentPane.add(panel4);
             }
             
@@ -368,6 +372,11 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
             tableData.clear();
             tableData.put("chgUname", uName);  // NOI18N
             fireEditorEvent();
+        }
+        if (_curTable instanceof DefaultCsvNamedTable) {
+            // Check if the User Name has been changed
+            String csvFileName = editCsvTableName.getText().trim();
+            ((DefaultCsvNamedTable)_curTable).setFileName(csvFileName);
         }
         // complete update and activate NamedTable
         finishDone();
