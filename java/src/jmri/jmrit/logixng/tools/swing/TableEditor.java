@@ -9,6 +9,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -29,13 +30,13 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
+import jmri.jmrit.logixng.tools.swing.Bundle;
 
 /**
  * Editor for LogixNG Tables
@@ -200,11 +201,13 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
             JLabel cellRefByIndexLabel = new JLabel();  // NOI18N
             JTextField cellRefByIndex = new JTextField();
             cellRefByIndex.setEditable(false);
+            cellRefByIndexButton.setEnabled(false);
             
             JButton cellRefByHeaderButton = new JButton(Bundle.getMessage("TableEditor_CopyToClipboard"));  // NOI18N
             JLabel cellRefByHeaderLabel = new JLabel();  // NOI18N
             JTextField cellRefByHeader = new JTextField();
             cellRefByHeader.setEditable(false);
+            cellRefByHeaderButton.setEnabled(false);
             
             java.awt.datatransfer.Clipboard clipboard =
                     Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -219,6 +222,7 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
                 String refByIndex = String.format("{%s[%d,%d]}", _curTable.getDisplayName(), tableTable.getSelectedRow()+1, tableTable.getSelectedColumn()+1);
                 cellRefByIndexLabel.setText(refByIndex);  // NOI18N
                 cellRefByIndex.setText(ReferenceUtil.getReference(symbolTable, refByIndex));  // NOI18N
+                cellRefByIndexButton.setEnabled(true);
                 
                 Object rowHeaderObj = _curTable.getCell(tableTable.getSelectedRow()+1, 0);
                 Object columnHeaderObj = _curTable.getCell(0, tableTable.getSelectedColumn()+1);
@@ -250,7 +254,7 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
                 }
             };
             
-            JList rowHeader = new JList(lm);
+            JList<String> rowHeader = new JList<>(lm);
             rowHeader.setFixedCellHeight(
                     tableTable.getRowHeight()
 //                    tableTable.getRowHeight() + tableTable.getRowMargin()
@@ -262,7 +266,6 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
             tableTableScrollPane.setRowHeaderView(rowHeader);
             Dimension dim = tableTable.getPreferredSize();
             dim.height = 450;
-//            tableTableScrollPane.setPreferredSize(dim);
             tableTableScrollPane.getViewport().setPreferredSize(dim);
             contentPane.add(tableTableScrollPane);
             
@@ -283,13 +286,20 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
             // add buttons at bottom of window
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
-            // Bottom Buttons - Done NamedTable
-            JButton done = new JButton(Bundle.getMessage("ButtonDone"));  // NOI18N
-            panel6.add(done);
-            done.addActionListener((e) -> {
-                donePressed(e);
+            // Bottom Buttons - Cancel NamedTable
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
+            panel6.add(cancelButton);
+            cancelButton.addActionListener((e) -> {
+                finishDone();
             });
-            done.setToolTipText(Bundle.getMessage("DoneButtonHint"));  // NOI18N
+//            done.setToolTipText(Bundle.getMessage("CancelButtonHint"));  // NOI18N
+            // Bottom Buttons - Ok NamedTable
+            JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
+            panel6.add(okButton);
+            okButton.addActionListener((e) -> {
+                okPressed(e);
+            });
+//            done.setToolTipText(Bundle.getMessage("OkButtonHint"));  // NOI18N
             // Delete NamedTable
             JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));  // NOI18N
             panel6.add(delete);
@@ -304,7 +314,7 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (_inEditMode) {
-                    donePressed(null);
+                    okPressed(null);
                 } else {
                     finishDone();
                 }
@@ -338,7 +348,7 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
     }
 
     /**
-     * Respond to the Done button in the Edit NamedTable window.
+     * Respond to the Ok button in the Edit NamedTable window.
      * <p>
      * Note: We also get here if the Edit NamedTable window is dismissed, or if the
      * Add button is pressed in the LogixNG Table with an active Edit NamedTable
@@ -346,7 +356,7 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
      *
      * @param e The event heard
      */
-    void donePressed(ActionEvent e) {
+    private void okPressed(ActionEvent e) {
 //        if (checkEditConditionalNG()) {
 //            return;
 //        }
@@ -374,8 +384,37 @@ import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
             fireEditorEvent();
         }
         if (_curTable instanceof DefaultCsvNamedTable) {
-            // Check if the User Name has been changed
             String csvFileName = editCsvTableName.getText().trim();
+            
+            try {
+                // NamedTable does not exist, create a new NamedTable
+                AbstractNamedTable.loadTableFromCSV_File(
+                        "IQT1",     // Arbitrary LogixNG table name
+//                        InstanceManager.getDefault(NamedTableManager.class).getAutoSystemName(),
+                        null, csvFileName, false);
+            } catch (java.nio.file.NoSuchFileException ex) {
+                log.error("Cannot load table due since the file is not found", ex);
+                JOptionPane.showMessageDialog(_editLogixNGFrame,
+                        Bundle.getMessage("TableEditor_Error_FileNotFound", csvFileName),
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (IOException ex) {
+                log.error("Cannot load table due to I/O error", ex);
+                JOptionPane.showMessageDialog(_editLogixNGFrame,
+                        ex.getLocalizedMessage(),
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (RuntimeException ex) {
+                log.error("Cannot load table due to an error", ex);
+                JOptionPane.showMessageDialog(_editLogixNGFrame,
+                        ex.getLocalizedMessage(),
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             ((DefaultCsvNamedTable)_curTable).setFileName(csvFileName);
         }
         // complete update and activate NamedTable

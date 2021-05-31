@@ -1,31 +1,15 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.UserPreferencesManager;
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
-import java.util.ResourceBundle;
 
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
@@ -121,7 +105,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected void deleteBean(NamedTable bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(bean);
     }
 
     @Override

@@ -756,6 +756,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     _inEditMode = false;
                     f.setVisible(true);
                 } else if (key.equals("Delete")) {           // NOI18N
+                    _inEditMode = false;
                     deletePressed(value);
                 } else if (key.equals("chgUname")) {         // NOI18N
                     E x = getManager().getBySystemName(lgxName);
