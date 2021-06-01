@@ -14,6 +14,7 @@ import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 
