@@ -725,7 +725,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         InstanceManager.getDefault(ModuleManager.class).createModule("IQM103", "Module 103", socketType);
         InstanceManager.getDefault(ModuleManager.class).createModule("IQM104", "Module 104", socketType);
 
-        helpTarget = "package.jmri.jmrit.logixng.LogixNGModuleTable";
+        helpTarget = "package.jmri.jmrit.beantable.LogixNGModuleTable";
         a = new LogixNGModuleTableAction();
     }
 
