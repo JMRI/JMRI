@@ -38,6 +38,10 @@ public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
         if (bean == null) {
             enabled(false);
         } else {
+            sensorPullUpComboBox.removeAllItems();
+            for (Sensor.PullResistance pr : bean.getAvailablePullValues ()) {
+                sensorPullUpComboBox.addItem (pr);
+            }
             resetPullUpItems(null); //Get this to retrieve the current details.
             enabled(true);
         }
