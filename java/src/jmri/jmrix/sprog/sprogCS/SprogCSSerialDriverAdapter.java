@@ -2,6 +2,9 @@ package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implement SerialPortAdapter for the Sprog system.
  * <p>
@@ -40,12 +43,13 @@ public class SprogCSSerialDriverAdapter
             numSlots = Integer.parseInt(slots);
         }
         catch (NumberFormatException e) {
+            log.warn("Could not parse number of slots " + e);
             numSlots = 16;
         }
         
         super.configure();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
 
 }

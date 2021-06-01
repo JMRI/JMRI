@@ -41,6 +41,7 @@ public class DefaultStringActionManagerXml extends AbstractManagerXml {
         setStoreElementClass(actions);
         StringActionManager tm = (StringActionManager) o;
         if (tm != null) {
+            if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleStringActionSocket action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
 //                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N

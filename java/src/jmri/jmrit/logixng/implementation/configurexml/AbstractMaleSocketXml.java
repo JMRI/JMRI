@@ -38,7 +38,10 @@ public class AbstractMaleSocketXml
         element.setAttribute("catchAbortExecution", maleSocket.getCatchAbortExecution()? "yes" : "no");  // NOI18N
         element.setAttribute("class", this.getClass().getName());
         
-        element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
+        // Only store error handling type of the inner most socket
+        if (!(maleSocket.getObject() instanceof MaleSocket)) {
+            element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
+        }
         
         for (SymbolTable.VariableData data : maleSocket.getLocalVariables()) {
             Element elementVariable = new Element("LocalVariable");

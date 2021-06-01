@@ -3,12 +3,10 @@ package jmri.jmrit.beantable;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -83,6 +81,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected abstract E createBean(String systemName, String userName);
 
     protected abstract void deleteBean(E bean);
+
+    protected boolean browseMonoSpace() { return false; }
 
     protected abstract String getBeanText(E bean);
 
@@ -756,6 +756,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     _inEditMode = false;
                     f.setVisible(true);
                 } else if (key.equals("Delete")) {           // NOI18N
+                    _inEditMode = false;
                     deletePressed(value);
                 } else if (key.equals("chgUname")) {         // NOI18N
                     E x = getManager().getBySystemName(lgxName);
@@ -939,6 +940,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         // Build the conditionalNGs listing
         _textContent = new JTextArea(this.getBeanText(_curNamedBean));
+        if (browseMonoSpace()) {
+            _textContent.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        }
         JScrollPane scrollPane = new JScrollPane(_textContent);
         contentPane.add(scrollPane);
 
