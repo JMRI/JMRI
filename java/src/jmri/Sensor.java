@@ -225,6 +225,10 @@ public interface Sensor extends DigitalIO {
        }
 
     }
+    
+    default public PullResistance [] getAvailablePullValues () {
+        return PullResistance.values();
+    }
 
     /**
      * Set the pull resistance
