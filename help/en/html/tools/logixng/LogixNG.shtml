@@ -1,8 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
   <title>JMRI: LogixNG Documentation</title>
   <meta name="author" content="David Duchamp">
   <meta name="author" content="Daniel Bergqvist">
@@ -17,72 +16,153 @@
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="../Sidebar" -->
+    <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: LogixNG Documentation</h1>
+      <h1><a id="TopOfPage" name="TopOfPage"></a>JMRI: LogixNG Documentation</h1>
+
+<a href="Tutorial/index.shtml">Tutorial</a>
 
       <p class="noted">LogixNG, along with its documentation, is still evolving.
       Some of the text is based on the original Logix documents.</p>
 
-	  <p>JMRI has for a long time had the tool Logix which can be
-	  used to setup rules, for example that a signal should go to
-	  green if some turnouts are in a predefined state. Logix does
-	  its job well, but is difficult to extend with new functionality.</p>
+      <p>JMRI has for a long time had the tool Logix which can be
+      used to create rules, for example that a signal should go to
+      green if some turnouts are in a predefined state. Logix does
+      its job well, but is difficult to extend with new functionality.</p>
 
-	  <p>LogixNG, short for Logix Next Generation, is a complete
-	  rethink of the concept. It's modular, which means
-	  it's easy to extend LogixNG with new functionality and it's
-	  easy to test each part of LogixNG.</p>
+      <p>LogixNG, short for Logix Next Generation, is a complete
+      rethink of the concept. It's modular, which means
+      it's easy to extend LogixNG with new functionality and it's
+      easy to test each part of LogixNG.</p>
 
-	  <p>LogixNG have building blocks that are similar to Logix.
-	  A <i>LogixNG</i> is the same as a <i>Logix</i>. A
-	  <i>ConditionalNG</i> is the same as a <i>Conditional</i>.
-	  An <i>expression</i> in LogixNG is similar to a
-	  <i>conditional variable</i> in Logix and an <i>action</i> in
-	  LogixNG is similar to a <i>conditional action</i> in Logix.</p>
+      <p>LogixNG have building blocks that are similar to Logix.
+      A <i>LogixNG</i> is the same as a <i>Logix</i>. A
+      <i>ConditionalNG</i> is the same as a <i>Conditional</i>.
+      An <i>expression</i> in LogixNG is similar to a
+      <i>conditional variable</i> in Logix and an <i>action</i> in
+      LogixNG is similar to a <i>conditional action</i> in Logix.</p>
 
-	  <p>LogixNG also has references and tables. A reference is an
-	  indirect pointer to an item on the layout. For example, if
-	  the memory IM1 has the value "IT1", the reference {IM1} points
-	  to the turnout IT1. This means that if an action has the
-	  command "set turnout {IM1} to thrown", it means that LogixNG
-	  reads the memory IM1, which in this example has the value IT1,
-	  and then sets the turnout IT1 to thrown.</p>
+      <p>LogixNG also has references and tables. A reference is an
+      indirect pointer to an item on the layout. For example, if
+      the memory IM1 has the value "IT1", the reference {IM1} points
+      to the turnout IT1. This means that if an action has the
+      command "set turnout {IM1} to thrown", it means that LogixNG
+      reads the memory IM1, which in this example has the value IT1,
+      and then sets the turnout IT1 to thrown.  This is similar to the Logix
+      Indirect using <strong>@memoryName</strong>.</p>
 
-	  <p>References can be used to change which turnout to use, which
-	  is very useful to setup generic rules. If a particular rule is
-	  common for many places on the layout, references can be use to
-	  use that single rule for all these cases.</p>
+      <p>References can be used to change which turnout to use, which
+      is very useful to setup generic rules. If a particular rule is
+      common for many places on the layout, references can be use to
+      use that single rule for all these cases.</p>
 
-	  <p>LogixNG also adds tables to JMRI. A table is similar to
-	  Memory but has one or two dimensions. Each row and each column
-	  in the table may be given a name, which means that a single
-	  cell in the table can be referred to with the row name and the
-	  column name. Tables are in particular intended to be used
-	  together with references, to make it easy to setup complex
-	  configurations. A table can be created in a spreadsheet software
-	  like Microsoft Excel or LibreOffice Calc and then exported as an
-	  CSV file and imported to JMRI.</p>
+      <p>LogixNG also adds tables to JMRI. A table is similar to
+      Memory but has one or two dimensions. Each row and each column
+      in the table may be given a name, which means that a single
+      cell in the table can be referred to with the row name and the
+      column name. Tables are in particular intended to be used
+      together with references, to make it easy to setup complex
+      configurations. A table can be created in a spreadsheet software
+      like Microsoft Excel or LibreOffice Calc and then exported as an
+      CSV file and imported to JMRI.</p>
 
-<!--
-	  <p>LogixNG, short for Logix Next Generation, provide a
-	  powerful capability for JMRI to monitor one or more
-	  conditions on a layout, and take action when these
-	  conditions change in a user-specified way. LogixNG can be
-	  used to control signals, crossing gates, and other types of
-	  automation on the layout. The user interface is designed to
-	  be user friendly to all users with basic familiarity with
-	  JMRI. A LogixNG provides a means for setting up
-	  user-specified logic in an intuitive manner, without the
-      user having to be familiar with mathematical logic.</p>
+      <ul>
+        <li><a href="#components">LogixNG Components</a></li>
+        <li><a href="#preferences">LogixNG Preferences</a></li>
+      </ul>
 
-      <p>LogixNG is similar to Logix&trade;, but is a new design
-	  to make the code easier to manage and extend.</p>
--->
+      <a name="components" id="components"></a>
+      <h2>LogixNG Components</h2>
 
+        <p>The LogixNG tool has 3 main components.  They are accessed via the main PanelPro
+        <strong>Tools &rArr; Tables &rArr; LogixNG</strong> menu path like other JMRI table items.
+        The 3 LogixNG tables and related content will be <strong><em>loaded</em></strong>
+        and <strong><em>stored</em></strong> along with all of the other tables and panels.</p>
 
-	  <a name="contents" id="contents"></a>
+        <a name="logixngs" id="logixngs"></a>
+        <h3>LogixNGs and ConditionalNGs</h3>
+          <p>The <strong>LogixNGs</strong> menu item displays a list of LogixNGs.  When a
+          LogixNG item is selected, the ConditionalNG list is displayed.  Clicking on the Edit
+          button will open the ConditionalNG editor.  This window contains a tree of the
+          items that have been added to the conditional.  The primary items are the
+          expressions which act like if statements and actions to be performed.  For details,
+          see the following pages:</p>
+          <ul>
+            <li><a href="../../../package/jmri/jmrit/beantable/LogixNGTable.shtml">LogixNG Table</a></li>
+            <li><a href="../../../package/jmri/jmrit/logixng/LogixNGTableEditor.shtml">LogixNG Editor</a></li>
+            <li><a href="../../../package/jmri/jmrit/logixng/ConditionalNGEditor.shtml">ConditionalNG Editor</a></li>
+          </ul>
+
+        <a name="modules" id="modules"></a>
+        <h3>Modules</h3>
+          <p>The <strong>LogixNG Modules</strong> menu item displays a list of modules.  A
+          module is similar to a ConditionalNG in that it also uses the tree based editor.
+          The major difference is that information can be passed to a module and it can return
+          results.  For details, see the following pages:</p>
+          <ul>
+            <li><a href="../../../package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">Module Table</a></li>
+            <li><a href="../../../package/jmri/jmrit/logixng/ModuleEditor.shtml">Module Editor</a></li>
+          </ul>
+
+        <a name="tables" id="tables"></a>
+        <h3>Tables</h3>
+          <p>The <strong>LogixNG Tables</strong> menu item displays a list of tables.  The
+          table feature was described in the introduction. For details, see the following page:</p>
+          <ul>
+            <li><a href="../../../package/jmri/jmrit/beantable/LogixNGTableTable.shtml">Tables Table</a></li>
+          </ul>
+
+        <p><a href="#TopOfPage">[Go to top of page]</a></p>
+
+      <a name="preferences" id="preferences"></a>
+      <h2>LogixNG Preferences</h2>
+        <p>LogixNG has settings the can be set in JMRI <strong>Preferences &rArr; LogixNG</strong>.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/Preferences.png">
+        <img src="images/Preferences.png"
+        alt="LogixNG Preferences" width="297" height="198">
+        </a>
+        </div>
+
+        <dl>
+          <dt>Start LogixNGs on load</dt>
+          <dd>If checked, the enabled LogixNG definitions will be active after the
+          completion of the PanelPro xml data file loading.  If not checked, the LogixNGs
+          will be inactive until <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong>
+          is selected.  The default setting is checked.</dd>
+
+          <dt>Install Debugger</dt>
+          <dd>There is an option in the LogixNG editor list for debugging a CondditionalNG.
+          This has to be enabled during start up to work.</dd>
+
+          <dt>Show system names and user names</dt>
+          <dd>The LogixNG expressions and actions have names.  These names are used
+          internally by LogixNG.  In certain developer situations, making the names
+          visible can be helpful.  The default is unchecked.</dd>
+
+          <dt>Error Handling Options</dt>
+          <dd>LogixNG has robust error handling.  The combo box selection provides the default
+          setting.  Individual expressions and actions can override the default setting.</dd>
+        </dl>
+
+        <p>Note:  LogixNG execution can be stopped using
+        <strong>Tools &rArr; LogixNG &rArr; Stop LogixNG</strong>.</p>
+
+        <p><a href="#TopOfPage">[Go to top of page]</a></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h6></h6>
+<h6></h6>
+<h6></h6>
+<p><hr></p>
+<hr/>
+<hr/>
+
+      <a name="contents" id="contents"></a>
       <h2>Contents</h2>
 
       <p>The documentation below describes LogixNG, and discusses how
@@ -135,104 +215,53 @@
         <li><a href="../../package/jmri/jmrit/conditional/ConditionalNGTreeEditor.shtml">ConditionalNG Tree Editor</a></li>
       </ul>
 
-
-
-	  <a name="intro" id="intro"></a>
-
+      <a name="intro" id="intro"></a>
       <h2>Introduction to LogixNG</h2>
 
-      <p>For those who are used with Logix, it's important to note that
-	  LogixNG is similar, but different.</p>
+      <p>For those who have used Logix, it's important to note that
+      LogixNG is similar, but different.</p>
 
-	  <p>The main building blocks in LogixNG are actions and expressions.
-	  An action do something, for example throwing a turnout, set a signal
-	  or run a script. An expression asks a question, for example if
-	  turnout LT2 is closed, or if sensor IS255 is active.</p>
+      <p>The main building blocks in LogixNG are actions and expressions.
+      An action does something, for example throwing a turnout, set a signal
+      or run a script. An expression asks a question, for example if
+      turnout LT2 is closed, or if sensor IS255 is active.</p>
 
-	  <p>The actions and expressions are organized in trees, there each
-	  tree is a ConditionalNG. The ConditionalNGs are organized in LogixNGs.</p>
+      <p>The actions and expressions are organized in trees, there each
+      tree is a ConditionalNG. The ConditionalNGs are organized in LogixNGs.</p>
 
-	  <p>An action or expression may have other actions and/or expressions
-	  as children, which allows the user to build a complex structure
-	  with simple building blocks.</p>
+      <p>An action or expression may have other actions and/or expressions
+      as children, which allows the user to build a complex structure
+      with simple building blocks.</p>
 
-	  <p>Example:<br>
-	  One common root of the tree is the IfThenElse action. It has one
-	  child expression and one or two child actions. It evaluates the
-	  expression and if the expression answers <strong>true</strong>, the
-	  "then" child action is executed. But if the expression answers
-	  <strong>false</strong>, the "else" child action is executed instead.
+      <p>Example:<br>
+      One common root of the tree is the <strong>IfThenElse</strong> action. It has one
+      child expression and one or two child actions. It evaluates the expression and if
+      the expression answers <strong>true</strong>, the <strong><em>then</em></strong>
+      child action is executed. But if the expression answers <strong>false</strong>,
+      the <strong><em>else</em></strong> child action is executed instead.
+
+      <p class="noted">LogixNG is both the name of the JMRI tool and the name of the
+      main component of that tool.</p>
+
+<!--
+      <a name="components" id="components"></a>
+      <h2>LogixNG Components</h2>
+      <dl>The three main components of the LogixNG tool are:
+        <dt>LogixNG</dt>
+        <dt>Module</dt>
+        <dt>Table</dt>
+      </dl>
+ -->
 
 
 <!--
-      ********************REMOVED CONTENT*****************************
-      <p>LogixNG is built of four building blocks:</p>
-	  <ul>
-        <li>LogixNG - a container of one or several ConditionalNGs</li>
-	    <li>ConditionalNG - a tree structure consisting of Actions and Expressions</li>
-		<li>Actions - an action does something</li>
-		<li>Expressions - an expression asks a question</li>
-      </ul>
+          <li>
+        </ul>
 
-	  <p>The main building blocks of LogixNG is Actions and Expressions.
-	  Unlike Logix, the actions and expressions in LogixNG is
-	  structured in a tree which gives a lot more flexibility.
-	  For example, an IfThenElse action has an child expression
-	  which in turn can have multiple child expressions.</p>
+       is the LogixNG table entry, its ConditionalNGs
+      and the expresssions and actions defined for the
+ -->
 
-	  <p>Each action and expression does one particular task, like
-	  throwing a switch or asking the state of a sensor. Some actions
-	  and expressions combines other actions and/or expressions, for
-	  example the IfThenElse action that asks a question and then
-	  acts upon the answer. And the Or expression answers true if all
-	  its child expressions answers true.</p>
-
-	  <p>A ConditionalNG is the container of a tree of actions and
-	  expressions. A LogixNG is a container of one or several
-	  ConditionalNGs.</p>
-
-	  <p>For people used with Logix, LogixNG and ConditionalNG follows
-	  the structure of Logix, there LogixNG is equivalent to Logix and
-	  there ConditionalNG is equivalent to Conditional. Actions and
-	  Expressions of LogixNG follows the same idea as in Logix, but
-	  are implemented in a true tree structure.</p>
-
-      <p>A LogixNG is a small group of ConditionalNGs focused on a
-      single task on the layout. Each <a href=
-      "#conditionalng">ConditionalNG</a> may be viewed as a statement
-      of the form:</p>
-
-      <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
-
-      <p>The "logical expression" part of a ConditionalNG tests the
-      state of a group of user-specified conditions on the layout,
-      for example, whether certain turnouts are closed or thrown,
-      or whether a block is occupied. The "action" part of the
-      ConditionalNG specifies what action is to be taken if the state
-      of the logical expression changes.</p>
-
-      <p>For example, one LogixNG with several ConditionalNGs could
-      control the appearance of one signal head. The first
-      ConditionalNG could check conditions for a GREEN appearance. A
-      second ConditionalNG could check on another allowed appearance.
-      Other ConditionalNGs could check for other appearances. A LogixNG
-      is flexible enough so that the signal rules of any railroad
-      might be set up, provided, of course, information needed to
-      test the required conditions is available. So with only one
-      LogixNG, a user should be able to set up the required logic for
-      setting the appearance of one signal head.</p>
-
-      <p>Think of a LogixNG as a <strong>small</strong> group of one or more
-      ConditionalNGs that address a single need. Being able to group
-      all the ConditionalNGs that address that single need in one
-      LogixNG simplifies things. Only one System Name is needed for
-      all the logic addressing the task, and grouping all the logic
-      for the task in one place, makes it much easier to see how
-      related logical expressions might work together and how they
-      might affect each other.</p>
-
-      ********************REMOVED CONTENT*****************************
--->
 
 
 
@@ -251,7 +280,8 @@
 	  manually if desired.</p>
 
       <p>LogixNG types and example system names</p>
-	  <table border="1" cellspacing="0">
+<!-- 	  <table border="1" cellspacing="0"> -->
+	  <table>
 	    <tr><th>LogixNG type</th><th>System name</th><th>Auto system name</th></tr>
 		<tr><td>LogixNG</td><td>IQ0001</td><td>IQ:AUTO:0001</td></tr>
 		<tr><td><strong>A</strong>nalog <strong>A</strong>ction</td><td>IQAA0001</td><td>IQAA:AUTO:0001</td></tr>
@@ -280,7 +310,7 @@
 
 	  <p>Example:</p>
 
-	  <table border="1" cellspacing="0" cellpadding="2">
+	  <table>
 	  <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
 	  <tr><th>&nbsp;1&nbsp;</th><td>IQT22</td><td>Yard table</td><td></td><td></td></tr>
 	  <tr><th>&nbsp;2&nbsp;</th><td></td><td>West yard</td><td>East yard</td><td>North yard</td></tr>
@@ -329,7 +359,7 @@
 	  <p>Example from the table above. These examples assume that IM3 has the value
 	  'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
 
-	  <table border="1" cellspacing="0" cellpadding="2">
+	  <table>
 	  <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
 	  <tr><td>IQT22[1,1]</td><td>IQT22</td><td>Cell A1 has the system name of the table</td></tr>
 	  <tr><td>IQT22[1,2]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
@@ -1604,6 +1634,8 @@
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
+
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

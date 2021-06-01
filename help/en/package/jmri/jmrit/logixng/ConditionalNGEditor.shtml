@@ -1,10 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-
-<!-- Copyright Dave Sand 2021 -->
-
   <title>JMRI: ConditionalNG Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng conditional tree editor">
@@ -16,15 +13,17 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../../../../html/tools/Sidebar.shtml" -->
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
     <div id="mainContent">
 
       <h1>JMRI: ConditionalNG Editor</h1>
 
-        <p>Details about using the ConditionalNG Tree Editor</p>
+        <p>The expressions and actions of a LogixNG are represented by a tree structure.
+        The "root" of the tree is an A action.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

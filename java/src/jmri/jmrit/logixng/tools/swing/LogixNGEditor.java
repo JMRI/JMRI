@@ -428,11 +428,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         if (checkEditConditionalNG()) {
             return;
         }
-/*
-        if (!checkConditionalNGReferences(_curLogixNG.getSystemName())) {
-            return;
-        }
-*/
+
         _showReminder = true;
         logixNG_Data.clear();
         logixNG_Data.put("Delete", _curLogixNG.getSystemName());   // NOI18N

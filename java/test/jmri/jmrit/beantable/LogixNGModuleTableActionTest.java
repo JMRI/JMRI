@@ -56,13 +56,13 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 
     @Override
     public String getTableFrameName() {
-        return Bundle.getMessage("TitleLogixNGTable");  // NOI18N
+        return Bundle.getMessage("TitleLogixNGModuleTable");  // NOI18N
     }
 
     @Override
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("LogixNG Table Action class description", Bundle.getMessage("TitleLogixNGTable"), a.getClassDescription());  // NOI18N
+        Assert.assertEquals("LogixNG Table Action class description", Bundle.getMessage("TitleLogixNGModuleTable"), a.getClassDescription());  // NOI18N
     }
 
     @Test
@@ -147,7 +147,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 */
     @Override
     public String getAddFrameName(){
-        return Bundle.getMessage("TitleAddLogixNG");
+        return Bundle.getMessage("TitleAddLogixNGModule");
     }
 /*
     @Test
@@ -252,7 +252,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
                 setProperty("jmri.jmrit.beantable.LogixNGModuleTableAction", "Edit Mode", "TREEEDIT");  // NOI18N
         a.actionPerformed(null);
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
-        JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
+        JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGModuleTable"));  // NOI18N
         Assert.assertNotNull(logixNGFrame);
 
         logixNGTable.editPressed("IQ104");  // NOI18N
@@ -268,11 +268,11 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
-        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
+        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         logixNGTable.addPressed(null);
-        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNGModule"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
 
         new JTextFieldOperator(addFrame, 1).setText("LogixNG 999");  // NOI18N
@@ -294,11 +294,11 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
-        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
+        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         logixNGTable.addPressed(null);
-        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNGModule"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
 
         //disable "Auto System Name" via checkbox
@@ -324,7 +324,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
-        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
+        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         // Delete IQ102, respond No
@@ -376,10 +376,10 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
-        JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
+        JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGModuleTable"));  // NOI18N
 
         logixNGTable.addPressed(null);
-        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNGModule"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
 
         //disable "Auto System Name" via checkbox

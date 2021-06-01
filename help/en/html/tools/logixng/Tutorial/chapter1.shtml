@@ -1,0 +1,407 @@
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 1</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 1</h1>
+
+      <h2>LogixNG - What is it?</h2>
+
+        <p>LogixNG is similar to Logix. It's a way to define rules, like <i>"If sensor
+        IS1 is Active, then set turnout IT2 to Thrown"</i>. It borrows some concepts
+        from Logix, but it's a complete new design and it can work side by side with
+        Logix.</p>
+
+
+      <h2>Setting up a LogixNG and a ConditionalNG</h2>
+
+        <p>First, we create a LogixNG. We start <b>PanelPro</b> and select <b>Tools</b>
+        &rArr; <b>Tables</b> &rArr; <b>LogixNG</b> &rArr; <b>LogixNG</b> to open the table
+        with the LogixNGs.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter1/create_logixng_1.png">
+        <img src="images/chapter1/create_logixng_1.png"
+        alt="Chapter 1-L1" width="959" height="359">
+        </a>
+        </div>
+
+        <p>Click the <b>Add...</b> button to add a new LogixNG.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter1/create_logixng_2.png">
+        <img src="images/chapter1/create_logixng_2.png"
+        alt="Chapter 1-L2" width="606" height="263">
+        </a>
+        </div>
+
+        <p>By default, the checkbox <b>Automatically generate System Name</b> is checked for
+        all items in LogixNG.</p>
+
+        <p>Click the <b>Create</b> button to create a LogixNG.  The LogixNG ConditionalNG
+        list will be opened automatically.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter1/create_logixng_3.png">
+        <img src="images/chapter1/create_logixng_3.png"
+        alt="Chapter 1-L2" width="1037" height="451">
+        </a>
+        </div>
+
+        <p>Click the <b>New ConditionalNG</b> button to add a new ConditionalNG.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter1/create_conditionalng_1.png">
+        <img src="images/chapter1/create_conditionalng_1.png"
+        alt="Chapter 1-1" width="603" height="171">
+        </a>
+        </div>
+
+        <p>Click the <b>Create</b> button to create it.  The ConditionalNG editor will
+        open.</p>
+
+
+      <h2>The ConditionalNG editor</h2>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter1/create_conditionalng_2.png">
+        <img src="images/chapter1/create_conditionalng_2.png"
+        alt="Chapter 1-2" width="781" height="300">
+        </a>
+        </div>
+
+        <p>A ConditionalNG is a tree of actions and expressions. When the ConditionalNG is
+        created, the tree consist only of a single female socket, "! A". The exclamation mark
+        indicates that this is a digital action socket, so you can connect digital actions to it.</p>
+
+        <p>Right-click (command-click) on any row to show the context menu for that row.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter1/create_conditionalng_3.png">
+        <img src="images/chapter1/create_conditionalng_3.png"
+        alt="Chapter 1-3" width="265" height="459">
+        </a>
+        </div>
+
+
+        <h3>Create an Action</h3>
+
+          <p>To create a new action, we right-click (command-click) with the mouse on the
+          female socket <code>! A</code> and then select <strong>Add</strong> in the popup menu.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_4.png">
+          <img src="images/chapter1/create_conditionalng_4.png"
+          alt="Chapter 1-4" width="250" height="121">
+          </a>
+          </div>
+
+          <p>We then select which action we want to create. The actions and expressions
+          are organized in categories, so we first select the <strong>Category</strong>.
+          The default category is Item.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_5.png">
+          <img src="images/chapter1/create_conditionalng_5.png"
+          alt="Chapter 1-5" width="263" height="137">
+          </a>
+          </div>
+
+          <p>We then select the action <strong>Type</strong>. Lets start with "Turnout".</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_6.png">
+          <img src="images/chapter1/create_conditionalng_6.png"
+          alt="Chapter 1-6" width="258" height="399">
+          </a>
+          </div>
+
+          <p>Click the <strong>Create</strong> button to create the action.</p>
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_7.png">
+          <img src="images/chapter1/create_conditionalng_7.png"
+          alt="Chapter 1-7" width="250" height="121">
+          </a>
+          </div>
+
+          <p>We now get a dialog box there we can select the turnout to control. And what to do with this turnout.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_8.png">
+          <img src="images/chapter1/create_conditionalng_8.png"
+          alt="Chapter 1-8" width="922" height="270">
+          </a>
+          </div>
+
+
+          <p>In this example, we select "IT_1_1" and we tell the action to throw the
+          turnout when the action is triggered.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_9.png">
+          <img src="images/chapter1/create_conditionalng_9.png"
+          alt="Chapter 1-9" width="922" height="270">
+          </a>
+          </div>
+
+          <p>Click the <strong>Create</strong> button to create this action.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_10.png">
+          <img src="images/chapter1/create_conditionalng_10.png"
+          alt="Chapter 1-10" width="781" height="300">
+          </a>
+          </div>
+
+          <p>The action is now created and each time this ConditionalNG is executed, the turnout
+          "IT_1_1" is thrown.</p>
+
+
+        <h3>Create an Expression</h3>
+
+          <p>Having a single turnout action in the ConditionalNG will not do much good.
+          Lets change the ConditionalNG so that it reads sensor "IS_1_1" and if
+          it's active, the turnout is thrown.</p>
+
+          <p>To do this, we need to temporary remove the Set turnout action and instead
+          add an <strong>If Then Else</strong> action. LogixNG has a clipboard that allows
+          us to cut and paste actions and expressions. So lets use it to temporarily move
+          the Set turnout action to the clipboard.
+
+          <p>Right-click (command-click) with the mouse on the Set turnout action and
+          then select "Cut" in the popup menu.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_11.png">
+          <img src="images/chapter1/create_conditionalng_11.png"
+          alt="Chapter 1-11" width="311" height="459">
+          </a>
+          </div>
+
+          <p>The action is now moved to the clipboard and the ConditionalNG is empty.</p>
+
+          <p>We will not look at the clipboard for now, but as a side note, you can open
+          the clipboard by selecting <strong>Tools &rArr; Clipboard</strong> in the
+          ConditionalNG editor.</p>
+
+          <p>Right click (command-click) on <code>! A</code> and select <strong>Add</strong>.
+          This time select the <strong>Common</strong> category and the <strong>If Then
+          Else</strong> type.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_12.png">
+          <img src="images/chapter1/create_conditionalng_12.png"
+          alt="Chapter 1-12" width="276" height="240">
+          </a>
+          </div>
+
+          <p>Click on the <strong>Create</strong> button.</p>
+
+          <p>The <strong>If Then Else</strong> item has two options.  The default is
+          <strong>Execute on change</strong>.  The <strong>Then</strong> and
+          <strong>Else</strong> actions will execute when the <strong>If</strong>
+          expression has changed between true and false.  When the <strong>Always
+          execute</strong> option is selected, the actions will execute even though the
+          <strong>If</strong> expression is still true or false.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_13.png">
+          <img src="images/chapter1/create_conditionalng_13.png"
+          alt="Chapter 1-13" width="485" height="214">
+          </a>
+          </div>
+
+          <p>Click on the <strong>Create</strong> button.</p>
+
+          <p>We now have a ConditionalNG with the If Then Else action.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_14.png">
+          <img src="images/chapter1/create_conditionalng_14.png"
+          alt="Chapter 1-14" width="781" height="300">
+          </a>
+          </div>
+
+
+          <p>Right-click (command-click) with the mouse on the <strong>Then</strong> socket
+          and select <strong>Paste</strong> in the popup menu to paste the "Set turnout" action.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_15.png">
+          <img src="images/chapter1/create_conditionalng_15.png"
+          alt="Chapter 1-15" width="289" height="510">
+          </a>
+          </div>
+
+          <p>We now have the <strong>If Then Else</strong> action with the Set turnout action.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_16.png">
+          <img src="images/chapter1/create_conditionalng_16.png"
+          alt="Chapter 1-16" width="781" height="300">
+          </a>
+          </div>
+
+          <p>Right-click (command-click) with the mouse on the <strong>If</strong> socket
+          and select <strong>Add</strong> in the popup menu to add a new expression.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_17.png">
+          <img src="images/chapter1/create_conditionalng_17.png"
+          alt="Chapter 1-17" width="275" height="488">
+          </a>
+          </div>
+
+          <p>Select the <strong>Item</strong> category and <strong>Sensor</strong> type.
+          Then click on <strong>Create</strong> button.
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_18.png">
+          <img src="images/chapter1/create_conditionalng_18.png"
+          alt="Chapter 1-18" width="202" height="121">
+          </a>
+          </div>
+
+          <p>Select the "IS_1_1" sensor and select "Active". Note also the dropdown
+          box <strong>is / is not</strong> in the middle.</p>
+
+          <p>Normally, any change to an expression item should trigger the true/false
+          evaluation.  Sometimes an expression item should participate in the evaluation
+          but not trigger it.  The Listen checkbox is used to control the trigger state.</p>
+
+          <p>Click on the <strong>Create</strong> button.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_19.png">
+          <img src="images/chapter1/create_conditionalng_19.png"
+          alt="Chapter 1-19" width="983" height="303">
+          </a>
+          </div>
+
+          <p>We now have a ConditionalNG which will be executed every time the sensor
+          "IS_1_1" changes its state. And if "IS_1_1" changes to Active,
+          then turnout "T_1_1" will be thrown.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/create_conditionalng_20.png">
+          <img src="images/chapter1/create_conditionalng_20.png"
+          alt="Chapter 1-20" width="781" height="300">
+          </a>
+          </div>
+
+
+      <h2>Basics</h2>
+
+        <p>LogixNG has four basic building blocks: Actions, Expressions, Male sockets and
+        Female sockets.</p>
+
+        <p>Actions do something, for example throw a turnout or sets a signal mast.
+        Expressions ask something, for example if a sensor is active or if a signal head
+        has a particular appearance. The actions and expressions form a tree and  complex
+        logic can be built with them.</p>
+
+        <p>Each action/expression is embedded in one or several male sockets. Male sockets
+        allow actions/expressions to be connected to a female socket of the correct type.</p>
+
+        <p>A ConditionalNG has a female socket that is the root of the ConditionalNG tree.
+        And some actions/expressions have one or several female sockets as children. There
+        are several different female sockets:</p>
+
+        <div style="margin-left: 2em">
+          <table>
+            <tr><th>Symbol</th><th>Type</th></tr>
+            <tr><td style="text-align:center">!</td><td>Digital action</td></tr>
+            <tr><td style="text-align:center">?</td><td>Digital expression</td></tr>
+            <tr><td style="text-align:center">!b</td><td>Digital boolean action</td></tr>
+            <tr><td style="text-align:center">!~</td><td>Analog action</td></tr>
+            <tr><td style="text-align:center">?~</td><td>Analog expression</td></tr>
+            <tr><td style="text-align:center">!s</td><td>String action</td></tr>
+            <tr><td style="text-align:center">?s</td><td>String expression</td></tr>
+          </table>
+        </div>
+
+        <h3>Categories</h3>
+
+          <p>To get some kind of structure of the types of actions and expressions,
+          LogixNG has a number of categories. Then you create a new action or expression,
+          you first select the category and then the action/expression. Currently, the
+          categories are:</p>
+
+          <ul>
+            <li>Item - Actions and expressions related to items on the layout, for example
+            turnouts and signal masts</li>
+            <li>Common - The most important actions and expressions that are not in the
+            category Item</li>
+            <li>Display - Actions and expressions related to Panels</li>
+            <li>LocoNet - Actions and expressions related to LocoNet</li>
+            <li>Other - Other actions and expressions</li>
+          </ul>
+
+          <p>These categories may not be optimal and it would probably be good to have a
+          discussion on the jmri developers mailing list about these. It's easy to change
+          them, it's easy to add more categories and it's to move an action or expression
+          from one category to another.</p>
+
+        <h3>Additional Example</h3>
+
+          <ul>
+            <li>To create a compound <strong>if</strong> expression, add an operator such as
+            <strong>And</strong> or <strong>Or</strong> before adding the expressions.
+            These are located in the Common category.</li>
+
+            <li>To create multiple actions, add the <strong>Many</strong> operator before
+            adding the actions.  This and others are in the Common category.</li>
+
+            <li>To create a delayed action, use the <strong>Execute delay</strong> action
+            in Common and then add the action to the delay.</li>
+
+            <li>When adding or editing an expression or action, a comment can be edited using
+            the <strong>Edit comment</strong> button on the detail dialog.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter1/conditionalng_example_1.png">
+          <img src="images/chapter1/conditionalng_example_1.png"
+          alt="Chapter 1 Example 1" width="781" height="462">
+          </a>
+          </div>
+
+        <h3>Another example: Stop the power during lunch</h3>
+
+          <p>Logix support reading the fast clock. LogixNG also supports reading the
+          system clock. Lets assume you want to cut power to the layout during the lunch.
+          This can easily be done by the following ConditionalNG:</p>
+
+<pre>
+* IfThenElse
+  * If: And
+    * E1: System clock is between 12:00 and 13:00
+    * E2: Power is On
+  * Then: Set power Off
+  * Else:
+</pre>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>
