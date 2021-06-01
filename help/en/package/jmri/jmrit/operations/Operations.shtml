@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 
 <head>
@@ -431,8 +431,11 @@
 
    <h3>New User Advice</h3>
    OperationsPro&trade; has been designed to create car movements that make sense to you and your
-   crew. If you've never used a computer program to generate a train Manifest or switch list, we
-   recommend that you load and use the <a href="#demo">demo files</a> provided. Please read the <a
+   crew. There are many options and features that the program provides and it can be a bit
+   overwhelming, but you can get started by simply following the steps in the
+   <a href="#QuickStartHelp">Quick Start Help</a>. If you've never used a computer program to
+   generate a train Manifest or switch list, we recommend that you load and use the
+   <a href="#demo">demo files</a> provided. Please read the <a
     href="#BuildReportDetails">build reports</a> for the demo trains in very detailed mode, even if
    they build which they should since they are demo files. You should make changes to the demo
    database and see what the results are. This is your chance to experiment with the program before
@@ -1756,8 +1759,7 @@
     information, so you might have to limit the number of car attributes (see <a
      href="#MessageFormats">Message Formats</a> below) in order get the data to fit. The next format
     available is "Two Column (Track)". This format prints the track name in both columns in a header
-    format. The text color options for set outs, pick ups, and local move are not available for the
-    "Two Column" formats.
+    format.
    </p>
 
    <p>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or

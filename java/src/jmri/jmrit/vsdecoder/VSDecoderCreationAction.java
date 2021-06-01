@@ -5,6 +5,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
 /**
+ * Start Virtual Sound Decoder Manager.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -18,7 +20,7 @@ import javax.swing.JFrame;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class VSDecoderCreationAction extends AbstractAction {
 

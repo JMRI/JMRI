@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Load VSDecoder Profiles from XML.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>

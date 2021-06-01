@@ -1,6 +1,13 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.beans.PropertyChangeEvent;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Throttle trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -14,13 +21,8 @@ package jmri.jmrit.vsdecoder;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-import java.beans.PropertyChangeEvent;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 class ThrottleTrigger extends Trigger {
 
     int current_notch, prev_notch;
@@ -54,7 +56,7 @@ class ThrottleTrigger extends Trigger {
             return;
         }
 
-        log.debug("Throttle Trigger old value = {} new value = {}", event.getOldValue(), event.getNewValue());
+        log.debug("Throttle Trigger old value: {}, new value: {}", event.getOldValue(), event.getNewValue());
         this.callback.takeAction((Float) event.getNewValue());
     }
 
@@ -64,7 +66,7 @@ class ThrottleTrigger extends Trigger {
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "THROTTLE");
         log.warn("CompareTrigger.getXml() not implemented");
-        return (me);
+        return me;
     }
 
     @Override

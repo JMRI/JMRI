@@ -687,14 +687,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public Division getDivision() {
         return _division;
     }
-    
+
     public String getDivisionName() {
         if (getDivision() != null) {
             return getDivision().getName();
         }
         return NONE;
     }
-    
+
     public String getDivisionId() {
         if (getDivision() != null) {
             return getDivision().getId();
@@ -1322,9 +1322,13 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             track = destination.getTrackById(a.getValue());
         }
         setDestination(destination, track, true); // force destination
-        
+
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
-           _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+        }
+        // TODO remove the following 3 lines in 2022
+        if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.MOVES)) != null) {
             try {

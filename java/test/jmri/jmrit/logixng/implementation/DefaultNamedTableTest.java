@@ -25,7 +25,8 @@ public class DefaultNamedTableTest {
     @Test
     public void testCSVFile() throws IOException {
         NamedTable table = AbstractNamedTable.loadTableFromCSV_File(
-                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"));
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"),
+                true);
         
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File file = new File(FileUtil.getUserFilesPath() + "temp/" + "turnout_and_signals.csv");

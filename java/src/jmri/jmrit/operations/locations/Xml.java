@@ -53,7 +53,8 @@ public class Xml {
     static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
     static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
     static final String SECONDARY = "secondary"; // early version of operations called tracks "secondary" // NOI18N
-    static final String DIVISION_ID = "DivisionId"; // NOI18N
+    static final String DIVISION_ID_ERROR = "DivisionId"; // NOI18N
+    static final String DIVISION_ID = "divisionId"; // NOI18N
 
     // Track.java
     static final String LOC_TYPE = "locType"; // NOI18N

@@ -26,6 +26,20 @@ public class DefaultSymbolTable implements SymbolTable {
     private final Map<String, Symbol> _symbols = new HashMap<>();
     
     
+    /**
+     * Create a new instance of DefaultSymbolTable with no previous symbol table.
+     */
+    public DefaultSymbolTable() {
+        _prevSymbolTable = null;
+        _stack = new DefaultStack();
+        _firstSymbolIndex = _stack.getCount();
+    }
+    
+    /**
+     * Create a new instance of DefaultSymbolTable with previous symbol table
+     * and the stack from a ConditionalNG.
+     * @param currentConditionalNG the ConditionalNG
+     */
     public DefaultSymbolTable(ConditionalNG currentConditionalNG) {
         _prevSymbolTable = currentConditionalNG.getSymbolTable();
         _stack = currentConditionalNG.getStack();
