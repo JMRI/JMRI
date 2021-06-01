@@ -5,6 +5,8 @@ import jmri.Turnout;
 
 import jmri.JmriException;
 
+import jmri.jmrix.pi.extendgpio.ExtensionService;
+
 /**
  * Implement Pi turnout manager.
  * <p>
@@ -65,12 +67,12 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
             throw new jmri.NamedBean.BadSystemNameException();
         }
         if (name.substring (prefixLen, prefixLen+1).equals (":")) {
-            return RaspberryPiGpioExFactory.validateSystemNameFormat (name);
+            return ExtensionService.validateSystemNameFormat (name);
         } else {
             return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
         }
     }
-    
+
     /**
      * Use an updated tool tip to account for extended pins.
      *  {@inheritDoc}
