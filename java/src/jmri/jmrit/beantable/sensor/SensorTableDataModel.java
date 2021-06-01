@@ -298,7 +298,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
             case PULLUPCOL:
-                PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
+                PullResistanceComboBox c = new PullResistanceComboBox(s.getAvailablePullValues());
                 c.setSelectedItem(s.getPullResistance());
                 return c;
             case FORGETCOL:
