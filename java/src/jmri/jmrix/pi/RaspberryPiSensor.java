@@ -10,8 +10,12 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import jmri.jmrix.pi.extendgpio.ExtensionService;
+import jmri.jmrix.pi.extendgpio.spi.GpioExtension;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,10 +28,11 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
 
     private static GpioController gpio = null;
     private GpioPinDigitalInput pin = null;
-    private PinPullResistance pull = PinPullResistance.PULL_DOWN;
+    private PinPullResistance pull = PinPullResistance.OFF;
+    private GpioExtension gpioExtender = null;
 
     public RaspberryPiSensor(String systemName, String userName) {
-        this(systemName, userName, GpioFactory.getInstance(), PinPullResistance.PULL_DOWN);
+        this(systemName, userName, GpioFactory.getInstance(), PinPullResistance.OFF);
     }
 
     public RaspberryPiSensor(String systemName, String userName, PinPullResistance p) {
@@ -35,7 +40,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
     }
 
     public RaspberryPiSensor(String systemName) {
-        this(systemName, GpioFactory.getInstance(), PinPullResistance.PULL_DOWN);
+        this(systemName, GpioFactory.getInstance(), PinPullResistance.OFF);
     }
 
     public RaspberryPiSensor(String systemName, PinPullResistance p) {
@@ -93,8 +98,14 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
                 throw new IllegalArgumentException(msg);
             }
         } else {
+            gpioExtender = ExtensionService.getExtensionFromSystemName (getSystemName());
+            if (gpioExtender == null) {
+                String msg = Bundle.getMessage("PinNameNotValid", "", systemName);
+                log.error(msg);
+                throw new IllegalArgumentException(msg);
+            }
             try {
-                pin = RaspberryPiGpioExFactory.provisionInputPinByName (gpio, getSystemName());
+                pin = gpioExtender.provisionDigitalInputPin (gpio, getSystemName());
                 pinName = pin.getName();
             } catch (java.lang.RuntimeException re) {
                 log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
@@ -156,6 +167,14 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
         pin.setPullResistance(pull);
     }
 
+    @Override
+    public Sensor.PullResistance [] getAvailablePullValues () {
+        if (gpioExtender == null) {
+            return (super.getAvailablePullValues ());
+        }
+        return gpioExtender.getAvailablePullValues ();
+        
+    }
     /**
      * Set the pull resistance.
      * <p>
