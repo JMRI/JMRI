@@ -42,6 +42,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
         ConditionalNG_Manager tm = (ConditionalNG_Manager) o;
         LogixNG_Manager lm = InstanceManager.getDefault(LogixNG_Manager.class);
         if (tm != null) {
+            if (lm.getNamedBeanSet().isEmpty()) return null;
             for (LogixNG logixNG : lm.getNamedBeanSet()) {
                 for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
                     ConditionalNG conditionalNG = logixNG.getConditionalNG(i);

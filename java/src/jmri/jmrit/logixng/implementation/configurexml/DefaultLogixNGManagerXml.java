@@ -38,6 +38,8 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      */
     @Override
     public Element store(Object o) {
+        boolean hasData = false;
+        
         Element logixNGs = new Element("LogixNGs");
         setStoreElementClass(logixNGs);
         LogixNG_Manager tm = (LogixNG_Manager) o;
@@ -67,6 +69,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
 
                 logixNGs.addContent(elem);
+                hasData = true;
             }
 
             Element elemInitializationTable = new Element("InitializationTable");  // NOI18N
@@ -92,7 +95,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             }
             logixNGs.addContent(elemClipboard);
         }
-        return (logixNGs);
+        return hasData ? logixNGs : null;
     }
 
     /**

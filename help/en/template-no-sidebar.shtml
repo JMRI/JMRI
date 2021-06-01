@@ -12,8 +12,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="no-sidebar" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Page Title???</h1>Content???? This file shows the
       top and bottom matter for a plain page, without a side menu

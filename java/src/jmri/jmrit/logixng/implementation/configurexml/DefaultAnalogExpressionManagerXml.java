@@ -41,9 +41,9 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
         setStoreElementClass(expressions);
         AnalogExpressionManager tm = (AnalogExpressionManager) o;
         if (tm != null) {
+            if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleAnalogExpressionSocket expression : tm.getNamedBeanSet()) {
                 log.debug("expression system name is " + expression.getSystemName());  // NOI18N
-//                log.error("expression system name is " + expression.getSystemName() + ", " + expression.getLongDescription());  // NOI18N
                 try {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
@@ -55,7 +55,6 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());
                     if (e != null) {
                         for (Element ee : elements) e.addContent(ee);
-//                        e.addContent(storeMaleSocket(expression));
                         expressions.addContent(e);
                     } else {
                         throw new RuntimeException("Cannot load xml configurator for " + a.getObject().getClass().getName());

@@ -84,11 +84,11 @@
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
     </aspectMapping>
 
@@ -124,11 +124,13 @@
 
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
     </aspectMapping>
 
@@ -136,72 +138,61 @@
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
-</aspectMapping>
+    </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Slow Clear</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
-      <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
   </aspectMappings>
