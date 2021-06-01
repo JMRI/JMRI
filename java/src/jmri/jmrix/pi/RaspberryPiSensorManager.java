@@ -2,6 +2,7 @@ package jmri.jmrix.pi;
 
 import javax.annotation.Nonnull;
 import jmri.Sensor;
+import jmri.jmrix.pi.extendgpio.ExtensionService;
 
 import jmri.JmriException;
 
@@ -79,7 +80,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
             throw new jmri.NamedBean.BadSystemNameException();
         }
         if (name.substring (prefixLen, prefixLen+1).equals (":")) {
-            return RaspberryPiGpioExFactory.validateSystemNameFormat (name);
+            return ExtensionService.validateSystemNameFormat (name);
         } else {
             return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
         }
