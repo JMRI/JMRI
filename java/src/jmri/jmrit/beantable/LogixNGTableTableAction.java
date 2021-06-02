@@ -107,8 +107,15 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     @Override
     protected NamedTable createBean(String systemName, String userName) {
         if (_typeExternalTable.isSelected()) {
+            String fileName = _csvFileName.getText();
+            if (fileName == null || fileName.isEmpty()) {
+                JOptionPane.showMessageDialog(addLogixNGFrame,
+                        Bundle.getMessage("LogixNGError2"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
             return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, _csvFileName.getText());
+                    .newCSVTable(systemName, userName, fileName);
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -172,6 +179,16 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    protected String getAddTitleKey() {
+        return "TitleLogixNGTableTable";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGTableCreateButtonHint";
     }
 
     @Override

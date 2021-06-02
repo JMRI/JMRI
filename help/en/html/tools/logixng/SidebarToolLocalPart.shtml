@@ -26,7 +26,7 @@
             <li><em style="padding-left: 1em;">Tables Table:</em>
               <ul>
                 <li><a href="/help/en/package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG Tables Table</a>
-<!--                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml">Tables  Editor</a> -->
+                <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml">Tables  Editor</a>
               </ul>
             </li>
             <li><em style="padding-left: 1em;">Tools:</em>

@@ -115,6 +115,16 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         return writer.toString();
     }
 
+    @Override
+    protected String getAddTitleKey() {
+        return "TitleAddLogixNG";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGCreateButtonHint";
+    }
+
     /**
      * Create or copy bean frame.
      *

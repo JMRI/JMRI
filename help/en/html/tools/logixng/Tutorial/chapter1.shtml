@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -394,6 +394,10 @@
   * Then: Set power Off
   * Else:
 </pre>
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="chapter2.shtml">Chapter 2 - The clipboard</a></span></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

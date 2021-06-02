@@ -136,6 +136,16 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected String getAddTitleKey() {
+        return "TitleAddLogixNGModule";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGModuleCreateButtonHint";
+    }
+
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LogixNGModuleTable";  // NOI18N
     }

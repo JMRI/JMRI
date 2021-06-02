@@ -86,6 +86,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected abstract String getBeanText(E bean);
 
+    protected abstract String getAddTitleKey();
+
+    protected abstract String getCreateButtonHintKey();
+
     // ------------ Methods for LogixNG Table Window ------------
 
     /**
@@ -409,22 +413,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         _showReminder = true;
         // make an Add bean Frame
         if (addLogixNGFrame == null) {
-            String title = "TitleAddLogixNG";
-            String buttonHint = "LogixNGCreateButtonHint";
-            if (this instanceof LogixNGModuleTableAction) {
-                title = "TitleAddLogixNGModule";
-                buttonHint = "LogixNGModuleCreateButtonHint";
-            }
-            if (this instanceof LogixNGTableTableAction) {
-                title = "TitleLogixNGTableTable";
-                buttonHint = "LogixNGTableCreateButtonHint";
-            }
-            JPanel panel5 = makeAddFrame(title, "Add");  // NOI18N
+            String titleKey = getAddTitleKey();
+            String buttonHintKey = getCreateButtonHintKey();
+            JPanel panel5 = makeAddFrame(titleKey, "Add");  // NOI18N
             // Create bean
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             panel5.add(create);
             create.addActionListener(this::createPressed);
-            create.setToolTipText(Bundle.getMessage(buttonHint));  // NOI18N
+            create.setToolTipText(Bundle.getMessage(buttonHintKey));  // NOI18N
         }
         addLogixNGFrame.pack();
         addLogixNGFrame.setVisible(true);
@@ -689,6 +685,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 return;
             }
             _curNamedBean = createBean(uName);
+            if (_curNamedBean == null) {
+                log.error("Failure to create bean with System Name: {}", "none");  // NOI18N
+                return;
+            }
             sName = _curNamedBean.getSystemName();
         } else {
             if (!checkLogixNGSysName()) {

@@ -16,25 +16,40 @@
 
   <div id="mBody">
 
-    <div id="mainContent" class="no-sidebar">
+    <!--#include virtual="../Sidebar" -->
 
-<h1>LogixNG Tutorial</h1>
+    <div id="mainContent">
 
-This tutorial has an <a href="PreviewLogixNG.jmri.zip">example profile</a>.
-<p>
-This tutorial has a number of chapters, there each chapter demonstrates some feature of LogixNG. Each chapter has its
-own ConditionalNG in the example profile, and this ConditionalNG has the end result of each chapter.
-<p>
-The sensors, turnouts, and so on, that's used in this tutorial has system names like IS_3_5, there the first number is
-the chapter it's used in.
-<p>
-Some chapters has a panel and the panels has names like "Chapter 1", that tells which chapter this panel is used for.
+      <h1>LogixNG Tutorial</h1>
 
+      <p>This tutorial has an <a href="PreviewLogixNG.jmri.zip">example profile</a>.
+      To use the profile, download and unzip the file.  Start PanelPro and select
+      <strong>Help &rArr; Locations</strong>.  Select <strong>Open Settings Location</strong>.
+      The file manager for your OS will open.  Move the unzipped profile to this location.
+      After stopping and starting PanelPro, use <strong>Preferences &rArr; Config Profiles</strong>
+      to make the profile active.</p>
+
+
+      <p>This tutorial has a number of chapters, each chapter demonstrates some feature of
+      LogixNG. Each chapter has its own ConditionalNG in the example profile, and this
+      ConditionalNG has the end result of each chapter.</p>
+
+      <p>The sensors, turnouts, and so on, that's used in this tutorial has system names
+      like IS_3_5, there the first number is the chapter it's used in.  Some chapters have
+      a panel and the panels has names like "Chapter 1", that tells which chapter this
+      panel is used for.</p>
+
+      <h3>Chapters</h3>
+
+      <ul>
+        <li><a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a></li>
+        <li><a href="chapter2.shtml">Chapter 2 - The clipboard</a></li>
+        <li><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></li>
+      </ul>
 <hr>
 
 <p>
 
-<a href="chapter0.html">Chapter 0 - Setting up the profile</a>
 <p>
 <a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a>
 <p>

@@ -21,8 +21,6 @@
     <div id="mainContent">
       <h1><a id="TopOfPage" name="TopOfPage"></a>JMRI: LogixNG Documentation</h1>
 
-<a href="Tutorial/index.shtml">Tutorial</a>
-
       <p class="noted">LogixNG, along with its documentation, is still evolving.
       Some of the text is based on the original Logix documents.</p>
 
@@ -75,7 +73,7 @@
       <a name="components" id="components"></a>
       <h2>LogixNG Components</h2>
 
-        <p>The LogixNG tool has 3 main components.  They are accessed via the main PanelPro
+        <p>The LogixNG tool has three main components.  They are accessed via the main PanelPro
         <strong>Tools &rArr; Tables &rArr; LogixNG</strong> menu path like other JMRI table items.
         The 3 LogixNG tables and related content will be <strong><em>loaded</em></strong>
         and <strong><em>stored</em></strong> along with all of the other tables and panels.</p>
