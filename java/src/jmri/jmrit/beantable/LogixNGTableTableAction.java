@@ -2,12 +2,19 @@ package jmri.jmrit.beantable;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 
@@ -57,6 +64,16 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
+    protected void setTitle() {
+        f.setTitle(Bundle.getMessage("TitleLogixNGTableTable"));
+    }
+
+    @Override
+    public String getClassDescription() {
+        return Bundle.getMessage("TitleLogixNGTableTable");        // NOI18N
+    }
+
+    @Override
     protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
         return new TableEditor(m, sName);
     }
@@ -90,8 +107,15 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     @Override
     protected NamedTable createBean(String systemName, String userName) {
         if (_typeExternalTable.isSelected()) {
+            String fileName = _csvFileName.getText();
+            if (fileName == null || fileName.isEmpty()) {
+                JOptionPane.showMessageDialog(addLogixNGFrame,
+                        Bundle.getMessage("LogixNGError2"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
             return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, _csvFileName.getText());
+                    .newCSVTable(systemName, userName, fileName);
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -158,8 +182,41 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
+    protected String getAddTitleKey() {
+        return "TitleLogixNGTableTable";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGTableCreateButtonHint";
+    }
+
+    @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.logixng.LogixNGTableTable";  // NOI18N
+        return "package.jmri.jmrit.beantable.LogixNGTableTable";  // NOI18N
+    }
+
+    private JButton createFileChooser() {
+        JButton selectFileButton = new JButton("..."); // "File" replaced by ...
+        selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
+        selectFileButton.setToolTipText(Bundle.getMessage("LogixNG_FileButtonHint"));  // NOI18N
+        selectFileButton.addActionListener((ActionEvent e) -> {
+            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
+            csvFileChooser.rescanCurrentDirectory();
+            int retVal = csvFileChooser.showOpenDialog(null);
+            // handle selection or cancel
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                // set selected file location
+                try {
+                    _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
+                } catch (java.io.IOException ex) {
+                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    _csvFileName.setText("");
+                }
+            }
+        });
+        return selectFileButton;
     }
 
     /**
@@ -174,7 +231,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.logixng.LogixNGTableTable", true);     // NOI18N
+                "package.jmri.jmrit.beantable.LogixNGTableTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -182,13 +239,15 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        p.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = 1;
         c.gridheight = 1;
+
         c.gridx = 0;
         c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.EAST;
+        c.anchor = GridBagConstraints.EAST;
+
         p.add(_sysNameLabel, c);
         _sysNameLabel.setLabelFor(_systemName);
         c.gridy = 1;
@@ -196,25 +255,33 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         _userNameLabel.setLabelFor(_addUserName);
         c.gridy = 2;
         p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
+
         c.gridx = 1;
         c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.anchor = GridBagConstraints.WEST;
         c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
         p.add(_systemName, c);
         c.gridy = 1;
         p.add(_addUserName, c);
+
         c.gridy = 2;
-        c.gridwidth = 2;
+        createFileChooser();
+        p.add(createFileChooser(), c);
+
+        c.gridx = 2;        // make room for file selector
+        c.gridwidth = GridBagConstraints.REMAINDER;
         p.add(_csvFileName, c);
+
         c.gridwidth = 1;
         c.gridx = 2;
         c.gridy = 1;
-        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.anchor = GridBagConstraints.WEST;
         c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName, c);
+
 
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
