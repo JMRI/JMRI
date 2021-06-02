@@ -1,31 +1,15 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.UserPreferencesManager;
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
-import java.util.ResourceBundle;
 
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
@@ -74,7 +58,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
-        return null;
+        return new TableEditor(m, sName);
     }
 
     @Override
@@ -121,12 +105,56 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected void deleteBean(NamedTable bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(bean);
+    }
+
+    @Override
+    protected boolean browseMonoSpace() {
+        return true;
     }
 
     @Override
     protected String getBeanText(NamedTable bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int maxColumnWidth = 0;
+        int columnWidth[] = new int[bean.numColumns()];
+        String[][] cells = new String[bean.numRows()][];
+        for (int row=0; row < bean.numRows(); row++) {
+            cells[row] = new String[bean.numColumns()];
+            for (int col=0; col < bean.numColumns(); col++) {
+                Object value = bean.getCell(row, col);
+                cells[row][col] = value != null ? value.toString() : "<null>";
+                columnWidth[col] = Math.max(columnWidth[col], cells[row][col].length());
+                maxColumnWidth = Math.max(maxColumnWidth, columnWidth[col]);
+            }
+        }
+        StringBuilder columnLine = new StringBuilder();
+        while (columnLine.length()+2 < maxColumnWidth) {
+            columnLine.append("----------------------");
+        }
+        String columnPadding = String.format("%"+Integer.toString(maxColumnWidth)+"s", "");
+        StringBuilder sb = new StringBuilder();
+        sb.append("+");
+        for (int col=0; col < bean.numColumns(); col++) {
+            sb.append(columnLine.substring(0,columnWidth[col]+2));
+            sb.append("+");
+            if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+        }
+        for (int row=0; row < bean.numRows(); row++) {
+            sb.append("|");
+            for (int col=0; col < bean.numColumns(); col++) {
+                sb.append(" ");
+                sb.append((cells[row][col]+columnPadding).substring(0,columnWidth[col]));
+                sb.append(" |");
+                if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+            }
+            sb.append("+");
+            for (int col=0; col < bean.numColumns(); col++) {
+                sb.append(columnLine.substring(0,columnWidth[col]+2));
+                sb.append("+");
+                if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+            }
+        }
+        return sb.toString();
     }
 
     @Override
