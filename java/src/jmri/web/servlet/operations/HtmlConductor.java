@@ -127,14 +127,14 @@ public class HtmlConductor extends HtmlTrainCommon {
         if (work) {
             if (!train.isShowArrivalAndDepartureTimesEnabled()) {
                 builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
-            } else if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+            } else if (routeLocation == train.getTrainDepartsRouteLocation()) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName, train  // NOI18N
                         .getFormatedDepartureTime())); // NOI18N
             } else if (!routeLocation.getDepartureTime().equals("")) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName,  // NOI18N
                         routeLocation.getFormatedDepartureTime())); // NOI18N
             } else if (Setup.isUseDepartureTimeEnabled()
-                    && routeLocation != train.getRoute().getTerminatesRouteLocation()
+                    && routeLocation != train.getTrainTerminatesRouteLocation()
                     && !train.getExpectedDepartureTime(routeLocation).equals(Train.ALREADY_SERVICED)) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName, train  // NOI18N
                         .getExpectedDepartureTime(routeLocation)));
@@ -162,7 +162,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         // engine change or helper service?
         builder.append(this.getEngineChanges(routeLocation));
 
-        if (routeLocation != train.getRoute().getTerminatesRouteLocation()) {
+        if (routeLocation != train.getTrainTerminatesRouteLocation()) {
             if (work) {
                 if (!Setup.isPrintLoadsAndEmptiesEnabled()) {
                     // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
@@ -184,7 +184,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 if (routeLocation.getComment().trim().isEmpty()) {
                     // no route comment, no work at this location
                     if (train.isShowArrivalAndDepartureTimesEnabled()) {
-                        if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+                        if (routeLocation == train.getTrainDepartsRouteLocation()) {
                             builder.append(String.format(locale, strings
                                     .getProperty("NoScheduledWorkAtWithDepartureTime"), routeLocationName, train  // NOI18N
                                     .getFormatedDepartureTime()));
@@ -211,7 +211,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                         }
                     }
                     if (train.isShowArrivalAndDepartureTimesEnabled()) {
-                        if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+                        if (routeLocation == train.getTrainDepartsRouteLocation()) {
                             builder.append(String.format(locale, strings
                                     .getProperty("CommentAtWithDepartureTime"), routeLocationName, train // NOI18N
                                     .getFormatedDepartureTime(), StringEscapeUtils

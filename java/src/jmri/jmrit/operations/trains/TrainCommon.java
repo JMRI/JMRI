@@ -214,12 +214,11 @@ public class TrainCommon {
      * @param file        Manifest or switch list File
      * @param train       The train being printed.
      * @param carList     List of cars for this train
-     * @param routeList   The train's list of RouteLocations
      * @param rl          The RouteLocation being printed
      * @param printHeader True if new location.
      * @param isManifest  True if manifest, false if switch list.
      */
-    protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList,
+    protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList,
             RouteLocation rl, boolean printHeader, boolean isManifest) {
         if (printHeader) {
             printPickupHeader = true;
@@ -236,10 +235,10 @@ public class TrainCommon {
             }
             trackNames.add(splitString(track.getName())); // use a track name
                                                           // once
-            // block pick up cars by destination
+            // block pick up cars
             // except for passenger cars
             boolean found = false; // begin blocking at rl
-            for (RouteLocation rld : routeList) {
+            for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 if (rld != rl && !found) {
                     continue;
                 }
@@ -255,7 +254,7 @@ public class TrainCommon {
                     if (car.getRouteLocation() == rl &&
                             car.getTrack() != null &&
                             ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
-                                    (rld == routeList.get(routeList.size() - 1) &&
+                                    (rld == train.getTrainTerminatesRouteLocation() &&
                                             (car.isCaboose() || car.hasFred())) ||
                                     (car.isPassenger() && isOnlyPassenger))) {
                         // determine if header is to be printed
@@ -353,16 +352,16 @@ public class TrainCommon {
 
     /**
      * Produces a two column format for car pick ups and set outs. Sorted by track
-     * and then by destination. This routine is used for the "Two Column" format.
+     * and then by blocking order. This routine is used for the "Two Column" format.
      *
      * @param file        Manifest or switch list File
+     * @param train       The train
      * @param carList     List of cars for this train
-     * @param routeList   The train's list of RouteLocations
      * @param rl          The RouteLocation being printed
      * @param printHeader True if new location.
      * @param isManifest  True if manifest, false if switch list.
      */
-    protected void blockCarsTwoColumn(PrintWriter file, List<Car> carList, List<RouteLocation> routeList,
+    protected void blockCarsTwoColumn(PrintWriter file, Train train, List<Car> carList,
             RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
         int lineLength = getLineLength(isManifest);
@@ -377,9 +376,9 @@ public class TrainCommon {
                 continue;
             }
             trackNames.add(splitString(track.getName())); // use a track name once
-            // block car pick ups by destination
+            // block car pick ups
             boolean found = false; // begin blocking at rl
-            for (RouteLocation rld : routeList) {
+            for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 if (rld != rl && !found) {
                     continue;
                 }
@@ -389,7 +388,7 @@ public class TrainCommon {
                     if (car.getTrack() != null &&
                             car.getRouteLocation() == rl &&
                             ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
-                                    (rld == routeList.get(routeList.size() - 1) &&
+                                    (rld == train.getTrainTerminatesRouteLocation() &&
                                             (car.isCaboose() || car.hasFred())))) {
                         if (Setup.isSortByTrackNameEnabled() &&
                                 !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
@@ -452,13 +451,13 @@ public class TrainCommon {
      * format. This routine is used to generate the "Two Column by Track" format.
      *
      * @param file        Manifest or switch list File
+     * @param train       The train
      * @param carList     List of cars for this train
-     * @param routeList   The train's list of RouteLocations
      * @param rl          The RouteLocation being printed
      * @param printHeader True if new location.
      * @param isManifest  True if manifest, false if switch list.
      */
-    protected void blockCarsByTrackNameTwoColumn(PrintWriter file, List<Car> carList, List<RouteLocation> routeList,
+    protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList,
             RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
         List<Track> tracks = rl.getLocation().getTracksByNameList(null);
@@ -473,9 +472,9 @@ public class TrainCommon {
             if (trackNames.contains(trackName)) {
                 continue;
             }
-            // block car pick ups by destination
+            // block car pick ups
             boolean found = false; // begin blocking at rl
-            for (RouteLocation rld : routeList) {
+            for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 if (rld != rl && !found) {
                     continue;
                 }
@@ -485,7 +484,7 @@ public class TrainCommon {
                             car.getRouteLocation() == rl &&
                             trackName.equals(splitString(car.getTrackName())) &&
                             ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
-                                    (rld == routeList.get(routeList.size() - 1) &&
+                                    (rld == train.getTrainTerminatesRouteLocation() &&
                                             (car.isCaboose() || car.hasFred())))) {
                         if (!trackNames.contains(trackName)) {
                             printTrackNameHeader(file, trackName, isManifest);
