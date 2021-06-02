@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.TableRowOrColumn;
+
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import java.util.Map;
@@ -303,35 +305,6 @@ public class TableForEach extends AbstractDigitalAction
     }
 
 
-    public enum TableRowOrColumn {
-        Row(Bundle.getMessage("TableForEach_TableRowOrColumn_Row"),
-            Bundle.getMessage("TableForEach_TableRowOrColumn_Row_lowercase")),
-        Column(Bundle.getMessage("TableForEach_TableRowOrColumn_Column"),
-            Bundle.getMessage("TableForEach_TableRowOrColumn_Column_lowercase"));
-        
-        private final String _text;
-        private final String _textLowerCase;
-        
-        private TableRowOrColumn(String text, String textLowerCase) {
-            this._text = text;
-            this._textLowerCase = textLowerCase;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
-        public String toStringLowerCase() {
-            return _textLowerCase;
-        }
-        
-        public TableRowOrColumn getOpposite() {
-            if (this == Row) return Column;
-            else return Row;
-        }
-    }
-    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEach.class);
 
 }

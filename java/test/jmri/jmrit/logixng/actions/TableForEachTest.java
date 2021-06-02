@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.TableRowOrColumn;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -236,7 +238,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                         .loadTableFromCSV("program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         
         _tableForEach.setTable(csvTable);
-        _tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        _tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
         _tableForEach.setRowOrColumnName("1");
         _tableForEach.setLocalVariableName("MyVariable");
         _logixNG.setEnabled(true);

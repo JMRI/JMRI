@@ -10,7 +10,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanType;
+import jmri.jmrit.logixng.actions.NamedBeanType;
 
 import org.jdom2.Element;
 
