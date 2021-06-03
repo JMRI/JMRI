@@ -46,6 +46,8 @@
         <li><a href="chapter2.shtml">Chapter 2 - The clipboard</a></li>
         <li><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></li>
         <li><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></li>
+        <li><a href="chapter5.shtml">Chapter 5 - Action Items</a></li>
+        <li><a href="chapter6.shtml">Chapter 6 - Expression Items</a></li>
       </ul>
 <hr>
 
@@ -65,11 +67,11 @@
 <!-- <a href="chapter3.html">Chapter 3 - Basic actions and expressions</a> -->
 <!-- <a href="chapter3.html">Chapter 3 - Initialization</a> -->
 <p>
-<a href="chapter4.html" style="text-decoration: line-through;">Chapter 4 - Working with timers</a>
+<!-- <a href="chapter4.html" style="text-decoration: line-through;">Chapter 4 - Working with timers</a> -->
 <p>
-<a href="chapter5.html" style="text-decoration: line-through;">Chapter 5 - Controlling an engine</a>
+<!-- <a href="chapter5.html" style="text-decoration: line-through;">Chapter 5 - Controlling an engine</a> -->
 <p>
-<a href="chapter6.html">Chapter 6 - Formula</a>
+<!-- <a href="chapter6.html">Chapter 6 - Formula</a> -->
 <p>
 <a href="chapter7.html">Chapter 7 - Sequence - controlling a crane and a loco</a>
 <p>

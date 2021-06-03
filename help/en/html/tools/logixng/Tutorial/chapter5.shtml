@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 5</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 5</h1>
+
+      <h2>Action Items</h2>
+
+        <p>The dialog for adding and editing actions consists of an upper part that
+        contains the item and the actions for that item.  The lower part is common
+        to all actions.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter5/typical_action.png">
+        <img src="images/chapter5/typical_action.png"
+        alt="Chapter 5 typical action" width="922" height="270">
+        </a>
+        </div>
+
+        <p>The <strong>Edit</strong> screen is the same except for the title, the Create
+        button and the current content will be in the fields.</p>
+
+        <p>The left section is normally used to select the item, such as a turnout or
+        a sensor.  The right section is the action to be performed.  The default mode
+        will be to use the <strong>Direct</strong> tabs.</p>
+
+        <p><strong>Reference</strong>, <strong>Local Variable</strong> and <strong>Formula
+        </strong> tabs will be explained in later chapters.</p>
+
+        <p>The lower section contains a standard set of items</p>
+
+        <dl>
+          <dt>Error Handling</dt>
+          <dd>If <strong>Use default</strong> is selected, the value in
+          <a href="../LogixNG.shtml#preferences">Preference</a> will be used.  The other
+          options are the same.</dd>
+
+          <dt>Catch "Abort execution"</dt>
+          <dd> === unknown === </dd>
+
+          <dt>Edit comment</dt>
+          <dd>Each action can have a comment.  The comment dialog has a multiline text
+          area.  Click <strong>OK</strong> to save the comment.</dd>
+
+          <dt>Formula functions</dt>
+          <dd>These will be explained in the Formula chapter.<dd>
+
+          <dt>Cancel</dt>
+          <dd>Close the dialog without applying any changes.<dd>
+
+          <dt>Create/OK</dt>
+          <dd>Save the new action or the changes to an existing action.<dd>
+        </dl>
+
+        <h3>Action Items List</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/action_list.png">
+          <img src="images/chapter5/action_list.png"
+          alt="Chapter 5 action item list" width="259" height="399">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Block</dt>
+            <dt>Clock</dt>
+            <dt>Enable/Disable Logix</dt>
+            <dt>Entry/Exit</dt>
+            <dt>Light</dt>
+            <dt>Local variable</dt>
+            <dt>Memory</dt>
+            <dt>OBlock</dt>
+            <dt>Power</dt>
+            <dt>Route</dt>
+            <dt>Script</dt>
+            <dt>Sensor</dt>
+            <dt>Signal head</dt>
+            <dt>Signal mast</dt>
+            <dt>Throttle</dt>
+            <dt>Turnout</dt>
+            <dt>Turnout, lock</dt>
+            <dt>Warrant</dt>
+          </dl>
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="chapter6.shtml">Chapter 6 - Expression Items</a></span></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>

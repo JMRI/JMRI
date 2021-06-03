@@ -133,9 +133,9 @@
               socket names and also works with numbers and strings.</em></dd>
             <dt>Digital Formula</dt>
               <dd>Formula is the next generation of Antecedent. It supports many operators,
-              like ==, !=, <=, >=, <, >, +, -, *, / and %. It supports local variables,
-              memories and functions. It supports all the types of expressions, digital,
-              analog and string expressions.</dd>
+              like ==, !=, &lt;=, >=, &lt;, >, +, -, *, / and %. It
+              supports local variables, memories and functions. It supports all the types
+              of expressions, digital, analog and string expressions.</dd>
             <dt>Not</dt>
             <dt>Or</dt>
               <dd>Or evaluates the child expressions and if at least one of them returns
