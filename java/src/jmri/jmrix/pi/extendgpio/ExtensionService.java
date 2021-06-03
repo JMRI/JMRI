@@ -18,8 +18,10 @@ import java.util.ServiceLoader;
 import jmri.Sensor;
 
 /**
- *
- * @author dmj
+ * ExtensionService - Handle the loading of Raspberry Pi GPIO extensions
+ *                    such as MCP23017GpioExtension
+ * 
+ * @author Dave Jordan
  */
 public class ExtensionService {
     private static ExtensionService service;
@@ -28,10 +30,16 @@ public class ExtensionService {
     private static ArrayList<String> gpioExtensionNames = new ArrayList<String> ();
     private static ArrayList<GpioExtension> gpioExtensions = new ArrayList<GpioExtension> ();
 
-    private static GpioExtension getExtension (String ExtensionName) { // throws Exception {
+    /**
+     * Find an extension based on the extension name
+     * 
+     * @param extensionName is the name of the extension to be located
+     * @return The extension or null if an extension could not be found
+     */
+     private static GpioExtension getExtension (String extensionName) { // throws Exception {
         int exIndex = -1;
         if (! gpioExtensionNames.isEmpty ()) {
-            exIndex = gpioExtensionNames.indexOf (ExtensionName);
+            exIndex = gpioExtensionNames.indexOf (extensionName);
         }
         if (exIndex >= 0) {
             return gpioExtensions.get(exIndex);
@@ -40,8 +48,8 @@ public class ExtensionService {
             Iterator<GpioExtension> extensions = loader.iterator();
             while (extensions.hasNext()) {
                 GpioExtension ex = extensions.next ();
-                if (ExtensionName.equals (ex.getExtensionName ())) {
-                    gpioExtensionNames.add (ExtensionName);
+                if (extensionName.equals (ex.getExtensionName ())) {
+                    gpioExtensionNames.add (extensionName);
                     gpioExtensions.add (ex);
                     return ex;
                 }
@@ -56,6 +64,11 @@ public class ExtensionService {
         loader = ServiceLoader.load(GpioExtension.class);
     }
     
+    /**
+     * Maintain a single instance of the extension loading service
+     * 
+     * @return The extension loading service
+     */
     public static synchronized ExtensionService getInstance() {
         if (service == null) {
             service = new ExtensionService();
@@ -63,13 +76,12 @@ public class ExtensionService {
         return service;
     }
     
-//    public String getExtensionName () {
-//        return 
-//    }
-//    public String validateSystemNameFormat (String systemName);
-//    public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName);
-//    public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName);
-//    public Sensor.PullResistance [] getPullResistances ();
+    /**
+     * Find an extension based on the pin's system name
+     * 
+     * @param systemName is the name to be validated
+     * @return The extension or null if an extension could not be found
+     */
     public static GpioExtension getExtensionFromSystemName (String systemName) { // throws Exception {
         String tokens[] = systemName.split (":");
         if (tokens.length < 2) {
@@ -78,10 +90,11 @@ public class ExtensionService {
         return (getExtension (tokens[1]));
     }
 
-        /**
-     * Validate the format of a system name
+    /**
+     * Validate the format of a system name.  This mostly checks that an appropriate
+     * extension can be found.
      * 
-     * @param SystemName is the name to be validated
+     * @param systemName is the name to be validated
      * @return The validated system name or null if the name could not be validated.
      */
     public static String validateSystemNameFormat (String systemName) {
