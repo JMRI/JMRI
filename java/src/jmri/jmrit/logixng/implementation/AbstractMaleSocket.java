@@ -192,12 +192,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     @Override
     public boolean getListen() {
+        if (getObject() instanceof MaleSocket) {
+            return ((MaleSocket)getObject()).getListen();
+        }
         return _listen;
     }
 
     @Override
     public void setListen(boolean listen)
     {
+        if (getObject() instanceof MaleSocket) {
+            ((MaleSocket)getObject()).setListen(listen);
+        }
         _listen = listen;
     }
 

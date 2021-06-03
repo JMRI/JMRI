@@ -411,8 +411,6 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadSensorType", cv.getType().toString()));
         }
 
-        expression.setTriggerOnChange(cv.doTriggerActions());
-
         return expression;
     }
 
@@ -445,8 +443,6 @@ public class ImportConditional {
                 throw new InvalidConditionalVariableException(
                         Bundle.getMessage("ConditionalBadTurnoutType", cv.getType().toString()));
         }
-
-        expression.setTriggerOnChange(cv.doTriggerActions());
 
         return expression;
     }
@@ -521,7 +517,6 @@ public class ImportConditional {
         }
 
         expression.setListenToOtherMemory(false);
-        expression.setTriggerOnChange(cv.doTriggerActions());
 
         return expression;
     }
@@ -555,8 +550,6 @@ public class ImportConditional {
                 throw new InvalidConditionalVariableException(
                         Bundle.getMessage("ConditionalBadLightType", cv.getType().toString()));
         }
-
-        expression.setTriggerOnChange(cv.doTriggerActions());
 
         return expression;
     }
@@ -626,8 +619,6 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadSignalHeadType", cv.getType().toString()));
         }
 
-        expression.setTriggerOnChange(cv.doTriggerActions());
-
         isNegated.set(false);   // We have already handled this
 
         return expression;
@@ -666,8 +657,6 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadSignalMastType", cv.getType().toString()));
         }
 
-        expression.setTriggerOnChange(cv.doTriggerActions());
-
         isNegated.set(false);   // We have already handled this
 
         return expression;
@@ -703,8 +692,6 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadEntryExitType", cv.getType().toString()));
         }
 
-        expression.setTriggerOnChange(cv.doTriggerActions());
-
         return expression;
     }
 
@@ -738,8 +725,6 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadConditionalType", cv.getType().toString()));
         }
 
-        expression.setTriggerOnChange(cv.doTriggerActions());
-
         return expression;
     }
 
@@ -766,8 +751,6 @@ public class ImportConditional {
 
         expression.setType(ExpressionClock.Type.FastClock);
         expression.setRange(ConditionalVariable.fixMidnight(cv.getNum1()), ConditionalVariable.fixMidnight(cv.getNum2()));
-
-        expression.setTriggerOnChange(cv.doTriggerActions());
 
         return expression;
     }
@@ -811,8 +794,6 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadWarrantType", cv.getType().toString()));
         }
 
-        expression.setTriggerOnChange(cv.doTriggerActions());
-
         return expression;
     }
 
@@ -841,7 +822,6 @@ public class ImportConditional {
 
         expression.setOBlock(b);
         expression.setBeanState(oblockStatus);
-        expression.setTriggerOnChange(cv.doTriggerActions());
 
         return expression;
     }
@@ -1050,9 +1030,6 @@ public class ImportConditional {
                 throw new InvalidConditionalVariableException(
                         Bundle.getMessage("ActionBadTurnoutType", ca.getType().toString()));
         }
-
-//        ca.getActionData();
-//        action.setTriggerOnChange(ca.doTriggerActions());
 
         return action;
     }
