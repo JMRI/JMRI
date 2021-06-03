@@ -25,6 +25,18 @@
         <authorinitials>MKZ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2021-05-15</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Clear option to Approach aspectMapping</revremark>
+    </revision> 
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision> 
   </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
@@ -38,7 +50,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -46,7 +58,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -54,7 +66,7 @@
       <show>yellow</show>
       <show>green</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240F-alt.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240F-alt.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -62,7 +74,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240G.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240G.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -70,7 +82,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 53, RULE 240D</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -78,7 +90,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, RULE 240B Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-pbs/rule-240B.gif</imagelink>
     </appearance>
   </appearances>
 
@@ -136,6 +148,7 @@
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Advance Approach Alt</ourAspect>
+      <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
      <aspectMapping>

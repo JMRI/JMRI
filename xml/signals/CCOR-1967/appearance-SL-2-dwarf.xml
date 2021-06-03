@@ -54,6 +54,12 @@
         <authorinitials>MKZ</authorinitials>
         <revremark>added Flashing Stop and Proceed Div to Flashing Stop and Proceed aspectMapping</revremark>
     </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
@@ -67,7 +73,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -75,7 +81,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Page 54, RULE 240F Fig.5</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -83,7 +89,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 54, RULE 240G Fig.4</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240G.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240G.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -91,7 +97,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Page 54, RULE 240M Fig.3</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240M.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240M.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -99,7 +105,7 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Page 54, RULE 240K Fig.3</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240K.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240K.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -107,7 +113,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240L.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240L.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -115,7 +121,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -124,7 +130,7 @@
       <show>red</show>
       <reference>Page 55, Rule 240N Fig.6</reference>
       <comment>Lunar aspect for upper head in route-signal system</comment>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240N-lunar.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240N-lunar.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -133,7 +139,7 @@
       <show>lunar</show>
       <reference>Page 55, Rule 240N Fig.5</reference>
       <comment>Lunar aspect for lower head in route-signal system</comment>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240N-lunarDiv.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240N-lunarDiv.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -141,7 +147,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Page 53, Rule 240C</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -149,7 +155,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Page 53, Rule 240C</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -157,7 +163,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, Rule 240A Fig.5</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240A.gif</imagelink>
     </appearance>
   </appearances>
 
@@ -170,7 +176,7 @@
     </permissive>
     <held>
       <aspect>Stop</aspect>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240A-held.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240A-held.gif</imagelink>
     </held>
   </specificappearances>
 

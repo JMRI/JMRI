@@ -31,6 +31,12 @@
 		<authorinitials>MKZ</authorinitials>
 		<revremark>added Clear to Approach aspectMapping</revremark>
 		</revision>
+    <revision>
+		<revnumber>2</revnumber>
+		<date>2021-05-31</date>
+		<authorinitials>MKZ</authorinitials>
+		<revremark>fix imagelink directory</revremark>
+		</revision>
   </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
@@ -44,7 +50,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Page 53, Rule 240E</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -52,7 +58,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Page 54, Rule 240F</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -60,7 +66,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 54, Rule 240G</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240G.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240G.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -68,7 +74,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 53, Rule 240D</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -76,7 +82,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Page 55, Rule 240N</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240N-yellow.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240N-yellow.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -84,7 +90,7 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Page 55, Rule 240N</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240N-lunar.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240N-lunar.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -92,7 +98,7 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Page 55, Rule 240N</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240N-lunar.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240N-lunar.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -100,7 +106,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Page 53, RULE 240C</reference>
-	<imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240C.gif</imagelink>
+	<imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -108,7 +114,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Page 53, RULE 240C Fig.3</reference>
-	<imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240C.gif</imagelink>
+	<imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -116,7 +122,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, RULE 240A</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240A.gif</imagelink>
     </appearance>
   </appearances>
 
@@ -129,7 +135,7 @@
     </permissive>
     <held>
       <aspect>Stop</aspect>
-	<imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240A-held.gif</imagelink>
+	<imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-low/rule-240A-held.gif</imagelink>
     </held>
   </specificappearances>
 

@@ -10,13 +10,13 @@
     <year>2019</year>
 	<holder>JMRI</holder>
   </copyright>
-
+  
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-
+  
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>
+    </author>    
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -32,13 +32,19 @@
         <authorinitials>MKZ</authorinitials>
         <revremark>fix Approach aspect mapping</revremark>
     </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision>
  </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
   <name>Triple head signal</name>
   <reference>As described in The Consolidated Code of Operating Rules, Edition of 1967. Pages 53-55</reference>
   <description>Appearances for a three-head absolute block signal</description>
-
+  
   <appearances>
 
     <appearance>
@@ -47,7 +53,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, RULE 240E</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -56,7 +62,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 54, RULE 240F Fig.4</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -65,7 +71,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Page 54, RULE 240F Fig.10</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240F-alt.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240F-alt.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -74,7 +80,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 54, RULE 240G Fig.3</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240G.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240G.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -84,7 +90,7 @@
       <show>red</show>
       <reference>Page 54, RULE 240M Fig.2</reference>
       <reference>Diverging aspect for medium-speed route</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240M.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240M.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -94,7 +100,7 @@
       <show>green</show>
       <reference>Page 54, RULE 240M Fig.4</reference>
       <reference>Diverging aspect for low-speed route</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240M-alt.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240M-alt.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -103,7 +109,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Page 54, RULE 240K Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240K.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240K.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -112,7 +118,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 54, RULE 240L Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240L.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240L.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -121,7 +127,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, RULE 240D Fig.4</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -131,7 +137,7 @@
       <show>yellow</show>
       <reference>Page 55, RULE 240N</reference>
       <reference>Restricting aspect with lower-head yellow displayed</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240N-yellow.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240N-yellow.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -141,7 +147,7 @@
       <show>lunar</show>
       <reference>Page 55, RULE 240N</reference>
       <reference>Restricting aspect with lower Lunar displayed</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240N-lunar.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240N-lunar.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -151,7 +157,7 @@
       <show>lunar</show>
       <reference>Page 55, RULE 240N</reference>
       <reference>Duplicate aspect due to route-signaling system</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240N-lunar.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240N-lunar.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -160,7 +166,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -170,7 +176,7 @@
       <show>flashred</show>
       <reference>Page 53</reference>
       <reference>Duplicate aspect due to route-signaling system</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -179,7 +185,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, RULE 240A Fig.4</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240A.gif</imagelink>
     </appearance>
   </appearances>
 
@@ -192,7 +198,7 @@
     </permissive>
     <held>
       <aspect>Stop</aspect>
-	 <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240A-held.gif</imagelink>
+	 <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-3-high/rule-240A-held.gif</imagelink>
     </held>
   </specificappearances>
 

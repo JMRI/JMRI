@@ -26,10 +26,22 @@
         <revremark>Initial version</revremark>
     </revision>
     <revision>
-        <revnumber>1.1.1</revnumber>
+        <revnumber>1.1</revnumber>
         <date>2020-06-04</date>
         <authorinitials>MKZ</authorinitials>
         <revremark>added Clear and Diverging Clear to Approach aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2021-05-15</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Diverging Clear to Diverging Approach aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
     </revision>
   </revhistory>
 
@@ -45,7 +57,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -53,7 +65,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -61,7 +73,7 @@
       <show>yellow</show>
       <show>green</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240F-alt.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240F-alt.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -69,7 +81,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 54, RULE 240G Fig.1</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240G.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240G.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -77,7 +89,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Page 54, RULE 240M Fig.1</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240M.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240M.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -85,7 +97,7 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Page 54, RULE 240K Fig.1</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240K.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240K.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -93,7 +105,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Page 54, RULE 240L Fig.1</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240L.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240L.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -101,7 +113,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 53, RULE 240D Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -109,7 +121,7 @@
       <show>lunar</show>
       <show>red</show>
       <reference>Page 55, RULE 240N Fig.8</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240N-lunar.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240N-lunar.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -117,7 +129,7 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Page 55, RULE240N Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240N-lunarDiv.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240N-lunarDiv.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -125,7 +137,7 @@
       <show>flashred</show>
       <show>red</show>
       <reference>Page 53, RULE 240C Fig.7</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240C-normal.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240C-normal.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -133,7 +145,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Page 53, RULE240C Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240C-div.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240C-div.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -141,7 +153,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 53, RULE 240A, Fig.2</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240A.gif</imagelink>
     </appearance>
   </appearances>
 
@@ -154,7 +166,7 @@
     </permissive>
     <held>
       <aspect>Stop</aspect>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240A-held.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240A-held.gif</imagelink>
     </held>
   </specificappearances>
 
@@ -205,6 +217,7 @@
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Approach Diverging</ourAspect>
       <ourAspect>Diverging Advance Approach</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
