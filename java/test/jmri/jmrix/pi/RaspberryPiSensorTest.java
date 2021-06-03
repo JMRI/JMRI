@@ -68,7 +68,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     @Test
     @Override
     public void testGetPullResistance(){
-        Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_DOWN, t.getPullResistance());
+        Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_OFF, t.getPullResistance());
     }
 
     private GpioProvider myProvider;
