@@ -18,10 +18,11 @@ import jmri.jmrix.pi.extendgpio.spi.GpioExtension;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- *
- * @author dmj
+ * MCP23017GpioExtension - Provide an interface between JMRI and the Raspberry Pi
+ *                         Pi4j/WiringPi support for the MCP23017 GPIO extender
+ * 
+ * @author Dave Jordan
  */
-
 
 @ServiceProvider(service = GpioExtension.class)
 public class MCP23017GpioExtension implements GpioExtension {
@@ -53,6 +54,11 @@ public class MCP23017GpioExtension implements GpioExtension {
         }
     }
 
+    /*
+    *  Information about specific MCP23017 providers based on I2C bus number
+    *  and device channel number on that I2C bus
+    */
+
     class ProviderElement {
         int busNumber;
         int channelNumber;
@@ -65,7 +71,10 @@ public class MCP23017GpioExtension implements GpioExtension {
         }
     }
 
-    static ArrayList<ProviderElement> elementArray = new ArrayList<ProviderElement>();       // Provider cache
+    /*
+    *  Maintain a cache of Extension providers that have been requested and loaded.
+    */
+    static ArrayList<ProviderElement> elementArray = new ArrayList<ProviderElement>();
 
     /**
      * Look up a bus/channel combination in the cache.  If found, use the cached provider; if not,
@@ -87,13 +96,27 @@ public class MCP23017GpioExtension implements GpioExtension {
         return provider;
     }
 
+    /*
+    *  The MCP23017 chip only supports PULL_UP and OFF
+    */
     static Sensor.PullResistance [] MCP23017PullValues = { Sensor.PullResistance.PULL_UP,
-                                                                Sensor.PullResistance.PULL_OFF };
+                                                           Sensor.PullResistance.PULL_OFF };
 
-    public String  getExtensionName () {
+    /**
+     * Return the name of this extension
+     * 
+     * @return The extension name ("MCP23017")
+     */
+    public String getExtensionName () {
         return "MCP23017";
     }
 
+    /**
+     * Validate a pin SystemName
+     * 
+     * @param systemName The name to be validated
+     * @return The validated system name or null if it could not be validated
+     */
     public String validateSystemNameFormat (String systemName) {
         try {
             ParsedPin pp = new ParsedPin (systemName);
@@ -106,6 +129,13 @@ public class MCP23017GpioExtension implements GpioExtension {
         return null;
     }
 
+    /**
+     * Provision a digital input pin
+     * 
+     * @param gpio The active GPIO Controller 
+     * @param systemName The name of the pin
+     * @return The input pin or null if it could not be provisioned
+     */
     public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName) {
         try {
             ParsedPin pp = new ParsedPin (systemName);
@@ -120,6 +150,13 @@ public class MCP23017GpioExtension implements GpioExtension {
         }
     }
 
+    /**
+     * Provision a digital output pin
+     * 
+     * @param gpio The active GPIO Controller 
+     * @param systemName The name of the pin
+     * @return The output pin or null if it could not be provisioned
+     */
     public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName) {
         try {
             ParsedPin pp = new ParsedPin (systemName);
@@ -133,7 +170,15 @@ public class MCP23017GpioExtension implements GpioExtension {
         }
         return null;
     }
-    
+
+    /**
+     * Get an array of possible input pin pull resistance values
+     * 
+     * @return The array
+     * 
+     * The MCP23017 limits Pull values to either Pull Up or Off, Pull Down is not supported
+     */
+    @Override
     public Sensor.PullResistance [] getAvailablePullValues () {
         return MCP23017PullValues;
     }
