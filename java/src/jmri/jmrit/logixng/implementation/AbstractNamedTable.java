@@ -98,7 +98,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     private static NamedTable loadFromCSV(
             @CheckForNull String systemName, @CheckForNull String userName,
             @Nonnull String fileName,
-            @Nonnull List<String> lines)
+            @Nonnull List<String> lines,
+            boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
         
         NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
@@ -142,54 +143,59 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         }
         
         NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells);
-        manager.register(table);
+        
+        if (registerInManager) manager.register(table);
         
         return table;
     }
     
     @Nonnull
     public static NamedTable loadTableFromCSV_Text(
-            @Nonnull String fileName, @Nonnull String text)
+            @Nonnull String fileName,
+            @Nonnull String text,
+            boolean registerInManager)
             throws BadUserNameException, BadSystemNameException {
         
         List<String> lines = Arrays.asList(text.split("\\r?\\n",-1));
-        return loadFromCSV(null, null, fileName, lines);
+        return loadFromCSV(null, null, fileName, lines, registerInManager);
     }
     
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(@Nonnull String fileName)
+    public static NamedTable loadTableFromCSV_File(
+            @Nonnull String fileName, boolean registerInManager)
             throws BadUserNameException, BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(null, null, fileName, lines);
+        return loadFromCSV(null, null, fileName, lines, registerInManager);
     }
     
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(@Nonnull File file)
+    public static NamedTable loadTableFromCSV_File(
+            @Nonnull File file, boolean registerInManager)
             throws BadUserNameException, BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(null, null, file.getPath(), lines);
+        return loadFromCSV(null, null, file.getPath(), lines, registerInManager);
     }
     
     @Nonnull
     public static NamedTable loadTableFromCSV_File(
             @Nonnull String systemName, @CheckForNull String userName,
-            @Nonnull String fileName)
+            @Nonnull String fileName, boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(systemName, userName, fileName, lines);
+        return loadFromCSV(systemName, userName, fileName, lines, registerInManager);
     }
     
     @Nonnull
     public static NamedTable loadTableFromCSV_File(
             @Nonnull String systemName, @CheckForNull String userName,
-            @Nonnull File file)
+            @Nonnull File file, boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(systemName, userName, file.getPath(), lines);
+        return loadFromCSV(systemName, userName, file.getPath(), lines, registerInManager);
     }
     
     /**

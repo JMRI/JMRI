@@ -12,7 +12,7 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" --> <!-- might be improved to show an Alphabet sidebar + some nav? -->
+    <!--#include virtual="/Sidebar.shtml" --> <!-- might be improved to show an Alphabet sidebar + some nav? -->
     <div id="mainContent">
 
       <h2>Acknowledgements: People who've contributed to JMRI</h2>
@@ -768,7 +768,7 @@
         1980 signal definition</a>, the
         <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>,
         and
-        the <a href="https:/jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
+        the <a href="https://jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
         </li>
 
         <li>Bob McCown, who helped with the migration of the jmriusers list to

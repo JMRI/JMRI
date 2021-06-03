@@ -299,7 +299,7 @@ class Steam1Sound extends EngineSound {
         if ((n != null) && (n.equals("yes"))) {
             is_dynamic_gain = true;
         } else {
-            is_dynamic_gain = false; // Muss das nicht oben stehen (s.a. waiting-active)?
+            is_dynamic_gain = false;
         }
         log.debug("dynamic gain: {}", is_dynamic_gain);
 

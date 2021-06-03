@@ -6,6 +6,10 @@
 # 
 ###############################################################################
 
+import os
+import platform
+from javax.swing import JOptionPane
+
 class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     global trains_dispatched
@@ -596,16 +600,56 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     
     ## ***********************************************************************************            
         
+    def getOperatingSystem(self):
+        #detecting the operating system using `os.name` System property
+        os = java.lang.System.getProperty("os.name")
+        os = os.lower()
+        if "win" in os:
+            return "WINDOWS"
+        elif "nix" in os or "nux" in os or "aix" in os:
+            return "LINUX"
+        elif "mac" in os:
+            return "MAC"
+        return None
+    
+    def speak(self, msg):
+        os = self.getOperatingSystem()
+        if os == "WINDOWS":
+            self.speak_windows(msg)
+        elif os == "LINUX":
+            self.speak_linux(msg)
+        elif os == "MAC":
+            self.speak_mac(msg)
             
-    # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
-    def speak(self,msg) :
-        #if self.logLevel > 1: print("about to speak",msg)
-        #java.lang.Runtime.getRuntime().exec('Z:\\ConfigProfiles\\jython\\sound2\\nircmd speak text "' + msg +'"')    
-        my_dir = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/programs')
-        if self.logLevel > 1: print "nircmd" + my_dir+'/nircmd'
-        java.lang.Runtime.getRuntime().exec(my_dir+'/nircmd speak text "' + msg +'"')
-        return
+    # # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
+    def speak_windows(self,msg) : 
+        try:
+            cmd1 = "Add-Type -AssemblyName System.Speech"
+            cmd2 = '$SpeechSynthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer'
+            cmd3 = "$SpeechSynthesizer.Speak('" + msg + "')"
+            cmd = cmd1 + ";" + cmd2 + ";" + cmd3
+            os.system("powershell " + cmd )
+        except:
+            msg = "Announcements not working \n Only supported on windows versions with powershell and SpeechSynthesizer"
+            JOptionPane.showMessageDialog(None, msg, "Warning", JOptionPane.WARNING_MESSAGE)
+         
+    def speak_mac(self, msg):
+        try:
+            java.lang.Runtime.getRuntime().exec("say {}".format(msg))
+        except:
+            msg = "Announcements not working \n say not working on your Mac"
+            JOptionPane.showMessageDialog(None, msg, "Warning", JOptionPane.WARNING_MESSAGE)
         
+    def speak_linux(self, msg):
+        try:
+            #os.system("""echo %s | spd-say -e -w -t male1""" % (msg,))
+            #os.system("""echo %s | spd-say -e -w -t female3""" % (msg,))
+            #os.system("""echo %s | spd-say -e -w -t child_male""" % (msg,))
+            os.system("""echo %s | spd-say -e -w -t child_female""" % (msg,))  #slightly slower 
+        except:
+            msg = "Announcements not working \n spd-say not set up on your linux system"
+            JOptionPane.showMessageDialog(None, msg, "Warning", JOptionPane.WARNING_MESSAGE)
+               
     def announce(self, fromblockname, toblockname, speak_on, direction, instruction): 
 
         from_station = self.get_station_name(fromblockname)
@@ -639,4 +683,3 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if bell_on == "True":
             snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")
             snd.play(snd)
-

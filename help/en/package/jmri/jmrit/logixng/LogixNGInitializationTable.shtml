@@ -1,10 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-
-<!-- Copyright Dave Sand 2021 -->
-
   <title>JMRI: LogixNG Initialization Table</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng initialization">
@@ -16,15 +13,34 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../../../../html/tools/Sidebar.shtml" -->
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
     <div id="mainContent">
 
       <h1>JMRI: LogixNG Initialization Table</h1>
 
-        <p>Details about using the LogixNG initialization table</p>
+      <p>LogixNG is started after loading the xml data file.  The Initialization table
+      provides a list of LogixNGs that should be run before the rest of them are enabled.
+      This is the same concept used by the LRoute/Logix RTXINITIALIZER.</p>
+
+      <p>The initialization table is at
+      <strong>Tools &rArr; LogixNG &rArr; LogixNG Initialization table</strong>.</p>
+
+      <div style="margin-left: 2em">
+      <a href="images/InitTable.png">
+      <img src="images/InitTable.png"
+      alt="LogixNG Initialization Table" width="688" height="150" >
+      </a>
+      </div>
+
+      <p>Select a LogixNG from the combo box and press <strong>Add Initialization LogixNG</strong>.
+
+      <p>The <strong>Delete</strong> button will remove the entry.  The
+      <strong>Move up</strong> and <strong>Move down</strong> buttons are used to change
+      execution sequence for the LogixNGs.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

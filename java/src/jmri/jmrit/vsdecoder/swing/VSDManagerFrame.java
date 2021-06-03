@@ -268,7 +268,7 @@ public class VSDManagerFrame extends JmriJFrame {
         } else {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
-                log.error("Lost context, VSDecoder is null. Quit JMRI and start over. No New Decoder constructed! Address: {}, profile: {}, ",
+                log.error("Lost context, VSDecoder is null. Quit JMRI and start over. No New Decoder constructed! Address: {}, profile: {}",
                         config.getLocoAddress(), config.getProfileName());
                 return;
             }

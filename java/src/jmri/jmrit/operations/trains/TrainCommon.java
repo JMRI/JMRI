@@ -376,8 +376,7 @@ public class TrainCommon {
             if (trackNames.contains(splitString(track.getName()))) {
                 continue;
             }
-            trackNames.add(splitString(track.getName())); // use a track name
-                                                          // once
+            trackNames.add(splitString(track.getName())); // use a track name once
             // block car pick ups by destination
             boolean found = false; // begin blocking at rl
             for (RouteLocation rld : routeList) {
@@ -408,8 +407,8 @@ public class TrainCommon {
                             s = pickupCar(car, isManifest, !IS_TWO_COLUMN_TRACK).trim();
                         }
                         s = padAndTruncate(s, lineLength / 2);
-                        s = formatColorString(s, Setup.getPickupColor());
                         if (car.isLocalMove()) {
+                            s = formatColorString(s, Setup.getLocalColor());
                             String sl = appendSetoutString(s, carList, car.getRouteDestination(), car, isManifest,
                                     !IS_TWO_COLUMN_TRACK);
                             // check for utility car, and local route with two
@@ -423,6 +422,7 @@ public class TrainCommon {
                                 s = padAndTruncate(s + VERTICAL_LINE_CHAR, getLineLength(isManifest));
                             }
                         } else {
+                            s = formatColorString(s, Setup.getPickupColor());
                             s = appendSetoutString(s, carList, rl, true, isManifest, !IS_TWO_COLUMN_TRACK);
                         }
                         addLine(file, s);
@@ -437,8 +437,8 @@ public class TrainCommon {
             String s = padString("", lineLength / 2);
             s = appendSetoutString(s, carList, rl, false, isManifest, !IS_TWO_COLUMN_TRACK);
             String test = s.trim();
-            if (test.length() > 1) // null line contains |
-            {
+            // null line contains |
+            if (test.length() > 1) {
                 addLine(file, s);
             }
         }
@@ -503,7 +503,7 @@ public class TrainCommon {
                             s = pickupCar(car, isManifest, IS_TWO_COLUMN_TRACK).trim();
                         }
                         s = padAndTruncate(s, getLineLength(isManifest) / 2);
-                        s = formatColorString(s, Setup.getPickupColor());
+                        s = formatColorString(s, car.isLocalMove()? Setup.getLocalColor() : Setup.getPickupColor());
                         s = appendSetoutString(s, trackName, carList, rl, isManifest, IS_TWO_COLUMN_TRACK);
                         addLine(file, s);
                     }
@@ -633,7 +633,7 @@ public class TrainCommon {
         }
 
         dropText = padAndTruncate(dropText.trim(), getLineLength(isManifest) / 2 - 1);
-        dropText = formatColorString(dropText, Setup.getDropColor());
+        dropText = formatColorString(dropText, car.isLocalMove()? Setup.getLocalColor(): Setup.getDropColor());
         return s + VERTICAL_LINE_CHAR + dropText;
     }
 

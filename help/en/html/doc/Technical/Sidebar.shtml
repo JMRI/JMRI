@@ -6,7 +6,7 @@
         <div style="text-align: center">Code documentation</div>
         <dl>
 
-      <dt><h3>Development Tools</h3></dt>
+      <dt class="dtheader">Development Tools</dt>
       <dd>
             <ul class="navigation">
               <li>Code/Help Repository:
@@ -29,7 +29,7 @@
             </ul>
         </dd>
 
-      <dt><h3>Code Structure</h3></dt>
+      <dt class="dtheader">Code Structure</dt>
         <dd>
             <ul class="navigation">
             <li><a href="IntroStructure.shtml">Introduction</a></li>
@@ -47,7 +47,7 @@
                 <li><a href="XmlView.shtml">XSLT Formatting</a></li>
                 </ul>
             <li><a href="WebSite.shtml">Web Site</a></li>
-            
+
             <li><a href="/JavaDoc/doc/">Javadocs</a>
                 <ul class="navigation">
                 <li><a href="/JavaDoc/doc/index-files/index-1.html">Name Index</a></li>
@@ -57,7 +57,7 @@
             </ul>
         </dd>
 
-        <dt><h3>Techniques and Standards</h3></dt>
+        <dt class="dtheader">Techniques and Standards</dt>
         <dd>
             <ul class="navigation">
             <li><a href="RP.shtml">Recommended Practices</a></li>
@@ -73,7 +73,7 @@
             </ul>
         </dd>
 
-        <dt><h3>Help and Web Site</h3></dt>
+        <dt class="dtheader">Help and Web Site</dt>
         <dd>
             <ul class="navigation">
             <li><a href="Help.shtml">Providing Help using JavaHelp</a></li>
@@ -84,7 +84,7 @@
             </ul>
         </dd>
 
-        <dt><h3>How To</h3></dt>
+        <dt class="dtheader">How To</dt>
         <dd>
             <ul class="navigation">
             <li><a href="plugins.shtml">Extend JMRI</a></li>
@@ -93,7 +93,7 @@
             </ul>
         </dd>
 
-        <dt><h3>Functional Info</h3></dt>
+        <dt class="dtheader">Functional Info</dt>
         <dd>
             <ul class="navigation">
             <li><a href="TurnoutFeedback.shtml">Turnout Feedback</a></li>
@@ -102,7 +102,7 @@
             </ul>
         </dd>
 
-        <dt><h3>Background Info</h3></dt>
+        <dt class="dtheader">Background Info</dt>
         <dd>
             <ul class="navigation">
             <li><a href="TechRoadMap.shtml">Technology Roadmap</a></li>
@@ -111,9 +111,9 @@
             </ul>
         </dd>
     </dl>
-    
+
     <!--#include virtual="../../../parts/SidebarTail.shtml" -->
-    
+
     </div> <!-- closes #side -->
 <!-- button is in /Header -->
 <script src="/js/side.js"></script>
