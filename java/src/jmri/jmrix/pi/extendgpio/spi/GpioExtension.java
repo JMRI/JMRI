@@ -5,20 +5,60 @@
  */
 package jmri.jmrix.pi.extendgpio.spi;
 
-import com.pi4j.io.gpio.*;
-
 import jmri.spi.JmriServiceProviderInterface;
-
 import jmri.Sensor;
 
+import com.pi4j.io.gpio.*;
+
 /**
- *
- * @author dmj
+ * GpioExtension - Interface to be implemented by Raspberry Pi GPIO extensions
+ *                 such as MCP23017GpioExtension
+ * 
+ * @author Dave Jordan
  */
 public interface GpioExtension extends JmriServiceProviderInterface {
+
+    /**
+     * Get the name of this extension
+     * 
+     * @return The name
+     */
     public String getExtensionName ();
+
+    /**
+     * Validate a pin SystemName
+     * 
+     * @param systemName The name to be validated
+     * @return The validated system name or null if it could not be validated
+     */
     public String validateSystemNameFormat (String systemName);
+    
+    /**
+     * Provision a digital input pin
+     * 
+     * @param gpio The active GPIO Controller 
+     * @param systemName The name of the pin
+     * @return The input pin or null if it could not be provisioned
+     */
     public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName);
+    
+    /**
+     * Provision a digital output pin
+     * 
+     * @param gpio The active GPIO Controller 
+     * @param systemName The name of the pin
+     * @return The output pin or null if it could not be provisioned
+     */
     public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName);
-    public Sensor.PullResistance [] getAvailablePullValues ();
+    
+    /**
+     * Get an array of possible input pin pull resistance values
+     * 
+     * @return The array
+     * 
+     * The default implementation returns all values from Sensor.PullResistnace
+     */
+    default public Sensor.PullResistance [] getAvailablePullValues () {
+        return Sensor.PullResistance.values();
+    }
 }
