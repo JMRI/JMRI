@@ -10,13 +10,13 @@
     <year>2019</year>
 	<holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-  
+
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -44,7 +44,7 @@
   <name>Triple head signal</name>
   <reference>As described in The Consolidated Code of Operating Rules, Edition of 1967. Pages 53-55</reference>
   <description>Appearances for a three-head absolute block signal</description>
-  
+
   <appearances>
 
     <appearance>
