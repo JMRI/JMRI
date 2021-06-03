@@ -40,7 +40,7 @@
 
         <dt>Print error handling</dt>
         <dd>LogixNG has several methods for handling errors.  The assigned method can be
-        included in the report.  It will appear on the line following 3 colons.  For
+        included in the report.  It will appear on the line following three colons.  For
         example:   <em>Sensor Sensor 1 is Active ::: Use default</em>.</dd>
 
         <dt>Print not connected sockets</dt>

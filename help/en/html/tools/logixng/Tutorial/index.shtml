@@ -45,17 +45,24 @@
         <li><a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a></li>
         <li><a href="chapter2.shtml">Chapter 2 - The clipboard</a></li>
         <li><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></li>
+        <li><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></li>
       </ul>
 <hr>
 
+<hr>
+<hr>
+<hr>
+
+<h3>Ignore -- WIP</h3>
+
 <p>
 
 <p>
-<a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a>
+<!-- <a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a> -->
 <p>
 <a href="chapter2.html">Chapter 2 - The clipboard</a>
 <p>
-<a href="chapter3.html">Chapter 3 - Basic actions and expressions</a>
+<!-- <a href="chapter3.html">Chapter 3 - Basic actions and expressions</a> -->
 <!-- <a href="chapter3.html">Chapter 3 - Initialization</a> -->
 <p>
 <a href="chapter4.html" style="text-decoration: line-through;">Chapter 4 - Working with timers</a>

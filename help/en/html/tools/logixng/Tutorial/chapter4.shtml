@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 4</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 4</h1>
+
+      <h2>Working with sockets</h2>
+
+        <p>The ConditionalNG tree structure is constructed using sockets.  These are used
+        to build the branch and leaf nodes of the tree.  Chapter 1 showed how the nodes
+        were created and linked together.</p>
+
+        <p>The sockets for a particular node depend on the node definition.  The
+        <strong>If Then Else</strong> node has 3 sockets.  The <strong>And</strong> and
+        <strong>More</strong> nodes have an unlimited number of sockets.</p>
+
+        <p>The right click context menu, introduced in chapter 1, is used to manage
+        sockets.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter4/editor_context_menu.png">
+        <img src="images/chapter4/editor_context_menu.png"
+        alt="Chapter 4 editor context menu" width="215" height="434">
+        </a>
+        </div>
+
+        <h3>Rename socket</h3>
+
+          <p>Each row in the tree starts with the socket type and the socket name. See
+          the list at <a href="chapter1#chapter1_socket_types">socket types</a>.</p>
+
+          <p>The names usually reflect their purpose, such as <strong>If</strong> for the
+          beginning of an <strong>If Then Else</strong> group, or <strong>A</strong> for
+          action or <strong>E</strong> for expression.  Some sockets can  occur several times,
+          such a A1, A2 for a series of actions within the <strong>Many</strong> socket.</p>
+
+          <p>When <strong>Rename socket</strong> is selected, the rename dialog will open.
+          Enter the new name and click <strong>OK</strong>.
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter4/rename_socket.png">
+          <img src="images/chapter4/rename_socket.png"
+          alt="Chapter 4 rename socket" width="334" height="93">
+          </a>
+          </div>
+
+        <h3>Add / Edit / Remove</h3>
+
+          <p>When an empty socket is selected, the <strong>Add</strong> menu item will be
+          active.  If the socket is not empty, <strong>Edit</strong> and <strong>Remove</strong>
+          will be active.</p>
+
+          <p><strong>Add</strong> is covered in <a href="chapter1.shtml">chapter 1</a>.
+          <strong>Edit</strong> brings up the dialog that was used to create the row.</p>
+
+          <p><strong>Remove</strong> deletes the row and all of its children after the
+          delete is confirmed.  This is different than the <strong>Cut</strong> menu item
+          which uses the LogixNG <a href="chapter2.shtml">clipboard</a>.<p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter4/remove_confirmation.png">
+          <img src="images/chapter4/remove_confirmation.png"
+          alt="Chapter 4 remove confirmation" width="335" height="126">
+          </a>
+          </div>
+
+        <h3>Cut / Copy / Paste</h3>
+
+          <p>These are covered in <a href="chapter2.shtml">chapter 2 - The clipboard</a>.</p>
+
+        <h3>Remove socket / Insert socket / Move socket</h3>
+
+          <p>When using a multiple socket list like <strong>And</strong> or <strong>Many</strong>,
+          the next socket is added each time an expression or action has been added.  When
+          the list is complete, the empty socket at the end can be left or removed
+          using <strong>Remove socket</strong>.</p>
+
+          <p><strong>Insert</strong> is used to add a new socket at the selected point in
+          the list.</p>
+
+          <p><strong>Move</strong> is used to move a socket up or down.</p>
+
+          <h4>Why?</h4>
+
+            <p>The primary purpose is to re-order the items in a sequence that makes sense.</p>
+
+            <p>An example is to simplify compound logic.  Instead of A and (B or C) and D,
+            change the order to be A and D and (B or C).</p>
+
+            <div style="margin-left: 2em; float: left;">
+            <a href="images/chapter4/move_before.png">
+            <img src="images/chapter4/move_before.png"
+            alt="Chapter 4 move before" width="251" height="171">
+            </a>
+            </div>
+
+            <div style="margin-left: 2em; float: left;">
+            <a href="images/chapter4/move_after.png">
+            <img src="images/chapter4/move_after.png"
+            alt="Chapter 4 move after" width="241" height="168">
+            </a>
+            </div>
+
+            <div style="clear: both"></div>
+
+          <p>An alternative to compound structures is the formula feature which will be
+          covered in a later chapter.</p>
+
+        <h3>Enable / Disable</h3>
+
+          <p>When an expression is disabled, it will not participate in the true/false
+          evaluation.  For actions, the action will not be executed.  When a branch is
+          disabled, the children are effectively disabled.  The text for the row is
+          displayed using a strikethrough format.</p>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter4/disabled_item.png">
+          <img src="images/chapter4/disabled_item.png"
+          alt="Chapter 4 disabled item" width="207" height="55">
+          </a>
+          </div>
+
+        <h3>Lock / Unlock</h3>
+
+          <p> === unknown === </p>
+
+        <h3>Local variables</h3>
+
+          <p>Local variables are discussed in a later chapter.</p>
+
+        <h3>Change user name  </h3>
+
+          <p>When <strong>Change user name</strong> is enabled, a name can be assigned to
+          the row. </p>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter4/user_name.png">
+          <img src="images/chapter4/user_name.png"
+          alt="Chapter 4 user name" width="626" height="174">
+          </a>
+          </div>
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="">Chapter 5 - ????????</a></span></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>
