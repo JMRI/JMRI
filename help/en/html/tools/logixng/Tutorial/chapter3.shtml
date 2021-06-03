@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 3</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 3</h1>
+
+      <p>When an Action or Expression is to be added to the ConditionalNG tree, an item
+      has to be selected.  The selection window has a <strong>Category</strong> list and
+      a <strong>Type</strong> list which varies based on the category selection.  JMRI
+      objects, such as sensors, turnouts, etc., are in the <strong>Item</strong> category.
+      These are handled in separate chapters.</p>
+
+      <h2>Actions</h2>
+        <h3>Common</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_common.png">
+          <img src="images/chapter3/action_common.png"
+          alt="Chapter 3 common action" width="275" height="237">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Execute delayed</dt>
+            <dt>For</dt>
+            <dt>If Then Else</dt>
+            <dt>Many</dt>
+            <dt>Read analog and set analog</dt>
+            <dt>Read string and set string</dt>
+            <dt>Sequence</dt>
+            <dt>Table: For each</dt>
+            <dt>Timer</dt>
+          </dl>
+
+        <h3>Display</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_display.png">
+          <img src="images/chapter3/action_display.png"
+          alt="Chapter 3 display action" width="260" height="132">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Icon/Label on panel</dt>
+            <dd>Disable/Enable/Hide/Show an icon or label on a specific panel.</dd>
+          </dl>
+
+        <h3>LocoNet</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_loconet.png">
+          <img src="images/chapter3/action_loconet.png"
+          alt="Chapter 3 loconet action" width="260" height="131">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Clear loconet slots</dt>
+            <dt>Update loconet slots</dt>
+          </dl>
+
+        <h3>Other</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_other.png">
+          <img src="images/chapter3/action_other.png"
+          alt="Chapter 3 other action" width="261" height="179">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Call module</dt>
+            <dt>Listen on beans</dt>
+            <dt>Log local variables</dt>
+            <dt>Logix</dt>
+              <dd>LogixNG has an action called Logix that emulates how JMRI Logix works.
+              The action Logix has one expression and a number of boolean actions. A
+              boolean action is an action that takes a boolean value (true/false) and then
+              decides what to do. The action Logix was added mainly to support import of
+              JMRI Logix to LogixNG.</dd>
+            <dt>Shutdown</dt>
+            <dt>Web browser</dt>
+          </dl>
+
+
+      <h2>Expressions</h2>
+
+        <p>In Logix, the user can select between three different ways to combine the
+        variables in the Conditional. And, Or and Antecedent. In LogixNG, these three are
+        expressions that can have other expressions as children.</p>
+
+        <h3>Common</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_common.png">
+          <img src="images/chapter3/expression_common.png"
+          alt="Chapter 3 common expression" width="208" height="166">
+          </a>
+          </div>
+
+          <dl>
+            <dt>And</dt>
+              <dd>And evaluates the child expressions and if all of them returns true, the
+              And expression returns true as well.</dd>
+            <dt>Antecedent</dt>
+              <dd>The Antecedent expression is mainly included to make import from Logix
+              to LogixNG simple. It works exactly as Antecedent in Logix. It has a number
+              of child expressions and an antecedent that defines how the evaluation of the
+              expressions should be done. Each child expression is referenced in the
+              antecedent by R1, R2, R3, ..., there R1 is the first child expression, R2 is
+              the second child expression, and so on. Note that this differ from other
+              expressions in LogixNG, there other LogixNG expressions uses the socket name,
+              but since the Antecedent expression is included to work as Antecedent works
+              in Logix, the antecedent has been kept from Logix Antecedent as well.
+              <em>Note: Antecedent is included for compability with Logix but it's
+              recommended to use Formula instead. Formula is much more powerful, uses the
+              socket names and also works with numbers and strings.</em></dd>
+            <dt>Digital Formula</dt>
+              <dd>Formula is the next generation of Antecedent. It supports many operators,
+              like ==, !=, <=, >=, <, >, +, -, *, / and %. It supports local variables,
+              memories and functions. It supports all the types of expressions, digital,
+              analog and string expressions.</dd>
+            <dt>Not</dt>
+            <dt>Or</dt>
+              <dd>Or evaluates the child expressions and if at least one of them returns
+              true, the And expression returns true as well.</dd>
+          </dl>
+
+        <h3>LocoNet</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_loconet.png">
+          <img src="images/chapter3/expression_loconet.png"
+          alt="Chapter 3 loconet expression" width="213" height="130">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Slot Usage</dt>
+          </dl>
+
+        <h3>Other</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_other.png">
+          <img src="images/chapter3/expression_other.png"
+          alt="Chapter 3 other expression" width="297" height="183">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Always false</dt>
+            <dt>Always true</dt>
+            <dt>Call module</dt>
+            <dt>Hold</dt>
+            <dt>Last result of digital expression</dt>
+            <dt>Trigger once</dt>
+          </dl>
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="">Chapter 4 - ????????</a></span></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>
