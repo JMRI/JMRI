@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -23,6 +24,7 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 /**
@@ -42,7 +44,7 @@ import jmri.util.JmriJFrame;
     private boolean _inEditMode = false;
 
     private boolean _showReminder = false;
-    
+
     private final SymbolTable symbolTable = new DefaultSymbolTable();
 
 //    private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
@@ -98,6 +100,30 @@ import jmri.util.JmriJFrame;
 
     // ------------ Methods for Edit NamedTable Pane ------------
 
+    private JButton createFileChooser() {
+        JButton selectFileButton = new JButton("..."); // "File" replaced by ...
+        selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
+        selectFileButton.setToolTipText(Bundle.getMessage("TableEdit_FileButtonHint"));  // NOI18N
+        selectFileButton.addActionListener((ActionEvent e) -> {
+            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
+            csvFileChooser.rescanCurrentDirectory();
+            int retVal = csvFileChooser.showOpenDialog(null);
+            // handle selection or cancel
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                // set selected file location
+                try {
+                    editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
+                } catch (java.io.IOException ex) {
+                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    editCsvTableName.setText("");
+                }
+            }
+        });
+        return selectFileButton;
+    }
+
+
     /**
      * Create and/or initialize the Edit NamedTable pane.
      */
@@ -123,7 +149,7 @@ import jmri.util.JmriJFrame;
                         false);
             }
             _editLogixNGFrame.addHelpMenu(
-                    "package.jmri.jmrit.logixng.LogixNGTableEditor", true);  // NOI18N
+                    "package.jmri.jmrit.logixng.LogixNGTableTableEditor", true);  // NOI18N
             _editLogixNGFrame.setLocation(100, 30);
             Container contentPane = _editLogixNGFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -141,9 +167,9 @@ import jmri.util.JmriJFrame;
             panel2.add(editUserName);
             editUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
             contentPane.add(panel2);
-            
+
             boolean isCsvTable = _curTable instanceof DefaultCsvNamedTable;
-            
+
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
             JLabel tableTypeLabel = new JLabel(Bundle.getMessage("TableEditor_TableType") + ": ");  // NOI18N
@@ -153,7 +179,7 @@ import jmri.util.JmriJFrame;
                             ? Bundle.getMessage("TableEditor_CsvFile")
                             : Bundle.getMessage("TableEditor_UnknownTableType")));
             contentPane.add(panel3);
-            
+
             if (isCsvTable) {
                 JPanel panel4 = new JPanel();
                 panel4.setLayout(new FlowLayout());
@@ -163,10 +189,11 @@ import jmri.util.JmriJFrame;
                 editCsvTableName.setText(((DefaultCsvNamedTable)_curTable).getFileName());
                 panel4.add(editCsvTableName);
 //                editCsvTableName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
+                panel4.add(createFileChooser());
                 contentPane.add(panel4);
             }
-            
-            
+
+
             // add table of Tables
             JPanel pctSpace = new JPanel();
             pctSpace.setLayout(new FlowLayout());
@@ -183,34 +210,34 @@ import jmri.util.JmriJFrame;
             tableTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             tableTable.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
             tableTable.getTableHeader().setReorderingAllowed(false);
-            
+
             JButton cellRefByIndexButton = new JButton(Bundle.getMessage("TableEditor_CopyToClipboard"));  // NOI18N
             JLabel cellRefByIndexLabel = new JLabel();  // NOI18N
             JTextField cellRefByIndex = new JTextField();
             cellRefByIndex.setEditable(false);
             cellRefByIndexButton.setEnabled(false);
-            
+
             JButton cellRefByHeaderButton = new JButton(Bundle.getMessage("TableEditor_CopyToClipboard"));  // NOI18N
             JLabel cellRefByHeaderLabel = new JLabel();  // NOI18N
             JTextField cellRefByHeader = new JTextField();
             cellRefByHeader.setEditable(false);
             cellRefByHeaderButton.setEnabled(false);
-            
+
             java.awt.datatransfer.Clipboard clipboard =
                     Toolkit.getDefaultToolkit().getSystemClipboard();
-            
+
             cellRefByIndexButton.addActionListener(
                     (evt) -> { clipboard.setContents(new StringSelection(cellRefByIndexLabel.getText()), null);});
-            
+
             cellRefByHeaderButton.addActionListener(
                     (evt) -> { clipboard.setContents(new StringSelection(cellRefByHeaderLabel.getText()), null);});
-            
+
             ListSelectionListener selectCellListener = (evt) -> {
                 String refByIndex = String.format("{%s[%d,%d]}", _curTable.getDisplayName(), tableTable.getSelectedRow()+1, tableTable.getSelectedColumn()+1);
                 cellRefByIndexLabel.setText(refByIndex);  // NOI18N
                 cellRefByIndex.setText(ReferenceUtil.getReference(symbolTable, refByIndex));  // NOI18N
                 cellRefByIndexButton.setEnabled(true);
-                
+
                 Object rowHeaderObj = _curTable.getCell(tableTable.getSelectedRow()+1, 0);
                 Object columnHeaderObj = _curTable.getCell(0, tableTable.getSelectedColumn()+1);
                 String rowHeader = rowHeaderObj != null ? rowHeaderObj.toString() : "";
@@ -228,9 +255,9 @@ import jmri.util.JmriJFrame;
             };
             tableTable.getSelectionModel().addListSelectionListener(selectCellListener);
             tableTable.getColumnModel().getSelectionModel().addListSelectionListener(selectCellListener);
-            
+
             ListModel<Object> lm = new RowHeaderListModel();
-            
+
             JList<Object> rowHeader = new JList<>(lm);
             rowHeader.setFixedCellHeight(
                     tableTable.getRowHeight()
@@ -238,28 +265,28 @@ import jmri.util.JmriJFrame;
 //                    + table.getIntercellSpacing().height
             );
             rowHeader.setCellRenderer(new RowHeaderRenderer(tableTable));
-            
+
             JScrollPane tableTableScrollPane = new JScrollPane(tableTable);
             tableTableScrollPane.setRowHeaderView(rowHeader);
             Dimension dim = tableTable.getPreferredSize();
             dim.height = 450;
             tableTableScrollPane.getViewport().setPreferredSize(dim);
             contentPane.add(tableTableScrollPane);
-            
+
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
             panel4.add(cellRefByIndexButton);
             panel4.add(cellRefByIndexLabel);
             panel4.add(cellRefByIndex);
             contentPane.add(panel4);
-            
+
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(cellRefByHeaderButton);
             panel5.add(cellRefByHeaderLabel);
             panel5.add(cellRefByHeader);
             contentPane.add(panel5);
-            
+
             // add buttons at bottom of window
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
@@ -362,7 +389,7 @@ import jmri.util.JmriJFrame;
         }
         if (_curTable instanceof DefaultCsvNamedTable) {
             String csvFileName = editCsvTableName.getText().trim();
-            
+
             try {
                 // NamedTable does not exist, create a new NamedTable
                 AbstractNamedTable.loadTableFromCSV_File(
@@ -391,7 +418,7 @@ import jmri.util.JmriJFrame;
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             ((DefaultCsvNamedTable)_curTable).setFileName(csvFileName);
         }
         // complete update and activate NamedTable
@@ -443,13 +470,13 @@ import jmri.util.JmriJFrame;
         public int getRowCount() {
             return _curTable.numRows()-1;
         }
-        
+
         @Override
         public String getColumnName(int col) {
             Object data = _curTable.getCell(0, col+1);
             return data != null ? data.toString() : "<null>";
         }
-        
+
         @Override
         public Object getValueAt(int row, int col) {
             return _curTable.getCell(row+1, col+1);
@@ -467,9 +494,9 @@ import jmri.util.JmriJFrame;
             return _curTable.getCell(index+1, 0);
         }
     }
-    
+
     private static final class RowHeaderRenderer extends JLabel implements ListCellRenderer<Object> {
-        
+
         RowHeaderRenderer(JTable table) {
             JTableHeader header = table.getTableHeader();
             setOpaque(true);
@@ -479,7 +506,7 @@ import jmri.util.JmriJFrame;
             setBackground(header.getBackground());
             setFont(header.getFont());
         }
-        
+
         @Override
         public Component getListCellRendererComponent(JList list, Object value,
                 int index, boolean isSelected, boolean cellHasFocus) {
@@ -487,7 +514,7 @@ import jmri.util.JmriJFrame;
             return this;
         }
     }
-    
+
     protected String getClassName() {
         return TableEditor.class.getName();
     }
@@ -552,5 +579,5 @@ import jmri.util.JmriJFrame;
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableEditor.class);
-    
+
 }
