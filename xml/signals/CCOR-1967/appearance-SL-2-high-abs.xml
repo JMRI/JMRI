@@ -10,12 +10,12 @@
     <year>2019</year>
     <holder>JMRI</holder>
   </copyright>
-  
-  <authorgroup xmlns="http://docbook.org/ns/docbook">   
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -49,7 +49,7 @@
   <name>Double head absolute signal</name>
   <reference>http://gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
   <description>Appearances for a two-head absolute block signal</description>
-  
+
   <appearances>
 
     <appearance>
@@ -273,4 +273,4 @@
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

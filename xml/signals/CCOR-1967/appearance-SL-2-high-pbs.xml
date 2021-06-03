@@ -10,12 +10,12 @@
     <year>2019</year>
 	<holder>JMRI</holder>
   </copyright>
-  
-  <authorgroup xmlns="http://docbook.org/ns/docbook">   
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -24,26 +24,26 @@
         <date>2019-12-29</date>
         <authorinitials>MKZ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2021-05-15</date>
         <authorinitials>MKZ</authorinitials>
         <revremark>added Clear option to Approach aspectMapping</revremark>
-    </revision> 
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2021-05-31</date>
         <authorinitials>MKZ</authorinitials>
         <revremark>fix imagelink directory</revremark>
-    </revision> 
+    </revision>
   </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
   <name>Double head permissive block signal</name>
   <reference>http://www.gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
   <description>Appearances for a two-head permissive block signal</description>
-  
+
   <appearances>
     <appearance>
       <aspectname>Clear</aspectname>
@@ -187,4 +187,4 @@
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

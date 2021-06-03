@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
-  <authorgroup xmlns="http://docbook.org/ns/docbook">   
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -66,7 +66,7 @@
   <name>Double head dwarf signal</name>
   <reference>As described in the Consolidated Code of Operating Rules, Edition of 1967. Pages 53-55</reference>
   <description>Appearances for a two-head dwarf signal without other badging</description>
-  
+
   <appearances>
     <appearance>
       <aspectname>Clear</aspectname>
@@ -286,4 +286,4 @@
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>
