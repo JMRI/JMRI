@@ -226,6 +226,15 @@ public interface Sensor extends DigitalIO {
 
     }
     
+    /**
+     * Get an array of possible input pin pull resistance values
+     * Provided here so that it may be overridden to limit pull
+     * values for a given type of input pin
+     * 
+     * @return The array
+     * 
+     * This default implementation returns all values from Sensor.PullResistnace
+     */
     default public PullResistance [] getAvailablePullValues () {
         return PullResistance.values();
     }
