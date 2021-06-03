@@ -173,7 +173,6 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
             return (super.getAvailablePullValues ());
         }
         return gpioExtender.getAvailablePullValues ();
-        
     }
     /**
      * Set the pull resistance.
