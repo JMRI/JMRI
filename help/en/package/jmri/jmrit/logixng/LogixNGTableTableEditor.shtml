@@ -1,10 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-
-<!-- Copyright Dave Sand 2021 -->
-
   <title>JMRI: LogixNG Tables Table Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng tables editor">
@@ -16,7 +13,8 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../../../../html/tools/Sidebar.shtml" -->
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+
     <div id="mainContent">
 
       <h1>JMRI: LogixNG Tables Table Editor</h1>
@@ -26,5 +24,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -248,9 +248,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (getTriggerOnChange()) {
-            getConditionalNG().execute();
-        }
+        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
