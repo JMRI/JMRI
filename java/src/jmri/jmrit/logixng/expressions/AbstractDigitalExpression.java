@@ -67,18 +67,6 @@ public abstract class AbstractDigitalExpression extends AbstractBase
         return _state;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
-    }
-    
     public String getNewSocketName() {
         String[] names = new String[getChildCount()];
         for (int i=0; i < getChildCount(); i++) {
