@@ -30,7 +30,7 @@ public class MCP23017GpioExtension implements GpioExtension {
     /**
      * Parse and store an MCP23017 Pin address and Pin.
      */
-    class ParsedPin {
+    static class ParsedPin {
         int busNumber;          // I2C Bus Number
         int channelNumber;      // MCP23017 Device Channel on that bus (32-39)
         int pinNumber;          // Pin Number on that MCP23017 (0-15)
@@ -59,7 +59,7 @@ public class MCP23017GpioExtension implements GpioExtension {
     *  and device channel number on that I2C bus
     */
 
-    class ProviderElement {
+    static class ProviderElement {
         int busNumber;
         int channelNumber;
         MCP23017GpioProvider provider;
