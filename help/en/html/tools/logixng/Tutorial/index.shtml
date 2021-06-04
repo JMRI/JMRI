@@ -39,7 +39,7 @@
       a panel and the panels has names like "Chapter 1", that tells which chapter this
       panel is used for.</p>
 
-      <h3>Chapters</h3>
+      <h3>Standard Features</h3>
 
       <ul>
         <li><a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a></li>
@@ -48,6 +48,16 @@
         <li><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></li>
         <li><a href="chapter5.shtml">Chapter 5 - Action Items</a></li>
         <li><a href="chapter6.shtml">Chapter 6 - Expression Items</a></li>
+      </ul>
+
+      <h3>Advanced Features</h3>
+
+      <ul>
+        <li><a href="chapter6.shtml">Chapter 7 - References</a></li>
+        <li><a href="chapter6.shtml">Chapter 8 - Local Variables</a></li>
+        <li><a href="chapter6.shtml">Chapter 9 - Formula</a></li>
+        <li><a href="chapter6.shtml">Chapter 10 - Modules</a></li>
+        <li><a href="chapter6.shtml">Chapter 11 - Tables</a></li>
       </ul>
 <hr>
 
