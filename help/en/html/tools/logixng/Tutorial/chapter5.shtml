@@ -39,8 +39,8 @@
         a sensor.  The right section is the action to be performed.  The default mode
         will be to use the <strong>Direct</strong> tabs.</p>
 
-        <p><strong>Reference</strong>, <strong>Local Variable</strong> and <strong>Formula
-        </strong> tabs will be explained in later chapters.</p>
+        <p>See <a href="chapter7.shtml">Reference</a>, <a href="chapter8.shtml">Local
+        Variable</a> and <a href="chapter9.shtml">Formula</a> for details about the other tabs.</p>
 
         <p>The lower section contains a standard set of items</p>
 
@@ -51,14 +51,16 @@
           options are the same.</dd>
 
           <dt>Catch "Abort execution"</dt>
-          <dd> === unknown === </dd>
+          <dd>If the error handling (see previous) for any child node is set to <strong>
+          Abort execution</strong>, a parent node should have this option checked.  This
+          lets the parent node handle the error.</dd>
 
           <dt>Edit comment</dt>
           <dd>Each action can have a comment.  The comment dialog has a multiline text
           area.  Click <strong>OK</strong> to save the comment.</dd>
 
           <dt>Formula functions</dt>
-          <dd>These will be explained in the Formula chapter.<dd>
+          <dd>These are explained in the <a href="chapter9.shtml">Formula</a> chapter.<dd>
 
           <dt>Cancel</dt>
           <dd>Close the dialog without applying any changes.<dd>
