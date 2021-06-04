@@ -24,7 +24,6 @@ import jmri.Sensor;
  * @author Dave Jordan
  */
 public class ExtensionService {
-    private static ExtensionService service;
     private static ServiceLoader<GpioExtension> loader = ServiceLoader.load(GpioExtension.class);
     
     private static ArrayList<String> gpioExtensionNames = new ArrayList<String> ();
