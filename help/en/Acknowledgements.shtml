@@ -111,7 +111,7 @@
 
         <li><a href="https://github.com/JMRI/JMRI/pulls/danielb987">Daniel Bergqvist</a>,
         <!-- danielb987 --> primary author of the
-		<a href="https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>.</li>
+        <a href="https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>.</li>
 
         <li>Andrew Berridge, who debugged and fixed problems with
         the SPROG serial interface</li>
