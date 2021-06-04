@@ -18,8 +18,8 @@ import org.junit.jupiter.api.*;
 public class ExtensionServiceTest {
     
     @Test
-    public void testInstantiation(){
-      Assert.assertNotNull("ExtensionService Instantiation", ExtensionService.getInstance());
+    public void testExistance(){
+      Assert.assertNull("ExtensionService Existance", ExtensionService.getExtensionFromSystemName(""));
     }
 
     @BeforeEach
