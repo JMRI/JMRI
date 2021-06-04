@@ -28,18 +28,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         ((DigitalExpressionBean)getObject()).notifyChangedResult(oldResult, newResult);
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean getTriggerOnChange() {
-        return ((DigitalExpressionBean)getObject()).getTriggerOnChange();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setTriggerOnChange(boolean triggerOnChange) {
-        ((DigitalExpressionBean)getObject()).setTriggerOnChange(triggerOnChange);
-    }
-    
     private void checkChangedLastResult(boolean savedLastResult) {
         if (savedLastResult != lastEvaluationResult) {
             ((DigitalExpressionBean)getObject())

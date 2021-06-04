@@ -110,7 +110,7 @@ public class TrainManifest extends TrainCommon {
                                         train.getDescription()});
                         if (!train.isShowArrivalAndDepartureTimesEnabled()) {
                             newLine(fileOut, workAt);
-                        } else if (rl == train.getRoute().getDepartsRouteLocation()) {
+                        } else if (rl == train.getTrainDepartsRouteLocation()) {
                             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                                     .getStringWorkDepartureTime(), new Object[]{routeLocationName,
                                             train.getFormatedDepartureTime(), train.getName(),
@@ -120,7 +120,7 @@ public class TrainManifest extends TrainCommon {
                                     .getStringWorkDepartureTime(), new Object[]{routeLocationName,
                                             rl.getFormatedDepartureTime(), train.getName(), train.getDescription()}));
                         } else if (Setup.isUseDepartureTimeEnabled() &&
-                                rl != train.getRoute().getTerminatesRouteLocation()) {
+                                rl != train.getTrainTerminatesRouteLocation()) {
                             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                                     .getStringWorkDepartureTime(), new Object[]{routeLocationName,
                                             train.getExpectedDepartureTime(rl), train.getName(),
@@ -182,21 +182,21 @@ public class TrainManifest extends TrainCommon {
                     pickupEngines(fileOut, engineList, rl, IS_MANIFEST);
                     // if switcher show loco drop at end of list
                     if (train.isLocalSwitcher()) {
-                        blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
+                        blockCarsByTrack(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                         dropEngines(fileOut, engineList, rl, IS_MANIFEST);
                     } else {
                         dropEngines(fileOut, engineList, rl, IS_MANIFEST);
-                        blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
+                        blockCarsByTrack(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                     }
                 } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
-                    blockCarsTwoColumn(fileOut, carList, routeList, rl, printHeader, IS_MANIFEST);
+                    blockCarsTwoColumn(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                 } else {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
-                    blockCarsByTrackNameTwoColumn(fileOut, carList, routeList, rl, printHeader, IS_MANIFEST);
+                    blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                 }
 
-                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the current?
                     RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
                     if (routeLocationName.equals(splitString(rlNext.getName()))) {
@@ -246,7 +246,7 @@ public class TrainManifest extends TrainCommon {
                             }
                         }
                         if (train.isShowArrivalAndDepartureTimesEnabled()) {
-                            if (rl == train.getRoute().getDepartsRouteLocation()) {
+                            if (rl == train.getTrainDepartsRouteLocation()) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
                             } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
