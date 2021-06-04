@@ -10,10 +10,15 @@ import com.pi4j.io.gpio.*;
 
 import jmri.jmrix.pi.extendgpio.spi.GpioExtension;
 
+import jmri.NamedBean.BadSystemNameException;
+
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jmri.Sensor;
 
@@ -54,9 +59,9 @@ public class ExtensionService {
                 }
             }
         } catch (ServiceConfigurationError serviceError) {
-                serviceError.printStackTrace ();
+            log.error ("GPIO Extension not found"+serviceError.getLocalizedMessage(), serviceError);
         }
-        return null;
+        throw new BadSystemNameException ();
     }
         
     /**
@@ -65,7 +70,7 @@ public class ExtensionService {
      * @param systemName is the name to be validated
      * @return The extension or null if an extension could not be found
      */
-    public static GpioExtension getExtensionFromSystemName (String systemName) { // throws Exception {
+    public static GpioExtension getExtensionFromSystemName (String systemName) throws BadSystemNameException {
         String tokens[] = systemName.split (":");
         if (tokens.length < 2) {
             return null;
@@ -80,12 +85,14 @@ public class ExtensionService {
      * @param systemName is the name to be validated
      * @return The validated system name or null if the name could not be validated.
      */
-    public static String validateSystemNameFormat (String systemName) {
+    public static String validateSystemNameFormat (String systemName) throws BadSystemNameException {
         GpioExtension ex = getExtensionFromSystemName (systemName);
         if (ex != null) {
             return ex.validateSystemNameFormat(systemName);
         }
         return null;
     }
+
+private static final Logger log = LoggerFactory.getLogger(ExtensionService.class);
 
 }

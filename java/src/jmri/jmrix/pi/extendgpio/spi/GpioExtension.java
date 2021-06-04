@@ -8,6 +8,8 @@ package jmri.jmrix.pi.extendgpio.spi;
 import jmri.spi.JmriServiceProviderInterface;
 import jmri.Sensor;
 
+import jmri.NamedBean.BadSystemNameException;
+
 import com.pi4j.io.gpio.*;
 
 /**
@@ -30,8 +32,9 @@ public interface GpioExtension extends JmriServiceProviderInterface {
      * 
      * @param systemName The name to be validated
      * @return The validated system name or null if it could not be validated
+     * @throws BadSystemNameException
      */
-    public String validateSystemNameFormat (String systemName);
+    public String validateSystemNameFormat (String systemName) throws BadSystemNameException;
     
     /**
      * Provision a digital input pin
@@ -39,8 +42,9 @@ public interface GpioExtension extends JmriServiceProviderInterface {
      * @param gpio The active GPIO Controller 
      * @param systemName The name of the pin
      * @return The input pin or null if it could not be provisioned
+     * @throws BadSystemNameException
      */
-    public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName);
+    public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName) throws BadSystemNameException;
     
     /**
      * Provision a digital output pin
@@ -48,8 +52,9 @@ public interface GpioExtension extends JmriServiceProviderInterface {
      * @param gpio The active GPIO Controller 
      * @param systemName The name of the pin
      * @return The output pin or null if it could not be provisioned
+     * @throws BadSystemNameException
      */
-    public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName);
+    public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName) throws BadSystemNameException;
     
     /**
      * Get an array of possible input pin pull resistance values

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.jmrix.pi.extendgpio.spi.GpioExtension;
 
+import jmri.NamedBean.BadSystemNameException;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -80,7 +82,7 @@ public class MCP23017GpioExtension implements GpioExtension {
      * Look up a bus/channel combination in the cache.  If found, use the cached provider; if not,
      * create a new provider and add it to the cache.
      */
-    private MCP23017GpioProvider getProvider (int bus, int chan) {
+    private MCP23017GpioProvider getProvider (int bus, int chan) throws BadSystemNameException {
         MCP23017GpioProvider provider;
         for (int i = 0; i < elementArray.size(); i++) {
             if ((bus == elementArray.get(i).busNumber) && (chan == elementArray.get(i).channelNumber)) {
@@ -90,7 +92,7 @@ public class MCP23017GpioExtension implements GpioExtension {
         try {
             provider = new MCP23017GpioProvider (bus, chan);
         } catch (com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException | IOException ex) {
-            return null;
+            throw new BadSystemNameException ();
         }
         elementArray.add (new ProviderElement (bus, chan, provider));
         return provider;
@@ -116,17 +118,21 @@ public class MCP23017GpioExtension implements GpioExtension {
      * 
      * @param systemName The name to be validated
      * @return The validated system name or null if it could not be validated
+     * @throws BadSystemNameException
      */
-    public String validateSystemNameFormat (String systemName) {
+    public String validateSystemNameFormat (String systemName) throws BadSystemNameException {
         try {
             ParsedPin pp = new ParsedPin (systemName);
             MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
             if ((provider != null) && (pp.pinNumber >= 0) && (pp.pinNumber <= 15)) {
                 return systemName;
             }
-        } catch (Exception ex) {
+        } catch (BadSystemNameException ex) {
+            throw ex;
         }
-        return null;
+          catch (Exception ex) {
+        }
+        throw new BadSystemNameException ();
     }
 
     /**
@@ -135,8 +141,9 @@ public class MCP23017GpioExtension implements GpioExtension {
      * @param gpio The active GPIO Controller 
      * @param systemName The name of the pin
      * @return The input pin or null if it could not be provisioned
+     * @throws BadSystemNameException
      */
-    public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName) {
+    public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName) throws BadSystemNameException {
         try {
             ParsedPin pp = new ParsedPin (systemName);
             MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
@@ -145,9 +152,11 @@ public class MCP23017GpioExtension implements GpioExtension {
             }
             GpioPinDigitalInput pin = gpio.provisionDigitalInputPin(provider, pp.pin, systemName);
             return pin;
+        } catch (BadSystemNameException ex) {
+            throw ex;
         } catch (Exception ex) {
-            return null;
         }
+        throw new BadSystemNameException ();
     }
 
     /**
@@ -156,8 +165,9 @@ public class MCP23017GpioExtension implements GpioExtension {
      * @param gpio The active GPIO Controller 
      * @param systemName The name of the pin
      * @return The output pin or null if it could not be provisioned
+     * @throws BadSystemNameException
      */
-    public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName) {
+    public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName) throws BadSystemNameException {
         try {
             ParsedPin pp = new ParsedPin (systemName);
             MCP23017GpioProvider provider = getProvider (pp.busNumber, pp.channelNumber);
@@ -166,9 +176,11 @@ public class MCP23017GpioExtension implements GpioExtension {
             }
             GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(provider, pp.pin, systemName, PinState.LOW);
             return pin;
+        } catch (BadSystemNameException ex) {
+            throw ex;
         } catch (Exception ex) {
         }
-        return null;
+        throw new BadSystemNameException ();
     }
 
     /**
