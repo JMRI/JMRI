@@ -58,7 +58,6 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         FemaleSocket socket;
         MyExpression myExpression = new MyExpression("IQSA1");
         FemaleSocketListener listener = new MyFemaleSocketListener();
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
         
         socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", socket.getClass().getName());
