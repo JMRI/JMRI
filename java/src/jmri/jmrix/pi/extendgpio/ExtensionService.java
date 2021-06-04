@@ -59,23 +59,7 @@ public class ExtensionService {
         }
         return null;
     }
-    
-    private ExtensionService() {
-        loader = ServiceLoader.load(GpioExtension.class);
-    }
-    
-    /**
-     * Maintain a single instance of the extension loading service
-     * 
-     * @return The extension loading service
-     */
-    public static synchronized ExtensionService getInstance() {
-        if (service == null) {
-            service = new ExtensionService();
-        }
-        return service;
-    }
-    
+        
     /**
      * Find an extension based on the pin's system name
      * 
