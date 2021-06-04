@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
@@ -41,9 +40,6 @@ public class RouteBlockingOrderEditFrame extends OperationsFrame implements java
     
     JLabel routeName = new JLabel();
     JLabel routeComment = new JLabel();
-
-    public static final String NAME = Bundle.getMessage("Name");
-    public static final String DISPOSE = "dispose"; // NOI18N
 
     public RouteBlockingOrderEditFrame(Route route) {
         super(Bundle.getMessage("MenuBlockingOrder"));
@@ -125,9 +121,6 @@ public class RouteBlockingOrderEditFrame extends OperationsFrame implements java
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_RouteBlockingOrder", true); // NOI18N
-
-        // get notified if combo box gets modified
-        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
 
         // set frame size and route for display
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));

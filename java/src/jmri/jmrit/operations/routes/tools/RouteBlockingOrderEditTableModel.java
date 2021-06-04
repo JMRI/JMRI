@@ -21,9 +21,9 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 /**
- * Table Model for edit of route locations used by operations
+ * Table Model for edit of route blocking used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2013
+ * @author Daniel Boudreau Copyright (C) 2021
  */
 public class RouteBlockingOrderEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

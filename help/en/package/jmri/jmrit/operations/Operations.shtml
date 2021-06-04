@@ -4188,15 +4188,16 @@
    <a name="RouteBlockingOrder" id="RouteBlockingOrder"></a>
    <h4>Blocking Order</h4>
    <p>
-    The program when creating a <a href="#PrintingManifests">Manifest</a> normally blocks
-    cars in the train by their destination. Cars for the first destination in a train's route are
-    placed immediately after the locomotives, followed by the next location's set of cars,
-    continuing until the last set of cars which can be found at the end of the Manifest's for the
-    train's departure location. For example, you might want to have the cars for a location placed
-    at the end of the train to facilate a facing point set out. If you want to change the blocking
-    order for a train, you can use this tool to modify how the program blocks the cars for a
-    location. Use the "Up" or "Down" buttons to change the blocking order, and press the "Save"
-    button to complete the change. Use the reset button to restore the blocking order.
+    The program when creating a <a href="#PrintingManifests">Manifest</a> normally blocks cars in
+    the train by their destination. Cars for the first destination in a train's route are placed
+    immediately after the locomotives, followed by the next location's set of cars, continuing until
+    the last set of cars which can be found at the end of the Manifest's for the train's departure
+    location. But with this tool, you can have a different blocking order. For example, you might
+    want to have the cars for a location placed at the end of the train to facilitate a facing point
+    set out. If you want to change the blocking order for a train, you can use this tool to modify
+    how the program blocks the cars for a location. Use the "Up" or "Down" buttons to change the
+    blocking order, and press the "Save" button to complete the change. Use the reset button to
+    restore the blocking order.
    </p>
 
    <p>You can also modify the order cars are set out for a location, see <a href="#TrackBlockingOrder">Track Blocking Order</a>.</p>
