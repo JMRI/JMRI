@@ -189,7 +189,6 @@ public class StoreAndLoadTest {
                 digitalActionManager.registerAction(new DigitalMany(
                                         digitalActionManager.getAutoSystemName(), null));
         femaleRootSocket.connect(actionManySocket);
-        femaleRootSocket.setLock(Base.Lock.HARD_LOCK);
 
 
 

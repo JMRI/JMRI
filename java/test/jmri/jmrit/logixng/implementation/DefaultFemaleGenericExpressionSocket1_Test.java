@@ -245,51 +245,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         socket.disconnect();
     }
 
-    private void testLockUnlock(FemaleSocket socket1, FemaleSocket socket2) {
-        socket1.setLock(Base.Lock.NONE);
-        Assert.assertEquals("Lock is correct", Base.Lock.NONE, socket2.getLock());
-        socket1.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.USER_LOCK, socket2.getLock());
-        socket1.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.HARD_LOCK, socket2.getLock());
-
-        socket2.setLock(Base.Lock.NONE);
-        Assert.assertEquals("Lock is correct", Base.Lock.NONE, socket1.getLock());
-        socket2.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.USER_LOCK, socket1.getLock());
-        socket2.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.HARD_LOCK, socket1.getLock());
-    }
-
-    @Test
-    public void testLockUnlock() throws SocketAlreadyConnectedException {
-        MyExpressionTurnout digitalExpression = new MyExpressionTurnout("IQDE351");
-        MaleSocket digitalMaleSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
-
-        DefaultFemaleGenericExpressionSocket socket;
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleAnalogExpressionSocket analogSocket = socket.getAnalogSocket(_conditionalNG);
-        testLockUnlock(socket, analogSocket);
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleDigitalExpressionSocket digitalSocket = socket.getDigitalSocket(_conditionalNG);
-        testLockUnlock(socket, digitalSocket);
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleGenericExpressionSocket genericSocket = socket.getGenericSocket(_conditionalNG);
-        testLockUnlock(socket, genericSocket);
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleStringExpressionSocket stringSocket = socket.getStringSocket(_conditionalNG);
-        testLockUnlock(socket, stringSocket);
-    }
-
     @Test
     public void testIsCompatibleSocket() {
         AnalogExpressionConstant analogExpression = new AnalogExpressionConstant("IQAE351", null);

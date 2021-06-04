@@ -1449,8 +1449,8 @@ public class TreeEditor extends TreeViewer {
             
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
-                menuItemLock.setEnabled(connectedSocket.getLock() == Base.Lock.NONE);
-                menuItemUnlock.setEnabled(connectedSocket.getLock() == Base.Lock.USER_LOCK);
+                menuItemLock.setEnabled(!connectedSocket.isLocked());
+                menuItemUnlock.setEnabled(connectedSocket.isLocked());
             } else {
                 menuItemLock.setEnabled(false);
                 menuItemUnlock.setEnabled(false);

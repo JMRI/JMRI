@@ -27,6 +27,8 @@ import org.slf4j.Logger;
 public abstract class AbstractMaleSocket implements MaleSocket {
 
     private final Base _object;
+    private boolean _locked = false;
+    private boolean _system = false;
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
@@ -53,14 +55,38 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public final Lock getLock() {
-        return _object.getLock();
+    public boolean isLocked() {
+        if (_object instanceof MaleSocket) {
+            return ((MaleSocket)_object).isLocked();
+        }
+        return _locked;
     }
 
     /** {@inheritDoc} */
     @Override
-    public final void setLock(Lock lock) {
-        _object.setLock(lock);
+    public void setLocked(boolean locked) {
+        if (_object instanceof MaleSocket) {
+            ((MaleSocket)_object).setLocked(locked);
+        }
+        _locked = locked;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSystem() {
+        if (_object instanceof MaleSocket) {
+            return ((MaleSocket)_object).isSystem();
+        }
+        return _system;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setSystem(boolean system) {
+        if (_object instanceof MaleSocket) {
+            ((MaleSocket)_object).setSystem(system);
+        }
+        _system = system;
     }
 
     /** {@inheritDoc} */

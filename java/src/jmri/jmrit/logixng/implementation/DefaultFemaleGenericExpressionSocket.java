@@ -457,18 +457,6 @@ public class DefaultFemaleGenericExpressionSocket
 
         /** {@inheritDoc} */
         @Override
-        public Lock getLock() {
-            return DefaultFemaleGenericExpressionSocket.this.getLock();
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void setLock(Lock lock) {
-            DefaultFemaleGenericExpressionSocket.this.setLock(lock);
-        }
-
-        /** {@inheritDoc} */
-        @Override
         public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
             DefaultFemaleGenericExpressionSocket.this.connect(socket);
             _listener.connected(this);
@@ -581,18 +569,6 @@ public class DefaultFemaleGenericExpressionSocket
 
         /** {@inheritDoc} */
         @Override
-        public Lock getLock() {
-            return DefaultFemaleGenericExpressionSocket.this.getLock();
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void setLock(Lock lock) {
-            DefaultFemaleGenericExpressionSocket.this.setLock(lock);
-        }
-
-        /** {@inheritDoc} */
-        @Override
         public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
             DefaultFemaleGenericExpressionSocket.this.connect(socket);
             _listener.connected(this);
@@ -701,18 +677,6 @@ public class DefaultFemaleGenericExpressionSocket
         @Override
         public void setParent(Base parent) {
             DefaultFemaleGenericExpressionSocket.this.setParent(parent);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public Lock getLock() {
-            return DefaultFemaleGenericExpressionSocket.this.getLock();
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void setLock(Lock lock) {
-            DefaultFemaleGenericExpressionSocket.this.setLock(lock);
         }
 
         /** {@inheritDoc} */
@@ -864,18 +828,6 @@ public class DefaultFemaleGenericExpressionSocket
         @Override
         public void setParent(Base parent) {
             DefaultFemaleGenericExpressionSocket.this.setParent(parent);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public Lock getLock() {
-            return DefaultFemaleGenericExpressionSocket.this.getLock();
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void setLock(Lock lock) {
-            DefaultFemaleGenericExpressionSocket.this.setLock(lock);
         }
 
         /** {@inheritDoc} */
