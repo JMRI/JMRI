@@ -32,7 +32,7 @@ public interface GpioExtension extends JmriServiceProviderInterface {
      * 
      * @param systemName The name to be validated
      * @return The validated system name or null if it could not be validated
-     * @throws BadSystemNameException
+     * @throws BadSystemNameException If unable to validate the system name
      */
     public String validateSystemNameFormat (String systemName) throws BadSystemNameException;
     
@@ -42,7 +42,7 @@ public interface GpioExtension extends JmriServiceProviderInterface {
      * @param gpio The active GPIO Controller 
      * @param systemName The name of the pin
      * @return The input pin or null if it could not be provisioned
-     * @throws BadSystemNameException
+     * @throws BadSystemNameException If unable to validate the system name
      */
     public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName) throws BadSystemNameException;
     
@@ -52,7 +52,7 @@ public interface GpioExtension extends JmriServiceProviderInterface {
      * @param gpio The active GPIO Controller 
      * @param systemName The name of the pin
      * @return The output pin or null if it could not be provisioned
-     * @throws BadSystemNameException
+     * @throws BadSystemNameException If unable to validate the system name
      */
     public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName) throws BadSystemNameException;
     
