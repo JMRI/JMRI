@@ -1,6 +1,9 @@
 package jmri.jmrit.operations.routes.tools;
 
+import java.awt.GraphicsEnvironment;
+
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -18,6 +21,7 @@ import jmri.util.swing.JemmyUtil;
 public class RouteBlockingOrderEditFrameTest extends OperationsTestCase {
     @Test
     public void testFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Route r = JUnitOperationsUtil.createThreeLocationTurnRoute();
         RouteBlockingOrderEditFrame t = new RouteBlockingOrderEditFrame(r);
         Assert.assertNotNull("exists", t);
@@ -28,6 +32,7 @@ public class RouteBlockingOrderEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testResetButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Route r = JUnitOperationsUtil.createThreeLocationTurnRoute();
         for (RouteLocation rl : r.getLocationsBySequenceList()) {
             Assert.assertEquals("blocking order default", 0, rl.getBlockingOrder());
