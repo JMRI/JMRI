@@ -14,11 +14,11 @@
 	<holder>JMRI</holder>
   </copyright>
 
-  <authorgroup xmlns="http://docbook.org/ns/docbook" >  
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -221,6 +221,6 @@
     <appearancefile href="appearance-SL-2-low.xml"/>
     <appearancefile href="appearance-SL-3-high.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+
