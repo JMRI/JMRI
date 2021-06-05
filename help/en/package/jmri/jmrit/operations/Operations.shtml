@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 
 <head>
@@ -1759,8 +1759,7 @@
     information, so you might have to limit the number of car attributes (see <a
      href="#MessageFormats">Message Formats</a> below) in order get the data to fit. The next format
     available is "Two Column (Track)". This format prints the track name in both columns in a header
-    format. The text color options for set outs, pick ups, and local move are not available for the
-    "Two Column" formats.
+    format.
    </p>
 
    <p>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
@@ -3457,14 +3456,15 @@
     off using numbers cleanly divisible by 10. For example, you might what to place an observation
     car at the end of the train, a value of "90" would be appropriate. If you wanted a baggage car
     to be the first car in the passenger train, a value of "10" would be a good value, cars in the
-    middle of the train could use "50". Later you can fine turn your passenger trains by using the
+    middle of the train could use "50". Later you can fine tune your passenger trains by using the
     other numbers that are available.</p>
 
    <p>When the utility checkbox is selected, it instructions the program when printing Manifests
     and switch lists to not show the individual car's road and number, but rather the quantity of
     cars needed of that type. For example, prototype unit trains when shipping coal don't normally list
     the cars in the train by the car's road number but instead it shows the number of cars, the type of
-    car, and the car's load on the train's Manifest.</p>
+    car, and the car's load on the train's Manifest. The color of utility cars isn't shown on Manifests
+    and switch lists.</p>
 
    <p>If you use the utility feature, it is strongly recommended that you select the utility
     feature for all cars of a given type. Since the car's road and number isn't displayed on the

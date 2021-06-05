@@ -63,14 +63,14 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (hasWork && !routeLocationName.equals(previousLocationName)) {
                 if (!train.isShowArrivalAndDepartureTimesEnabled()) {
                     builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
-                } else if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+                } else if (routeLocation == train.getTrainDepartsRouteLocation()) {
                     builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName,
                             train.getFormatedDepartureTime())); // NOI18N
                 } else if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
                     builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName,
                             routeLocation.getFormatedDepartureTime())); // NOI18N
                 } else if (Setup.isUseDepartureTimeEnabled()
-                        && routeLocation != train.getRoute().getTerminatesRouteLocation()) {
+                        && routeLocation != train.getTrainTerminatesRouteLocation()) {
                     builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName,
                             train.getExpectedDepartureTime(routeLocation))); // NOI18N
                 } else if (!train.getExpectedArrivalTime(routeLocation).equals(Train.ALREADY_SERVICED)) { // NOI18N
@@ -131,7 +131,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             builder.append(blockCars(location.path(JsonOperations.CARS), routeLocation, true));
             builder.append(dropEngines(location.path(JSON.ENGINES).path(JSON.REMOVE)));
 
-            if (routeLocation != train.getRoute().getTerminatesRouteLocation()) {
+            if (routeLocation != train.getTrainTerminatesRouteLocation()) {
                 // Is the next location the same as the current?
                 RouteLocation rlNext = train.getRoute().getNextRouteLocation(routeLocation);
                 if (!routeLocationName.equals(splitString(rlNext.getName()))) {
@@ -160,7 +160,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                         if (routeLocation.getComment().trim().isEmpty()) {
                             // no route comment, no work at this location
                             if (train.isShowArrivalAndDepartureTimesEnabled()) {
-                                if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+                                if (routeLocation == train.getTrainDepartsRouteLocation()) {
                                     builder.append(String.format(locale, strings
                                             .getProperty("NoScheduledWorkAtWithDepartureTime"), routeLocationName,
                                             train.getFormatedDepartureTime()));
@@ -191,7 +191,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                                 }
                             }
                             if (train.isShowArrivalAndDepartureTimesEnabled()) {
-                                if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+                                if (routeLocation == train.getTrainDepartsRouteLocation()) {
                                     builder.append(String.format(locale, strings
                                             .getProperty("CommentAtWithDepartureTime"), routeLocationName, train // NOI18N
                                             .getFormatedDepartureTime(), StringEscapeUtils

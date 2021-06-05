@@ -86,6 +86,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected abstract String getBeanText(E bean);
 
+    protected abstract String getAddTitleKey();
+
+    protected abstract String getCreateButtonHintKey();
+
     // ------------ Methods for LogixNG Table Window ------------
 
     /**
@@ -362,7 +366,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.logixng.LogixNGTable";  // NOI18N
+        return "package.jmri.jmrit.beantable.LogixNGTable";  // NOI18N
     }
 
     // ------------ variable definitions ------------
@@ -409,12 +413,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         _showReminder = true;
         // make an Add bean Frame
         if (addLogixNGFrame == null) {
-            JPanel panel5 = makeAddFrame("TitleAddLogixNG", "Add");  // NOI18N
+            String titleKey = getAddTitleKey();
+            String buttonHintKey = getCreateButtonHintKey();
+            JPanel panel5 = makeAddFrame(titleKey, "Add");  // NOI18N
             // Create bean
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             panel5.add(create);
             create.addActionListener(this::createPressed);
-            create.setToolTipText(Bundle.getMessage("LogixNGCreateButtonHint"));  // NOI18N
+            create.setToolTipText(Bundle.getMessage(buttonHintKey));  // NOI18N
         }
         addLogixNGFrame.pack();
         addLogixNGFrame.setVisible(true);
@@ -472,7 +478,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         Runnable t = new Runnable() {
             @Override
             public void run() {
-                log.error("Copy LogixNG is not implemented yet");
+                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
 
                 // This may or may not work. It's not tested yet.
                 // Disable for now.
@@ -679,6 +685,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 return;
             }
             _curNamedBean = createBean(uName);
+            if (_curNamedBean == null) {
+                log.error("Failure to create bean with System Name: {}", "none");  // NOI18N
+                return;
+            }
             sName = _curNamedBean.getSystemName();
         } else {
             if (!checkLogixNGSysName()) {
@@ -915,8 +925,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
-        JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
-        condBrowserFrame.addHelpMenu("package.jmri.jmrit.logixng.LogixNGTable", true);            // NOI18N
+        JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("LogixNG_Browse_Title"), false, true);   // NOI18N
 
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -952,7 +961,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         bottomPanel.add(helpBrowse, BorderLayout.WEST);
         helpBrowse.addActionListener((ActionEvent e) -> {
             JOptionPane.showMessageDialog(condBrowserFrame,
-                    Bundle.getMessage("BrowserHelpText"),   // NOI18N
+                    Bundle.getMessage("LogixNG_Browse_HelpText"),   // NOI18N
                     Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
                     JOptionPane.INFORMATION_MESSAGE);
         });
