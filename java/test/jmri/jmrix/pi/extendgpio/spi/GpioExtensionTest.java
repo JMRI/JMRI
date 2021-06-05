@@ -5,6 +5,10 @@
  */
 package jmri.jmrix.pi.extendgpio.spi;
 
+import com.pi4j.io.gpio.*;
+
+import jmri.NamedBean.BadSystemNameException;
+import jmri.Sensor;
 import jmri.jmrix.pi.extendgpio.ExtensionService;
 import jmri.util.JUnitUtil;
 
@@ -18,7 +22,36 @@ import org.junit.jupiter.api.*;
  * @author   Dave Jordan
  */
 public class GpioExtensionTest {
+
+    private class GpioExtensionImpl implements GpioExtension {
+
+        @Override
+        public String getExtensionName () {
+            return "GpioExtensionImpl";
+        }
+
+        @Override
+        public String validateSystemNameFormat (String systemName) throws BadSystemNameException {
+            return null;
+        }
     
+        @Override
+        public GpioPinDigitalInput provisionDigitalInputPin(GpioController gpio, String systemName) throws BadSystemNameException {
+            return null;
+        }
+    
+        @Override
+        public GpioPinDigitalOutput provisionDigitalOutputPin(GpioController gpio, String systemName) throws BadSystemNameException {
+            return null;
+        }
+    
+        @Override
+        public Sensor.PullResistance [] getAvailablePullValues () {
+            return GpioExtension.super.getAvailablePullValues ();
+        }
+    
+    }
+
     @Test
     public void testExtensionName(){
         GpioExtension ex = ExtensionService.getExtensionFromSystemName ("PT:MCP23017:");
@@ -26,6 +59,14 @@ public class GpioExtensionTest {
         Assert.assertEquals ("MCP23017", s);
     }
 
+    @Test
+    public void testPullValues() {
+        GpioExtension ex = new GpioExtensionImpl ();
+        Sensor.PullResistance [] myPV = ex.getAvailablePullValues ();
+        Sensor.PullResistance [] defPV = Sensor.PullResistance.values();
+        Assert.assertArrayEquals (defPV, myPV);
+    }
+    
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
