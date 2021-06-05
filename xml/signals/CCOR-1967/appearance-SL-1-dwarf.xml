@@ -10,12 +10,12 @@
     <year>2019</year>
     <holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
         <email>cpunclejoe@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -67,55 +67,61 @@
         <authorinitials>MKZ</authorinitials>
         <revremark>added Advance Approach to Approach aspectMapping, allows proceed indication for R/Y signal head</revremark>
     </revision>
+        <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
   <name>Single head dwarf signal</name>
   <reference>http://gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
   <description>Appearances for one-head dwarf signal without other badging</description>
-  
+
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 53, RULE 240E</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>flashyellow</show>
       <reference>Page 54, RULE 240F Fig.6</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 53, RULE 240D</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <reference>Page 55, RULE 240N</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240N.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240N.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Flashing Stop and Proceed</aspectname>
       <show>flashred</show>
       <reference>Page 53, RULE 240A</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240C.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240A.gif</imagelink>
     </appearance>
   </appearances>
 
@@ -220,4 +226,4 @@
     </aspectMapping>
   </aspectMappings>
 
-</appearancetable>  
+</appearancetable>

@@ -34,26 +34,7 @@ public class ImportLogix {
      */
     public ImportLogix(Logix logix, boolean allowSystemImport, boolean dryRun) {
 
-//        System.out.format("RTX: %s%n", jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer());
-
         _dryRun = dryRun;
-
-        if ("SYS".equals(logix.getSystemName())) {
-            if (allowSystemImport) {
-                log.warn("Warning. Trying to import SYS from Logix to LogixNG: ", logix.getSystemName());
-            } else {
-                throw new IllegalArgumentException("Cannot import Logix SYS to LogixNG");
-            }
-        }
-        if (logix.getSystemName().startsWith(
-                InstanceManager.getDefault(LogixManager.class).getSystemNamePrefix() + ":RTX")) {
-            if (allowSystemImport) {
-                log.warn("Warning. Trying to import RTX from Logix to LogixNG: ", logix.getSystemName());
-            } else {
-                throw new IllegalArgumentException("Cannot import Logix RTX to LogixNG");
-            }
-        }
-
         LogixNG logixNG = null;
 
         if (!_dryRun) {

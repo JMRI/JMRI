@@ -115,6 +115,16 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         return writer.toString();
     }
 
+    @Override
+    protected String getAddTitleKey() {
+        return "TitleAddLogixNG";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGCreateButtonHint";
+    }
+
     /**
      * Create or copy bean frame.
      *
@@ -127,7 +137,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.logixng.LogixNGTable", true);     // NOI18N
+                "package.jmri.jmrit.beantable.LogixNGTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

@@ -629,7 +629,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return NONE;
     }
 
-    protected RouteLocation getTrainDepartsRouteLocation() {
+    public RouteLocation getTrainDepartsRouteLocation() {
         if (getRoute() == null) {
             return null;
         }
@@ -661,6 +661,17 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return null;
         }
         return getRoute().getTerminatesRouteLocation();
+    }
+    
+    /**
+     * Returns the order the train should be blocked.
+     * @return routeLocations for this train.
+     */
+    public List<RouteLocation> getTrainBlockingOrder() {
+        if (getRoute() == null) {
+            return null;
+        }
+        return getRoute().getLocationsBySequenceList();
     }
 
     /**

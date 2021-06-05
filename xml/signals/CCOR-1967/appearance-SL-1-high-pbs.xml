@@ -31,6 +31,12 @@
         <authorinitials>MKZ</authorinitials>
         <revremark>fix Approach aspect mapping</revremark>
     </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision>
 </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
@@ -44,28 +50,28 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240E.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240E.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>flashyellow</show>
       <reference>Page 54</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240F.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240F.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240D.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240D.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <reference>Page 53</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-high-pbs/rule-240B.gif</imagelink>
     </appearance>
   </appearances>
 
