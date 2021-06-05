@@ -62,7 +62,7 @@
 
       <h3>Prototype Railroad Signaling terms</h3><a href=
       "https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg"
-      width="132" height="240" align="right"></a> 
+      width="132" height="240" align="right"></a>
       <!-- With some very useful information from the JMRI developers structure site -->
 
       <ul>
@@ -164,12 +164,12 @@
         <li><b>Virtual</b> Virtual signals are JMRI internal
         signals with no actual hardware attached. Virtual Signals
         may represent theoretical Aspects at buffer stops or in
-        staging that are used by prior signals.  They may also be useful with 
+        staging that are used by prior signals.  They may also be useful with
         <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">Signal Mast Repeaters</a>.<br>
         <ul>
-            <li>When using JMRI Signal Heads, the list of signal head types includes 
+            <li>When using JMRI Signal Heads, the list of signal head types includes
         the option "Virtual".</li>
-            <li>When using JMRI Signal Masts, the list of "Mast 
+            <li>When using JMRI Signal Masts, the list of "Mast
         Driver" types includes a "Virtual Mast" driver type.</li>
         </ul>
         </li>
@@ -286,8 +286,7 @@
         Signaling page</a></li>
 
         <li><a href=
-        "http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling
-        simply explained</a> by A.A. Krug</li>
+        "http://www.mikeroque.com/railroad-signals/">Understanding Railroad Signals</a> by A.A. Krug</li>
 
         <li><a href="http://www.lundsten.dk/us_signaling/">North
         American Signaling</a> is a comprehensive website by
@@ -401,7 +400,7 @@
 
       <p>5. The <b><a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
       Signal Mast Repeater</a></b> tool allows one signal mast to
-      follow another signal mast's aspect, or for two signal masts to follow each 
+      follow another signal mast's aspect, or for two signal masts to follow each
       other (i.e. the most-recent aspect change is reflected by the other mast).
       This can be convenient for providing a duplicate of a signal's aspect via
       different hardware, and may also be useful when creating "Signal Mast Logic"

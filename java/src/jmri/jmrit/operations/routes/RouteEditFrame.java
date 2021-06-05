@@ -15,6 +15,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.tools.PrintRouteAction;
+import jmri.jmrit.operations.routes.tools.RouteBlockingOrderEditFrameAction;
 import jmri.jmrit.operations.routes.tools.RouteCopyAction;
 import jmri.jmrit.operations.routes.tools.SetTrainIconRouteAction;
 import jmri.jmrit.operations.setup.Control;
@@ -210,6 +211,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     
     private void loadToolMenu() {
         toolMenu.removeAll();
+        toolMenu.add(new RouteBlockingOrderEditFrameAction(_route));
         toolMenu.add(new RouteCopyAction(_route));
         toolMenu.add(new SetTrainIconRouteAction(_route));
         toolMenu.addSeparator();

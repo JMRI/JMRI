@@ -479,6 +479,8 @@
         who hosts a large part of our
         development and distribution infrastructure.
 
+        <li>@gitophile, who found the fix for a broken link.</li>
+
         <li>Joseph Goldstone, who put together the javax.comm
         implementation for Mac OS X</li>
 
