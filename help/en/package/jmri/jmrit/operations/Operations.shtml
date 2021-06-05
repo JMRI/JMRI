@@ -324,6 +324,8 @@
       <li><a href="#RouteTools">Route Tools</a>
 
        <ul>
+       <li><a href="#RouteBlockingOrder">Blocking Order</a></li>
+       
         <li><a href="#CopyRoute">Copy Route</a></li>
 
         <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
@@ -1880,10 +1882,11 @@
    <a name="SortByTrack" id="SortByTrack"></a>
    <p>
     The next option is "Sort by Track". The program when creating a train Manifest normally lists
-    the cars in the order they need to be placed into the train for proper blocking. The normal
-    format is to list the cars in the order they will be set out as determined by the train's route,
-    and then alphabetically by the track names for each location. You can modify the blocking order
-    for a location by using the tool <a href="#TrackBlockingOrder">Track Blocking Order</a>. If you
+    the cars in the order they need to be placed into the train for proper <a
+     href="#RouteBlockingOrder">blocking</a>. The normal format is to list the cars in the order
+    they will be set out as determined by the train's <a href="#RouteBlockingOrder">route</a>, and
+    then alphabetically by the track names for each location. You can modify the blocking order for
+    a location by using the tool <a href="#TrackBlockingOrder">Track Blocking Order</a>. If you
     would rather have the cars listed by the track name rather than blocking order, select the
     option "Sort by Track".
    </p>
@@ -2188,13 +2191,15 @@
 
    <a name="TrackBlockingOrder" id="TrackBlockingOrder"></a>
    <h4>Track Blocking Order</h4>
-   The program when creating Manifests and switch lists will block the cars in the train by
-   destination and then alphabetically by the track names at the destination. If you want to change
-   the order tracks are serviced at a location, use the location tool "Track Blocking Order" to
-   adjust the order tracks are presented on Manifests and switch lists. The "Order" number controls
-   how tracks are presented, lower numbered tracks are printed first for Westbound and Northbound
-   trains, and higher numbered tracks are printed first for Eastbound and Southbound trains. Use any
-   blocking order number greater than zero when using this feature.
+   The program when creating <a href="#PrintingManifests">Manifest</a> and switch lists
+   will block the cars in the train by destination (<a
+    href="#RouteBlockingOrder">route blocking order</a>) and then alphabetically by the track names
+   at the destination. If you want to change the order tracks are serviced at a location, use the
+   location tool "Track Blocking Order" to adjust the order tracks are presented on Manifests and
+   switch lists. The "Order" number controls how tracks are presented, lower numbered tracks are
+   printed first for Westbound and Northbound trains, and higher numbered tracks are printed first
+   for Eastbound and Southbound trains. Use any blocking order number greater than zero when using
+   this feature.
 
    <p>Note that this feature controls the set outs for a location. Car pick ups at a location
     are blocked by their next destination and then alphabetically by track name or by the track blocking
@@ -4179,6 +4184,23 @@
 
    <a name="RouteTools" id="RouteTools"></a>
    <h3>Route Tools</h3>
+
+   <a name="RouteBlockingOrder" id="RouteBlockingOrder"></a>
+   <h4>Blocking Order</h4>
+   <p>
+    The program when creating a <a href="#PrintingManifests">Manifest</a> normally blocks cars in
+    the train by their destination. Cars for the first destination in a train's route are placed
+    immediately after the locomotives, followed by the next location's set of cars, continuing until
+    the last set of cars which can be found at the end of the Manifest's for the train's departure
+    location. But with this tool, you can have a different blocking order. For example, you might
+    want to have the cars for a location placed at the end of the train to facilitate a facing point
+    set out. If you want to change the blocking order for a train, you can use this tool to modify
+    how the program blocks the cars for a location. Use the "Up" or "Down" buttons to change the
+    blocking order, and press the "Save" button to complete the change. Use the reset button to
+    restore the blocking order.
+   </p>
+
+   <p>You can also modify the order cars are set out for a location, see <a href="#TrackBlockingOrder">Track Blocking Order</a>.</p>
 
    <a name="CopyRoute" id="CopyRoute"></a>
    <h4>Copy Route</h4>

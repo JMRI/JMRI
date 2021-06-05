@@ -133,13 +133,28 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final boolean validateName(String name) {
+        // Empty name is not allowed
         if (name.isEmpty()) return false;
+        
+        // The name must start with a letter
         if (!Character.isLetter(name.charAt(0))) return false;
+        
+        // The name must consist of letters, digits or underscore
         for (int i=0; i < name.length(); i++) {
             if (!Character.isLetterOrDigit(name.charAt(i)) && (name.charAt(i) != '_')) {
                 return false;
             }
         }
+        
+        if (_parent != null) {
+            // Check that no other female socket of the parent has the same name
+            for (int i=0; i < _parent.getChildCount(); i++) {
+                FemaleSocket child = _parent.getChild(i);
+                if ((child != this) && name.equals(child.getName())) return false;
+            }
+        }
+        
+        // The name is valid
         return true;
     }
 

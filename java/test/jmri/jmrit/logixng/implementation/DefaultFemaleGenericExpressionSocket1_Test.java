@@ -89,24 +89,8 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         DefaultFemaleGenericExpressionSocket socket;
 
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleAnalogExpressionSocket analogSocket = socket.getAnalogSocket(_conditionalNG);
-        Assert.assertEquals("String matches", "?*", analogSocket.getShortDescription());
-        Assert.assertEquals("String matches", "?* E", analogSocket.getLongDescription());
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleDigitalExpressionSocket digitalSocket = socket.getDigitalSocket(_conditionalNG);
-        Assert.assertEquals("String matches", "?*", digitalSocket.getShortDescription());
-        Assert.assertEquals("String matches", "?* E", digitalSocket.getLongDescription());
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleGenericExpressionSocket genericSocket = socket.getGenericSocket(_conditionalNG);
-        Assert.assertEquals("String matches", "?*", genericSocket.getShortDescription());
-        Assert.assertEquals("String matches", "?* E", genericSocket.getLongDescription());
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleStringExpressionSocket stringSocket = socket.getStringSocket(_conditionalNG);
-        Assert.assertEquals("String matches", "?*", stringSocket.getShortDescription());
-        Assert.assertEquals("String matches", "?* E", stringSocket.getLongDescription());
+        Assert.assertEquals("String matches", "?*", socket.getShortDescription());
+        Assert.assertEquals("String matches", "?* E", socket.getLongDescription());
     }
 
     @Override
@@ -222,26 +206,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
 
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
         socket.connect(digitalMaleSocket);
-        FemaleAnalogExpressionSocket analogSocket = socket.getAnalogSocket(_conditionalNG);
-        checkConnectableClasses(analogSocket);
-        socket.disconnect();
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleDigitalExpressionSocket digitalSocket = socket.getDigitalSocket(_conditionalNG);
-        checkConnectableClasses(digitalSocket);
-        socket.disconnect();
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleGenericExpressionSocket genericSocket = socket.getGenericSocket(_conditionalNG);
-        checkConnectableClasses(genericSocket);
-        socket.disconnect();
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.connect(digitalMaleSocket);
-        FemaleStringExpressionSocket stringSocket = socket.getStringSocket(_conditionalNG);
-        checkConnectableClasses(stringSocket);
+        checkConnectableClasses(socket);
         socket.disconnect();
     }
 
@@ -262,41 +227,13 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
 
         DefaultFemaleGenericExpressionSocket femaleSocket;
 
-        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, _conditionalNG, _listener, "E");
-        FemaleAnalogExpressionSocket analogSocket = femaleSocket.getAnalogSocket(_conditionalNG);
-        Assert.assertTrue("Socket is compatible",
-                analogSocket.isCompatible(analogMaleSocket));
-        Assert.assertTrue("Socket is compatible",
-                analogSocket.isCompatible(digitalMaleSocket));
-        Assert.assertTrue("Socket is compatible",
-                analogSocket.isCompatible(stringMaleSocket));
-
         femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleDigitalExpressionSocket digitalSocket = femaleSocket.getDigitalSocket(_conditionalNG);
         Assert.assertTrue("Socket is compatible",
-                digitalSocket.isCompatible(analogMaleSocket));
+                femaleSocket.isCompatible(analogMaleSocket));
         Assert.assertTrue("Socket is compatible",
-                digitalSocket.isCompatible(digitalMaleSocket));
+                femaleSocket.isCompatible(digitalMaleSocket));
         Assert.assertTrue("Socket is compatible",
-                digitalSocket.isCompatible(stringMaleSocket));
-
-        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleGenericExpressionSocket genericSocket = femaleSocket.getGenericSocket(_conditionalNG);
-        Assert.assertTrue("Socket is compatible",
-                genericSocket.isCompatible(analogMaleSocket));
-        Assert.assertTrue("Socket is compatible",
-                genericSocket.isCompatible(digitalMaleSocket));
-        Assert.assertTrue("Socket is compatible",
-                genericSocket.isCompatible(stringMaleSocket));
-
-        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        FemaleStringExpressionSocket stringSocket = femaleSocket.getStringSocket(_conditionalNG);
-        Assert.assertTrue("Socket is compatible",
-                stringSocket.isCompatible(analogMaleSocket));
-        Assert.assertTrue("Socket is compatible",
-                stringSocket.isCompatible(digitalMaleSocket));
-        Assert.assertTrue("Socket is compatible",
-                stringSocket.isCompatible(stringMaleSocket));
+                femaleSocket.isCompatible(stringMaleSocket));
     }
 
     @Test
@@ -389,164 +326,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         }
         Assert.assertTrue("Exception thrown", exceptionThrown);
         _femaleGenericSocket.disconnect();
-    }
-
-    // The same test as above, but use the _femaleGenericSocket.getGenericSocket() instead
-    @Test
-    public void testGetAndSetSocketTypeInternalSocket() throws SocketAlreadyConnectedException {
-        FemaleGenericExpressionSocket internalSocket = _femaleGenericSocket.getGenericSocket(_conditionalNG);
-
-        boolean exceptionThrown;
-
-        AnalogExpressionMemory analogExpression = new AnalogExpressionMemory("IQAE351", null);
-        MaleSocket analogMaleSocket =
-                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpression);
-
-        ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
-        MaleSocket digitalMaleSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
-
-        StringExpressionMemory stringExpression = new StringExpressionMemory("IQSE351", null);
-        MaleSocket stringMaleSocket =
-                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
-
-        // This should work
-        internalSocket.setSocketType(SocketType.ANALOG);
-        internalSocket.setSocketType(SocketType.ANALOG);   // Test calling setSocketType() twice
-        Assert.assertEquals("Socket type is correct", SocketType.ANALOG, internalSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
-
-        // We can't change socket type if it's connected
-        internalSocket.connect(analogMaleSocket);
-        exceptionThrown = false;
-        try {
-            internalSocket.setSocketType(SocketType.DIGITAL);
-        } catch (SocketAlreadyConnectedException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-        internalSocket.disconnect();
-
-
-        // This should work
-        internalSocket.setSocketType(SocketType.DIGITAL);
-        internalSocket.setSocketType(SocketType.DIGITAL);   // Test calling setSocketType() twice
-        Assert.assertEquals("Socket type is correct", SocketType.DIGITAL, internalSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
-
-        // We can't change socket type if it's connected
-        internalSocket.connect(digitalMaleSocket);
-        exceptionThrown = false;
-        try {
-            internalSocket.setSocketType(SocketType.GENERIC);
-        } catch (SocketAlreadyConnectedException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-        internalSocket.disconnect();
-
-
-        // This should work
-        internalSocket.setSocketType(SocketType.GENERIC);
-        internalSocket.setSocketType(SocketType.GENERIC);   // Test calling setSocketType() twice
-        Assert.assertEquals("Socket type is correct", SocketType.GENERIC, internalSocket.getSocketType());
-        Assert.assertNull("Active socket is null", internalSocket.getCurrentActiveSocket());
-
-        // We can't change socket type if it's connected
-        internalSocket.connect(stringMaleSocket);
-        exceptionThrown = false;
-        try {
-            internalSocket.setSocketType(SocketType.STRING);
-        } catch (SocketAlreadyConnectedException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-        internalSocket.disconnect();
-
-
-        // This should work
-        internalSocket.setSocketType(SocketType.STRING);
-        internalSocket.setSocketType(SocketType.STRING);   // Test calling setSocketType() twice
-        Assert.assertEquals("Socket type is correct", SocketType.STRING, internalSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
-
-        // We can't change socket type if it's connected
-        internalSocket.connect(stringMaleSocket);
-        exceptionThrown = false;
-        try {
-            internalSocket.setSocketType(SocketType.DIGITAL);
-        } catch (SocketAlreadyConnectedException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-        internalSocket.disconnect();
-    }
-
-    private void testGetSocketException(
-            DefaultFemaleGenericExpressionSocket socket) {
-
-        boolean exceptionThrown;
-
-        exceptionThrown = false;
-        try {
-            socket.getAnalogSocket(_conditionalNG);
-        } catch (RuntimeException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-
-        exceptionThrown = false;
-        try {
-            socket.getDigitalSocket(_conditionalNG);
-        } catch (RuntimeException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-
-        exceptionThrown = false;
-        try {
-            socket.getGenericSocket(_conditionalNG);
-        } catch (RuntimeException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-
-        exceptionThrown = false;
-        try {
-            socket.getStringSocket(_conditionalNG);
-        } catch (RuntimeException e) {
-            exceptionThrown = true;
-            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
-    }
-
-    @Test
-    public void testGetSocket() {
-        DefaultFemaleGenericExpressionSocket socket;
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.ANALOG, _conditionalNG, _listener, "E");
-        socket.getAnalogSocket(_conditionalNG);
-        testGetSocketException(socket);
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, _conditionalNG, _listener, "E");
-        socket.getDigitalSocket(_conditionalNG);
-        testGetSocketException(socket);
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, _conditionalNG, _listener, "E");
-        socket.getGenericSocket(_conditionalNG);
-        testGetSocketException(socket);
-
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.STRING, _conditionalNG, _listener, "E");
-        socket.getStringSocket(_conditionalNG);
-        testGetSocketException(socket);
     }
 
     @Test

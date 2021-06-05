@@ -180,7 +180,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
             Assert.assertEquals("expression female socket name is "+entry._socketName,
                     entry._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
-                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
+                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
                     expression.getChild(i).getClass().getName());
             Assert.assertFalse("expression female socket is not connected",
                     expression.getChild(i).isConnected());
@@ -239,7 +239,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
             Assert.assertEquals("expression female socket name is "+entry._socketName,
                     entry._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
-                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
+                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
                     expression.getChild(i).getClass().getName());
             Assert.assertFalse("expression female socket is not connected",
                     expression.getChild(i).isConnected());
