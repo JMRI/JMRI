@@ -95,7 +95,7 @@ public class TableForEach extends AbstractDigitalAction
                 }
             }
         } else {
-            int column = table.getRowNumber(_rowOrColumnName);
+            int column = table.getColumnNumber(_rowOrColumnName);
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(row, 0);
