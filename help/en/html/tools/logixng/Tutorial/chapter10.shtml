@@ -20,7 +20,189 @@
       <h1>LogixNG Tutorial - Chapter 10</h1>
 
       <h2>Modules</h2>
-Content
+
+      <p>A module is a special ConditionalNG which is invoked from regular ConditionalNGs.
+      In programing terms it is a sub-routine, method, def, etc.  It can use zero or more
+      inputs and return zero or more outputs.  It does not respond to expression changes.</p>
+
+      <p>A common use would be to return the state of a set of expressions that can be
+      called by various ConditionalNGs rather than listing each expressions in each
+      ConditionalNG.  Another exmaple is setting a common group of actions.</p>
+
+      <p>When combined with <a href="chapter11.shtml">tables</a>, a module could be passed
+      the name of a table row.  It would then perform the actions based on the table
+      row data.</p>
+
+      <p>The <a href="/help/en/package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">
+      Module Table</a> provides the details on creating a module.</p>
+
+      <p>This is a digital expression socket.  It can have inputs, but it is limited to
+      returning <strong>true</strong> or <strong>false</strong> based on the
+      <strong><em>current</em></strong> state of the expression list.</p>
+
+      <div style="margin-left: 2em;">
+      <a href="images/chapter10/digital_expression_root.png">
+      <img src="images/chapter10/digital_expression_root.png"
+      alt="Chapter 10 digital expression root" width="500" height="108">
+      </a>
+      </div>
+
+      <p>This is a digital action socket.  This can be used to create an action only module or
+      complex modules withe any combination of expressions and actions, such as
+      <strong>if then else</strong> structures.  These can have inputs and outputs.</p>
+
+      <div style="margin-left: 2em;">
+      <a href="images/chapter10/digital_action_root.png">
+      <img src="images/chapter10/digital_action_root.png"
+      alt="Chapter 10 digital action root" width="500" height="96">
+      </a>
+      </div>
+
+
+      <h3>Inputs and Outputs</h3>
+
+        <p>The input and outputs are defined by doing a right click and edit on the first
+        line of the tree.  In the module, the inputs and outputs are defined as
+        local variables.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/parameters_dialog.png">
+        <img src="images/chapter10/parameters_dialog.png"
+        alt="Chapter 10 parameters dialog" width="617" height="387">
+        </a>
+        </div>
+
+        <p>Click on the <strong>Add parameters</strong> button.  Enter a name and select
+        whether it is for <strong>input</strong>, <strong>output</strong> or both.  The
+        <strong>Select</strong> option is used to delete the row or move it up or down.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/parameters_sample.png">
+        <img src="images/chapter10/parameters_sample.png"
+        alt="Chapter 10 parameters sample" width="617" height="387">
+        </a>
+        </div>
+
+        <p>The first row is updated to show the inputs and outputs.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/definitions.png">
+        <img src="images/chapter10/definitions.png"
+        alt="Chapter 10 module definitions" width="589" height="108">
+        </a>
+        </div>
+
+      <h3>Calling a Digital Expression Module</h3>
+
+        <p>Expression modules are called from ConditionalNG expressions and return
+        <strong>true</strong> or <strong>false</strong>.</p>
+
+        <p>Use the <strong>Call module</strong> type in the <strong>Other</strong> category.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/add_expression_call.png">
+        <img src="images/chapter10/add_expression_call.png"
+        alt="Chapter 10 add expression call" width="303" height="185">
+        </a>
+        </div>
+
+        <p>After clicking Create, the Module detail window will open.  Select the module
+        from the list.  It only shows expresson modules.  Click <strong>OK</strong> to add
+        to the tree.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/expression_list.png">
+        <img src="images/chapter10/expression_list.png"
+        alt="Chapter 10 call expression list" width="244" height="96">
+        </a>
+        </div>
+
+        <p>If there are parameters that need configuration, edit the newly added row and
+        the parameter list will be displayed. If necessary, configure the input variables
+        as described in the next section.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/call_expression_module.png">
+        <img src="images/chapter10/call_expression_module.png"
+        alt="Chapter 10 call expression module" width="499" height="144">
+        </a>
+        </div>
+
+      <h3>Calling a Digital Action Module</h3>
+
+        <p>Use the <strong>Call module</strong> type in the <strong>Other</strong> category.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/add_action_call.png">
+        <img src="images/chapter10/add_action_call.png"
+        alt="Chapter 10 add action call" width="303" height="185">
+        </a>
+        </div>
+
+        <p>After clicking Create, the Module detail window will open.  Select the module
+        from the list.  It only shows action modules.  Click <strong>OK</strong> to add
+        to the tree.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/action_list.png">
+        <img src="images/chapter10/action_list.png"
+        alt="Chapter 10 call action list" width="244" height="96">
+        </a>
+        </div>
+
+        <p>If there are parameters that need configuration, edit the newly added row and
+        the parameter list will be displayed. If necessary, configure the input variables</p>
+
+        <h4>Configure Call Parameters</h4>
+
+        <p>When Edit is selected on the row, the parameters window will open.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/parameters_window.png">
+        <img src="images/chapter10/parameters_window.png"
+        alt="Chapter 10 parameters window" width="476" height="316">
+        </a>
+        </div>
+
+        <p>For <strong>Input types</strong> there are a variety of sources.  They range from
+        literals to various type of references.  The <strong>Input data</strong> field has
+        the literal value or the reference name.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/input_types.png">
+        <img src="images/chapter10/input_types.png"
+        alt="Chapter 10 input types" width="425" height="189">
+        </a>
+        </div>
+
+        <p>For <strong>Output types</strong> there are two choices.  The <strong>Output data</strong>
+        field contains the name of the choice.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/output_types.png">
+        <img src="images/chapter10/output_types.png"
+        alt="Chapter 10 output types" width="421" height="100">
+        </a>
+        </div>
+
+        <p>The selections in this example are local variables.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/call_parameters.png">
+        <img src="images/chapter10/call_parameters.png"
+        alt="Chapter 10 call parameters" width="490" height="424">
+        </a>
+        </div>
+
+        <p>The resulting ConditionalNG with the local variables and a comment on the
+        module call.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter10/call_action_module.png">
+        <img src="images/chapter10/call_action_module.png"
+        alt="Chapter 10 call action module" width="500" height="184">
+        </a>
+        </div>
 
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>
