@@ -1,0 +1,187 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 6</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<!--
+<a id="id1" href="#">Note for developers</a>
+<p id="id2" class="hidden">If you click on me, aaa I will disappear.</p>
+-->
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 6</h1>
+
+<h2>Formula</h2>
+
+LogixNG has native support for complex calculations with the tool "Formula". Formula supports almost all the Java
+operators and you can use local variables and functions with formula. In many cases, like the action Turnout, you can
+choose to use formula to get the turnout you want to act on, or to get the new state you want to set.
+<p>
+Local variables, which are explained in chapter 8, can be used directly in formula. So if you have a local variable
+<i>index</i>, you can for example have the formula <i>"IT" + index</i>, which adds the string "IT" and the value of
+<i>index</i>. This can be useful if you for example want to set all the turnouts IT1, IT2, IT3, ..., IT10 to thrown.
+You can then use the action <i>For</i> to iterate from 1 to 10 and to set each of these turnouts to thrown.
+
+<h3>The Formula expressions</h3>
+
+There are three expressions for formula: Analog Formula, Digital Formula and String Formula. They all work the same
+way, except that Analog Formula returns a floating point number, Digital Formula returns a boolean value (true or
+false), and String Formula returns a string. The expression formula can have child expressions, for example reading
+an analog value or reading the state of a sensor. You use the result of the child expressions by using the name of the
+female socket in the formula. So if you have an expression Formula which has a child E1 to which an expression Sensor
+is connected, you can use the result of the expression Sensor in the formula by the identifier E1 which points to the
+female socket and its connected expression.
+
+<h3>Operators</h3>
+
+Formula supports most of the Java operators. A list of the Java operators, together with the priority of them, is on
+<a href="https://introcs.cs.princeton.edu/java/11precedence/">this page</a>.
+<p>
+Currently supported operators are:
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><th>Operator</th><th>Description</th><th>Associativity</th></tr>
+<tr><td>-</td><td>unary minus</td><td>right to left</td></tr>
+<tr><td>* / %</td><td>multiply, divide, modulo</td><td>left to right</td></tr>
+<tr><td>+ -<br>+</td><td>additive<br>string concatenation</td><td>left to right</td></tr>
+<tr><td>< <= <br> > >=</td><td>relational</td><td>not associative</td></tr>
+<tr><td>==<br>!=</td><td>equality</td><td>left to right</td></tr>
+<tr><td>&&</td><td>logical AND</td><td>left to right</td></tr>
+<tr><td>||</td><td>logical OR</td><td>left to right</td></tr>
+<tr><td>?:</td><td>ternary</td><td>right to left</td></tr>
+<tr><td> =   +=   -= <br> *=   /=   %=</td><td>assignment</td><td>right to left</td></tr>
+</table>
+
+<p>
+
+Note that for the calculations to work, each operand must have the correct type. For example, if you have a memory IM1
+that has a number as a string and you want to subtrack from it, like <i>IM1&nbsp;-&nbsp;1</i>, you need to convert the string in
+IM1 to an integer or a float. Example: <i>int(IM1)&nbsp;-&nbsp;1</i> or <i>float(IM1)&nbsp;-&nbsp;1</i>.
+
+<h3>Functions</h3>
+
+Formula supports functions, like sin(x) and random(). Some functions takes one or several parameters. A function has
+an identifier, for example "sin", followed by a left parantheses, optional one or several parameters separated by
+comma, and then closed by a right parantheses.
+<p>
+The dialog boxes for editing an action or expression, and the dialog box for editing variables, has a button "Formula
+functions". If you click on that button, you get a new dialog box that shows the functions that are available and the
+documentation on each of them.
+<p>
+One may notice that there is several modules with one or two functions in each module. For example, the module Math has
+the functions random() and sin(). The reason for so many modules for so few functions is that the number of functions
+is expected to grow. For example, the Math module should have cos(), tan(), atan() and sqrt(), but neither of these are
+implemented yet.
+<p>
+For JMRI developers: The functions are defined in the package <i>jmri.jmrit.logixng.util.parser.functions</i> and each
+module has its own Java class. Each function is its own class that implements the <i>Function</i> interface.
+
+<h4>Documentation of the functions</h4>
+
+To make it easier to use the functions, each function has some documentation for it.
+
+<img src="images/chapter6_function_help1.png"><br>
+<p>
+Each action/expression has a button <i>Formula functions</i> that opens a dialog box with documentation of the
+functions.
+
+<p>
+
+<img src="images/chapter6_function_help2.png"><br>
+<p>
+The functions are grouped in modules to make it easier to find the functions. Select the module you are interested in.
+<p>
+
+<img src="images/chapter6_function_help3.png"><br>
+<p>
+Then select the function you are interested in.
+<p>
+In this case, the function <i>fastClock()</i> take a string parameter which can have any of the values <i>hour</i>,
+<i>min</i> or <i>minOfDay</i>.
+<p>
+
+
+<img src="images/chapter6_function_help4.png"><br>
+<p>
+Some functions, for example the function <i>random()</i>, can take different numbers of parameters. The function
+<i>random()</i> takes either a maximum value and returns a random value 0.0 <= x < max. Or it takes a minimum value and
+returns a random value min <= x < max.
+
+<p>
+
+
+<h3>Add new function with Jython</h3>
+
+It's possible to create a new function i Jython to be used by formula. The code below gives an example that you can use
+as a template. A new function is added by creating a new class that extends the class <b>Function</b> and that
+implements these methods:
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td>getModule</td><td>The name of the module that the function belongs to</td></tr>
+<tr><td>getName</td><td>The name of the function</td></tr>
+<tr><td>calculate</td><td>Calculate the function</td></tr>
+<tr><td>getDescription</td><td>Description of the function for the user</td></tr>
+</table>
+
+<p>
+
+Example Jython script that defines the function <b>jythonTest</b> that takes one floating point parameter:
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>
+<pre>
+import jmri
+
+class MyFunction(jmri.jmrit.logixng.util.parser.Function):
+  def getModule(self):
+    return "Jython example"
+  
+  def getName(self):
+    return "jythonTest"
+  
+  def calculate(self, parameterList):
+    if (parameterList.size() != 1):
+	  raise jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException("Function requires one parameter")
+    return parameterList.get(0).calculate() * 3.4
+  
+  def getDescription(self):
+    return "Example of function defined in Jython"
+
+
+jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put("jythonTest", MyFunction())
+</pre>
+</td></tr>
+</table>
+
+<h3>Calculate the function</h3>
+
+The function <b>calculate</b> takes a number of arguments as a <b>List&lt;ExpressionNode&gt;</b>. We first checks the number
+of arguments by calling the method <b>size()</b> and if that's correct, we get the arguments by calling the method
+<b>get(index)</b> there "index" is the index of the argument.
+<p>
+But to do something useful with the arguments, we need to calculate each argument we want to use. We do that by calling
+the method <b>calculate</b> on each argument we want to use.
+<p>
+We then do the calculation, which in this case multiplies the first argument with 3.4 and then returns the value.
+
+<h3>Important!</h3>
+
+A function may set turnouts, sensors, and other things on the layout. You may for example create the function
+<b>setTurnout(turnout, newState)</b>. But it's important to remember that a ConditionalNG runs on a separate thread so
+if you set a turnout or a sensor, you must do that on the layout thread. Formula is always run on the thread that the
+ConditionalNG is run on, so if a function updates the layout or the GUI, it needs to do it on the layout thread or the
+GUI thread.
+<p>
+See chapter <a href="chapter13.html">Chapter 13 - Threads</a> for more information of LogixNG threads.
+<p>
+</td>
+</tr>
+</table>
+</body>
+</html>

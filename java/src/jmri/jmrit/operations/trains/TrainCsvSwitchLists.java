@@ -140,15 +140,15 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                             fileOut.printRecord("DL", Bundle.getMessage("csvDepartureLocationName"),
                                     splitString(splitString(train.getTrainDepartsName()))); // NOI18N
                             printDepartureTime(fileOut, train.getFormatedDepartureTime());
-                            if (rl == train.getRoute().getDepartsRouteLocation() && routeList.size() > 1) {
+                            if (rl == train.getTrainDepartsRouteLocation() && !train.isLocalSwitcher()) {
                                 printTrainDeparts(fileOut, splitString(rl.getName()), rl.getTrainDirectionString());
                             }
-                            if (rl != train.getRoute().getDepartsRouteLocation()) {
+                            if (rl != train.getTrainDepartsRouteLocation()) {
                                 printExpectedTimeArrival(fileOut, expectedArrivalTime);
                                 printTrainArrives(fileOut, splitString(rl.getName()), rl.getTrainDirectionString());
                             }
                         }
-                        if (rl == train.getRoute().getTerminatesRouteLocation()) {
+                        if (rl == train.getTrainTerminatesRouteLocation()) {
                             printTrainTerminates(fileOut, splitString(rl.getName()));
                         }
                     }
@@ -169,7 +169,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                                 printExpectedTimeArrival(fileOut, expectedArrivalTime);
                             }
                             printTrainArrives(fileOut, splitString(rl.getName()), rl.getTrainDirectionString());
-                            if (rl == train.getRoute().getTerminatesRouteLocation()) {
+                            if (rl == train.getTrainTerminatesRouteLocation()) {
                                 printTrainTerminates(fileOut, splitString(rl.getName()));
                             }
                         } else {
@@ -200,8 +200,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     }
 
                     // get a list of cars and determine if this location is serviced
-                    // block pick up cars by destination
-                    for (RouteLocation rld : routeList) {
+                    // block pick up cars
+                    for (RouteLocation rld : train.getTrainBlockingOrder()) {
                         for (Car car : carList) {
                             if (car.getRouteLocation() == rl &&
                                     car.getTrack() != null &&
@@ -239,7 +239,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         }
                     }
                     stops++;
-                    if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                    if (rl != train.getTrainTerminatesRouteLocation()) {
                         printTrainLength(fileOut, train.getTrainLength(rl), train.getNumberEmptyCarsInTrain(rl),
                                 train.getNumberCarsInTrain(rl));
                         printTrainWeight(fileOut, train.getTrainWeight(rl));

@@ -1,6 +1,8 @@
 package jmri.jmrit.vsdecoder;
 
 /**
+ * Main thread of VSDecoder.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>

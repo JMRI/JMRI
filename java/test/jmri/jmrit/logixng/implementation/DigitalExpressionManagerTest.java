@@ -58,15 +58,9 @@ public class DigitalExpressionManagerTest extends AbstractManagerTestBase {
         FemaleSocket socket;
         MyExpression myExpression = new MyExpression("IQSA1");
         FemaleSocketListener listener = new MyFemaleSocketListener();
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
         
-        preferences.setUseGenericFemaleSockets(false);
         socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", socket.getClass().getName());
-        
-        preferences.setUseGenericFemaleSockets(true);
-        socket = _m.createFemaleSocket(myExpression, listener, "E2");
-        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket", socket.getClass().getName());
     }
     
     @Test
@@ -205,16 +199,6 @@ public class DigitalExpressionManagerTest extends AbstractManagerTestBase {
 
         @Override
         public boolean evaluate() throws JmriException {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public void setTriggerOnChange(boolean triggerOnChange) {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public boolean getTriggerOnChange() {
             throw new UnsupportedOperationException("Not supported");
         }
 

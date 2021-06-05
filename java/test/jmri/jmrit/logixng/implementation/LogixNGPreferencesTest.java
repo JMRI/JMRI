@@ -34,12 +34,6 @@ public class LogixNGPreferencesTest {
         Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
         prefsB.setStartLogixNGOnStartup(false);
-        
-        prefsA.setUseGenericFemaleSockets(false);
-        prefsB.setUseGenericFemaleSockets(true);
-        Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
-        Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
-        prefsB.setUseGenericFemaleSockets(false);
     }
     
     @Test
@@ -51,12 +45,6 @@ public class LogixNGPreferencesTest {
         
         prefs.setStartLogixNGOnStartup(false);
         Assert.assertFalse(prefs.getStartLogixNGOnStartup());
-        
-        prefs.setUseGenericFemaleSockets(true);
-        Assert.assertTrue(prefs.getUseGenericFemaleSockets());
-        
-        prefs.setUseGenericFemaleSockets(false);
-        Assert.assertFalse(prefs.getUseGenericFemaleSockets());
         
         prefs.setInstallDebugger(true);
         Assert.assertTrue(prefs.getInstallDebugger());
@@ -83,20 +71,6 @@ public class LogixNGPreferencesTest {
         Assert.assertFalse(prefsB.getStartLogixNGOnStartup());
         prefsA.apply(prefsB);
         Assert.assertFalse(prefsA.getStartLogixNGOnStartup());
-        
-        prefsA.setUseGenericFemaleSockets(false);
-        prefsB.setUseGenericFemaleSockets(true);
-        Assert.assertFalse(prefsA.getUseGenericFemaleSockets());
-        Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
-        prefsA.apply(prefsB);
-        Assert.assertTrue(prefsA.getUseGenericFemaleSockets());
-        
-        prefsA.setUseGenericFemaleSockets(true);
-        prefsB.setUseGenericFemaleSockets(false);
-        Assert.assertTrue(prefsA.getUseGenericFemaleSockets());
-        Assert.assertFalse(prefsB.getUseGenericFemaleSockets());
-        prefsA.apply(prefsB);
-        Assert.assertFalse(prefsA.getUseGenericFemaleSockets());
         
         prefsA.setInstallDebugger(false);
         prefsB.setInstallDebugger(true);
@@ -127,16 +101,6 @@ public class LogixNGPreferencesTest {
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
         Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
-        
-        prefsA.setUseGenericFemaleSockets(false);
-        prefsA.save();
-        prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse(prefsB.getUseGenericFemaleSockets());
-        
-        prefsA.setUseGenericFemaleSockets(true);
-        prefsA.save();
-        prefsB = new DefaultLogixNGPreferences();
-        Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
         
         prefsA.setInstallDebugger(false);
         prefsA.save();

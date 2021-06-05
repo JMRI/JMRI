@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI: LogixNG Logix Import</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng logix import">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+    <div id="mainContent">
+
+      <h1>JMRI: LogixNG Logix Import</h1>
+
+        <p>The LogixNG import Tool at <strong>Tools &rArr; LogixNG &rArr; Import Logix</strong>
+        will import the Logix definitions and convert them to LogixNG/ConditionalNG definitions.
+        </p>
+
+        <div style="margin-left: 2em">
+        <a href="images/ImportLogix.png">
+        <img src="images/ImportLogix.png"
+        alt="Import Logix to LogixNG" width="610" height="515" >
+        </a>
+        </div>
+
+        <h2>Import Options</h2>
+
+          <p>Most of the options have not been implemented yet.</p>
+
+          <p>The <strong>Import system Logixs also?</strong> option controls the import of
+          the <strong>SYS</strong> (Sensor groups) or the <strong>IX:RTXINITIALIZER</strong>
+          Logix. It's recommended to leave this option unchecked.</p>
+
+        <h2>Import Actions</h2>
+
+          <p>Click on <strong>Import</strong> to start.  The <strong>Cancel</strong>
+          button will change to <strong>Done</strong> when the import has finished.
+          Click on <strong>Cancel</strong> to close the window without doing the import.</p>
+
+          <p>The import process will display a message on the JMRI System Console,
+          <strong>Help &rArr; System Console</strong>, for  each Logix Conditional that
+          has been imported.  Any errors will also be listed.</p>
+
+        <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

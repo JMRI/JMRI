@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI: LogixNG Module Table</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng module">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+
+    <div id="mainContent">
+
+      <h1>JMRI: LogixNG Module Table</h1>
+
+        <p>The LogixNG Module table contains a list of the defined LogixNG Modules.</p>
+
+        <ul>
+          <li><a href="#tableContent">Table Content</a>
+          <li><a href="#selectActions">Select Actions</a>
+          <li><a href="#menuItems">Menu Items</a>
+          <li><a href="#addModule">Add a LogixNG Module</a>
+        </ul>
+
+      <a id="tableContent" name="tableContent"></a>
+      <h2>Table Content</h2>
+        <p>
+        The LogixNG Module table lists all of the currently defined LogixNG Modules.
+        Each row has a standard set of columns.
+        </p>
+
+        <dl>
+          <dt>System Name</dt>
+          <dd>The system name for the LogixNG Module.  Module system names have an
+          <strong>IQM</strong> prefix normally followed by numbers.  For details about the
+          Module system name, see <a href="#addModule">Add a LogixNG Module</a>.
+          The system name cannot be changed.</dd>
+
+          <dt>User Name</dt>
+          <dd>The user name for the LogixNG Module.  This is a free form field that
+          contains a meaningful name.</dd>
+
+          <dt>Comment</dt>
+          <dd>A free form comment field for the LogixNG Module</dd>
+
+          <dt>Menu</dt>
+          <dd>The <strong>Select</strong> combo box is used to select actions for the
+          selected LogixNG Module.  See <a href="#selectActions">Select Actions</a></dd>
+        </dl>
+
+      <a id="selectActions" name="selectActions"></a>
+      <h2>Select Actions</h2>
+        <p>The dropdown combo box has 4 actions that can be applied to the current LogixNG Module row.</p>
+
+        <div style="margin-left: 2em">
+        <a href="../logixng/images/SelectActions.png">
+        <img src="../logixng/images/SelectActions.png"
+        alt="Select Actions" width="167" height="123" >
+        </a>
+        </div>
+
+        <dl>
+          <dt>Edit</dt>
+          <dd>When <strong>Edit</strong> is selected, the Module editor will open.
+          See <a href="../logixng/ModuleEditor.shtml">Module Editor</a> for details.</dd>
+
+          <dt>Browse</dt>
+          <dd>The <strong>Browse</strong> option opens a text window with a representation
+          of the definitions within the LogixNG Module.  See <a href="../logixng/LogixNGBrowser.shtml">LogixNG
+          Browser</a> for details about the browser.</dd>
+
+          <dt>Copy</dt>
+          <dd>The <strong>Copy</strong> action is used to create a duplicate of the current
+          LogixNG Module.
+          <strong><em>Note: This feature is not available yet.</em></strong></dd>
+
+          <dt>Delete</dt>
+          <dd>The <strong>Delete</strong> action deletes the current LogixNG Module and
+          the LogixNG Module content.  A confirmation dialog will be displayed.
+
+          <div style="margin-left: 2em">
+          <a href="../logixng/images/DeleteModule.png">
+          <img src="../logixng/images/DeleteModule.png"
+          alt="Delete LogixNG Module Confirmation" width="378" height="126" >
+          </a>
+          </div>
+
+          </dd>
+        </dl>
+
+      <a id="menuItems" name="menuItems"></a>
+      <h2>Menu Items</h2>
+        <dl>
+          <dt>Tools</dt>
+          <dd>The tools menu has one item:  <strong>Open PickList Tables</strong>.  The
+          PickList was designed for dragging names, such as sensor names, to a text field.
+          Due to the implementation of ConditionalNG edit dialogs, the drag and drop
+          capability does not function.  It can still be used as a reference.</dd>
+        </dl>
+
+      <a id="addModule" name="addModule"></a>
+      <h2>Add a LogixNG Module</h2>
+
+        <p>To create a new LogixNG Module, click on the <strong>Add...</strong> button. The
+        <strong>Add LogixNG Module</strong> window will be displayed.</p>
+
+        <div style="margin-left: 2em">
+        <a href="../logixng/images/AddModule.png">
+        <img src="../logixng/images/AddModule.png"
+        alt="Add LogixNG Module" width="663" height="198" >
+        </a>
+        </div>
+
+        <p>The system name is required. The system name for a LogixNG Module always begins with
+        the letters IQM.  If the entered name does not start with IQM, it will be automatically
+        added.  The typical suffix is a number.  If <strong>Automatically generate System Name</strong>
+        is checked, the system name format will be <strong>IQM:AUTO:nnnn</strong>.  Any other
+        format requires adding a <strong>$</strong> (dollar) character between
+        <strong>IQM</strong> and the suffix.
+
+        <p>The user name is optional but recommended. A user name may be any useful text,
+        provided the new user name was not previously assigned to another LogixNG Module.
+        Once a LogixNG Module is created, its system name cannot be changed.  Its user
+        name may be changed in the LogixNG Module Table. The user name is usually used to
+        provide a more descriptive name, for example, "Signal 5 Control".</p>
+
+        <p>LogixNG has a concept called sockets.  They are used to provided connection points
+        that support a variety of connections.  When a LogixNG Module is being created, it has
+        to know what kind of socket it will support.</p>
+
+        <p>The <strong>Socket type</strong> combo box is used to select the socket type.</p>
+
+        <div style="margin-left: 2em">
+        <a href="../logixng/images/AddModuleType.png">
+        <img src="../logixng/images/AddModuleType.png"
+        alt="Add LogixNG Module Socket Type" width="215" height="132" >
+        </a>
+        </div>
+
+        <p>The <strong>Digital expression socket</strong> is equivalent to a Logix
+        Conditional that only has variables and returns a true or false when called from
+        another Conditional.</p>
+
+        <p>The <strong>Digital action socket</strong> is used to perform a set of actions.
+        It can also implement a full if/then/else set of logic.</p>
+
+        <p>After clicking <strong>Create</strong>, the LogixNG Module will be created and the
+        <a href="../logixng/ModuleEditor.shtml">Edit Module</a> window will appear.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -139,7 +139,7 @@ public class LogixNGInitializationTable extends JmriJFrame {
     }
 
     public void initMinimumSize(Dimension dimension) {
-        setMinimumSize(dimension);
+//         setMinimumSize(dimension);
         pack();
         setVisible(true);
     }

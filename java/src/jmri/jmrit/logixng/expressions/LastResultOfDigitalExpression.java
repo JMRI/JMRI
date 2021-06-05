@@ -176,9 +176,7 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (getTriggerOnChange()) {
-            getConditionalNG().execute();
-        }
+        getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */

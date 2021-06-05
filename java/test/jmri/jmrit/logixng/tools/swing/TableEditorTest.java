@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test TimeDiagram
+ * Test TableEditor
  * 
  * @author Daniel Bergqvist Copyright (C) 2018
  */

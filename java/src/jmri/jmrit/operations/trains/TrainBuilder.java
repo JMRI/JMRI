@@ -2225,7 +2225,6 @@ public class TrainBuilder extends TrainCommon {
         }
         // now block out cars, send the largest block of cars to the locations
         // requesting the greatest number of moves
-        RouteLocation rl = _train.getTrainDepartsRouteLocation();
         while (true) {
             String blockId = getLargestBlock(); // get the id of the largest block of cars
             if (blockId.isEmpty() || _numOfBlocks.get(blockId) == 1) {
@@ -2280,7 +2279,7 @@ public class TrainBuilder extends TrainCommon {
                             }
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockingCar"),
                                     new Object[] { car.toString(), loc.getName(), rld.getName() }));
-                            if (!findDestinationAndTrack(car, rl, rld)) {
+                            if (!findDestinationAndTrack(car, _train.getTrainDepartsRouteLocation(), rld)) {
                                 addLine(_buildReport, SEVEN,
                                         MessageFormat.format(Bundle.getMessage("blockNotAbleCarType"),
                                                 new Object[] { car.toString(), rld.getName(), car.getTypeName() }));
