@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.TableRowOrColumn;
-
 import java.beans.*;
 import java.util.*;
 
@@ -76,19 +74,19 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
         assertListenersAreNotRegistered(log, "setTable");
         _tableHandle = handle;
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
     }
     
-    public void setTable(@Nonnull NamedTable turnout) {
+    public void setTable(@Nonnull NamedTable table) {
         assertListenersAreNotRegistered(log, "setTable");
         setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+                .getNamedBeanHandle(table.getDisplayName(), table));
     }
     
     public void removeTable() {
         assertListenersAreNotRegistered(log, "setTable");
         if (_tableHandle != null) {
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
             _tableHandle = null;
         }
     }
