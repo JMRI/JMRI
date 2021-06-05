@@ -29,7 +29,7 @@
 
       <p>Local variables, which are explained in <a href="chapter8.shtml">chapter 8</a>,
       can be used directly in formula. So if you have a local variable <em>index</em>, you
-      can for example have the formula <em>"IT" + index</em>, which adds the string "IT"
+      can for example have the formula <em>"IT" + str(index)</em>, which adds the string "IT"
       and the value of <em>index</em>. This can be useful if you for example want to set
       all the turnouts IT1, IT2, IT3, ..., IT10 to thrown. You can then use the action
       <strong>For</strong> to iterate from 1 to 10 and to set each of these turnouts to
@@ -74,7 +74,7 @@
       subtrack from it, like <code>IM1 - 1</code>, you need to convert the string in
       IM1 to an integer or a float. Example: <code>int(IM1) - 1</code> or
       <code>float(IM1) - 1</code>.  The same rules apply to concatenating a string and
-      an integer.  In the IT example, the required format is <code>IT + int(index)</code>.
+      an integer.  The integer has to be converted to a string.  <code>"IT" + str(index)</code></p>
 
       <p>In this example, the <strong>A1</strong> section uses the <a href="chapter3.shtml">
       For</a> action to toggle 5 turnouts.  The turnout user names are T1 thru T5.  The
@@ -239,7 +239,7 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
 
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="">Chapter 10 - Modules</a></span></p>
+      <span style="padding-left: 6em"><a href="chapter10.shtml">Chapter 10 - Modules</a></span></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

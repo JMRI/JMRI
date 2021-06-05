@@ -20,11 +20,78 @@
       <h1>LogixNG Tutorial - Chapter 7</h1>
 
       <h2>References</h2>
-Content
+
+      <p>Sometimes it's useful to use indirect addressing of turnouts, sensors and other
+      things. LogixNG supports indirect addressing of both the name of the turnout, sensor,
+      signal head, etc., and of the expected state, like Thrown or Closed.  This is simular
+      to the the Logix memory indirect using <strong>@memname</strong>.</p>
+
+      <p>When the Reference tab is selected, the appropriate values are entered into the text
+      field.  References are the name of a local variable, memory or table cell, enclosed
+      in curly brackets.</p>
+
+      <div style="margin-left: 2em;">
+      <a href="images/chapter7/reference_tab.png">
+      <img src="images/chapter7/reference_tab.png"
+      alt="Chapter 7 reference tab" width="393" height="85">
+      </a>
+      </div>
+
+      <p>Some examples:</p>
+
+      <div style="margin-left: 2em;">
+        <table>
+          <tr><th>Reference</th><th>Description</th><th>Note</th></tr>
+          <tr>
+            <td>{MyLocalVariable}</td>
+            <td>The value of the local variable <em>MyLocalVariable</em></td>
+            <td>The name is in the symbol table</td>
+          </tr>
+          <tr>
+            <td>{My memory}</td>
+            <td>The value of the memory <em>My memory</em></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{My other memory}}</td>
+            <td>Double reference, the value of the value</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{My table[North yard, Left turnout]}</td>
+            <td>The value of the cell at the intersection of the row name and column name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{My table[{Yard}, Left turnout]}</td>
+            <td>Same as above except the row name comes from a reference</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{My table[North yard, {Turnout selection}]}</td>
+            <td>Same as above except the column name comes from a reference</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{TableName}[North yard, Left turnout]}</td>
+            <td>The table name comes from a reference, which becomes a reference</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{TableName}[{Yard}, {Turnout selection}]}</td>
+            <td>Everything comes from a reference, which becomes a reference</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+
+      <p>Local variables are described in <a href="chapter8.shtml">Chapter 8 - Local variables</a>.</p>
+
+      <p>Tables are described in <a href="chapter11.shtml">Chapter 11 - Tables</a>.</p>
 
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="">Chapter 8 - Local Variables</a></span></p>
+      <span style="padding-left: 6em"><a href="chapter8.shtml">Chapter 8 - Local Variables</a></span></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
