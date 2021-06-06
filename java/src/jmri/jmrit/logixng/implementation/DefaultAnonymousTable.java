@@ -80,11 +80,6 @@ public class DefaultAnonymousTable implements AnonymousTable {
             if (cell != null && cell instanceof String) {
                 rowNames.put(cell.toString(), i);
             }
-//            if (cell != null) {
-//                rowNames.put(cell.toString(), i);
-//            } else {
-//                rowNames.put(Integer.toString(i), i);
-//            }
         }
         
         for (int i=0; i <= _numColumns; i++) {

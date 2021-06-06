@@ -53,7 +53,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
             NamedTable table = tableBeanPanel.getNamedBean();
             if (table != null) {
                 if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
-                    for (int column=1; column <= table.numColumns(); column++) {
+                    for (int column=0; column <= table.numColumns(); column++) {
                         // If the header is null or empty, treat the row as a comment
                         Object header = table.getCell(0, column);
                         if ((header != null) && (!header.toString().isEmpty())) {
@@ -61,7 +61,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
                         }
                     }
                 } else {
-                    for (int row=1; row <= table.numRows(); row++) {
+                    for (int row=0; row <= table.numRows(); row++) {
                         // If the header is null or empty, treat the row as a comment
                         Object header = table.getCell(row, 0);
                         if ((header != null) && (!header.toString().isEmpty())) {

@@ -10,7 +10,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.TableForEach;
 import jmri.jmrit.logixng.TableRowOrColumn;
-import jmri.jmrit.logixng.TableRowOrColumn;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -75,7 +74,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         panel.add(tableBeanPanelPanel);
         
         _tableRowOrColumnComboBox = new JComboBox<>();
-        for (TableForEach.TableRowOrColumn item : TableForEach.TableRowOrColumn.values()) {
+        for (TableRowOrColumn item : TableRowOrColumn.values()) {
             _tableRowOrColumnComboBox.addItem(item);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
@@ -84,7 +83,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             NamedTable table = tableBeanPanel.getNamedBean();
             if (table != null) {
                 if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
-                    for (int column=1; column <= table.numColumns(); column++) {
+                    for (int column=0; column <= table.numColumns(); column++) {
                         // If the header is null or empty, treat the row as a comment
                         Object header = table.getCell(0, column);
                         if ((header != null) && (!header.toString().isEmpty())) {
@@ -92,7 +91,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
                         }
                     }
                 } else {
-                    for (int row=1; row <= table.numRows(); row++) {
+                    for (int row=0; row <= table.numRows(); row++) {
                         // If the header is null or empty, treat the row as a comment
                         Object header = table.getCell(row, 0);
                         if ((header != null) && (!header.toString().isEmpty())) {
