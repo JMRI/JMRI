@@ -151,21 +151,19 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
                     throw new PropertyVetoException(getDisplayName(), evt);
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    removeTable();
                 }
             }
         }
-*/
     }
 
     /** {@inheritDoc} */
@@ -206,7 +204,12 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionListenOnBeansTable_Long");
+        return Bundle.getMessage(locale, "ActionListenOnBeansTable_Long",
+                _namedBeanType.toString(),
+                _tableRowOrColumn.getOpposite().toStringLowerCase(),
+                _tableRowOrColumn.toStringLowerCase(),
+                _rowOrColumnName,
+                getTable() != null ? getTable().getName() : "");
     }
 
     /** {@inheritDoc} */

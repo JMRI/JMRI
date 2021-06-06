@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyVetoException;
+
 import jmri.jmrit.logixng.TableRowOrColumn;
 
 import java.beans.VetoableChangeListener;
@@ -42,6 +44,8 @@ public class TableForEach extends AbstractDigitalAction
         copy.setComment(getComment());
         copy.setTable(_tableHandle);
         copy.setTableRowOrColumn(_tableRowOrColumn);
+        copy.setRowOrColumnName(_rowOrColumnName);
+        copy.setLocalVariableName(_variableName);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -193,6 +197,23 @@ public class TableForEach extends AbstractDigitalAction
      */
     public void setLocalVariableName(String localVariableName) {
         _variableName = localVariableName;
+    }
+    
+    @Override
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    throw new PropertyVetoException(getDisplayName(), evt);
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    removeTable();
+                }
+            }
+        }
     }
     
     @Override

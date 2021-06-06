@@ -97,7 +97,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     @Nonnull
     private static NamedTable loadFromCSV(
             @Nonnull String systemName, @CheckForNull String userName,
-            @Nonnull String fileName,
+            @CheckForNull String fileName,
             @Nonnull List<String> lines,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
