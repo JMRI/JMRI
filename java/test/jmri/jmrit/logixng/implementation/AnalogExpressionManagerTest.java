@@ -58,15 +58,9 @@ public class AnalogExpressionManagerTest extends AbstractManagerTestBase {
         FemaleSocket socket;
         AnalogExpressionManagerTest.MyExpression myExpression = new AnalogExpressionManagerTest.MyExpression("IQSA1");
         FemaleSocketListener listener = new AnalogExpressionManagerTest.MyFemaleSocketListener();
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
         
-        preferences.setUseGenericFemaleSockets(false);
         socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket", socket.getClass().getName());
-        
-        preferences.setUseGenericFemaleSockets(true);
-        socket = _m.createFemaleSocket(myExpression, listener, "E2");
-        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket", socket.getClass().getName());
     }
     
     @Test

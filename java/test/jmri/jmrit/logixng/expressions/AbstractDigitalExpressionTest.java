@@ -7,6 +7,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.FakeParent;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import jmri.util.JUnitUtil;
 
@@ -96,9 +97,20 @@ public class AbstractDigitalExpressionTest {
             throw new UnsupportedOperationException("Not supported.");
         }
 
+        private final Base fakeParent = new FakeParent();
+
+        // To aid testing of the method getNewSocketName(), we let the method
+        // getChild() set the name.
+        // See the method testGetNewSocketName().
         @Override
         public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+            // FemaleSocket.setName() calls validate() that calls parent.getChild()
+            // which gives a StackOverflowError. To protect from that, we temporary
+            // set the parent to a fake parent.
+            Base parent = child.getParent();
+            child.setParent(fakeParent);
             child.setName("E"+index);
+            child.setParent(parent);
             return child;
         }
 

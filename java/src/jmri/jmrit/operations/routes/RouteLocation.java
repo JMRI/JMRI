@@ -1,9 +1,14 @@
 package jmri.jmrit.operations.routes;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Color;
 import java.awt.Point;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
@@ -13,11 +18,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.ColorUtil;
-
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a location in a route, a location can appear more than once in a
@@ -44,6 +44,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     protected String _departureTime = NONE; // departure time from this location
     protected int _trainIconX = 0; // the x & y coordinates for the train icon
     protected int _trainIconY = 0;
+    protected int _blockingOrder = 0;
     protected String _comment = NONE;
     protected Color _commentColor = Color.black;
 
@@ -119,6 +120,14 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public void setSequenceNumber(int sequence) {
         // property change not needed
         _sequenceNum = sequence;
+    }
+    
+    public int getBlockingOrder() {
+        return _blockingOrder;
+    }
+    
+    public void setBlockingOrder(int order) {
+        _blockingOrder = order;
     }
 
     public void setComment(String comment) {
@@ -567,6 +576,13 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if ((a = e.getAttribute(Xml.DEPART_TIME)) != null) {
             _departureTime = a.getValue();
         }
+        if ((a = e.getAttribute(Xml.BLOCKING_ORDER)) != null) {
+            try {
+                _blockingOrder = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) blocking order ({}) isn't a valid number", getName(), a.getValue());
+            }
+        }
         if ((a = e.getAttribute(Xml.TRAIN_ICON_X)) != null) {
             try {
                 _trainIconX = Integer.parseInt(a.getValue());
@@ -618,16 +634,9 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         e.setAttribute(Xml.DROPS, isDropAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
         e.setAttribute(Xml.DEPART_TIME, getDepartureTime());
+        e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         e.setAttribute(Xml.TRAIN_ICON_X, Integer.toString(getTrainIconX()));
         e.setAttribute(Xml.TRAIN_ICON_Y, Integer.toString(getTrainIconY()));
-        
-//        if (getTrainIconRangeX() != RANGE_DEFAULT) {
-//            e.setAttribute(Xml.TRAIN_ICON_RANGE_X, Integer.toString(getTrainIconRangeX()));
-//        }
-//        if (getTrainIconRangeY() != RANGE_DEFAULT) {
-//            e.setAttribute(Xml.TRAIN_ICON_RANGE_Y, Integer.toString(getTrainIconRangeY()));
-//        }
-        
         e.setAttribute(Xml.COMMENT_COLOR, getCommentTextColor());
         e.setAttribute(Xml.COMMENT, getComment());
 
