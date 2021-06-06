@@ -22,7 +22,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
 
     private BeanSelectPanel<NamedTable> tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
-    private JTextField _rowOrColumnName;
+    private JComboBox<String> _rowOrColumnNameComboBox;
     private JTextField _localVariable;
     
     @Override
@@ -41,6 +41,30 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             _tableRowOrColumnComboBox.addItem(item);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
+        _tableRowOrColumnComboBox.addActionListener((evt) -> {
+            _rowOrColumnNameComboBox.removeAllItems();
+            NamedTable table = tableBeanPanel.getNamedBean();
+            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                for (int column=1; column <= table.numColumns(); column++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(0, column);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            } else {
+                for (int row=1; row <= table.numRows(); row++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(row, 0);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            }
+            if (action != null) {
+                _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
+            }
+        });
         
         JPanel tableRowOrColumnPanel = new JPanel();
         tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumn")));
@@ -75,9 +99,10 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         
         JPanel rowOrColumnNamePanel = new JPanel();
         rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumnName")));
-        _rowOrColumnName = new JTextField(20);
-        rowOrColumnNamePanel.add(_rowOrColumnName);
+        _rowOrColumnNameComboBox = new JComboBox<>();
+        rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
         panel.add(rowOrColumnNamePanel);
+        JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
         
         JPanel localVariablePanel = new JPanel();
         localVariablePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_LocalVariable")));
@@ -90,7 +115,6 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
                 tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
             }
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
-            _rowOrColumnName.setText(action.getRowOrColumnName());
             _localVariable.setText(action.getLocalVariableName());
         }
     }
@@ -127,8 +151,12 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         } else {
             action.removeTable();
         }
-        action.setTableRowOrColumn((TableForEach.TableRowOrColumn)_tableRowOrColumnComboBox.getSelectedItem());
-        action.setRowOrColumnName(_rowOrColumnName.getText());
+        action.setTableRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
+        if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
+            action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
+        } else {
+            action.setRowOrColumnName("");
+        }
         action.setLocalVariableName(_localVariable.getText());
     }
     

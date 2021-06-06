@@ -236,8 +236,8 @@ public class TableForEach extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "TableForEach_Long",
-                _tableRowOrColumn.toStringLowerCase(),
                 _tableRowOrColumn.getOpposite().toStringLowerCase(),
+                _tableRowOrColumn.toStringLowerCase(),
                 _rowOrColumnName,
                 getTable() != null ? getTable().getName() : "",
                 _variableName,

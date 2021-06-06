@@ -436,12 +436,12 @@ import jmri.util.JmriJFrame;
 
         @Override
         public int getColumnCount() {
-            return _curTable.numColumns()-1;    // Don't show row headers
+            return _curTable.numColumns();
         }
 
         @Override
         public int getRowCount() {
-            return _curTable.numRows()-1;
+            return _curTable.numRows();
         }
         
         @Override
@@ -459,7 +459,7 @@ import jmri.util.JmriJFrame;
     private class RowHeaderListModel extends AbstractListModel<Object> {
         @Override
         public int getSize() {
-            return _curTable.numRows()-1;
+            return _curTable.numRows();
         }
 
         @Override
