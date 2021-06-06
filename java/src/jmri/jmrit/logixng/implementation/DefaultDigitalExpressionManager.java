@@ -131,15 +131,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     public FemaleDigitalExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
         
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
-//        if (preferences.getUseGenericFemaleSockets() && false) {
-        if (preferences.getUseGenericFemaleSockets()) {
-            return new DefaultFemaleGenericExpressionSocket(
-                    FemaleGenericExpressionSocket.SocketType.DIGITAL, parent, listener, socketName)
-                    .getDigitalSocket(parent);
-        } else {
-            return new DefaultFemaleDigitalExpressionSocket(parent, listener, socketName);
-        }
+        return new DefaultFemaleDigitalExpressionSocket(parent, listener, socketName);
     }
     
     @Override

@@ -44,18 +44,6 @@ public interface LogixNGPreferences {
     public boolean getStartLogixNGOnStartup();
 
     /**
-     * Set whenether generic sockets should be used for expression sockets.
-     * @param value true if generic sockets should be used, false otherwise
-     */
-    public void setUseGenericFemaleSockets(boolean value);
-
-    /**
-     * Get whenether generic sockets should be used for expression sockets.
-     * @return true if generic sockets should be used, false otherwise
-     */
-    public boolean getUseGenericFemaleSockets();
-
-    /**
      * Set whenether system names and user names should be visible for actions
      * and expressions.
      * @param value true if names should be visible, false otherwise

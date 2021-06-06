@@ -98,8 +98,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             Base parent, FemaleSocketListener listener, String socketName) {
         
         return new DefaultFemaleGenericExpressionSocket(
-                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName)
-                .getGenericSocket(parent);
+                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName);
     }
 
     public final void setFormula(String formula) throws ParserException {

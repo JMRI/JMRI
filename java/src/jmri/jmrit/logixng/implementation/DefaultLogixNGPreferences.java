@@ -22,7 +22,6 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public static final String ERROR_HANDLING_TYPE = "errorHandlingType";
     
     private boolean _startLogixNGOnLoad = true;
-    private boolean _useGenericFemaleSockets = false;
     private boolean _showSystemUserNames = false;
     private boolean _installDebugger = true;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.ShowDialogBox;
@@ -38,7 +37,6 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
 
     private void readPreferences(Preferences sharedPreferences) {
         _startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, _startLogixNGOnLoad);
-        _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
         _installDebugger = sharedPreferences.getBoolean(INSTALL_DEBUGGER, _installDebugger);
         _showSystemUserNames = sharedPreferences.getBoolean(SHOW_SYSTEM_USER_NAMES, _showSystemUserNames);
         _errorHandlingType = ErrorHandlingType.valueOf(
@@ -86,16 +84,12 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getShowSystemUserNames() != prefs.getShowSystemUserNames()) {
             return true;
         }
-        if (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets()) {
-            return true;
-        }
         return (getErrorHandlingType() != prefs.getErrorHandlingType());
     }
 
     @Override
     public void apply(LogixNGPreferences prefs) {
         setStartLogixNGOnStartup(prefs.getStartLogixNGOnStartup());
-        setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
         setInstallDebugger(prefs.getInstallDebugger());
         setShowSystemUserNames(prefs.getShowSystemUserNames());
         this.setErrorHandlingType(prefs.getErrorHandlingType());
@@ -105,38 +99,9 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putBoolean(START_LOGIXNG_ON_LOAD, this.getStartLogixNGOnStartup());
-        sharedPreferences.putBoolean(USE_GENERIC_FEMALE_SOCKETS, this.getUseGenericFemaleSockets());
         sharedPreferences.putBoolean(INSTALL_DEBUGGER, this.getInstallDebugger());
         sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
         sharedPreferences.put(ERROR_HANDLING_TYPE, this.getErrorHandlingType().name());
-/*        
-        sharedPreferences.putInt(PORT, this.getPort());
-        sharedPreferences.putBoolean(USE_ZERO_CONF, this.isUseZeroConf());
-        sharedPreferences.putInt(CLICK_DELAY, this.getClickDelay());
-        sharedPreferences.putInt(REFRESH_DELAY, this.getRefreshDelay());
-        sharedPreferences.putBoolean(USE_AJAX, this.isUseAjax());
-        sharedPreferences.putBoolean(SIMPLE, this.isSimple());
-        sharedPreferences.putBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig());
-        sharedPreferences.putBoolean(READONLY_POWER, this.isReadonlyPower());
-        sharedPreferences.put(RAILROAD_NAME, getRailroadName());
-        sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
-        sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
-        try {
-            Preferences node = sharedPreferences.node(DISALLOWED_FRAMES);
-            this.disallowedFrames.stream().forEach((frame) -> {
-                node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
-            });
-            if (this.disallowedFrames.size() < node.keys().length) {
-                for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
-                    node.remove(Integer.toString(i));
-                }
-            }
-            sharedPreferences.sync();
-            setIsDirty(false);  //  Resets only when stored
-        } catch (BackingStoreException ex) {
-            log.error("Exception while saving web server preferences", ex);
-        }
-*/
     }
     
     @Override
@@ -148,17 +113,6 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getStartLogixNGOnStartup() {
         return _startLogixNGOnLoad;
-    }
-
-    @Override
-    public void setUseGenericFemaleSockets(boolean value) {
-        _useGenericFemaleSockets = value;
-        setIsDirty(true);
-    }
-
-    @Override
-    public boolean getUseGenericFemaleSockets() {
-        return _useGenericFemaleSockets;
     }
 
     @Override
