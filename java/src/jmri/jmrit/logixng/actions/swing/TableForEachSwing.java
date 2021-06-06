@@ -20,9 +20,14 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class TableForEachSwing extends AbstractDigitalActionSwing {
 
+    private JTabbedPane _tabbedPane;
+    private JPanel _panelTable = new javax.swing.JPanel();
+    private JPanel _panelReference = new javax.swing.JPanel();
+    private JPanel _panelFormula = new javax.swing.JPanel();
     private BeanSelectPanel<NamedTable> tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
     private JComboBox<String> _rowOrColumnNameComboBox;
+    private JTextField _rowOrColumnNameTextField;
     private JTextField _localVariable;
     
     @Override
@@ -35,6 +40,38 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JPanel tableBeanPanelPanel = new JPanel();
+        tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_Table")));
+        
+        _tabbedPane = new JTabbedPane();
+        _panelTable = new javax.swing.JPanel();
+        _panelReference = new javax.swing.JPanel();
+        _panelFormula = new javax.swing.JPanel();
+        
+        _tabbedPane.addTab("Table", _panelTable); // NOI1aa8N
+        _tabbedPane.addTab("Reference", _panelReference); // NOIaa18N
+        _tabbedPane.addTab("Formula", _panelFormula); // NOI1aa8N
+        
+        _tabbedPane.addChangeListener((evt) -> {
+            boolean isPanelTable = (_tabbedPane.getSelectedComponent() == _panelTable);
+            _rowOrColumnNameComboBox.setVisible(isPanelTable);
+            _rowOrColumnNameTextField.setVisible(!isPanelTable);
+        });
+        
+        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        _panelTable.add(tableBeanPanel);
+        
+        JTextField referenceTextField = new JTextField();
+        referenceTextField.setColumns(30);
+        _panelReference.add(referenceTextField);
+        
+        JTextField formulaTextField = new JTextField();
+        formulaTextField.setColumns(30);
+        _panelFormula.add(formulaTextField);
+        
+        tableBeanPanelPanel.add(_tabbedPane);
+        panel.add(tableBeanPanelPanel);
         
         _tableRowOrColumnComboBox = new JComboBox<>();
         for (TableForEach.TableRowOrColumn item : TableForEach.TableRowOrColumn.values()) {
@@ -73,36 +110,13 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         tableRowOrColumnPanel.add(_tableRowOrColumnComboBox);
         panel.add(tableRowOrColumnPanel);
         
-        JPanel tableBeanPanelPanel = new JPanel();
-        tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_Table")));
-        
-        JTabbedPane tabbedPane = new JTabbedPane();
-        JPanel panelTurnout = new javax.swing.JPanel();
-        JPanel panelReference = new javax.swing.JPanel();
-        JPanel panelFormula = new javax.swing.JPanel();
-        
-        tabbedPane.addTab("Table", panelTurnout); // NOI1aa8N
-        tabbedPane.addTab("Reference", panelReference); // NOIaa18N
-        tabbedPane.addTab("Formula", panelFormula); // NOI1aa8N
-        
-        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-        panelTurnout.add(tableBeanPanel);
-        
-        JTextField referenceTextField = new JTextField();
-        referenceTextField.setColumns(30);
-        panelReference.add(referenceTextField);
-        
-        JTextField formulaTextField = new JTextField();
-        formulaTextField.setColumns(30);
-        panelFormula.add(formulaTextField);
-        
-        tableBeanPanelPanel.add(tabbedPane);
-        panel.add(tableBeanPanelPanel);
-        
         JPanel rowOrColumnNamePanel = new JPanel();
         rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumnName")));
         _rowOrColumnNameComboBox = new JComboBox<>();
         rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
+        _rowOrColumnNameTextField = new JTextField(20);
+        _rowOrColumnNameTextField.setVisible(false);
+        rowOrColumnNamePanel.add(_rowOrColumnNameTextField);
         panel.add(rowOrColumnNamePanel);
         JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
         
@@ -154,10 +168,14 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             action.removeTable();
         }
         action.setTableRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
-        if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
-            action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
+        if (_tabbedPane.getSelectedComponent() == _panelTable) {
+            if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
+                action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
+            } else {
+                action.setRowOrColumnName("");
+            }
         } else {
-            action.setRowOrColumnName("");
+            action.setRowOrColumnName(_rowOrColumnNameTextField.getText());
         }
         action.setLocalVariableName(_localVariable.getText());
     }
