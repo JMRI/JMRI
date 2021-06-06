@@ -3571,6 +3571,11 @@ public class TrainBuilder extends TrainCommon {
             if (car.getTrack() == track || track.getSchedule() == null) {
                 continue;
             }
+            // don't allow local move to track with a "similar" name
+            if (splitString(car.getLocationName()).equals(splitString(track.getLocation().getName())) &&
+                    splitString(car.getTrackName()).equals(splitString(track.getName()))) {
+                continue;
+            }
             if (locationsNotServiced.contains(track.getLocation())) {
                 continue;
             }
@@ -3660,6 +3665,11 @@ public class TrainBuilder extends TrainCommon {
      */
     private boolean sendCarToDestinationSpur(Car car, Track track) {
         if (car.getTrack() == track) {
+            return false;
+        }
+        // don't allow local move to track with a "similar" name
+        if (splitString(car.getLocationName()).equals(splitString(track.getLocation().getName())) &&
+                splitString(car.getTrackName()).equals(splitString(track.getName()))) {
             return false;
         }
         // is the car's destination the terminal and is that allowed?
@@ -3772,6 +3782,11 @@ public class TrainBuilder extends TrainCommon {
      */
     private boolean sendCarToDestinationTrack(Car car, Track track) {
         if (car.getTrack() == track) {
+            return false;
+        }
+        // don't allow local move to track with a "similar" name
+        if (splitString(car.getLocationName()).equals(splitString(track.getLocation().getName())) &&
+                splitString(car.getTrackName()).equals(splitString(track.getName()))) {
             return false;
         }
         if (track.isStaging() && car.getLocation() == track.getLocation()) {
