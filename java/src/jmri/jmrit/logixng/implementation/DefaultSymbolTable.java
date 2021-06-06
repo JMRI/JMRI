@@ -4,7 +4,6 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Stack;
@@ -58,6 +57,17 @@ public class DefaultSymbolTable implements SymbolTable {
     @Override
     public Map<String, Symbol> getSymbols() {
         return Collections.unmodifiableMap(_symbols);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public Map<String, Object> getSymbolValues() {
+        Map<String, Object> symbolValues = new HashMap<>();
+        for (Symbol symbol : _symbols.values()) {
+            Object value = _stack.getValueAtIndex(_firstSymbolIndex + symbol.getIndex());
+            symbolValues.put(symbol.getName(), value);
+        }
+        return Collections.unmodifiableMap(symbolValues);
     }
     
     /** {@inheritDoc} */

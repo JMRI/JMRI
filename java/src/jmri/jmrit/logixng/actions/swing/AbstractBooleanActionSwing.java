@@ -19,6 +19,18 @@ public abstract class AbstractBooleanActionSwing extends AbstractSwingConfigurat
     
     /** {@inheritDoc} */
     @Override
+    public String getExecuteEvaluateMenuText() {
+        return Bundle.getMessage("MenuText_ExecuteEvaluate");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void executeEvaluate(@Nonnull Base object) {
+        throw new RuntimeException("Not supported");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class);
     }

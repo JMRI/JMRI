@@ -2,12 +2,12 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jmri.*;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.BaseManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
@@ -18,6 +18,46 @@ import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 public abstract class AbstractDigitalExpressionSwing extends AbstractSwingConfigurator {
 
     protected JPanel panel;
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getExecuteEvaluateMenuText() {
+        return Bundle.getMessage("MenuText_ExecuteEvaluate");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void executeEvaluate(@Nonnull Base object) {
+        ConditionalNG conditionalNG = object.getConditionalNG();
+        if (conditionalNG == null) throw new RuntimeException("Not supported yet");
+        
+        SymbolTable symbolTable = new DefaultSymbolTable();
+        getAllSymbols(object, symbolTable);
+        
+        conditionalNG.getCurrentThread().runOnLogixNGEventually(() -> {
+            SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
+            
+            try {
+                conditionalNG.setSymbolTable(symbolTable);
+                boolean result = ((DigitalExpression)object).evaluate();
+                jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("ExecuteEvaluate_EvaluationCompleted", result),
+                            Bundle.getMessage("ExecuteEvaluate_Title"),
+//                            "The result of the expression is: "+Boolean.toString(result),
+//                            "The expression has been evaluated",
+                            JOptionPane.PLAIN_MESSAGE);
+                });
+            } catch (JmriException | RuntimeException e) {
+    //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+    //                        conditionalNG.getSystemName(), e, e);
+                log.warn("ConditionalNG {} got an exception during execute: {}",
+                        conditionalNG.getSystemName(), e, e);
+            }
+            
+            conditionalNG.setSymbolTable(oldSymbolTable);
+        });
+    }
     
     /** {@inheritDoc} */
     @Override
@@ -52,5 +92,8 @@ public abstract class AbstractDigitalExpressionSwing extends AbstractSwingConfig
     public String getAutoSystemName() {
         return InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName();
     }
+    
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalExpressionSwing.class);
     
 }
