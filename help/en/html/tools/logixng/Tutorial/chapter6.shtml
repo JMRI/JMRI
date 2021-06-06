@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 6</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial expression items">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 6</h1>
+
+      <h2>Expression Items</h2>
+
+        <p>The dialog for adding and editing expressions consists of an upper part that
+        contains the item and the states for that item.  The lower part is common
+        to all expresssions.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter6/typical_expression.png">
+        <img src="images/chapter6/typical_expression.png"
+        alt="Chapter 6 typical expression" width="991" height="303">
+        </a>
+        </div>
+
+        <p>The <strong>Edit</strong> screen is the same except for the title, the Create
+        button and the current content will be in the fields.</p>
+
+        <p>The left section is normally used to select the item, such as a turnout or
+        a sensor.  The right section is the state to be checked.  The center section will
+        normally have a <strong>is / is not</strong> combo box.  The default mode
+        will be to use the <strong>Direct</strong> tabs.</p>
+
+        <p>See <a href="chapter7.shtml">Reference</a>, <a href="chapter8.shtml">Local
+        Variable</a> and <a href="chapter9.shtml">Formula</a> for details about the other tabs.</p>
+
+        <p>The lower section contains a standard set of items</p>
+
+        <dl>
+          <dt>Error Handling</dt>
+          <dd>If <strong>Use default</strong> is selected, the value in
+          <a href="../LogixNG.shtml#preferences">Preference</a> will be used.  The other
+          options are the same.</dd>
+
+          <dt>Catch "Abort execution"</dt>
+          <dd>If the error handling (see previous) for any child node is set to <strong>
+          Abort execution</strong>, a parent node should have this option checked.  This
+          lets the parent node handle the error.</dd>
+
+          <dt>Listen</dt>
+          <dd>Normally, any change to an expression item should trigger the true/false
+          evaluation.  Sometimes an expression item should participate in the evaluation
+          but not trigger it.  The Listen checkbox is used to control the trigger state.</dd>
+
+          <dt>Edit comment</dt>
+          <dd>Each expression can have a comment.  The comment dialog has a multiline text
+          area.  Click <strong>OK</strong> to save the comment.</dd>
+
+          <dt>Formula functions</dt>
+          <dd>These are explained in the <a href="chapter9.shtml">Formula</a> chapter.<dd>
+
+          <dt>Cancel</dt>
+          <dd>Close the dialog without applying any changes.<dd>
+
+          <dt>Create/OK</dt>
+          <dd>Save the new expression or the changes to an existing expression.<dd>
+        </dl>
+
+        <h3>Expresson Items List</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter6/expression_list.png">
+          <img src="images/chapter6/expression_list.png"
+          alt="Chapter 6 expression item list" width="211" height="362">
+          </a>
+          </div>
+
+          <dl>
+            <dt>Block</dt>
+            <dt>Clock</dt>
+            <dt>Conditional</dt>
+            <dt>Entry/Exit</dt>
+            <dt>Light</dt>
+            <dt>Local variable</dt>
+            <dt>Memory</dt>
+            <dt>OBlock</dt>
+            <dt>Power</dt>
+            <dt>Reference</dt>
+            <dt>Script</dt>
+            <dt>Sensor</dt>
+            <dt>Signal head</dt>
+            <dt>Signal mast</dt>
+            <dt>Turnout</dt>
+            <dt>Warrant</dt>
+          </dl>
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="">Chapter 7 - References</a></span></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>

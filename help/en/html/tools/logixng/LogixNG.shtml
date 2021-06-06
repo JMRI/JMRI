@@ -16,7 +16,7 @@
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1><a id="TopOfPage" name="TopOfPage"></a>JMRI: LogixNG Documentation</h1>

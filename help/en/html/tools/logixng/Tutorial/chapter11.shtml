@@ -1,18 +1,128 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<title>LogixNG Tutorial - Chapter 10</title>
-<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
-<link rel="stylesheet" href="style.css">
+  <title>LogixNG Tutorial - Chapter 11</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial tables">
+
+  <!--#include virtual="/Style.shtml" -->
+
 </head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
 
-<table width="800">
-<tr>
-<td>
+  <div id="mBody">
 
-<h1>LogixNG Tutorial - Chapter 10</h1>
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 11</h1>
+
+      <h2>LogixNG Tables</h2>
+
+      <p>LogixNG Tables are two dimensional data structures, like a spreadsheet.</p>
+
+      <p>Example:</p>
+
+      <div style="margin-left: 2em;">
+        <table>
+          <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+          <tr><th>&nbsp;1&nbsp;</th><td>IQT22</td><td>Yard table</td><td></td><td></td></tr>
+          <tr><th>&nbsp;2&nbsp;</th><td></td><td>West yard</td><td>East yard</td><td>North yard</td></tr>
+          <tr><th>&nbsp;3&nbsp;</th><td></td><td colspan="3">Left entrance of the yard</td></tr>
+          <tr><th>&nbsp;4&nbsp;</th><td>Leftmost turnout</td><td>IT101</td><td>IT201</td><td>IT301</td></tr>
+          <tr><th>&nbsp;5&nbsp;</th><td>Left turnout</td><td>IT103</td><td>IT203</td><td>IT303</td></tr>
+          <tr><th>&nbsp;6&nbsp;</th><td></td><td colspan="3">Right entrance of the yard</td></tr>
+          <tr><th>&nbsp;7&nbsp;</th><td>Rightmost turnout</td><td>IT112</td><td>IT212</td><td>IT312</td></tr>
+          <tr><th>&nbsp;8&nbsp;</th><td>Right turnout</td><td>IT114</td><td>IT214</td><td>IT314</td></tr>
+        </table>
+      </div>
+
+      <p>A table can be used to create a lookup table. It's accessed by either its
+      system name or its user name, followed by a left square bracket, the name of the
+      row, a comma, the name of the column, and a right square bracket.</p>
+
+      <p>Instead of the names of the row and column, it's also possible to use the row
+      number or the column number. Note that row 1 has the system name and user name of
+      the table, row 2 has the names of the columns, and column 1 has the names of the
+      rows. Note that for columns, 1 is column A, 2 is column B, 22 is V, 23 is W, 26 is Z,
+      27 is AA and 28 is AB.</p>
+
+      <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell
+      &lt;column letter&gt;&lt;row number&gt; while references in JMRI has table[row,column].
+      Example: Cell B3 is table[3,2], since B3 is row 3 and column 2.</p>
+
+      <p>Example from the table above. These examples assume that IM3 has the value
+      'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
+
+      <div style="margin-left: 2em;">
+        <table>
+          <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
+          <tr><td>IQT22[1,1]</td><td>IQT22</td><td>Cell A1 has the system name of the table</td></tr>
+          <tr><td>IQT22[1,2]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
+          <tr><td>IQT22[2,2]</td><td>West yard</td><td>Cell B2 has the name of column B</td></tr>
+          <tr><td>IQT22[4,1]</td><td>Leftmost turnout</td><td>Cell A4 has the name of row 4</td></tr>
+          <tr><td>Yard table[4,1]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
+          <tr><td>IQT22[5,3]</td><td>IT203</td><td>Cell C5 has the value 'IT203'</td></tr>
+          <tr><td>IQT22[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+          <tr><td>Yard table[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+          <tr><td>IQT22[Leftmost turnout,{IM3}]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B4</td></tr>
+          <tr><td>IQT22[{IM4},East yard]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C7</td></tr>
+          <tr><td>IQT22[{IM4},{IM3}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B7</td></tr>
+          <tr><td>{IM5}[{IM4},{IM3}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
+        </table>
+      </div>
+
+      <p>Note that a Memory can point to a table. For example, if the memory IM7 has
+      the value '{Yard table[{IM3},Leftmost turnout]}', LogixNG will look at IM7, and
+      find that it's value is in curly brackets. It will then resolve the value inside
+      these curly brackets, which is 'Yard table[{IM3},Leftmost turnout]'. It will then
+      resolve the value of IM3 which has the value 'West yard'. It will then get the
+      table cell 'Yard table[West yard,Leftmost turnout]' which is cell B4 with the
+      value 'IT101'.</p>
+
+	  <p>The ActionForEach iterates over a comma separated list of values. It can be used
+	  with tables by using the keywords __columns__ and __rows__ . Note that it's two
+	  underscore characters before and after. {IQT1[__columns__]} gives a comma separated
+	  list of all the column names in the table IQT1. {IQT1[__rows__]} gives a comma
+	  separated list of all the row names in the table IQT1. It's also possible to write
+	  {Yard table[__columns__]} and {Yard table[__rows__]}. You can even use this syntax
+	  in ActionMemory to assign a Memory the list of column names or row names. Note
+	  however that column names or row names that are empty is seen as colums or rows with
+	  a comment and therefore they are not included.</p>
+
+      <p>The tables are created using a spreadsheet program and the exported to
+      a <strong><em>TAB</em></strong> delimited CSV file.
+      PanelPro Tools &rArr; Tables &rArr; LogixNG &rArr; LogixNG Tables is used to load the table
+      into JMRI memory.  See
+      <a href="../.././../help/en/package/jmri/jmrit/beantable/LogixNGTableTable.shtml">
+      LgoixNG Tables Table</a> for details.  The table is not stored in the PanelPro data
+      file.  When the data file is loaded, a reference to the table will be used to
+      the CSV file into memory.  The CSV file should be located in the user files
+      location along with the PanelPro data file.
+
+
+
+
+
+	  <h3>Note</h3>
+
+      <p>If a name has the characters comma, left or righ square bracket or left or right
+	  curly brackets, these characters must be escaped by preceding them with a backslash.
+	  Examples: \, \[ \] \{ \} \\</p>
+
+	  <p>If a reference contains a backslash, it will take some more time to evaluate it
+	  than if it doesn't contain any backslash. So if it's possible to not use these special
+	  characters in references or names of beans, it's recommended.</p>
+
+
+      <h3>Creating the CSV File</h3>
+
+
+<!-- ============ -->
+
+<!--
 
 <h2>Tables - working with templates</h2>
 <p>
@@ -166,9 +276,18 @@ with "Middle turnout", "Middle mast" and "Sensor track 3".
 
 Note that a reference can point to another reference that points to a bean. This means that we can have a table that
 points to another table that points to the bean.
+-->
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a></p>
+<!--       <span style="padding-left: 6em"><a href="">Chapter Y - ????????</a></span></p> -->
 
-</td>
-</tr>
-</table>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
 </body>
 </html>
