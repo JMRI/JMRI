@@ -16028,7 +16028,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train1.isBuilt());
 
         // confirm car's destination interchange at Chelmsford
-        Assert.assertEquals("Confirm c1 destination", chelmsfordInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination interchange", chelmsfordInterchange1, c1.getDestinationTrack());
         Assert.assertEquals("Confirm c1 final destination", danversSpur1, c1.getFinalDestinationTrack());
         // Danvers spur move count was set at 10.
         Assert.assertEquals("Spur move count", 11, danversSpur1.getMoves());
