@@ -44,25 +44,27 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         _tableRowOrColumnComboBox.addActionListener((evt) -> {
             _rowOrColumnNameComboBox.removeAllItems();
             NamedTable table = tableBeanPanel.getNamedBean();
-            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
-                for (int column=1; column <= table.numColumns(); column++) {
-                    // If the header is null or empty, treat the row as a comment
-                    Object header = table.getCell(0, column);
-                    if ((header != null) && (!header.toString().isEmpty())) {
-                        _rowOrColumnNameComboBox.addItem(header.toString());
+            if (table != null) {
+                if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                    for (int column=1; column <= table.numColumns(); column++) {
+                        // If the header is null or empty, treat the row as a comment
+                        Object header = table.getCell(0, column);
+                        if ((header != null) && (!header.toString().isEmpty())) {
+                            _rowOrColumnNameComboBox.addItem(header.toString());
+                        }
+                    }
+                } else {
+                    for (int row=1; row <= table.numRows(); row++) {
+                        // If the header is null or empty, treat the row as a comment
+                        Object header = table.getCell(row, 0);
+                        if ((header != null) && (!header.toString().isEmpty())) {
+                            _rowOrColumnNameComboBox.addItem(header.toString());
+                        }
                     }
                 }
-            } else {
-                for (int row=1; row <= table.numRows(); row++) {
-                    // If the header is null or empty, treat the row as a comment
-                    Object header = table.getCell(row, 0);
-                    if ((header != null) && (!header.toString().isEmpty())) {
-                        _rowOrColumnNameComboBox.addItem(header.toString());
-                    }
+                if (action != null) {
+                    _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
                 }
-            }
-            if (action != null) {
-                _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
             }
         });
         
