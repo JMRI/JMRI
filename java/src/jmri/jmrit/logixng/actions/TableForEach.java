@@ -97,7 +97,7 @@ public class TableForEach extends AbstractDigitalAction
                 }
             }
         } else {
-            int column = table.getRowNumber(_rowOrColumnName);
+            int column = table.getColumnNumber(_rowOrColumnName);
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(row, 0);
@@ -238,8 +238,8 @@ public class TableForEach extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "TableForEach_Long",
-                _tableRowOrColumn.toStringLowerCase(),
                 _tableRowOrColumn.getOpposite().toStringLowerCase(),
+                _tableRowOrColumn.toStringLowerCase(),
                 _rowOrColumnName,
                 getTable() != null ? getTable().getName() : "",
                 _variableName,

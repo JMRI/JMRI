@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.FakeParent;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -102,9 +104,20 @@ public class AbstractDigitalBooleanActionTest {
             throw new UnsupportedOperationException("Not supported.");
         }
 
+        private final Base fakeParent = new FakeParent();
+
+        // To aid testing of the method getNewSocketName(), we let the method
+        // getChild() set the name.
+        // See the method testGetNewSocketName().
         @Override
         public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+            // FemaleSocket.setName() calls validate() that calls parent.getChild()
+            // which gives a StackOverflowError. To protect from that, we temporary
+            // set the parent to a fake parent.
+            Base parent = child.getParent();
+            child.setParent(fakeParent);
             child.setName("A"+index);
+            child.setParent(parent);
             return child;
         }
 

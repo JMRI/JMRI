@@ -19,6 +19,12 @@ public interface SymbolTable {
     public Map<String, Symbol> getSymbols();
     
     /**
+     * The list of symbols and their values in the table
+     * @return the name of the symbols and their values
+     */
+    public Map<String, Object> getSymbolValues();
+    
+    /**
      * Get the value of a symbol
      * @param name the name
      * @return the value

@@ -671,7 +671,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (getRoute() == null) {
             return null;
         }
-        return getRoute().getLocationsBySequenceList();
+        return getRoute().getBlockingOrder();
     }
 
     /**
