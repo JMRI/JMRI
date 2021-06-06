@@ -159,7 +159,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
                 namedBeanReference._handle.getBean()
-                        .addPropertyChangeListener(namedBeanReference._type._propertyName, this);
+                        .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
             }
         }
         _listenersAreRegistered = true;
@@ -173,7 +173,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
                 namedBeanReference._handle.getBean()
-                        .removePropertyChangeListener(namedBeanReference._type._propertyName, this);
+                        .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
             }
         }
         _listenersAreRegistered = false;
@@ -201,7 +201,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _name = name;
             _type = type;
 
-            NamedBean bean = _type._manager.getNamedBean(name);
+            NamedBean bean = _type.getManager().getNamedBean(name);
             if (bean != null) {
                 _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
             }
@@ -230,11 +230,11 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         public void updateHandle() {
             if (!_name.isEmpty()) {
-                NamedBean bean = _type._manager.getNamedBean(_name);
+                NamedBean bean = _type.getManager().getNamedBean(_name);
                 if (bean != null) {
                     _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
                 } else {
-                    log.warn("Cannot find named bean "+_name+" in manager for "+_type._manager.getBeanTypeHandled());
+                    log.warn("Cannot find named bean "+_name+" in manager for "+_type.getManager().getBeanTypeHandled());
                     _handle = null;
                 }
             } else {

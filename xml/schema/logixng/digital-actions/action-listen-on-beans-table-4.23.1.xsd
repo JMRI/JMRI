@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionListenOnBeansType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionListenOnBeansTableType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionListenOnBeans class.
+          Define the XML stucture for storing the contents of a ActionListenOnBeansTable class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionListenOnBeansXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionListenOnBeansTableXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
@@ -41,25 +41,27 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="References" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="Reference" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                          <xs:element name="type" type="LogixNG_NamedBeanType" minOccurs="1" maxOccurs="1"/>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
+<!--              <xs:element name="localVariable" type="xs:string" /> -->
+              <xs:element name="table" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnName" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="tableRowOrColumn" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Row"/>
+                    <xs:enumeration value="Column"/>
+                  </xs:restriction>
+                </xs:simpleType>
               </xs:element>
+
+              <xs:element name="namedBeanType" type="LogixNG_NamedBeanType" minOccurs="1" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             
+            <xs:attribute name="includeCellsWithoutHeader" type="yesNoType" use="required"/>
+
 			<xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>

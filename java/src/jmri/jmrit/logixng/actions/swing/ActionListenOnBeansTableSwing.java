@@ -6,15 +6,10 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeansTable;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -25,177 +20,102 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneSensor;
-    private BeanSelectPanel<Sensor> sensorBeanPanel;
-    private JPanel _panelSensorDirect;
-    private JPanel _panelSensorReference;
-    private JPanel _panelSensorLocalVariable;
-    private JPanel _panelSensorFormula;
-    private JTextField _sensorReferenceTextField;
-    private JTextField _sensorLocalVariableTextField;
-    private JTextField _sensorFormulaTextField;
-    
-    private JTabbedPane _tabbedPaneSensorState;
-    private JComboBox<SensorState> _stateComboBox;
-    private JPanel _panelSensorStateDirect;
-    private JPanel _panelSensorStateReference;
-    private JPanel _panelSensorStateLocalVariable;
-    private JPanel _panelSensorStateFormula;
-    private JTextField _sensorStateReferenceTextField;
-    private JTextField _sensorStateLocalVariableTextField;
-    private JTextField _sensorStateFormulaTextField;
-    
+    private BeanSelectPanel<NamedTable> tableBeanPanel;
+    private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
+    private JComboBox<String> _rowOrColumnNameComboBox;
+    private JCheckBox _includeCellsWithoutHeaderCheckBox;
+    private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
+        if ((object != null) && !(object instanceof ActionListenOnBeansTable)) {
+            throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
+        }
+        
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
         
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-        _tabbedPaneSensor = new JTabbedPane();
-        _panelSensorDirect = new javax.swing.JPanel();
-        _panelSensorReference = new javax.swing.JPanel();
-        _panelSensorLocalVariable = new javax.swing.JPanel();
-        _panelSensorFormula = new javax.swing.JPanel();
+        JPanel tableBeanPanelPanel = new JPanel();
+        tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_Table")));
+        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        tableBeanPanelPanel.add(tableBeanPanel);
+        panel.add(tableBeanPanelPanel);
         
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.Direct.toString(), _panelSensorDirect);
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.Reference.toString(), _panelSensorReference);
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorLocalVariable);
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorFormula);
-        
-        sensorBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SensorManager.class), null);
-        _panelSensorDirect.add(sensorBeanPanel);
-        
-        _sensorReferenceTextField = new JTextField();
-        _sensorReferenceTextField.setColumns(30);
-        _panelSensorReference.add(_sensorReferenceTextField);
-        
-        _sensorLocalVariableTextField = new JTextField();
-        _sensorLocalVariableTextField.setColumns(30);
-        _panelSensorLocalVariable.add(_sensorLocalVariableTextField);
-        
-        _sensorFormulaTextField = new JTextField();
-        _sensorFormulaTextField.setColumns(30);
-        _panelSensorFormula.add(_sensorFormulaTextField);
-        
-        
-        _tabbedPaneSensorState = new JTabbedPane();
-        _panelSensorStateDirect = new javax.swing.JPanel();
-        _panelSensorStateReference = new javax.swing.JPanel();
-        _panelSensorStateLocalVariable = new javax.swing.JPanel();
-        _panelSensorStateFormula = new javax.swing.JPanel();
-        
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.Direct.toString(), _panelSensorStateDirect);
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.Reference.toString(), _panelSensorStateReference);
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorStateLocalVariable);
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorStateFormula);
-        
-        _stateComboBox = new JComboBox<>();
-        for (SensorState e : SensorState.values()) {
-            _stateComboBox.addItem(e);
+        _tableRowOrColumnComboBox = new JComboBox<>();
+        for (TableRowOrColumn item : TableRowOrColumn.values()) {
+            _tableRowOrColumnComboBox.addItem(item);
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
+        JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
+        _tableRowOrColumnComboBox.addActionListener((evt) -> {
+            _rowOrColumnNameComboBox.removeAllItems();
+            NamedTable table = tableBeanPanel.getNamedBean();
+            if (table != null) {
+                if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                    for (int column=1; column <= table.numColumns(); column++) {
+                        // If the header is null or empty, treat the row as a comment
+                        Object header = table.getCell(0, column);
+                        if ((header != null) && (!header.toString().isEmpty())) {
+                            _rowOrColumnNameComboBox.addItem(header.toString());
+                        }
+                    }
+                } else {
+                    for (int row=1; row <= table.numRows(); row++) {
+                        // If the header is null or empty, treat the row as a comment
+                        Object header = table.getCell(row, 0);
+                        if ((header != null) && (!header.toString().isEmpty())) {
+                            _rowOrColumnNameComboBox.addItem(header.toString());
+                        }
+                    }
+                }
+                if (action != null) {
+                    _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
+                }
+            }
+        });
         
-        _panelSensorStateDirect.add(_stateComboBox);
+        JPanel tableRowOrColumnPanel = new JPanel();
+        tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumn")));
+        tableRowOrColumnPanel.add(_tableRowOrColumnComboBox);
+        panel.add(tableRowOrColumnPanel);
         
-        _sensorStateReferenceTextField = new JTextField();
-        _sensorStateReferenceTextField.setColumns(30);
-        _panelSensorStateReference.add(_sensorStateReferenceTextField);
+        JPanel rowOrColumnNamePanel = new JPanel();
+        rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumnName")));
+        _rowOrColumnNameComboBox = new JComboBox<>();
+        rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
+        panel.add(rowOrColumnNamePanel);
+        JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
         
-        _sensorStateLocalVariableTextField = new JTextField();
-        _sensorStateLocalVariableTextField.setColumns(30);
-        _panelSensorStateLocalVariable.add(_sensorStateLocalVariableTextField);
+        JPanel includeCellsWithoutHeaderPanel = new JPanel();
+        includeCellsWithoutHeaderPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_IncludeCellsWithoutHeader")));
+        _includeCellsWithoutHeaderCheckBox = new JCheckBox();
+        includeCellsWithoutHeaderPanel.add(_includeCellsWithoutHeaderCheckBox);
+        panel.add(includeCellsWithoutHeaderPanel);
         
-        _sensorStateFormulaTextField = new JTextField();
-        _sensorStateFormulaTextField.setColumns(30);
-        _panelSensorStateFormula.add(_sensorStateFormulaTextField);
-        
+        JPanel namedBeanTypePanel = new JPanel();
+        namedBeanTypePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_NamedBeanType")));
+        _namedBeanTypeComboBox = new JComboBox<>();
+        for (NamedBeanType item : NamedBeanType.values()) {
+            _namedBeanTypeComboBox.addItem(item);
+        }
+        namedBeanTypePanel.add(_namedBeanTypeComboBox);
+        panel.add(namedBeanTypePanel);
         
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneSensor.setSelectedComponent(_panelSensorDirect); break;
-                case Reference: _tabbedPaneSensor.setSelectedComponent(_panelSensorReference); break;
-                case LocalVariable: _tabbedPaneSensor.setSelectedComponent(_panelSensorLocalVariable); break;
-                case Formula: _tabbedPaneSensor.setSelectedComponent(_panelSensorFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+            if (action.getTable() != null) {
+                tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
             }
-            if (action.getSensor() != null) {
-                sensorBeanPanel.setDefaultNamedBean(action.getSensor().getBean());
-            }
-            _sensorReferenceTextField.setText(action.getReference());
-            _sensorLocalVariableTextField.setText(action.getLocalVariable());
-            _sensorFormulaTextField.setText(action.getFormula());
-            
-            switch (action.getStateAddressing()) {
-                case Direct: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateDirect); break;
-                case Reference: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateReference); break;
-                case LocalVariable: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateLocalVariable); break;
-                case Formula: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getStateAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getBeanState());
-            _sensorStateReferenceTextField.setText(action.getStateReference());
-            _sensorStateLocalVariableTextField.setText(action.getStateLocalVariable());
-            _sensorStateFormulaTextField.setText(action.getStateFormula());
+            _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
+            _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
+            _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
         }
-        
-        JComponent[] components = new JComponent[]{
-            _tabbedPaneSensor,
-            _tabbedPaneSensorState};
-        
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionListenOnBeansTable_Components"), components);
-        
-        for (JComponent c : componentList) panel.add(c);
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionListenOnBeansTable action = new ActionListenOnBeansTable("IQDA1", null);
-        
-        try {
-            if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
-                action.setReference(_sensorReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-        
-        try {
-            if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
-                action.setStateReference(_sensorStateReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-        
-        try {
-            action.setFormula(_sensorFormulaTextField.getText());
-            if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
         return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public String getAutoSystemName() {
-        return InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName();
     }
     
     /** {@inheritDoc} */
@@ -209,70 +129,41 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ActionListenOnBeansTable)) {
+        if (!(object instanceof ActionListenOnBeansTable)) {
             throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
+        
+        // Create a temporary action in case we don't have one.
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
-        if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
-            Sensor sensor = sensorBeanPanel.getNamedBean();
-            if (sensor != null) {
-                NamedBeanHandle<Sensor> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-                action.setSensor(handle);
-            } else {
-                action.removeSensor();
-            }
+        NamedTable table = tableBeanPanel.getNamedBean();
+        if (table != null) {
+            NamedBeanHandle<NamedTable> handle
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(table.getDisplayName(), table);
+            action.setTable(handle);
         } else {
-            action.removeSensor();
+            action.removeTable();
         }
-        try {
-            if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_sensorReferenceTextField.getText());
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_sensorLocalVariableTextField.getText());
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_sensorFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneSensor has unknown selection");
-            }
-            
-            if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateDirect) {
-                action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
-                action.setStateAddressing(NamedBeanAddressing.Reference);
-                action.setStateReference(_sensorStateReferenceTextField.getText());
-            } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateLocalVariable) {
-                action.setStateAddressing(NamedBeanAddressing.LocalVariable);
-                action.setStateLocalVariable(_sensorStateLocalVariableTextField.getText());
-            } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateFormula) {
-                action.setStateAddressing(NamedBeanAddressing.Formula);
-                action.setStateFormula(_sensorStateFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneSensorState has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+        action.setTableRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
+        if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
+            action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
+        } else {
+            action.setRowOrColumnName("");
         }
+        if (_namedBeanTypeComboBox.getSelectedIndex() != -1) {
+            action.setNamedBeanType(_namedBeanTypeComboBox.getItemAt(_namedBeanTypeComboBox.getSelectedIndex()));
+        }
+        action.setIncludeCellsWithoutHeader(_includeCellsWithoutHeaderCheckBox.isSelected());
     }
     
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Sensor_Short");
+        return Bundle.getMessage("ActionListenOnBeansTable_Short");
     }
     
     @Override
     public void dispose() {
-        if (sensorBeanPanel != null) {
-            sensorBeanPanel.dispose();
-        }
     }
     
     

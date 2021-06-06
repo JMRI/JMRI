@@ -20,7 +20,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     private NamedBeanHandle<NamedTable> _tableHandle;
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnName = "";
-    private boolean _includeRowColumnWithoutHeader = false;
+    private boolean _includeCellsWithoutHeader = false;
     private final List<Map.Entry<NamedBean, String>> _namedBeansEntries = new ArrayList<>();
 
     public ActionListenOnBeansTable(String sys, String user)
@@ -39,7 +39,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         copy.setNamedBeanType(_namedBeanType);
         copy.setTable(_tableHandle);
         copy.setTableRowOrColumn(_tableRowOrColumn);
-        copy.setIncludeRowColumnWithoutHeader(_includeRowColumnWithoutHeader);
+        copy.setIncludeCellsWithoutHeader(_includeCellsWithoutHeader);
         return manager.registerAction(copy);
     }
 
@@ -129,25 +129,24 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     }
     
     /**
-     * Set whenever to include rows/columns that doesn't have a header.
-     * Rows/columns without headers can be used to use some cells in the table
+     * Set whenever to include cells that doesn't have a header.
+     * Cells without headers can be used to use some cells in the table
      * as comments.
-     * @return true if include rows/columns that doesn't have a header,
-     *         false otherwise
+     * @return true if include cells that doesn't have a header, false otherwise
      */
-    public boolean getIncludeRowColumnWithoutHeader() {
-        return _includeRowColumnWithoutHeader;
+    public boolean getIncludeCellsWithoutHeader() {
+        return _includeCellsWithoutHeader;
     }
     
     /**
-     * Set whenever to include rows/columns that doesn't have a header.
-     * Rows/columns without headers can be used to use some cells in the table
+     * Set whenever to include cells that doesn't have a header.
+     * Cells without headers can be used to use some cells in the table
      * as comments.
-     * @param includeRowColumnWithoutHeader true if include rows/columns that
-     *                                      doesn't have a header, false otherwise
+     * @param includeCellsWithoutHeader true if include rows/columns that
+     *                                  doesn't have a header, false otherwise
      */
-    public void setIncludeRowColumnWithoutHeader(boolean includeRowColumnWithoutHeader) {
-        _includeRowColumnWithoutHeader = includeRowColumnWithoutHeader;
+    public void setIncludeCellsWithoutHeader(boolean includeCellsWithoutHeader) {
+        _includeCellsWithoutHeader = includeCellsWithoutHeader;
     }
     
     @Override
@@ -237,20 +236,20 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
                 // unless _includeRowColumnWithoutHeader is true
                 Object header = table.getCell(0, column);
 //                System.out.format("Row header: %s%n", header);
-                if (_includeRowColumnWithoutHeader
+                if (_includeCellsWithoutHeader
                         || ((header != null) && (!header.toString().isEmpty()))) {
                     Object cell = table.getCell(row, column);
                     if (cell != null) items.add(cell.toString());
                 }
             }
         } else {
-            int column = table.getRowNumber(_rowOrColumnName);
+            int column = table.getColumnNumber(_rowOrColumnName);
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
                 // unless _includeRowColumnWithoutHeader is true
                 Object header = table.getCell(row, 0);
 //                System.out.format("Column header: %s%n", header);
-                if (_includeRowColumnWithoutHeader
+                if (_includeCellsWithoutHeader
                         || ((header != null) && (!header.toString().isEmpty()))) {
                     Object cell = table.getCell(row, column);
                     if (cell != null && !cell.toString().isEmpty()) items.add(cell.toString());
@@ -268,14 +267,14 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         List<String> items = getItems();
         
         for (String item : items) {
-            NamedBean namedBean = _namedBeanType._manager.getNamedBean(item);
+            NamedBean namedBean = _namedBeanType.getManager().getNamedBean(item);
             
             if (namedBean != null) {
                 Map.Entry<NamedBean, String> namedBeanEntry =
-                        new HashMap.SimpleEntry<>(namedBean, _namedBeanType._propertyName);
+                        new HashMap.SimpleEntry<>(namedBean, _namedBeanType.getPropertyName());
 
                 _namedBeansEntries.add(namedBeanEntry);
-                namedBean.addPropertyChangeListener(_namedBeanType._propertyName, this);
+                namedBean.addPropertyChangeListener(_namedBeanType.getPropertyName(), this);
             } else {
                 log.warn("The named bean \"{}\" cannot be found in the manager for {}", item, _namedBeanType.toString());
             }

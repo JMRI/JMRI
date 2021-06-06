@@ -20,11 +20,12 @@ public enum NamedBeanType {
     Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> {
         return InstanceManager.getDefault(TurnoutManager.class);
     });
+    
     private final String _name;
     private final Class<? extends NamedBean> _clazz;
-    final String _propertyName;
+    private final String _propertyName;
     private final GetManager _getManager;
-    Manager<? extends NamedBean> _manager;
+    private Manager<? extends NamedBean> _manager;
 
     NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, GetManager getManager) {
         _name = name;
@@ -41,6 +42,10 @@ public enum NamedBeanType {
 
     public Class<? extends NamedBean> getClazz() {
         return _clazz;
+    }
+
+    public String getPropertyName() {
+        return _propertyName;
     }
 
     public Manager<? extends NamedBean> getManager() {

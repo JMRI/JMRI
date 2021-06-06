@@ -464,7 +464,13 @@ import jmri.util.JmriJFrame;
 
         @Override
         public Object getElementAt(int index) {
-            return _curTable.getCell(index+1, 0);
+            // Ensure the header has at least five characters and ensure
+            // there are at least two spaces at the end since the last letter
+            // doesn't fully fit at the row.
+            Object data = _curTable.getCell(index+1, 0);
+            String padding = "  ";     // Two spaces
+            String str = data != null ? data.toString().concat(padding) : padding;
+            return str.length() < 5 ? str.concat("     ").substring(0, 7) : str;
         }
     }
     
@@ -505,7 +511,7 @@ import jmri.util.JmriJFrame;
     /**
      * Create a custom listener event.
      */
-    public interface TableEvenLtistener extends EventListener {
+    public interface TableEventListener extends EventListener {
 
         void tableEventOccurred();
     }

@@ -75,7 +75,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
     }
     
     private void setupTable() {
-        for (int i=1; i <= _numRows; i++) {
+        for (int i=0; i <= _numRows; i++) {
             Object cell = _data[i][0];
             if (cell != null && cell instanceof String) {
                 rowNames.put(cell.toString(), i);
@@ -87,7 +87,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
 //            }
         }
         
-        for (int i=1; i <= _numColumns; i++) {
+        for (int i=0; i <= _numColumns; i++) {
             Object cell = _data[0][i];
             if (cell != null && cell instanceof String) {
                 columnNames.put(cell.toString(), i);

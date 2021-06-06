@@ -1,13 +1,14 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import jmri.*;
-import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrit.logixng.*;
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionListenOnBeansTable;
 import jmri.jmrit.logixng.actions.NamedBeanType;
-import jmri.jmrit.logixng.util.parser.ParserException;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
+
+import jmri.jmrit.logixng.TableRowOrColumn;
 
 /**
  * Handle XML configuration for ActionListenOnBeansTable objects.
@@ -19,11 +20,11 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
 
     public ActionListenOnBeansTableXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
-     * @param o Object to store, of type TripleSensorSignalHead
+     * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     @Override
@@ -35,95 +36,57 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
+
+        if (p.getTable() != null) {
+            element.addContent(new Element("table").addContent(p.getTable().getName()));
+        }
+        element.addContent(new Element("rowOrColumnName").addContent(p.getRowOrColumnName()));
+        element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
+        
+        element.setAttribute("includeCellsWithoutHeader",
+                p.getIncludeCellsWithoutHeader() ? "yes" : "no");  // NOI18N
         
         element.addContent(new Element("namedBeanType").addContent(p.getNamedBeanType().name()));
         
-        NamedBeanHandle<NamedTable> table = p.getTable();
-        if (table != null) {
-            element.addContent(new Element("table").addContent(table.getName()));
-        }
-        
-        element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
-        
-        element.addContent(new Element("rowOrColumnName").addContent(p.getRowOrColumnName()));
-        
-        
-        
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
-        
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("sensorState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
-
         return element;
     }
     
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
+    public boolean load(Element shared, Element perNode) {
+        
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionListenOnBeansTable h = new ActionListenOnBeansTable(sys, uname);
-
+        
         loadCommon(h, shared);
-
+        
+        Element tableRowOrColumnElement = shared.getChild("tableRowOrColumn");
+        TableRowOrColumn tableRowOrColumn =
+                TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
+        h.setTableRowOrColumn(tableRowOrColumn);
+        
         Element tableName = shared.getChild("table");
         if (tableName != null) {
-            NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(tableName.getTextTrim());
-            if (t != null) h.setTable(t);
-            else h.removeTable();
+            h.setTable(tableName.getTextTrim());
         }
-
-        try {
-            Element elem = shared.getChild("namedBeanType");
-            if (elem != null) {
-                h.setNamedBeanType(NamedBeanType.valueOf(elem.getTextTrim()));
-            }
-            
-            elem = shared.getChild("tableRowOrColumn");
-            if (elem != null) {
-                h.setTableRowOrColumn(TableRowOrColumn.valueOf(elem.getTextTrim()));
-            }
-            
-            elem = shared.getChild("rowOrColumnName");
-            if (elem != null) h.setRowOrColumnName(elem.getTextTrim());
-            
-            
-            
-            
-            
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-            
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-            
-            
-            elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-            
-            Element sensorState = shared.getChild("sensorState");
-            if (sensorState != null) {
-                h.setBeanState(ActionListenOnBeansTable.SensorState.valueOf(sensorState.getTextTrim()));
-            }
-            
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-            
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-            
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-            
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
+        
+        Element rowOrColumnName = shared.getChild("rowOrColumnName");
+        if (rowOrColumnName != null) {
+            h.setRowOrColumnName(rowOrColumnName.getTextTrim());
         }
-
+        
+        String includeCellsWithoutHeader = "no";
+        Attribute attribute = shared.getAttribute("includeCellsWithoutHeader");
+        if (attribute != null) {  // NOI18N
+            includeCellsWithoutHeader = attribute.getValue();  // NOI18N
+        }
+        h.setIncludeCellsWithoutHeader("yes".equals(includeCellsWithoutHeader));
+        
+        Element namedBeanTypeElement = shared.getChild("namedBeanType");
+        NamedBeanType namedBeanType =
+                NamedBeanType.valueOf(namedBeanTypeElement.getTextTrim());
+        h.setNamedBeanType(namedBeanType);
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
