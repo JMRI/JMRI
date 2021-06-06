@@ -21,9 +21,10 @@
 
       <h2>Modules</h2>
 
-      <p>A module is a special ConditionalNG which is invoked from regular ConditionalNGs.
-      In programing terms it is a sub-routine, method, def, etc.  It can use zero or more
-      inputs and return zero or more outputs.  It does not respond to expression changes.</p>
+      <p>A module is a special ConditionalNG which is invoked from regular ConditionalNGs
+      or other Modules.  In programing terms it is a sub-routine, method, def, etc.  It
+      can use zero or more inputs and return zero or more outputs.  It does not respond
+      to expression changes.</p>
 
       <p>A common use would be to return the state of a set of expressions that can be
       called by various ConditionalNGs rather than listing each expressions in each
@@ -48,7 +49,7 @@
       </div>
 
       <p>This is a digital action socket.  This can be used to create an action only module or
-      complex modules withe any combination of expressions and actions, such as
+      complex modules with any combination of expressions and actions, such as
       <strong>if then else</strong> structures.  These can have inputs and outputs.</p>
 
       <div style="margin-left: 2em;">

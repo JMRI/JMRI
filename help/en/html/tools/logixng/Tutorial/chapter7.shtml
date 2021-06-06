@@ -21,10 +21,29 @@
 
       <h2>References</h2>
 
-      <p>Sometimes it's useful to use indirect addressing of turnouts, sensors and other
-      things. LogixNG supports indirect addressing of both the name of the turnout, sensor,
-      signal head, etc., and of the expected state, like Thrown or Closed.  This is simular
-      to the the Logix memory indirect using <strong>@memname</strong>.</p>
+      <p>The following discussion refers to {name}.  This can be either a JMRI memory variable
+      or a LogixNG Local Variable.</p>
+
+
+      <p>LogixNG can use references to access layout items like turnouts in an indirect
+      way. It's done by entering the system name or user name in curly brackets. If
+      a turnout action has the turnout IT1, it will access that turnout directly. But if
+      the turnout action has the turnout {IM2}, it will read that memory and if that
+      memory has a string as a value, it will use that string value to find the turnout.
+      So if the memory IM2 has the value IT5, and the turnout action has the turnout
+      {IM2}, the turnout action will read the memory IM2 and find out that it points to
+      the turnout IT5 and therefore do it's action on turnout IT5. The benefit of this
+      is that the Memory can be changed during execution and therefore the same
+      turnout action can be used to access different turnouts at different times.</p>
+
+      <p>It's possible to use indirect access recursive. If a turnout action has the
+      turnout {IM5}, and that Memory has the value {IM14}, and that the Memory IM14
+      has the value IT3, the turnout action will access IT3. The turnout action has an
+      indirect turnout IM5 so it will read that Memory. And since that memory has the
+      value {IM14} which also is an indirect access, it will read the memory IM14 and
+      find out that it has the value IT3, and therefore use IT3. This is also true for
+      tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has the
+      value 'IT5', the cell IQT1[5,3] will point to IT5.</p>
 
       <p>When the Reference tab is selected, the appropriate values are entered into the text
       field.  References are the name of a local variable, memory or table cell, enclosed

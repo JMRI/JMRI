@@ -40,7 +40,7 @@
       <p>There are three expressions for formula: Analog Formula, Digital Formula and
       String Formula. They all work the same way, except that Analog Formula returns a
       floating point number, Digital Formula returns a boolean value (true or false), and
-      String Formula returns a string. The expression formula can have child expressions,
+      String Formula returns a string. The expression Formula can have child expressions,
       for example reading an analog value or reading the state of a sensor. You use the
       result of the child expressions by using the name of the female socket in the formula.
       So if you have an expression Formula which has a child E1 to which an expression
