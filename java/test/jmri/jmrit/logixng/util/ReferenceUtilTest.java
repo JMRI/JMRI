@@ -286,7 +286,6 @@ public class ReferenceUtilTest {
         // tab character.
         
         String yardTableData =
-                "\tYard table\n" +
                 "\tNorth yard\tEast yard\tSouth yard\tWest yard" + _nl +
                 "Leftmost turnout\tIT101\tIT201\tIT301\tIT401" + _nl +
                 "Left turnout\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
@@ -295,7 +294,6 @@ public class ReferenceUtilTest {
                 "Other turnout\tIT1\tIT2\tIT3\tIT4" + _nl;
         
         String turnoutTableData =
-                "\tTurnout table\n" +
                 "\tColumn" + _nl +
                 "Green turnout\tIT101" + _nl +
                 "Red turnout\tTurnout" + _nl +
@@ -303,15 +301,71 @@ public class ReferenceUtilTest {
                 "Blue turnout\tTurnout 222" + _nl;
         
         String otherYardTableData =
-                "\tOther yard table\n" +
                 "\tYellow yard\tGreen yard\tBlue yard\tRed yard" + _nl +
                 "Turnouts\tWest yard\tEast yard\tIT301\tIT401" + _nl +
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSV("filename.csv", yardTableData);
-        _tableManager.loadTableFromCSV("filename.csv", turnoutTableData);
-        _tableManager.loadTableFromCSV("filename.csv", otherYardTableData);
+        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData);
+        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData);
+        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData);
+        
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println(getBeanText(yardTable));
+        System.out.println();
+        System.out.println();
+        System.out.println(getBeanText(_tableManager.getBySystemName("IQT2")));
+        System.out.println();
+        System.out.println();
+        System.out.println(getBeanText(_tableManager.getBySystemName("IQT3")));
+        System.out.println();
+        System.out.println();
+        System.out.println();
+    }
+    
+    private String getBeanText(NamedTable bean) {
+        int maxColumnWidth = 0;
+        int columnWidth[] = new int[bean.numColumns()];
+        String[][] cells = new String[bean.numRows()][];
+        for (int row=0; row < bean.numRows(); row++) {
+            cells[row] = new String[bean.numColumns()];
+            for (int col=0; col < bean.numColumns(); col++) {
+                Object value = bean.getCell(row, col);
+                cells[row][col] = value != null ? value.toString() : "<null>";
+                columnWidth[col] = Math.max(columnWidth[col], cells[row][col].length());
+                maxColumnWidth = Math.max(maxColumnWidth, columnWidth[col]);
+            }
+        }
+        StringBuilder columnLine = new StringBuilder();
+        while (columnLine.length()+2 < maxColumnWidth) {
+            columnLine.append("----------------------");
+        }
+        String columnPadding = String.format("%"+Integer.toString(maxColumnWidth)+"s", "");
+        StringBuilder sb = new StringBuilder();
+        sb.append("+");
+        for (int col=0; col < bean.numColumns(); col++) {
+            sb.append(columnLine.substring(0,columnWidth[col]+2));
+            sb.append("+");
+            if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+        }
+        for (int row=0; row < bean.numRows(); row++) {
+            sb.append("|");
+            for (int col=0; col < bean.numColumns(); col++) {
+                sb.append(" ");
+                sb.append((cells[row][col]+columnPadding).substring(0,columnWidth[col]));
+                sb.append(" |");
+                if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+            }
+            sb.append("+");
+            for (int col=0; col < bean.numColumns(); col++) {
+                sb.append(columnLine.substring(0,columnWidth[col]+2));
+                sb.append("+");
+                if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+            }
+        }
+        return sb.toString();
     }
     
     // The minimal setup for log4J
