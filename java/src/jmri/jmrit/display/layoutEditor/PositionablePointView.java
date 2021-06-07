@@ -1179,6 +1179,7 @@ public class PositionablePointView extends LayoutTrackView {
                             if (layoutEditor.prevSelectedObject == pp_this) {
                                 layoutEditor.prevSelectedObject = null;
                             }
+                            layoutEditor.clearSelectionGroups();
 
                             // remove this PositionablePoint and PositionablePointView from the layoutEditor's list of layout tracks
                             layoutEditor.removeLayoutTrackAndRedraw(pp_this);
@@ -1202,6 +1203,7 @@ public class PositionablePointView extends LayoutTrackView {
             ) {
                 if (canRemove() && layoutEditor.removePositionablePoint(positionablePoint)) {
                     // user is serious about removing this point from the panel
+                    layoutEditor.clearSelectionGroups();
                     remove();
                     dispose();
                 }
