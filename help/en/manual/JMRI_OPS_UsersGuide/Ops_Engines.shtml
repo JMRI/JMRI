@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -89,7 +88,8 @@
         "Ops_Routes.shtml">Next</a></p>
 
         <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div><!--#include virtual="/Footer.shtml" -->
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
