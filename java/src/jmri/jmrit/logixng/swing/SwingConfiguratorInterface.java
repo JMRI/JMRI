@@ -5,11 +5,9 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBean.BadUserNameException;
 import jmri.NamedBean.BadSystemNameException;
@@ -25,16 +23,16 @@ import jmri.jmrit.logixng.MaleSocket;
 public interface SwingConfiguratorInterface {
 
     /**
-     * Set the parent frame for this class
-     * @param frame the parent frame
+     * Get the menu text for execute/evaluate.
+     * @return the menu text
      */
-    public void setFrame(JFrame frame);
+    public String getExecuteEvaluateMenuText();
     
     /**
-     * Get the parent frame for this class
-     * @return the parent frame
+     * Execute or evaluate an item that this object configures.
+     * @param object the object to execute or evaluate
      */
-    public JFrame getFrame();
+    public void executeEvaluate(@Nonnull Base object);
     
     /**
      * Get the manager that handles the beans for the new object.

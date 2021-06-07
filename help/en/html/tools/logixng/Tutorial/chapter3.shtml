@@ -5,7 +5,7 @@
   <title>LogixNG Tutorial - Chapter 3</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial">
+  <meta name="keywords" content="jmri LogixNG tutorial basic actions expressions">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -18,6 +18,8 @@
 
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Tutorial - Chapter 3</h1>
+
+      <h2>Basic Actions and Expressions</h2>
 
       <p>When an Action or Expression is to be added to the ConditionalNG tree, an item
       has to be selected.  The selection window has a <strong>Category</strong> list and
@@ -133,9 +135,9 @@
               socket names and also works with numbers and strings.</em></dd>
             <dt>Digital Formula</dt>
               <dd>Formula is the next generation of Antecedent. It supports many operators,
-              like ==, !=, <=, >=, <, >, +, -, *, / and %. It supports local variables,
-              memories and functions. It supports all the types of expressions, digital,
-              analog and string expressions.</dd>
+              like ==, !=, &lt;=, >=, &lt;, >, +, -, *, / and %. It
+              supports local variables, memories and functions. It supports all the types
+              of expressions, digital, analog and string expressions.</dd>
             <dt>Not</dt>
             <dt>Or</dt>
               <dd>Or evaluates the child expressions and if at least one of them returns
@@ -175,7 +177,7 @@
 
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="">Chapter 4 - ????????</a></span></p>
+      <span style="padding-left: 6em"><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></span></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
