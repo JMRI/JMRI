@@ -129,7 +129,7 @@ public class TableForEach extends AbstractDigitalAction
     public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
         assertListenersAreNotRegistered(log, "setTable");
         _tableHandle = handle;
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
     }
     
     public void setTable(@Nonnull NamedTable turnout) {
@@ -141,7 +141,7 @@ public class TableForEach extends AbstractDigitalAction
     public void removeTable() {
         assertListenersAreNotRegistered(log, "setTable");
         if (_tableHandle != null) {
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
             _tableHandle = null;
         }
     }
