@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.TableRowOrColumn;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +11,8 @@ import java.util.Map;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -233,10 +233,10 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         // Load table turnout_and_signals.csv
         NamedTable csvTable =
                 InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+                        .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         
         _tableForEach.setTable(csvTable);
-        _tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        _tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
         _tableForEach.setRowOrColumnName("1");
         _tableForEach.setLocalVariableName("MyVariable");
         _logixNG.setEnabled(true);

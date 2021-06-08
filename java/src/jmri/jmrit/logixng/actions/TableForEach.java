@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyVetoException;
+
+import jmri.jmrit.logixng.TableRowOrColumn;
+
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import java.util.Map;
@@ -40,6 +44,8 @@ public class TableForEach extends AbstractDigitalAction
         copy.setComment(getComment());
         copy.setTable(_tableHandle);
         copy.setTableRowOrColumn(_tableRowOrColumn);
+        copy.setRowOrColumnName(_rowOrColumnName);
+        copy.setLocalVariableName(_variableName);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -123,7 +129,7 @@ public class TableForEach extends AbstractDigitalAction
     public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
         assertListenersAreNotRegistered(log, "setTable");
         _tableHandle = handle;
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
     }
     
     public void setTable(@Nonnull NamedTable turnout) {
@@ -135,7 +141,7 @@ public class TableForEach extends AbstractDigitalAction
     public void removeTable() {
         assertListenersAreNotRegistered(log, "setTable");
         if (_tableHandle != null) {
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
             _tableHandle = null;
         }
     }
@@ -191,6 +197,23 @@ public class TableForEach extends AbstractDigitalAction
      */
     public void setLocalVariableName(String localVariableName) {
         _variableName = localVariableName;
+    }
+    
+    @Override
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    throw new PropertyVetoException(getDisplayName(), evt);
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    removeTable();
+                }
+            }
+        }
     }
     
     @Override
@@ -303,35 +326,6 @@ public class TableForEach extends AbstractDigitalAction
     }
 
 
-    public enum TableRowOrColumn {
-        Row(Bundle.getMessage("TableForEach_TableRowOrColumn_Row"),
-            Bundle.getMessage("TableForEach_TableRowOrColumn_Row_lowercase")),
-        Column(Bundle.getMessage("TableForEach_TableRowOrColumn_Column"),
-            Bundle.getMessage("TableForEach_TableRowOrColumn_Column_lowercase"));
-        
-        private final String _text;
-        private final String _textLowerCase;
-        
-        private TableRowOrColumn(String text, String textLowerCase) {
-            this._text = text;
-            this._textLowerCase = textLowerCase;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
-        public String toStringLowerCase() {
-            return _textLowerCase;
-        }
-        
-        public TableRowOrColumn getOpposite() {
-            if (this == Row) return Column;
-            else return Row;
-        }
-    }
-    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEach.class);
 
 }

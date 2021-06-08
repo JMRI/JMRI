@@ -14,7 +14,7 @@ import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanType;
+import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;

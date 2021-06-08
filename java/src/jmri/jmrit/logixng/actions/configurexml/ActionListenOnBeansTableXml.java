@@ -2,23 +2,23 @@ package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.actions.TableForEach;
+import jmri.jmrit.logixng.actions.ActionListenOnBeansTable;
+import jmri.jmrit.logixng.actions.NamedBeanType;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.TableRowOrColumn;
 
 /**
- * Handle XML configuration for TableForEach objects.
+ * Handle XML configuration for ActionListenOnBeansTable objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public TableForEachXml() {
+    public ActionListenOnBeansTableXml() {
     }
 
     /**
@@ -29,35 +29,25 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
      */
     @Override
     public Element store(Object o) {
-        TableForEach p = (TableForEach) o;
+        ActionListenOnBeansTable p = (ActionListenOnBeansTable) o;
 
-        Element element = new Element("TableForEach");
+        Element element = new Element("ActionListenOnBeansTable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariableName()));
         if (p.getTable() != null) {
             element.addContent(new Element("table").addContent(p.getTable().getName()));
         }
         element.addContent(new Element("rowOrColumnName").addContent(p.getRowOrColumnName()));
         element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
         
-        Element e2 = new Element("Socket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
-        MaleSocket socket = p.getSocket().getConnectedSocket();
-        String socketSystemName;
-        if (socket != null) {
-            socketSystemName = socket.getSystemName();
-        } else {
-            socketSystemName = p.getSocketSystemName();
-        }
-        if (socketSystemName != null) {
-            e2.addContent(new Element("systemName").addContent(socketSystemName));
-        }
-        element.addContent(e2);
-
+        element.setAttribute("includeCellsWithoutHeader",
+                p.getIncludeCellsWithoutHeader() ? "yes" : "no");  // NOI18N
+        
+        element.addContent(new Element("namedBeanType").addContent(p.getNamedBeanType().name()));
+        
         return element;
     }
     
@@ -66,7 +56,7 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        TableForEach h = new TableForEach(sys, uname);
+        ActionListenOnBeansTable h = new ActionListenOnBeansTable(sys, uname);
         
         loadCommon(h, shared);
         
@@ -74,13 +64,6 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         TableRowOrColumn tableRowOrColumn =
                 TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
         h.setTableRowOrColumn(tableRowOrColumn);
-        
-        Element socketName = shared.getChild("Socket").getChild("socketName");
-        h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("Socket").getChild("systemName");
-        if (socketSystemName != null) {
-            h.setSocketSystemName(socketSystemName.getTextTrim());
-        }
         
         Element tableName = shared.getChild("table");
         if (tableName != null) {
@@ -92,14 +75,21 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
             h.setRowOrColumnName(rowOrColumnName.getTextTrim());
         }
         
-        Element localVariable = shared.getChild("localVariable");
-        if (localVariable != null) {
-            h.setLocalVariableName(localVariable.getTextTrim());
+        String includeCellsWithoutHeader = "no";
+        Attribute attribute = shared.getAttribute("includeCellsWithoutHeader");
+        if (attribute != null) {  // NOI18N
+            includeCellsWithoutHeader = attribute.getValue();  // NOI18N
         }
+        h.setIncludeCellsWithoutHeader("yes".equals(includeCellsWithoutHeader));
+        
+        Element namedBeanTypeElement = shared.getChild("namedBeanType");
+        NamedBeanType namedBeanType =
+                NamedBeanType.valueOf(namedBeanTypeElement.getTextTrim());
+        h.setNamedBeanType(namedBeanType);
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEachXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTableXml.class);
 }

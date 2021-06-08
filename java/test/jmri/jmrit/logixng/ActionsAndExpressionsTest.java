@@ -221,6 +221,7 @@ public class ActionsAndExpressionsTest {
                 classes,
                 new String[]{
                     "Bundle",
+                    "NamedBeanType",
                     "AbstractAnalogAction","AnalogFactory",         // Analog
                     "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital
                     "AbstractDigitalBooleanAction","DigitalBooleanFactory",     // Boolean digital
