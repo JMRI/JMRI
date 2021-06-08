@@ -1179,7 +1179,7 @@ public class PositionablePointView extends LayoutTrackView {
                             if (layoutEditor.prevSelectedObject == pp_this) {
                                 layoutEditor.prevSelectedObject = null;
                             }
-                            layoutEditor.clearSelectionGroups();
+                            clearPossibleSelection();
 
                             // remove this PositionablePoint and PositionablePointView from the layoutEditor's list of layout tracks
                             layoutEditor.removeLayoutTrackAndRedraw(pp_this);
@@ -1203,7 +1203,7 @@ public class PositionablePointView extends LayoutTrackView {
             ) {
                 if (canRemove() && layoutEditor.removePositionablePoint(positionablePoint)) {
                     // user is serious about removing this point from the panel
-                    layoutEditor.clearSelectionGroups();
+                    clearPossibleSelection();
                     remove();
                     dispose();
                 }
@@ -1320,6 +1320,19 @@ public class PositionablePointView extends LayoutTrackView {
 
         return popup;
     }   // showPopup
+
+    /**
+     * If an anchor point is selected via a track segment connection, it will be
+     * in the track selection list.  When the merge or delete finishes, draw
+     * can no longer find the object resulting in a Java exception.
+     * <p>
+     * If the anchor point is in the track selection list, the selection groups are cleared.
+     */
+    private void clearPossibleSelection() {
+        if (layoutEditor.getLayoutTrackSelection().contains(positionablePoint)) {
+            layoutEditor.clearSelectionGroups();
+        }
+    }
 
     /**
      * {@inheritDoc}
