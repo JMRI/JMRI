@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.configurexml;
 
+import jmri.jmrit.logixng.TableRowOrColumn;
+
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
 import java.io.*;
@@ -113,7 +115,7 @@ public class StoreAndLoadTest {
         // Load table turnout_and_signals.csv
         jmri.jmrit.logixng.NamedTable csvTable =
                 InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+                        .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         Assert.assertNotNull(csvTable);
 
         // Create module IQM1
@@ -1658,7 +1660,7 @@ public class StoreAndLoadTest {
 
 
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
-        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -1667,7 +1669,7 @@ public class StoreAndLoadTest {
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setTable(csvTable);
-        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Row);
+        tableForEach.setTableRowOrColumn(TableRowOrColumn.Row);
         tableForEach.setRowOrColumnName("North yard");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -1679,7 +1681,7 @@ public class StoreAndLoadTest {
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setTable(csvTable);
-        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
         tableForEach.setRowOrColumnName("Second turnout");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
