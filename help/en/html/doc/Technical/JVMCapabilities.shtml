@@ -58,7 +58,7 @@
       runtime environment that could run the feature, including the
       needed JVM and library support.
 
-      <table border="1">
+      <table style="width: 100%; padding: 10px 15px 10px 15px;">
         <tr>
           <th>Feature</th>
 
@@ -206,9 +206,9 @@
           need to migrate away from these before using a more 
           advanced JRE or JDK.</td>
 
-          <td>&gt; >11</td>
+          <td>&gt; 11</td>
 
-          <td>&gt; >11</td>
+          <td>&gt; 11</td>
 
         </tr>
 
