@@ -159,7 +159,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
                 namedBeanReference._handle.getBean()
-                        .addPropertyChangeListener(namedBeanReference._type._propertyName, this);
+                        .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
             }
         }
         _listenersAreRegistered = true;
@@ -173,7 +173,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
                 namedBeanReference._handle.getBean()
-                        .removePropertyChangeListener(namedBeanReference._type._propertyName, this);
+                        .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
             }
         }
         _listenersAreRegistered = false;
@@ -191,48 +191,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     }
 
 
-    public enum NamedBeanType {
-        Light(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", () -> { return InstanceManager.getDefault(LightManager.class); }),
-        Memory(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", () -> { return InstanceManager.getDefault(MemoryManager.class); }),
-        Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> { return InstanceManager.getDefault(SensorManager.class); }),
-        Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> { return InstanceManager.getDefault(TurnoutManager.class); });
-
-        private final String _name;
-        private final Class<? extends NamedBean> _clazz;
-        private final String _propertyName;
-        private final GetManager _getManager;
-        private Manager<? extends NamedBean> _manager;
-
-        NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, GetManager getManager) {
-            _name = name;
-            _clazz = clazz;
-            _propertyName = propertyName;
-            _getManager = getManager;
-            _manager = _getManager.getManager();
-        }
-
-        @Override
-        public String toString() { return _name; }
-
-        public Class<? extends NamedBean> getClazz() { return _clazz; }
-
-        public Manager<? extends NamedBean> getManager() { return _manager; }
-
-        // This method is used by test classes to reset this enum.
-        // Each test resets the InstanceManager so we need to reset the
-        // managers in this enum.
-        public static void reset() {
-            for (NamedBeanType type : NamedBeanType.values()) {
-                type._manager = type._getManager.getManager();
-            }
-        }
-
-        private interface GetManager {
-            Manager<? extends NamedBean> getManager();
-        }
-    }
-
-
     public static class NamedBeanReference {
 
         private String _name;
@@ -243,7 +201,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _name = name;
             _type = type;
 
-            NamedBean bean = _type._manager.getNamedBean(name);
+            NamedBean bean = _type.getManager().getNamedBean(name);
             if (bean != null) {
                 _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
             }
@@ -272,11 +230,11 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         public void updateHandle() {
             if (!_name.isEmpty()) {
-                NamedBean bean = _type._manager.getNamedBean(_name);
+                NamedBean bean = _type.getManager().getNamedBean(_name);
                 if (bean != null) {
                     _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
                 } else {
-                    log.warn("Cannot find named bean "+_name+" in manager for "+_type._manager.getBeanTypeHandled());
+                    log.warn("Cannot find named bean "+_name+" in manager for "+_type.getManager().getBeanTypeHandled());
                     _handle = null;
                 }
             } else {

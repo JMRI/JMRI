@@ -528,15 +528,16 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             _rs.setTypeName((String) typeComboBox.getSelectedItem());
         }
 
-        int blocking = 0;
+        int blocking = RollingStock.DEFAULT_BLOCKING_ORDER;
         try {
             blocking = Integer.parseInt(blockingTextField.getText());
-            // only allow numbers between 0 and 100
-            if (blocking < 0 || blocking > 100) {
-                blocking = 0;
+            // only allow numbers between -100 and 100
+            if (blocking < -RollingStock.MAX_BLOCKING_ORDER || blocking > RollingStock.MAX_BLOCKING_ORDER) {
+                blocking = RollingStock.DEFAULT_BLOCKING_ORDER;
             }
         } catch (Exception e) {
-            log.warn("Blocking must be a number between 0 and 100");
+            log.warn("Blocking must be a number between -{} and {}", RollingStock.MAX_BLOCKING_ORDER,
+                    RollingStock.MAX_BLOCKING_ORDER);
         }
         blockingTextField.setText(Integer.toString(blocking));
 

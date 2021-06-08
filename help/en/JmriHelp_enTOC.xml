@@ -432,9 +432,11 @@
 
    <tocitem text="LogixNG Module Table " target="package.jmri.jmrit.beantable.LogixNGModuleTable"/>
 
-   <tocitem text="LogixNG Module Table " target="package.jmri.jmrit.logixng.ModuleEditor"/>
+   <tocitem text="LogixNG Module Table Editor " target="package.jmri.jmrit.logixng.ModuleEditor"/>
 
    <tocitem text="LogixNG Tables Table " target="package.jmri.jmrit.beantable.LogixNGTableTable"/>
+
+   <tocitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
 
    <tocitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
 

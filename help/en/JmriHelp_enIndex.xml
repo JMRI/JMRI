@@ -411,9 +411,11 @@
 
   <indexitem text="LogixNG Module Table " target="package.jmri.jmrit.beantable.LogixNGModuleTable"/>
 
-  <indexitem text="LogixNG Module Table " target="package.jmri.jmrit.logixng.ModuleEditor"/>
+  <indexitem text="LogixNG Module Table Editor " target="package.jmri.jmrit.logixng.ModuleEditor"/>
 
   <indexitem text="LogixNG Tables Table " target="package.jmri.jmrit.beantable.LogixNGTableTable"/>
+
+  <indexitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
 
   <indexitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
 

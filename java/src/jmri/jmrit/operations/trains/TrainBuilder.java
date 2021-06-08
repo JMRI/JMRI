@@ -3659,17 +3659,9 @@ public class TrainBuilder extends TrainCommon {
      * @return false if there's an issue with using the spur
      */
     private boolean sendCarToDestinationSpur(Car car, Track track) {
-        if (car.getTrack() == track) {
+        if (!checkBasicMoves(car, track)) {
             return false;
         }
-        // is the car's destination the terminal and is that allowed?
-        if (!checkThroughCarsAllowed(car, track.getLocation().getName())) {
-            return false;
-        }
-        if (!checkLocalMovesAllowed(car, track)) {
-            return false;
-        }
-
         String status = car.testDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
@@ -3771,17 +3763,7 @@ public class TrainBuilder extends TrainCommon {
      * @return true if car given a new final destination
      */
     private boolean sendCarToDestinationTrack(Car car, Track track) {
-        if (car.getTrack() == track) {
-            return false;
-        }
-        if (track.isStaging() && car.getLocation() == track.getLocation()) {
-            return false; // don't use same staging location
-        }
-        // is the car's destination the terminal and is that allowed?
-        if (!checkThroughCarsAllowed(car, track.getLocation().getName())) {
-            return false;
-        }
-        if (!checkLocalMovesAllowed(car, track)) {
+        if (!checkBasicMoves(car, track)) {
             return false;
         }
         String status = car.testDestination(track.getLocation(), track);
@@ -3818,6 +3800,28 @@ public class TrainBuilder extends TrainCommon {
         }
         car.updateKernel(); // car part of kernel?
         return true; // done, car has a new final destination
+    }
+    
+    private boolean checkBasicMoves(Car car, Track track) {
+        if (car.getTrack() == track) {
+            return false;
+        }
+        // don't allow local move to track with a "similar" name
+        if (splitString(car.getLocationName()).equals(splitString(track.getLocation().getName())) &&
+                splitString(car.getTrackName()).equals(splitString(track.getName()))) {
+            return false;
+        }
+        if (track.isStaging() && car.getLocation() == track.getLocation()) {
+            return false; // don't use same staging location
+        }
+        // is the car's destination the terminal and is that allowed?
+        if (!checkThroughCarsAllowed(car, track.getLocation().getName())) {
+            return false;
+        }
+        if (!checkLocalMovesAllowed(car, track)) {
+            return false;
+        }
+        return true;
     }
 
     private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {

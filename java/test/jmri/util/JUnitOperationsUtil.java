@@ -401,17 +401,24 @@ public class JUnitOperationsUtil {
 
     public static Route createFiveLocationRoute() {
 
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
-        Route route = createThreeLocationRoute();
+        createSevenNormalLocations();
+        
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Davers-Essex");
 
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
         Location danvers = lmanager.getLocationByName("Danvers");
         Location essex = lmanager.getLocationByName("Essex");
 
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
         route.addLocation(danvers);
         route.addLocation(essex);
-
-        route.setName("Route Acton-Boston-Chelmsford-Davers-Essex");
 
         return route;
     }

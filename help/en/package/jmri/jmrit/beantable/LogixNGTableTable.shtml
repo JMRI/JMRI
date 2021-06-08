@@ -42,7 +42,8 @@
           The system name cannot be changed.</dd>
 
           <dt>User Name</dt>
-          <dd>The user name for the LogixNG Table.  This is a free form field that contains a meaningful name.</dd>
+          <dd>The user name for the LogixNG Table.  This is a free form field that contains
+          a meaningful name.</dd>
 
           <dt>Comment</dt>
           <dd>A free form comment field for the LogixNG</dd>
@@ -63,7 +64,35 @@
         </a>
         </div>
 
-        <p class="noted">The selection actions have not been implemented for Tables yet.</p>
+        <dl>
+          <dt>Edit</dt>
+          <dd>When <strong>Edit</strong> is selected, the LogixNG table editor will open.
+          This window will contain the contents of the CSV file that has been loaded.
+          See <a href="../logixng/LogixNGTableTableEditor.shtml">LogixNG Table Editor</a>
+          for details.</dd>
+
+          <dt>Browse</dt>
+          <dd>The <strong>Browse</strong> option opens a text window with a representation
+          of the definitions within the LogixNG table.  See <a href="../logixng/LogixNGBrowser.shtml">LogixNG
+          Browser</a> for details about the browser.</dd>
+
+          <dt>Copy</dt>
+          <dd>The <strong>Copy</strong> action is used to create a duplicate of the current
+          LogixNG table.  <strong><em>Note: This feature is not available yet.</em></strong></dd>
+
+          <dt>Delete</dt>
+          <dd>The <strong>Delete</strong> action deletes the current LogixNG table and its
+          content.  A confirmation dialog will be displayed.
+
+          <div style="margin-left: 2em">
+          <a href="../logixng/images/DeleteTable.png">
+          <img src="../logixng/images/DeleteTable.png"
+          alt="Delete LogixNG Table Confirmation" width="367" height="126" >
+          </a>
+          </div>
+
+          </dd>
+        </dl>
 
       <a id="menuItems" name="menuItems"></a>
       <h2>Menu Items</h2>
@@ -107,7 +136,8 @@
 
         <p>The ability to create an internal table is not implemented yet.</p>
 
-        <p>After clicking <strong>Create</strong>, the LogixNG Table will be created.</p>
+        <p>After clicking <strong>Create</strong>, the LogixNG Table will be created and the
+        <a href="../logixng/LogixNGTableTableEditor.shtml">Table Editor</a> window will appear.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

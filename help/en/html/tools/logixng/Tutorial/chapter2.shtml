@@ -5,7 +5,7 @@
   <title>LogixNG Tutorial - Chapter 2</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial">
+  <meta name="keywords" content="jmri LogixNG tutorial clipboard">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -40,8 +40,8 @@
           The clipboard contents are visible by selecting <strong>Tools &rArr; Open clipboard</strong>.
 
           <div style="margin-left: 2em">
-          <a href="images/chapter2_clipboard.png">
-          <img src="images/chapter2_clipboard.png"
+          <a href="images/chapter2/chapter2_clipboard.png">
+          <img src="images/chapter2/chapter2_clipboard.png"
           alt="Chapter 2 clipboard" width="500" height="305">
           </a>
           </div>
