@@ -8,69 +8,39 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.TableForEach;
-import jmri.jmrit.logixng.TableRowOrColumn;
+import jmri.jmrit.logixng.actions.ActionListenOnBeansTable;
+import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Configures an TableForEach object with a Swing JPanel.
+ * Configures an ActionListenOnBeansTable object with a Swing JPanel.
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class TableForEachSwing extends AbstractDigitalActionSwing {
+public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPane;
-    private JPanel _panelTable = new javax.swing.JPanel();
-    private JPanel _panelReference = new javax.swing.JPanel();
-    private JPanel _panelFormula = new javax.swing.JPanel();
     private BeanSelectPanel<NamedTable> tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
     private JComboBox<String> _rowOrColumnNameComboBox;
-    private JTextField _rowOrColumnNameTextField;
-    private JTextField _localVariable;
+    private JCheckBox _includeCellsWithoutHeaderCheckBox;
+    private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && !(object instanceof TableForEach)) {
-            throw new IllegalArgumentException("object must be an TableForEach but is a: "+object.getClass().getName());
+        if ((object != null) && !(object instanceof ActionListenOnBeansTable)) {
+            throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
         
-        TableForEach action = (TableForEach)object;
+        ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
         JPanel tableBeanPanelPanel = new JPanel();
-        tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_Table")));
-        
-        _tabbedPane = new JTabbedPane();
-        _panelTable = new javax.swing.JPanel();
-        _panelReference = new javax.swing.JPanel();
-        _panelFormula = new javax.swing.JPanel();
-        
-        _tabbedPane.addTab("Table", _panelTable); // NOI1aa8N
-        _tabbedPane.addTab("Reference", _panelReference); // NOIaa18N
-        _tabbedPane.addTab("Formula", _panelFormula); // NOI1aa8N
-        
-        _tabbedPane.addChangeListener((evt) -> {
-            boolean isPanelTable = (_tabbedPane.getSelectedComponent() == _panelTable);
-            _rowOrColumnNameComboBox.setVisible(isPanelTable);
-            _rowOrColumnNameTextField.setVisible(!isPanelTable);
-        });
-        
+        tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_Table")));
         tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-        _panelTable.add(tableBeanPanel);
-        
-        JTextField referenceTextField = new JTextField();
-        referenceTextField.setColumns(30);
-        _panelReference.add(referenceTextField);
-        
-        JTextField formulaTextField = new JTextField();
-        formulaTextField.setColumns(30);
-        _panelFormula.add(formulaTextField);
-        
-        tableBeanPanelPanel.add(_tabbedPane);
+        tableBeanPanelPanel.add(tableBeanPanel);
         panel.add(tableBeanPanelPanel);
         
         _tableRowOrColumnComboBox = new JComboBox<>();
@@ -106,32 +76,39 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         });
         
         JPanel tableRowOrColumnPanel = new JPanel();
-        tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumn")));
+        tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumn")));
         tableRowOrColumnPanel.add(_tableRowOrColumnComboBox);
         panel.add(tableRowOrColumnPanel);
         
         JPanel rowOrColumnNamePanel = new JPanel();
-        rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumnName")));
+        rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumnName")));
         _rowOrColumnNameComboBox = new JComboBox<>();
         rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
-        _rowOrColumnNameTextField = new JTextField(20);
-        _rowOrColumnNameTextField.setVisible(false);
-        rowOrColumnNamePanel.add(_rowOrColumnNameTextField);
         panel.add(rowOrColumnNamePanel);
         JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
         
-        JPanel localVariablePanel = new JPanel();
-        localVariablePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_LocalVariable")));
-        _localVariable = new JTextField(20);
-        localVariablePanel.add(_localVariable);
-        panel.add(localVariablePanel);
+        JPanel includeCellsWithoutHeaderPanel = new JPanel();
+        includeCellsWithoutHeaderPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_IncludeCellsWithoutHeader")));
+        _includeCellsWithoutHeaderCheckBox = new JCheckBox();
+        includeCellsWithoutHeaderPanel.add(_includeCellsWithoutHeaderCheckBox);
+        panel.add(includeCellsWithoutHeaderPanel);
+        
+        JPanel namedBeanTypePanel = new JPanel();
+        namedBeanTypePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_NamedBeanType")));
+        _namedBeanTypeComboBox = new JComboBox<>();
+        for (NamedBeanType item : NamedBeanType.values()) {
+            _namedBeanTypeComboBox.addItem(item);
+        }
+        namedBeanTypePanel.add(_namedBeanTypeComboBox);
+        panel.add(namedBeanTypePanel);
         
         if (action != null) {
             if (action.getTable() != null) {
                 tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
             }
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
-            _localVariable.setText(action.getLocalVariableName());
+            _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
+            _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
         }
     }
     
@@ -144,7 +121,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        TableForEach action = new TableForEach(systemName, userName);
+        ActionListenOnBeansTable action = new ActionListenOnBeansTable(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -152,12 +129,12 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (!(object instanceof TableForEach)) {
-            throw new IllegalArgumentException("object must be an TableForEach but is a: "+object.getClass().getName());
+        if (!(object instanceof ActionListenOnBeansTable)) {
+            throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
         
         // Create a temporary action in case we don't have one.
-        TableForEach action = (TableForEach)object;
+        ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
         NamedTable table = tableBeanPanel.getNamedBean();
         if (table != null) {
             NamedBeanHandle<NamedTable> handle
@@ -168,22 +145,21 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             action.removeTable();
         }
         action.setTableRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
-        if (_tabbedPane.getSelectedComponent() == _panelTable) {
-            if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
-                action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
-            } else {
-                action.setRowOrColumnName("");
-            }
+        if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
+            action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
         } else {
-            action.setRowOrColumnName(_rowOrColumnNameTextField.getText());
+            action.setRowOrColumnName("");
         }
-        action.setLocalVariableName(_localVariable.getText());
+        if (_namedBeanTypeComboBox.getSelectedIndex() != -1) {
+            action.setNamedBeanType(_namedBeanTypeComboBox.getItemAt(_namedBeanTypeComboBox.getSelectedIndex()));
+        }
+        action.setIncludeCellsWithoutHeader(_includeCellsWithoutHeaderCheckBox.isSelected());
     }
     
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("TableForEach_Short");
+        return Bundle.getMessage("ActionListenOnBeansTable_Short");
     }
     
     @Override
@@ -191,6 +167,6 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEachSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTableSwing.class);
     
 }

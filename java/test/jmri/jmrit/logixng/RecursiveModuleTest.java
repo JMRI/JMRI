@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
@@ -77,7 +78,7 @@ public class RecursiveModuleTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        ActionListenOnBeans.NamedBeanType.reset();
+        NamedBeanType.reset();
         
         n = InstanceManager.getDefault(MemoryManager.class).provide("IMN");
         n.setValue(1);
@@ -195,7 +196,7 @@ public class RecursiveModuleTest {
         conditionalNG.getChild(0).connect(manySocket);
         
         ActionListenOnBeans listenOnBeans = new ActionListenOnBeans("IQDA2", null);
-        listenOnBeans.addReference(new NamedBeanReference("IMN", ActionListenOnBeans.NamedBeanType.Memory));
+        listenOnBeans.addReference(new NamedBeanReference("IMN", NamedBeanType.Memory));
 //        listenOnBeans.addReference("Turnoaut:IT1");
 //        listenOnBeans.addReference("Turnout:IT1xx");
 //        listenOnBeans.addReference("senSorIS1");

@@ -39,7 +39,7 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
      */
     public DefaultCsvNamedTable(
             @Nonnull String sys, @CheckForNull String user,
-            @Nonnull String fileName,
+            @CheckForNull String fileName,
             @Nonnull Object[][] data)
             throws BadUserNameException, BadSystemNameException {
         super(sys,user,data);

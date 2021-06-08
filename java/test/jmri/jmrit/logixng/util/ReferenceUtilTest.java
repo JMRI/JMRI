@@ -286,7 +286,6 @@ public class ReferenceUtilTest {
         // tab character.
         
         String yardTableData =
-                "\tYard table\n" +
                 "\tNorth yard\tEast yard\tSouth yard\tWest yard" + _nl +
                 "Leftmost turnout\tIT101\tIT201\tIT301\tIT401" + _nl +
                 "Left turnout\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
@@ -295,7 +294,6 @@ public class ReferenceUtilTest {
                 "Other turnout\tIT1\tIT2\tIT3\tIT4" + _nl;
         
         String turnoutTableData =
-                "\tTurnout table\n" +
                 "\tColumn" + _nl +
                 "Green turnout\tIT101" + _nl +
                 "Red turnout\tTurnout" + _nl +
@@ -303,15 +301,14 @@ public class ReferenceUtilTest {
                 "Blue turnout\tTurnout 222" + _nl;
         
         String otherYardTableData =
-                "\tOther yard table\n" +
                 "\tYellow yard\tGreen yard\tBlue yard\tRed yard" + _nl +
                 "Turnouts\tWest yard\tEast yard\tIT301\tIT401" + _nl +
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSV("filename.csv", yardTableData);
-        _tableManager.loadTableFromCSV("filename.csv", turnoutTableData);
-        _tableManager.loadTableFromCSV("filename.csv", otherYardTableData);
+        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData);
+        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData);
+        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData);
     }
     
     // The minimal setup for log4J
