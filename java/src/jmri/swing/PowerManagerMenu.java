@@ -37,7 +37,7 @@ abstract public class PowerManagerMenu extends JMenu {
         ButtonGroup group = new ButtonGroup();
 
         // label this menu
-        setText("Connection");
+        setText(Bundle.getMessage("MenuConnection")) ;
 
         // now add an item for each available manager
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
