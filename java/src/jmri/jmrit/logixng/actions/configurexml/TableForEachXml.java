@@ -8,6 +8,7 @@ import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.TableRowOrColumn;
 
 /**
  * Handle XML configuration for TableForEach objects.
@@ -70,8 +71,8 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         loadCommon(h, shared);
         
         Element tableRowOrColumnElement = shared.getChild("tableRowOrColumn");
-        TableForEach.TableRowOrColumn tableRowOrColumn =
-                TableForEach.TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
+        TableRowOrColumn tableRowOrColumn =
+                TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
         h.setTableRowOrColumn(tableRowOrColumn);
         
         Element socketName = shared.getChild("Socket").getChild("socketName");

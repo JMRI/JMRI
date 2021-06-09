@@ -6,7 +6,7 @@
     <meta name="author" content="Bob Jacobsen">
     <meta name="author" content="B. Milhaupt">
     <meta name="keywords" content="JMRI technical code Apache NetBeans">
-  <!--#include virtual="/Style.shtml" -->
+    <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -17,44 +17,44 @@
 
         <!-- this was created by running the command `asciidoctorj -a toc NetBeans.adoc`
             and copying the contents of body element in the resultant NetBeans.html file -->
-        <div id="header">
         <h1>JMRI Code: Building with Apache NetBeans</h1>
+
         <div id="toc" class="toc">
         <div id="toctitle">Table of Contents</div>
         <ul class="sectlevel1">
-        <li><a href="#_introduction">Introduction</a></li>
-        <li><a href="#_installation">Installation</a>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#installation">Installation</a>
         <ul class="sectlevel2">
-        <li><a href="#_linux">Linux</a></li>
-        <li><a href="#_macos">macOS</a></li>
-        <li><a href="#_windows">Windows</a></li>
+        <li><a href="#linux">Linux</a></li>
+        <li><a href="#macos">macOS</a></li>
+        <li><a href="#windows">Windows</a></li>
         </ul>
         </li>
-        <li><a href="#_using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with JMRI&#8217;s Git Code Repository</a>
+        <li><a href="#using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with JMRI&#8217;s Git Code Repository</a>
         <ul class="sectlevel2">
-        <li><a href="#_checking_out_code">Checking out code</a></li>
-        <li><a href="#_local_commits">Local Commits</a></li>
-        <li><a href="#_updating_the_code_from_git">Updating the code from Git</a></li>
-        <li><a href="#_creating_a_pull_request">Creating a Pull Request</a></li>
+        <li><a href="#checking_out_code">Checking out code</a></li>
+        <li><a href="#local_commits">Local Commits</a></li>
+        <li><a href="#updating_the_code_from_git">Updating the code from Git</a></li>
+        <li><a href="#creating_a_pull_request">Creating a Pull Request</a></li>
         </ul>
         </li>
-        <li><a href="#_building_and_running_jmri">Building and running JMRI</a>
+        <li><a href="#building_and_running_jmri">Building and running JMRI</a>
         <ul class="sectlevel2">
-        <li><a href="#_prime">Prime</a></li>
-        <li><a href="#_build">Build</a></li>
-        <li><a href="#_run_an_application">Run an Application</a></li>
-        <li><a href="#_debug_an_application">Debug an Application</a></li>
-        <li><a href="#_profile_an_application">Profile an Application</a></li>
+        <li><a href="#prime">Prime</a></li>
+        <li><a href="#build">Build</a></li>
+        <li><a href="#run_an_application">Run an Application</a></li>
+        <li><a href="#debug_an_application">Debug an Application</a></li>
+        <li><a href="#profile_an_application">Profile an Application</a></li>
         </ul>
         </li>
-        <li><a href="#_making_a_jar_file">Making a Jar File</a></li>
-        <li><a href="#_making_a_release_package_for_windows_using_nsis">Making a release package for Windows using NSIS</a></li>
-        <li><a href="#_using_apache_netbeans_xml_tools">Using Apache NetBeans XML tools</a></li>
-        <li><a href="#_running_spotbugs">Running SpotBugs</a></li>
-        <li><a href="#_loading_a_specific_branch_from_github">Loading a Specific Branch from GitHub</a></li>
+        <li><a href="#making_a_jar_file">Making a Jar File</a></li>
+        <li><a href="#making_a_release_package_for_windows_using_nsis">Making a release package for Windows using NSIS</a></li>
+        <li><a href="#using_apache_netbeans_xml_tools">Using Apache NetBeans XML tools</a></li>
+        <li><a href="#running_spotbugs">Running SpotBugs</a></li>
+        <li><a href="#loading_a_specific_branch_from_github">Loading a Specific Branch from GitHub</a></li>
         </ul>
         </div>
-        </div>
+
         <div id="content">
         <div class="sect1">
         <h2><a id="introduction" name="introduction"></a>Introduction</h2>
@@ -709,6 +709,7 @@
         Last updated 2020-03-22 13:05:18 -0400
         </div>
         </div>
+
         <!--#include virtual="/Footer.shtml" -->
         </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
