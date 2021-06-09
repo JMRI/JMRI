@@ -108,6 +108,63 @@
 
       <p>Tables are described in <a href="chapter11.shtml">Chapter 11 - Tables</a>.</p>
 
+
+
+	  <a name="indirect_accessing" id="indirect_accessing"></a>
+
+      <h2>Indirect adressing of NamedBeans</h2>
+
+      <p>In some cases, it may be useful to use indirect addressing of NamedBeans.</p>
+
+      <p>This can be done in two ways:</p>
+      <ul>
+	      <li>Using a Memory that has the name of the NamedBean</li>
+          <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+      </ul>
+
+      <p>Using a Memory that has the name of the NamedBean</p>
+
+      <p>Lets say we have an ActionTurnout that should throw a particulat turnout.
+      But we wnat to be able to select which turnout to throw at a later time.
+      We can solve that by storing the system name or user name in a Memory.
+      We then tell the ActionTurnout to read the Memory and lookup the turnout
+      on the fly.</p>
+
+      <p>Since LogixNG fully supports string manipulation and calculations of both
+      integers and floating point values, where are plenty of possibilities here.</p>
+
+      <h3>Warning</h3>
+
+      <p>There is one major drawback with this. Since LogixNG doesn't know in
+      advance which NamedBeans will be accessed indirectly, it's not possible
+      for LogixNG to automaticly register listeners to the named beans that
+      should trigger on change. For example, an ExpressionTurnout registers
+      a listener on the turnout, if the name of the turnout is given, but if
+      the ExpressionTurnout is using indirect addressing of the turnout, it's
+      not able to do that.</p>
+
+      <p>The solution is to use the ActionListenOnBeans and tell this action
+      which beans to listen on. Any time any property of any of the named
+      beans this action listen to, the ConditionalNG will be executed.</p>
+
+      <p>Example:</p>
+      <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's
+      expressions and wants each of them to trigger on change. Turnouts
+      IT1 and IT3 and IT4 are directly accessed in expressions and IT2, IT3
+      and IT5 is indirect accessed.</p>
+
+      <p>Each turnout that is directly addressed in an expression will the
+      ConditionalNG listen to automaticly, so IT1, IT3 and IT4 will be listen
+      to. But in order to listen on turnouts IT2 and IT5, the
+      ActionListenOnBeans needs to be used.</p>
+
+      <p>The ActionListenOnBeans can be placed anythere in the ConditionalNG
+      tree, as long as it and its parents are enabled. If you disable this
+      action, or any of its parent actions, the ActionListenOnBeans will not
+      listen on its named beans.</p>
+
+
+
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>
       <span style="padding-left: 6em"><a href="chapter8.shtml">Chapter 8 - Local Variables</a></span></p>

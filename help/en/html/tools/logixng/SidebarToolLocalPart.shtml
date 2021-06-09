@@ -32,7 +32,7 @@
             <li><em style="padding-left: 1em;">Tools:</em>
               <ul>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml">Initialization Table</a>
-                <li><a href="/help/en/package/jmri/jmrit/logixng/LogixImport.shtml">Logix Import</a>
+                <li><a href="/help/en/package/jmri/jmrit/logixng/LogixImport.shtml">Import Logix</a>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGBrowser.shtml">LogixNG Browser</a>
               </ul>
             </li>

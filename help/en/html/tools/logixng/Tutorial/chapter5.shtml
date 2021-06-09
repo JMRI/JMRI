@@ -93,7 +93,17 @@
             <dt>Sensor</dt>
             <dt>Signal head</dt>
             <dt>Signal mast</dt>
+
             <dt>Throttle</dt>
+            <dd>The Throttle action controls a throttle. It has child expressions
+            for loco address, loco speed and loco direction. For now, an analog
+            memory expression or an analog constant expression can be used to
+            control the loco address and the loco speed, but once JMRI has
+            support for AnalogIO devices, an AnalogIO may be used to control
+            loco address and/or loco speed.</dd>
+
+
+
             <dt>Turnout</dt>
             <dt>Turnout, lock</dt>
             <dt>Warrant</dt>
