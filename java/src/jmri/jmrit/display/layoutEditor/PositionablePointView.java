@@ -22,7 +22,7 @@ import jmri.util.swing.JmriColorChooser;
 /**
  * MVC View component for the PositionablePoint class.
  *
- * @author Bob Jacobsen  Copyright (c) 2020
+ * @author Bob Jacobsen Copyright (c) 2020
  *
  * <p>
  * Arrows and bumpers are visual, presentation aspects handled in the View.
@@ -41,8 +41,9 @@ public class PositionablePointView extends LayoutTrackView {
 
     /**
      * constructor method.
-     * @param point the positionable point.
-     * @param c location to display the positionable point
+     *
+     * @param point        the positionable point.
+     * @param c            location to display the positionable point
      * @param layoutEditor for access to tools
      */
     public PositionablePointView(@Nonnull PositionablePoint point,
@@ -54,7 +55,9 @@ public class PositionablePointView extends LayoutTrackView {
 
     final private PositionablePoint positionablePoint;
 
-    public PositionablePoint getPoint() { return positionablePoint; }
+    public PositionablePoint getPoint() {
+        return positionablePoint;
+    }
 
     // this should only be used for debugging...
     @Override
@@ -81,8 +84,9 @@ public class PositionablePointView extends LayoutTrackView {
         return result + " '" + getName() + "'";
     }
 
-   /**
+    /**
      * Accessor methods
+     *
      * @return Type enum for this Positionable Point
      */
     public PointType getType() {
@@ -871,7 +875,7 @@ public class PositionablePointView extends LayoutTrackView {
             popup.add(connectionsMenu);
         }
 
-        if (getConnect1() != null && (getType() == PointType.EDGE_CONNECTOR || getType() == PointType.END_BUMPER)) {
+        if (getConnect1() != null) {
             //
             // decorations menu
             //
@@ -1022,9 +1026,8 @@ public class PositionablePointView extends LayoutTrackView {
                             ctv.getArrowGap());
                     ctv.setArrowGap(newValue);
                 });
-            } // if (getType() == EDGE_CONNECTOR)
+            } else {
 
-            if (getType() == PointType.END_BUMPER) {
                 JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
                 decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
                 decorationsMenu.add(endBumperMenu);
@@ -1071,12 +1074,12 @@ public class PositionablePointView extends LayoutTrackView {
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             ctv.getBumperLineWidth(), t -> {
-                                if (t < 0 || t > TrackSegmentView.MAX_BUMPER_WIDTH) {
-                                    throw new IllegalArgumentException(
-                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_WIDTH));
-                                }
-                                return true;
-                            });
+                        if (t < 0 || t > TrackSegmentView.MAX_BUMPER_WIDTH) {
+                            throw new IllegalArgumentException(
+                                    Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_WIDTH));
+                        }
+                        return true;
+                    });
                     ctv.setBumperLineWidth(newValue);
                 });
 
@@ -1090,16 +1093,16 @@ public class PositionablePointView extends LayoutTrackView {
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             ctv.getBumperLength(), t -> {
-                                if (t < 0 || t > TrackSegmentView.MAX_BUMPER_LENGTH) {
-                                    throw new IllegalArgumentException(
-                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_LENGTH));
-                                }
-                                return true;
-                            });
+                        if (t < 0 || t > TrackSegmentView.MAX_BUMPER_LENGTH) {
+                            throw new IllegalArgumentException(
+                                    Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_LENGTH));
+                        }
+                        return true;
+                    });
                     ctv.setBumperLength(newValue);
                 });
-            }
-        }   // if ((getType() == EDGE_CONNECTOR) || (getType() == END_BUMPER))
+            } // if (getType() == EDGE_CONNECTOR)
+        }   // if (getConnect1() != null)
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -1323,10 +1326,11 @@ public class PositionablePointView extends LayoutTrackView {
 
     /**
      * If an anchor point is selected via a track segment connection, it will be
-     * in the track selection list.  When the merge or delete finishes, draw
-     * can no longer find the object resulting in a Java exception.
+     * in the track selection list. When the merge or delete finishes, draw can
+     * no longer find the object resulting in a Java exception.
      * <p>
-     * If the anchor point is in the track selection list, the selection groups are cleared.
+     * If the anchor point is in the track selection list, the selection groups
+     * are cleared.
      */
     private void clearPossibleSelection() {
         if (layoutEditor.getLayoutTrackSelection().contains(positionablePoint)) {
@@ -1527,9 +1531,9 @@ public class PositionablePointView extends LayoutTrackView {
                     linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p != positionablePoint) {
-                    if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
-                            pointList.add(p);
+                        if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
+                            if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
+                                pointList.add(p);
                                 linkPointsBox.addItem(p.getName());
                             }
                         }
@@ -1686,7 +1690,7 @@ public class PositionablePointView extends LayoutTrackView {
 
     /**
      * Draw track decorations.
-     *
+     * <p>
      * This type of track has none, so this method is empty.
      */
     @Override
