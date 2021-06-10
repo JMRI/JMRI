@@ -87,7 +87,7 @@
             <output name="15" label="Coupler| ">
                 <label xml:lang="it">Accoppiatore| </label>
             </output>
-			<model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="983" comment="Model ATH04014">
+            <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="983" comment="Model ATH04014">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
             <output name="3" label="  FX3  "/>
@@ -122,7 +122,7 @@
                 <label xml:lang="it">Accoppiatore| </label>
             </output>
             <functionlabels>
-				<functionlabel num="0" lockable="true">Headlight</functionlabel>
+                <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
                 <functionlabel num="2" lockable="false">Whistle</functionlabel>
                 <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
@@ -145,9 +145,9 @@
                 <functionlabel num="20" lockable="true">Injectors</functionlabel>
                 <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
                 <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
-				<functionlabel num="23" lockable="true">All Abord</functionlabel>
-				<functionlabel num="26" lockable="true">Cutoff +</functionlabel>
-				<functionlabel num="27" lockable="true">Cutoff -</functionlabel>
+                <functionlabel num="23" lockable="true">All Abord</functionlabel>
+                <functionlabel num="26" lockable="true">Cutoff +</functionlabel>
+                <functionlabel num="27" lockable="true">Cutoff -</functionlabel>
             </functionlabels>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
