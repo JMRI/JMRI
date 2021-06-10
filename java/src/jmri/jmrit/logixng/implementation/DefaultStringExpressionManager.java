@@ -132,14 +132,7 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
     public FemaleStringExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
         
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
-        if (preferences.getUseGenericFemaleSockets()) {
-            return new DefaultFemaleGenericExpressionSocket(
-                    FemaleGenericExpressionSocket.SocketType.STRING, parent, listener, socketName)
-                    .getStringSocket(parent);
-        } else {
-            return new DefaultFemaleStringExpressionSocket(parent, listener, socketName);
-        }
+        return new DefaultFemaleStringExpressionSocket(parent, listener, socketName);
     }
     
     @Override

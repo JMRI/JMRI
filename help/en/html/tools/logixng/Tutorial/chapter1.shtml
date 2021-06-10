@@ -5,7 +5,7 @@
   <title>LogixNG Tutorial - Chapter 1</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial">
+  <meta name="keywords" content="jmri LogixNG tutorial getting started">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -321,6 +321,7 @@
         And some actions/expressions have one or several female sockets as children. There
         are several different female sockets:</p>
 
+        <a id="chapter1_socket_types"></a>
         <div style="margin-left: 2em">
           <table>
             <tr><th>Symbol</th><th>Type</th></tr>

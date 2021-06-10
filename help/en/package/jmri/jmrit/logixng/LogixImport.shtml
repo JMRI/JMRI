@@ -35,7 +35,9 @@
 
           <p>The <strong>Import system Logixs also?</strong> option controls the import of
           the <strong>SYS</strong> (Sensor groups) or the <strong>IX:RTXINITIALIZER</strong>
-          Logix. It's recommended to leave this option unchecked.</p>
+          Logix.  Subsequent changes to <strong>Sensor Groups</strong> or <strong>LRoutes
+          </strong> will update the related Logix.  LogixNG will not be aware of those
+          changes. It's recommended to leave this option unchecked.</p>
 
         <h2>Import Actions</h2>
 

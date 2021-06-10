@@ -570,7 +570,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
                 });
-                if (abort) throw new AbortConditionalNGExecutionException();
+                if (abort) throw new AbortConditionalNGExecutionException(e);
                 break;
 
             case LogError:
@@ -613,7 +613,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                     ErrorHandlingDialog_MultiLine dialog = new ErrorHandlingDialog_MultiLine();
                     return dialog.showDialog(item, message, messageList);
                 });
-                if (abort) throw new AbortConditionalNGExecutionException();
+                if (abort) throw new AbortConditionalNGExecutionException(e);
                 break;
 
             case LogError:
@@ -650,7 +650,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
                 });
-                if (abort) throw new AbortConditionalNGExecutionException();
+                if (abort) throw new AbortConditionalNGExecutionException(e);
                 break;
 
             case LogError:
