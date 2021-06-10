@@ -93,6 +93,7 @@
         </a>
         </div>
 
+      <a id="DigitalExpressionModule"></a>
       <h3>Calling a Digital Expression Module</h3>
 
         <p>Expression modules are called from ConditionalNG expressions and return
@@ -119,8 +120,8 @@
         </div>
 
         <p>If there are parameters that need configuration, edit the newly added row and
-        the parameter list will be displayed. If necessary, configure the input variables
-        as described in the next section.</p>
+        the parameter list will be displayed. If necessary, configure the input and
+        return variables as described in the next section.</p>
 
         <div style="margin-left: 2em;">
         <a href="images/chapter10/call_expression_module.png">
@@ -129,6 +130,7 @@
         </a>
         </div>
 
+      <a id="DigitalActionModule"></a>
       <h3>Calling a Digital Action Module</h3>
 
         <p>Use the <strong>Call module</strong> type in the <strong>Other</strong> category.</p>

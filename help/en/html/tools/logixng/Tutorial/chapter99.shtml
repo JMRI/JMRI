@@ -807,6 +807,18 @@
 
 
 
+	  <p>The ActionForEach iterates over a comma separated list of values. It can be used
+	  with tables by using the keywords __columns__ and __rows__ . Note that it's two
+	  underscore characters before and after. {IQT1[__columns__]} gives a comma separated
+	  list of all the column names in the table IQT1. {IQT1[__rows__]} gives a comma
+	  separated list of all the row names in the table IQT1. It's also possible to write
+	  {Yard table[__columns__]} and {Yard table[__rows__]}. You can even use this syntax
+	  in ActionMemory to assign a Memory the list of column names or row names. Note
+	  however that column names or row names that are empty is seen as colums or rows with
+	  a comment and therefore they are not included.</p>
+
+
+
 
 
       <hr>

@@ -37,71 +37,70 @@
           </a>
           </div>
 
-          <dl>
-            <dt>Execute delayed</dt>
+          <a id="ExecuteDelayed">
+          <h5>Execute delayed</h5>
 
-            <dd>Delay the execution of the following action for a specified amount of time.
-            This is the same as the Logix <strong>Delayed Set ...</strong>.  The main
-            difference is that this can be used with any action, such as signals.  The
-            time delay units are milliseconds, seconds, minutes and hours.
+          <p>Delay the execution of the following action for a specified amount of time.
+          This is the same as the Logix <strong>Delayed Set ...</strong>.  The main
+          difference is that this can be used with any action, such as signals.  The
+          time delay units are milliseconds, seconds, minutes and hours.
 
-            <div style="margin-left: 2em">
-            <a href="images/chapter3/execute_delay.png">
-            <img src="images/chapter3/execute_delay.png"
-            alt="Chapter 3 execute_delay" width="535" height="329">
-            </a>
-            </div>
-            <dd>
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/execute_delay.png">
+          <img src="images/chapter3/execute_delay.png"
+          alt="Chapter 3 execute_delay" width="535" height="329">
+          </a>
+          </div>
+          <p>
 
-            <dt>For</dt>
-            <dd>
-              For is a for-loop. It has four children.
-              <ul>
-                <li><strong>Init</strong> - this action is executed only one time. It's
-                used to initialize the loop, for example setting a Memory to a particular
-                value.</li>
+          <h5>For</h5>
+          <p>
+            For is a for-loop. It has four children.
+            <ul>
+              <li><strong>Init</strong> - this action is executed only one time. It's
+              used to initialize the loop, for example setting a Memory to a particular
+              value.</li>
 
-                <li><strong>While</strong> - this expression decides if the loop
-                should run one lap more. The loop will continue to run until this
-                condition will be <strong>false</strong>.</li>
+              <li><strong>While</strong> - this expression decides if the loop
+              should run one lap more. The loop will continue to run until this
+              condition will be <strong>false</strong>.</li>
 
-                <li><strong>AfterEach</strong> - this action is executed at the end of the
-                loop. It can for example be used to increment a counter in a Memory.</li>
+              <li><strong>AfterEach</strong> - this action is executed at the end of the
+              loop. It can for example be used to increment a counter in a Memory.</li>
 
-                <li><strong>Do</strong> - this action is executed in each loop. It
-                does the main work.</li>
-              </ul>
+              <li><strong>Do</strong> - this action is executed in each loop. It
+              does the main work.</li>
+            </ul>
 
-              <p>When For is executed, the Init action is run once. After that, the
-              Condition expression is evaluated. If the condition returns <strong>true</strong>,
-              the Do action is executed and at last the AfterEach action is executed. Then
-              the process is repeated, except that the Init action is only executed once.</p>
-            </dd>
+            <p>When For is executed, the Init action is run once. After that, the
+            Condition expression is evaluated. If the condition returns <strong>true</strong>,
+            the Do action is executed and at last the AfterEach action is executed. Then
+            the process is repeated, except that the Init action is only executed once.</p>
 
-            <dt>If Then Else</dt>
-            <dd>Reads a digital child expression and if the answer is <strong>true</strong>
-            it executes the <strong>then</strong> child action, else it executes the
-            <strong>else</strong> child action.</dd>
+          <h5>If Then Else</h5>
+          <p>Reads a digital child expression and if the answer is <strong>true</strong>
+          it executes the <strong>then</strong> child action, else it executes the
+          <strong>else</strong> child action.</p>
 
-            <dt>Many</dt>
-            <dd>The Many action executes many child actions.</dd>
+          <h5>Many</h5>
+          <p>The Many action executes many child actions.</p>
 
-            <dt>Read analog and set analog</dt>
-            <dd>Read an analog child expression and execute an analog child action.</dd>
+          <h5>Read analog and set analog</h5>
+          <p>Read an analog child expression and execute an analog child action.</p>
 
-            <dt>Read string and set string</dt>
-            <dd>Read a string child expression and execute a string child action.</dd>
+          <h5>Read string and set string</h5>
+          <p>Read a string child expression and execute a string child action.</p>
 
-            <dt>Sequence</dt>
-            <dd>-- pending --</dd>
+          <h5>Sequence</h5>
+          <p>-- pending --</p>
 
-            <dt>Table: For each</dt>
-            <dd>-- pending --</dd>
+          <h5>Table: For each</h5>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a></p>
 
-            <dt>Timer</dt>
-            <dd>The Timer action executes a child action after some time.</dd>
+          <h5>Timer</h5>
+          <p>-- How is this different than execute delayed --</p>
+          <p>The Timer action executes a child action after some time.</p>
 
-          </dl>
 
         <h3>Display</h3>
 
@@ -112,10 +111,8 @@
           </a>
           </div>
 
-          <dl>
-            <dt>Icon/Label on panel</dt>
-            <dd>Disable/Enable/Hide/Show an icon or label on a specific panel.</dd>
-          </dl>
+          <h5>Icon/Label on panel</h5>
+          <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
 
         <h3>LocoNet</h3>
 
@@ -126,53 +123,50 @@
           </a>
           </div>
 
-          <dl>
-            <dt>Clear loconet slots</dt>
-            <dd>-- pending --</dd>
+          <h5>Clear loconet slots</h5>
+          <p>-- pending --</p>
 
-            <dt>Update loconet slots</dt>
-            <dd>-- pending --</dd>
+          <h5>Update loconet slots</h5>
+          <p>-- pending --</p>
 
-          </dl>
 
         <h3>Other</h3>
 
           <div style="margin-left: 2em">
           <a href="images/chapter3/action_other.png">
           <img src="images/chapter3/action_other.png"
-          alt="Chapter 3 other action" width="261" height="179">
+          alt="Chapter 3 other action" width="259" height="198">
           </a>
           </div>
 
-          <dl>
-            <dt>Call module</dt>
-            <dd>-- pending --</dd>
+          <h5>Call module</h5>
+          <p>See <a href="chapter10.shtml#DigitalActionModule">Chapter 10 - Modules</a> for details.</p>
 
-            <dt>Listen on beans</dt>
-            <dd>-- pending --</dd>
+          <h5>Listen on beans</h5>
+          <p>See <a href="chapter7.shtml#ListenOnBeans">Chapter 7 - Listen on beans</a> for details.</p>
 
-            <dt>Log local variables</dt>
-            <dd>-- pending --</dd>
+          <h5>Listen on beans - Table</h5>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
 
-            <dt>Logix</dt>
-            <dd>LogixNG has an action called Logix that emulates how JMRI Logix works.
-            The action Logix has one expression and a number of boolean actions. A
-            boolean action is an action that takes a boolean value (true/false) and then
-            decides what to do. The action Logix was added mainly to support import of
-            JMRI Logix to LogixNG.</dd>
+          <h5>Log local variables</h5>
+          <p>See <a href="chapter8.shtml#LogLocalVariables">Chapter 8 - Debugging local variables</a> for details.</p>
 
-            <dt>Shutdown</dt>
-            <dd>The ShutdownComputer action either shutdown or restarts the computer.
-            This action is mainly included to demonstrate the possibilities of LogixNG,
-            but it may be useful in some cases, for example when a Raspberry Pi computer
-            runs the layout and there is no keyboard and mouse connected to the Raspberry
-            Pi computer. It's then possible to use a sensor to shutdown the computer.</dd>
+          <h5>Logix</h5>
+          <p>LogixNG has an action called Logix that emulates how JMRI Logix works.
+          The action Logix has one expression and a number of boolean actions. A
+          boolean action is an action that takes a boolean value (true/false) and then
+          decides what to do. The action Logix was added mainly to support import of
+          JMRI Logix to LogixNG.</p>
 
-            <dt>Web browser</dt>
-            <dd>-- pending --</dd>
+          <h5>Shutdown</h5>
+          <p>The ShutdownComputer action either shutdown or restarts the computer.
+          This action is mainly included to demonstrate the possibilities of LogixNG,
+          but it may be useful in some cases, for example when a Raspberry Pi computer
+          runs the layout and there is no keyboard and mouse connected to the Raspberry
+          Pi computer. It's then possible to use a sensor to shutdown the computer.</p>
 
-          </dl>
-
+          <h5>Web browser</h5>
+          <p>-- pending --</p>
 
       <h2>Expressions</h2>
 
@@ -189,41 +183,39 @@
           </a>
           </div>
 
-          <dl>
-            <dt>And</dt>
-              <dd>And evaluates the child expressions and if all of them returns true, the
-              And expression returns true as well.</dd>
+          <h5>And</h5>
+            <p>And evaluates the child expressions and if all of them returns true, the
+            And expression returns true as well.</p>
 
-            <dt>Antecedent</dt>
-              <dd>The Antecedent expression is mainly included to make import from Logix
-              to LogixNG simple. It works exactly as Antecedent in Logix. It has a number
-              of child expressions and an antecedent that defines how the evaluation of the
-              expressions should be done. Each child expression is referenced in the
-              antecedent by R1, R2, R3, ..., there R1 is the first child expression, R2 is
-              the second child expression, and so on. Note that this differs from other
-              expressions in LogixNG, other LogixNG expressions uses the socket name,
-              but since the Antecedent expression is included to work as Antecedent works
-              in Logix, the antecedent has been kept from Logix Antecedent as well.
-              <em>Note: Antecedent is included for compability with Logix but it's
-              recommended to use Formula instead. Formula is much more powerful, uses the
-              socket names and also works with numbers and strings.</em></dd>
+          <h5>Antecedent</h5>
+            <p>The Antecedent expression is mainly included to make import from Logix
+            to LogixNG simple. It works exactly as Antecedent in Logix. It has a number
+            of child expressions and an antecedent that defines how the evaluation of the
+            expressions should be done. Each child expression is referenced in the
+            antecedent by R1, R2, R3, ..., there R1 is the first child expression, R2 is
+            the second child expression, and so on. Note that this differs from other
+            expressions in LogixNG, other LogixNG expressions uses the socket name,
+            but since the Antecedent expression is included to work as Antecedent works
+            in Logix, the antecedent has been kept from Logix Antecedent as well.
+            <em>Note: Antecedent is included for compability with Logix but it's
+            recommended to use Formula instead. Formula is much more powerful, uses the
+            socket names and also works with numbers and strings.</em></p>
 
-            <dt>Digital Formula</dt>
-              <dd>Formula is the next generation of Antecedent. It supports many operators,
-              like ==, !=, &lt;=, >=, &lt;, >, +, -, *, / and %. It
-              supports local variables, memories and functions. It supports all the types
-              of expressions, digital, analog and string expressions.</dd>
+          <h5>Digital Formula</h5>
+            <p>Formula is the next generation of Antecedent. It supports many operators,
+            like ==, !=, &lt;=, >=, &lt;, >, +, -, *, / and %. It
+            supports local variables, memories and functions. It supports all the types
+            of expressions, digital, analog and string expressions.</p>
 
-            <dt>Not</dt>
-              <dd>The Not expression has one child expression and answers <strong>true</strong>
-              if the child  expression answers <strong>false</strong>, and <strong>false</strong>
-              if the child expression answers <strong>true</strong>.</dd>
+          <h5>Not</h5>
+            <p>The Not expression has one child expression and answers <strong>true</strong>
+            if the child  expression answers <strong>false</strong>, and <strong>false</strong>
+            if the child expression answers <strong>true</strong>.</p>
 
-            <dt>Or</dt>
-              <dd>Or evaluates the child expressions and if at least one of them returns
-              true, the Or expression returns true as well.</dd>
+          <h5>Or</h5>
+            <p>Or evaluates the child expressions and if at least one of them returns
+            true, the Or expression returns true as well.</p>
 
-          </dl>
 
         <h3>LocoNet</h3>
 
@@ -234,18 +226,15 @@
           </a>
           </div>
 
-          <dl>
-            <dt>Slot Usage</dt>
-            <dd>Evaluate the LocoNet slot usage.
+          <h5>Slot Usage</h5>
+          <p>Evaluate the LocoNet slot usage.</p>
 
-            <div style="margin-left: 2em">
-            <a href="images/chapter3/loconet_slot_usage.png">
-            <img src="images/chapter3/loconet_slot_usage.png"
-            alt="Chapter 3 loconet slot usage" width="962" height="505">
-            </a>
-            </div>
-            </dd>
-          </dl>
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/loconet_slot_usage.png">
+          <img src="images/chapter3/loconet_slot_usage.png"
+          alt="Chapter 3 loconet slot usage" width="962" height="505">
+          </a>
+          </div>
 
         <h3>Other</h3>
 
@@ -256,35 +245,33 @@
           </a>
           </div>
 
-          <dl>
-            <dt>Always false</dt>
-            <dd>The False expression always answers <strong>false</strong>.</dd>
+          <h5>Always false</h5>
+          <p>The False expression always answers <strong>false</strong>.</p>
 
-            <dt>Always true</dt>
-            <dd>The True expression always answers <strong>true</strong>.</dd>
+          <h5>Always true</h5>
+          <p>The True expression always answers <strong>true</strong>.</p>
 
-            <dt>Call module</dt>
-            <dd>Call a module and and return its true/false response.
-            See <a href="chapter10.shtml">Chapter 10 - Modules</a></dd>
+          <h5>Call module</h5>
+          <p>Call a module and and return its true/false response.
+          See <a href="chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
 
-            <dt>Hold</dt>
-            <dd>The Hold expression has two child expressions, one trigger expression and
-            one hold expression. For this expression to become <strong>true</strong>, both
-            the trigger expression and the hold expression must answer <strong>true</strong>.
-            But then it stays <strong>true</strong> as long as the hold expression stays
-            <strong>true</strong>.</dd>
+          <h5>Hold</h5>
+          <p>The Hold expression has two child expressions, one trigger expression and
+          one hold expression. For this expression to become <strong>true</strong>, both
+          the trigger expression and the hold expression must answer <strong>true</strong>.
+          But then it stays <strong>true</strong> as long as the hold expression stays
+          <strong>true</strong>.</p>
 
-            <dt>Last result of digital expression</dt>
-            <dd>-- pending --</dd>
+          <h5>Last result of digital expression</h5>
+          <p>-- pending --</p>
 
-            <dt>Trigger once</dt>
-            <dd>The TriggerOnce expression answers <strong>true</strong> one single
-            time and then <strong>false</strong> until JMRI is restarted. It's
-            designed to be used when something needs to be done exactly one time,
-            for example set some turnouts to a specified inital state or to set
-            some memories to some predefined values.</dd>
+          <h5>Trigger once</h5>
+          <p>The TriggerOnce expression answers <strong>true</strong> one single
+          time and then <strong>false</strong> until JMRI is restarted. It's
+          designed to be used when something needs to be done exactly one time,
+          for example set some turnouts to a specified inital state or to set
+          some memories to some predefined values.</p>
 
-          </dl>
 
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>
