@@ -366,6 +366,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
                 break;
+            case RegEx:
+                // Do nothing
+                break;
             default:
                 throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
         }
@@ -393,11 +396,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 break;
 
             case MatchRegex:
-                result = matchRegex(memoryValue, otherValue);
+                result = matchRegex(memoryValue, _regEx);
                 break;
 
             case NotMatchRegex:
-                result = !matchRegex(memoryValue, otherValue);
+                result = !matchRegex(memoryValue, _regEx);
                 break;
 
             default:

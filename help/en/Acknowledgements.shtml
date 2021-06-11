@@ -109,11 +109,9 @@
         Taylor Berg, <!-- tman0 -->
         who worked on the DCC++ support.
 
-        <li>
-        Daniel Bergqvist, <!-- danielb987 -->
-        who added the "ask before shutdown" code,
-        improved the Bundle code, added to the Swedish translation,
-        and improved components of the LocoNet engine.
+        <li><a href="https://github.com/JMRI/JMRI/pulls/danielb987">Daniel Bergqvist</a>,
+        <!-- danielb987 --> primary author of the
+        <a href="https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>.</li>
 
         <li>Andrew Berridge, who debugged and fixed problems with
         the SPROG serial interface</li>
