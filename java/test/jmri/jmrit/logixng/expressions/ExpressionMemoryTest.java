@@ -246,7 +246,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.MatchRegex);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
-        expressionMemory.setConstantValue("Hello.*");
+        expressionMemory.setRegEx("Hello.*");
         memory.setValue("Hello world");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -262,7 +262,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionMemory.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionMemory.setRegEx("\\w\\w\\d+\\s\\d+");
         memory.setValue("Ab213 31");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -281,7 +281,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.NotMatchRegex);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
-        expressionMemory.setConstantValue("Hello.*");
+        expressionMemory.setRegEx("Hello.*");
         memory.setValue("Hello world");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -297,7 +297,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionMemory.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionMemory.setRegEx("\\w\\w\\d+\\s\\d+");
         memory.setValue("Ab213 31");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());

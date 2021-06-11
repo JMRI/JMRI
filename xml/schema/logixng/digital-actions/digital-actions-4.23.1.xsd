@@ -53,6 +53,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/for-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/logix-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/log-data-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/log-local-variables-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/sequence-4.23.1.xsd"/>
@@ -105,6 +106,7 @@
             <xs:element name="For"               type="LogixNG_DigitalAction_ForType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="IfThenElse"        type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Logix"             type="LogixNG_DigitalAction_LogixType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="LogData"           type="LogixNG_DigitalAction_LogDataType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="LogLocalVariables" type="LogixNG_DigitalAction_LogLocalVariablesType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DigitalMany"       type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
