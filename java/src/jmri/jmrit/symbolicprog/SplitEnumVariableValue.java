@@ -1,0 +1,847 @@
+package jmri.jmrit.symbolicprog;
+
+
+import java.io.UnsupportedEncodingException;
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Like {@link SplitVariableValue}, except that the string representation is
+ * text.
+ * <br><br>
+ * Most attributes of {@link SplitVariableValue} are inherited.
+ * <br><br>
+ * Specific attributes for this class are:
+ * <ul>
+ * <li>
+ * A {@code match} attribute (which must be a {@code regular expression}) can be
+ * used to impose constraints on entered text.
+ * </li>
+ * <li>
+ * A {@code termByteStr} attribute can be used to change the default string
+ * terminator byte value. Valid values are 0-255 or "" to specify no terminator
+ * byte. The default is "0" (a null byte).
+ * </li>
+ * <li>
+ * A {@code padByteStr} attribute can be used to change the default string
+ * padding byte value. Valid values are 0-255 or "" to specify no pad byte. The
+ * default is "0" (a null byte).
+ * </li>
+ * <li>
+ * A {@code charSet} attribute can be used to change the character set used to
+ * encode or decode the text string. Valid values are any Java-supported
+ * {@link java.nio.charset.Charset} name. If not specified, the default
+ * character set of this Java virtual machine is used.
+ * </li>
+ * </ul>
+ *
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2013, 2014
+ * @author Dave Heap Copyright (C) 2016
+ */
+public class SplitEnumVariableValue extends SplitVariableValue {
+
+    public static final String NO_TERM_BYTE = "";
+    public static final String NO_PAD_BYTE = "";
+
+    
+    private static final int RETRY_COUNT = 2;
+    
+    String matchRegex;
+    String termByteStr;
+    String padByteStr;
+    String charSet;
+    Byte termByteVal;
+    Byte padByteVal;
+    int atest;
+    private final List<JTree> trees = new ArrayList<>();
+
+    private int retry = 0;
+    private int _progState = 0;
+    private static final int IDLE = 0;
+    private static final int READING_FIRST = 1;
+    private static final int WRITING_FIRST = -1;
+    private static final int bitCount = Long.bitCount(~0);
+    private static final long intMask = Integer.toUnsignedLong(~0);
+
+    
+    private final List<ComboCheckBox> comboCBs = new ArrayList<>();
+    private final List<SplitEnumVariableValue.VarComboBox> comboVars = new ArrayList<>();
+    private final List<ComboRadioButtons> comboRBs = new ArrayList<>();
+    
+    
+    public SplitEnumVariableValue(String name, String comment, String cvName,
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String stdname,
+            String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+        _maxVal = maxVal;
+        _minVal = minVal;
+        treeNodes.addLast(new DefaultMutableTreeNode(""));
+    }
+
+    @Override
+    public void stepOneActions(String name, String comment, String cvName,
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String stdname,
+            String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
+        atest = 77;
+        matchRegex = extra1;
+        termByteStr = extra2;
+        padByteStr = extra3;
+        charSet = extra4;
+        //if (!termByteStr.equals(NO_TERM_BYTE)) {
+        //    termByteVal = (byte) Integer.parseUnsignedInt(termByteStr);
+        //}
+        if (!padByteStr.equals(NO_PAD_BYTE)) {
+            padByteVal = (byte) Integer.parseUnsignedInt(padByteStr);
+        }
+        
+        
+        log.debug("stepOneActions");
+        log.debug("atest={}", atest);
+        log.debug("padByteStr=\"{}\"",padByteStr);
+        log.debug("padByteVal={}",padByteVal);
+        
+    }
+    /*
+    @Override
+    public CvValue[] usesCVs() {
+        return new CvValue[]{_cvMap.get(getCvNum())};
+    }
+    */
+    
+    public void nItems(int n) {
+        _itemArray = new String[n];
+        _pathArray = new TreePath[n];
+        _valueArray = new int[n];
+        _nstored = 0;
+        log.debug("enumeration arrays size={}", n);
+    }
+    
+        /**
+     * Create a new item in the enumeration, with an associated value one more
+     * than the last item (or zero if this is the first one added)
+     *
+     * @param s Name of the enumeration item
+     */
+    public void addItem(String s) {
+        if (_nstored == 0) {
+            addItem(s, 0);
+        } else {
+            addItem(s, _valueArray[_nstored - 1] + 1);
+        }
+    }
+
+    public void addItem(String s, int value) {
+        _valueArray[_nstored] = value;
+        TreeLeafNode node = new TreeLeafNode(s, _nstored);
+        treeNodes.getLast().add(node);
+        _pathArray[_nstored] = new TreePath(node.getPath());
+        _itemArray[_nstored++] = s;
+        log.debug("_itemArray.length={},_nstored={},s='{}',value={}", _itemArray.length, _nstored, s, value);
+    }
+
+    public void startGroup(String name) {
+        DefaultMutableTreeNode next = new DefaultMutableTreeNode(name);
+        treeNodes.getLast().add(next);
+        treeNodes.addLast(next);
+    }
+
+    public void endGroup() {
+        treeNodes.removeLast();
+    }
+    
+    public void lastItem() {
+        _value = new JComboBox<>(java.util.Arrays.copyOf(_itemArray, _nstored));
+        // finish initialization
+        _value.setActionCommand("");
+        _defaultColor = _value.getBackground();
+        _value.setBackground(COLOR_UNKNOWN);
+        _value.setOpaque(true);
+        // connect to the JComboBox model and the CV so we'll see changes.
+        _value.addActionListener(this);
+        CvValue cv = _cvMap.get(getCvNum());
+        if (cv == null) {
+            log.error("no CV defined in enumVal {}, skipping setState", getCvName());
+            return;
+        }
+        cv.addPropertyChangeListener(this);
+        cv.setState(CvValue.FROMFILE);
+    }
+    
+    @Override
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
+        _value.setToolTipText(t);  // set our value
+    }
+        // stored value
+    JComboBox<String> _value = null;
+
+    // place to keep the items & associated numbers
+    private String[] _itemArray = null;
+    private TreePath[] _pathArray = null;
+    private int[] _valueArray = null;
+    private int _nstored;
+
+    Deque<DefaultMutableTreeNode> treeNodes = new ArrayDeque<>();
+    
+    @Override
+    public void stepTwoActions() {
+        log.debug("stepTwoActions");
+        log.debug("atest={}", atest);
+        //log.debug("termByteStr=\"{}\",padByteStr=\"{}\"", termByteStr, padByteStr);
+        //log.debug("termByteVal={},padByteVal={}", termByteVal, padByteVal);
+        _columns = cvCount + 2; //update column width now we have a better idea
+    }
+
+    boolean isMatched(String s) {
+        if (matchRegex != null && !matchRegex.equals("")) {
+            return s.matches(matchRegex);
+        } else {
+            return true;
+        }
+    }
+
+    byte[] getBytesFromText(String s) {
+        byte[] ret = {};
+//        log.debug("defaultCharset()=" + defaultCharset().name());
+//        log.debug("displayName()=" + defaultCharset().displayName());
+//        log.debug("aliases()=" + defaultCharset().aliases());
+        try {
+            ret = s.getBytes(charSet);
+        } catch (UnsupportedEncodingException ex) {
+            unsupportedCharset();
+        }
+        return ret;
+    }
+
+        @Override
+    public void setAvailable(boolean a) {
+        _value.setVisible(a);
+        for (ComboCheckBox c : comboCBs) {
+            c.setVisible(a);
+        }
+        for (VarComboBox c : comboVars) {
+            c.setVisible(a);
+        }
+        for (ComboRadioButtons c : comboRBs) {
+            c.setVisible(a);
+        }
+        super.setAvailable(a);
+    }
+
+    @Override
+    public Object rangeVal() {
+        return "enum: " + _minVal + " - " + _maxVal;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        // see if this is from _value itself, or from an alternate rep.
+        // if from an alternate rep, it will contain the value to select
+        if (log.isDebugEnabled()) {
+            log.debug("{} start action event: {}", label(), e);
+        }
+        
+        if(e != null){
+            if (!(e.getActionCommand().equals(""))) {
+                // is from alternate rep
+                _value.setSelectedItem(e.getActionCommand());
+                if (log.isDebugEnabled()) {
+                    log.debug("{} action event was from alternate rep", label());
+                }
+                // match and select in tree
+                if (_nstored > 0) {
+                    for (int i = 0; i < _nstored; i++) {
+                        if (e.getActionCommand().equals(_itemArray[i])) {
+                            // now select in the tree
+                            TreePath path = _pathArray[i];
+                            for (JTree tree : trees) {
+                                tree.setSelectionPath(path);
+                                // ensure selection is in visible portion of JScrollPane
+                                tree.scrollPathToVisible(path);
+                            }
+                            break; // first one is enough
+                        }
+                    }
+                }
+            }
+            else if(e.getActionCommand().equals("")){
+                exitField();
+            }
+        }
+    }
+    
+    void exitField(){
+        int selVal = getIntValue();
+        // there may be a lost focus event left in the queue when disposed so protect
+        long newFieldVal = 0;
+        try {
+            newFieldVal = selVal;
+        } catch (NumberFormatException e) {
+            _textField.setText(oldContents);
+        }
+        log.debug("_minVal={};_maxVal={};newFieldVal={}",
+                Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
+        
+        long newVal = (newFieldVal - mOffset) / mFactor;
+        long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
+        log.debug("Enter updatedTextField from exitField");
+        updatedDropDown();
+        prop.firePropertyChange("Value", oldVal, newVal);
+    }
+    
+    void updatedDropDown() {
+        log.debug("Variable='{}'; enter updatedTextField in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _textField.getText());
+        // called for new values in text field - set the CVs as needed
+
+        int[] retVals = getCvValsFromSingleInt(getIntValue());
+
+        // combine with existing values via mask
+        for (int j = 0; j < cvCount; j++) {
+            int i = j;
+            // special care needed if _textField is shrinking
+            if (_fieldShrink) {
+                i = (cvCount - 1) - j; // reverse CV updating order
+            }
+            log.debug("retVals[{}]={};cvList.get({}).cvMask{};offsetVal={}", i, retVals[i], i, cvList.get(i).cvMask, offsetVal(cvList.get(i).cvMask));
+            int cvMask = maskValAsInt(cvList.get(i).cvMask);
+            CvValue thisCV = cvList.get(i).thisCV;
+            int oldCvVal = thisCV.getValue();
+            int newCvVal = (oldCvVal & ~cvMask)
+                    | ((retVals[i] << offsetVal(cvList.get(i).cvMask)) & cvMask);
+            log.debug("{};cvMask={};oldCvVal={};retVals[{}]={};newCvVal={}", cvList.get(i).cvName, cvMask, oldCvVal, i, retVals[i], newCvVal);
+
+            // cv updates here trigger updated property changes, which means
+            // we're going to get notified sooner or later.
+            //if (newCvVal != oldCvVal) {
+                thisCV.setValue(newCvVal);
+            //}
+        }
+        log.debug("Variable={}; exit updatedTextField", _name);
+    }
+    
+    int[] getCvValsFromSingleInt(long newEntry) {
+        // calculate resulting number
+        long newVal = (newEntry - mOffset) / mFactor;
+        log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
+
+        int[] retVals = new int[cvCount];
+
+        // extract individual values via masks
+        for (int i = 0; i < cvCount; i++) {
+            retVals[i] = (((int) (newVal >>> cvList.get(i).startOffset))
+                    & (maskValAsInt(cvList.get(i).cvMask) >>> offsetVal(cvList.get(i).cvMask)));
+        }
+        // Stripping test this value return for now. This gives us known values
+        // to look for.
+        retVals[0] = 128;
+        retVals[1] = 32;
+        return retVals;
+    }
+    
+     @Override
+    public String getValueString() {
+        return Integer.toString(getIntValue());
+    }
+    
+        @Override
+    public void setIntValue(int i) {
+        setLongValue(i);
+    }
+    
+    @Override
+    public String getTextValue() {
+        if (_value.getSelectedItem() != null) {
+            return _value.getSelectedItem().toString();
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public Object getValueObject() {
+        return _value.getSelectedIndex();
+    }
+    
+    @Override
+    public int getIntValue() {
+        if (_value.getSelectedIndex() >= _valueArray.length || _value.getSelectedIndex() < 0) {
+            log.error("trying to get value {} too large for array length {} in var {}", _value.getSelectedIndex(), _valueArray.length, label());
+        }
+        log.debug("SelectedIndex={}", _value.getSelectedIndex());
+        return _valueArray[_value.getSelectedIndex()];
+    }
+    
+    String getTextFromBytes(byte[] v) {
+        String ret = "";
+        int textBytesLength = v.length;
+        for (int i = 0; i < v.length; i++) {
+            if (!termByteStr.equals(NO_TERM_BYTE) && (v[i] == termByteVal)) {
+                textBytesLength = i;
+                break;
+            }
+        }
+        if (textBytesLength > 0) {
+            byte[] textBytes = new byte[textBytesLength];
+            System.arraycopy(v, 0, textBytes, 0, textBytesLength);
+            try {
+                ret = new String(textBytes, charSet);
+            } catch (UnsupportedEncodingException ex) {
+                unsupportedCharset();
+            }
+        }
+        return ret; //fall through
+    }
+
+    void unsupportedCharset() {
+        synchronized (this) {
+            JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, _name),
+                    Bundle.getMessage("DecoderDefError"), JOptionPane.ERROR_MESSAGE); // NOI18N
+        }
+        log.error(Bundle.getMessage("UnsupportedCharset", charSet, _name));
+    }
+
+    @Override
+    public Component getCommonRep() {
+        return _value;
+    }
+
+    
+    public void setValue(int value) {
+        int oldVal = getIntValue();
+        selectValue(value);
+        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+            prop.firePropertyChange("Value", null, value);
+        }
+        try {
+            long val = Long.parseUnsignedLong(String.valueOf(value));
+            setLongValue(val);
+        } catch (NumberFormatException e) {
+            log.warn("skipping set of non-long value \"{}\"", value);
+        }
+        
+    }
+    
+    public void setValue(String value){
+        try {
+            long val = Long.parseUnsignedLong(value);
+            setLongValue(val);
+        } catch (NumberFormatException e) {
+            log.warn("skipping set of non-long value \"{}\"", value);
+        }
+    }
+    
+    protected void selectValue(int value) {
+        if (_nstored > 0) {
+            for (int i = 0; i < _nstored; i++) {
+                if (_valueArray[i] == value) {
+                    //found it, select it
+                    _value.setSelectedIndex(i);
+
+                    // now select in the tree
+                    TreePath path = _pathArray[i];
+                    for (JTree tree : trees) {
+                        tree.setSelectionPath(path);
+                        // ensure selection is in visible portion of JScrollPane
+                        tree.scrollPathToVisible(path);
+                    }
+                    return;
+                }
+            }
+        }
+
+        // We can be commanded to a number that hasn't been defined.
+        // But that's OK for certain applications.  Instead, we add them as needed
+        log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
+        // lengthen arrays
+        _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
+
+        _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
+
+        _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
+
+        addItem("Reserved value " + value, value);
+
+        // update the JComboBox
+        _value.addItem(_itemArray[_nstored - 1]);
+        _value.setSelectedItem(_itemArray[_nstored - 1]);
+
+        // tell trees to redisplay & select
+        for (JTree tree : trees) {
+            ((DefaultTreeModel) tree.getModel()).reload();
+            tree.setSelectionPath(_pathArray[_nstored - 1]);
+            // ensure selection is in visible portion of JScrollPane
+            tree.scrollPathToVisible(_pathArray[_nstored - 1]);
+        }
+    }
+    
+       @Override
+    public Component getNewRep(String format) {
+        // sort on format type
+        switch (format) {
+            case "tree":
+                DefaultTreeModel dModel = new DefaultTreeModel(treeNodes.getFirst());
+                JTree dTree = new JTree(dModel);
+                trees.add(dTree);
+                JScrollPane dScroll = new JScrollPane(dTree);
+                dTree.setRootVisible(false);
+                dTree.setShowsRootHandles(true);
+                dTree.setScrollsOnExpand(true);
+                dTree.setExpandsSelectedPaths(true);
+                dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+                // arrange for only leaf nodes can be selected
+                dTree.addTreeSelectionListener(new TreeSelectionListener() {
+                    @Override
+                    public void valueChanged(TreeSelectionEvent e) {
+                        TreePath[] paths = e.getPaths();
+                        for (TreePath path : paths) {
+                            DefaultMutableTreeNode o = (DefaultMutableTreeNode) path.getLastPathComponent();
+                            if (o.getChildCount() > 0) {
+                                ((JTree) e.getSource()).removeSelectionPath(path);
+                            }
+                        }
+                        // now record selection
+                        if (paths.length >= 1) {
+                            if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
+                                // update value of Variable
+                                setValue(_valueArray[((TreeLeafNode) paths[0].getLastPathComponent()).index]);
+                            }
+                        }
+                    }
+                });
+                // select initial value
+                TreePath path = _pathArray[_value.getSelectedIndex()];
+                dTree.setSelectionPath(path);
+                // ensure selection is in visible portion of JScrollPane
+                dTree.scrollPathToVisible(path);
+
+                if (getReadOnly() || getInfoOnly()) {
+                    log.error("read only variables cannot use tree format: {}", item());
+                }
+                updateRepresentation(dScroll);
+                return dScroll;
+            default: {
+                // return a new JComboBox representing the same model
+                VarComboBox b = new VarComboBox(_value.getModel(), this);
+                comboVars.add(b);
+                if (getReadOnly() || getInfoOnly()) {
+                    b.setEnabled(false);
+                }
+                updateRepresentation(b);
+                return b;
+            }
+        }
+    }
+    /**
+     * Contains byte-value specific code.
+     * <br>
+     * Calculates new value for _textField and invokes
+     * {@link #setValue(String) setValue(newVal)} to make and notify the change
+     *
+     * @param intVals array of new CV values
+     */
+    
+    @Override
+    void updateVariableValue(int[] intVals) {
+        long newVal = 0;
+        for (int i = 0; i < intVals.length; i++) {
+            newVal = newVal | (((long) intVals[i]) << cvList.get(i).startOffset);
+        }
+        log.debug("Variable={}; set value to {}", _name, newVal);
+        setLongValue(newVal);  // check for duplicate is done inside setLongValue
+        log.debug("Variable={}; in property change after setValue call", _name);
+    }
+    
+
+    /**
+     * Notify the connected CVs of a state change from above
+     */
+    @Override
+    public void setCvState(int state) {
+        _cvMap.get(getCvNum()).setState(state);
+    }
+
+    @Override
+    public boolean isChanged() {
+        CvValue cv = _cvMap.get(getCvNum());
+        return considerChanged(cv);
+    }
+
+    @Override
+    public void readChanges() {
+        if (isToRead() && !isChanged()) {
+            log.debug("!!!!!!! unacceptable combination in readChanges: {}", label());
+        }
+        if (isChanged() || isToRead()) {
+            readAll();
+        }
+    }
+
+    @Override
+    public void writeChanges() {
+        if (isToWrite() && !isChanged()) {
+            log.debug("!!!!!! unacceptable combination in writeChanges: {}", label());
+        }
+        if (isChanged() || isToWrite()) {
+            writeAll();
+        }
+    }
+
+    @Override
+    public void readAll() {
+        log.debug("Variable={}; splitVal read() invoked", _name);
+        setToRead(false);
+        setBusy(true);  // will be reset when value changes
+        //super.setState(READ);
+        if (_progState != IDLE) {
+            log.warn("Variable={}; programming state {}, not IDLE, in read()", _name, _progState);
+        }
+        _textField.setText(""); // start with a clean slate
+        for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
+            cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+        }
+        _progState = READING_FIRST;
+        retry = 0;
+        log.debug("Variable={}; invoke CV read", _name);
+        (cvList.get(0).thisCV).read(_status); // kick off the read sequence
+    }
+    
+    @Override
+    public void writeAll() {
+        log.debug("Variable={}; write() invoked", _name);
+        if (getReadOnly()) {
+            log.error("Variable={}; unexpected write operation when readOnly is set", _name);
+        }
+        setToWrite(false);
+        setBusy(true);  // will be reset when value changes
+        if (_progState != IDLE) {
+            log.warn("Variable={}; Programming state {}, not IDLE, in write()", _name, _progState);
+        }
+        _progState = WRITING_FIRST;
+        log.debug("Variable={}; invoke CV write", _name);
+        (cvList.get(0).thisCV).write(_status); // kick off the write sequence
+    }
+
+    // handle incoming parameter notification
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        // notification from CV; check for Value being changed
+        log.debug("Variable={}; property changed event - name: {}", _name, e.getPropertyName());
+        // notification from CV; check for Value being changed
+        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+            // busy transitions drive the state
+            if (log.isDebugEnabled() && _progState != IDLE) {
+                log.debug("getState() = {}", (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
+            }
+
+            if (_progState == IDLE) { // State machine is idle, so "Busy" transition is the result of a CV update by another source.
+                // The source would be a Read/Write from either the CVs pane or another Variable with one or more overlapping CV(s).
+                // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
+                log.debug("Variable={}; Busy goes false with state IDLE", _name);
+            } else if (_progState >= READING_FIRST) {   // reading CVs
+                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
+                    retry = 0;
+                    if (Math.abs(_progState) < cvCount) {   // read next CV
+                        _progState++;
+                        if (log.isDebugEnabled()) {
+                            log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                        }
+                        (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
+                    } else {  // finally done, set not busy
+                        log.debug("Variable={}; Busy goes false with success READING state {}", _name, _progState);
+                        _progState = IDLE;
+                        setBusy(false);
+                    }
+                } else {   // read failed
+                    log.debug("Variable={}; Busy goes false with failure READING state {}", _name, _progState);
+                    if (retry < RETRY_COUNT) { //have we exhausted retry count?
+                        retry++;
+                        (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
+                    } else {
+                        _progState = IDLE;
+                        setBusy(false);
+                        if (RETRY_COUNT > 0) {
+                            for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
+                                cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+                            }
+                        }
+                    }
+                }
+            } else {  // writing CVs
+                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
+                    if (Math.abs(_progState) < cvCount) {   // write next CV
+                        _progState--;
+                        if (log.isDebugEnabled()) {
+                            log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                        }
+                        (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
+                    } else {  // finally done, set not busy
+                        log.debug("Variable={}; Busy goes false with success WRITING state {}", _name, _progState);
+                        _progState = IDLE;
+                        setBusy(false);
+                    }
+                } else {   // read failed we're done!
+                    log.debug("Variable={}; Busy goes false with failure WRITING state {}", _name, _progState);
+                    _progState = IDLE;
+                    setBusy(false);
+                }
+            }
+        } else if (e.getPropertyName().equals("State")) {
+            log.debug("state change due to CV state change, so propagate that");
+            int varState = getState(); // AbstractValue.SAME;
+            log.debug("{} state was {}", _name, varState);
+            for (int i = 0; i < cvCount; i++) {
+                int state = cvList.get(i).thisCV.getState();
+                if (i == 0) {
+                    varState = state;
+                } else if (priorityValue(state) > priorityValue(varState)) {
+                    varState = AbstractValue.UNKNOWN; // or should it be = state ?
+                }
+            }
+            setState(varState);
+            log.debug("{} state set to {}", _name, varState);
+        } else if (e.getPropertyName().equals("Value")) {
+            // update value of Variable
+            log.debug("update value of Variable");
+
+            int[] intVals = new int[cvCount];
+
+            for (int i = 0; i < cvCount; i++) {
+                intVals[i] = (cvList.get(i).thisCV.getValue() & maskValAsInt(cvList.get(i).cvMask)) >>> offsetVal(cvList.get(i).cvMask);
+            }
+
+            updateVariableValue(intVals);
+
+            log.debug("state change due to CV value change, so propagate that");
+            int varState = AbstractValue.SAME;
+            for (int i = 0; i < cvCount; i++) {
+                int state = cvList.get(i).thisCV.getState();
+                if (priorityValue(state) > priorityValue(varState)) {
+                    varState = state;
+                }
+            }
+            setState(varState);
+        }
+    }
+
+    /* Internal class extends a JComboBox so that its color is consistent with
+     * an underlying variable; we return one of these in getNewRep.
+     * <p>
+     * Unlike similar cases elsewhere, this doesn't have to listen to
+     * value changes.  Those are handled automagically since we're sharing the same
+     * model between this object and the real JComboBox value.
+     *
+     * @author   Bob Jacobsen   Copyright (C) 2001
+     */
+    public static class VarComboBox extends JComboBox<String> {
+
+        VarComboBox(ComboBoxModel<String> m, SplitEnumVariableValue var) {
+            super(m);
+            _var = var;
+            _l = new java.beans.PropertyChangeListener() {
+                @Override
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("VarComboBox saw property change: {}", e);
+                    }
+                    originalPropertyChanged(e);
+                }
+            };
+            // get the original color right
+            setBackground(_var._value.getBackground());
+            setOpaque(true);
+            // listen for changes to original state
+            _var.addPropertyChangeListener(_l);
+        }
+
+        SplitEnumVariableValue _var;
+        transient java.beans.PropertyChangeListener _l = null;
+
+        void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+            // update this color from original state
+            if (e.getPropertyName().equals("State")) {
+                setBackground(_var._value.getBackground());
+                setOpaque(true);
+            }
+        }
+
+        public void dispose() {
+            if (_var != null && _l != null) {
+                _var.removePropertyChangeListener(_l);
+            }
+            _l = null;
+            _var = null;
+        }
+    }
+
+    // clean up connections when done
+    @Override
+    public void dispose() {
+        log.debug("dispose");
+
+        // remove connection to CV
+        if (_cvMap.get(getCvNum()) == null) {
+            log.error("no CV defined for variable {}, no listeners to remove", getCvNum());
+        } else {
+            _cvMap.get(getCvNum()).removePropertyChangeListener(this);
+        }
+        // remove connection to graphical representation
+        disposeReps();
+    }
+
+    void disposeReps() {
+        if (_value != null) {
+            _value.removeActionListener(this);
+        }
+        for (int i = 0; i < comboCBs.size(); i++) {
+            comboCBs.get(i).dispose();
+        }
+        for (int i = 0; i < comboVars.size(); i++) {
+            comboVars.get(i).dispose();
+        }
+        for (int i = 0; i < comboRBs.size(); i++) {
+            comboRBs.get(i).dispose();
+        }
+    }
+
+    static class TreeLeafNode extends DefaultMutableTreeNode {
+
+        TreeLeafNode(String name, int index) {
+            super(name);
+            this.index = index;
+        }
+
+        int index;
+    }
+    
+
+    
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(SplitTextVariableValue.class
+            .getName());
+
+}
