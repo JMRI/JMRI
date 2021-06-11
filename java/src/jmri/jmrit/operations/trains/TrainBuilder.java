@@ -3448,11 +3448,19 @@ public class TrainBuilder extends TrainCommon {
         if (car.getDivision() == null || car.getDestination() != null || car.getFinalDestination() != null) {
             return true;
         }
-        addLine(_buildReport, FIVE,
-                MessageFormat.format(Bundle.getMessage("buildCarHasDivision"),
-                        new Object[] { car.toString(), car.getTypeName(), car.getLoadType().toLowerCase(),
-                                car.getLoadName(), car.getDivisionName(), car.getLocationName(), car.getTrackName(),
-                                car.getTrack().getDivisionName() }));
+        if (car.getDivision() == car.getTrack().getDivision()) {
+            addLine(_buildReport, FIVE,
+                    MessageFormat.format(Bundle.getMessage("buildCarDepartHomeDivision"),
+                            new Object[] { car.toString(), car.getTypeName(), car.getLoadType().toLowerCase(),
+                                    car.getLoadName(), car.getDivisionName(), car.getLocationName(), car.getTrackName(),
+                                    car.getTrack().getDivisionName() }));
+        } else {
+            addLine(_buildReport, FIVE,
+                    MessageFormat.format(Bundle.getMessage("buildCarDepartForeignDivision"),
+                            new Object[] { car.toString(), car.getTypeName(), car.getLoadType().toLowerCase(),
+                                    car.getLoadName(), car.getDivisionName(), car.getLocationName(), car.getTrackName(),
+                                    car.getTrack().getDivisionName() }));
+        }
         if (car.getKernel() != null) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildCarLeadKernel"),
@@ -3514,6 +3522,13 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
                         new Object[] { track.getLocation().getName(), car.getTrackName() }));
                 locationsNotServiced.add(track.getLocation()); // location not reachable
+                continue;
+            }
+            // only use the termination staging track for this train
+            if (trackType.equals(Track.STAGING) &&
+                    _terminateStageTrack != null &&
+                    track.getLocation() == _terminateLocation &&
+                    track != _terminateStageTrack) {
                 continue;
             }
             if (trackType.equals(Track.SPUR)) {
@@ -3801,7 +3816,7 @@ public class TrainBuilder extends TrainCommon {
         car.updateKernel(); // car part of kernel?
         return true; // done, car has a new final destination
     }
-    
+
     private boolean checkBasicMoves(Car car, Track track) {
         if (car.getTrack() == track) {
             return false;
@@ -4796,7 +4811,12 @@ public class TrainBuilder extends TrainCommon {
         }
         // now find a track for this car
         for (Track testTrack : testDestination.getTracksByMovesList(null)) {
-            if (testTrack == car.getTrack() && !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
+            // normally don't move car to a track with the same name at the same location
+            if (splitString(car.getLocationName()).equals(splitString(testTrack.getLocation().getName())) &&
+                    splitString(car.getTrackName()).equals(splitString(testTrack.getName())) &&
+                    !car.isPassenger() &&
+                    !car.isCaboose() &&
+                    !car.hasFred()) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarSameTrack"),
                         new Object[] { car.toString(), testTrack.getName() }));
                 continue;
