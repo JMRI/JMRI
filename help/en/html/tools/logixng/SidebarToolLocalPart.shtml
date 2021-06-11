@@ -8,6 +8,7 @@
               <ul>
                 <li><a href="/help/en/html/tools/logixng/LogixNG.shtml">LogixNG</a>
                 <li><a href="/help/en/html/tools/logixng/Tutorial/index.shtml">LogixNG Tutorial</a>
+                <li><a href="/help/en/html/tools/logixng/ErrorHandling.shtml">Error Handling</a>
               </ul>
             </li>
             <li><em style="padding-left: 1em;">LogixNGs Table:</em>
@@ -32,7 +33,7 @@
             <li><em style="padding-left: 1em;">Tools:</em>
               <ul>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml">Initialization Table</a>
-                <li><a href="/help/en/package/jmri/jmrit/logixng/LogixImport.shtml">Logix Import</a>
+                <li><a href="/help/en/package/jmri/jmrit/logixng/LogixImport.shtml">Import Logix</a>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGBrowser.shtml">LogixNG Browser</a>
               </ul>
             </li>

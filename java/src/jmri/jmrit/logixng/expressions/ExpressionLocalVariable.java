@@ -337,6 +337,9 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_otherLocalVariable), false);
                 break;
+            case RegEx:
+                // Do nothing
+                break;
             default:
                 throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
         }
@@ -364,11 +367,11 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 break;
 
             case MatchRegex:
-                result = matchRegex(variableValue, otherValue);
+                result = matchRegex(variableValue, _regEx);
                 break;
 
             case NotMatchRegex:
-                result = !matchRegex(variableValue, otherValue);
+                result = !matchRegex(variableValue, _regEx);
                 break;
 
             default:

@@ -135,7 +135,8 @@ WARN  - Log local variables done [JMRI LogixNGThread]
         value will be 'null'. Reference means that the value will be the value that the
         reference is pointing at. Formula means the result of the formula.</p>
 
-      <h3>Debugging of local variables</h3>
+      <a id="LogLocalVariables"></a>
+      <h3>Debugging local variables</h3>
 
         <p>What to do if the ConditionalNG doesn't do the expected? The debugger provides one
         tool, but another tool is the action <strong>Log local variables</strong>. Each time
