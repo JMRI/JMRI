@@ -3,6 +3,7 @@
 <?transform-xslt href="http://jmri.org/xml/decoders/MGP_Panel.xsl"?>
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,12 +17,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
   <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
-  <!-- Version 2 - change mfg to match name in NMRA.xml -->
-  
+     <!-- Version 2 - change mfg to match name in NMRA.xml -->
+  <version author="Keld Polmann" version="3" lastUpdated="20210301"/>
+     <!-- Version 3 - a lot of updates for new decoder firmware. -->
+
   <decoder>
-    <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels">
-      <model model="Panel" lowVersionID="1">
-			</model>
+    <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels">
+		<model model="Panel" lowVersionID="1" manufacturerID="126" productID="4" developerID="1"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
@@ -51,7 +53,7 @@
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	  </variable>	  
+	  </variable> 
 
 <!--
 <group name="General">	  
@@ -83,13 +85,45 @@
 			<enumChoice choice="Yes" value="1"/>
 		</enumVal>
 	</variable>
+	<variable item="Use Lock" CV="25" mask="XXXXVXXX">
+		<enumVal>
+			<enumChoice choice="No" value="0"/>
+			<enumChoice choice="Yes" value="1"/>
+		</enumVal>
+	</variable>
+	<variable item="Toggle Switch without answer" CV="25" mask="XXXVXXXX">
+		<enumVal>
+			<enumChoice choice="No" value="0"/>
+			<enumChoice choice="Yes" value="1"/>
+		</enumVal>
+	</variable>
 	<variable item="LED Test Sequence" CV="26">
         <decVal min="0" max="64"/>
 	</variable>
-
+	<variable item="Acoustic feedback" CV="27" mask="XXXXXVVV">
+		<enumVal>
+			<enumChoice choice="No feedback" value="0"/>
+			<enumChoice choice="Feedback on all buttons" value="1"/>
+			<enumChoice choice="Feedback only on Combo" value="2"/>
+		</enumVal>
+	</variable>
+	<variable item="Acoustic feedback (0-15s)" CV="27" mask="VVVVXXXX" default="0">
+		<decVal />
+	</variable>
 	<variable item="LED max intensity" CV="100">
         <decVal />
 	</variable>
+	
+	<variable CV="86" item="Start Address Auto Reply" default="0">
+		<splitVal highCV="87" upperMask="XXXXXVVV"/>
+		<label>Long Address</label>
+	</variable>	
+
+	<variable CV="88" item="Auto Reply No. Adresses" default="0">
+		<splitVal highCV="89" upperMask="XXXXXVVV"/>
+		<label>Number of Adresses</label>
+	 </variable>  
+
 
 <!--
 <group name="Input">
@@ -165,11 +199,39 @@ in xsl
 			<label>
 				<text> </text>
 			</label>
+			<display item="Use Lock"/>
+			<label>
+				<text> </text>
+			</label>			
+			<display item="Toggle Switch without answer"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Acoustic feedback"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Acoustic feedback (0-15s)"/>
+			<label>
+				<text> </text>
+			</label>			
+			
 			<display item="LED Test Sequence"/>
 			<label>
 				<text> </text>
 			</label>
 			<display item="LED max intensity"></display>
+
+			<label>
+				<text>Auto Reply</text>
+				
+			</label>
+				<display item="Start Address Auto Reply"/>
+				<display item="Auto Reply No. Adresses"/>
+			<label>
+				<text> </text>
+			</label>		
+			
 		</column>
 	</pane>
   
@@ -179,6 +241,9 @@ in xsl
     </pane>
   	<pane>
         <name>LedPane</name>
+    </pane>
+  	<pane>
+        <name>LedDepPane</name>
     </pane>
   	<pane>
         <name>RoutesPane</name>
