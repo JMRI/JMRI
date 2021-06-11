@@ -186,8 +186,6 @@ public class LogData extends AbstractDigitalExpression
                 throw new IllegalArgumentException("_formatType has invalid value: "+_formatType.name());
         }
 
-        System.out.println(str);    // REMOVE THIS!!!
-
         if (_logToLog) log.warn(str);
         if (_logToScriptOutput) ScriptOutput.getDefault().getOutputArea().append(str+"\n");
         
