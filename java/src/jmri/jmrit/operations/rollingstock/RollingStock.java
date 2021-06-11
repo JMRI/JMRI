@@ -36,6 +36,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;
+    public static final int MAX_BLOCKING_ORDER = 100;
     public static final boolean FORCE = true; // ignore length, type, etc. when setting car's track
     protected static final String DEFAULT_WEIGHT = "0";
 

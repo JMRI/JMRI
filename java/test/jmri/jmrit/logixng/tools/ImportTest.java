@@ -4,15 +4,15 @@ import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.junit.*;
+
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
-import jmri.jmrit.logix.*;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.*;
-
-import org.junit.*;
+import jmri.util.junit.rules.RetryRule;
 
 /**
  * Test import of Logix to LogixNG.
@@ -68,6 +68,7 @@ public class ImportTest {
     }
     
     @Test
+    @Ignore
     public void testEntryExit() throws InterruptedException, JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         // ENTRYEXIT
         // SET_NXPAIR_ENABLED

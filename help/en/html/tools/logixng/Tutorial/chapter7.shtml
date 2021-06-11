@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 7</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial references">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 7</h1>
+
+      <h2>References</h2>
+
+      <p>The following discussion refers to {name}.  This can be either a JMRI memory variable
+      or a LogixNG Local Variable.</p>
+
+
+      <p>LogixNG can use references to access layout items like turnouts in an indirect
+      way. It's done by entering the system name or user name in curly brackets. If
+      a turnout action has the turnout IT1, it will access that turnout directly. But if
+      the turnout action has the turnout {IM2}, it will read that memory and if that
+      memory has a string as a value, it will use that string value to find the turnout.
+      So if the memory IM2 has the value IT5, and the turnout action has the turnout
+      {IM2}, the turnout action will read the memory IM2 and find out that it points to
+      the turnout IT5 and therefore do it's action on turnout IT5. The benefit of this
+      is that the Memory can be changed during execution and therefore the same
+      turnout action can be used to access different turnouts at different times.</p>
+
+      <p>It's possible to use indirect access recursive. If a turnout action has the
+      turnout {IM5}, and that Memory has the value {IM14}, and that the Memory IM14
+      has the value IT3, the turnout action will access IT3. The turnout action has an
+      indirect turnout IM5 so it will read that Memory. And since that memory has the
+      value {IM14} which also is an indirect access, it will read the memory IM14 and
+      find out that it has the value IT3, and therefore use IT3. This is also true for
+      tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has the
+      value 'IT5', the cell IQT1[5,3] will point to IT5.</p>
+
+      <p>When the Reference tab is selected, the appropriate values are entered into the text
+      field.  References are the name of a local variable, memory or table cell, enclosed
+      in curly brackets.</p>
+
+      <div style="margin-left: 2em;">
+      <a href="images/chapter7/reference_tab.png">
+      <img src="images/chapter7/reference_tab.png"
+      alt="Chapter 7 reference tab" width="393" height="85">
+      </a>
+      </div>
+
+      <p>Some examples:</p>
+
+      <div style="margin-left: 2em;">
+        <table>
+          <tr><th>Reference</th><th>Description</th><th>Note</th></tr>
+          <tr>
+            <td>{MyLocalVariable}</td>
+            <td>The value of the local variable <em>MyLocalVariable</em></td>
+            <td>The name is in the symbol table</td>
+          </tr>
+          <tr>
+            <td>{My memory}</td>
+            <td>The value of the memory <em>My memory</em></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{My other memory}}</td>
+            <td>Double reference, the value of the value</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{My table[North yard, Left turnout]}</td>
+            <td>The value of the cell at the intersection of the row name and column name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{My table[{Yard}, Left turnout]}</td>
+            <td>Same as above except the row name comes from a reference</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{My table[North yard, {Turnout selection}]}</td>
+            <td>Same as above except the column name comes from a reference</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{TableName}[North yard, Left turnout]}</td>
+            <td>The table name comes from a reference, which becomes a reference</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{TableName}[{Yard}, {Turnout selection}]}</td>
+            <td>Everything comes from a reference, which becomes a reference</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+
+      <p>Local variables are described in <a href="chapter8.shtml">Chapter 8 - Local variables</a>.</p>
+
+      <p>Tables are described in <a href="chapter11.shtml">Chapter 11 - Tables</a>.</p>
+
+
+
+	  <a name="indirect_accessing" id="indirect_accessing"></a>
+
+      <h2>Indirect adressing of NamedBeans</h2>
+
+      <p>In some cases, it may be useful to use indirect addressing of NamedBeans.</p>
+
+      <p>This can be done in two ways:</p>
+      <ul>
+	      <li>Using a Memory that has the name of the NamedBean</li>
+          <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+      </ul>
+
+      <p>Using a Memory that has the name of the NamedBean</p>
+
+      <p>Lets say we have an ActionTurnout that should throw a particulat turnout.
+      But we wnat to be able to select which turnout to throw at a later time.
+      We can solve that by storing the system name or user name in a Memory.
+      We then tell the ActionTurnout to read the Memory and lookup the turnout
+      on the fly.</p>
+
+      <p>Since LogixNG fully supports string manipulation and calculations of both
+      integers and floating point values, where are plenty of possibilities here.</p>
+
+      <a id="ListenOnBeans"></a>
+      <h3>Listen on beans</h3>
+
+      <p>There is one major drawback with this. Since LogixNG doesn't know in advance which
+      NamedBeans (turnouts, sensors, etc.) will be accessed indirectly, it's not possible
+      for LogixNG to automaticly register listeners to the named beans that should trigger
+      on change. For example, a Turnout expression registers a listener on the turnout,
+      if the name of the turnout is given, but if the Turnout expression is using indirect
+      addressing of the turnout, it's not able to do that.</p>
+
+      <p>The solution is to use the <strong>Listen on beans</strong> action and tell this
+      action which beans to listen on. Any time any property of any of the named beans this
+      action listens to changes, the ConditionalNG will be executed.</p>
+
+      <p>Example:</p>
+      <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's expressions
+      and wants each of them to trigger on change. Turnouts IT1 and IT3 and IT4 are
+      directly accessed in expressions and IT2, IT3 and IT5 are indirect accessed.</p>
+
+      <p>Each turnout that is directly addressed in an expression will have the
+      ConditionalNG listen to automaticly, so IT1, IT3 and IT4 will be listend
+      to. But in order to listen on turnouts IT2 and IT5, the
+      <strong>Listen on beans</strong> action needs to be used.</p>
+
+      <p>The <strong>Listen on beans</strong> action  can be placed anythere in the ConditionalNG
+      tree, as long as it and its parents are enabled. If you disable this
+      action, or any of its parent actions, the <strong>Listen on beans</strong> action  will not
+      listen on its named beans.</p>
+
+
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="chapter8.shtml">Chapter 8 - Local Variables</a></span></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>

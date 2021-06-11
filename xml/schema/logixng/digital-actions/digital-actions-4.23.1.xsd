@@ -30,6 +30,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-entry-exit-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-listen-on-beans-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-listen-on-beans-table-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-local-variable-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-loconet-clear-slots-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-loconet-update-slots-4.23.1.xsd"/>
@@ -52,6 +53,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/for-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/logix-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/log-data-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/log-local-variables-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/sequence-4.23.1.xsd"/>
@@ -80,6 +82,7 @@
             <xs:element name="ActionEntryExit"   type="LogixNG_DigitalAction_ActionEntryExitType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLight"       type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionListenOnBeans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionListenOnBeansTable"  type="LogixNG_DigitalAction_ActionListenOnBeansTableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLocalVariable"  type="LogixNG_DigitalAction_ActionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLoconetClearSlots"  type="LogixNG_DigitalAction_ActionLocoNetClearSlotsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLoconetUpdateSlots"  type="LogixNG_DigitalAction_ActionLocoNetUpdateSlotsType" minOccurs="0" maxOccurs="unbounded" />
@@ -103,6 +106,7 @@
             <xs:element name="For"               type="LogixNG_DigitalAction_ForType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="IfThenElse"        type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Logix"             type="LogixNG_DigitalAction_LogixType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="LogData"           type="LogixNG_DigitalAction_LogDataType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="LogLocalVariables" type="LogixNG_DigitalAction_LogLocalVariablesType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DigitalMany"       type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />

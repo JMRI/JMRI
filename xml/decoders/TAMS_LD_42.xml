@@ -16,8 +16,12 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="W.D.Kok" version="1.00" lastUpdated="20210512"/>
   <!-- Version 1.00 - Initial version                           -->
+  <version author="JeaneLG" version="1.01" lastUpdated="20210608"/> 
+  <!-- Version 1.01 - some Bugfixes: 													  -->
+  <!--							  added VersionIDs, 												-->
+  <!--							  changed CV112: include has to be exclude  -->
   <decoder>
-    <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH">
+    <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" highVersionID="62">
       <model model="LD-G-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
              numOuts="7" numFns="30" productID="41-04420"><!--without wires-->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
@@ -63,7 +67,7 @@
         <size length="21.8" width="17.2" height="4" units="mm"/>
       </model>
       <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A"
-             numOuts="7" numFns="30" connector="NEM652" productID="41-04422"><!-- NEM 652 -->
+             numOuts="7" numFns="30" connector="NEM652" productID="41-04422" lowVersionID="14"><!-- NEM 652 -->
         <output name="1" label="F0f|(White)" maxcurrent="300 mA">
           <label xml:lang="de">F0f|(Weiss)</label>
           <label xml:lang="nl">F0f|(Wit)</label>
@@ -849,7 +853,7 @@
         <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
         <comment>Range 1-255</comment>
       </variable>
-      <variable CV="112" item="Motor Option 1" comment="Range 1-15" default="3" include="41-05420,41-05421">
+      <variable CV="112" item="Motor Option 1" comment="Range 1-15" default="3" exclude="41-05420,41-05421">
         <decVal min="1" max="15"/>
         <label>Gain factor</label>
         <label xml:lang="de">Verstärkungsfactor</label>

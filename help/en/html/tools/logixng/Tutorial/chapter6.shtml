@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 6</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial expression items">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 6</h1>
+
+      <h2>Expression Items</h2>
+
+        <p>The dialog for adding and editing expressions consists of an upper part that
+        contains the item and the states for that item.  The lower part is common
+        to all expresssions.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter6/typical_expression.png">
+        <img src="images/chapter6/typical_expression.png"
+        alt="Chapter 6 typical expression" width="991" height="303">
+        </a>
+        </div>
+
+        <p>The <strong>Edit</strong> screen is the same except for the title, the Create
+        button and the current content will be in the fields.</p>
+
+        <p>The left section is normally used to select the item, such as a turnout or
+        a sensor.  The right section is the state to be checked.  The center section will
+        normally have a <strong>is / is not</strong> combo box.  The default mode
+        will be to use the <strong>Direct</strong> tabs.</p>
+
+        <p>See <a href="chapter7.shtml">Reference</a>, <a href="chapter8.shtml">Local
+        Variable</a> and <a href="chapter9.shtml">Formula</a> for details about the other tabs.</p>
+
+        <p>The lower section contains a standard set of items</p>
+
+        <dl>
+          <dt>Error Handling</dt>
+          <dd>If <strong>Use default</strong> is selected, the value in
+          <a href="../LogixNG.shtml#preferences">Preference</a> will be used.  For other
+          options see <a href="../ErrorHandling.shtml">error handling</a>.</dd>
+
+          <dt>Catch "Abort execution"</dt>
+          <dd>If the error handling (see previous) for any child node is set to <strong>
+          Abort execution</strong>, a parent node should have this option checked.  This
+          lets the parent node handle the error.</dd>
+
+          <dt>Listen</dt>
+          <dd>Normally, any change to an expression item should trigger the true/false
+          evaluation.  Sometimes an expression item should participate in the evaluation
+          but not trigger it.  The Listen checkbox is used to control the trigger state.</dd>
+
+          <dt>Edit comment</dt>
+          <dd>Each expression can have a comment.  The comment dialog has a multiline text
+          area.  Click <strong>OK</strong> to save the comment.</dd>
+
+          <dt>Formula functions</dt>
+          <dd>These are explained in the <a href="chapter9.shtml">Formula</a> chapter.<dd>
+
+          <dt>Cancel</dt>
+          <dd>Close the dialog without applying any changes.<dd>
+
+          <dt>Create/OK</dt>
+          <dd>Save the new expression or the changes to an existing expression.<dd>
+        </dl>
+
+        <h3>Expresson Items List</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter6/expression_list.png">
+          <img src="images/chapter6/expression_list.png"
+          alt="Chapter 6 expression item list" width="211" height="362">
+          </a>
+          </div>
+
+          <h5>Block</h5>
+            <ul>
+              <li><strong>Occupied:</strong> Evaluate to true if the sensor assigned to the block is active.</li>
+              <li><strong>not Occupied:</strong> Evaluate to true if the sensor assigned to the block is inactive.</li>
+              <li><strong>some other state:</strong> Evaluate to true if the state is unknown, inconsistent or undetected.</li>
+              <li><strong>Allocated:</strong> Evaluate to true if the related layout block has use extra color enabled.</li>
+              <li><strong>equal to:</strong> Evaluate to true if the value of the block matches a string value or
+              a reference value, which is typically a memory variable.</li>
+            </ul>
+
+          <h5>Clock</h5>
+            <ul>
+              <li><strong>Fast clock:</strong> Evaluate to true if the fast clock time is between two hh:mm values.</li>
+              <li><strong>System clock:</strong> Evaluate to true if the system clock time is between two hh:mm values.</li>
+            </ul>
+
+          <h5>Conditional</h5>
+            <p>If the conditional named is used in more than one Logix, the results are unpredictable.<p>
+            <ul>
+              <li><strong>False:</strong> Evaluate to true if the state of the specified conditional is false.</li>
+              <li><strong>True:</strong> Evaluate to true if the state of the specified conditional is true.</li>
+              <li><strong>Other:</strong> Evaluate to true if the state of the specified conditional is unknown or inconsistent.</li>
+            </ul>
+
+          <h5>Entry/Exit</h5>
+            <ul>
+              <li><strong>Inactive:</strong> Evaluate to true if the state of the specified entry/exit pair is inactive.</li>
+              <li><strong>Active:</strong> Evaluate to true if the state of the specified entry/exit pair is active.</li>
+              <li><strong>Other:</strong> Evaluate to true if the state of the specified entry/exit pair is unknown or inconsistent.</li>
+              <li>Evaluate if an Entry/Exit pair is active, inactive or other.</li>
+            </ul>
+
+          <h5>Light</h5>
+            <ul>
+              <li><strong>Off:</strong> Evaluate to true if the state of the specified light is off.</li>
+              <li><strong>On:</strong> Evaluate to true if the state of the specified light is on.</li>
+              <li><strong>Other:</strong> Evaluate to true if the state of the specified light is unknown or inconsistent.</li>
+            </ul>
+
+          <h5>Local variable</h5>
+            <p>Compares the value of the specified local variable to either a string, a memory variable
+            or another local variable.  Evaluates to true if the comparison is true.</p>
+            <ul>
+              <li><strong>is less than</strong></li>
+              <li><strong>is less than or equal</strong></li>
+              <li><strong>is equal to</strong></li>
+              <li><strong>is greater than or equal to</strong></li>
+              <li><strong>is greater than</strong></li>
+              <li><strong>is not equal to</strong></li>
+              <li><strong>is null</strong></li>
+              <li><strong>is not null</strong></li>
+              <li><strong>does match regular expression</strong></li>
+              <li><strong>does not match regular expresson</strong></li>
+            </ul>
+            <p>For information about regular expressions, see:
+            https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
+
+          <h5>Memory</h5>
+            <p>Compares the value of the specified memory variable to either a string, another memory variable
+            or a local variable.  Evaluates to true if the comparison is true.</p>
+            <ul>
+              <li><strong>is less than</strong></li>
+              <li><strong>is less than or equal</strong></li>
+              <li><strong>is equal to</strong></li>
+              <li><strong>is greater than or equal to</strong></li>
+              <li><strong>is greater than</strong></li>
+              <li><strong>is not equal to</strong></li>
+              <li><strong>is null</strong></li>
+              <li><strong>is not null</strong></li>
+              <li><strong>does match regular expression</strong></li>
+              <li><strong>does not match regular expresson</strong></li>
+            </ul>
+            <p>For information about regular expressions, see:
+            https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
+
+          <h5>OBlock</h5>
+            <ul>
+              <li><strong>Unoccupied:</strong> Evaluate to true if the specified oblock is not occupied.</li>
+              <li><strong>Occupied:</strong> Evaluate to true if the specified oblock is occupied.</li>
+              <li><strong>Allocated:</strong> Evaluate to true if the specified oblock is allocated.</li>
+              <li><strong>Running:</strong> Evaluate to true if the specified oblock is running
+              (is path occupied in Logix).</li>
+              <li><strong>OutOfService:</strong> Evaluate to true if the specified oblock is out of service.</li>
+              <li><strong>Dark:</strong> Evaluate to true if the specified oblock is dark.</li>
+              <li><strong>TrackError:</strong> Evaluate to true if the specified oblock has a track error
+              (is power error in Logix).</li>
+            </ul>
+
+          <h5>Power</h5>
+            <ul>
+              <li><strong>On:</strong> Evaluate to true if the power state is on.</li>
+              <li><strong>Off:</strong> Evaluate to true if the power state is off.</li>
+              <li><strong>Other:</strong> Evaluate to true if the power state is unknown or inconsistent.</li>
+            </ul>
+
+          <h5>Reference</h5>
+          <p>-- pending --</p>
+
+          <h5>Script</h5>
+          <p>A script expression calls a Jython script.  The Jython context contains a
+          <strong>result</strong> boolean object.  When the script is done, it does a
+          <code>result.setValue(x)</code> where x is, or evaluates to, True or False.
+
+          <h5>Sensor</h5>
+            <ul>
+              <li><strong>Inactive:</strong> Evaluate to true if the state of the specified sensor is inactive.</li>
+              <li><strong>Active:</strong> Evaluate to true if the state of the specified sensor is active.</li>
+              <li><strong>Other:</strong> Evaluate to true if the state of the specified sensor is unknown or inconsistent.</li>
+            </ul>
+
+          <h5>Signal head</h5>
+            <ul>
+              <li><strong>has appearance:</strong> Evaluate to true if the specified signal
+              head appearance matches the selected appearance.</li>
+              <li><strong>has not appearance:</strong> Evaluate to true if the specified
+              signal head appearance does not match the selected appearance.</li>
+              <li><strong>is lit:</strong> Evaluate to true if the state of the specified signal head is lit.</li>
+              <li><strong>is not lit:</strong> Evaluate to true if the state of the specified signal head is no lit.</li>
+              <li><strong>is held:</strong> Evaluate to true if the state of the specified signal head is held.</li>
+              <li><strong>is not held:</strong> Evaluate to true if the state of the specified signal head is not held.</li>
+            </ul>
+
+          <h5>Signal mast</h5>
+            <ul>
+              <li><strong>has aspect:</strong> Evaluate to true if the specified signal
+              mast aspect matches the selected aspect.</li>
+              <li><strong>has  not aspect:</strong> Evaluate to true if the specified
+              signal mast aspect does not match the selected aspect.</li>
+              <li><strong>is lit:</strong> Evaluate to true if the state of the specified signal mast is lit.</li>
+              <li><strong>is not lit:</strong> Evaluate to true if the state of the specified signal mast is no lit.</li>
+              <li><strong>is held:</strong> Evaluate to true if the state of the specified signal mast is held.</li>
+              <li><strong>is not held:</strong> Evaluate to true if the state of the specified signal mast is not held.</li>
+              <li><strong>is permissive sml disabled:</strong> Evaluate to true if the specified
+              signal mast has permissive sml disbled.</li>
+              <li><strong>is not permissive sml disabled:</strong> Evaluate to true if the
+              specified signal does not have permissive sml disabled.</li>
+            </ul>
+
+          <h5>Turnout</h5>
+            <ul>
+              <li><strong>Closed:</strong> Evaluate to true if the state of the specified turnout is closed.</li>
+              <li><strong>Thrown:</strong> Evaluate to true if the state of the specified turnout is thrown.</li>
+              <li><strong>Other:</strong> Evaluate to true if the state of the specified turnout is unknown or inconsistent.</li>
+            </ul>
+
+          <h5>Warrant</h5>
+            <ul>
+              <li><strong>Route free:</strong> Evaluate to true if the specified route is available.</li>
+              <li><strong>Route occupied:</strong> Evaluate to true if the specified route is occupied.</li>
+              <li><strong>Route allocated:</strong> Evaluate to true if the specified route has been allocated.</li>
+              <li><strong>Route set:</strong> Evaluate to true if the specified turnout has been set.</li>
+              <li><strong>Train is running:</strong> Evaluate to true if the specified route has a train running.</li>
+            </ul>
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <span style="padding-left: 6em"><a href="chapter7.shtml">Chapter 7 - References</a></span></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>

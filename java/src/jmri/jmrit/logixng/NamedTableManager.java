@@ -53,29 +53,26 @@ public interface NamedTableManager extends Manager<NamedTable> {
     
     /**
      * Load a table from a CSV text.
-     * @param fileName the file name of the CSV table
-     * @return the loaded table
-     * @throws java.io.IOException if an I/O exception occurs
-     */
-    public NamedTable loadTableFromCSV(@Nonnull String fileName)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
-    
-    /**
-     * Load a table from a CSV text.
-     * @param fileName the file name of the CSV table
+     * @param sys the system name of the new table
+     * @param user the user name of the new table or null if no user name
      * @param text the CSV text
      * @return the loaded table
      */
-    public NamedTable loadTableFromCSV(@Nonnull String fileName, @Nonnull String text)
+    public NamedTable loadTableFromCSVData(
+            @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException;
     
     /**
-     * Load a table from a CSV file.
-     * @param file the CSV file
+     * Load a table from a CSV finle.
+     * @param sys the system name of the new table
+     * @param user the user name of the new table or null if no user name
+     * @param fileName the file name of the CSV table
      * @return the loaded table
-     * @throws java.io.IOException on I/O error
+     * @throws java.io.IOException in case of an exception
      */
-    public NamedTable loadTableFromCSV(@Nonnull File file)
+    public NamedTable loadTableFromCSV(
+            @Nonnull String sys, @CheckForNull String user,
+            @Nonnull String fileName)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
@@ -87,8 +84,8 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @throws java.io.IOException in case of an exception
      */
     public NamedTable loadTableFromCSV(
-            @Nonnull File file,
-            @Nonnull String sys, @CheckForNull String user)
+            @Nonnull String sys, @CheckForNull String user,
+            @Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**

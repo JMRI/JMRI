@@ -2,6 +2,8 @@ package jmri.jmrit.logixng;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import jmri.NamedBean;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
@@ -94,6 +96,7 @@ public interface MaleSocket extends Debugable {
      * 
      * @return the object this male socket holds
      */
+    @Nonnull
     public Base getObject();
 
     /**
