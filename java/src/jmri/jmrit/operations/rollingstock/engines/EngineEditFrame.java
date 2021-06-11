@@ -265,16 +265,18 @@ public class EngineEditFrame extends RollingStockEditFrame {
      */
     private void convertTractiveEffortToHp() {
         String TE = teTextField.getText();
-        TE = TE.replace(",", "");
-        int te = 0;
-        try {
-            te = Integer.parseInt(TE);
-        } catch (Exception e) {
-            log.error("Not able to convert TE {} to HP", teTextField.getText());
-        }
-        if (te > 0) {
-            int hp = te * Integer.parseInt(SPEED) / 375;
-            hpTextField.setText(Integer.toString(hp));
+        if (!TE.isEmpty()) {
+            TE = TE.replace(",", "");
+            int te = 0;
+            try {
+                te = Integer.parseInt(TE);
+            } catch (Exception e) {
+                log.error("Not able to convert TE {} to HP", teTextField.getText());
+            }
+            if (te > 0) {
+                int hp = te * Integer.parseInt(SPEED) / 375;
+                hpTextField.setText(Integer.toString(hp));
+            }
         }
     }
 
