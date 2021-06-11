@@ -37,7 +37,7 @@
           </a>
           </div>
 
-          <a id="ExecuteDelayed">
+          <a id="ExecuteDelayed"></a>
           <h5>Execute delayed</h5>
 
           <p>Delay the execution of the following action for a specified amount of time.
@@ -82,6 +82,15 @@
           it executes the <strong>then</strong> child action, else it executes the
           <strong>else</strong> child action.</p>
 
+          <p>There are two options:</p>
+
+          <ul>
+            <li><strong>Execute on change:</strong> Executes the Then or the Else action
+            only when the If expression has changed from True to False, or from False to True.</li>
+            <li><strong>Always execute:</strong> Executes the Then or the Else action every
+            time the <strong>If Then Else</strong> action is executed..</li>
+          </ul>
+
           <h5>Many</h5>
           <p>The Many action executes many child actions.</p>
 
@@ -92,15 +101,37 @@
           <p>Read a string child expression and execute a string child action.</p>
 
           <h5>Sequence</h5>
-          <p>-- pending --</p>
+          <p>The Sequence action executes a series of action/expression pairs.  For each
+          pair, the actions will be performed and then the expression will wait until it
+          becomes true.  When it is true, the next action/expression pair will be
+          started.  The sequence will repeat forever or until stopped.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_sequence.png">
+          <img src="images/chapter3/action_sequence.png"
+          alt="Chapter 3 display action" width="614" height="447">
+          </a>
+          </div>
+
+          <ul>
+            <li><strong>Start:</strong> When the start expression is true, the sequence
+            will start with the first action/expression pair.</li>
+            <li><strong>Stop:</strong> When the stop expression is true, the sequence will
+            stop running.</li>
+            <li><strong>Reset:</strong> When the reset expression is true, the sequence
+            will be interrupted and return to the first action/expresson pair.</li>
+          </ul>
 
           <h5>Table: For each</h5>
-          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a></p>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for
+          details on table actions.</p>
 
           <h5>Timer</h5>
-          <p>-- How is this different than execute delayed --</p>
-          <p>The Timer action executes a child action after some time.</p>
 
+          <p>Timer has a number of actions, each executed after some time. The action
+          Timer waits some time, then executes the first action. It then waits some more
+          time, and then executes the second action. And so on. The time to wait can be 0
+          seconds, which means the action is executed immediately.</p>
 
         <h3>Display</h3>
 
@@ -159,11 +190,9 @@
           JMRI Logix to LogixNG.</p>
 
           <h5>Shutdown</h5>
-          <p>The ShutdownComputer action either shutdown or restarts the computer.
-          This action is mainly included to demonstrate the possibilities of LogixNG,
-          but it may be useful in some cases, for example when a Raspberry Pi computer
-          runs the layout and there is no keyboard and mouse connected to the Raspberry
-          Pi computer. It's then possible to use a sensor to shutdown the computer.</p>
+
+          <p>The ShutdownComputer action can either shutdown or restart the computer,
+          or shutdown or restart JMRI.</p>
 
           <h5>Web browser</h5>
           <p>-- pending --</p>
@@ -194,7 +223,7 @@
             expressions should be done. Each child expression is referenced in the
             antecedent by R1, R2, R3, ..., there R1 is the first child expression, R2 is
             the second child expression, and so on. Note that this differs from other
-            expressions in LogixNG, other LogixNG expressions uses the socket name,
+            expressions in LogixNG. Other LogixNG expressions use the socket name,
             but since the Antecedent expression is included to work as Antecedent works
             in Logix, the antecedent has been kept from Logix Antecedent as well.
             <em>Note: Antecedent is included for compability with Logix but it's
@@ -249,7 +278,8 @@
           <p>The False expression always answers <strong>false</strong>.</p>
 
           <h5>Always true</h5>
-          <p>The True expression always answers <strong>true</strong>.</p>
+          <p>The True expression always answers <strong>true</strong>.  This expression
+          is commonly used as a child to the Trigger Once expression.</p>
 
           <h5>Call module</h5>
           <p>Call a module and and return its true/false response.
@@ -263,15 +293,24 @@
           <strong>true</strong>.</p>
 
           <h5>Last result of digital expression</h5>
-          <p>-- pending --</p>
+          <p>Each digital expression retains its most recent true/false state.  This can
+          be checked if the expression has a user name.  See <a href="chapter4.shtml">
+          Chapter 4</a>.  Select the user name from the combo box.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_last_result.png">
+          <img src="images/chapter3/expression_last_result.png"
+          alt="Chapter 3 expression last result" width="485" height="247">
+          </a>
+          </div>
 
           <h5>Trigger once</h5>
-          <p>The TriggerOnce expression answers <strong>true</strong> one single
-          time and then <strong>false</strong> until JMRI is restarted. It's
-          designed to be used when something needs to be done exactly one time,
-          for example set some turnouts to a specified inital state or to set
-          some memories to some predefined values.</p>
+          <p>The TriggerOnce expression answers true one single time and then false
+          until its child expression becomes False and then True again.</p>
 
+          <p>Most often, the TriggerOnce expression will have the expression Always
+          true as its child and it will then answers true one single time and then
+          false until JMRI is restarted.</p>
 
       <hr>
       <p><a href="index.shtml">Return to the Tutorial TOC</a>

@@ -47,8 +47,8 @@
         <dl>
           <dt>Error Handling</dt>
           <dd>If <strong>Use default</strong> is selected, the value in
-          <a href="../LogixNG.shtml#preferences">Preference</a> will be used.  The other
-          options are the same.</dd>
+          <a href="../LogixNG.shtml#preferences">Preferences</a> will be used.  For other
+          options see <a href="../ErrorHandling.shtml">error handling</a>.</dd>
 
           <dt>Catch "Abort execution"</dt>
           <dd>If the error handling (see previous) for any child node is set to <strong>

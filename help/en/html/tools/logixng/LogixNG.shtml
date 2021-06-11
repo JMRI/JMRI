@@ -119,6 +119,7 @@
             <li><a href="../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml">Table Editor</a></li>
           </ul>
 
+      <a id="preferences"></a>
       <h2>LogixNG Preferences</h2>
         <p>LogixNG has settings the can be set in JMRI <strong>Preferences &rArr; LogixNG</strong>.</p>
 
@@ -147,7 +148,8 @@
 
           <dt>Error Handling Options</dt>
           <dd>LogixNG has robust error handling.  The combo box selection provides the default
-          setting.  Individual expressions and actions can override the default setting.</dd>
+          setting.  Individual expressions and actions can override the default setting.
+          For details, see <a href="ErrorHandling.shtml">Error Handling</a><dd>
         </dl>
 
         <p><em><strong>Note</strong>:  LogixNG execution can be stopped using

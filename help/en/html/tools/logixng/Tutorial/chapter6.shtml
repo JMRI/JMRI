@@ -48,8 +48,8 @@
         <dl>
           <dt>Error Handling</dt>
           <dd>If <strong>Use default</strong> is selected, the value in
-          <a href="../LogixNG.shtml#preferences">Preference</a> will be used.  The other
-          options are the same.</dd>
+          <a href="../LogixNG.shtml#preferences">Preference</a> will be used.  For other
+          options see <a href="../ErrorHandling.shtml">error handling</a>.</dd>
 
           <dt>Catch "Abort execution"</dt>
           <dd>If the error handling (see previous) for any child node is set to <strong>
@@ -138,6 +138,8 @@
               <li><strong>does match regular expression</strong></li>
               <li><strong>does not match regular expresson</strong></li>
             </ul>
+            <p>For information about regular expressions, see:
+            https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
 
           <h5>Memory</h5>
             <p>Compares the value of the specified memory variable to either a string, another memory variable
@@ -154,6 +156,8 @@
               <li><strong>does match regular expression</strong></li>
               <li><strong>does not match regular expresson</strong></li>
             </ul>
+            <p>For information about regular expressions, see:
+            https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
 
           <h5>OBlock</h5>
             <ul>
