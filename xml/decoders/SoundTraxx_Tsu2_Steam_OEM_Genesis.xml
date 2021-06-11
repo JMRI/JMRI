@@ -43,14 +43,54 @@
             <authorinitials>MM</authorinitials>
             <revremark>Update</revremark>
         </revision>
+		<revision>
+            <revnumber>3</revnumber>
+            <date>2021-06-09</date>
+            <authorinitials>MF</authorinitials>
+            <revremark>Update, Add N-scale BigBoy</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Steam OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the - OEM - version Tsunami2 Steam decoders">
-            <model model="TSU-21PNEM Big Boy" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
+            <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-              <output name="3" label="  FX3  "/>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Whistle">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brakes| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
+            <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="983" comment="Model ATH04014">
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
             <output name="5" label="Whistle| ">
                 <label xml:lang="it">Fischio| </label>
@@ -82,7 +122,7 @@
                 <label xml:lang="it">Accoppiatore| </label>
             </output>
             <functionlabels>
-				<functionlabel num="0" lockable="true">Headlight</functionlabel>
+                <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
                 <functionlabel num="2" lockable="false">Whistle</functionlabel>
                 <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
@@ -105,9 +145,9 @@
                 <functionlabel num="20" lockable="true">Injectors</functionlabel>
                 <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
                 <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
-				<functionlabel num="23" lockable="true">All Abord</functionlabel>
-				<functionlabel num="26" lockable="true">Cutoff +</functionlabel>
-				<functionlabel num="27" lockable="true">Cutoff -</functionlabel>
+                <functionlabel num="23" lockable="true">All Abord</functionlabel>
+                <functionlabel num="26" lockable="true">Cutoff +</functionlabel>
+                <functionlabel num="27" lockable="true">Cutoff -</functionlabel>
             </functionlabels>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
