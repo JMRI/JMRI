@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Tutorial - Chapter 99</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG tutorial expression items">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Tutorial - Chapter 99</h1>
+
+      <h2>Misc Items</h2>
+
+<h1>
+    +---------------------- Note ---------------------+
+    | The content in this file is not to be published.|
+    +-------------------------------------------------+
+</h1>
+
+
+	  <a name="system_names" id="system_names"></a>
+
+      <h2>LogixNG system names</h2>
+
+      <p>System names in JMRI consists of a system prefix and a type letter.
+	  For LogixNG, the system prefix is usually 'I' and the type letter is 'Q'.
+	  But LogixNG consists of several sub types and if all of them would have
+	  its own type letter, the letters in the alphabet would run out. Therefore
+	  LogixNG has sub type letters, except for LogixNG itself.</p>
+
+	  <p>There is usually no need to work directly with system names and it's
+	  recommended to let JMRI to auto generate them. But they can be created
+	  manually if desired.</p>
+
+      <p>LogixNG types and example system names</p>
+<!-- 	  <table border="1" cellspacing="0"> -->
+	  <table>
+	    <tr><th>LogixNG type</th><th>System name</th><th>Auto system name</th></tr>
+		<tr><td>LogixNG</td><td>IQ0001</td><td>IQ:AUTO:0001</td></tr>
+		<tr><td><strong>A</strong>nalog <strong>A</strong>ction</td><td>IQAA0001</td><td>IQAA:AUTO:0001</td></tr>
+		<tr><td><strong>A</strong>nalog <strong>E</strong>xpression</td><td>IQAE0001</td><td>IQAE:AUTO:0001</td></tr>
+		<tr><td><strong>C</strong>onditionalNG</td><td>IQC0001</td><td>IQC:AUTO:0001</td></tr>
+		<tr><td><strong>D</strong>igital <strong>A</strong>ction</td><td>IQDA0001</td><td>IQDA:AUTO:0001</td></tr>
+		<tr><td><strong>D</strong>igital <strong>B</strong>oolean action</td><td>IQDB0001</td><td>IQDB:AUTO:0001</td></tr>
+		<tr><td><strong>D</strong>igital <strong>E</strong>xpression</td><td>IQDE0001</td><td>IQDE:AUTO:0001</td></tr>
+		<tr><td><strong>S</strong>tring <strong>A</strong>ction</td><td>IQSA0001</td><td>IQSA:AUTO:0001</td></tr>
+		<tr><td><strong>S</strong>tring <strong>E</strong>xpression</td><td>IQSE0001</td><td>IQSE:AUTO:0001</td></tr>
+		<tr><td><strong>T</strong>able</td><td>IQT0001</td><td>IQT:AUTO:0001</td></tr>
+	  </table>
+
+	  <p>"Auto system name" refers to system names that are generated automaticly.</p>
+
+	  <p>All system names consists of the system prefix, the type letter, possible a
+	  sub type, possible :AUTO: and a number. The number may begin with zeros and the
+	  system name IQ1 is different from the system name IQ0001.</p>
+
+	  <p>The LogixNG data types Map and Table are used to make generic LogixNGs. For
+	  a table, its columns and rows can also be accessed as NamedBeans.</p>
+
+
+
+
+
+      <h3>LogixNG table structure</h3>
+
+	  <p>A Table is a data type that holds a two dimensional array, like a spreadsheet.</p>
+
+	  <p>Example:</p>
+
+	  <table>
+	  <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+	  <tr><th>&nbsp;1&nbsp;</th><td>IQT22</td><td>Yard table</td><td></td><td></td></tr>
+	  <tr><th>&nbsp;2&nbsp;</th><td></td><td>West yard</td><td>East yard</td><td>North yard</td></tr>
+	  <tr><th>&nbsp;3&nbsp;</th><td></td><td colspan="3">Left entrance of the yard</td></tr>
+	  <tr><th>&nbsp;4&nbsp;</th><td>Leftmost turnout</td><td>IT101</td><td>IT201</td><td>IT301</td></tr>
+	  <tr><th>&nbsp;5&nbsp;</th><td>Left turnout</td><td>IT103</td><td>IT203</td><td>IT303</td></tr>
+	  <tr><th>&nbsp;6&nbsp;</th><td></td><td colspan="3">Right entrance of the yard</td></tr>
+	  <tr><th>&nbsp;7&nbsp;</th><td>Rightmost turnout</td><td>IT112</td><td>IT212</td><td>IT312</td></tr>
+	  <tr><th>&nbsp;8&nbsp;</th><td>Right turnout</td><td>IT114</td><td>IT214</td><td>IT314</td></tr>
+	  </table>
+
+      <p>LogixNG can use references to access layout items like turnouts in an indirect
+	  way. It's done by entering the system name or user name in curly brackets. If
+	  a ActionTurnout has the turnout IT1, it will access that turnout directly. But if
+	  the ActionTurnout has the turnout {IM2}, it will read that memory and if that
+	  memory has a string as a value, it will use that string value to find the turnout.
+	  So if the memory IM2 has the value IT5, and the ActionTurnout has the turnout
+	  [IM2], the ActionTurnout will read the memory IM2 and find out that it points to
+	  the turnout IT5 and therefore do it's action on turnout IT5. The benefit of this
+	  is that the Memory can be changed during execution and therefore the same
+	  ActionTurnout can be used to access different turnouts at different times.</p>
+
+	  <p>It's possible to use indirect access recursive. If a ActionTurnout has the
+	  turnout {IM5}, and that Memory has the value {IM14}, and that the Memory IM14
+	  has the value IT3, the ActionTurnout will access IT3. The ActionTurnout has an
+	  indirect turnout IM5 so it will read that Memory. And since that memory has the
+	  value {IM14} which also is an indirect access, it will read the memory IM14 and
+	  find out that it has the value IT3, and therefore use IT3. This is also true for
+	  tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has the
+	  value 'IT5', the cell IQT1[5,3] will point to IT5.</p>
+
+	  <p>A table can be used to create a lookup table. It's accessed by either its
+	  system name or its user name, followed by a left square bracket, the name of the
+	  column, a comma, the name of the row, and a right square bracket.</p>
+
+	  <p>Instead of the names of the row and column, it's also possible to use the row
+	  number or the column number. Note that row 1 has the system name and user name of
+	  the table, row 2 has the names of the columns, and column 1 has the names of the
+	  rows. Note that for columns, 1 is row A, 2 is row B, 22 is V, 23 is W, 26 is Z,
+	  27 is AA and 28 is AB.</p>
+
+	  <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell
+	  &lt;column letter&gt;&lt;row number&gt; while references in JMRI has table[row,column].
+	  Example: Cell B3 is table[3,2], since B3 is row 3 and column 2.</p>
+
+	  <p>Example from the table above. These examples assume that IM3 has the value
+	  'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
+
+	  <table>
+	  <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
+	  <tr><td>IQT22[1,1]</td><td>IQT22</td><td>Cell A1 has the system name of the table</td></tr>
+	  <tr><td>IQT22[1,2]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
+	  <tr><td>IQT22[2,2]</td><td>West yard</td><td>Cell B2 has the name of column B</td></tr>
+	  <tr><td>IQT22[4,1]</td><td>Leftmost turnout</td><td>Cell A4 has the name of row 4</td></tr>
+	  <tr><td>Yard table[4,1]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
+	  <tr><td>IQT22[5,3]</td><td>IT203</td><td>Cell C5 has the value 'IT203'</td></tr>
+	  <tr><td>IQT22[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>Yard table[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>IQT22[Leftmost turnout,{IM3}]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B4</td></tr>
+	  <tr><td>IQT22[{IM4},East yard]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C7</td></tr>
+	  <tr><td>IQT22[{IM4},{IM3}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B7</td></tr>
+	  <tr><td>{IM5}[{IM4},{IM3}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
+	  </table>
+
+	  <p>Note that a Memory can point to a table. For example, if the memory IM7 has
+	  the value '{Yard table[{IM3},Leftmost turnout]}', LogixNG will look at IM7, and
+	  find that it's value is in curly brackets. It will then resolve the value inside
+	  these curly brackets, which is 'Yard table[{IM3},Leftmost turnout]'. It will then
+	  resolve the value of IM3 which has the value 'West yard'. It will then get the
+	  table cell 'Yard table[West yard,Leftmost turnout]' which is cell B4 with the
+	  value 'IT101'.</p>
+
+	  <p>The ActionForEach iterates over a comma separated list of values. It can be used
+	  with tables by using the keywords __columns__ and __rows__ . Note that it's two
+	  underscore characters before and after. {IQT1[__columns__]} gives a comma separated
+	  list of all the column names in the table IQT1. {IQT1[__rows__]} gives a comma
+	  separated list of all the row names in the table IQT1. It's also possible to write
+	  {Yard table[__columns__]} and {Yard table[__rows__]}. You can even use this syntax
+	  in ActionMemory to assign a Memory the list of column names or row names. Note
+	  however that column names or row names that are empty is seen as colums or rows with
+	  a comment and therefore they are not included.</p>
+
+	  <p>Tables are loaded by a start up action. They are created in a spreadsheet, like
+	  Microsoft Excel or LibreOffice Calc and then exported to a CSV file, separated by
+	  TAB characters. The table is read only and is not stored in the panel filee, so it
+	  must be reloaded each time JMRI starts.</p>
+
+	  <h3>Note</h3>
+
+      <p>If a name has the characters comma, left or righ square bracket or left or right
+	  curly brackets, these characters must be escaped by preceding them with a backslash.
+	  Examples: \, \[ \] \{ \} \\</p>
+
+	  <p>If a reference contains a backslash, it will take some more time to evaluate it
+	  than if it doesn't contain any backslash. So if it's possible to not use these special
+	  characters in references or names of beans, it's recommended.</p>
+
+
+
+
+
+	  <a name="scripts" id="scripts"></a>
+
+      <h2>Scripts</h2>
+
+      <p>All types of LogixNG actions and expressions may use
+	  Python/Jython scripts. Below follows the description of
+	  scripts for digital expressions, but the same pattern
+	  applies to all the types of actions and expressions.</p>
+
+      <p>The digital expression that handles scripts is
+	  ExpressionScript.</p>
+
+      <p>The script that is executed by ExpressionScript must
+	  declare a class that extend the class AbstractScriptDigitalExpression.
+	  The script must override the method evaluate(). For a
+	  script that listen to other beans, it's recommended to
+	  also override the methods registerScriptListeners() and
+	  unregisterScriptListeners().</p>
+
+	  <p>When called, the script must tell the caller which
+	  class to use. It does that by setting the variable
+	  params._scriptClass.set(instance)</p>
+
+      <p>Example of a digital expression script:</p>
+
+      <div style="margin-left: 2em;"><p><code>
+      import jmri<br>
+      <br>
+      class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression):<br>
+      <br>
+      &nbsp;&nbsp;l = lights.provideLight(\"IL1\")<br>
+      <br>
+      &nbsp;&nbsp;def registerScriptListeners(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;self.l.addPropertyChangeListener(\"KnownState\", self);<br>
+      <br>
+      &nbsp;&nbsp;def unregisterScriptListeners():<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;l.removePropertyChangeListener(\"KnownState\", this);<br>
+      <br>
+      &nbsp;&nbsp;def evaluate(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;return self.l.commandedState == ON<br>
+      <br>
+      params._scriptClass.set(MyExpression(params._parentExpression))<br>
+      </code></p></div>
+
+
+
+	  <p><strong>ActionForEach</strong></p>
+
+	  <p>ActionForEach is a for-loop.</p>
+
+	  <p>This action has a list of items. Either a constant list, or it can use a
+	  NamedBeanMap.</p>
+
+	  <p>The ActionForEach action loops thru the list. It takes the first item in
+	  the list, assigns it to a Memory, and then executes its child action. Then it
+	  takes the second item in the list, assigns it to the Memory, and executes the
+	  child action.</p>
+
+
+
+      <a name="digital_boolean_actions" id="digital_boolean_actions"></a>
+      <h2>List of digital boolean actions</h2>
+
+      <p>This section lists all the digital boolean actions that is currently
+	  available with LogixNG.</p>
+
+      <p>Digital boolean actions takes a true/false value and do something.
+	  The most common use is the digital action Logix together with the digital
+	  boolean action OnChange.</p>
+
+      <p>Digital boolean actions have system names with the letters
+      <strong>DB</strong> (for <strong>D</strong>igital
+      <strong>B</strong>oolean action). Example: IQDB002 or IQDB:0053.
+      System names with colon are auto generated system names.</p>
+
+      <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
+	  sure if these ideas are worth keeping. /Daniel</p>
+
+      <p style="color:blue">Items in blue is not up to date with documentation.
+	  The documentation tells how they should work, but the code is not finished yet.
+	  /Daniel</p>
+
+      <ul>
+        <li>
+          <p><strong>OnChange</strong></p>
+
+          <p>Executes a child action if the parameter is changed and to the
+          desired value.</p>
+        </li>
+
+      </ul>
+
+
+
+      <h3>LogixNG table structure</h3>
+
+	  <p>A Table is a data type that holds a two dimensional array, like a spreadsheet.</p>
+
+	  <p>Example:</p>
+
+	  <table>
+	  <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+	  <tr><th>&nbsp;1&nbsp;</th><td>IQT22</td><td>Yard table</td><td></td><td></td></tr>
+	  <tr><th>&nbsp;2&nbsp;</th><td></td><td>West yard</td><td>East yard</td><td>North yard</td></tr>
+	  <tr><th>&nbsp;3&nbsp;</th><td></td><td colspan="3">Left entrance of the yard</td></tr>
+	  <tr><th>&nbsp;4&nbsp;</th><td>Leftmost turnout</td><td>IT101</td><td>IT201</td><td>IT301</td></tr>
+	  <tr><th>&nbsp;5&nbsp;</th><td>Left turnout</td><td>IT103</td><td>IT203</td><td>IT303</td></tr>
+	  <tr><th>&nbsp;6&nbsp;</th><td></td><td colspan="3">Right entrance of the yard</td></tr>
+	  <tr><th>&nbsp;7&nbsp;</th><td>Rightmost turnout</td><td>IT112</td><td>IT212</td><td>IT312</td></tr>
+	  <tr><th>&nbsp;8&nbsp;</th><td>Right turnout</td><td>IT114</td><td>IT214</td><td>IT314</td></tr>
+	  </table>
+
+      <p>LogixNG can use references to access layout items like turnouts in an indirect
+	  way. It's done by entering the system name or user name in curly brackets. If
+	  a ActionTurnout has the turnout IT1, it will access that turnout directly. But if
+	  the ActionTurnout has the turnout {IM2}, it will read that memory and if that
+	  memory has a string as a value, it will use that string value to find the turnout.
+	  So if the memory IM2 has the value IT5, and the ActionTurnout has the turnout
+	  [IM2], the ActionTurnout will read the memory IM2 and find out that it points to
+	  the turnout IT5 and therefore do it's action on turnout IT5. The benefit of this
+	  is that the Memory can be changed during execution and therefore the same
+	  ActionTurnout can be used to access different turnouts at different times.</p>
+
+	  <p>It's possible to use indirect access recursive. If a ActionTurnout has the
+	  turnout {IM5}, and that Memory has the value {IM14}, and that the Memory IM14
+	  has the value IT3, the ActionTurnout will access IT3. The ActionTurnout has an
+	  indirect turnout IM5 so it will read that Memory. And since that memory has the
+	  value {IM14} which also is an indirect access, it will read the memory IM14 and
+	  find out that it has the value IT3, and therefore use IT3. This is also true for
+	  tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has the
+	  value 'IT5', the cell IQT1[5,3] will point to IT5.</p>
+
+	  <p>A table can be used to create a lookup table. It's accessed by either its
+	  system name or its user name, followed by a left square bracket, the name of the
+	  column, a comma, the name of the row, and a right square bracket.</p>
+
+	  <p>Instead of the names of the row and column, it's also possible to use the row
+	  number or the column number. Note that row 1 has the system name and user name of
+	  the table, row 2 has the names of the columns, and column 1 has the names of the
+	  rows. Note that for columns, 1 is row A, 2 is row B, 22 is V, 23 is W, 26 is Z,
+	  27 is AA and 28 is AB.</p>
+
+	  <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell
+	  &lt;column letter&gt;&lt;row number&gt; while references in JMRI has table[row,column].
+	  Example: Cell B3 is table[3,2], since B3 is row 3 and column 2.</p>
+
+	  <p>Example from the table above. These examples assume that IM3 has the value
+	  'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
+
+	  <table>
+	  <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
+	  <tr><td>IQT22[1,1]</td><td>IQT22</td><td>Cell A1 has the system name of the table</td></tr>
+	  <tr><td>IQT22[1,2]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
+	  <tr><td>IQT22[2,2]</td><td>West yard</td><td>Cell B2 has the name of column B</td></tr>
+	  <tr><td>IQT22[4,1]</td><td>Leftmost turnout</td><td>Cell A4 has the name of row 4</td></tr>
+	  <tr><td>Yard table[4,1]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
+	  <tr><td>IQT22[5,3]</td><td>IT203</td><td>Cell C5 has the value 'IT203'</td></tr>
+	  <tr><td>IQT22[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>Yard table[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>IQT22[Leftmost turnout,{IM3}]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B4</td></tr>
+	  <tr><td>IQT22[{IM4},East yard]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C7</td></tr>
+	  <tr><td>IQT22[{IM4},{IM3}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B7</td></tr>
+	  <tr><td>{IM5}[{IM4},{IM3}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
+	  </table>
+
+	  <p>Note that a Memory can point to a table. For example, if the memory IM7 has
+	  the value '{Yard table[{IM3},Leftmost turnout]}', LogixNG will look at IM7, and
+	  find that it's value is in curly brackets. It will then resolve the value inside
+	  these curly brackets, which is 'Yard table[{IM3},Leftmost turnout]'. It will then
+	  resolve the value of IM3 which has the value 'West yard'. It will then get the
+	  table cell 'Yard table[West yard,Leftmost turnout]' which is cell B4 with the
+	  value 'IT101'.</p>
+
+	  <p>The ActionForEach iterates over a comma separated list of values. It can be used
+	  with tables by using the keywords __columns__ and __rows__ . Note that it's two
+	  underscore characters before and after. {IQT1[__columns__]} gives a comma separated
+	  list of all the column names in the table IQT1. {IQT1[__rows__]} gives a comma
+	  separated list of all the row names in the table IQT1. It's also possible to write
+	  {Yard table[__columns__]} and {Yard table[__rows__]}. You can even use this syntax
+	  in ActionMemory to assign a Memory the list of column names or row names. Note
+	  however that column names or row names that are empty is seen as colums or rows with
+	  a comment and therefore they are not included.</p>
+
+	  <p>Tables are loaded by a start up action. They are created in a spreadsheet, like
+	  Microsoft Excel or LibreOffice Calc and then exported to a CSV file, separated by
+	  TAB characters. The table is read only and is not stored in the panel filee, so it
+	  must be reloaded each time JMRI starts.</p>
+
+
+
+
+
+
+
+	  curly brackets, these characters must be escaped by preceding them with a backslash.
+	  Examples: \, \[ \] \{ \} \\</p>
+
+	  <p>If a reference contains a backslash, it will take some more time to evaluate it
+	  than if it doesn't contain any backslash. So if it's possible to not use these special
+	  characters in references or names of beans, it's recommended.</p>
+
+<!--	  <h3>Important</h3>
+
+	  <p>In order for indirect access to work, some limitations are put on the names
+	  used in LogixNG. System names and user names must not contain comma, square brackets
+	  and curly brackets. For example, if a turnout has the name 'Green yard, left turnout',
+	  it cannot be used with its user name in LogixNG unless the name is changed and the
+	  comma is removed.</p> -->
+
+      <p class="noted">LogixNG is both the name of the JMRI tool and the name of the
+      main component of that tool.</p>
+
+
+
+
+
+
+	  <a name="enable" id="enable"></a>
+
+      <h2>Enabled and Execution enabled</h2>
+
+      <p>The intention with LogixNG is to be similar to Logix, in
+	  order to make it easier for users of Logix to understand how
+	  LogixNG works.</p>
+
+	  <p>This has resulted in a big challenge when it comes to
+	  <strong>Enabled</strong>, since in Logix, a Conditional that
+	  is not <strong>Enabled</strong> will still calculate its
+	  variables but not execute its actions.</p>
+
+	  <p>In LogixNG, there is a need to be able to completely disable
+	  the calculation too, and not only the execution of actions.
+	  Therefore, in LogixNG, if a LogixNG or a ConditionalNG is not
+	  <strong>enabled</strong>, it's not evaluated at all.</p>
+
+	  <p>But LogixNG also needed to be somewhat compatible with Logix,
+	  for example to be able to import Logixs to LogixNG. In order to
+	  solve that, LogixNG has <strong>execution enabled</strong>. If
+	  a LogixNG or a ConditionalNG doesn't have <strong>execution
+	  enabled</strong>, it's only evaluated but not executed.</p>
+
+	  <p>There is however a problem with <strong>execution enabled
+	  </strong>. Not all of the actions supports this. Only the actions
+	  <a href="#aaa">IfThenElse</a> and <a href="#bbb">Logix</a> supports
+	  <strong>execution enabled</strong>.</p>
+
+
+
+
+	  <a name="scripts" id="scripts"></a>
+
+      <h2>Scripts</h2>
+
+      <p>All types of LogixNG actions and expressions may use
+	  Python/Jython scripts. Below follows the description of
+	  scripts for digital expressions, but the same pattern
+	  applies to all the types of actions and expressions.</p>
+
+      <p>The digital expression that handles scripts is
+	  ExpressionScript.</p>
+
+      <p>The script that is executed by ExpressionScript must
+	  declare a class that extend the class AbstractScriptDigitalExpression.
+	  The script must override the method evaluate(). For a
+	  script that listen to other beans, it's recommended to
+	  also override the methods registerScriptListeners() and
+	  unregisterScriptListeners().</p>
+
+	  <p>When called, the script must tell the caller which
+	  class to use. It does that by setting the variable
+	  params._scriptClass.set(instance)</p>
+
+      <p>Example of a digital expression script:</p>
+
+      <div style="margin-left: 2em;"><p><code>
+      import jmri<br>
+      <br>
+      class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression):<br>
+      <br>
+      &nbsp;&nbsp;l = lights.provideLight(\"IL1\")<br>
+      <br>
+      &nbsp;&nbsp;def registerScriptListeners(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;self.l.addPropertyChangeListener(\"KnownState\", self);<br>
+      <br>
+      &nbsp;&nbsp;def unregisterScriptListeners():<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;l.removePropertyChangeListener(\"KnownState\", this);<br>
+      <br>
+      &nbsp;&nbsp;def evaluate(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;return self.l.commandedState == ON<br>
+      <br>
+      params._scriptClass.set(MyExpression(params._parentExpression))<br>
+      </code></p></div>
+
+
+
+	  <a name="indirect_accessing" id="indirect_accessing"></a>
+
+      <h2>Indirect adressing of NamedBeans</h2>
+
+      <p>In some cases, it may be useful to use indirect addressing of NamedBeans.</p>
+
+      <p>This can be done in two ways:</p>
+      <ul>
+	      <li>Using a Memory that has the name of the NamedBean</li>
+          <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+      </ul>
+
+      <p>Using a Memory that has the name of the NamedBean</p>
+
+      <p>Lets say we have an ActionTurnout that should throw a particulat turnout.
+      But we wnat to be able to select which turnout to throw at a later time.
+      We can solve that by storing the system name or user name in a Memory.
+      We then tell the ActionTurnout to read the Memory and lookup the turnout
+      on the fly.</p>
+
+      <p>Since LogixNG fully supports string manipulation and calculations of both
+      integers and floating point values, where are plenty of possibilities here.</p>
+
+      <h3>Warning</h3>
+
+      <p>There is one major drawback with this. Since LogixNG doesn't know in
+      advance which NamedBeans will be accessed indirectly, it's not possible
+      for LogixNG to automaticly register listeners to the named beans that
+      should trigger on change. For example, an ExpressionTurnout registers
+      a listener on the turnout, if the name of the turnout is given, but if
+      the ExpressionTurnout is using indirect addressing of the turnout, it's
+      not able to do that.</p>
+
+      <p>The solution is to use the ActionListenOnBeans and tell this action
+      which beans to listen on. Any time any property of any of the named
+      beans this action listen to, the ConditionalNG will be executed.</p>
+
+      <p>Example:</p>
+      <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's
+      expressions and wants each of them to trigger on change. Turnouts
+      IT1 and IT3 and IT4 are directly accessed in expressions and IT2, IT3
+      and IT5 is indirect accessed.</p>
+
+      <p>Each turnout that is directly addressed in an expression will the
+      ConditionalNG listen to automaticly, so IT1, IT3 and IT4 will be listen
+      to. But in order to listen on turnouts IT2 and IT5, the
+      ActionListenOnBeans needs to be used.</p>
+
+      <p>The ActionListenOnBeans can be placed anythere in the ConditionalNG
+      tree, as long as it and its parents are enabled. If you disable this
+      action, or any of its parent actions, the ActionListenOnBeans will not
+      listen on its named beans.</p>
+
+
+
+	  <p><strong>ActionFor</strong></p>
+
+	  <p>ActionFor is a for-loop. It has four children.</p>
+	  <ul>
+	      <li><strong>Init</strong> - this action is first executed once. It's
+          used to initialize the loop, for example setting a Memory to a particular
+          value.</li>
+
+          <li><strong>Condition</strong> - this expression decides if the loop
+          should run one lap more. The loop will continue to run until this
+          condition will be <strong>false</strong>.</li>
+
+          <li><strong>Next</strong> - this action is executed at the end of the
+          loop. It can for example be used to increment a counter in a Memory.</li>
+
+          <li><strong>Action</strong> - this action is executed in each loop. It
+          does the main work.</li>
+      </ul>
+
+	  <p>Then ActionFor is executed, the Init action is run once. After that, the
+	  Condition expression is evaluated. If the condition returns <strong>true</strong>,
+	  the Action action is executed and at last the Next action is executed. Then
+	  the process is repeated, except that the Init action is only executed once.</p>
+
+	  <p><strong>ActionForEach</strong></p>
+
+	  <p>ActionForEach is a for-loop.</p>
+
+	  <p>This action has a list of items. Either a constant list, or it can use a
+	  NamedBeanMap.</p>
+
+	  <p>The ActionForEach action loops thru the list. It takes the first item in
+	  the list, assigns it to a Memory, and then executes its child action. Then it
+	  takes the second item in the list, assigns it to the Memory, and executes the
+	  child action.</p>
+
+
+
+
+          <p>The Logix action reads a digital child expression and then executes
+          boolean actions. Each boolean action takes the result from the
+          expression and takes action accordingly. The recommended child boolean
+          actions for this action is the OnChange action. The Logix action, together
+          with the OnChange child boolean actions, acts like the JMRI Logix, with
+          explains the name of this action.</p>
+
+
+
+
+      <a name="digital_boolean_actions" id="digital_boolean_actions"></a>
+      <h2>List of digital boolean actions</h2>
+
+      <p>This section lists all the digital boolean actions that is currently
+	  available with LogixNG.</p>
+
+      <p>Digital boolean actions takes a true/false value and do something.
+	  The most common use is the digital action Logix together with the digital
+	  boolean action OnChange.</p>
+
+      <p>Digital boolean actions have system names with the letters
+      <strong>DB</strong> (for <strong>D</strong>igital
+      <strong>B</strong>oolean action). Example: IQDB002 or IQDB:0053.
+      System names with colon are auto generated system names.</p>
+
+      <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
+	  sure if these ideas are worth keeping. /Daniel</p>
+
+      <p style="color:blue">Items in blue is not up to date with documentation.
+	  The documentation tells how they should work, but the code is not finished yet.
+	  /Daniel</p>
+
+      <ul>
+        <li>
+          <p><strong>OnChange</strong></p>
+
+          <p>Executes a child action if the parameter is changed and to the
+          desired value.</p>
+        </li>
+
+      </ul>
+
+
+
+
+        <li>
+          <p><strong style="color:blue">ResetOnTrue</strong></p>
+
+          <p><strong style="color:red">Update the code</strong></p>
+
+          <p>The ResetOnTrue expression has two child expressions, one
+          primary expression and one secondary expression. When the primary
+          expression becomes <strong>true</strong>, the secondary expression
+          is reset. This expression is primary designed to be used with a timer
+          expression as the secondary expression. The timer will then restart
+          when it's reset.</p>
+
+          <p>The user can select between four different ways on when this
+          expression answers <strong>true</strong>.</p>
+
+          <ul>
+            <li>The primary expression trigger, and until the secondary expression becomes true.</li>
+            <li>The primary expression trigger, and while the secondary expression is true.</li>
+            <li>The primary expression stays true, and until the secondary expression becomes true.</li>
+            <li>The primary expression stays true, and while the secondary expression is true.</li>
+          </ul>
+
+          <p>Example usages for this expression:</p>
+
+          <ul>
+            <li>Wait on a timer. For example, when turnout IT1 is thrown, wait 5 seconds until expression becomes true.</li>
+            <li>Wait on a timer. For example, when turnout IT1 is thrown, let the expression be true for 5 seconds.</li>
+          </ul>
+        </li>
+
+
+
+
+
+      <a name="notes" id="notes"></a>
+      <h2>Additional Notes</h2>
+
+      <p>This section contains questions and answers that normally
+      are not needed by LogixNG users, but in some cases were
+      important or of interest for previous versions of LogixNG.</p>
+
+      <ul>
+        <li>
+          <p><strong>How is a LogixNG started?</strong></p>
+
+          <p>Start of a LogixNG is similar to the way a light, a
+          route, or other continuously running JMRI entity starts.
+          Internally a LogixNG has an "activate" method, that is
+          called when the LogixNG is created, after it is edited, or
+          when it is loaded from a configuration file. This method
+          starts listeners for items in the expressions of the
+          LogixNG's ConditionalNGs. When any of these listeners fires
+          (indicating that the watched property of a expression
+          has changed), the LogixNG is calculated, resulting in
+          appropriate actions being taken, provided the LogixNG is
+          enabled.</p>
+        </li>
+
+        <li>
+          <strong>When should Triggers Calculation be unchecked in an
+          expression?</strong>
+
+          <p>Normally Triggers Calculation should be checked in all
+          expressions that has this option, so a change in any of its
+          expression
+          will trigger calculation of a LogixNG. This results in the
+          LogixNG quickly reacting to changes on the layout, and
+          maintaining the status of signals, turnouts, etc. as
+          desired. There are situations, however, where it is
+          desirable to test the state of an entity, but not use it
+          as a calculation trigger. The following paragraphs
+          describe a couple of those situations, but there are
+          others.</p>
+
+          <p>Occasionally a "logic loop" can result if triggering
+          is not suppressed. For example, if the state of a turnout
+          is tested in a expression, and the same turnout is
+          set in an action of the same or another ConditionalNG of
+          the same LogixNG, continuous triggering (a logic loop)
+          could result. The easiest way out of this dilemma is to
+          test the turnout, without using it as a triggering
+          entity. This is done by unchecking Triggers Calculation
+          in <strong>all</strong> expressions where the turnout is
+          specified. If the turnout is used in expressions of
+          more than one ConditionalNG of the LogixNG, it must be
+          unchecked everywhere it is used to suppress using it as a
+          trigger.</p>
+
+          <p>Another situation arises when Delayed Set Sensor
+          action is used with an internal sensor to trigger a
+          second LogixNG after the delay time has elapsed. If the
+          second LogixNG is not to be triggered before the delay time
+          elapses, all of its expressions, except for the
+          delayed internal sensor, should be unchecked. This
+          scenario might occur, for example, if a ConditionalNG turns
+          on something as its first action, and sets a Delayed Set
+          Sensor as its second action to turn off that something
+          after a specified time provided certain conditions are
+          met.</p>
+        </li>
+
+        <li>
+          <strong>What is a "logic loop" and how can it be avoided?</strong>
+
+          <p>A "logic loop" results when the program appears to
+          slow down significantly or lock up as multiple LogixNGs are
+          continuously triggered by changing references to each
+          other. The best way to avoid a "logic loop" is to be
+          aware of situations that can lead to a loop, and plan
+          your logic to avoid such situations.</p>
+
+          <p>A "logic loop" can result within a single LogixNG when a
+          expression (sensor, turnout, etc.) that triggers the
+          LogixNG is also changed by that same LogixNG. The LogixNG
+          editor will detect some situations that could result in a
+          loop, and will issue a warning when you close the LogixNG.
+          <strong>Heed these warnings!</strong> A warning doesn't mean that a
+          loop definitely will result if you continue. The warning
+          message is a "wake up call" that you should study
+          carefully what you're doing to make sure a loop won't
+          result.</p>
+
+          <p>A more complicated situation involving two or more
+          LogixNGs can also result in a "logic loop". For example, if
+          LogixNG 1 is triggered by sensor A, and has an action that
+          changes turnout B, and LogixNG 2 is triggered by turnout B
+          and changes sensor A, the potential for a loop exists as
+          these LogixNGs trigger each other. You can easily extend
+          this idea to triggering chains (loops) involving three or
+          more LogixNGs, and even to interactions between LogixNGs and
+          Routes. There is no test in the program to warn about
+          loops involving multiple LogixNGs. (To develop such a test
+          would be very difficult.)</p>
+        </li>
+
+        <li>
+          <strong>What should I do if I think I have a "logic loop"?</strong>
+
+          <p>When they do occur, "logic loops" can be a bit scary
+          to trouble shoot. Your computer may appear to be locked
+          up, or slowed to a crawl as the loop uses up most of the
+          available computer time. Fortunately JMRI provides tools
+          to help in design and debugging. Unchecking "Triggers
+          Calculation" for a expression (discussed above), can
+          help you design around loops when you have identified the
+          LogixNG causing the looping problem. To get around the lock
+          up or slow down problem, start with all your LogixNGs
+          disabled, (see below) then enable them one by one until
+          you discover the loop.</p>
+
+          <p>If the panel file containing LogixNGs loads
+          automatically when the program starts up, press and
+          release the shift key a few times rapidly as soon as you
+          see the small JMRI splash screen (the first thing you see
+          during start up). Your panel file will be loaded with all
+          LogixNGs disabled.</p>
+
+          <p>If you load your panel file manually using the Panels
+          &gt; Open Panel...
+          menu, before loading your file, go to the <strong>Debug</strong>
+          menu and select <strong>Load LogixNGs Disabled</strong>. After
+          responding OK to the message, load your panel file as you
+          normally would. Your panel file will be loaded with all
+          LogixNGs disabled.</p>
+
+          <p>After loading your panel file, open the LogixNG Table
+          and verify that all LogixNGs are disabled. If you know
+          which LogixNG is causing the trouble, you can then fix it
+          or delete it, re-enable the other LogixNGs, and save your
+          panel file. If you don't know which LogixNG is causing the
+          problem, you can enable your LogixNGs, one by one, until
+          the loop occurs. When the loop starts, you know that the
+          last LogixNG you enabled is at least partly responsible for
+          the problem. At this point you should restart the program
+          with all LogixNGs disabled, and fix or delete the LogixNG you
+          identified.</p>
+
+          <p><strong>CAUTION:</strong> <strong>It's wise to save your panel file
+          frequently when entering LogixNGs.</strong> If a logic loop
+          occurs, it may be difficult, if not impossible, to save
+          your panel file before shutting down the program.
+          Remember that a LogixNG is activated as soon as you click
+          <strong>Done</strong> in the Edit LogixNG window. Also, remember that
+          hitting an <strong>Edit</strong> button in the LogixNG Table
+          deactivates the selected LogixNG before opening it for
+          editing, offering a possible way to break into a logic
+          loop without restarting the program.</p>
+        </li>
+      </ul>
+
+
+
+
+
+	  <p>The ActionForEach iterates over a comma separated list of values. It can be used
+	  with tables by using the keywords __columns__ and __rows__ . Note that it's two
+	  underscore characters before and after. {IQT1[__columns__]} gives a comma separated
+	  list of all the column names in the table IQT1. {IQT1[__rows__]} gives a comma
+	  separated list of all the row names in the table IQT1. It's also possible to write
+	  {Yard table[__columns__]} and {Yard table[__rows__]}. You can even use this syntax
+	  in ActionMemory to assign a Memory the list of column names or row names. Note
+	  however that column names or row names that are empty is seen as colums or rows with
+	  a comment and therefore they are not included.</p>
+
+
+
+
+
+      <hr>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>
