@@ -166,7 +166,7 @@
           <div style="margin-left: 2em">
           <a href="images/chapter3/action_other.png">
           <img src="images/chapter3/action_other.png"
-          alt="Chapter 3 other action" width="259" height="198">
+          alt="Chapter 3 other action" width="259" height="214">
           </a>
           </div>
 
@@ -178,6 +178,71 @@
 
           <h5>Listen on beans - Table</h5>
           <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
+
+          <a id="ActionLogData"></a>
+          <h5>Log data</h5>
+
+          <p>While developing a ConditionalNG, it can be helpful to see field content, make
+          note of the location within the tree, etc.  Adding the <strong>Log data</strong>
+          type in the <strong>Other</strong> category will display a dialog to configure
+          the <strong>Log data</strong> options.</p>
+
+          <p>Select either or both Log options</p>
+
+          <ul>
+            <li><strong>Log to the log:</strong> Help &rArr; System Console.</li>
+            <li><strong>Log to the Script Output:</strong> Scripting &rArr; Script Output.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_log_data.png">
+          <img src="images/chapter3/action_log_data.png"
+          alt="Chapter 3 action log data" width="565" height="506">
+          </a>
+          </div>
+
+          <p>There are three format types.</p>
+
+          <ul>
+            <li><strong>Only text: </strong> The text typed into the Format box will be
+            displayed on the log.  The data in the table is ignored.</li>
+            <li><strong>Comma separated list: </strong> The values for the items in the
+            table will be displayed separated by commas.  The content in the format field
+            is ignored.</li>
+            <li><strong>String.format: </strong> Use the format string to format the data
+            in the table.  See the java method String.format() for the syntax of the
+            format string.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_format.png">
+          <img src="images/chapter3/log_data_format.png"
+          alt="Chapter 3 log data format" width="187" height="62">
+          </a>
+          </div>
+
+          <p>The table lists the data sources for the comma separated and and string
+          format options.<p>
+
+          <p>Click on the <strong>Add</strong> button to add an entry to the table.
+          Select the source type and add the name or a reference in the Data field.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_sources.png">
+          <img src="images/chapter3/log_data_sources.png"
+          alt="Chapter 3 log data sources" width="421" height="116">
+          </a>
+          </div>
+
+          <p>This example uses the string.format option to combine text with the contents
+          of two memory variables.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_sample.png">
+          <img src="images/chapter3/log_data_sample.png"
+          alt="Chapter 3 log data sample" width="556" height="506">
+          </a>
+          </div>
 
           <h5>Log local variables</h5>
           <p>See <a href="chapter8.shtml#LogLocalVariables">Chapter 8 - Debugging local variables</a> for details.</p>
@@ -270,7 +335,7 @@
           <div style="margin-left: 2em">
           <a href="images/chapter3/expression_other.png">
           <img src="images/chapter3/expression_other.png"
-          alt="Chapter 3 other expression" width="297" height="183">
+          alt="Chapter 3 other expression" width="300" height="199">
           </a>
           </div>
 
@@ -303,6 +368,24 @@
           alt="Chapter 3 expression last result" width="485" height="247">
           </a>
           </div>
+
+          <h5>Log data</h5>
+
+          <p>The <strong>Log data</strong> expresson works the same as the <strong>Log data
+          </strong> action.  See <a href="#ActionLogData">Log data action</a> for details.</p>
+
+          <p>Since this is an expression, it must return true or false.  The window for
+          creating the expression version includes a combo box for selecting True or False</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_return.png">
+          <img src="images/chapter3/log_data_return.png"
+          alt="Chapter 3 log data return options" width="231" height="91">
+          </a>
+          </div>
+
+          <p><strong>True</strong> is recommended for <strong>And</strong> expressions and
+          <strong>False</strong> for <strong>Or</strong> expressions.
 
           <h5>Trigger once</h5>
           <p>The TriggerOnce expression answers true one single time and then false
