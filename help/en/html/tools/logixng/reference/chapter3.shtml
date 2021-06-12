@@ -359,6 +359,7 @@
           But then it stays <strong>true</strong> as long as the hold expression stays
           <strong>true</strong>.</p>
 
+          <a id="LastResult"></a>
           <h5>Last result of digital expression</h5>
           <p>Each digital expression retains its most recent true/false state.  This can
           be checked if the expression has a user name.  See <a href="chapter4.shtml">

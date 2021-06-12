@@ -125,7 +125,8 @@
             </ul>
 
           <h5>Light</h5>
-            <p>Light intensity and transition time have not been implemented in LogixNG.</p>
+            <p><strong><em>Light intensity</em></strong> and <strong><em>transition time</em></strong>
+            have not been implemented in LogixNG.</p>
             <ul>
               <li><strong>Off:</strong> Set the selected light off.</li>
               <li><strong>On:</strong> Set the selected light on.</li>

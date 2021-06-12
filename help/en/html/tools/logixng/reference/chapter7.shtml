@@ -110,7 +110,7 @@
 
 
 
-	  <a name="indirect_accessing" id="indirect_accessing"></a>
+      <a id="indirect_accessing"></a>
 
       <h2>Indirect adressing of NamedBeans</h2>
 
@@ -118,16 +118,16 @@
 
       <p>This can be done in two ways:</p>
       <ul>
-	      <li>Using a Memory that has the name of the NamedBean</li>
-          <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+          <li>Using a Memory that has the name of the NamedBean</li>
+          <li>Using a Table to lookup the name of the NamedBean</li>
       </ul>
 
       <p>Using a Memory that has the name of the NamedBean</p>
 
-      <p>Lets say we have an ActionTurnout that should throw a particulat turnout.
+      <p>Lets say we have a Turnout action that should throw a particulat turnout.
       But we wnat to be able to select which turnout to throw at a later time.
       We can solve that by storing the system name or user name in a Memory.
-      We then tell the ActionTurnout to read the Memory and lookup the turnout
+      We then tell the Turnout action to read the Memory and lookup the turnout
       on the fly.</p>
 
       <p>Since LogixNG fully supports string manipulation and calculations of both
