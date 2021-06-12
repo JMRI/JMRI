@@ -396,8 +396,8 @@
           false until JMRI is restarted.</p>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></span></p>
+      <p><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></p>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

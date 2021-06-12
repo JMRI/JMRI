@@ -21,7 +21,7 @@
         <p>The expressions and actions of a LogixNG are represented by a tree structure.
         The "root" of the tree is an A action.</p>
 
-        <p><a href="../../../../html/tools/logixng/Tutorial/Chapter1.shtml">Chapter 1</a> of
+        <p><a href="../../../../html/tools/logixng/Tutorial/chapter1.shtml">Chapter 1</a> of
         the LogixNG tutorial gives an introduction to the ConditionalNG editor.</p>
 
       <!--#include virtual="/Footer.shtml" -->

@@ -239,8 +239,8 @@
             </ul>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter7.shtml">Chapter 7 - References</a></span></p>
+      <p><a href="chapter7.shtml">Chapter 7 - References</a></p>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

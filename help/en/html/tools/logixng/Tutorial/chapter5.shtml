@@ -289,8 +289,8 @@
             </ul>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter6.shtml">Chapter 6 - Expression Items</a></span></p>
+      <p><a href="chapter6.shtml">Chapter 6 - Expression Items</a></p>
+      <p><a href="index.shtml">Return to the Tutorial TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
