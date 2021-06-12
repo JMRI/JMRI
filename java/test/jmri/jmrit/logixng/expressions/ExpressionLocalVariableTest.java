@@ -227,7 +227,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.MatchRegex);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
-        expressionLocalVariable.setConstantValue("Hello.*");
+        expressionLocalVariable.setRegEx("Hello.*");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Hello world");
@@ -247,7 +247,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionLocalVariable.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionLocalVariable.setRegEx("\\w\\w\\d+\\s\\d+");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Ab213 31");
@@ -270,7 +270,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.NotMatchRegex);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
-        expressionLocalVariable.setConstantValue("Hello.*");
+        expressionLocalVariable.setRegEx("Hello.*");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Hello world");
@@ -290,7 +290,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionLocalVariable.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionLocalVariable.setRegEx("\\w\\w\\d+\\s\\d+");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Ab213 31");

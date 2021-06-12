@@ -49,6 +49,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/formula-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/hold-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/last-result-of-digital-expression-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/log-data-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/not-4.23.3.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/or-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/reset-on-true-4.23.1.xsd"/>
@@ -95,6 +96,7 @@
             <xs:element name="DigitalFormula"     type="LogixNG_DigitalExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Hold"               type="LogixNG_DigitalExpression_HoldType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="LastResultOfDigitalExpression"  type="LogixNG_DigitalExpression_LastResultOfDigitalExpressionType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="LogData"            type="LogixNG_DigitalExpression_LogDataType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Not"                type="LogixNG_DigitalExpression_NotType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Or"                 type="LogixNG_DigitalExpression_OrType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ResetOnTrue"        type="LogixNG_DigitalExpression_ResetOnTrueType" minOccurs="0" maxOccurs="unbounded" />

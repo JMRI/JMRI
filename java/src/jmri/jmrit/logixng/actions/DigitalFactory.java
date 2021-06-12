@@ -45,6 +45,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, For.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, IfThenElse.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LogLocalVariables.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Sequence.class));
