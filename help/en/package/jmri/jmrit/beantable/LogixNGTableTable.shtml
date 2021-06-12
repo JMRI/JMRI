@@ -118,11 +118,11 @@
         </div>
 
         <p>The system name is required. The system name for a LogixNG Table always begins with
-        the letters IQT.  If the entered name does not start with IQT, it will be automatically
-        added.  The typical suffix is a number.  If <strong>Automatically generate System Name</strong>
-        is checked, the system name format will be <strong>IQT:AUTO:nnnn</strong>.  Any other
-        format requires adding a <strong>$</strong> (dollar) character between
-        <strong>IQT</strong> and the suffix.
+        the letters <strong>IQT</strong>.  If the entered name does not start with <strong>
+        IQT</strong>, it will be automatically added.  The typical suffix is a number.  If
+        <strong>Automatically generate System Name</strong> is checked, the system name
+        format will be <strong>IQT:AUTO:nnnn</strong>.  Any other format requires adding a
+        <strong>$</strong> (dollar) character between <strong>IQT</strong> and the suffix.</p>
 
         <p>The user name is optional but recommended. A user name may be any useful text,
         provided the new user name was not previously assigned to another LogixNG Table. Once a

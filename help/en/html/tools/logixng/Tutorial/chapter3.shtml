@@ -155,10 +155,10 @@
           </div>
 
           <h5>Clear loconet slots</h5>
-          <p>-- pending --</p>
+          <p>This action clears the slot status in the command station if you are using LocoNet.</p>
 
           <h5>Update loconet slots</h5>
-          <p>-- pending --</p>
+          <p>This action forces an update of the LocoNet slot status in JMRI.</p>
 
 
         <h3>Other</h3>
@@ -210,8 +210,10 @@
             table will be displayed separated by commas.  The content in the format field
             is ignored.</li>
             <li><strong>String.format: </strong> Use the format string to format the data
-            in the table.  See the java method String.format() for the syntax of the
-            format string.</li>
+            in the table.  See the java method
+            <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">
+            String.format()</a> for the syntax of the
+            format string.  Note:  The format is similar <code>sprintf</code>.</li>
           </ul>
 
           <div style="margin-left: 2em">
@@ -260,7 +262,7 @@
           or shutdown or restart JMRI.</p>
 
           <h5>Web browser</h5>
-          <p>-- pending --</p>
+          <p>The web browser action opens a web page in the web browser.</p>
 
       <h2>Expressions</h2>
 

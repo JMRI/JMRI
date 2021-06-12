@@ -88,7 +88,7 @@
         created, the tree consist only of a single female socket, "! A". The exclamation mark
         indicates that this is a digital action socket, so you can connect digital actions to it.</p>
 
-        <p>Right-click (command-click) on any row to show the context menu for that row.</p>
+        <p>Right-click on any row to show the context menu for that row.</p>
 
         <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_3.png">
@@ -100,7 +100,7 @@
 
         <h3>Create an Action</h3>
 
-          <p>To create a new action, we right-click (command-click) with the mouse on the
+          <p>To create a new action, we right-click with the mouse on the
           female socket <code>! A</code> and then select <strong>Add</strong> in the popup menu.</p>
 
           <div style="margin-left: 2em">
@@ -167,8 +167,8 @@
           </a>
           </div>
 
-          <p>The action is now created and each time this ConditionalNG is executed, the turnout
-          "IT_1_1" is thrown.</p>
+          <p>The action is now created and each time this ConditionalNG is executed, the
+          turnout "IT_1_1" is thrown.</p>
 
 
         <h3>Create an Expression</h3>
@@ -177,13 +177,13 @@
           Lets change the ConditionalNG so that it reads sensor "IS_1_1" and if
           it's active, the turnout is thrown.</p>
 
-          <p>To do this, we need to temporary remove the Set turnout action and instead
+          <p>To do this, we need to temporarily remove the Set turnout action and instead
           add an <strong>If Then Else</strong> action. LogixNG has a clipboard that allows
           us to cut and paste actions and expressions. So lets use it to temporarily move
           the Set turnout action to the clipboard.
 
-          <p>Right-click (command-click) with the mouse on the Set turnout action and
-          then select "Cut" in the popup menu.</p>
+          <p>Right-click with the mouse on the Set turnout action and then select "Cut" in
+          the popup menu.</p>
 
           <div style="margin-left: 2em">
           <a href="images/chapter1/create_conditionalng_11.png">
@@ -198,7 +198,7 @@
           the clipboard by selecting <strong>Tools &rArr; Clipboard</strong> in the
           ConditionalNG editor.</p>
 
-          <p>Right click (command-click) on <code>! A</code> and select <strong>Add</strong>.
+          <p>Right click on <code>! A</code> and select <strong>Add</strong>.
           This time select the <strong>Common</strong> category and the <strong>If Then
           Else</strong> type.</p>
 
@@ -237,7 +237,7 @@
           </div>
 
 
-          <p>Right-click (command-click) with the mouse on the <strong>Then</strong> socket
+          <p>Right-click with the mouse on the <strong>Then</strong> socket
           and select <strong>Paste</strong> in the popup menu to paste the "Set turnout" action.</p>
 
           <div style="margin-left: 2em">
@@ -256,7 +256,7 @@
           </a>
           </div>
 
-          <p>Right-click (command-click) with the mouse on the <strong>If</strong> socket
+          <p>Right-click with the mouse on the <strong>If</strong> socket
           and select <strong>Add</strong> in the popup menu to add a new expression.</p>
 
           <div style="margin-left: 2em">
@@ -346,7 +346,7 @@
             <li>Item - Actions and expressions related to items on the layout, for example
             turnouts and signal masts</li>
             <li>Common - The most important actions and expressions that are not in the
-            category Item</li>
+            Item category</li>
             <li>Display - Actions and expressions related to Panels</li>
             <li>LocoNet - Actions and expressions related to LocoNet</li>
             <li>Other - Other actions and expressions</li>
