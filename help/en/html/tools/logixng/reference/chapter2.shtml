@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Reference - Chapter 2</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference clipboard">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 2</h1>
+
+      <h2>The clipboard</h2>
+
+        <h3>Cut/Copy/Paste</h3>
+
+          <p>While editing a ConditionalNG, it can be useful to <strong>cut</strong> out
+          something, edit something else, and then <strong>paste</strong> it back.
+          Chapter 1 has a good example.  For this purpose, LogixNG has a clipboard. Each
+          time you cut an action or expression, it is moved to the clipboard.</p>
+
+          <p>It also possible to <strong>copy</strong> all or part of a ConditionalNG.  This
+          can then be pasted into the same ConditionalNG, another ConditionalNG or even a
+          different LogixNG.</p>
+
+        <h3>Working with the clipboard</h3>
+
+          <p>The clipboard editor works the same way as the ConditionalNG editor, with the
+          exception that actions and expressions are never active while on the clipboard.</p>
+
+          The clipboard contents are visible by selecting <strong>Tools &rArr; Open clipboard</strong>.
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter2/chapter2_clipboard.png">
+          <img src="images/chapter2/chapter2_clipboard.png"
+          alt="Chapter 2 clipboard" width="500" height="305">
+          </a>
+          </div>
+
+          <p>In the ConditionalNG editor window, copy and cut add to the beginning of the
+          clipboard list.  Paste uses the <strong><em>first</em></strong> item in the
+          clipboard list and it will be <strong>deleted</strong> from clipboard list.</p>
+
+          <p>In the clipboard window, copy creates a <strong>duplicate</strong> item and
+          adds it to the beginning of the list.  Cut <strong>moves</strong> the item to
+          the beginning of the list.  <strong>Remove</strong> will <strong>delete</strong>
+          the item from the clipboard list.</p>
+
+          <p>Note that you can cut an item on any level in the clipboard tree. While
+          editing a ConditionalNG, you may cut a big tree from the ConditionalNG and you
+          then take only a small sub tree and paste back to the ConditionalNG.</p>
+
+<pre>
+Example:
+* Many
+  * IfThenElse
+    * If sensor
+    * Then Throw turnout
+</pre>
+
+          <p>You can cut the Many action from the ConditionalNG, then go to the clipboard
+          and expand the Many action and then cut the IfThenElse action. The IfThenElse
+          action will then be moved to the first row on the clipboard. Now you can go back
+          to the ConditionalNG and paste the IfThenElse action to the ConditionalNG.</p>
+
+          <p>If the popup menu is opened on an item that can be copied, the menu item Copy
+          is enabled. If "Copy" is selected, the item and its sub tree are copied to the
+          clipboard. Each item gets an auto system name and no user name.</p>
+
+      <hr>
+      <p><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>
