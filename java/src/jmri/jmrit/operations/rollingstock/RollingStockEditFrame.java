@@ -104,7 +104,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     // panels for engine edit
     public JPanel pModel = new JPanel();
-    public JPanel pHp = new JPanel();
+    public JPanel pPower = new JPanel();
 
     public RollingStockEditFrame(String title) {
         super(title);
@@ -236,8 +236,8 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         pLoad.setVisible(false);
 
         // for engines
-        pOptional.add(pHp);
-        pHp.setVisible(false);
+        pOptional.add(pPower);
+        pPower.setVisible(false);
 
         // row 10
         pGroup.setLayout(new GridBagLayout());
