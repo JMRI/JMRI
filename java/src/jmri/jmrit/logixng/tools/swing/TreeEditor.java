@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -1470,16 +1471,17 @@ public class TreeEditor extends TreeViewer {
                 menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper));
             }
             
-            if (femaleSocket.isConnected()) {
-                MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
-                menuItemLock.setEnabled(!connectedSocket.isLocked());
-                menuItemUnlock.setEnabled(connectedSocket.isLocked());
-            } else {
-                menuItemLock.setEnabled(false);
-                menuItemUnlock.setEnabled(false);
-            }
-            menuItemLock.setEnabled(false);     // Not implemented yet
-            menuItemUnlock.setEnabled(false);   // Not implemented yet
+            AtomicBoolean isAnyLocked = new AtomicBoolean(false);
+            AtomicBoolean isAnyUnlocked = new AtomicBoolean(false);
+            
+            _currentFemaleSocket.forEntireTree((item) -> {
+                if (item instanceof MaleSocket) {
+                    isAnyLocked.setPlain(isAnyLocked.getPlain() || ((MaleSocket)item).isLocked());
+                    isAnyUnlocked.setPlain(isAnyUnlocked.getPlain() || !((MaleSocket)item).isLocked());
+                }
+            });
+            menuItemLock.setEnabled(isAnyUnlocked.getPlain());
+            menuItemUnlock.setEnabled(isAnyLocked.getPlain());
             
             menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
             
@@ -1646,9 +1648,21 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_LOCK:
+                    _currentFemaleSocket.forEntireTree((item) -> {
+                        if (item instanceof MaleSocket) {
+                            ((MaleSocket)item).setLocked(true);
+                        }
+                    });
+                    _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                     break;
                     
                 case ACTION_COMMAND_UNLOCK:
+                    _currentFemaleSocket.forEntireTree((item) -> {
+                        if (item instanceof MaleSocket) {
+                            ((MaleSocket)item).setLocked(false);
+                        }
+                    });
+                    _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                     break;
                     
                 case ACTION_COMMAND_LOCAL_VARIABLES:

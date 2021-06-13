@@ -100,6 +100,7 @@
 
 
               <xs:attribute name="enabled" type="yesNoType" />
+              <xs:attribute name="locked" type="yesNoType" />
               <xs:attribute name="class" type="classType" use="required"/>
             </xs:complexType>
           </xs:element>
