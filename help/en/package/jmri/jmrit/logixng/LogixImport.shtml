@@ -43,11 +43,12 @@
             <li><strong>RTX:</strong> These are created by LRoutes and the Route <strong>
             Export to Logix</strong> option.  This includes the RTXINITIALZER.</li>
             <li><strong>USS CTC:</strong> These are create by the USS CTC OsIndicator tool.</li>
-            <li><strong>SSL:</strong> These are created to support complex SSL configurations
-            such as Throat-to-Throat.  Since these do not have descriptive system names,
-            they will be imported.  This can lead to unpredictable SSL behavior.  These
-            should be deleted from LogixNG after doing the import.</li>
           </ul>
+
+          <p><strong>SSL</strong> Logixes are created to support complex SSL configurations
+          such as Throat-to-Throat.  Since these do not have descriptive system names,
+          they will be imported.  This can lead to unpredictable SSL behavior.  These
+          should be deleted from LogixNG after doing the import.</p>
 
           <p>Subsequent changes using these JMRI tools will update the related Logix.
           LogixNG will not be aware of those changes. It's recommended to leave this option
