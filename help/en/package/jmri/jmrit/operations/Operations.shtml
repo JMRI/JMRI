@@ -3898,7 +3898,9 @@
    you to add a new road or delete any that you don't need. Now enter the locomotive's number,
    model, type, length and horsepower. The locomotive's horsepower, the train's weight, and track
    grade is used by the program to calculate how many locomotives are required when using the "Auto"
-   feature when building trains.
+   feature when building trains. Stream engines use tractive effort rather than horsepower to
+   describe their potential for pulling trains. Enter the tractive effort in lbf and the program
+   will convert it to the approximate horsepower at 25 MPH when you press the Save button.
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). You can also enter the built date, owner and a comment for

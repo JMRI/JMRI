@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 8</title>
+  <title>LogixNG Reference - Chapter 8</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial local variables">
+  <meta name="keywords" content="jmri LogixNG reference local variables">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 8</h1>
+      <h1>LogixNG Reference - Chapter 8</h1>
 
       <h2>Local Variables</h2>
 
@@ -144,8 +144,8 @@ WARN  - Log local variables done [JMRI LogixNGThread]
         Console.</p>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter9.shtml">Chapter 9 - Formula</a></span></p>
+      <p><a href="chapter9.shtml">Chapter 9 - Formula</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

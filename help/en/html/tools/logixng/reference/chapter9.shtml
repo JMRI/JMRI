@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 9</title>
+  <title>LogixNG Reference - Chapter 9</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial formula">
+  <meta name="keywords" content="jmri LogixNG reference formula">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 9</h1>
+      <h1>LogixNG Reference - Chapter 9</h1>
 
       <h2>Formula</h2>
 
@@ -31,8 +31,8 @@
       can be used directly in formula. So if you have a local variable <em>index</em>, you
       can for example have the formula <em>"IT" + str(index)</em>, which adds the string "IT"
       and the value of <em>index</em>. This can be useful if you for example want to set
-      all the turnouts IT1, IT2, IT3, ..., IT10 to thrown. You can then use the action
-      <strong>For</strong> to iterate from 1 to 10 and to set each of these turnouts to
+      all the turnouts IT1, IT2, IT3, ..., IT10 to thrown. You can then use the
+      <strong>For</strong> action to iterate from 1 to 10 and to set each of these turnouts to
       thrown.</p>
 
       <h3>The Formula expressions</h3>
@@ -238,8 +238,8 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
           LogixNG threads.</p>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter10.shtml">Chapter 10 - Modules</a></span></p>
+      <p><a href="chapter10.shtml">Chapter 10 - Modules</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

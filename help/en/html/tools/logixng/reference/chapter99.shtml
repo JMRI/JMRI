@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 99</title>
+  <title>LogixNG Reference - Chapter 99</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial expression items">
+  <meta name="keywords" content="jmri LogixNG Reference expression items">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 99</h1>
+      <h1>LogixNG Reference - Chapter 99</h1>
 
       <h2>Misc Items</h2>
 
@@ -822,7 +822,7 @@
 
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
+      <p><a href="index.shtml">Return to the Reference TOC</a>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

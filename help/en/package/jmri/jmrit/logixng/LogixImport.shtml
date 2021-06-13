@@ -18,7 +18,7 @@
 
       <h1>JMRI: LogixNG Logix Import</h1>
 
-        <p>The LogixNG import Tool at <strong>Tools &rArr; LogixNG &rArr; Import Logix</strong>
+        <p>The LogixNG import Tool at PanelPro <strong>Tools &rArr; LogixNG &rArr; Import Logix</strong>
         will import the Logix definitions and convert them to LogixNG/ConditionalNG definitions.
         </p>
 

@@ -34,9 +34,9 @@
       <dl>
         <dt>Print line numbers</dt>
         <dd>LogixNG definitions can be very long.  Line numbers can help identify an area
-        of the listing. It's particular useful when you ask about LogixNG on the JMRI
-        users list. Other users can then point out exactly in the list there the problem
-        lies by giving the line number.</dd>
+        of the listing. It's very useful when you ask about LogixNG on the JMRI users list.
+        Other users can then point out exactly in the list there the problem lies by
+        giving the line number.</dd>
 
         <dt>Print error handling</dt>
         <dd>LogixNG has several methods for handling errors.  The assigned method can be

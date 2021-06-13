@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 5</title>
+  <title>LogixNG Reference - Chapter 5</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial action items">
+  <meta name="keywords" content="jmri LogixNG reference action items">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 5</h1>
+      <h1>LogixNG Reference - Chapter 5</h1>
 
       <h2>Action Items</h2>
 
@@ -125,7 +125,8 @@
             </ul>
 
           <h5>Light</h5>
-            <p>Light intensity and transition time have not been implemented in LogixNG.</p>
+            <p><strong><em>Light intensity</em></strong> and <strong><em>transition time</em></strong>
+            have not been implemented in LogixNG.</p>
             <ul>
               <li><strong>Off:</strong> Set the selected light off.</li>
               <li><strong>On:</strong> Set the selected light on.</li>
@@ -289,8 +290,8 @@
             </ul>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter6.shtml">Chapter 6 - Expression Items</a></span></p>
+      <p><a href="chapter6.shtml">Chapter 6 - Expression Items</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
