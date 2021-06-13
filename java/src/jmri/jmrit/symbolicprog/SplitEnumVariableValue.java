@@ -66,22 +66,22 @@ public class SplitEnumVariableValue extends SplitVariableValue {
     
     private static final int RETRY_COUNT = 2;
     
-    String matchRegex;
-    String termByteStr;
-    String padByteStr;
-    String charSet;
-    Byte termByteVal;
-    Byte padByteVal;
+//    String matchRegex;
+//    String termByteStr;
+//    String padByteStr;
+//    String charSet;
+//    Byte termByteVal;
+//    Byte padByteVal;
     int atest;
     private final List<JTree> trees = new ArrayList<>();
 
-    private int retry = 0;
-    private int _progState = 0;
-    private static final int IDLE = 0;
-    private static final int READING_FIRST = 1;
-    private static final int WRITING_FIRST = -1;
-    private static final int bitCount = Long.bitCount(~0);
-    private static final long intMask = Integer.toUnsignedLong(~0);
+//    private int retry = 0;
+//    private int _progState = 0;
+//    private static final int IDLE = 0;
+//    private static final int READING_FIRST = 1;
+//    private static final int WRITING_FIRST = -1;
+//    private static final int bitCount = Long.bitCount(~0);
+//    private static final long intMask = Integer.toUnsignedLong(~0);
 
     
     private final List<ComboCheckBox> comboCBs = new ArrayList<>();
@@ -107,22 +107,22 @@ public class SplitEnumVariableValue extends SplitVariableValue {
             HashMap<String, CvValue> v, JLabel status, String stdname,
             String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
         atest = 77;
-        matchRegex = extra1;
-        termByteStr = extra2;
-        padByteStr = extra3;
-        charSet = extra4;
+//        matchRegex = extra1;
+//        termByteStr = extra2;
+//        padByteStr = extra3;
+//        charSet = extra4;
         //if (!termByteStr.equals(NO_TERM_BYTE)) {
         //    termByteVal = (byte) Integer.parseUnsignedInt(termByteStr);
         //}
-        if (!padByteStr.equals(NO_PAD_BYTE)) {
-            padByteVal = (byte) Integer.parseUnsignedInt(padByteStr);
-        }
+//        if (!padByteStr.equals(NO_PAD_BYTE)) {
+//            padByteVal = (byte) Integer.parseUnsignedInt(padByteStr);
+//        }
         
         
         log.debug("stepOneActions");
         log.debug("atest={}", atest);
-        log.debug("padByteStr=\"{}\"",padByteStr);
-        log.debug("padByteVal={}",padByteVal);
+//        log.debug("padByteStr=\"{}\"",padByteStr);
+//        log.debug("padByteVal={}",padByteVal);
         
     }
     /*
@@ -216,26 +216,26 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         _columns = cvCount + 2; //update column width now we have a better idea
     }
 
-    boolean isMatched(String s) {
-        if (matchRegex != null && !matchRegex.equals("")) {
-            return s.matches(matchRegex);
-        } else {
-            return true;
-        }
-    }
-
-    byte[] getBytesFromText(String s) {
-        byte[] ret = {};
-//        log.debug("defaultCharset()=" + defaultCharset().name());
-//        log.debug("displayName()=" + defaultCharset().displayName());
-//        log.debug("aliases()=" + defaultCharset().aliases());
-        try {
-            ret = s.getBytes(charSet);
-        } catch (UnsupportedEncodingException ex) {
-            unsupportedCharset();
-        }
-        return ret;
-    }
+//    boolean isMatched(String s) {
+//        if (matchRegex != null && !matchRegex.equals("")) {
+//            return s.matches(matchRegex);
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    byte[] getBytesFromText(String s) {
+//        byte[] ret = {};
+////        log.debug("defaultCharset()=" + defaultCharset().name());
+////        log.debug("displayName()=" + defaultCharset().displayName());
+////        log.debug("aliases()=" + defaultCharset().aliases());
+//        try {
+//            ret = s.getBytes(charSet);
+//        } catch (UnsupportedEncodingException ex) {
+//            unsupportedCharset();
+//        }
+//        return ret;
+//    }
 
         @Override
     public void setAvailable(boolean a) {
@@ -295,6 +295,7 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         }
     }
     
+    @Override
     void exitField(){
         int selVal = getIntValue();
         // there may be a lost focus event left in the queue when disposed so protect
@@ -304,18 +305,18 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         } catch (NumberFormatException e) {
             _textField.setText(oldContents);
         }
-        log.debug("_minVal={};_maxVal={};newFieldVal={}",
+        log.info("_minVal={};_maxVal={};newFieldVal={}",
                 Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
         
         long newVal = (newFieldVal - mOffset) / mFactor;
         long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
-        log.debug("Enter updatedTextField from exitField");
+        log.info("Enter updatedTextField from exitField");
         updatedDropDown();
         prop.firePropertyChange("Value", oldVal, newVal);
     }
     
     void updatedDropDown() {
-        log.debug("Variable='{}'; enter updatedTextField in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _textField.getText());
+        log.info("Variable='{}'; enter updatedDropDown in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _value);
         // called for new values in text field - set the CVs as needed
 
         int[] retVals = getCvValsFromSingleInt(getIntValue());
@@ -323,10 +324,10 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         // combine with existing values via mask
         for (int j = 0; j < cvCount; j++) {
             int i = j;
-            // special care needed if _textField is shrinking
-            if (_fieldShrink) {
-                i = (cvCount - 1) - j; // reverse CV updating order
-            }
+//            // special care needed if _textField is shrinking
+//            if (_fieldShrink) {
+//                i = (cvCount - 1) - j; // reverse CV updating order
+//            }
             log.debug("retVals[{}]={};cvList.get({}).cvMask{};offsetVal={}", i, retVals[i], i, cvList.get(i).cvMask, offsetVal(cvList.get(i).cvMask));
             int cvMask = maskValAsInt(cvList.get(i).cvMask);
             CvValue thisCV = cvList.get(i).thisCV;
@@ -337,9 +338,9 @@ public class SplitEnumVariableValue extends SplitVariableValue {
 
             // cv updates here trigger updated property changes, which means
             // we're going to get notified sooner or later.
-            //if (newCvVal != oldCvVal) {
+            if (newCvVal != oldCvVal) {
                 thisCV.setValue(newCvVal);
-            //}
+            }
         }
         log.debug("Variable={}; exit updatedTextField", _name);
     }
@@ -357,9 +358,9 @@ public class SplitEnumVariableValue extends SplitVariableValue {
                     & (maskValAsInt(cvList.get(i).cvMask) >>> offsetVal(cvList.get(i).cvMask)));
         }
         // Stripping test this value return for now. This gives us known values
-        // to look for.
-        retVals[0] = 128;
-        retVals[1] = 32;
+        // to look for. x
+//        retVals[0] = 128;
+//        retVals[1] = 32;
         return retVals;
     }
     
@@ -396,39 +397,39 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         return _valueArray[_value.getSelectedIndex()];
     }
     
-    String getTextFromBytes(byte[] v) {
-        String ret = "";
-        int textBytesLength = v.length;
-        for (int i = 0; i < v.length; i++) {
-            if (!termByteStr.equals(NO_TERM_BYTE) && (v[i] == termByteVal)) {
-                textBytesLength = i;
-                break;
-            }
-        }
-        if (textBytesLength > 0) {
-            byte[] textBytes = new byte[textBytesLength];
-            System.arraycopy(v, 0, textBytes, 0, textBytesLength);
-            try {
-                ret = new String(textBytes, charSet);
-            } catch (UnsupportedEncodingException ex) {
-                unsupportedCharset();
-            }
-        }
-        return ret; //fall through
-    }
-
-    void unsupportedCharset() {
-        synchronized (this) {
-            JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, _name),
-                    Bundle.getMessage("DecoderDefError"), JOptionPane.ERROR_MESSAGE); // NOI18N
-        }
-        log.error(Bundle.getMessage("UnsupportedCharset", charSet, _name));
-    }
-
-    @Override
-    public Component getCommonRep() {
-        return _value;
-    }
+//    String getTextFromBytes(byte[] v) {
+//        String ret = "";
+//        int textBytesLength = v.length;
+//        for (int i = 0; i < v.length; i++) {
+//            if (!termByteStr.equals(NO_TERM_BYTE) && (v[i] == termByteVal)) {
+//                textBytesLength = i;
+//                break;
+//            }
+//        }
+//        if (textBytesLength > 0) {
+//            byte[] textBytes = new byte[textBytesLength];
+//            System.arraycopy(v, 0, textBytes, 0, textBytesLength);
+//            try {
+//                ret = new String(textBytes, charSet);
+//            } catch (UnsupportedEncodingException ex) {
+//                unsupportedCharset();
+//            }
+//        }
+//        return ret; //fall through
+//    }
+//
+//    void unsupportedCharset() {
+//        synchronized (this) {
+//            JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, _name),
+//                    Bundle.getMessage("DecoderDefError"), JOptionPane.ERROR_MESSAGE); // NOI18N
+//        }
+//        log.error(Bundle.getMessage("UnsupportedCharset", charSet, _name));
+//    }
+//
+//    @Override
+//    public Component getCommonRep() {
+//        return _value;
+//    }
 
     
     public void setValue(int value) {
@@ -446,6 +447,7 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         
     }
     
+    @Override
     public void setValue(String value){
         try {
             long val = Long.parseUnsignedLong(value);
@@ -556,199 +558,199 @@ public class SplitEnumVariableValue extends SplitVariableValue {
             }
         }
     }
-    /**
-     * Contains byte-value specific code.
-     * <br>
-     * Calculates new value for _textField and invokes
-     * {@link #setValue(String) setValue(newVal)} to make and notify the change
-     *
-     * @param intVals array of new CV values
-     */
-    
-    @Override
-    void updateVariableValue(int[] intVals) {
-        long newVal = 0;
-        for (int i = 0; i < intVals.length; i++) {
-            newVal = newVal | (((long) intVals[i]) << cvList.get(i).startOffset);
-        }
-        log.debug("Variable={}; set value to {}", _name, newVal);
-        setLongValue(newVal);  // check for duplicate is done inside setLongValue
-        log.debug("Variable={}; in property change after setValue call", _name);
-    }
-    
+//    /**
+//     * Contains byte-value specific code.
+//     * <br>
+//     * Calculates new value for _textField and invokes
+//     * {@link #setValue(String) setValue(newVal)} to make and notify the change
+//     *
+//     * @param intVals array of new CV values
+//     */
+//    
+//    @Override
+//    void updateVariableValue(int[] intVals) {
+//        long newVal = 0;
+//        for (int i = 0; i < intVals.length; i++) {
+//            newVal = newVal | (((long) intVals[i]) << cvList.get(i).startOffset);
+//        }
+//        log.debug("Variable={}; set value to {}", _name, newVal);
+//        setLongValue(newVal);  // check for duplicate is done inside setLongValue
+//        log.debug("Variable={}; in property change after setValue call", _name);
+//    }
+//    
+//
+//    /**
+//     * Notify the connected CVs of a state change from above
+//     */
+//    @Override
+//    public void setCvState(int state) {
+//        _cvMap.get(getCvNum()).setState(state);
+//    }
+//
+//    @Override
+//    public boolean isChanged() {
+//        CvValue cv = _cvMap.get(getCvNum());
+//        return considerChanged(cv);
+//    }
+//
+//    @Override
+//    public void readChanges() {
+//        if (isToRead() && !isChanged()) {
+//            log.debug("!!!!!!! unacceptable combination in readChanges: {}", label());
+//        }
+//        if (isChanged() || isToRead()) {
+//            readAll();
+//        }
+//    }
+//
+//    @Override
+//    public void writeChanges() {
+//        if (isToWrite() && !isChanged()) {
+//            log.debug("!!!!!! unacceptable combination in writeChanges: {}", label());
+//        }
+//        if (isChanged() || isToWrite()) {
+//            writeAll();
+//        }
+//    }
+//
+//    @Override
+//    public void readAll() {
+//        log.debug("Variable={}; splitVal read() invoked", _name);
+//        setToRead(false);
+//        setBusy(true);  // will be reset when value changes
+//        //super.setState(READ);
+//        if (_progState != IDLE) {
+//            log.warn("Variable={}; programming state {}, not IDLE, in read()", _name, _progState);
+//        }
+//        _textField.setText(""); // start with a clean slate
+//        for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
+//            cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+//        }
+//        _progState = READING_FIRST;
+//        retry = 0;
+//        log.debug("Variable={}; invoke CV read", _name);
+//        (cvList.get(0).thisCV).read(_status); // kick off the read sequence
+//    }
+//    
+//    @Override
+//    public void writeAll() {
+//        log.debug("Variable={}; write() invoked", _name);
+//        if (getReadOnly()) {
+//            log.error("Variable={}; unexpected write operation when readOnly is set", _name);
+//        }
+//        setToWrite(false);
+//        setBusy(true);  // will be reset when value changes
+//        if (_progState != IDLE) {
+//            log.warn("Variable={}; Programming state {}, not IDLE, in write()", _name, _progState);
+//        }
+//        _progState = WRITING_FIRST;
+//        log.debug("Variable={}; invoke CV write", _name);
+//        (cvList.get(0).thisCV).write(_status); // kick off the write sequence
+//    }
+//
+//    // handle incoming parameter notification
+//    @Override
+//    public void propertyChange(java.beans.PropertyChangeEvent e) {
+//        // notification from CV; check for Value being changed
+//        log.debug("Variable={}; property changed event - name: {}", _name, e.getPropertyName());
+//        // notification from CV; check for Value being changed
+//        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+//            // busy transitions drive the state
+//            if (log.isDebugEnabled() && _progState != IDLE) {
+//                log.debug("getState() = {}", (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
+//            }
+//
+//            if (_progState == IDLE) { // State machine is idle, so "Busy" transition is the result of a CV update by another source.
+//                // The source would be a Read/Write from either the CVs pane or another Variable with one or more overlapping CV(s).
+//                // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
+//                log.debug("Variable={}; Busy goes false with state IDLE", _name);
+//            } else if (_progState >= READING_FIRST) {   // reading CVs
+//                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
+//                    retry = 0;
+//                    if (Math.abs(_progState) < cvCount) {   // read next CV
+//                        _progState++;
+//                        if (log.isDebugEnabled()) {
+//                            log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+//                        }
+//                        (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
+//                    } else {  // finally done, set not busy
+//                        log.debug("Variable={}; Busy goes false with success READING state {}", _name, _progState);
+//                        _progState = IDLE;
+//                        setBusy(false);
+//                    }
+//                } else {   // read failed
+//                    log.debug("Variable={}; Busy goes false with failure READING state {}", _name, _progState);
+//                    if (retry < RETRY_COUNT) { //have we exhausted retry count?
+//                        retry++;
+//                        (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
+//                    } else {
+//                        _progState = IDLE;
+//                        setBusy(false);
+//                        if (RETRY_COUNT > 0) {
+//                            for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
+//                                cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {  // writing CVs
+//                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
+//                    if (Math.abs(_progState) < cvCount) {   // write next CV
+//                        _progState--;
+//                        if (log.isDebugEnabled()) {
+//                            log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+//                        }
+//                        (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
+//                    } else {  // finally done, set not busy
+//                        log.debug("Variable={}; Busy goes false with success WRITING state {}", _name, _progState);
+//                        _progState = IDLE;
+//                        setBusy(false);
+//                    }
+//                } else {   // read failed we're done!
+//                    log.debug("Variable={}; Busy goes false with failure WRITING state {}", _name, _progState);
+//                    _progState = IDLE;
+//                    setBusy(false);
+//                }
+//            }
+//        } else if (e.getPropertyName().equals("State")) {
+//            log.debug("state change due to CV state change, so propagate that");
+//            int varState = getState(); // AbstractValue.SAME;
+//            log.debug("{} state was {}", _name, varState);
+//            for (int i = 0; i < cvCount; i++) {
+//                int state = cvList.get(i).thisCV.getState();
+//                if (i == 0) {
+//                    varState = state;
+//                } else if (priorityValue(state) > priorityValue(varState)) {
+//                    varState = AbstractValue.UNKNOWN; // or should it be = state ?
+//                }
+//            }
+//            setState(varState);
+//            log.debug("{} state set to {}", _name, varState);
+//        } else if (e.getPropertyName().equals("Value")) {
+//            // update value of Variable
+//            log.debug("update value of Variable");
+//
+//            int[] intVals = new int[cvCount];
+//
+//            for (int i = 0; i < cvCount; i++) {
+//                intVals[i] = (cvList.get(i).thisCV.getValue() & maskValAsInt(cvList.get(i).cvMask)) >>> offsetVal(cvList.get(i).cvMask);
+//            }
+//
+//            updateVariableValue(intVals);
+//
+//            log.debug("state change due to CV value change, so propagate that");
+//            int varState = AbstractValue.SAME;
+//            for (int i = 0; i < cvCount; i++) {
+//                int state = cvList.get(i).thisCV.getState();
+//                if (priorityValue(state) > priorityValue(varState)) {
+//                    varState = state;
+//                }
+//            }
+//            setState(varState);
+//        }
+//    }
 
-    /**
-     * Notify the connected CVs of a state change from above
-     */
-    @Override
-    public void setCvState(int state) {
-        _cvMap.get(getCvNum()).setState(state);
-    }
-
-    @Override
-    public boolean isChanged() {
-        CvValue cv = _cvMap.get(getCvNum());
-        return considerChanged(cv);
-    }
-
-    @Override
-    public void readChanges() {
-        if (isToRead() && !isChanged()) {
-            log.debug("!!!!!!! unacceptable combination in readChanges: {}", label());
-        }
-        if (isChanged() || isToRead()) {
-            readAll();
-        }
-    }
-
-    @Override
-    public void writeChanges() {
-        if (isToWrite() && !isChanged()) {
-            log.debug("!!!!!! unacceptable combination in writeChanges: {}", label());
-        }
-        if (isChanged() || isToWrite()) {
-            writeAll();
-        }
-    }
-
-    @Override
-    public void readAll() {
-        log.debug("Variable={}; splitVal read() invoked", _name);
-        setToRead(false);
-        setBusy(true);  // will be reset when value changes
-        //super.setState(READ);
-        if (_progState != IDLE) {
-            log.warn("Variable={}; programming state {}, not IDLE, in read()", _name, _progState);
-        }
-        _textField.setText(""); // start with a clean slate
-        for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
-            cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
-        }
-        _progState = READING_FIRST;
-        retry = 0;
-        log.debug("Variable={}; invoke CV read", _name);
-        (cvList.get(0).thisCV).read(_status); // kick off the read sequence
-    }
-    
-    @Override
-    public void writeAll() {
-        log.debug("Variable={}; write() invoked", _name);
-        if (getReadOnly()) {
-            log.error("Variable={}; unexpected write operation when readOnly is set", _name);
-        }
-        setToWrite(false);
-        setBusy(true);  // will be reset when value changes
-        if (_progState != IDLE) {
-            log.warn("Variable={}; Programming state {}, not IDLE, in write()", _name, _progState);
-        }
-        _progState = WRITING_FIRST;
-        log.debug("Variable={}; invoke CV write", _name);
-        (cvList.get(0).thisCV).write(_status); // kick off the write sequence
-    }
-
-    // handle incoming parameter notification
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // notification from CV; check for Value being changed
-        log.debug("Variable={}; property changed event - name: {}", _name, e.getPropertyName());
-        // notification from CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
-            // busy transitions drive the state
-            if (log.isDebugEnabled() && _progState != IDLE) {
-                log.debug("getState() = {}", (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
-            }
-
-            if (_progState == IDLE) { // State machine is idle, so "Busy" transition is the result of a CV update by another source.
-                // The source would be a Read/Write from either the CVs pane or another Variable with one or more overlapping CV(s).
-                // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
-                log.debug("Variable={}; Busy goes false with state IDLE", _name);
-            } else if (_progState >= READING_FIRST) {   // reading CVs
-                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
-                    retry = 0;
-                    if (Math.abs(_progState) < cvCount) {   // read next CV
-                        _progState++;
-                        if (log.isDebugEnabled()) {
-                            log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
-                        }
-                        (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
-                    } else {  // finally done, set not busy
-                        log.debug("Variable={}; Busy goes false with success READING state {}", _name, _progState);
-                        _progState = IDLE;
-                        setBusy(false);
-                    }
-                } else {   // read failed
-                    log.debug("Variable={}; Busy goes false with failure READING state {}", _name, _progState);
-                    if (retry < RETRY_COUNT) { //have we exhausted retry count?
-                        retry++;
-                        (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
-                    } else {
-                        _progState = IDLE;
-                        setBusy(false);
-                        if (RETRY_COUNT > 0) {
-                            for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
-                                cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
-                            }
-                        }
-                    }
-                }
-            } else {  // writing CVs
-                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
-                    if (Math.abs(_progState) < cvCount) {   // write next CV
-                        _progState--;
-                        if (log.isDebugEnabled()) {
-                            log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
-                        }
-                        (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
-                    } else {  // finally done, set not busy
-                        log.debug("Variable={}; Busy goes false with success WRITING state {}", _name, _progState);
-                        _progState = IDLE;
-                        setBusy(false);
-                    }
-                } else {   // read failed we're done!
-                    log.debug("Variable={}; Busy goes false with failure WRITING state {}", _name, _progState);
-                    _progState = IDLE;
-                    setBusy(false);
-                }
-            }
-        } else if (e.getPropertyName().equals("State")) {
-            log.debug("state change due to CV state change, so propagate that");
-            int varState = getState(); // AbstractValue.SAME;
-            log.debug("{} state was {}", _name, varState);
-            for (int i = 0; i < cvCount; i++) {
-                int state = cvList.get(i).thisCV.getState();
-                if (i == 0) {
-                    varState = state;
-                } else if (priorityValue(state) > priorityValue(varState)) {
-                    varState = AbstractValue.UNKNOWN; // or should it be = state ?
-                }
-            }
-            setState(varState);
-            log.debug("{} state set to {}", _name, varState);
-        } else if (e.getPropertyName().equals("Value")) {
-            // update value of Variable
-            log.debug("update value of Variable");
-
-            int[] intVals = new int[cvCount];
-
-            for (int i = 0; i < cvCount; i++) {
-                intVals[i] = (cvList.get(i).thisCV.getValue() & maskValAsInt(cvList.get(i).cvMask)) >>> offsetVal(cvList.get(i).cvMask);
-            }
-
-            updateVariableValue(intVals);
-
-            log.debug("state change due to CV value change, so propagate that");
-            int varState = AbstractValue.SAME;
-            for (int i = 0; i < cvCount; i++) {
-                int state = cvList.get(i).thisCV.getState();
-                if (priorityValue(state) > priorityValue(varState)) {
-                    varState = state;
-                }
-            }
-            setState(varState);
-        }
-    }
-
-    /* Internal class extends a JComboBox so that its color is consistent with
+    /** Internal class extends a JComboBox so that its color is consistent with
      * an underlying variable; we return one of these in getNewRep.
      * <p>
      * Unlike similar cases elsewhere, this doesn't have to listen to
@@ -841,7 +843,7 @@ public class SplitEnumVariableValue extends SplitVariableValue {
 
     
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SplitTextVariableValue.class
+    private final static Logger log = LoggerFactory.getLogger(SplitEnumVariableValue.class
             .getName());
 
 }

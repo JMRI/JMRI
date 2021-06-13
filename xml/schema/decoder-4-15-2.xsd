@@ -864,6 +864,27 @@
                         <xs:attribute name="charSet" type="xs:string"/>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="splitEnumVal" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            A text value, but stored across multiple CVs using some simple calculations
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:attribute name="highCV" type="cvNameType" />
+                        <xs:attribute name="min" type="xs:int" default="0"/>
+                        <xs:attribute name="max" type="xs:int" default="255"/>
+                        <xs:attribute name="default" type="xs:int"/>
+                        <xs:attribute name="factor" type="xs:int" default="1"/>
+                        <xs:attribute name="offset" type="xs:int" default="0"/>
+                        <xs:attribute name="comment" type="xs:string"/>
+                        <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                        <xs:attribute name="match" type="xs:string"/>
+                        <xs:attribute name="termByte" type="unsignedByteOrBlankType"/>
+                        <xs:attribute name="padByte" type="unsignedByteOrBlankType"/>
+                        <xs:attribute name="charSet" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="splitDateTimeVal" >
                     <xs:annotation>
                         <xs:documentation>

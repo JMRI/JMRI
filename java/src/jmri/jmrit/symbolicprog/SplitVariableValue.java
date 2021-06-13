@@ -718,11 +718,11 @@ public class SplitVariableValue extends VariableValue
     // handle incoming parameter notification
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("Variable={}; property changed event - name: {}", _name, e.getPropertyName());
+        log.debug("Variable={} source={}; property {} changed event - name: {}", _name, e.getSource().toString(), e.getPropertyName());
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
-            if (log.isDebugEnabled() && _progState != IDLE) {
+            if (_progState != IDLE) {
                 log.debug("getState() = {}", (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
             }
 
@@ -735,9 +735,7 @@ public class SplitVariableValue extends VariableValue
                     retry = 0;
                     if (Math.abs(_progState) < cvCount) {   // read next CV
                         _progState++;
-                        if (log.isDebugEnabled()) {
-                            log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
-                        }
+                        log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                         (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                     } else {  // finally done, set not busy
                         log.debug("Variable={}; Busy goes false with success READING state {}", _name, _progState);
@@ -763,9 +761,7 @@ public class SplitVariableValue extends VariableValue
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
                     if (Math.abs(_progState) < cvCount) {   // write next CV
                         _progState--;
-                        if (log.isDebugEnabled()) {
-                            log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
-                        }
+                        log.info("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                         (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
                     } else {  // finally done, set not busy
                         log.debug("Variable={}; Busy goes false with success WRITING state {}", _name, _progState);
