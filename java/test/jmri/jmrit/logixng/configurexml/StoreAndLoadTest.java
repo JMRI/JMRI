@@ -200,11 +200,13 @@ public class StoreAndLoadTest {
         ActionBlock actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         MaleSocket maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setEnabled(false);
+        maleSocket.setLocked(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        maleSocket.setLocked(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);

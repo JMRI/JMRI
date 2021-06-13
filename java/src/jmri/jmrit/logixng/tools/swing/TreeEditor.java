@@ -1476,12 +1476,12 @@ public class TreeEditor extends TreeViewer {
             
             _currentFemaleSocket.forEntireTree((item) -> {
                 if (item instanceof MaleSocket) {
-                    isAnyLocked.setPlain(isAnyLocked.getPlain() || ((MaleSocket)item).isLocked());
-                    isAnyUnlocked.setPlain(isAnyUnlocked.getPlain() || !((MaleSocket)item).isLocked());
+                    isAnyLocked.set(isAnyLocked.get() || ((MaleSocket)item).isLocked());
+                    isAnyUnlocked.set(isAnyUnlocked.get() || !((MaleSocket)item).isLocked());
                 }
             });
-            menuItemLock.setEnabled(isAnyUnlocked.getPlain());
-            menuItemUnlock.setEnabled(isAnyLocked.getPlain());
+            menuItemLock.setEnabled(isAnyUnlocked.get());
+            menuItemUnlock.setEnabled(isAnyLocked.get());
             
             menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
             
