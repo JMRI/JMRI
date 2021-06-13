@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial</title>
+  <title>LogixNG Reference</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial">
+  <meta name="keywords" content="jmri LogixNG reference">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -20,9 +20,9 @@
 
     <div id="mainContent">
 
-      <h1>LogixNG Tutorial</h1>
+      <h1>LogixNG Reference</h1>
 
-      <p>The tutorial provides the detailed information for using LogixNG. For people
+      <p>The reference provides the detailed information for using LogixNG. For people
       familiar with Logix, chapter 1 should provide a good introduction and make it
       possible to create a simple LogixNG/ConditionalNG.  The remaining chapters in the
       Standard Features list, except for the clipboard, are similar to Logix documentation.</p>

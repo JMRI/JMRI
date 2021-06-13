@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 10</title>
+  <title>LogixNG Reference - Chapter 10</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial modules">
+  <meta name="keywords" content="jmri LogixNG reference modules">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 10</h1>
+      <h1>LogixNG Reference - Chapter 10</h1>
 
       <h2>Modules</h2>
 
@@ -37,7 +37,7 @@
       <p>The <a href="/help/en/package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">
       Module Table</a> provides the details on creating a module.</p>
 
-      <p>This is a digital expression socket.  It can have inputs, but it is limited to
+      <p>This is a digital expression socket.  It can have inputs and outputs as well as
       returning <strong>true</strong> or <strong>false</strong> based on the
       <strong><em>current</em></strong> state of the expression list.</p>
 
@@ -208,8 +208,8 @@
         </div>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter11.shtml">Chapter 11 - Tables</a></span></p>
+      <p><a href="chapter11.shtml">Chapter 11 - Tables</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

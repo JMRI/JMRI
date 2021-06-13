@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 4</title>
+  <title>LogixNG Reference - Chapter 4</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial sockets">
+  <meta name="keywords" content="jmri LogixNG reference sockets">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 4</h1>
+      <h1>LogixNG Reference - Chapter 4</h1>
 
       <h2>Working with sockets</h2>
 
@@ -118,8 +118,8 @@
 
             <div style="clear: both"></div>
 
-          <p>An alternative to compound structures is the formula feature which will be
-          covered in a later chapter.</p>
+          <p>An alternative to compound structures is the formula feature which is
+          covered in <a href="chapter9.shtml">Chapter 9 - Formula</a>.</p>
 
         <h3>Enable / Disable</h3>
 
@@ -137,16 +137,17 @@
 
         <h3>Lock / Unlock</h3>
 
-          <p> === unknown === </p>
+          <p> === pending === </p>
 
         <h3>Local variables</h3>
 
-          <p>Local variables are discussed in a later chapter.</p>
+          <p>Local variables are discussed in <a href="chapter8.shtml">Chapter 8 - Local Variables</a>.</p>
 
         <h3>Change user name  </h3>
 
           <p>When <strong>Change user name</strong> is enabled, a name can be assigned to
-          the row. </p>
+          the row. The user name is used by <a href="chapter3.shtml#LastResult">
+          Chapter 3 - Last result of digital expression</a>.</p>
 
           <div style="margin-left: 2em;">
           <a href="images/chapter4/user_name.png">
@@ -156,8 +157,8 @@
           </div>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter5.shtml">Chapter 5 - Action Items</a></span></p>
+      <p><a href="chapter5.shtml">Chapter 5 - Action Items</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

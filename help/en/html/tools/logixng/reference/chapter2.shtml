@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 2</title>
+  <title>LogixNG Reference - Chapter 2</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial clipboard">
+  <meta name="keywords" content="jmri LogixNG reference clipboard">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 2</h1>
+      <h1>LogixNG Reference - Chapter 2</h1>
 
       <h2>The clipboard</h2>
 
@@ -77,8 +77,8 @@ Example:
           clipboard. Each item gets an auto system name and no user name.</p>
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></span></p>
+      <p><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

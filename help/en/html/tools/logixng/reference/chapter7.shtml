@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>LogixNG Tutorial - Chapter 7</title>
+  <title>LogixNG Reference - Chapter 7</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG tutorial references">
+  <meta name="keywords" content="jmri LogixNG reference references">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -17,7 +17,7 @@
   <div id="mBody">
 
     <div id="mainContent" class="no-sidebar">
-      <h1>LogixNG Tutorial - Chapter 7</h1>
+      <h1>LogixNG Reference - Chapter 7</h1>
 
       <h2>References</h2>
 
@@ -110,7 +110,7 @@
 
 
 
-	  <a name="indirect_accessing" id="indirect_accessing"></a>
+      <a id="indirect_accessing"></a>
 
       <h2>Indirect adressing of NamedBeans</h2>
 
@@ -118,16 +118,16 @@
 
       <p>This can be done in two ways:</p>
       <ul>
-	      <li>Using a Memory that has the name of the NamedBean</li>
-          <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+          <li>Using a Memory that has the name of the NamedBean</li>
+          <li>Using a Table to lookup the name of the NamedBean</li>
       </ul>
 
       <p>Using a Memory that has the name of the NamedBean</p>
 
-      <p>Lets say we have an ActionTurnout that should throw a particulat turnout.
+      <p>Lets say we have a Turnout action that should throw a particulat turnout.
       But we wnat to be able to select which turnout to throw at a later time.
       We can solve that by storing the system name or user name in a Memory.
-      We then tell the ActionTurnout to read the Memory and lookup the turnout
+      We then tell the Turnout action to read the Memory and lookup the turnout
       on the fly.</p>
 
       <p>Since LogixNG fully supports string manipulation and calculations of both
@@ -165,8 +165,8 @@
 
 
       <hr>
-      <p><a href="index.shtml">Return to the Tutorial TOC</a>
-      <span style="padding-left: 6em"><a href="chapter8.shtml">Chapter 8 - Local Variables</a></span></p>
+      <p><a href="chapter8.shtml">Chapter 8 - Local Variables</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
