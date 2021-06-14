@@ -207,7 +207,7 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("TurnoutLock_TurnoutInUseTurnoutExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("TurnoutLock_TurnoutInUseTurnoutActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N

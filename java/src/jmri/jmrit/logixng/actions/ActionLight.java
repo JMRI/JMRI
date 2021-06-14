@@ -207,7 +207,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             if (evt.getOldValue() instanceof Light) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Light_LightInUseLightExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("Light_LightInUseLightActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
