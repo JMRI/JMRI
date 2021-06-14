@@ -3,6 +3,7 @@
 <?transform-xslt href="http://jmri.org/xml/decoders/MGP_Signal10.xsl"?>
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,12 +17,19 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
   <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
-  <!-- Version 2 - change mfg to match name in NMRA.xml -->
+    <!-- Version 2 - change mfg to match name in NMRA.xml -->
+  <version author="Keld Polmann" version="3" lastUpdated="20210301"/>
+    <!-- Version 3 - a lot of updates for new decoder firmware. Signal decoder definition generic for all country version. -->
   
   <decoder>
-    <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal10, a LocoNet decoder for railway signals">
-      <model model="Signal10" lowVersionID="1">
-			</model>
+    <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal, a LocoNet decoder control panels">
+	  <model model="Signal10 SE" lowVersionID="1" productID="6"></model>
+	  <model model="Signal10 DE" lowVersionID="1" productID="7"></model>
+	  <model model="Signal10 DK" lowVersionID="1" productID="8"></model>
+	  <model model="Signal10 CZ" lowVersionID="1" productID="11"></model>
+	  <model model="Signal10 US" lowVersionID="1" productID="12"></model>
+	  <model model="Signal10 NO" lowVersionID="1" productID="13"></model>
+	  <model model="Signal10 NL" lowVersionID="1" productID="14"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
@@ -47,11 +55,25 @@
         <decVal/>
         <label>Product Id</label>
       </variable>
-
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	  </variable>	  
+	  </variable>
+
+	  <variable CV="98" item="Night Address" default="1">
+		<splitVal highCV="99" upperMask="XXXXXVVV"/>
+		<label>Long Address</label>
+	  </variable>
+
+	  <variable CV="78" item="Start Address Auto Reply" default="0">
+		<splitVal highCV="79" upperMask="XXXXXVVV"/>
+		<label>Long Address</label>
+	  </variable>	
+
+	  <variable CV="80" item="Auto Reply No. Adresses" default="0">
+		<splitVal highCV="81" upperMask="XXXXXVVV"/>
+		<label>Number of Adresses</label>
+	  </variable>  
 
 <!--
       <variable item="Signal Addressing Mode" CV="23" mask="XXXXXXXV">
@@ -76,7 +98,13 @@
         </enumVal>
         <label>Flash LED at startup</label>
       </variable>
-
+      <variable item="LocoNet Connected" CV="23" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+        <label>LocoNet Connected</label>
+      </variable>
 <!--
 <SV svNumber="23" type="bits" start='7' length='1' name="Add SE delay" rw="1" advanced="1" minversion="3">
 		<values>
@@ -138,7 +166,7 @@
   		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <decVal max="64"/>
       </variable>
-	  
+
 <!--
 	<array svNumber="86" name="Intensity bank " tip="" startIndex='1' length='3' rw='1'>
 		<SV offset="0" type="int1" name="Green" rw="1"/>
@@ -161,20 +189,44 @@
       <variable CV="95" item="Intensity bank 3, Red" ><decVal/></variable>
       <variable CV="96" item="Intensity bank 3, White" ><decVal/></variable>
       <variable CV="97" item="Intensity bank 3, Yellow" ><decVal/></variable>
+	 
+	 
+	  <variable CV="700" item="Signal Select Start Address" default="0">
+	  <splitVal highCV="701" upperMask="XXXXVVVV"/>
+	  <label>Signal Sel Start Address</label>
+	  </variable>
 
+	<!-- <SV svNumber="900" type="bits" start='0' length='1' name="Input type Group 1" rw="1" minVersion='10'> -->
+	<variable item="RGB Color Order" CV="900" mask="XXXXXVVV">
+		<enumVal>
+			<enumChoice choice="RGB" value="0"/>
+			<enumChoice choice="GRB" value="1"/>
+			<enumChoice choice="RBG" value="2"/>
+			<enumChoice choice="GBR" value="3"/>
+			<enumChoice choice="BRG" value="4"/>
+			<enumChoice choice="BGR" value="5"/>
+		</enumVal>
+	</variable>	
 
 	
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
 <!-- <group name="Sensor input"> -->	  
-
-	<!-- <SV svNumber="30" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address" rw="1"/> -->
-	<variable CV="30" item="Sensor Start Address" default="1">
-        <decVal min="1" max="4070"/>
-	</variable>	  
-	<!-- <SV svNumber="32" type="bits" start='0' length='5' name="Number of used sensors" maxValue='16' rw="1"/> -->
-	<variable item="Number of used sensors" CV="32" mask="XXXVVVVV">
+	<!-- <SV svNumber="30" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address Group 1" rw="1"/> -->
+	<variable CV="30" item="Sensor Start Address Group 1" default="1">
+		<splitVal highCV="31" upperMask="XXXXXVVV"/>
+	</variable>
+	<!-- <SV svNumber="32" type="bits" start='0' length='5' name="Number of used sensors Group 1" maxValue='16' rw="1"/> -->
+	<variable item="Number of used sensors Group 1" CV="32" mask="XXXVVVVV">
         <decVal max="16"/>
 	</variable>
+	<!-- <SV svNumber="40" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address Group 2" rw="1"/> -->
+	<variable CV="40" item="Sensor Start Address Group 2" default="1">
+		<splitVal highCV="41" upperMask="XXXXXVVV"/>
+	</variable>
+	<!-- <SV svNumber="39" type="bits" start='0' length='5' name="Number of used sensors Group 2" maxValue='16' rw="1"/> -->
+	<variable item="Number of used sensors Group 2" CV="39" mask="XXXVVVVV">
+        <decVal max="16"/>
+	</variable>	  
 	<!-- <SV svNumber="32" type="bits" start='5' length='1' name="Sensor, Value for occupied state" rw="1" minVersion='1'> -->
 	<variable item="Sensor, Value for occupied state" CV="32" mask="XXVXXXXX">
 		<enumVal>
@@ -182,11 +234,25 @@
 			<enumChoice choice="Occupied at HIGH" value="0"/>
 		</enumVal>
 	</variable>
-<!--	<SV svNumber="32" type="bits" start='6' length='1' name="Sensor unconnected state" rw="1" minVersion='1'> -->
+	<!-- <SV svNumber="32" type="bits" start='6' length='1' name="Sensor unconnected state" rw="1" minVersion='1'> -->
 	<variable item="Sensor unconnected state" CV="32" mask="XVXXXXXX">
 		<enumVal>
 			<enumChoice choice="NORMAL, always high" value="0"/>
 			<enumChoice choice="undefined, floating state" value="1"/>
+		</enumVal>
+	</variable>
+	<!-- <SV svNumber="33" type="bits" start='0' length='1' name="Input type Group 1" rw="1" minVersion='1'> -->
+	<variable item="Input type Group 1" CV="33" mask="XXXXXXXV">
+		<enumVal>
+			<enumChoice choice="Occupancy Sensor" value="0"/>
+			<enumChoice choice="Switch feedback" value="1"/>
+		</enumVal>
+	</variable>
+	<!-- <SV svNumber="33" type="bits" start='4' length='1' name="Input type Group 2" rw="1" minVersion='1'> -->
+	<variable item="Input type Group 2" CV="33" mask="XXXVXXXX">
+		<enumVal>
+			<enumChoice choice="Occupancy Sensor" value="0"/>
+			<enumChoice choice="Switch feedback" value="1"/>
 		</enumVal>
 	</variable>
 	<!-- <SV svNumber="34" type="int2" name="Sensor filter Pre (ms)" rw="1"/> -->
@@ -209,10 +275,18 @@
   <pane>
     <name>General decoder info</name>
     <column>
+
       <label>
         <text>Address to decoder AND to first signal</text>
       </label>
       <display item="Short Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Night Address</text>
+      </label>
+      <display item="Night Address"/>
       <label>
         <text> </text>
       </label>
@@ -232,22 +306,13 @@
       <label>
         <text> </text>
       </label>
-<!--
-	  <row>
-        <column>
-          <display item="CDU Recharge Time"/>
-        </column>
-        <column>
-          <display item="CDU Recharge Time" format="hslider" label=""/>
-        </column>
-      </row>
+      <display item="Author" label="version author"/>
       <label>
         <text> </text>
       </label>
-      <display item="Output State Memory"/>
--->
     </column>
   </pane>
+  
   <pane>
     <name>Signal general info</name>
     <column>
@@ -270,8 +335,12 @@
       <label>
         <text> </text>
       </label>
+      <display item="LocoNet Connected"/>
+      <label>
+        <text> </text>
+      </label>	  
+	  
       <display item="Add SE delay"/>
-
 	  <label>
         <text> </text>
       </label>
@@ -293,6 +362,20 @@
       <display item="Direction address 1"/>
       <display item="Direction address 2"/>
       <display item="Direction address 3"/>
+
+      <label>
+        <text> </text>
+      </label>
+
+      <label>
+        <text>Auto Reply</text>
+      </label>
+      <display item="Start Address Auto Reply"/>
+      <display item="Auto Reply No. Adresses"/>
+      <label>
+        <text> </text>
+      </label>
+
     </column>
 
     <column>
@@ -325,6 +408,15 @@
 	<display item="Intensity bank 3, Red" label="Red"/>
 	<display item="Intensity bank 3, White" label="White"/>
 	<display item="Intensity bank 3, Yellow" label="Yellow"/>
+	
+      <label>
+        <text> </text>
+     </label>
+	<display item="Signal Sel Start Address" label="Signal Sel Start Address"/>		 
+      <label>
+        <text> </text>
+     </label>
+	<display item="RGB Color Order" label="RGB Color Order"/>	
 
     </column>
 
@@ -344,8 +436,15 @@
 	<pane>
 		<name>Sensor input</name>
 		<column>
-			<display item="Sensor Start Address"/>
-			<display item="Number of used sensors"/>
+			<display item="Sensor Start Address Group 1"/>
+			<display item="Number of used sensors Group 1"/>
+			<display item="Input type Group 1"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Sensor Start Address Group 2"/>
+			<display item="Number of used sensors Group 2"/>
+			<display item="Input type Group 2"/>
 			<label>
 				<text> </text>
 			</label>
@@ -366,18 +465,26 @@
         <name>SignalsPane</name>
     </pane>
   	<pane>
+        <name>SigSpecialsPane</name>
+    </pane>
+  	<pane>
         <name>ExtraRulesPane</name>
+   </pane>
+  	<pane>
+        <name>ShortSignalPane</name>
     </pane>
   	<pane>
         <name>RepeatSignalPane</name>
     </pane>
+	<pane>
+        <name>DirectionDetectionPane</name>
+    </pane>
   	<pane>
         <name>TriggerRulePane</name>
     </pane>
-<!--
   	<pane>
-        <name>TestPane</name>
+        <name>SignalSelectorsPane</name>
     </pane>
--->
+
 
 </decoder-config>
