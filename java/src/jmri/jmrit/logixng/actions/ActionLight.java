@@ -29,12 +29,21 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
+
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private LightState _lightState = LightState.On;
     private String _stateReference = "";
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
+
+    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
+    private String _dataReference = "";
+    private String _dataLocalVariable = "";
+    private String _dataFormula = "";
+    private ExpressionNode _dataExpressionNode;
+
+    private int _lightValue= 0;
 
     public ActionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -55,10 +64,19 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
+
         copy.setStateAddressing(_stateAddressing);
         copy.setStateFormula(_stateFormula);
         copy.setStateLocalVariable(_stateLocalVariable);
         copy.setStateReference(_stateReference);
+
+        copy.setDataAddressing(_dataAddressing);
+        copy.setDataReference(_dataReference);
+        copy.setDataLocalVariable(_dataLocalVariable);
+        copy.setDataFormula(_dataFormula);
+
+        copy.setLightValue(_lightValue);
+
         return manager.registerAction(copy);
     }
 
@@ -145,6 +163,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         }
     }
 
+
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
         parseStateFormula();
@@ -200,6 +219,65 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             _stateExpressionNode = null;
         }
     }
+
+
+    public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _dataAddressing = addressing;
+        parseDataFormula();
+    }
+
+    public NamedBeanAddressing getDataAddressing() {
+        return _dataAddressing;
+    }
+
+    public void setDataReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _dataReference = reference;
+    }
+
+    public String getDataReference() {
+        return _dataReference;
+    }
+
+    public void setDataLocalVariable(@Nonnull String localVariable) {
+        _dataLocalVariable = localVariable;
+    }
+
+    public String getDataLocalVariable() {
+        return _dataLocalVariable;
+    }
+
+    public void setDataFormula(@Nonnull String formula) throws ParserException {
+        _dataFormula = formula;
+        parseDataFormula();
+    }
+
+    public String getDataFormula() {
+        return _dataFormula;
+    }
+
+    private void parseDataFormula() throws ParserException {
+        if (_dataAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _dataExpressionNode = parser.parseExpression(_dataFormula);
+        } else {
+            _dataExpressionNode = null;
+        }
+    }
+
+
+    public void setLightValue(@Nonnull int value) {
+        _lightValue = value;
+    }
+
+    public int getLightValue() {
+        return _lightValue;
+    }
+
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
@@ -260,8 +338,6 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     public void execute() throws JmriException {
         Light light;
 
-//        System.out.format("ActionLight.execute: %s%n", getLongDescription());
-
         switch (_addressing) {
             case Direct:
                 light = _lightHandle != null ? _lightHandle.getBean() : null;
@@ -294,8 +370,6 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-//        System.out.format("ActionLight.execute: light: %s%n", light);
-
         if (light == null) {
 //            log.warn("light is null");
             return;
@@ -317,6 +391,17 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                     light.setCommandedState(Turnout.THROWN);
                 } else {
                     light.setCommandedState(Turnout.CLOSED);
+                }
+
+            } else if (state == LightState.Intensity) {
+                if (light instanceof VariableLight) {
+                    ((VariableLight)light).setTargetIntensity(getLightValue() / 100.0);
+                } else {
+                    light.setCommandedState(getLightValue() > 50 ? Light.ON : Light.OFF);
+                }
+            } else if (state == LightState.Interval) {
+                if (light instanceof VariableLight) {
+                    ((VariableLight)light).setTransitionTime(getLightValue());
                 }
             } else {
                 light.setCommandedState(state.getID());
@@ -373,7 +458,26 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 
         switch (_stateAddressing) {
             case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _lightState._text);
+                if (_lightState == LightState.Intensity || _lightState == LightState.Interval) {
+                    String bundleKey = "Light_Long_Value";
+                    switch (_dataAddressing) {
+                        case Direct:
+                            String type = _lightState == LightState.Intensity ?
+                                     Bundle.getMessage("Light_Intensity_Value") :
+                                     Bundle.getMessage("Light_Interval_Value");
+                            return Bundle.getMessage(locale, bundleKey, namedBean, type, _lightValue);
+                        case Reference:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByReference", _dataReference));
+                        case LocalVariable:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+                        case Formula:
+                            return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByFormula", _dataFormula));
+                        default:
+                            throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+                    }
+                } else {
+                    state = Bundle.getMessage(locale, "AddressByDirect", _lightState._text);
+                }
                 break;
 
             case Reference:
@@ -420,12 +524,16 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     // This constant is only used internally in LightState but must be outside
     // the enum.
     private static final int TOGGLE_ID = -1;
+    private static final int INTENSITY_ID = -2;
+    private static final int INTERVAL_ID = -3;
 
 
     public enum LightState {
         Off(Light.OFF, Bundle.getMessage("StateOff")),
         On(Light.ON, Bundle.getMessage("StateOn")),
-        Toggle(TOGGLE_ID, Bundle.getMessage("LightToggleStatus"));
+        Toggle(TOGGLE_ID, Bundle.getMessage("LightToggleStatus")),
+        Intensity(INTENSITY_ID, Bundle.getMessage("LightIntensity")),
+        Interval(INTERVAL_ID, Bundle.getMessage("LightInterval"));
 
         private final int _id;
         private final String _text;
