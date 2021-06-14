@@ -344,6 +344,15 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                 
                 MaleSocket connectedSocket = socket.getConnectedSocket();
                 
+                if (connectedSocket.isSystem()) {
+                    JLabel systemLabel = new JLabel(" "+Bundle.getMessage("TreePane_System")+" ", JLabel.CENTER);
+                    systemLabel.setForeground(Color.YELLOW);
+                    systemLabel.setBackground(Color.RED);
+                    systemLabel.setOpaque(true);
+                    panel.add(systemLabel);
+                    panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+                }
+                
                 if (connectedSocket.isLocked()) {
                     if (_lockIcon == null) {
                         _lockIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/logixng/lock.png", FileUtil.Location.INSTALLED));

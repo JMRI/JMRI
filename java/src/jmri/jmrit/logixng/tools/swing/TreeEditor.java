@@ -1520,11 +1520,11 @@ public class TreeEditor extends TreeViewer {
         private boolean abortEditAboutSystem(Base b) {
             int result = JOptionPane.showConfirmDialog(
                     this,
-                    "This item is owned and maintained by the system. Do you want to edit it?",
+                    Bundle.getMessage("TreeEditor_ChangeSystemNode"),
                     b.getLongDescription(),
                     JOptionPane.YES_NO_OPTION);
             
-            return result == JOptionPane.YES_OPTION;
+            return result == JOptionPane.NO_OPTION;
         }
 
         @Override
