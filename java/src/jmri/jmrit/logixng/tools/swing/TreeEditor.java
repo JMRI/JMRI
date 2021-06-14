@@ -1451,16 +1451,24 @@ public class TreeEditor extends TreeViewer {
             boolean disableForRoot = _disableRootRemoveCutCopy
                     && (_currentFemaleSocket == _treePane._femaleRootSocket);
             
-            menuItemAdd.setEnabled(!isConnected);
-            menuItemRemove.setEnabled(isConnected && !disableForRoot);
-            menuItemEdit.setEnabled(isConnected);
-            menuItemCut.setEnabled(isConnected && !disableForRoot);
+            boolean isLocked = isConnected && ((MaleSocket)femaleSocket.getConnectedSocket()).isLocked();
+            
+            Base parent = femaleSocket.getParent();
+            while ((parent != null) && !(parent instanceof MaleSocket)) {
+                parent = parent.getParent();
+            }
+            boolean parentIsLocked = (parent != null) && ((MaleSocket)parent).isLocked();
+            
+            menuItemAdd.setEnabled(!isConnected && !parentIsLocked);
+            menuItemRemove.setEnabled(isConnected && !isLocked && !parentIsLocked && !disableForRoot);
+            menuItemEdit.setEnabled(isConnected && !isLocked);
+            menuItemCut.setEnabled(isConnected && !isLocked && !parentIsLocked && !disableForRoot);
             menuItemCopy.setEnabled(isConnected && !disableForRoot);
-            menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
+            menuItemPaste.setEnabled(!isConnected && !parentIsLocked && canConnectFromClipboard);
             
             if (isConnected && !disableForRoot) {
-                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled());
-                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled());
+                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled() && !isLocked);
+                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled() && !isLocked);
             } else {
                 menuItemEnable.setEnabled(false);
                 menuItemDisable.setEnabled(false);
@@ -1468,7 +1476,7 @@ public class TreeEditor extends TreeViewer {
             
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 JMenuItem menuItem = menuItemFemaleSocketOperation.get(oper);
-                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper));
+                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper) && !isLocked);
             }
             
             AtomicBoolean isAnyLocked = new AtomicBoolean(false);
@@ -1483,9 +1491,9 @@ public class TreeEditor extends TreeViewer {
             menuItemLock.setEnabled(isAnyUnlocked.get());
             menuItemUnlock.setEnabled(isAnyLocked.get());
             
-            menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
+            menuItemLocalVariables.setEnabled(femaleSocket.isConnected() && !isLocked);
             
-            menuItemChangeUsername.setEnabled(femaleSocket.isConnected());
+            menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !isLocked);
             
             if (_enableExecuteEvaluate) {
                 menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
