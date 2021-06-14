@@ -431,7 +431,15 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             }
             if (!isEnabled()) {
                 writer.append(" ::: ");
-                writer.append(Bundle.getMessage("Disabled"));
+                writer.append(Bundle.getMessage("AbstractMaleSocket_Disabled"));
+            }
+            if (isLocked()) {
+                writer.append(" ::: ");
+                writer.append(Bundle.getMessage("AbstractMaleSocket_Locked"));
+            }
+            if (isSystem()) {
+                writer.append(" ::: ");
+                writer.append(Bundle.getMessage("AbstractMaleSocket_System"));
             }
             writer.println();
         }
@@ -489,7 +497,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (settings._printLocalVariables) {

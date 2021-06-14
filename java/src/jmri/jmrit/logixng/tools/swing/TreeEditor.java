@@ -1476,7 +1476,7 @@ public class TreeEditor extends TreeViewer {
             
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 JMenuItem menuItem = menuItemFemaleSocketOperation.get(oper);
-                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper) && !isLocked);
+                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper) && !parentIsLocked);
             }
             
             AtomicBoolean isAnyLocked = new AtomicBoolean(false);
@@ -1513,27 +1513,55 @@ public class TreeEditor extends TreeViewer {
             show(_tree, x, y);
         }
 
+        /**
+         * Asks the user if edit a system node.
+         * @return true if not edit system node, else return false
+         */
+        private boolean abortEditAboutSystem(Base b) {
+            int result = JOptionPane.showConfirmDialog(
+                    this,
+                    "This item is owned and maintained by the system. Do you want to edit it?",
+                    b.getLongDescription(),
+                    JOptionPane.YES_NO_OPTION);
+            
+            return result == JOptionPane.YES_OPTION;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            Base parent = _currentFemaleSocket.getParent();
+            while ((parent != null) && !(_currentFemaleSocket.getParent() instanceof MaleSocket)) {
+                parent = parent.getParent();
+            }
+            boolean parentIsSystem = (parent != null) && ((MaleSocket)parent).isSystem();
+            boolean itemIsSystem = (_currentFemaleSocket.isConnected())
+                    && _currentFemaleSocket.getConnectedSocket().isSystem();
+            
             switch (e.getActionCommand()) {
                 case ACTION_COMMAND_RENAME_SOCKET:
+                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
                     renameSocketPressed(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_ADD:
+                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
                     addPressed(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_EDIT:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     editPressed(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_REMOVE:
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     DeleteBeanWorker worker = new DeleteBeanWorker(_currentFemaleSocket, _currentPath);
                     worker.execute();
                     break;
                     
                 case ACTION_COMMAND_CUT:
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     if (_currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
@@ -1561,6 +1589,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_COPY:
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     if (_currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
@@ -1599,6 +1629,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_PASTE:
+                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
+                    
                     if (! _currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
@@ -1630,6 +1662,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_ENABLE:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     _currentFemaleSocket.getConnectedSocket().setEnabled(true);
                     runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
@@ -1643,6 +1677,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_DISABLE:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     _currentFemaleSocket.getConnectedSocket().setEnabled(false);
                     runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
@@ -1656,6 +1692,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_LOCK:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     _currentFemaleSocket.forEntireTree((item) -> {
                         if (item instanceof MaleSocket) {
                             ((MaleSocket)item).setLocked(true);
@@ -1665,6 +1703,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_UNLOCK:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     _currentFemaleSocket.forEntireTree((item) -> {
                         if (item instanceof MaleSocket) {
                             ((MaleSocket)item).setLocked(false);
@@ -1674,10 +1714,12 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_LOCAL_VARIABLES:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     editLocalVariables(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_CHANGE_USERNAME:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     changeUsername(_currentFemaleSocket, _currentPath);
                     break;
                     
@@ -1708,15 +1750,21 @@ public class TreeEditor extends TreeViewer {
 */                    
                 default:
                     // Check if the action is a female socket operation
-                    if (! checkFemaleSocketOperation(_currentFemaleSocket, e.getActionCommand())) {
+                    if (! checkFemaleSocketOperation(_currentFemaleSocket, parentIsSystem, itemIsSystem, e.getActionCommand())) {
                         log.error("e.getActionCommand() returns unknown value {}", e.getActionCommand());
                     }
             }
         }
         
-        private boolean checkFemaleSocketOperation(FemaleSocket femaleSocket, String command) {
+        private boolean checkFemaleSocketOperation(
+                FemaleSocket femaleSocket,
+                boolean parentIsSystem,
+                boolean itemIsSystem,
+                String command) {
+            
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 if (oper.name().equals(command)) {
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(femaleSocket.getParent())) return true;
                     femaleSocket.doSocketOperation(oper);
                     return true;
                 }

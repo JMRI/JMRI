@@ -212,11 +212,13 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        maleSocket.setSystem(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // Direct / Direct / Direct :: SetValue
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / Direct / Direct :: SetValue");
+        maleSocket.setLocked(false);
 
         actionBlock.setAddressing(NamedBeanAddressing.Direct);
         actionBlock.setBlock(block1);
