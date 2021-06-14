@@ -1451,7 +1451,7 @@ public class TreeEditor extends TreeViewer {
             boolean disableForRoot = _disableRootRemoveCutCopy
                     && (_currentFemaleSocket == _treePane._femaleRootSocket);
             
-            boolean isLocked = isConnected && ((MaleSocket)femaleSocket.getConnectedSocket()).isLocked();
+            boolean isLocked = isConnected && femaleSocket.getConnectedSocket().isLocked();
             
             Base parent = femaleSocket.getParent();
             while ((parent != null) && !(parent instanceof MaleSocket)) {
