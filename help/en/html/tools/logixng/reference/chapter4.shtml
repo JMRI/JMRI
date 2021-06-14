@@ -156,6 +156,48 @@
           </a>
           </div>
 
+        <h3>Evaluate</h3>
+
+        <p>Depending on the row type, it is possible to manually evaluate an expression.
+        This is useful debugging tool.<p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter4/evaluate_item.png">
+        <img src="images/chapter4/evaluate_item.png"
+        alt="Chapter 4 evaluate item" width="234" height="76">
+        </a>
+        </div>
+
+        <p>A dialog will show the results.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter4/evaluate_result.png">
+        <img src="images/chapter4/evaluate_result.png"
+        alt="Chapter 4 evaluate result" width="267" height="118">
+        </a>
+        </div>
+
+        <h3>Execute</h3>
+
+        <p>Depending on the row type, it is possible to manually perform an action.
+        This is useful debugging tool.<p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter4/execute_item.png">
+        <img src="images/chapter4/execute_item.png"
+        alt="Chapter 4 execute item" width="231" height="71">
+        </a>
+        </div>
+
+        <p>A dialog will show the results.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter4/execute_result.png">
+        <img src="images/chapter4/execute_result.png"
+        alt="Chapter 4 execute result" width="262" height="118">
+        </a>
+        </div>
+
       <hr>
       <p><a href="chapter5.shtml">Chapter 5 - Action Items</a></p>
       <p><a href="index.shtml">Return to the Reference TOC</a></p>
