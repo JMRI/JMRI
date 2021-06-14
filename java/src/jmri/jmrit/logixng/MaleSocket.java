@@ -99,6 +99,18 @@ public interface MaleSocket extends Debugable {
      */
     public void setSystem(boolean system);
     
+    /**
+     * Is the node catching AbortExecution or not?
+     * @return true if catching, false otherwise
+     */
+    public boolean getCatchAbortExecution();
+    
+    /**
+     * Set if the node should catch AbortExecution or not.
+     * @param catchAbortExecution true if catch, false otherwise
+     */
+    public void setCatchAbortExecution(boolean catchAbortExecution);
+    
     public void addLocalVariable(
             String name,
             InitialValueType initialValueType,

@@ -777,6 +777,16 @@ public abstract class FemaleSocketTestBase {
         public void setSystem(boolean system) {
             throw new UnsupportedOperationException("Not supported");
         }
+
+        @Override
+        public boolean getCatchAbortExecution() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setCatchAbortExecution(boolean catchAbortExecution) {
+            throw new UnsupportedOperationException("Not supported");
+        }
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FemaleSocketTestBase.class);

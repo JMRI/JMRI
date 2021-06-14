@@ -233,10 +233,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         _listen = listen;
     }
 
+    @Override
     public boolean getCatchAbortExecution() {
         return _catchAbortExecution;
     }
 
+    @Override
     public void setCatchAbortExecution(boolean catchAbortExecution)
     {
         _catchAbortExecution = catchAbortExecution;
@@ -536,7 +538,25 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     @Override
     public final Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
             throws JmriException {
-        return getObject().getDeepCopy(systemNames, userNames);
+        
+        MaleSocket maleSocket = (MaleSocket)getObject().getDeepCopy(systemNames, userNames);
+        
+        maleSocket.setComment(this.getComment());
+        if (maleSocket.getDebugConfig() != null) {
+            maleSocket.setDebugConfig(maleSocket.getDebugConfig().getCopy());
+        }
+        maleSocket.setEnabled(isEnabled());
+        maleSocket.setListen(getListen());
+        maleSocket.setErrorHandlingType(getErrorHandlingType());
+        maleSocket.setLocked(isLocked());
+        maleSocket.setSystem(false);    // If a system item is copied, the new item is not treated as system
+        maleSocket.setCatchAbortExecution(getCatchAbortExecution());
+        
+        for (VariableData data : _localVariables) {
+            maleSocket.addLocalVariable(data._name, data._initalValueType, data._initialValueData);
+        }
+        
+        return maleSocket;
     }
 
     @Override
