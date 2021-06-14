@@ -24,7 +24,7 @@
   
   <decoder>
     <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches">
-	  <model Model="Servo5" lowVersionID="1" manufacturerID="126" productID="9" developerID="2"></model>
+	  <model Model="Servo5" lowVersionID="1" productID="9"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>

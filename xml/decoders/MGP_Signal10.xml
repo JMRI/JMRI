@@ -23,13 +23,13 @@
   
   <decoder>
     <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal, a LocoNet decoder control panels">
-	  <model model="Signal10 SE" lowVersionID="1" manufacturerID="126" productID="6" developerID="1"></model>
-	  <model model="Signal10 DE" lowVersionID="1" manufacturerID="126" productID="7" developerID="1"></model>
-	  <model model="Signal10 DK" lowVersionID="1" manufacturerID="126" productID="8" developerID="1"></model>
-	  <model model="Signal10 CZ" lowVersionID="1" manufacturerID="126" productID="11" developerID="1"></model>
-	  <model model="Signal10 US" lowVersionID="1" manufacturerID="126" productID="12" developerID="1"></model>
-	  <model model="Signal10 NO" lowVersionID="1" manufacturerID="126" productID="13" developerID="1"></model>
-	  <model model="Signal10 NL" lowVersionID="1" manufacturerID="126" productID="14" developerID="1"></model>
+	  <model model="Signal10 SE" lowVersionID="1" productID="6"></model>
+	  <model model="Signal10 DE" lowVersionID="1" productID="7"></model>
+	  <model model="Signal10 DK" lowVersionID="1" productID="8"></model>
+	  <model model="Signal10 CZ" lowVersionID="1" productID="11"></model>
+	  <model model="Signal10 US" lowVersionID="1" productID="12"></model>
+	  <model model="Signal10 NO" lowVersionID="1" productID="13"></model>
+	  <model model="Signal10 NL" lowVersionID="1" productID="14"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
