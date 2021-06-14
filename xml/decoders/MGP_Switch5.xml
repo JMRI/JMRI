@@ -19,7 +19,7 @@
   <version author="Keld Polmann" version="1" lastUpdated="20210301"/>
   <decoder>
     <family name="Switch5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Switch5, a LocoNet decoder for railway switches">
-	  <model Model="Switch5" lowVersionID="1" productID="9"></model>
+	  <model model="Switch5" lowVersionID="1" productID="9"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
