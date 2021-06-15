@@ -191,7 +191,6 @@ public class StoreAndLoadTest {
                 digitalActionManager.registerAction(new DigitalMany(
                                         digitalActionManager.getAutoSystemName(), null));
         femaleRootSocket.connect(actionManySocket);
-        femaleRootSocket.setLock(Base.Lock.HARD_LOCK);
 
 
 
@@ -201,21 +200,25 @@ public class StoreAndLoadTest {
         ActionBlock actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         MaleSocket maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setEnabled(false);
+        maleSocket.setLocked(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        maleSocket.setLocked(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        maleSocket.setSystem(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // Direct / Direct / Direct :: SetValue
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / Direct / Direct :: SetValue");
+        maleSocket.setLocked(false);
 
         actionBlock.setAddressing(NamedBeanAddressing.Direct);
         actionBlock.setBlock(block1);

@@ -205,6 +205,13 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
         
+        @Override
+        public DebugConfig getCopy() {
+            AnalogActionDebugConfig config = new AnalogActionDebugConfig();
+            config._dontExecute = _dontExecute;
+            return config;
+        }
+        
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogActionSocket.class);

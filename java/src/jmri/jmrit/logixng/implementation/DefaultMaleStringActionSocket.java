@@ -193,6 +193,13 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
         
+        @Override
+        public DebugConfig getCopy() {
+            StringActionDebugConfig config = new StringActionDebugConfig();
+            config._dontExecute = _dontExecute;
+            return config;
+        }
+        
     }
     
     
