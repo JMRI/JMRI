@@ -180,7 +180,21 @@
             </ul>
 
           <h5>Reference</h5>
-          <p>-- pending --</p>
+          <p>If there is a possibility that a <a href="chapter7.shtml">reference</a> will
+          refer to an item that does not exist or it is the wrong item type, the Reference
+          expression can test that case and return true or false.</p>
+
+          <p>An example would be a <a href="chapter11.shtml">table</a> that has optional
+          cells.  A table for a staging yard ladder will have a variable number of turnouts
+          based on the selected track.</p>
+
+          <p>Enter the reference to be checked and specify the type.
+          <div style="margin-left: 2em;">
+          <a href="images/chapter6/reference_dialog.png">
+          <img src="images/chapter6/reference_dialog.png"
+          alt="Chapter 6 reference dialog" width="718" height="252">
+          </a>
+          </div>
 
           <h5>Script</h5>
           <p>A script expression calls a Jython script.  The Jython context contains a

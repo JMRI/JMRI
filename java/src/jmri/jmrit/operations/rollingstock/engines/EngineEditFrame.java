@@ -64,7 +64,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
         bUnitCheckBox.setSelected(false);
 
         // load tool tips
-        builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
+        builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
         editModelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[] { Bundle.getMessage("Model").toLowerCase() }));
         editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
@@ -261,10 +261,10 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
     /**
      * Converts tractive effort to HP using the formula: HP = TE * MPH / 375. MPH
-     * set at 25, see SPEED.
+     * set at 25, see SPEED. 60% conversion efficiency to produce reasonable HP values.
      */
     private void convertTractiveEffortToHp() {
-        String TE = teTextField.getText();
+        String TE = teTextField.getText().trim();
         if (!TE.isEmpty()) {
             TE = TE.replace(",", "");
             int te = 0;
@@ -274,7 +274,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 log.error("Not able to convert TE {} to HP", teTextField.getText());
             }
             if (te > 0) {
-                int hp = te * Integer.parseInt(SPEED) / 375;
+                int hp = te * Integer.parseInt(SPEED) / 625;
                 hpTextField.setText(Integer.toString(hp));
             }
         }
