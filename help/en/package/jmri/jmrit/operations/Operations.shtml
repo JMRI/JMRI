@@ -3899,13 +3899,14 @@
    model, type, length and horsepower. The locomotive's horsepower, the train's weight, and track
    grade is used by the program to calculate how many locomotives are required when using the "Auto"
    feature when building trains. Stream engines use tractive effort rather than horsepower to
-   describe their potential for pulling trains. Enter the tractive effort in lbf and the program
-   will convert it to the approximate horsepower at 25 MPH when you press the Save button.
+   describe their potential for pulling trains. Enter the tractive effort in lbf (pounds force)
+   and the program will convert it to the approximate horsepower at 25 MPH when you press the Save
+   button.
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). You can also enter the built date, owner and a comment for
     this locomotive. The built date can be in the format of a two or four digit year, or month-year
-    (mm-yy), were a two digit year will be converted to a loco built in the 1900s.</p>
+    (mm-yy), where a two digit year will be converted to a loco built in the 1900s.</p>
 
    <a name="LocomotiveModels" id="LocomotiveModels"></a>
    <h4>Locomotive Models</h4>
@@ -4475,7 +4476,7 @@
     routes servicing the spurs with schedules have interim yard or C/I tracks that are also full.
     This option tends to increase car movement to staging by ignoring the <a href="#SpurOption">Hold
      cars with custom loads when spurs are full</a> feature for a spur where the program would normally
-    hold a car at its current location when all spurs with schedules were full.
+    hold a car at its current location when all spurs with schedules are full.
    </p>
 
    <a name="BuildlocoConsist" id="BuildlocoConsist"></a>
@@ -4598,7 +4599,7 @@
 
    <p>
     Included in the <a href="https://jmri.org/jython/operations">jython directory</a> are several
-    examples of operation oriented scripts. These scripts were included in the JMRI download and can
+    examples of operation oriented scripts. These scripts are included in the JMRI download and can
     be found in the jmri-&gt;jython-&gt;operations directory.
    </p>
 

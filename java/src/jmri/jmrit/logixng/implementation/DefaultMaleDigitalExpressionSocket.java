@@ -206,6 +206,14 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         // The result if the result is forced.
         public boolean _result = false;
         
+        @Override
+        public DebugConfig getCopy() {
+            DigitalExpressionDebugConfig config = new DigitalExpressionDebugConfig();
+            config._forceResult = _forceResult;
+            config._result = _result;
+            return config;
+        }
+        
     }
     
     

@@ -38,20 +38,6 @@ public class DefaultConditionalNGTest {
     }
     
     @Test
-    public void testLock() {
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        
-        conditionalNG.setLock(Base.Lock.NONE);
-        Assert.assertEquals("Lock is correct", Base.Lock.NONE, conditionalNG.getLock());
-        
-        conditionalNG.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.USER_LOCK, conditionalNG.getLock());
-        
-        conditionalNG.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.HARD_LOCK, conditionalNG.getLock());
-    }
-    
-    @Test
     public void testState() throws JmriException {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         conditionalNG.setState(NamedBean.INCONSISTENT);

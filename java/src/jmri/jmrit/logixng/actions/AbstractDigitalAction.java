@@ -17,7 +17,6 @@ public abstract class AbstractDigitalAction extends AbstractBase
         implements DigitalActionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = DigitalActionBean.UNKNOWN;
     
     
@@ -44,18 +43,6 @@ public abstract class AbstractDigitalAction extends AbstractBase
         _parent = parent;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
-    }
-    
     public String getNewSocketName() {
         String[] names = new String[getChildCount()];
         for (int i=0; i < getChildCount(); i++) {

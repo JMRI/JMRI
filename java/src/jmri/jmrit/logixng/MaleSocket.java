@@ -63,9 +63,53 @@ public interface MaleSocket extends Debugable {
     @Override
     public boolean isEnabled();
     
+    /**
+     * Get whenether the node should listen to changes or not.
+     * @return true if listen, false if not listen
+     */
     public boolean getListen();
     
+    /**
+     * Set whenether the node should listen to changes or not.
+     * @param listen true if listen, false if not listen
+     */
     public void setListen(boolean listen);
+    
+    /**
+     * Is the node locked?
+     * @return true if locked, false otherwise
+     */
+    public boolean isLocked();
+    
+    /**
+     * Set if the node is locked or not.
+     * @param locked true if locked, false otherwise
+     */
+    public void setLocked(boolean locked);
+    
+    /**
+     * Is the node a system node?
+     * @return true if system, false otherwise
+     */
+    public boolean isSystem();
+    
+    /**
+     * Set if the node is system or not.
+     * @param system true if system, false otherwise
+     */
+    public void setSystem(boolean system);
+    
+    /**
+     * Is the node catching AbortExecution or not?
+     * @return true if catching, false otherwise
+     */
+    public boolean getCatchAbortExecution();
+    
+    /**
+     * Set if the node should catch AbortExecution or not.
+     * @param catchAbortExecution true if catch, false otherwise
+     */
+    public void setCatchAbortExecution(boolean catchAbortExecution);
     
     public void addLocalVariable(
             String name,
