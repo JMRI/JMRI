@@ -668,6 +668,7 @@ public class SplitVariableValue extends VariableValue
         _progState = READING_FIRST;
         retry = 0;
         log.debug("Variable={}; invoke CV read", _name);
+        log.info("Reading CV={}", cvList.get(0).cvName);
         (cvList.get(0).thisCV).read(_status); // kick off the read sequence
     }
 
@@ -684,6 +685,7 @@ public class SplitVariableValue extends VariableValue
         }
         _progState = WRITING_FIRST;
         log.debug("Variable={}; invoke CV write", _name);
+        log.info("Writing CV={}", cvList.get(0).cvName);
         (cvList.get(0).thisCV).write(_status); // kick off the write sequence
     }
 
@@ -723,13 +725,13 @@ public class SplitVariableValue extends VariableValue
         if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
             if (_progState != IDLE) {
-                log.debug("getState() = {}", (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
+                log.debug("\"Variable={} source={}; getState() = {}", _name, e.getSource().toString(), (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
             }
 
             if (_progState == IDLE) { // State machine is idle, so "Busy" transition is the result of a CV update by another source.
                 // The source would be a Read/Write from either the CVs pane or another Variable with one or more overlapping CV(s).
                 // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
-                log.debug("Variable={}; Busy goes false with state IDLE", _name);
+                log.debug("Variable={}; Busy goes false with _progState IDLE", _name);
             } else if (_progState >= READING_FIRST) {   // reading CVs
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
                     retry = 0;
@@ -738,12 +740,12 @@ public class SplitVariableValue extends VariableValue
                         log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                         (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                     } else {  // finally done, set not busy
-                        log.debug("Variable={}; Busy goes false with success READING state {}", _name, _progState);
+                        log.debug("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
                         _progState = IDLE;
                         setBusy(false);
                     }
                 } else {   // read failed
-                    log.debug("Variable={}; Busy goes false with failure READING state {}", _name, _progState);
+                    log.debug("Variable={}; Busy goes false with failure READING _progState {}", _name, _progState);
                     if (retry < RETRY_COUNT) { //have we exhausted retry count?
                         retry++;
                         (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
@@ -764,30 +766,31 @@ public class SplitVariableValue extends VariableValue
                         log.info("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                         (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
                     } else {  // finally done, set not busy
-                        log.debug("Variable={}; Busy goes false with success WRITING state {}", _name, _progState);
+                        log.debug("Variable={}; Busy goes false with success WRITING _progState {}", _name, _progState);
                         _progState = IDLE;
                         setBusy(false);
                     }
                 } else {   // read failed we're done!
-                    log.debug("Variable={}; Busy goes false with failure WRITING state {}", _name, _progState);
+                    log.debug("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
                     _progState = IDLE;
                     setBusy(false);
                 }
             }
         } else if (e.getPropertyName().equals("State")) {
-            log.debug("state change due to CV state change, so propagate that");
+            log.debug("Possible {} variable state change due to CV state change, so propagate that", _name);
             int varState = getState(); // AbstractValue.SAME;
-            log.debug("{} state was {}", _name, varState);
+            log.debug("{} variable state was {}", _name, stateNameFromValue(varState));
             for (int i = 0; i < cvCount; i++) {
                 int state = cvList.get(i).thisCV.getState();
                 if (i == 0) {
                     varState = state;
                 } else if (priorityValue(state) > priorityValue(varState)) {
                     varState = AbstractValue.UNKNOWN; // or should it be = state ?
+                    varState = state; // or should it be = state ?
                 }
             }
             setState(varState);
-            log.debug("{} state set to {}", _name, varState);
+            log.debug("{} variable state set to {}", _name, stateNameFromValue(varState));
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             log.debug("update value of Variable");
