@@ -31,7 +31,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
     private JPanel _panelOperationTypeLocalVariable;
     private JPanel _panelOperationTypeFormula;
     
-    private JComboBox<ActionSound.OperationType> _operationComboBox;
+    private JComboBox<ActionSound.Operation> _operationComboBox;
     private JTextField _soundOperationReferenceTextField;
     private JTextField _soundOperationLocalVariableTextField;
     private JTextField _soundOperationFormulaTextField;
@@ -76,7 +76,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         _tabbedPaneOperationType.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationTypeFormula);
         
         _operationComboBox = new JComboBox<>();
-        for (ActionSound.OperationType e : ActionSound.OperationType.values()) {
+        for (ActionSound.Operation e : ActionSound.Operation.values()) {
             _operationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
@@ -168,7 +168,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
             }
-            _operationComboBox.setSelectedItem(action.getOperationType());
+            _operationComboBox.setSelectedItem(action.getOperation());
             _soundOperationReferenceTextField.setText(action.getOperationReference());
             _soundOperationLocalVariableTextField.setText(action.getOperationLocalVariable());
             _soundOperationFormulaTextField.setText(action.getOperationFormula());
@@ -251,7 +251,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
                 action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationType((ActionSound.OperationType)_operationComboBox.getSelectedItem());
+                action.setOperation((ActionSound.Operation)_operationComboBox.getSelectedItem());
             } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
                 action.setOperationAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference(_soundOperationReferenceTextField.getText());

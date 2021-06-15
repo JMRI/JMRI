@@ -37,7 +37,7 @@ public class ActionSoundXml extends jmri.managers.configurexml.AbstractNamedBean
         storeCommon(p, element);
 
         element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationType").addContent(p.getOperationType().name()));
+        element.addContent(new Element("operationType").addContent(p.getOperation().name()));
         element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
         element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
@@ -67,7 +67,7 @@ public class ActionSoundXml extends jmri.managers.configurexml.AbstractNamedBean
             
             Element queryType = shared.getChild("operationType");
             if (queryType != null) {
-                h.setOperationType(ActionSound.OperationType.valueOf(queryType.getTextTrim()));
+                h.setOperation(ActionSound.Operation.valueOf(queryType.getTextTrim()));
             }
             
             elem = shared.getChild("operationReference");

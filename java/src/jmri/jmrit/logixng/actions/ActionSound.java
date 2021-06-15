@@ -23,7 +23,7 @@ import jmri.util.TypeConversionUtil;
 public class ActionSound extends AbstractDigitalAction {
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private OperationType _operationType = OperationType.Play;
+    private Operation _operation = Operation.Play;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
@@ -51,7 +51,7 @@ public class ActionSound extends AbstractDigitalAction {
         copy.setComment(getComment());
         copy.setSound(_sound);
         copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationType(_operationType);
+        copy.setOperation(_operation);
         copy.setOperationFormula(_operationFormula);
         copy.setOperationLocalVariable(_operationLocalVariable);
         copy.setOperationReference(_operationReference);
@@ -71,12 +71,12 @@ public class ActionSound extends AbstractDigitalAction {
         return _operationAddressing;
     }
     
-    public void setOperationType(OperationType operationType) {
-        _operationType = operationType;
+    public void setOperation(Operation operation) {
+        _operation = operation;
     }
     
-    public OperationType getOperationType() {
-        return _operationType;
+    public Operation getOperation() {
+        return _operation;
     }
     
     public void setOperationReference(@Nonnull String reference) {
@@ -213,31 +213,31 @@ public class ActionSound extends AbstractDigitalAction {
         }
     }
     
-    private OperationType getOperation() throws JmriException {
+    private Operation getTheOperation() throws JmriException {
         
         String oper = "";
         try {
             switch (_operationAddressing) {
                 case Direct:
-                    return _operationType;
+                    return _operation;
                     
                 case Reference:
                     oper = ReferenceUtil.getReference(
                             getConditionalNG().getSymbolTable(), _operationReference);
-                    return OperationType.valueOf(oper);
+                    return Operation.valueOf(oper);
                     
                 case LocalVariable:
                     SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                     oper = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-                    return OperationType.valueOf(oper);
+                    return Operation.valueOf(oper);
                     
                 case Formula:
                     if (_soundExpressionNode != null) {
                         oper = TypeConversionUtil.convertToString(
                                 _operationExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false);
-                        return OperationType.valueOf(oper);
+                        return Operation.valueOf(oper);
                     } else {
                         return null;
                     }
@@ -253,7 +253,7 @@ public class ActionSound extends AbstractDigitalAction {
     @Override
     public void execute() throws JmriException {
         
-        OperationType operation = getOperation();
+        Operation operation = getTheOperation();
         String path = getTheSound();
         
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
@@ -296,7 +296,7 @@ public class ActionSound extends AbstractDigitalAction {
         
         switch (_operationAddressing) {
             case Direct:
-                operation = Bundle.getMessage(locale, "AddressByDirect", _operationType._text);
+                operation = Bundle.getMessage(locale, "AddressByDirect", _operation._text);
                 break;
 
             case Reference:
@@ -337,7 +337,11 @@ public class ActionSound extends AbstractDigitalAction {
         }
         
         if (_operationAddressing == NamedBeanAddressing.Direct) {
-            return Bundle.getMessage(locale, "ActionSound_Long", operation, sound);
+            if (_operation == Operation.Play) {
+                return Bundle.getMessage(locale, "ActionSound_Long_Play", sound);
+            } else {
+                return Bundle.getMessage(locale, "ActionSound_Long", operation, sound);
+            }
         } else {
             return Bundle.getMessage(locale, "ActionSound_LongUnknownOper", operation, sound);
         }
@@ -378,12 +382,12 @@ public class ActionSound extends AbstractDigitalAction {
     }
     
     
-    public enum OperationType {
+    public enum Operation {
         Play(Bundle.getMessage("ActionSound_Operation_Play"));
         
         private final String _text;
         
-        private OperationType(String text) {
+        private Operation(String text) {
             this._text = text;
         }
         
