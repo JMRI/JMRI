@@ -333,6 +333,42 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         }
     }
 
+    private int getNewData() throws JmriException {
+        String newValue = "";
+
+        switch (_dataAddressing) {
+            case Direct:
+                return _lightValue;
+
+            case Reference:
+                newValue = ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _dataReference);
+                break;
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                newValue = TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
+                break;
+
+            case Formula:
+                newValue = _dataExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _dataExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : "";
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
+        }
+        try {
+            return Integer.parseInt(newValue);
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -395,13 +431,13 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 
             } else if (state == LightState.Intensity) {
                 if (light instanceof VariableLight) {
-                    ((VariableLight)light).setTargetIntensity(getLightValue() / 100.0);
+                    ((VariableLight)light).setTargetIntensity(getNewData() / 100.0);
                 } else {
-                    light.setCommandedState(getLightValue() > 50 ? Light.ON : Light.OFF);
+                    light.setCommandedState(getNewData() > 50 ? Light.ON : Light.OFF);
                 }
             } else if (state == LightState.Interval) {
                 if (light instanceof VariableLight) {
-                    ((VariableLight)light).setTransitionTime(getLightValue());
+                    ((VariableLight)light).setTransitionTime(getNewData());
                 }
             } else {
                 light.setCommandedState(state.getID());
