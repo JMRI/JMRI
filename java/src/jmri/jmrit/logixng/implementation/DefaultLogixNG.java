@@ -104,16 +104,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    @Override
-    public Lock getLock() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public void setLock(Lock lock) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
     /** {@inheritDoc} */
     @Override
     final public void setup() {
