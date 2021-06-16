@@ -268,7 +268,36 @@ public class ActionLightIntensity extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionLightIntensity_Long", _intensitySocket.getName());
+        String namedBean;
+
+        switch (_addressing) {
+            case Direct:
+                String lightName;
+                if (_lightHandle != null) {
+                    lightName = _lightHandle.getBean().getDisplayName();
+                } else {
+                    lightName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", lightName);
+                break;
+
+            case Reference:
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+
+            case LocalVariable:
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                break;
+
+            case Formula:
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
+        }
+
+        return Bundle.getMessage(locale, "ActionLightIntensity_Long", namedBean);
     }
 
     public FemaleAnalogExpressionSocket getIntensitySocket() {
