@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Reference - Chapter 3</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference basic actions expressions">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 3</h1>
+
+      <h2>Basic Actions and Expressions</h2>
+
+      <p>When an Action or Expression is to be added to the ConditionalNG tree, an item
+      has to be selected.  The selection window has a <strong>Category</strong> list and
+      a <strong>Type</strong> list which varies based on the category selection.  JMRI
+      objects, such as sensors, turnouts, etc., are in the <strong>Item</strong> category.
+      These are handled in separate chapters.</p>
+
+      <h2>Actions</h2>
+        <h3>Common</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_common.png">
+          <img src="images/chapter3/action_common.png"
+          alt="Chapter 3 common action" width="275" height="237">
+          </a>
+          </div>
+
+          <a id="ExecuteDelayed"></a>
+          <h5>Execute delayed</h5>
+
+          <p>Delay the execution of the following action for a specified amount of time.
+          This is the same as the Logix <strong>Delayed Set ...</strong>.  The main
+          difference is that this can be used with any action, such as signals.  The
+          time delay units are milliseconds, seconds, minutes and hours.
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/execute_delay.png">
+          <img src="images/chapter3/execute_delay.png"
+          alt="Chapter 3 execute_delay" width="535" height="329">
+          </a>
+          </div>
+          <p>
+
+          <h5>For</h5>
+          <p>
+            For is a for-loop. It has four children.
+            <ul>
+              <li><strong>Init</strong> - this action is executed only one time. It's
+              used to initialize the loop, for example setting a Memory to a particular
+              value.</li>
+
+              <li><strong>While</strong> - this expression decides if the loop
+              should run one lap more. The loop will continue to run until this
+              condition will be <strong>false</strong>.</li>
+
+              <li><strong>AfterEach</strong> - this action is executed at the end of the
+              loop. It can for example be used to increment a counter in a Memory.</li>
+
+              <li><strong>Do</strong> - this action is executed in each loop. It
+              does the main work.</li>
+            </ul>
+
+            <p>When For is executed, the Init action is run once. After that, the
+            Condition expression is evaluated. If the condition returns <strong>true</strong>,
+            the Do action is executed and at last the AfterEach action is executed. Then
+            the process is repeated, except that the Init action is only executed once.</p>
+
+          <h5>If Then Else</h5>
+          <p>Reads a digital child expression and if the answer is <strong>true</strong>
+          it executes the <strong>then</strong> child action, else it executes the
+          <strong>else</strong> child action.</p>
+
+          <p>There are two options:</p>
+
+          <ul>
+            <li><strong>Execute on change:</strong> Executes the Then or the Else action
+            only when the If expression has changed from True to False, or from False to True.</li>
+            <li><strong>Always execute:</strong> Executes the Then or the Else action every
+            time the <strong>If Then Else</strong> action is executed..</li>
+          </ul>
+
+          <h5>Many</h5>
+          <p>The Many action executes many child actions.</p>
+
+          <h5>Read analog and set analog</h5>
+          <p>Read an analog child expression and execute an analog child action.</p>
+
+          <h5>Read string and set string</h5>
+          <p>Read a string child expression and execute a string child action.</p>
+
+          <h5>Sequence</h5>
+          <p>The Sequence action executes a series of action/expression pairs.  For each
+          pair, the actions will be performed and then the expression will wait until it
+          becomes true.  When it is true, the next action/expression pair will be
+          started.  The sequence will repeat forever or until stopped.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_sequence.png">
+          <img src="images/chapter3/action_sequence.png"
+          alt="Chapter 3 display action" width="614" height="447">
+          </a>
+          </div>
+
+          <ul>
+            <li><strong>Start:</strong> When the start expression is true, the sequence
+            will start with the first action/expression pair.</li>
+            <li><strong>Stop:</strong> When the stop expression is true, the sequence will
+            stop running.</li>
+            <li><strong>Reset:</strong> When the reset expression is true, the sequence
+            will be interrupted and return to the first action/expresson pair.</li>
+          </ul>
+
+          <h5>Table: For each</h5>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for
+          details on table actions.</p>
+
+          <h5>Timer</h5>
+
+          <p>Timer has a number of actions, each executed after some time. The action
+          Timer waits some time, then executes the first action. It then waits some more
+          time, and then executes the second action. And so on. The time to wait can be 0
+          seconds, which means the action is executed immediately.</p>
+
+        <h3>Display</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_display.png">
+          <img src="images/chapter3/action_display.png"
+          alt="Chapter 3 display action" width="260" height="132">
+          </a>
+          </div>
+
+          <h5>Icon/Label on panel</h5>
+          <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+        <h3>LocoNet</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_loconet.png">
+          <img src="images/chapter3/action_loconet.png"
+          alt="Chapter 3 loconet action" width="260" height="131">
+          </a>
+          </div>
+
+          <h5>Clear loconet slots</h5>
+          <p>This action clears the slot status in the command station if you are using LocoNet.</p>
+
+          <h5>Update loconet slots</h5>
+          <p>This action forces an update of the LocoNet slot status in JMRI.</p>
+
+
+        <h3>Other</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_other.png">
+          <img src="images/chapter3/action_other.png"
+          alt="Chapter 3 other action" width="259" height="214">
+          </a>
+          </div>
+
+          <h5>Call module</h5>
+          <p>See <a href="chapter10.shtml#DigitalActionModule">Chapter 10 - Modules</a> for details.</p>
+
+          <h5>Listen on beans</h5>
+          <p>See <a href="chapter7.shtml#ListenOnBeans">Chapter 7 - Listen on beans</a> for details.</p>
+
+          <h5>Listen on beans - Table</h5>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
+
+          <a id="ActionLogData"></a>
+          <h5>Log data</h5>
+
+          <p>While developing a ConditionalNG, it can be helpful to see field content, make
+          note of the location within the tree, etc.  Adding the <strong>Log data</strong>
+          type in the <strong>Other</strong> category will display a dialog to configure
+          the <strong>Log data</strong> options.</p>
+
+          <p>Select either or both Log options</p>
+
+          <ul>
+            <li><strong>Log to the log:</strong> Help &rArr; System Console.</li>
+            <li><strong>Log to the Script Output:</strong> Scripting &rArr; Script Output.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/action_log_data.png">
+          <img src="images/chapter3/action_log_data.png"
+          alt="Chapter 3 action log data" width="565" height="506">
+          </a>
+          </div>
+
+          <p>There are three format types.</p>
+
+          <ul>
+            <li><strong>Only text: </strong> The text typed into the Format box will be
+            displayed on the log.  The data in the table is ignored.</li>
+            <li><strong>Comma separated list: </strong> The values for the items in the
+            table will be displayed separated by commas.  The content in the format field
+            is ignored.</li>
+            <li><strong>String.format: </strong> Use the format string to format the data
+            in the table.  See the java method
+            <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">
+            String.format()</a> for the syntax of the
+            format string.  Note:  The format is similar <code>sprintf</code>.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_format.png">
+          <img src="images/chapter3/log_data_format.png"
+          alt="Chapter 3 log data format" width="187" height="62">
+          </a>
+          </div>
+
+          <p>The table lists the data sources for the comma separated and and string
+          format options.<p>
+
+          <p>Click on the <strong>Add</strong> button to add an entry to the table.
+          Select the source type and add the name or a reference in the Data field.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_sources.png">
+          <img src="images/chapter3/log_data_sources.png"
+          alt="Chapter 3 log data sources" width="421" height="116">
+          </a>
+          </div>
+
+          <p>This example uses the string.format option to combine text with the contents
+          of two memory variables.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_sample.png">
+          <img src="images/chapter3/log_data_sample.png"
+          alt="Chapter 3 log data sample" width="556" height="506">
+          </a>
+          </div>
+
+          <h5>Log local variables</h5>
+          <p>See <a href="chapter8.shtml#LogLocalVariables">Chapter 8 - Debugging local variables</a> for details.</p>
+
+          <h5>Logix</h5>
+          <p>LogixNG has an action called Logix that emulates how JMRI Logix works.
+          The action Logix has one expression and a number of boolean actions. A
+          boolean action is an action that takes a boolean value (true/false) and then
+          decides what to do. The action Logix was added mainly to support import of
+          JMRI Logix to LogixNG.</p>
+
+          <h5>Shutdown</h5>
+
+          <p>The ShutdownComputer action can either shutdown or restart the computer,
+          or shutdown or restart JMRI.</p>
+
+          <h5>Web browser</h5>
+          <p>The web browser action opens a web page in the web browser.</p>
+
+      <h2>Expressions</h2>
+
+        <p>In Logix, the user can select between three different ways to combine the
+        variables in the Conditional. And, Or and Antecedent. In LogixNG, these three are
+        expressions that can have other expressions as children.</p>
+
+        <h3>Common</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_common.png">
+          <img src="images/chapter3/expression_common.png"
+          alt="Chapter 3 common expression" width="208" height="166">
+          </a>
+          </div>
+
+          <h5>And</h5>
+            <p>And evaluates the child expressions and if all of them returns true, the
+            And expression returns true as well.</p>
+
+          <h5>Antecedent</h5>
+            <p>The Antecedent expression is mainly included to make import from Logix
+            to LogixNG simple. It works exactly as Antecedent in Logix. It has a number
+            of child expressions and an antecedent that defines how the evaluation of the
+            expressions should be done. Each child expression is referenced in the
+            antecedent by R1, R2, R3, ..., there R1 is the first child expression, R2 is
+            the second child expression, and so on. Note that this differs from other
+            expressions in LogixNG. Other LogixNG expressions use the socket name,
+            but since the Antecedent expression is included to work as Antecedent works
+            in Logix, the antecedent has been kept from Logix Antecedent as well.
+            <em>Note: Antecedent is included for compability with Logix but it's
+            recommended to use Formula instead. Formula is much more powerful, uses the
+            socket names and also works with numbers and strings.</em></p>
+
+          <h5>Digital Formula</h5>
+            <p>Formula is the next generation of Antecedent. It supports many operators,
+            like ==, !=, &lt;=, >=, &lt;, >, +, -, *, / and %. It
+            supports local variables, memories and functions. It supports all the types
+            of expressions, digital, analog and string expressions.</p>
+
+          <h5>Not</h5>
+            <p>The Not expression has one child expression and answers <strong>true</strong>
+            if the child  expression answers <strong>false</strong>, and <strong>false</strong>
+            if the child expression answers <strong>true</strong>.</p>
+
+          <h5>Or</h5>
+            <p>Or evaluates the child expressions and if at least one of them returns
+            true, the Or expression returns true as well.</p>
+
+
+        <h3>LocoNet</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_loconet.png">
+          <img src="images/chapter3/expression_loconet.png"
+          alt="Chapter 3 loconet expression" width="213" height="130">
+          </a>
+          </div>
+
+          <h5>Slot Usage</h5>
+          <p>Evaluate the LocoNet slot usage.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/loconet_slot_usage.png">
+          <img src="images/chapter3/loconet_slot_usage.png"
+          alt="Chapter 3 loconet slot usage" width="962" height="505">
+          </a>
+          </div>
+
+        <h3>Other</h3>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_other.png">
+          <img src="images/chapter3/expression_other.png"
+          alt="Chapter 3 other expression" width="300" height="199">
+          </a>
+          </div>
+
+          <h5>Always false</h5>
+          <p>The False expression always answers <strong>false</strong>.</p>
+
+          <h5>Always true</h5>
+          <p>The True expression always answers <strong>true</strong>.  This expression
+          is commonly used as a child to the Trigger Once expression.</p>
+
+          <h5>Call module</h5>
+          <p>Call a module and and return its true/false response.
+          See <a href="chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+
+          <h5>Hold</h5>
+          <p>The Hold expression has two child expressions, one trigger expression and
+          one hold expression. For this expression to become <strong>true</strong>, both
+          the trigger expression and the hold expression must answer <strong>true</strong>.
+          But then it stays <strong>true</strong> as long as the hold expression stays
+          <strong>true</strong>.</p>
+
+          <a id="LastResult"></a>
+          <h5>Last result of digital expression</h5>
+          <p>Each digital expression retains its most recent true/false state.  This can
+          be checked if the expression has a user name.  See <a href="chapter4.shtml">
+          Chapter 4</a>.  Select the user name from the combo box.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/expression_last_result.png">
+          <img src="images/chapter3/expression_last_result.png"
+          alt="Chapter 3 expression last result" width="485" height="247">
+          </a>
+          </div>
+
+          <h5>Log data</h5>
+
+          <p>The <strong>Log data</strong> expresson works the same as the <strong>Log data
+          </strong> action.  See <a href="#ActionLogData">Log data action</a> for details.</p>
+
+          <p>Since this is an expression, it must return true or false.  The window for
+          creating the expression version includes a combo box for selecting True or False</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter3/log_data_return.png">
+          <img src="images/chapter3/log_data_return.png"
+          alt="Chapter 3 log data return options" width="231" height="91">
+          </a>
+          </div>
+
+          <p><strong>True</strong> is recommended for <strong>And</strong> expressions and
+          <strong>False</strong> for <strong>Or</strong> expressions.
+
+          <h5>Trigger once</h5>
+          <p>The TriggerOnce expression answers true one single time and then false
+          until its child expression becomes False and then True again.</p>
+
+          <p>Most often, the TriggerOnce expression will have the expression Always
+          true as its child and it will then answers true one single time and then
+          false until JMRI is restarted.</p>
+
+      <hr>
+      <p><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>

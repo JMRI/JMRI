@@ -1,0 +1,33 @@
+<!-- Sidebar.shtml -->
+<!-- Common sidebar for html/tools/[subdirectory] pages, mimics html/tools/Sidebar.shtml -->
+<!-- NOTE: subdirectory MUST have a SidebarToolLocalPart.shtml -->
+
+<hr class="hide">
+
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+
+           <!-- To include specific sidebar info for this subdirectory... -->
+           <!--#include virtual="SidebarToolLocalPart.shtml" -->
+
+           <!--#include virtual="../../../parts/SidebarTools.shtml" -->
+
+           <!--#include virtual="../../../parts/SidebarLayoutAutomation.shtml" -->
+
+           <dt><a href="../../../hardware/">Supported Hardware</a></dt>
+           <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
+           <!-- If someday we want to show the whole list, use #include virtual="../../../parts/SidebarSupportedHardware.shtml" -->
+
+           <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
+
+         </dl>
+
+         <!--#include virtual="../../../parts/SidebarTail.shtml" -->
+
+        </div>
+
+  <!-- button is in /Header -->
+  <script src="/js/side.js"></script>
+ <!-- /Sidebar.shtml -->
+

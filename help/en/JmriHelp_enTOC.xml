@@ -424,19 +424,23 @@
 
   </tocitem>
   <tocitem text="LogixNG " target="html.tools.logixng.LogixNG">
-   <tocitem text="LogixNG Table " target="package.jmri.jmrit.logixng.LogixNGTable"/>
+   <tocitem text="LogixNG Table " target="package.jmri.jmrit.beantable.LogixNGTable"/>
 
    <tocitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>
 
    <tocitem text="ConditionalNG Editor " target="package.jmri.jmrit.logixng.ConditionalNGEditor"/>
 
-   <tocitem text="LogixNG Module Table " target="package.jmri.jmrit.logixng.LogixNGModuleTable"/>
+   <tocitem text="LogixNG Module Table " target="package.jmri.jmrit.beantable.LogixNGModuleTable"/>
 
-   <tocitem text="LogixNG Tables Table " target="package.jmri.jmrit.logixng.LogixNGTableTable"/>
+   <tocitem text="LogixNG Module Table Editor " target="package.jmri.jmrit.logixng.ModuleEditor"/>
+
+   <tocitem text="LogixNG Tables Table " target="package.jmri.jmrit.beantable.LogixNGTableTable"/>
 
    <tocitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
 
    <tocitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
+
+   <tocitem text="LogixNG Logix Import " target="package.jmri.jmrit.logixng.LogixImport"/>
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">

@@ -58,15 +58,9 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         FemaleSocket socket;
         MyExpression myExpression = new MyExpression("IQSA1");
         FemaleSocketListener listener = new MyFemaleSocketListener();
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
         
-        preferences.setUseGenericFemaleSockets(false);
         socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", socket.getClass().getName());
-        
-        preferences.setUseGenericFemaleSockets(true);
-        socket = _m.createFemaleSocket(myExpression, listener, "E2");
-        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$StringSocket", socket.getClass().getName());
     }
     
     @Test
@@ -179,16 +173,6 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
 
         @Override
         public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public Lock getLock() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public void setLock(Lock lock) {
             throw new UnsupportedOperationException("Not supported");
         }
 

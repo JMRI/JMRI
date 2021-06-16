@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI: LogixNG Browser</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng browser">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+    <div id="mainContent">
+
+      <h1>JMRI: LogixNG Browser</h1>
+
+      <p>The browser provides a text report of the contents of a LogixNG table entry or
+      a Module table entry.  The text can be selected and copied to a clipboard or saved
+      as a text file.  This is useful for sharing a configuration or getting support.</p>
+
+      <div style="margin-left: 2em">
+      <a href="images/Browser.png">
+      <img src="images/Browser.png"
+      alt="LogixNG Browser" width="911" height="267" >
+      </a>
+      </div>
+
+      <h2>Browser Options</h2>
+      <p>The following options control the browser content.</p>
+      <dl>
+        <dt>Print line numbers</dt>
+        <dd>LogixNG definitions can be very long.  Line numbers can help identify an area
+        of the listing. It's very useful when you ask about LogixNG on the JMRI users list.
+        Other users can then point out exactly in the list there the problem lies by
+        giving the line number.</dd>
+
+        <dt>Print error handling</dt>
+        <dd>LogixNG has several methods for handling errors.  The assigned method can be
+        included in the report.  It will appear on the line following three colons.  For
+        example:   <em>Sensor Sensor 1 is Active ::: Use default</em>.</dd>
+
+        <dt>Print not connected sockets</dt>
+        <dd>When building the logic, each row of an expression (E?) or action (A?) will
+        be assigned an empty socket for the next expression or action.  This option
+        controls whether the empty sockets should be included.</dd>
+
+        <dt>Print local variables</dt>
+        <dd>Local variables are used to pass information between parts of a ConditionNG.
+        This option controls whether they should be included.</dd>
+      </dl>
+
+      <h2>Browser Actions</h2>
+      <dl>
+        <dt>Help</dt>
+        <dd>Provide some information about the browser</dd>
+
+        <dt>Save to Text File<dt>
+        <dd>Open a save dialog to store the contents of the browser window to a text file.
+        One of the uses for this is to use the line number option and share the file
+        with another person to work on an issue.</dd>
+      </dl>
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

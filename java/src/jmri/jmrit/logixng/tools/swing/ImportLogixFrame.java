@@ -37,6 +37,10 @@ public final class ImportLogixFrame extends JmriJFrame {
     private JButton _importLogix;
     private JButton _cancelDone;
 
+    private static final String SYSLOGIX = InstanceManager.getDefault(LogixManager.class).getSystemNamePrefix() + ":SYS";
+    private static final String RTXLOGIX = "RTX";
+    private static final String USSLOGIX = "USS CTC:OsIndicator";
+
     /**
      * Construct a LogixNGEditor.
      */
@@ -47,6 +51,9 @@ public final class ImportLogixFrame extends JmriJFrame {
     @Override
     public void initComponents() {
         super.initComponents();
+       JMenuBar menuBar = new JMenuBar();
+       setJMenuBar(menuBar);
+       addHelpMenu("package.jmri.jmrit.logixng.LogixImport", true); // NOI18N
 
         Container contentPanel = getContentPane();
 //        contentPanel.setLayout(new GridLayout( 0, 1));
@@ -114,7 +121,7 @@ public final class ImportLogixFrame extends JmriJFrame {
         warningPanel.add(warning);
         contentPanel.add(warningPanel);
 
-        contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 10)));    // vertical space.
 
 
         // set up import and cancel buttons
@@ -173,11 +180,9 @@ public final class ImportLogixFrame extends JmriJFrame {
         if (_whichLogix_All.isSelected()) {
             for (Logix logix : InstanceManager.getDefault(LogixManager.class).getNamedBeanSet()) {
                 boolean isSystemLogix =
-                        "SYS".equals(logix.getSystemName())
-                        || logix.getSystemName().startsWith(
-                                InstanceManager.getDefault(LogixManager.class)
-                                        .getSystemNamePrefix() + ":RTX");
-
+                        logix.getSystemName().equals(SYSLOGIX) ||
+                        logix.getSystemName().contains(RTXLOGIX) ||
+                        logix.getSystemName().contains(USSLOGIX);
                 if (!isSystemLogix || _includeSystemLogixs.isSelected()) {
                     logixs.add(logix);
                 }
@@ -201,8 +206,8 @@ public final class ImportLogixFrame extends JmriJFrame {
         errorMessage.append("</th></tr>");
 
         for (Logix logix : logixs) {
-            ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), true);
             try {
+                ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), true);
                 importLogix.doImport();
             } catch (JmriException e) {
                 errorMessage.append("<tr><td>");
@@ -219,8 +224,8 @@ public final class ImportLogixFrame extends JmriJFrame {
 
         if (!error) {
             for (Logix logix : logixs) {
-                ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), false);
                 try {
+                    ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), false);
                     importLogix.doImport();
                 } catch (JmriException e) {
                     throw new RuntimeException("Unexpected error: "+e.getMessage(), e);

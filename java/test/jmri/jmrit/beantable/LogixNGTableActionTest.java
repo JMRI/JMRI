@@ -167,7 +167,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         logixNGTable.browserPressed("IQ101");  // NOI18N
 
-        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("BrowserTitle"), true, true);  // NOI18N
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("LogixNG_Browse_Title"), true, true);  // NOI18N
         Assert.assertNotNull(frame);
         JUnitUtil.dispose(frame);
     }
@@ -513,7 +513,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ103", "LogixNG 103");
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ104", "LogixNG 104");
 
-        helpTarget = "package.jmri.jmrit.logixng.LogixNGTable";
+        helpTarget = "package.jmri.jmrit.beantable.LogixNGTable";
         a = new LogixNGTableAction();
     }
 

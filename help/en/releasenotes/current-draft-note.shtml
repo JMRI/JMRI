@@ -291,7 +291,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>Bugfixes in TAMS_LD_42.xml</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -469,11 +469,11 @@
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
-            <li></li>
+            <li>Updated link in documentation</li>
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>CCOR-1967 updated by Mark Ziebell</li>
             </ul>
 
         <h4>Signal Heads</h4>

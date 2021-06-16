@@ -28,7 +28,6 @@ public class DefaultConditionalNG extends AbstractBase
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleSocket;
     private boolean _enabled = true;
-    private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock _executeLock = new ExecuteLock();
     private boolean _runDelayed = true;
     private final Stack _stack = new DefaultStack();
@@ -265,16 +264,6 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public boolean isExternal() {
         throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
     }
 
     public void setSocketSystemName(String systemName) {

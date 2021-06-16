@@ -28,18 +28,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         ((DigitalExpressionBean)getObject()).notifyChangedResult(oldResult, newResult);
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean getTriggerOnChange() {
-        return ((DigitalExpressionBean)getObject()).getTriggerOnChange();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setTriggerOnChange(boolean triggerOnChange) {
-        ((DigitalExpressionBean)getObject()).setTriggerOnChange(triggerOnChange);
-    }
-    
     private void checkChangedLastResult(boolean savedLastResult) {
         if (savedLastResult != lastEvaluationResult) {
             ((DigitalExpressionBean)getObject())
@@ -217,6 +205,14 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         
         // The result if the result is forced.
         public boolean _result = false;
+        
+        @Override
+        public DebugConfig getCopy() {
+            DigitalExpressionDebugConfig config = new DigitalExpressionDebugConfig();
+            config._forceResult = _forceResult;
+            config._result = _result;
+            return config;
+        }
         
     }
     

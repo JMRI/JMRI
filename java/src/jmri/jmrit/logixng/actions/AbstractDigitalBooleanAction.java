@@ -17,7 +17,6 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
         implements DigitalBooleanActionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = DigitalBooleanActionBean.UNKNOWN;
     
     
@@ -44,18 +43,6 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
         _parent = parent;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
-    }
-    
     public String getNewSocketName() {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop

@@ -308,7 +308,8 @@
     }
 </pre>
         </div>
-      </div><!--#include virtual="/Footer.shtml" -->
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

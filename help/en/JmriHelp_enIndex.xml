@@ -403,19 +403,23 @@
 
  </indexitem>
  <indexitem text="LogixNG " target="html.tools.logixng.LogixNG">
-  <indexitem text="LogixNG Table " target="package.jmri.jmrit.logixng.LogixNGTable"/>
+  <indexitem text="LogixNG Table " target="package.jmri.jmrit.beantable.LogixNGTable"/>
 
   <indexitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>
 
   <indexitem text="ConditionalNG Editor " target="package.jmri.jmrit.logixng.ConditionalNGEditor"/>
 
-  <indexitem text="LogixNG Module Table " target="package.jmri.jmrit.logixng.LogixNGModuleTable"/>
+  <indexitem text="LogixNG Module Table " target="package.jmri.jmrit.beantable.LogixNGModuleTable"/>
 
-  <indexitem text="LogixNG Tables Table " target="package.jmri.jmrit.logixng.LogixNGTableTable"/>
+  <indexitem text="LogixNG Module Table Editor " target="package.jmri.jmrit.logixng.ModuleEditor"/>
+
+  <indexitem text="LogixNG Tables Table " target="package.jmri.jmrit.beantable.LogixNGTableTable"/>
 
   <indexitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
 
   <indexitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
+
+  <indexitem text="LogixNG Logix Import " target="package.jmri.jmrit.logixng.LogixImport"/>
 
  </indexitem>
  <indexitem text="LRoute " target="html.tools.LRoutes">

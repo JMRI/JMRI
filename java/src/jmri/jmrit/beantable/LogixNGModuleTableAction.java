@@ -72,6 +72,16 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected void setTitle() {
+        f.setTitle(Bundle.getMessage("TitleLogixNGModuleTable"));
+    }
+
+    @Override
+    public String getClassDescription() {
+        return Bundle.getMessage("TitleLogixNGModuleTable");        // NOI18N
+    }
+
+    @Override
     protected AbstractLogixNGEditor<Module> getEditor(BeanTableFrame<Module> f, BeanTableDataModel<Module> m, String sName) {
         ModuleEditor editor = new ModuleEditor(f, m, sName);
         editor.initComponents();
@@ -126,8 +136,18 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected String getAddTitleKey() {
+        return "TitleAddLogixNGModule";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGModuleCreateButtonHint";
+    }
+
+    @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.logixng.LogixNGModuleTable";  // NOI18N
+        return "package.jmri.jmrit.beantable.LogixNGModuleTable";  // NOI18N
     }
 
     /**
@@ -142,7 +162,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.logixng.LogixNGModuleTable", true);     // NOI18N
+                "package.jmri.jmrit.beantable.LogixNGModuleTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -151,6 +171,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
                 = new ArrayList<>(InstanceManager.getDefault(FemaleSocketManager.class).getSocketTypes().values());
         Collections.sort(list, (FemaleSocketManager.SocketType o1, FemaleSocketManager.SocketType o2) -> o1.getDescr().compareTo(o2.getDescr()));
 
+        _femaleSocketType.removeAllItems();
         for (FemaleSocketManager.SocketType socketType : list) {
             _femaleSocketType.addItem(socketType);
             if ("DefaultFemaleDigitalActionSocket".equals(socketType.getName())) {
@@ -201,10 +222,10 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
         panel31.setLayout(new FlowLayout());
-        JLabel message1 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGMessage1"));  // NOI18N
+        JLabel message1 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGModuleMessage1"));  // NOI18N
         panel31.add(message1);
         JPanel panel32 = new JPanel();
-        JLabel message2 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGMessage2"));  // NOI18N
+        JLabel message2 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGModuleMessage2"));  // NOI18N
         panel32.add(message2);
         panel3.add(panel31);
         panel3.add(panel32);

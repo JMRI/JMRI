@@ -48,7 +48,7 @@ public class LogLocalVariables extends AbstractDigitalAction {
         ConditionalNG c = getConditionalNG();
         log.warn(Bundle.getMessage("LogLocalVariables_Start"));
         for (SymbolTable.Symbol s : c.getSymbolTable().getSymbols().values()) {
-            log.warn(Bundle.getMessage("LogLocalVariables_Variable", s.getName(), c.getSymbolTable().getValue(s.getName())));
+            log.warn("    "+Bundle.getMessage("LogLocalVariables_Variable", s.getName(), c.getSymbolTable().getValue(s.getName())));
         }
         log.warn(Bundle.getMessage("LogLocalVariables_End"));
     }

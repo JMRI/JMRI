@@ -428,22 +428,6 @@ public abstract class AbstractBaseTestBase {
     }
     
     @Test
-    public void testLock() {
-        _base.setLock(Base.Lock.NONE);
-        Assert.assertTrue("Enum matches", Base.Lock.NONE == _base.getLock());
-        Assert.assertTrue("String matches", "No lock".equals(_base.getLock().toString()));
-        Assert.assertTrue("isChangeableByUser", _base.getLock().isChangeableByUser());
-        _base.setLock(Base.Lock.USER_LOCK);
-        Assert.assertTrue("Enum matches", Base.Lock.USER_LOCK == _base.getLock());
-        Assert.assertTrue("String matches", "User lock".equals(_base.getLock().toString()));
-        Assert.assertTrue("isChangeableByUser", _base.getLock().isChangeableByUser());
-        _base.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertTrue("Enum matches", Base.Lock.HARD_LOCK == _base.getLock());
-        Assert.assertTrue("String matches", "Hard lock".equals(_base.getLock().toString()));
-        Assert.assertFalse("isChangeableByUser", _base.getLock().isChangeableByUser());
-    }
-    
-    @Test
     public void testConstants() {
         Assert.assertTrue("String matches", "ChildCount".equals(Base.PROPERTY_CHILD_COUNT));
         Assert.assertTrue("String matches", "SocketConnected".equals(Base.PROPERTY_SOCKET_CONNECTED));
@@ -1065,16 +1049,6 @@ public abstract class AbstractBaseTestBase {
 
         @Override
         public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public Lock getLock() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setLock(Lock lock) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

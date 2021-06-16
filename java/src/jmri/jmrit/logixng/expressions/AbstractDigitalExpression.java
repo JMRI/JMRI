@@ -15,9 +15,7 @@ public abstract class AbstractDigitalExpression extends AbstractBase
         implements DigitalExpressionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = DigitalExpressionBean.UNKNOWN;
-    boolean _triggerOnChange = true;    // By default, trigger on change
     
     
     public AbstractDigitalExpression(String sys, String user)
@@ -67,31 +65,6 @@ public abstract class AbstractDigitalExpression extends AbstractBase
     public int getState() {
         log.warn("Unexpected call to getState in AbstractDigitalExpression.");  // NOI18N
         return _state;
-    }
-    
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setTriggerOnChange(boolean triggerOnChange) {
-        _triggerOnChange = triggerOnChange;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean getTriggerOnChange() {
-        return _triggerOnChange;
     }
     
     public String getNewSocketName() {

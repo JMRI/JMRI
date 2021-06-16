@@ -18,6 +18,7 @@ import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -296,6 +297,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
     private static final class FemaleSocketTreeRenderer implements TreeCellRenderer {
 
         private final FemaleSocketDecorator _decorator;
+        private static ImageIcon _lockIcon;
         
         
         public FemaleSocketTreeRenderer(FemaleSocketDecorator decorator) {
@@ -339,7 +341,25 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
+                
                 MaleSocket connectedSocket = socket.getConnectedSocket();
+                
+                if (connectedSocket.isSystem()) {
+                    JLabel systemLabel = new JLabel(" "+Bundle.getMessage("TreePane_System")+" ", JLabel.CENTER);
+                    systemLabel.setForeground(Color.YELLOW);
+                    systemLabel.setBackground(Color.RED);
+                    systemLabel.setOpaque(true);
+                    panel.add(systemLabel);
+                    panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+                }
+                
+                if (connectedSocket.isLocked()) {
+                    if (_lockIcon == null) {
+                        _lockIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/logixng/lock.png", FileUtil.Location.INSTALLED));
+                    }
+                    JLabel icLabel = new JLabel(_lockIcon, JLabel.CENTER);
+                    panel.add(icLabel);
+                }
                 
                 String comment = connectedSocket.getComment();
                 if (comment != null) {

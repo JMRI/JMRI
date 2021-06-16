@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.configurexml;
 
+import jmri.jmrit.logixng.TableRowOrColumn;
+
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
 import java.io.*;
@@ -113,7 +115,7 @@ public class StoreAndLoadTest {
         // Load table turnout_and_signals.csv
         jmri.jmrit.logixng.NamedTable csvTable =
                 InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+                        .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         Assert.assertNotNull(csvTable);
 
         // Create module IQM1
@@ -189,7 +191,6 @@ public class StoreAndLoadTest {
                 digitalActionManager.registerAction(new DigitalMany(
                                         digitalActionManager.getAutoSystemName(), null));
         femaleRootSocket.connect(actionManySocket);
-        femaleRootSocket.setLock(Base.Lock.HARD_LOCK);
 
 
 
@@ -199,21 +200,25 @@ public class StoreAndLoadTest {
         ActionBlock actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         MaleSocket maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setEnabled(false);
+        maleSocket.setLocked(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        maleSocket.setLocked(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        maleSocket.setSystem(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // Direct / Direct / Direct :: SetValue
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / Direct / Direct :: SetValue");
+        maleSocket.setLocked(false);
 
         actionBlock.setAddressing(NamedBeanAddressing.Direct);
         actionBlock.setBlock(block1);
@@ -1549,6 +1554,55 @@ public class StoreAndLoadTest {
         booleanMany.getChild(2).connect(maleSocket);
 
 
+        jmri.jmrit.logixng.actions.LogData logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(logData);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
+        logData.setComment("A comment");
+        logData.setLogToLog(true);
+        logData.setLogToScriptOutput(true);
+        logData.setFormat("Some text");
+        logData.setFormatType(jmri.jmrit.logixng.actions.LogData.FormatType.OnlyText);
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalActionManager.registerAction(logData);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
+        logData.setComment("A comment");
+        logData.setLogToLog(true);
+        logData.setLogToScriptOutput(true);
+        logData.setFormat("");
+        logData.setFormatType(jmri.jmrit.logixng.actions.LogData.FormatType.CommaSeparatedList);
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.Memory, "IM1"));
+        maleSocket = digitalActionManager.registerAction(logData);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
+        logData.setComment("A comment");
+        logData.setLogToLog(true);
+        logData.setLogToScriptOutput(true);
+        logData.setFormat("MyVar has the value %s");
+        logData.setFormatType(jmri.jmrit.logixng.actions.LogData.FormatType.StringFormat);
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.Reference, "{MyVar}"));
+        maleSocket = digitalActionManager.registerAction(logData);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
+        logData.setComment("A comment");
+        logData.setLogToLog(true);
+        logData.setLogToScriptOutput(true);
+        logData.setFormat("str(10): %s, 25: %d, IM1: %s, MyVar: %s");
+        logData.setFormatType(jmri.jmrit.logixng.actions.LogData.FormatType.StringFormat);
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.Formula, "str(10)"));
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.Formula, "25"));
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.Memory, "IM1"));
+        logData.getDataList().add(new jmri.jmrit.logixng.actions.LogData.Data(jmri.jmrit.logixng.actions.LogData.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalActionManager.registerAction(logData);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         LogLocalVariables logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         maleSocket.setEnabled(false);
@@ -1658,7 +1712,7 @@ public class StoreAndLoadTest {
 
 
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
-        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -1667,7 +1721,7 @@ public class StoreAndLoadTest {
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setTable(csvTable);
-        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Row);
+        tableForEach.setTableRowOrColumn(TableRowOrColumn.Row);
         tableForEach.setRowOrColumnName("North yard");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -1679,7 +1733,7 @@ public class StoreAndLoadTest {
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setTable(csvTable);
-        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
         tableForEach.setRowOrColumnName("Second turnout");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -2759,6 +2813,55 @@ public class StoreAndLoadTest {
         lastResultOfDigitalExpression.setComment("A comment");
         lastResultOfDigitalExpression.setDigitalExpression("A hold expression");
         maleSocket = digitalExpressionManager.registerExpression(lastResultOfDigitalExpression);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        jmri.jmrit.logixng.expressions.LogData logDataExpr = new jmri.jmrit.logixng.expressions.LogData(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(logDataExpr);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        logDataExpr = new jmri.jmrit.logixng.expressions.LogData(digitalExpressionManager.getAutoSystemName(), null);
+        logDataExpr.setComment("A comment");
+        logDataExpr.setLogToLog(true);
+        logDataExpr.setLogToScriptOutput(true);
+        logDataExpr.setFormat("Some text");
+        logDataExpr.setFormatType(jmri.jmrit.logixng.expressions.LogData.FormatType.OnlyText);
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalExpressionManager.registerExpression(logDataExpr);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        logDataExpr = new jmri.jmrit.logixng.expressions.LogData(digitalExpressionManager.getAutoSystemName(), null);
+        logDataExpr.setComment("A comment");
+        logDataExpr.setLogToLog(true);
+        logDataExpr.setLogToScriptOutput(true);
+        logDataExpr.setFormat("");
+        logDataExpr.setFormatType(jmri.jmrit.logixng.expressions.LogData.FormatType.CommaSeparatedList);
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.Memory, "IM1"));
+        maleSocket = digitalExpressionManager.registerExpression(logDataExpr);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        logDataExpr = new jmri.jmrit.logixng.expressions.LogData(digitalExpressionManager.getAutoSystemName(), null);
+        logDataExpr.setComment("A comment");
+        logDataExpr.setLogToLog(true);
+        logDataExpr.setLogToScriptOutput(true);
+        logDataExpr.setFormat("MyVar has the value %s");
+        logDataExpr.setFormatType(jmri.jmrit.logixng.expressions.LogData.FormatType.StringFormat);
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.Reference, "{MyVar}"));
+        maleSocket = digitalExpressionManager.registerExpression(logDataExpr);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        logDataExpr = new jmri.jmrit.logixng.expressions.LogData(digitalExpressionManager.getAutoSystemName(), null);
+        logDataExpr.setComment("A comment");
+        logDataExpr.setLogToLog(true);
+        logDataExpr.setLogToScriptOutput(true);
+        logDataExpr.setFormat("str(10): %s, 25: %d, IM1: %s, MyVar: %s");
+        logDataExpr.setFormatType(jmri.jmrit.logixng.expressions.LogData.FormatType.StringFormat);
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.Formula, "str(10)"));
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.Formula, "25"));
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.Memory, "IM1"));
+        logDataExpr.getDataList().add(new jmri.jmrit.logixng.expressions.LogData.Data(jmri.jmrit.logixng.expressions.LogData.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalExpressionManager.registerExpression(logDataExpr);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
