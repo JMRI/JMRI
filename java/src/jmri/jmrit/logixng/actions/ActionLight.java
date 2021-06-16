@@ -363,7 +363,10 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                 throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
         }
         try {
-            return Integer.parseInt(newValue);
+            int newInt = Integer.parseInt(newValue);
+            if (newInt < 0) newInt = 0;
+            if (newInt > 100) newInt = 100;
+            return newInt;
         } catch (NumberFormatException ex) {
             return 0;
         }
