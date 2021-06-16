@@ -23,6 +23,7 @@ public class AnalogFactory implements AnalogExpressionFactory {
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionConstant.class));
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionMemory.class));
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, AnalogFormula.class));
+        analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, TimeSinceMidnight.class));
         return analogExpressionClasses;
     }
 

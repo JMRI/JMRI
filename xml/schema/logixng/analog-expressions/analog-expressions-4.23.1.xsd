@@ -28,6 +28,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-constant-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-memory-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/formula-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/time-since-midnight-4.23.1.xsd"/>
 
     <xs:complexType name="LogixNG_AnalogExpressionManagerType">
       <xs:annotation>
@@ -45,7 +46,8 @@
 
             <xs:element name="AnalogExpressionConstant"  type="LogixNG_AnalogExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="AnalogExpressionMemory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="AnalogFormula"                     type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogFormula"             type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="TimeSinceMidnight"         type="LogixNG_AnalogExpression_TimeSinceMidnightType" minOccurs="0" maxOccurs="unbounded" />
 
             <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

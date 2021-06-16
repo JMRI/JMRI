@@ -65,6 +65,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IL2</systemName>
       <userName>Some light</userName>
     </light>
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>ILVariable</systemName>
+    </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
     <memory>
@@ -77,7 +80,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="7:43 PM">
+    <memory value="4:08 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -147,7 +150,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Jun 15 19:43:38 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Jun 16 04:08:15 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -307,7 +310,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Start expression</comment>
       <Expressions>
         <Socket>
-          <socketName>wach3ijaph</socketName>
+          <socketName>vzebjhe6vg</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -362,7 +365,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Stop expression</comment>
       <Expressions>
         <Socket>
-          <socketName>exchs1hosc</socketName>
+          <socketName>shyhc6ddzz</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -417,7 +420,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Start expression</comment>
       <Expressions>
         <Socket>
-          <socketName>qb2mbvzho1</socketName>
+          <socketName>gi7k5cdexk</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -472,7 +475,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Stop expression</comment>
       <Expressions>
         <Socket>
-          <socketName>u5ryhxupqt</socketName>
+          <socketName>gc1ytd8lme</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -527,7 +530,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Reset expression</comment>
       <Expressions>
         <Socket>
-          <socketName>stokvn5ays</socketName>
+          <socketName>k5anh9tl6g</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -582,7 +585,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Expression socket 1</comment>
       <Expressions>
         <Socket>
-          <socketName>bmdz8155n7</socketName>
+          <socketName>u72n322i6g</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -637,7 +640,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>Expression socket 2</comment>
       <Expressions>
         <Socket>
-          <socketName>gi7k5cdexk</socketName>
+          <socketName>qmnvr8x6dh</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -746,11 +749,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0009</systemName>
       <Expressions>
         <Socket>
-          <socketName>yftc77a94b</socketName>
+          <socketName>ec8s4bhwzk</socketName>
           <systemName>IQDE:AUTO:0010</systemName>
         </Socket>
         <Socket>
-          <socketName>symnfiljwk</socketName>
+          <socketName>ye9z4iltm2</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -805,411 +808,411 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Expressions>
         <Socket>
-          <socketName>w166rlk52a</socketName>
+          <socketName>akq14phscz</socketName>
           <systemName>IQDE:AUTO:0011</systemName>
         </Socket>
         <Socket>
-          <socketName>ie3vivqew6</socketName>
+          <socketName>r2q1sptvpm</socketName>
           <systemName>IQDE:AUTO:0012</systemName>
         </Socket>
         <Socket>
-          <socketName>mxgcnbjq5v</socketName>
+          <socketName>xtv2pkdjuo</socketName>
           <systemName>IQDE:AUTO:0013</systemName>
         </Socket>
         <Socket>
-          <socketName>ww2jevw81g</socketName>
+          <socketName>u51ark9p7s</socketName>
           <systemName>IQDE:AUTO:0014</systemName>
         </Socket>
         <Socket>
-          <socketName>qbmi1t52gn</socketName>
+          <socketName>snawzbgg95</socketName>
           <systemName>IQDE:AUTO:0015</systemName>
         </Socket>
         <Socket>
-          <socketName>jeqqv9etpr</socketName>
+          <socketName>tcopk5hswx</socketName>
           <systemName>IQDE:AUTO:0016</systemName>
         </Socket>
         <Socket>
-          <socketName>akq14phscz</socketName>
+          <socketName>ntvvjkc2si</socketName>
           <systemName>IQDE:AUTO:0017</systemName>
         </Socket>
         <Socket>
-          <socketName>sr2gfec2na</socketName>
+          <socketName>f59nolepsp</socketName>
           <systemName>IQDE:AUTO:0018</systemName>
         </Socket>
         <Socket>
-          <socketName>r2q1sptvpm</socketName>
+          <socketName>v5a5rqx9y2</socketName>
           <systemName>IQDE:AUTO:0019</systemName>
         </Socket>
         <Socket>
-          <socketName>gnalq7ww6b</socketName>
+          <socketName>f3kvmahi6f</socketName>
           <systemName>IQDE:AUTO:0020</systemName>
         </Socket>
         <Socket>
-          <socketName>xtv2pkdjuo</socketName>
+          <socketName>xouo7pa12m</socketName>
           <systemName>IQDE:AUTO:0021</systemName>
         </Socket>
         <Socket>
-          <socketName>sllnnotucc</socketName>
+          <socketName>b9odi4iwyj</socketName>
           <systemName>IQDE:AUTO:0022</systemName>
         </Socket>
         <Socket>
-          <socketName>u51ark9p7s</socketName>
+          <socketName>ao8qgopozn</socketName>
           <systemName>IQDE:AUTO:0023</systemName>
         </Socket>
         <Socket>
-          <socketName>blucr56qtq</socketName>
+          <socketName>p8lmx1u48w</socketName>
           <systemName>IQDE:AUTO:0024</systemName>
         </Socket>
         <Socket>
-          <socketName>snawzbgg95</socketName>
+          <socketName>p8n79ygwyi</socketName>
           <systemName>IQDE:AUTO:0025</systemName>
         </Socket>
         <Socket>
-          <socketName>oez1yoi9lf</socketName>
+          <socketName>c1fhnnefcv</socketName>
           <systemName>IQDE:AUTO:0026</systemName>
         </Socket>
         <Socket>
-          <socketName>tcopk5hswx</socketName>
+          <socketName>y2lkmccbgm</socketName>
           <systemName>IQDE:AUTO:0027</systemName>
         </Socket>
         <Socket>
-          <socketName>bkb4uwnfni</socketName>
+          <socketName>f2yy1htw11</socketName>
           <systemName>IQDE:AUTO:0028</systemName>
         </Socket>
         <Socket>
-          <socketName>ntvvjkc2si</socketName>
+          <socketName>j9h3fwg5o1</socketName>
           <systemName>IQDE:AUTO:0029</systemName>
         </Socket>
         <Socket>
-          <socketName>f59nolepsp</socketName>
+          <socketName>of4fe695p9</socketName>
           <systemName>IQDE:AUTO:0030</systemName>
         </Socket>
         <Socket>
-          <socketName>v5a5rqx9y2</socketName>
+          <socketName>ifdxunwxau</socketName>
           <systemName>IQDE:AUTO:0031</systemName>
         </Socket>
         <Socket>
-          <socketName>f3kvmahi6f</socketName>
+          <socketName>udkpxxuyoj</socketName>
           <systemName>IQDE:AUTO:0032</systemName>
         </Socket>
         <Socket>
-          <socketName>xouo7pa12m</socketName>
+          <socketName>scd4uvb6nm</socketName>
           <systemName>IQDE:AUTO:0033</systemName>
         </Socket>
         <Socket>
-          <socketName>b9odi4iwyj</socketName>
+          <socketName>r8kfv5lcff</socketName>
           <systemName>IQDE:AUTO:0034</systemName>
         </Socket>
         <Socket>
-          <socketName>ao8qgopozn</socketName>
+          <socketName>szel4qledn</socketName>
           <systemName>IQDE:AUTO:0035</systemName>
         </Socket>
         <Socket>
-          <socketName>p8lmx1u48w</socketName>
+          <socketName>usgky5rsrb</socketName>
           <systemName>IQDE:AUTO:0036</systemName>
         </Socket>
         <Socket>
-          <socketName>p8n79ygwyi</socketName>
+          <socketName>qn6ys77dah</socketName>
           <systemName>IQDE:AUTO:0037</systemName>
         </Socket>
         <Socket>
-          <socketName>c1fhnnefcv</socketName>
+          <socketName>ikr62o354f</socketName>
           <systemName>IQDE:AUTO:0038</systemName>
         </Socket>
         <Socket>
-          <socketName>y2lkmccbgm</socketName>
+          <socketName>ls8re8zc83</socketName>
           <systemName>IQDE:AUTO:0039</systemName>
         </Socket>
         <Socket>
-          <socketName>f2yy1htw11</socketName>
+          <socketName>pa5byjgekz</socketName>
           <systemName>IQDE:AUTO:0040</systemName>
         </Socket>
         <Socket>
-          <socketName>j9h3fwg5o1</socketName>
+          <socketName>qwxak5jrz4</socketName>
           <systemName>IQDE:AUTO:0041</systemName>
         </Socket>
         <Socket>
-          <socketName>of4fe695p9</socketName>
+          <socketName>tsi7nvl5qx</socketName>
           <systemName>IQDE:AUTO:0042</systemName>
         </Socket>
         <Socket>
-          <socketName>ifdxunwxau</socketName>
+          <socketName>b5eoozm7v8</socketName>
           <systemName>IQDE:AUTO:0043</systemName>
         </Socket>
         <Socket>
-          <socketName>udkpxxuyoj</socketName>
+          <socketName>iqvjz3ai43</socketName>
           <systemName>IQDE:AUTO:0044</systemName>
         </Socket>
         <Socket>
-          <socketName>scd4uvb6nm</socketName>
+          <socketName>q7pjruu62p</socketName>
           <systemName>IQDE:AUTO:0045</systemName>
         </Socket>
         <Socket>
-          <socketName>r8kfv5lcff</socketName>
+          <socketName>qsleqygrxy</socketName>
           <systemName>IQDE:AUTO:0046</systemName>
         </Socket>
         <Socket>
-          <socketName>szel4qledn</socketName>
+          <socketName>up7ccft1so</socketName>
           <systemName>IQDE:AUTO:0047</systemName>
         </Socket>
         <Socket>
-          <socketName>usgky5rsrb</socketName>
+          <socketName>vmt4nkw5ji</socketName>
           <systemName>IQDE:AUTO:0048</systemName>
         </Socket>
         <Socket>
-          <socketName>qn6ys77dah</socketName>
+          <socketName>i9fbdv1y2r</socketName>
           <systemName>IQDE:AUTO:0049</systemName>
         </Socket>
         <Socket>
-          <socketName>ikr62o354f</socketName>
+          <socketName>ly4lh5kdgf</socketName>
           <systemName>IQDE:AUTO:0050</systemName>
         </Socket>
         <Socket>
-          <socketName>ls8re8zc83</socketName>
+          <socketName>dw5edsemk8</socketName>
           <systemName>IQDE:AUTO:0051</systemName>
         </Socket>
         <Socket>
-          <socketName>pa5byjgekz</socketName>
+          <socketName>uxmfn31vht</socketName>
           <systemName>IQDE:AUTO:0052</systemName>
         </Socket>
         <Socket>
-          <socketName>qwxak5jrz4</socketName>
+          <socketName>krawaol4j1</socketName>
           <systemName>IQDE:AUTO:0053</systemName>
         </Socket>
         <Socket>
-          <socketName>tsi7nvl5qx</socketName>
+          <socketName>roswglnd19</socketName>
           <systemName>IQDE:AUTO:0054</systemName>
         </Socket>
         <Socket>
-          <socketName>b5eoozm7v8</socketName>
+          <socketName>i8w6roy73w</socketName>
           <systemName>IQDE:AUTO:0055</systemName>
         </Socket>
         <Socket>
-          <socketName>iqvjz3ai43</socketName>
+          <socketName>bfl76ouqcu</socketName>
           <systemName>IQDE:AUTO:0056</systemName>
         </Socket>
         <Socket>
-          <socketName>q7pjruu62p</socketName>
+          <socketName>j124fpkw5o</socketName>
           <systemName>IQDE:AUTO:0057</systemName>
         </Socket>
         <Socket>
-          <socketName>qsleqygrxy</socketName>
+          <socketName>weqsk6gy7h</socketName>
           <systemName>IQDE:AUTO:0058</systemName>
         </Socket>
         <Socket>
-          <socketName>up7ccft1so</socketName>
+          <socketName>ev1uzfd9pf</socketName>
           <systemName>IQDE:AUTO:0059</systemName>
         </Socket>
         <Socket>
-          <socketName>vmt4nkw5ji</socketName>
+          <socketName>yu6vhgpgrt</socketName>
           <systemName>IQDE:AUTO:0060</systemName>
         </Socket>
         <Socket>
-          <socketName>i9fbdv1y2r</socketName>
+          <socketName>qziw2js157</socketName>
           <systemName>IQDE:AUTO:0061</systemName>
         </Socket>
         <Socket>
-          <socketName>ly4lh5kdgf</socketName>
+          <socketName>tumq31qb2x</socketName>
           <systemName>IQDE:AUTO:0062</systemName>
         </Socket>
         <Socket>
-          <socketName>dw5edsemk8</socketName>
+          <socketName>hc36x5hm1t</socketName>
           <systemName>IQDE:AUTO:0063</systemName>
         </Socket>
         <Socket>
-          <socketName>uxmfn31vht</socketName>
+          <socketName>yeczby1jpx</socketName>
           <systemName>IQDE:AUTO:0064</systemName>
         </Socket>
         <Socket>
-          <socketName>krawaol4j1</socketName>
+          <socketName>qucp384dbe</socketName>
           <systemName>IQDE:AUTO:0065</systemName>
         </Socket>
         <Socket>
-          <socketName>roswglnd19</socketName>
+          <socketName>zqukvpivam</socketName>
           <systemName>IQDE:AUTO:0066</systemName>
         </Socket>
         <Socket>
-          <socketName>i8w6roy73w</socketName>
+          <socketName>s5486c73xy</socketName>
           <systemName>IQDE:AUTO:0067</systemName>
         </Socket>
         <Socket>
-          <socketName>bfl76ouqcu</socketName>
+          <socketName>udvhqyih8i</socketName>
           <systemName>IQDE:AUTO:0068</systemName>
         </Socket>
         <Socket>
-          <socketName>j124fpkw5o</socketName>
+          <socketName>jmiwfs2ayn</socketName>
           <systemName>IQDE:AUTO:0069</systemName>
         </Socket>
         <Socket>
-          <socketName>weqsk6gy7h</socketName>
+          <socketName>s21lh2lywy</socketName>
           <systemName>IQDE:AUTO:0070</systemName>
         </Socket>
         <Socket>
-          <socketName>ev1uzfd9pf</socketName>
+          <socketName>wbrpj9yual</socketName>
           <systemName>IQDE:AUTO:0071</systemName>
         </Socket>
         <Socket>
-          <socketName>yu6vhgpgrt</socketName>
+          <socketName>wry8a7lhy2</socketName>
           <systemName>IQDE:AUTO:0072</systemName>
         </Socket>
         <Socket>
-          <socketName>qziw2js157</socketName>
+          <socketName>f5285japt9</socketName>
           <systemName>IQDE:AUTO:0073</systemName>
         </Socket>
         <Socket>
-          <socketName>tumq31qb2x</socketName>
+          <socketName>nqzp4neyye</socketName>
           <systemName>IQDE:AUTO:0074</systemName>
         </Socket>
         <Socket>
-          <socketName>hc36x5hm1t</socketName>
+          <socketName>to1f9hvpnh</socketName>
           <systemName>IQDE:AUTO:0075</systemName>
         </Socket>
         <Socket>
-          <socketName>yeczby1jpx</socketName>
+          <socketName>v8961gjcvo</socketName>
           <systemName>IQDE:AUTO:0076</systemName>
         </Socket>
         <Socket>
-          <socketName>qucp384dbe</socketName>
+          <socketName>v21ms98uyr</socketName>
           <systemName>IQDE:AUTO:0077</systemName>
         </Socket>
         <Socket>
-          <socketName>zqukvpivam</socketName>
+          <socketName>tww2mhuysn</socketName>
           <systemName>IQDE:AUTO:0078</systemName>
         </Socket>
         <Socket>
-          <socketName>s5486c73xy</socketName>
+          <socketName>olw9jojx6f</socketName>
           <systemName>IQDE:AUTO:0079</systemName>
         </Socket>
         <Socket>
-          <socketName>udvhqyih8i</socketName>
+          <socketName>ahj57ij2vf</socketName>
           <systemName>IQDE:AUTO:0080</systemName>
         </Socket>
         <Socket>
-          <socketName>jmiwfs2ayn</socketName>
+          <socketName>xonhwlywsj</socketName>
           <systemName>IQDE:AUTO:0081</systemName>
         </Socket>
         <Socket>
-          <socketName>s21lh2lywy</socketName>
+          <socketName>vcflui7xie</socketName>
           <systemName>IQDE:AUTO:0082</systemName>
         </Socket>
         <Socket>
-          <socketName>wbrpj9yual</socketName>
+          <socketName>n86bvdjbmx</socketName>
           <systemName>IQDE:AUTO:0083</systemName>
         </Socket>
         <Socket>
-          <socketName>wry8a7lhy2</socketName>
+          <socketName>vv8232t4qs</socketName>
           <systemName>IQDE:AUTO:0084</systemName>
         </Socket>
         <Socket>
-          <socketName>f5285japt9</socketName>
+          <socketName>t6bniugfo1</socketName>
           <systemName>IQDE:AUTO:0085</systemName>
         </Socket>
         <Socket>
-          <socketName>nqzp4neyye</socketName>
+          <socketName>tp5bjvheub</socketName>
           <systemName>IQDE:AUTO:0086</systemName>
         </Socket>
         <Socket>
-          <socketName>to1f9hvpnh</socketName>
+          <socketName>el998o77bt</socketName>
           <systemName>IQDE:AUTO:0087</systemName>
         </Socket>
         <Socket>
-          <socketName>v8961gjcvo</socketName>
+          <socketName>xl7lk276mu</socketName>
           <systemName>IQDE:AUTO:0088</systemName>
         </Socket>
         <Socket>
-          <socketName>v21ms98uyr</socketName>
+          <socketName>ji5cwt3dpr</socketName>
           <systemName>IQDE:AUTO:0089</systemName>
         </Socket>
         <Socket>
-          <socketName>tww2mhuysn</socketName>
+          <socketName>fx6bj1pby8</socketName>
           <systemName>IQDE:AUTO:0090</systemName>
         </Socket>
         <Socket>
-          <socketName>olw9jojx6f</socketName>
+          <socketName>j72o9jycuo</socketName>
           <systemName>IQDE:AUTO:0091</systemName>
         </Socket>
         <Socket>
-          <socketName>ahj57ij2vf</socketName>
+          <socketName>w9axaaiwjl</socketName>
           <systemName>IQDE:AUTO:0092</systemName>
         </Socket>
         <Socket>
-          <socketName>xonhwlywsj</socketName>
+          <socketName>yqdwo6z1ju</socketName>
           <systemName>IQDE:AUTO:0093</systemName>
         </Socket>
         <Socket>
-          <socketName>n86bvdjbmx</socketName>
+          <socketName>ra512no22r</socketName>
           <systemName>IQDE:AUTO:0094</systemName>
         </Socket>
         <Socket>
-          <socketName>t6bniugfo1</socketName>
+          <socketName>dk5662hstq</socketName>
           <systemName>IQDE:AUTO:0095</systemName>
         </Socket>
         <Socket>
-          <socketName>xl7lk276mu</socketName>
+          <socketName>u979lgoxk5</socketName>
           <systemName>IQDE:AUTO:0096</systemName>
         </Socket>
         <Socket>
-          <socketName>j72o9jycuo</socketName>
+          <socketName>y1fxgvagq8</socketName>
           <systemName>IQDE:AUTO:0097</systemName>
         </Socket>
         <Socket>
-          <socketName>w9axaaiwjl</socketName>
+          <socketName>v1ht4yinjo</socketName>
           <systemName>IQDE:AUTO:0098</systemName>
         </Socket>
         <Socket>
-          <socketName>yqdwo6z1ju</socketName>
+          <socketName>sn3vlnxnb6</socketName>
           <systemName>IQDE:AUTO:0099</systemName>
         </Socket>
         <Socket>
-          <socketName>sqmmdryzan</socketName>
+          <socketName>tx8zaqvk8j</socketName>
           <systemName>IQDE:AUTO:0100</systemName>
         </Socket>
         <Socket>
-          <socketName>ra512no22r</socketName>
+          <socketName>fes9m9b771</socketName>
           <systemName>IQDE:AUTO:0101</systemName>
         </Socket>
         <Socket>
-          <socketName>tfaf1xgc5w</socketName>
+          <socketName>kwxes4p5nm</socketName>
           <systemName>IQDE:AUTO:0102</systemName>
         </Socket>
         <Socket>
-          <socketName>dk5662hstq</socketName>
+          <socketName>qd2px3h6o8</socketName>
           <systemName>IQDE:AUTO:0103</systemName>
         </Socket>
         <Socket>
-          <socketName>t7t5n382iq</socketName>
+          <socketName>dr99ytuwcl</socketName>
           <systemName>IQDE:AUTO:0104</systemName>
         </Socket>
         <Socket>
-          <socketName>u979lgoxk5</socketName>
+          <socketName>n18l2whl6z</socketName>
           <systemName>IQDE:AUTO:0105</systemName>
         </Socket>
         <Socket>
-          <socketName>btjn8h4ya6</socketName>
+          <socketName>u2toh81dwl</socketName>
           <systemName>IQDE:AUTO:0106</systemName>
         </Socket>
         <Socket>
-          <socketName>v1ht4yinjo</socketName>
+          <socketName>afx1zc869t</socketName>
           <systemName>IQDE:AUTO:0107</systemName>
         </Socket>
         <Socket>
-          <socketName>tx8zaqvk8j</socketName>
+          <socketName>sle4w6n658</socketName>
           <systemName>IQDE:AUTO:0108</systemName>
         </Socket>
         <Socket>
-          <socketName>kwxes4p5nm</socketName>
+          <socketName>u6jlrl5tq5</socketName>
           <systemName>IQDE:AUTO:0109</systemName>
         </Socket>
         <Socket>
-          <socketName>dr99ytuwcl</socketName>
+          <socketName>y1fea7meqt</socketName>
           <systemName>IQDE:AUTO:0110</systemName>
         </Socket>
         <Socket>
-          <socketName>bwpywdh9nr</socketName>
+          <socketName>ve5q2jo279</socketName>
           <systemName>IQDE:AUTO:0111</systemName>
         </Socket>
         <Socket>
-          <socketName>n18l2whl6z</socketName>
+          <socketName>vp6oqkk6p1</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -1264,7 +1267,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <antecedent />
       <Expressions>
         <Socket>
-          <socketName>yw8m1pcmnn</socketName>
+          <socketName>sr2gfec2na</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -1319,7 +1322,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <antecedent />
       <Expressions>
         <Socket>
-          <socketName>oaecqvs2z3</socketName>
+          <socketName>gnalq7ww6b</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -1375,7 +1378,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <antecedent>R1 or R2</antecedent>
       <Expressions>
         <Socket>
-          <socketName>h69jag1em1</socketName>
+          <socketName>sllnnotucc</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -1430,7 +1433,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <antecedent />
       <Expressions>
         <Socket>
-          <socketName>v21s627l7l</socketName>
+          <socketName>blucr56qtq</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -1485,7 +1488,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <antecedent />
       <Expressions>
         <Socket>
-          <socketName>owpzdy41j3</socketName>
+          <socketName>oez1yoi9lf</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -1540,7 +1543,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <antecedent />
       <Expressions>
         <Socket>
-          <socketName>ec8s4bhwzk</socketName>
+          <socketName>bkb4uwnfni</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -6187,7 +6190,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0093</systemName>
       <Expressions>
         <Socket>
-          <socketName>vcflui7xie</socketName>
+          <socketName>sqmmdryzan</socketName>
         </Socket>
       </Expressions>
       <formula />
@@ -6243,7 +6246,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Expressions>
         <Socket>
-          <socketName>vv8232t4qs</socketName>
+          <socketName>tfaf1xgc5w</socketName>
         </Socket>
       </Expressions>
       <formula>n + 1</formula>
@@ -6297,10 +6300,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <Hold class="jmri.jmrit.logixng.expressions.configurexml.HoldXml">
       <systemName>IQDE:AUTO:0095</systemName>
       <TriggerSocket>
-        <socketName>tp5bjvheub</socketName>
+        <socketName>t7t5n382iq</socketName>
       </TriggerSocket>
       <HoldSocket>
-        <socketName>el998o77bt</socketName>
+        <socketName>xhjjf51pdt</socketName>
       </HoldSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -6354,10 +6357,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>A hold expression</userName>
       <comment>A comment</comment>
       <TriggerSocket>
-        <socketName>ji5cwt3dpr</socketName>
+        <socketName>hhexo4hqsi</socketName>
       </TriggerSocket>
       <HoldSocket>
-        <socketName>fx6bj1pby8</socketName>
+        <socketName>btjn8h4ya6</socketName>
       </HoldSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -6820,7 +6823,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <Not class="jmri.jmrit.logixng.expressions.configurexml.NotXml">
       <systemName>IQDE:AUTO:0104</systemName>
       <Socket>
-        <socketName>xhjjf51pdt</socketName>
+        <socketName>bwpywdh9nr</socketName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -6873,7 +6876,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0105</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>hhexo4hqsi</socketName>
+        <socketName>symnfiljwk</socketName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -6926,7 +6929,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0106</systemName>
       <Expressions>
         <Socket>
-          <socketName>y1fxgvagq8</socketName>
+          <socketName>zhmq5i5v7a</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -6981,7 +6984,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Expressions>
         <Socket>
-          <socketName>sn3vlnxnb6</socketName>
+          <socketName>yfbvjw5r6g</socketName>
         </Socket>
       </Expressions>
       <MaleSocket>
@@ -7034,7 +7037,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <TriggerOnce class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
       <systemName>IQDE:AUTO:0108</systemName>
       <Socket>
-        <socketName>fes9m9b771</socketName>
+        <socketName>r93k7ocm7l</socketName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -7087,7 +7090,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0109</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>qd2px3h6o8</socketName>
+        <socketName>tj554qda29</socketName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -7359,239 +7362,239 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <systemName>IQDA:AUTO:0032</systemName>
         </Socket>
         <Socket>
-          <socketName>y7mbaogrq3</socketName>
+          <socketName>lbuobt6h9a</socketName>
           <systemName>IQDA:AUTO:0033</systemName>
         </Socket>
         <Socket>
-          <socketName>lbuobt6h9a</socketName>
+          <socketName>lwch5r5x9z</socketName>
           <systemName>IQDA:AUTO:0034</systemName>
         </Socket>
         <Socket>
-          <socketName>szt8ipqrvj</socketName>
+          <socketName>a9nebpam2x</socketName>
           <systemName>IQDA:AUTO:0035</systemName>
         </Socket>
         <Socket>
-          <socketName>lwch5r5x9z</socketName>
+          <socketName>a7ojx9h6td</socketName>
           <systemName>IQDA:AUTO:0036</systemName>
         </Socket>
         <Socket>
-          <socketName>qi3wcy513v</socketName>
+          <socketName>qgknx3y54l</socketName>
           <systemName>IQDA:AUTO:0037</systemName>
         </Socket>
         <Socket>
-          <socketName>a9nebpam2x</socketName>
+          <socketName>rsqu1tmpdh</socketName>
           <systemName>IQDA:AUTO:0038</systemName>
         </Socket>
         <Socket>
-          <socketName>cay24af3fi</socketName>
+          <socketName>drjqtbqxni</socketName>
           <systemName>IQDA:AUTO:0039</systemName>
         </Socket>
         <Socket>
-          <socketName>a7ojx9h6td</socketName>
+          <socketName>fpi5hehznd</socketName>
           <systemName>IQDA:AUTO:0040</systemName>
         </Socket>
         <Socket>
-          <socketName>xao2ycm9wh</socketName>
+          <socketName>njdlcf48cc</socketName>
           <systemName>IQDA:AUTO:0041</systemName>
         </Socket>
         <Socket>
-          <socketName>qgknx3y54l</socketName>
+          <socketName>vfix82hzhs</socketName>
           <systemName>IQDA:AUTO:0042</systemName>
         </Socket>
         <Socket>
-          <socketName>x2ui4lq7r6</socketName>
+          <socketName>v6twswasbs</socketName>
           <systemName>IQDA:AUTO:0043</systemName>
         </Socket>
         <Socket>
-          <socketName>rsqu1tmpdh</socketName>
+          <socketName>ucgr5wy2k1</socketName>
           <systemName>IQDA:AUTO:0044</systemName>
         </Socket>
         <Socket>
-          <socketName>drjqtbqxni</socketName>
+          <socketName>hgifhlk7gd</socketName>
           <systemName>IQDA:AUTO:0045</systemName>
         </Socket>
         <Socket>
-          <socketName>fpi5hehznd</socketName>
+          <socketName>f194tpq2sf</socketName>
           <systemName>IQDA:AUTO:0046</systemName>
         </Socket>
         <Socket>
-          <socketName>njdlcf48cc</socketName>
+          <socketName>nyuj76zjmw</socketName>
           <systemName>IQDA:AUTO:0047</systemName>
         </Socket>
         <Socket>
-          <socketName>vfix82hzhs</socketName>
+          <socketName>k6oruaz2c3</socketName>
           <systemName>IQDA:AUTO:0048</systemName>
         </Socket>
         <Socket>
-          <socketName>v6twswasbs</socketName>
+          <socketName>tctqt441y5</socketName>
           <systemName>IQDA:AUTO:0049</systemName>
         </Socket>
         <Socket>
-          <socketName>ucgr5wy2k1</socketName>
+          <socketName>sfw3hcrikd</socketName>
           <systemName>IQDA:AUTO:0050</systemName>
         </Socket>
         <Socket>
-          <socketName>hgifhlk7gd</socketName>
+          <socketName>qgsy4eukcv</socketName>
           <systemName>IQDA:AUTO:0051</systemName>
         </Socket>
         <Socket>
-          <socketName>f194tpq2sf</socketName>
+          <socketName>l2qbfem9sj</socketName>
           <systemName>IQDA:AUTO:0052</systemName>
         </Socket>
         <Socket>
-          <socketName>nyuj76zjmw</socketName>
+          <socketName>q9dqxg9wjc</socketName>
           <systemName>IQDA:AUTO:0053</systemName>
         </Socket>
         <Socket>
-          <socketName>k6oruaz2c3</socketName>
+          <socketName>f14jxviv35</socketName>
           <systemName>IQDA:AUTO:0054</systemName>
         </Socket>
         <Socket>
-          <socketName>tctqt441y5</socketName>
+          <socketName>slcac3jrwp</socketName>
           <systemName>IQDA:AUTO:0055</systemName>
         </Socket>
         <Socket>
-          <socketName>sfw3hcrikd</socketName>
+          <socketName>x4ztnpdv2e</socketName>
           <systemName>IQDA:AUTO:0056</systemName>
         </Socket>
         <Socket>
-          <socketName>qgsy4eukcv</socketName>
+          <socketName>w22st9drk8</socketName>
           <systemName>IQDA:AUTO:0057</systemName>
         </Socket>
         <Socket>
-          <socketName>l2qbfem9sj</socketName>
+          <socketName>sclpnrqf2j</socketName>
           <systemName>IQDA:AUTO:0058</systemName>
         </Socket>
         <Socket>
-          <socketName>q9dqxg9wjc</socketName>
+          <socketName>fdhtlhfjob</socketName>
           <systemName>IQDA:AUTO:0059</systemName>
         </Socket>
         <Socket>
-          <socketName>f14jxviv35</socketName>
+          <socketName>maa5uuarv7</socketName>
           <systemName>IQDA:AUTO:0060</systemName>
         </Socket>
         <Socket>
-          <socketName>slcac3jrwp</socketName>
+          <socketName>quixsgpzmh</socketName>
           <systemName>IQDA:AUTO:0061</systemName>
         </Socket>
         <Socket>
-          <socketName>x4ztnpdv2e</socketName>
+          <socketName>fyr3kjpi54</socketName>
           <systemName>IQDA:AUTO:0062</systemName>
         </Socket>
         <Socket>
-          <socketName>w22st9drk8</socketName>
+          <socketName>l9s2ps4o8h</socketName>
           <systemName>IQDA:AUTO:0063</systemName>
         </Socket>
         <Socket>
-          <socketName>sclpnrqf2j</socketName>
+          <socketName>qleoow56m1</socketName>
           <systemName>IQDA:AUTO:0064</systemName>
         </Socket>
         <Socket>
-          <socketName>fdhtlhfjob</socketName>
+          <socketName>fr9jtpltce</socketName>
           <systemName>IQDA:AUTO:0065</systemName>
         </Socket>
         <Socket>
-          <socketName>maa5uuarv7</socketName>
+          <socketName>fcxg5k4p5u</socketName>
           <systemName>IQDA:AUTO:0066</systemName>
         </Socket>
         <Socket>
-          <socketName>quixsgpzmh</socketName>
+          <socketName>vr7syf9kk7</socketName>
           <systemName>IQDA:AUTO:0067</systemName>
         </Socket>
         <Socket>
-          <socketName>fyr3kjpi54</socketName>
+          <socketName>peqkja2ipm</socketName>
           <systemName>IQDA:AUTO:0068</systemName>
         </Socket>
         <Socket>
-          <socketName>l9s2ps4o8h</socketName>
+          <socketName>wuozkpj4qs</socketName>
           <systemName>IQDA:AUTO:0069</systemName>
         </Socket>
         <Socket>
-          <socketName>qleoow56m1</socketName>
+          <socketName>ib12rrp884</socketName>
           <systemName>IQDA:AUTO:0070</systemName>
         </Socket>
         <Socket>
-          <socketName>fr9jtpltce</socketName>
+          <socketName>g5ym3wf7ip</socketName>
           <systemName>IQDA:AUTO:0071</systemName>
         </Socket>
         <Socket>
-          <socketName>fcxg5k4p5u</socketName>
+          <socketName>beqkqnx81j</socketName>
           <systemName>IQDA:AUTO:0072</systemName>
         </Socket>
         <Socket>
-          <socketName>vr7syf9kk7</socketName>
+          <socketName>o5dk5own18</socketName>
           <systemName>IQDA:AUTO:0073</systemName>
         </Socket>
         <Socket>
-          <socketName>peqkja2ipm</socketName>
+          <socketName>p6qalvxy2r</socketName>
           <systemName>IQDA:AUTO:0074</systemName>
         </Socket>
         <Socket>
-          <socketName>wuozkpj4qs</socketName>
+          <socketName>e6z49lbgcv</socketName>
           <systemName>IQDA:AUTO:0075</systemName>
         </Socket>
         <Socket>
-          <socketName>ib12rrp884</socketName>
+          <socketName>i1iledyegl</socketName>
           <systemName>IQDA:AUTO:0076</systemName>
         </Socket>
         <Socket>
-          <socketName>g5ym3wf7ip</socketName>
+          <socketName>bjfi2qq2ad</socketName>
           <systemName>IQDA:AUTO:0077</systemName>
         </Socket>
         <Socket>
-          <socketName>beqkqnx81j</socketName>
+          <socketName>v955fpg8pa</socketName>
           <systemName>IQDA:AUTO:0078</systemName>
         </Socket>
         <Socket>
-          <socketName>o5dk5own18</socketName>
+          <socketName>ahaxsl2dji</socketName>
           <systemName>IQDA:AUTO:0079</systemName>
         </Socket>
         <Socket>
-          <socketName>p6qalvxy2r</socketName>
+          <socketName>tiiwn9dpl2</socketName>
           <systemName>IQDA:AUTO:0080</systemName>
         </Socket>
         <Socket>
-          <socketName>e6z49lbgcv</socketName>
+          <socketName>g6ywrwfbsw</socketName>
           <systemName>IQDA:AUTO:0081</systemName>
         </Socket>
         <Socket>
-          <socketName>i1iledyegl</socketName>
+          <socketName>lkme7ire48</socketName>
           <systemName>IQDA:AUTO:0082</systemName>
         </Socket>
         <Socket>
-          <socketName>bjfi2qq2ad</socketName>
+          <socketName>lwfg7raaxt</socketName>
           <systemName>IQDA:AUTO:0083</systemName>
         </Socket>
         <Socket>
-          <socketName>v955fpg8pa</socketName>
+          <socketName>sfdp1ie22l</socketName>
           <systemName>IQDA:AUTO:0084</systemName>
         </Socket>
         <Socket>
-          <socketName>ahaxsl2dji</socketName>
+          <socketName>supffeoriw</socketName>
           <systemName>IQDA:AUTO:0085</systemName>
         </Socket>
         <Socket>
-          <socketName>tiiwn9dpl2</socketName>
+          <socketName>jta9fqd9x9</socketName>
           <systemName>IQDA:AUTO:0086</systemName>
         </Socket>
         <Socket>
-          <socketName>g6ywrwfbsw</socketName>
+          <socketName>neju3dvl7d</socketName>
           <systemName>IQDA:AUTO:0087</systemName>
         </Socket>
         <Socket>
-          <socketName>lkme7ire48</socketName>
+          <socketName>p9p72y32w5</socketName>
           <systemName>IQDA:AUTO:0088</systemName>
         </Socket>
         <Socket>
-          <socketName>lwfg7raaxt</socketName>
+          <socketName>veozkndye2</socketName>
           <systemName>IQDA:AUTO:0089</systemName>
         </Socket>
         <Socket>
-          <socketName>sfdp1ie22l</socketName>
+          <socketName>x9nrq2ioz5</socketName>
           <systemName>IQDA:AUTO:0090</systemName>
         </Socket>
         <Socket>
-          <socketName>p9p72y32w5</socketName>
+          <socketName>skhambco85</socketName>
           <systemName>IQDA:AUTO:0091</systemName>
         </Socket>
         <Socket>
@@ -7599,23 +7602,31 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <systemName>IQDA:AUTO:0092</systemName>
         </Socket>
         <Socket>
-          <socketName>ketskv6fna</socketName>
+          <socketName>dx21c6vuns</socketName>
           <systemName>IQDA:AUTO:0093</systemName>
         </Socket>
         <Socket>
-          <socketName>dlunib1qas</socketName>
+          <socketName>lst6vkn1zi</socketName>
           <systemName>IQDA:AUTO:0094</systemName>
         </Socket>
         <Socket>
-          <socketName>ab6pqbn555</socketName>
+          <socketName>abdukbps9l</socketName>
+          <systemName>IQDA:AUTO:0095</systemName>
+        </Socket>
+        <Socket>
+          <socketName>ketskv6fna</socketName>
+          <systemName>IQDA:AUTO:0096</systemName>
+        </Socket>
+        <Socket>
+          <socketName>dlunib1qas</socketName>
           <systemName>IQDA:AUTO:0097</systemName>
         </Socket>
         <Socket>
-          <socketName>abumiim72s</socketName>
+          <socketName>exchs1hosc</socketName>
           <systemName>IQDA:AUTO:0098</systemName>
         </Socket>
         <Socket>
-          <socketName>u5yeiwnwv3</socketName>
+          <socketName>unj9ekipbl</socketName>
           <systemName>IQDA:AUTO:0099</systemName>
         </Socket>
         <Socket>
@@ -7623,67 +7634,59 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <systemName>IQDA:AUTO:0100</systemName>
         </Socket>
         <Socket>
-          <socketName>dzdns3u8yd</socketName>
-          <systemName>IQDA:AUTO:0101</systemName>
-        </Socket>
-        <Socket>
-          <socketName>vzebjhe6vg</socketName>
-          <systemName>IQDA:AUTO:0102</systemName>
-        </Socket>
-        <Socket>
-          <socketName>lu8jtjsjw8</socketName>
+          <socketName>sijsqsb3yh</socketName>
           <systemName>IQDA:AUTO:0103</systemName>
         </Socket>
         <Socket>
-          <socketName>shyhc6ddzz</socketName>
+          <socketName>vecqcodaif</socketName>
           <systemName>IQDA:AUTO:0104</systemName>
         </Socket>
         <Socket>
-          <socketName>r1la1s8cjo</socketName>
+          <socketName>p1q4shjmcu</socketName>
           <systemName>IQDA:AUTO:0105</systemName>
         </Socket>
         <Socket>
-          <socketName>wz5cptedyi</socketName>
+          <socketName>it3c6j7e3t</socketName>
           <systemName>IQDA:AUTO:0106</systemName>
         </Socket>
         <Socket>
-          <socketName>bunwr9bz9z</socketName>
+          <socketName>arbetksl9i</socketName>
           <systemName>IQDA:AUTO:0107</systemName>
         </Socket>
         <Socket>
-          <socketName>mqrzcgasrg</socketName>
+          <socketName>q5msbchc6i</socketName>
           <systemName>IQDA:AUTO:0108</systemName>
         </Socket>
         <Socket>
-          <socketName>sijsqsb3yh</socketName>
+          <socketName>fzlpscpuxu</socketName>
           <systemName>IQDA:AUTO:0109</systemName>
         </Socket>
         <Socket>
-          <socketName>vecqcodaif</socketName>
+          <socketName>na5e881g7y</socketName>
           <systemName>IQDA:AUTO:0110</systemName>
         </Socket>
         <Socket>
-          <socketName>p1q4shjmcu</socketName>
+          <socketName>w6qkon778m</socketName>
           <systemName>IQDA:AUTO:0111</systemName>
         </Socket>
         <Socket>
-          <socketName>it3c6j7e3t</socketName>
+          <socketName>rrqcqu38e6</socketName>
           <systemName>IQDA:AUTO:0112</systemName>
         </Socket>
         <Socket>
-          <socketName>arbetksl9i</socketName>
+          <socketName>agplnqxa8a</socketName>
           <systemName>IQDA:AUTO:0113</systemName>
         </Socket>
         <Socket>
-          <socketName>q5msbchc6i</socketName>
+          <socketName>y123tpxm1r</socketName>
           <systemName>IQDA:AUTO:0114</systemName>
         </Socket>
         <Socket>
-          <socketName>w6qkon778m</socketName>
+          <socketName>yr8yrz4rol</socketName>
           <systemName>IQDA:AUTO:0115</systemName>
         </Socket>
         <Socket>
-          <socketName>y123tpxm1r</socketName>
+          <socketName>gv9d3mqr12</socketName>
           <systemName>IQDA:AUTO:0116</systemName>
         </Socket>
         <Socket>
@@ -7691,15 +7694,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <systemName>IQDA:AUTO:0117</systemName>
         </Socket>
         <Socket>
-          <socketName>wtn2b1qurw</socketName>
+          <socketName>hvtwyj9jhi</socketName>
           <systemName>IQDA:AUTO:0118</systemName>
         </Socket>
         <Socket>
-          <socketName>tqiy2qtatz</socketName>
+          <socketName>n8r2744dqv</socketName>
           <systemName>IQDA:AUTO:0119</systemName>
         </Socket>
         <Socket>
-          <socketName>cedgcb16mi</socketName>
+          <socketName>wtn2b1qurw</socketName>
           <systemName>IQDA:AUTO:0120</systemName>
         </Socket>
         <Socket>
@@ -7707,155 +7710,163 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <systemName>IQDA:AUTO:0121</systemName>
         </Socket>
         <Socket>
-          <socketName>czycgx5dmn</socketName>
+          <socketName>ltdvu4webp</socketName>
           <systemName>IQDA:AUTO:0122</systemName>
         </Socket>
         <Socket>
-          <socketName>drecwmlsam</socketName>
+          <socketName>z5cnvpx2sk</socketName>
           <systemName>IQDA:AUTO:0123</systemName>
         </Socket>
         <Socket>
-          <socketName>ltdvu4webp</socketName>
+          <socketName>dmuddz6blq</socketName>
           <systemName>IQDA:AUTO:0124</systemName>
         </Socket>
         <Socket>
-          <socketName>dpojgcdcs4</socketName>
+          <socketName>brgpmrpkxp</socketName>
           <systemName>IQDA:AUTO:0125</systemName>
         </Socket>
         <Socket>
-          <socketName>dyzwhu6uzp</socketName>
+          <socketName>zoet7a7k6s</socketName>
           <systemName>IQDA:AUTO:0126</systemName>
         </Socket>
         <Socket>
-          <socketName>z5cnvpx2sk</socketName>
+          <socketName>q8ocxi7nu5</socketName>
           <systemName>IQDA:AUTO:0127</systemName>
         </Socket>
         <Socket>
-          <socketName>rejb2x6e3o</socketName>
+          <socketName>x1lknlama9</socketName>
           <systemName>IQDA:AUTO:0128</systemName>
         </Socket>
         <Socket>
-          <socketName>dmuddz6blq</socketName>
+          <socketName>hcw27p1vj1</socketName>
           <systemName>IQDA:AUTO:0129</systemName>
         </Socket>
         <Socket>
-          <socketName>zoet7a7k6s</socketName>
+          <socketName>ebp68oivhn</socketName>
           <systemName>IQDA:AUTO:0130</systemName>
         </Socket>
         <Socket>
-          <socketName>x1lknlama9</socketName>
+          <socketName>s6f37y9fo9</socketName>
           <systemName>IQDA:AUTO:0131</systemName>
         </Socket>
         <Socket>
-          <socketName>ebp68oivhn</socketName>
+          <socketName>xkpmucglho</socketName>
           <systemName>IQDA:AUTO:0132</systemName>
         </Socket>
         <Socket>
-          <socketName>xkpmucglho</socketName>
+          <socketName>twmpjdj7pd</socketName>
           <systemName>IQDA:AUTO:0133</systemName>
         </Socket>
         <Socket>
-          <socketName>vfwweob5m5</socketName>
+          <socketName>ylwoabv6fq</socketName>
           <systemName>IQDA:AUTO:0134</systemName>
         </Socket>
         <Socket>
-          <socketName>ltgd2qb77v</socketName>
+          <socketName>giy8qh2z3u</socketName>
           <systemName>IQDA:AUTO:0135</systemName>
         </Socket>
         <Socket>
-          <socketName>md4vda81d6</socketName>
+          <socketName>up2eqrebmu</socketName>
           <systemName>IQDA:AUTO:0136</systemName>
         </Socket>
         <Socket>
-          <socketName>rskgf51q3g</socketName>
+          <socketName>hl13rri672</socketName>
           <systemName>IQDA:AUTO:0137</systemName>
         </Socket>
         <Socket>
-          <socketName>ch9fzacvjo</socketName>
+          <socketName>ltgd2qb77v</socketName>
           <systemName>IQDA:AUTO:0138</systemName>
         </Socket>
         <Socket>
-          <socketName>h9vum4oul1</socketName>
+          <socketName>yezcvqhd6d</socketName>
           <systemName>IQDA:AUTO:0139</systemName>
         </Socket>
         <Socket>
-          <socketName>se9eemxtwp</socketName>
+          <socketName>p634vs71ui</socketName>
           <systemName>IQDA:AUTO:0140</systemName>
         </Socket>
         <Socket>
-          <socketName>i5c33tykdg</socketName>
+          <socketName>ch9fzacvjo</socketName>
           <systemName>IQDA:AUTO:0141</systemName>
         </Socket>
         <Socket>
-          <socketName>ue5uabqwcq</socketName>
+          <socketName>s2fd5b5ant</socketName>
           <systemName>IQDA:AUTO:0142</systemName>
         </Socket>
         <Socket>
-          <socketName>tsl5y4rd1j</socketName>
+          <socketName>px5k9le3q7</socketName>
           <systemName>IQDA:AUTO:0143</systemName>
         </Socket>
         <Socket>
-          <socketName>yi5j36gpi5</socketName>
+          <socketName>xxa2557ufv</socketName>
           <systemName>IQDA:AUTO:0144</systemName>
         </Socket>
         <Socket>
-          <socketName>gcf3hlmixs</socketName>
+          <socketName>ue5uabqwcq</socketName>
           <systemName>IQDA:AUTO:0145</systemName>
         </Socket>
         <Socket>
-          <socketName>uigst3qzfq</socketName>
+          <socketName>xrf4gchgqs</socketName>
           <systemName>IQDA:AUTO:0146</systemName>
         </Socket>
         <Socket>
-          <socketName>qm1fqiu6gx</socketName>
+          <socketName>v1mdz314z1</socketName>
           <systemName>IQDA:AUTO:0147</systemName>
         </Socket>
         <Socket>
-          <socketName>uerxutuxfr</socketName>
+          <socketName>t3fihe1imi</socketName>
           <systemName>IQDA:AUTO:0148</systemName>
         </Socket>
         <Socket>
-          <socketName>c16uqv8odx</socketName>
+          <socketName>vz5rpupjcy</socketName>
           <systemName>IQDA:AUTO:0149</systemName>
         </Socket>
         <Socket>
-          <socketName>vbo38qftkw</socketName>
+          <socketName>f2cwy2z413</socketName>
           <systemName>IQDA:AUTO:0150</systemName>
         </Socket>
         <Socket>
-          <socketName>qgokngqprc</socketName>
+          <socketName>vbo38qftkw</socketName>
+          <systemName>IQDA:AUTO:0151</systemName>
+        </Socket>
+        <Socket>
+          <socketName>k1eib6f91c</socketName>
+          <systemName>IQDA:AUTO:0152</systemName>
+        </Socket>
+        <Socket>
+          <socketName>qb2mbvzho1</socketName>
           <systemName>IQDA:AUTO:0153</systemName>
         </Socket>
         <Socket>
-          <socketName>gc1ytd8lme</socketName>
+          <socketName>u5ryhxupqt</socketName>
           <systemName>IQDA:AUTO:0154</systemName>
         </Socket>
         <Socket>
-          <socketName>gqco7j554t</socketName>
+          <socketName>stokvn5ays</socketName>
           <systemName>IQDA:AUTO:0155</systemName>
         </Socket>
         <Socket>
-          <socketName>k5anh9tl6g</socketName>
+          <socketName>snxvx6y2sk</socketName>
           <systemName>IQDA:AUTO:0156</systemName>
         </Socket>
         <Socket>
-          <socketName>nnca3tu2cp</socketName>
-          <systemName>IQDA:AUTO:0157</systemName>
-        </Socket>
-        <Socket>
-          <socketName>yxy727baal</socketName>
-          <systemName>IQDA:AUTO:0158</systemName>
-        </Socket>
-        <Socket>
-          <socketName>u72n322i6g</socketName>
+          <socketName>cxpez7n4ev</socketName>
           <systemName>IQDA:AUTO:0159</systemName>
         </Socket>
         <Socket>
-          <socketName>clar7ts2ws</socketName>
+          <socketName>vk5lkviuur</socketName>
+          <systemName>IQDA:AUTO:0160</systemName>
+        </Socket>
+        <Socket>
+          <socketName>de4nih7qjk</socketName>
           <systemName>IQDA:AUTO:0161</systemName>
         </Socket>
         <Socket>
-          <socketName>vk5lkviuur</socketName>
+          <socketName>uhkz5o8ngb</socketName>
+          <systemName>IQDA:AUTO:0162</systemName>
+        </Socket>
+        <Socket>
+          <socketName>fmes5114s7</socketName>
           <systemName>IQDA:AUTO:0163</systemName>
         </Socket>
         <Socket>
@@ -7863,63 +7874,87 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <systemName>IQDA:AUTO:0164</systemName>
         </Socket>
         <Socket>
-          <socketName>gar6tbjl2s</socketName>
+          <socketName>w5u712cnzw</socketName>
           <systemName>IQDA:AUTO:0165</systemName>
         </Socket>
         <Socket>
-          <socketName>w5u712cnzw</socketName>
-          <systemName>IQDA:AUTO:0166</systemName>
-        </Socket>
-        <Socket>
-          <socketName>afx1zc869t</socketName>
+          <socketName>w166rlk52a</socketName>
           <systemName>IQDA:AUTO:0167</systemName>
         </Socket>
         <Socket>
-          <socketName>r93k7ocm7l</socketName>
-          <systemName>IQDA:AUTO:0168</systemName>
-        </Socket>
-        <Socket>
-          <socketName>y1fea7meqt</socketName>
+          <socketName>oaecqvs2z3</socketName>
           <systemName>IQDA:AUTO:0169</systemName>
         </Socket>
         <Socket>
-          <socketName>wgrnw6zbqd</socketName>
+          <socketName>v21s627l7l</socketName>
           <systemName>IQDA:AUTO:0170</systemName>
         </Socket>
         <Socket>
-          <socketName>nk1257mpsk</socketName>
+          <socketName>qbmi1t52gn</socketName>
           <systemName>IQDA:AUTO:0171</systemName>
         </Socket>
         <Socket>
-          <socketName>ndx7zebrgn</socketName>
+          <socketName>owpzdy41j3</socketName>
           <systemName>IQDA:AUTO:0172</systemName>
         </Socket>
         <Socket>
-          <socketName>tjaiipaie3</socketName>
+          <socketName>t3ru39u9cr</socketName>
           <systemName>IQDA:AUTO:0173</systemName>
         </Socket>
         <Socket>
-          <socketName>hexq6xsdzi</socketName>
+          <socketName>rlxuj5ywhd</socketName>
           <systemName>IQDA:AUTO:0174</systemName>
         </Socket>
         <Socket>
-          <socketName>zmo3qmkgfs</socketName>
+          <socketName>ndx7zebrgn</socketName>
           <systemName>IQDA:AUTO:0175</systemName>
         </Socket>
         <Socket>
-          <socketName>ro9t7c679m</socketName>
+          <socketName>tjaiipaie3</socketName>
           <systemName>IQDA:AUTO:0176</systemName>
         </Socket>
         <Socket>
-          <socketName>a1f65zj8fw</socketName>
+          <socketName>j21qk6vr4o</socketName>
           <systemName>IQDA:AUTO:0177</systemName>
         </Socket>
         <Socket>
-          <socketName>svqifosgde</socketName>
+          <socketName>k15a8yeu2r</socketName>
           <systemName>IQDA:AUTO:0178</systemName>
         </Socket>
         <Socket>
-          <socketName>g12apvck3y</socketName>
+          <socketName>lhclwjg93v</socketName>
+          <systemName>IQDA:AUTO:0179</systemName>
+        </Socket>
+        <Socket>
+          <socketName>raa2jylwab</socketName>
+          <systemName>IQDA:AUTO:0180</systemName>
+        </Socket>
+        <Socket>
+          <socketName>svqifosgde</socketName>
+          <systemName>IQDA:AUTO:0181</systemName>
+        </Socket>
+        <Socket>
+          <socketName>snirnz1s9c</socketName>
+          <systemName>IQDA:AUTO:0182</systemName>
+        </Socket>
+        <Socket>
+          <socketName>ul7k9bqe1m</socketName>
+          <systemName>IQDA:AUTO:0183</systemName>
+        </Socket>
+        <Socket>
+          <socketName>szi24sadqx</socketName>
+          <systemName>IQDA:AUTO:0184</systemName>
+        </Socket>
+        <Socket>
+          <socketName>hw96mtkvu7</socketName>
+          <systemName>IQDA:AUTO:0185</systemName>
+        </Socket>
+        <Socket>
+          <socketName>rvd5uubwzy</socketName>
+          <systemName>IQDA:AUTO:0186</systemName>
+        </Socket>
+        <Socket>
+          <socketName>wzhmqmevhg</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -9458,8 +9493,352 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </ActionLight>
-    <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
+    <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0032</systemName>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
+      <IntensitySocket>
+        <socketName>y7mbaogrq3</socketName>
+      </IntensitySocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLightIntensity>
+    <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
+      <systemName>IQDA:AUTO:0033</systemName>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
+      <IntensitySocket>
+        <socketName>szt8ipqrvj</socketName>
+      </IntensitySocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLightIntensity>
+    <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
+      <systemName>IQDA:AUTO:0034</systemName>
+      <comment>A comment</comment>
+      <variableLight>ILVariable</variableLight>
+      <addressing>Direct</addressing>
+      <reference>{IM1}</reference>
+      <localVariable>index</localVariable>
+      <formula>"IT"+index</formula>
+      <IntensitySocket>
+        <socketName>qi3wcy513v</socketName>
+      </IntensitySocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>AbortExecution</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLightIntensity>
+    <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
+      <systemName>IQDA:AUTO:0035</systemName>
+      <comment>A comment</comment>
+      <variableLight>ILVariable</variableLight>
+      <addressing>LocalVariable</addressing>
+      <reference>{IM1}</reference>
+      <localVariable>index</localVariable>
+      <formula>"IT"+index</formula>
+      <IntensitySocket>
+        <socketName>cay24af3fi</socketName>
+      </IntensitySocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>LogError</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLightIntensity>
+    <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
+      <systemName>IQDA:AUTO:0036</systemName>
+      <comment>A comment</comment>
+      <variableLight>ILVariable</variableLight>
+      <addressing>Formula</addressing>
+      <reference>{IM1}</reference>
+      <localVariable>index</localVariable>
+      <formula>"IT"+index</formula>
+      <IntensitySocket>
+        <socketName>xao2ycm9wh</socketName>
+      </IntensitySocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>LogErrorOnce</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLightIntensity>
+    <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
+      <systemName>IQDA:AUTO:0037</systemName>
+      <comment>A comment</comment>
+      <variableLight>ILVariable</variableLight>
+      <addressing>Reference</addressing>
+      <reference>{IM1}</reference>
+      <localVariable>index</localVariable>
+      <formula>"IT"+index</formula>
+      <IntensitySocket>
+        <socketName>x2ui4lq7r6</socketName>
+      </IntensitySocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>ShowDialogBox</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLightIntensity>
+    <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
+      <systemName>IQDA:AUTO:0038</systemName>
       <References />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -9509,7 +9888,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0033</systemName>
+      <systemName>IQDA:AUTO:0039</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9565,7 +9944,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0034</systemName>
+      <systemName>IQDA:AUTO:0040</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9621,7 +10000,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0035</systemName>
+      <systemName>IQDA:AUTO:0041</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9677,7 +10056,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0036</systemName>
+      <systemName>IQDA:AUTO:0042</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9733,7 +10112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0037</systemName>
+      <systemName>IQDA:AUTO:0043</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9789,7 +10168,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0038</systemName>
+      <systemName>IQDA:AUTO:0044</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9845,7 +10224,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0039</systemName>
+      <systemName>IQDA:AUTO:0045</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9901,7 +10280,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
-      <systemName>IQDA:AUTO:0040</systemName>
+      <systemName>IQDA:AUTO:0046</systemName>
       <comment>A comment</comment>
       <References>
         <Reference>
@@ -9957,7 +10336,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionListenOnBeans>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
-      <systemName>IQDA:AUTO:0041</systemName>
+      <systemName>IQDA:AUTO:0047</systemName>
       <variableOperation>SetToString</variableOperation>
       <constant />
       <otherVariable />
@@ -10010,7 +10389,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionLocalVariable>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
-      <systemName>IQDA:AUTO:0042</systemName>
+      <systemName>IQDA:AUTO:0048</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
       <memory>IM3</memory>
@@ -10066,7 +10445,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionLocalVariable>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
-      <systemName>IQDA:AUTO:0043</systemName>
+      <systemName>IQDA:AUTO:0049</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
       <memory>IM3</memory>
@@ -10122,7 +10501,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionLocalVariable>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
-      <systemName>IQDA:AUTO:0044</systemName>
+      <systemName>IQDA:AUTO:0050</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
       <memory>IM3</memory>
@@ -10178,7 +10557,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionLocalVariable>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
-      <systemName>IQDA:AUTO:0045</systemName>
+      <systemName>IQDA:AUTO:0051</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
       <memory>IM3</memory>
@@ -10234,7 +10613,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionLocalVariable>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
-      <systemName>IQDA:AUTO:0046</systemName>
+      <systemName>IQDA:AUTO:0052</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
       <memory>IM3</memory>
@@ -10290,7 +10669,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionLocalVariable>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
-      <systemName>IQDA:AUTO:0047</systemName>
+      <systemName>IQDA:AUTO:0053</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -10347,7 +10726,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionMemory>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
-      <systemName>IQDA:AUTO:0048</systemName>
+      <systemName>IQDA:AUTO:0054</systemName>
       <comment>A comment</comment>
       <memory>IM1</memory>
       <addressing>Direct</addressing>
@@ -10407,7 +10786,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionMemory>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
-      <systemName>IQDA:AUTO:0049</systemName>
+      <systemName>IQDA:AUTO:0055</systemName>
       <comment>A comment</comment>
       <memory>IM1</memory>
       <addressing>Formula</addressing>
@@ -10467,7 +10846,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionMemory>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
-      <systemName>IQDA:AUTO:0050</systemName>
+      <systemName>IQDA:AUTO:0056</systemName>
       <comment>A comment</comment>
       <memory>IM1</memory>
       <addressing>LocalVariable</addressing>
@@ -10527,7 +10906,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionMemory>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
-      <systemName>IQDA:AUTO:0051</systemName>
+      <systemName>IQDA:AUTO:0057</systemName>
       <comment>A comment</comment>
       <memory>IM1</memory>
       <addressing>Reference</addressing>
@@ -10587,7 +10966,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionMemory>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
-      <systemName>IQDA:AUTO:0052</systemName>
+      <systemName>IQDA:AUTO:0058</systemName>
       <comment>A comment</comment>
       <memory>IM1</memory>
       <addressing>Direct</addressing>
@@ -10647,7 +11026,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionMemory>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0053</systemName>
+      <systemName>IQDA:AUTO:0059</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -10710,7 +11089,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0054</systemName>
+      <systemName>IQDA:AUTO:0060</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -10773,7 +11152,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0055</systemName>
+      <systemName>IQDA:AUTO:0061</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -10836,7 +11215,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0056</systemName>
+      <systemName>IQDA:AUTO:0062</systemName>
       <comment>Direct / Direct / Direct :: SetValue</comment>
       <oblock>OB99</oblock>
       <addressing>Direct</addressing>
@@ -10901,7 +11280,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0057</systemName>
+      <systemName>IQDA:AUTO:0063</systemName>
       <comment>Direct / Direct :: ClearError</comment>
       <oblock>OB99</oblock>
       <addressing>Direct</addressing>
@@ -10966,7 +11345,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0058</systemName>
+      <systemName>IQDA:AUTO:0064</systemName>
       <comment>Direct / LocalVariable</comment>
       <oblock>OB99</oblock>
       <addressing>Direct</addressing>
@@ -11031,7 +11410,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0059</systemName>
+      <systemName>IQDA:AUTO:0065</systemName>
       <comment>LocalVariable / Formula</comment>
       <addressing>LocalVariable</addressing>
       <reference />
@@ -11095,7 +11474,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0060</systemName>
+      <systemName>IQDA:AUTO:0066</systemName>
       <comment>Formula / Reference</comment>
       <addressing>Formula</addressing>
       <reference />
@@ -11159,7 +11538,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
-      <systemName>IQDA:AUTO:0061</systemName>
+      <systemName>IQDA:AUTO:0067</systemName>
       <comment>Reference / Direct :: SetOutOfService</comment>
       <addressing>Reference</addressing>
       <reference>{IM1}</reference>
@@ -11223,7 +11602,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionOBlock>
     <ActionPower class="jmri.jmrit.logixng.actions.configurexml.ActionPowerXml">
-      <systemName>IQDA:AUTO:0062</systemName>
+      <systemName>IQDA:AUTO:0068</systemName>
       <powerState>On</powerState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11273,7 +11652,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionPower>
     <ActionPower class="jmri.jmrit.logixng.actions.configurexml.ActionPowerXml">
-      <systemName>IQDA:AUTO:0063</systemName>
+      <systemName>IQDA:AUTO:0069</systemName>
       <comment>A comment</comment>
       <powerState>Off</powerState>
       <MaleSocket>
@@ -11324,7 +11703,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionPower>
     <ActionPower class="jmri.jmrit.logixng.actions.configurexml.ActionPowerXml">
-      <systemName>IQDA:AUTO:0064</systemName>
+      <systemName>IQDA:AUTO:0070</systemName>
       <comment>A comment</comment>
       <powerState>On</powerState>
       <MaleSocket>
@@ -11375,7 +11754,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionPower>
     <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
-      <systemName>IQDA:AUTO:0065</systemName>
+      <systemName>IQDA:AUTO:0071</systemName>
       <operationAddressing>Direct</operationAddressing>
       <operationType>JythonCommand</operationType>
       <operationReference />
@@ -11434,7 +11813,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionScript>
     <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
-      <systemName>IQDA:AUTO:0066</systemName>
+      <systemName>IQDA:AUTO:0072</systemName>
       <comment>A comment</comment>
       <operationAddressing>Direct</operationAddressing>
       <operationType>JythonCommand</operationType>
@@ -11495,7 +11874,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionScript>
     <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
-      <systemName>IQDA:AUTO:0067</systemName>
+      <systemName>IQDA:AUTO:0073</systemName>
       <comment>A comment</comment>
       <operationAddressing>Formula</operationAddressing>
       <operationType>JythonCommand</operationType>
@@ -11555,7 +11934,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionScript>
     <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
-      <systemName>IQDA:AUTO:0068</systemName>
+      <systemName>IQDA:AUTO:0074</systemName>
       <comment>A comment</comment>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationType>JythonCommand</operationType>
@@ -11616,7 +11995,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionScript>
     <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
-      <systemName>IQDA:AUTO:0069</systemName>
+      <systemName>IQDA:AUTO:0075</systemName>
       <comment>A comment</comment>
       <operationAddressing>Reference</operationAddressing>
       <operationType>JythonCommand</operationType>
@@ -11677,7 +12056,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionScript>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
-      <systemName>IQDA:AUTO:0070</systemName>
+      <systemName>IQDA:AUTO:0076</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -11735,7 +12114,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSensor>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
-      <systemName>IQDA:AUTO:0071</systemName>
+      <systemName>IQDA:AUTO:0077</systemName>
       <comment>A comment</comment>
       <sensor>IS1</sensor>
       <addressing>Direct</addressing>
@@ -11795,7 +12174,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSensor>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
-      <systemName>IQDA:AUTO:0072</systemName>
+      <systemName>IQDA:AUTO:0078</systemName>
       <comment>A comment</comment>
       <sensor>IS1</sensor>
       <addressing>LocalVariable</addressing>
@@ -11855,7 +12234,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSensor>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
-      <systemName>IQDA:AUTO:0073</systemName>
+      <systemName>IQDA:AUTO:0079</systemName>
       <comment>A comment</comment>
       <sensor>IS1</sensor>
       <addressing>Formula</addressing>
@@ -11915,7 +12294,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSensor>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
-      <systemName>IQDA:AUTO:0074</systemName>
+      <systemName>IQDA:AUTO:0080</systemName>
       <comment>A comment</comment>
       <sensor>IS1</sensor>
       <addressing>Reference</addressing>
@@ -11975,7 +12354,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSensor>
     <ActionSignalHead class="jmri.jmrit.logixng.actions.configurexml.ActionSignalHeadXml">
-      <systemName>IQDA:AUTO:0075</systemName>
+      <systemName>IQDA:AUTO:0081</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -12038,7 +12417,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalHead>
     <ActionSignalHead class="jmri.jmrit.logixng.actions.configurexml.ActionSignalHeadXml">
-      <systemName>IQDA:AUTO:0076</systemName>
+      <systemName>IQDA:AUTO:0082</systemName>
       <comment>A comment</comment>
       <signalHead>IH1</signalHead>
       <addressing>Direct</addressing>
@@ -12104,7 +12483,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalHead>
     <ActionSignalHead class="jmri.jmrit.logixng.actions.configurexml.ActionSignalHeadXml">
-      <systemName>IQDA:AUTO:0077</systemName>
+      <systemName>IQDA:AUTO:0083</systemName>
       <comment>A comment</comment>
       <signalHead>IH1</signalHead>
       <addressing>LocalVariable</addressing>
@@ -12169,7 +12548,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalHead>
     <ActionSignalHead class="jmri.jmrit.logixng.actions.configurexml.ActionSignalHeadXml">
-      <systemName>IQDA:AUTO:0078</systemName>
+      <systemName>IQDA:AUTO:0084</systemName>
       <comment>A comment</comment>
       <signalHead>IH1</signalHead>
       <addressing>Formula</addressing>
@@ -12234,7 +12613,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalHead>
     <ActionSignalHead class="jmri.jmrit.logixng.actions.configurexml.ActionSignalHeadXml">
-      <systemName>IQDA:AUTO:0079</systemName>
+      <systemName>IQDA:AUTO:0085</systemName>
       <comment>A comment</comment>
       <signalHead>IH1</signalHead>
       <addressing>Reference</addressing>
@@ -12299,7 +12678,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalHead>
     <ActionSignalMast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
-      <systemName>IQDA:AUTO:0080</systemName>
+      <systemName>IQDA:AUTO:0086</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -12362,7 +12741,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalMast>
     <ActionSignalMast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
-      <systemName>IQDA:AUTO:0081</systemName>
+      <systemName>IQDA:AUTO:0087</systemName>
       <comment>A comment</comment>
       <signalMast>IF$shsm:AAR-1946:CPL(IH1)</signalMast>
       <addressing>Direct</addressing>
@@ -12428,7 +12807,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalMast>
     <ActionSignalMast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
-      <systemName>IQDA:AUTO:0082</systemName>
+      <systemName>IQDA:AUTO:0088</systemName>
       <comment>A comment</comment>
       <signalMast>IF$shsm:AAR-1946:CPL(IH1)</signalMast>
       <addressing>LocalVariable</addressing>
@@ -12493,7 +12872,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalMast>
     <ActionSignalMast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
-      <systemName>IQDA:AUTO:0083</systemName>
+      <systemName>IQDA:AUTO:0089</systemName>
       <comment>A comment</comment>
       <signalMast>IF$shsm:AAR-1946:CPL(IH1)</signalMast>
       <addressing>Formula</addressing>
@@ -12558,7 +12937,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalMast>
     <ActionSignalMast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
-      <systemName>IQDA:AUTO:0084</systemName>
+      <systemName>IQDA:AUTO:0090</systemName>
       <comment>A comment</comment>
       <signalMast>IF$shsm:AAR-1946:CPL(IH1)</signalMast>
       <addressing>Reference</addressing>
@@ -12623,7 +13002,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSignalMast>
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
-      <systemName>IQDA:AUTO:0085</systemName>
+      <systemName>IQDA:AUTO:0091</systemName>
       <operationAddressing>Direct</operationAddressing>
       <operationType>Play</operationType>
       <operationReference />
@@ -12682,7 +13061,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSound>
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
-      <systemName>IQDA:AUTO:0086</systemName>
+      <systemName>IQDA:AUTO:0092</systemName>
       <comment>A comment</comment>
       <operationAddressing>Direct</operationAddressing>
       <operationType>Play</operationType>
@@ -12743,7 +13122,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSound>
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
-      <systemName>IQDA:AUTO:0087</systemName>
+      <systemName>IQDA:AUTO:0093</systemName>
       <comment>A comment</comment>
       <operationAddressing>Formula</operationAddressing>
       <operationType>Play</operationType>
@@ -12804,7 +13183,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSound>
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
-      <systemName>IQDA:AUTO:0088</systemName>
+      <systemName>IQDA:AUTO:0094</systemName>
       <comment>A comment</comment>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationType>Play</operationType>
@@ -12865,7 +13244,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSound>
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
-      <systemName>IQDA:AUTO:0089</systemName>
+      <systemName>IQDA:AUTO:0095</systemName>
       <comment>A comment</comment>
       <operationAddressing>Reference</operationAddressing>
       <operationType>Play</operationType>
@@ -12926,15 +13305,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionSound>
     <Throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
-      <systemName>IQDA:AUTO:0090</systemName>
+      <systemName>IQDA:AUTO:0096</systemName>
       <LocoAddressSocket>
-        <socketName>supffeoriw</socketName>
+        <socketName>y72v5l5lwz</socketName>
       </LocoAddressSocket>
       <LocoSpeedSocket>
-        <socketName>jta9fqd9x9</socketName>
+        <socketName>q7b6dcgqwm</socketName>
       </LocoSpeedSocket>
       <LocoDirectionSocket>
-        <socketName>neju3dvl7d</socketName>
+        <socketName>sc69gbokir</socketName>
       </LocoDirectionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -12984,16 +13363,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Throttle>
     <Throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
-      <systemName>IQDA:AUTO:0091</systemName>
+      <systemName>IQDA:AUTO:0097</systemName>
       <comment>A comment</comment>
       <LocoAddressSocket>
-        <socketName>veozkndye2</socketName>
+        <socketName>l5con5gko4</socketName>
       </LocoAddressSocket>
       <LocoSpeedSocket>
-        <socketName>x9nrq2ioz5</socketName>
+        <socketName>wach3ijaph</socketName>
       </LocoSpeedSocket>
       <LocoDirectionSocket>
-        <socketName>skhambco85</socketName>
+        <socketName>qlkkkaxo28</socketName>
       </LocoDirectionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -13043,17 +13422,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Throttle>
     <ActionTimer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
-      <systemName>IQDA:AUTO:0092</systemName>
+      <systemName>IQDA:AUTO:0098</systemName>
       <StartSocket>
-        <socketName>dx21c6vuns</socketName>
+        <socketName>si67xmkj65</socketName>
       </StartSocket>
       <StopSocket>
-        <socketName>lst6vkn1zi</socketName>
+        <socketName>datpfsrga6</socketName>
       </StopSocket>
       <Actions>
         <Socket>
           <delay>0</delay>
-          <socketName>abdukbps9l</socketName>
+          <socketName>lw9h1yqf5p</socketName>
         </Socket>
       </Actions>
       <startImmediately>no</startImmediately>
@@ -13107,18 +13486,18 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTimer>
     <ActionTimer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
-      <systemName>IQDA:AUTO:0093</systemName>
+      <systemName>IQDA:AUTO:0099</systemName>
       <comment>A comment</comment>
       <StartSocket>
-        <socketName>y72v5l5lwz</socketName>
+        <socketName>ab6pqbn555</socketName>
       </StartSocket>
       <StopSocket>
-        <socketName>q7b6dcgqwm</socketName>
+        <socketName>abumiim72s</socketName>
       </StopSocket>
       <Actions>
         <Socket>
           <delay>100</delay>
-          <socketName>sc69gbokir</socketName>
+          <socketName>u5yeiwnwv3</socketName>
         </Socket>
       </Actions>
       <startImmediately>no</startImmediately>
@@ -13172,26 +13551,26 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTimer>
     <ActionTimer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
-      <systemName>IQDA:AUTO:0094</systemName>
+      <systemName>IQDA:AUTO:0100</systemName>
       <comment>A comment</comment>
       <StartSocket>
-        <socketName>l5con5gko4</socketName>
+        <socketName>dzdns3u8yd</socketName>
         <systemName>IQDE:AUTO:0001</systemName>
       </StartSocket>
       <StopSocket>
-        <socketName>qlkkkaxo28</socketName>
+        <socketName>lu8jtjsjw8</socketName>
         <systemName>IQDE:AUTO:0002</systemName>
       </StopSocket>
       <Actions>
         <Socket>
           <delay>2400</delay>
-          <socketName>si67xmkj65</socketName>
-          <systemName>IQDA:AUTO:0095</systemName>
+          <socketName>r1la1s8cjo</socketName>
+          <systemName>IQDA:AUTO:0101</systemName>
         </Socket>
         <Socket>
           <delay>10</delay>
-          <socketName>lw9h1yqf5p</socketName>
-          <systemName>IQDA:AUTO:0096</systemName>
+          <socketName>bunwr9bz9z</socketName>
+          <systemName>IQDA:AUTO:0102</systemName>
         </Socket>
       </Actions>
       <startImmediately>yes</startImmediately>
@@ -13245,11 +13624,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTimer>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0095</systemName>
+      <systemName>IQDA:AUTO:0101</systemName>
       <comment>Action socket 1</comment>
       <Actions>
         <Socket>
-          <socketName>datpfsrga6</socketName>
+          <socketName>wz5cptedyi</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -13300,11 +13679,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DigitalMany>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0096</systemName>
+      <systemName>IQDA:AUTO:0102</systemName>
       <comment>Action socket 2</comment>
       <Actions>
         <Socket>
-          <socketName>unj9ekipbl</socketName>
+          <socketName>mqrzcgasrg</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -13355,7 +13734,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DigitalMany>
     <ActionTurnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
-      <systemName>IQDA:AUTO:0097</systemName>
+      <systemName>IQDA:AUTO:0103</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -13413,7 +13792,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTurnout>
     <ActionTurnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
-      <systemName>IQDA:AUTO:0098</systemName>
+      <systemName>IQDA:AUTO:0104</systemName>
       <comment>A comment</comment>
       <turnout>IT1</turnout>
       <addressing>Direct</addressing>
@@ -13473,7 +13852,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTurnout>
     <ActionTurnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
-      <systemName>IQDA:AUTO:0099</systemName>
+      <systemName>IQDA:AUTO:0105</systemName>
       <comment>A comment</comment>
       <turnout>IT1</turnout>
       <addressing>LocalVariable</addressing>
@@ -13533,7 +13912,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTurnout>
     <ActionTurnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
-      <systemName>IQDA:AUTO:0100</systemName>
+      <systemName>IQDA:AUTO:0106</systemName>
       <comment>A comment</comment>
       <turnout>IT1</turnout>
       <addressing>Formula</addressing>
@@ -13593,7 +13972,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTurnout>
     <ActionTurnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
-      <systemName>IQDA:AUTO:0101</systemName>
+      <systemName>IQDA:AUTO:0107</systemName>
       <comment>A comment</comment>
       <turnout>IT1</turnout>
       <addressing>Reference</addressing>
@@ -13653,7 +14032,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionTurnout>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0102</systemName>
+      <systemName>IQDA:AUTO:0108</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -13717,7 +14096,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0103</systemName>
+      <systemName>IQDA:AUTO:0109</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -13781,7 +14160,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0104</systemName>
+      <systemName>IQDA:AUTO:0110</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -13845,7 +14224,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0105</systemName>
+      <systemName>IQDA:AUTO:0111</systemName>
       <comment>Direct / Direct / Direct :: SetTrainName</comment>
       <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
@@ -13911,7 +14290,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0106</systemName>
+      <systemName>IQDA:AUTO:0112</systemName>
       <comment>Direct / Direct / Direct :: ControlAutoTrain - Resume</comment>
       <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
@@ -13977,7 +14356,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0107</systemName>
+      <systemName>IQDA:AUTO:0113</systemName>
       <comment>Direct / Direct :: AllocateWarrantRoute</comment>
       <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
@@ -14043,7 +14422,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0108</systemName>
+      <systemName>IQDA:AUTO:0114</systemName>
       <comment>Direct / LocalVariable</comment>
       <warrant>Test Warrant</warrant>
       <addressing>Direct</addressing>
@@ -14109,7 +14488,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0109</systemName>
+      <systemName>IQDA:AUTO:0115</systemName>
       <comment>LocalVariable / Formula</comment>
       <addressing>LocalVariable</addressing>
       <reference />
@@ -14174,7 +14553,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0110</systemName>
+      <systemName>IQDA:AUTO:0116</systemName>
       <comment>Formula / Reference</comment>
       <addressing>Formula</addressing>
       <reference />
@@ -14239,7 +14618,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
-      <systemName>IQDA:AUTO:0111</systemName>
+      <systemName>IQDA:AUTO:0117</systemName>
       <comment>Reference / Direct :: DeallocateWarrant</comment>
       <addressing>Reference</addressing>
       <reference>{IM1}</reference>
@@ -14304,7 +14683,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionWarrant>
     <CallModule class="jmri.jmrit.logixng.actions.configurexml.DigitalCallModuleXml">
-      <systemName>IQDA:AUTO:0112</systemName>
+      <systemName>IQDA:AUTO:0118</systemName>
       <Parameters />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -14354,7 +14733,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </CallModule>
     <CallModule class="jmri.jmrit.logixng.actions.configurexml.DigitalCallModuleXml">
-      <systemName>IQDA:AUTO:0113</systemName>
+      <systemName>IQDA:AUTO:0119</systemName>
       <comment>A comment</comment>
       <module>IQM1</module>
       <Parameters>
@@ -14463,12 +14842,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </CallModule>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0114</systemName>
+      <systemName>IQDA:AUTO:0120</systemName>
       <ExpressionSocket>
-        <socketName>fzlpscpuxu</socketName>
+        <socketName>tqiy2qtatz</socketName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>na5e881g7y</socketName>
+        <socketName>cedgcb16mi</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -14518,13 +14897,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0115</systemName>
+      <systemName>IQDA:AUTO:0121</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>
-        <socketName>rrqcqu38e6</socketName>
+        <socketName>czycgx5dmn</socketName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>agplnqxa8a</socketName>
+        <socketName>drecwmlsam</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -14574,12 +14953,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0116</systemName>
+      <systemName>IQDA:AUTO:0122</systemName>
       <ExpressionSocket>
-        <socketName>yr8yrz4rol</socketName>
+        <socketName>dpojgcdcs4</socketName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>gv9d3mqr12</socketName>
+        <socketName>dyzwhu6uzp</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -14629,13 +15008,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoStringAction>
     <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0117</systemName>
+      <systemName>IQDA:AUTO:0123</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>
-        <socketName>hvtwyj9jhi</socketName>
+        <socketName>rejb2x6e3o</socketName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>n8r2744dqv</socketName>
+        <socketName>ax4pk33zo1</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -14685,7 +15064,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoStringAction>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
-      <systemName>IQDA:AUTO:0118</systemName>
+      <systemName>IQDA:AUTO:0124</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -14743,7 +15122,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </EnableLogix>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
-      <systemName>IQDA:AUTO:0119</systemName>
+      <systemName>IQDA:AUTO:0125</systemName>
       <comment>A comment</comment>
       <logix>IX1</logix>
       <addressing>Direct</addressing>
@@ -14803,7 +15182,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </EnableLogix>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
-      <systemName>IQDA:AUTO:0120</systemName>
+      <systemName>IQDA:AUTO:0126</systemName>
       <comment>A comment</comment>
       <logix>IX1</logix>
       <addressing>LocalVariable</addressing>
@@ -14863,7 +15242,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </EnableLogix>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
-      <systemName>IQDA:AUTO:0121</systemName>
+      <systemName>IQDA:AUTO:0127</systemName>
       <comment>A comment</comment>
       <logix>IX1</logix>
       <addressing>Formula</addressing>
@@ -14923,7 +15302,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </EnableLogix>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
-      <systemName>IQDA:AUTO:0122</systemName>
+      <systemName>IQDA:AUTO:0128</systemName>
       <comment>A comment</comment>
       <logix>IX1</logix>
       <addressing>Reference</addressing>
@@ -14983,7 +15362,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </EnableLogix>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
-      <systemName>IQDA:AUTO:0123</systemName>
+      <systemName>IQDA:AUTO:0129</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -15041,7 +15420,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionEntryExit>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
-      <systemName>IQDA:AUTO:0124</systemName>
+      <systemName>IQDA:AUTO:0130</systemName>
       <comment>A comment</comment>
       <addressing>Direct</addressing>
       <reference>{IM1}</reference>
@@ -15100,7 +15479,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionEntryExit>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
-      <systemName>IQDA:AUTO:0125</systemName>
+      <systemName>IQDA:AUTO:0131</systemName>
       <comment>A comment</comment>
       <addressing>LocalVariable</addressing>
       <reference>{IM1}</reference>
@@ -15159,7 +15538,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionEntryExit>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
-      <systemName>IQDA:AUTO:0126</systemName>
+      <systemName>IQDA:AUTO:0132</systemName>
       <comment>A comment</comment>
       <addressing>Formula</addressing>
       <reference>{IM1}</reference>
@@ -15218,7 +15597,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionEntryExit>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
-      <systemName>IQDA:AUTO:0127</systemName>
+      <systemName>IQDA:AUTO:0133</systemName>
       <comment>A comment</comment>
       <addressing>Reference</addressing>
       <reference>{IM1}</reference>
@@ -15277,9 +15656,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ActionEntryExit>
     <ExecuteDelayed class="jmri.jmrit.logixng.actions.configurexml.ExecuteDelayedXml">
-      <systemName>IQDA:AUTO:0128</systemName>
+      <systemName>IQDA:AUTO:0134</systemName>
       <Socket>
-        <socketName>ax4pk33zo1</socketName>
+        <socketName>gjm1m9c6xa</socketName>
       </Socket>
       <delayAddressing>Direct</delayAddressing>
       <delay>0</delay>
@@ -15336,10 +15715,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ExecuteDelayed>
     <ExecuteDelayed class="jmri.jmrit.logixng.actions.configurexml.ExecuteDelayedXml">
-      <systemName>IQDA:AUTO:0129</systemName>
+      <systemName>IQDA:AUTO:0135</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>brgpmrpkxp</socketName>
+        <socketName>vfwweob5m5</socketName>
       </Socket>
       <delayAddressing>Direct</delayAddressing>
       <delay>100</delay>
@@ -15396,10 +15775,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ExecuteDelayed>
     <ExecuteDelayed class="jmri.jmrit.logixng.actions.configurexml.ExecuteDelayedXml">
-      <systemName>IQDA:AUTO:0130</systemName>
+      <systemName>IQDA:AUTO:0136</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>q8ocxi7nu5</socketName>
+        <socketName>yaqxy9q8hy</socketName>
       </Socket>
       <delayAddressing>LocalVariable</delayAddressing>
       <delay>0</delay>
@@ -15456,10 +15835,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ExecuteDelayed>
     <ExecuteDelayed class="jmri.jmrit.logixng.actions.configurexml.ExecuteDelayedXml">
-      <systemName>IQDA:AUTO:0131</systemName>
+      <systemName>IQDA:AUTO:0137</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>hcw27p1vj1</socketName>
+        <socketName>hsde8my2ya</socketName>
       </Socket>
       <delayAddressing>Reference</delayAddressing>
       <delay>0</delay>
@@ -15516,10 +15895,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ExecuteDelayed>
     <ExecuteDelayed class="jmri.jmrit.logixng.actions.configurexml.ExecuteDelayedXml">
-      <systemName>IQDA:AUTO:0132</systemName>
+      <systemName>IQDA:AUTO:0138</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>s6f37y9fo9</socketName>
+        <socketName>ic96q2hbud</socketName>
       </Socket>
       <delayAddressing>Formula</delayAddressing>
       <delay>0</delay>
@@ -15576,18 +15955,18 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </ExecuteDelayed>
     <For class="jmri.jmrit.logixng.actions.configurexml.ForXml">
-      <systemName>IQDA:AUTO:0133</systemName>
+      <systemName>IQDA:AUTO:0139</systemName>
       <InitSocket>
-        <socketName>twmpjdj7pd</socketName>
+        <socketName>swv3ozpik4</socketName>
       </InitSocket>
       <WhileSocket>
-        <socketName>ylwoabv6fq</socketName>
+        <socketName>md4vda81d6</socketName>
       </WhileSocket>
       <AfterEachSocket>
-        <socketName>gjm1m9c6xa</socketName>
+        <socketName>opxowmjhi5</socketName>
       </AfterEachSocket>
       <DoSocket>
-        <socketName>giy8qh2z3u</socketName>
+        <socketName>ckiem3rago</socketName>
       </DoSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -15637,19 +16016,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </For>
     <For class="jmri.jmrit.logixng.actions.configurexml.ForXml">
-      <systemName>IQDA:AUTO:0134</systemName>
+      <systemName>IQDA:AUTO:0140</systemName>
       <comment>A comment</comment>
       <InitSocket>
-        <socketName>up2eqrebmu</socketName>
+        <socketName>rskgf51q3g</socketName>
       </InitSocket>
       <WhileSocket>
-        <socketName>yaqxy9q8hy</socketName>
+        <socketName>na5qx2wmq5</socketName>
       </WhileSocket>
       <AfterEachSocket>
-        <socketName>hl13rri672</socketName>
+        <socketName>z5y9dgcweq</socketName>
       </AfterEachSocket>
       <DoSocket>
-        <socketName>hsde8my2ya</socketName>
+        <socketName>sz9atduv5w</socketName>
       </DoSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -15699,15 +16078,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </For>
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
-      <systemName>IQDA:AUTO:0135</systemName>
+      <systemName>IQDA:AUTO:0141</systemName>
       <IfSocket>
-        <socketName>ic96q2hbud</socketName>
+        <socketName>yve96dayf9</socketName>
       </IfSocket>
       <ThenSocket>
-        <socketName>yezcvqhd6d</socketName>
+        <socketName>vmw27x5acd</socketName>
       </ThenSocket>
       <ElseSocket>
-        <socketName>swv3ozpik4</socketName>
+        <socketName>h9vum4oul1</socketName>
       </ElseSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -15757,16 +16136,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </IfThenElse>
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
-      <systemName>IQDA:AUTO:0136</systemName>
+      <systemName>IQDA:AUTO:0142</systemName>
       <comment>A comment</comment>
       <IfSocket>
-        <socketName>opxowmjhi5</socketName>
+        <socketName>fwzbpk3sd8</socketName>
       </IfSocket>
       <ThenSocket>
-        <socketName>ckiem3rago</socketName>
+        <socketName>qc6vymhcmw</socketName>
       </ThenSocket>
       <ElseSocket>
-        <socketName>p634vs71ui</socketName>
+        <socketName>o52nbru7j1</socketName>
       </ElseSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -15816,16 +16195,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </IfThenElse>
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="AlwaysExecute">
-      <systemName>IQDA:AUTO:0137</systemName>
+      <systemName>IQDA:AUTO:0143</systemName>
       <comment>A comment</comment>
       <IfSocket>
-        <socketName>na5qx2wmq5</socketName>
+        <socketName>j9jwkmdqxj</socketName>
       </IfSocket>
       <ThenSocket>
-        <socketName>z5y9dgcweq</socketName>
+        <socketName>wfubaackwj</socketName>
       </ThenSocket>
       <ElseSocket>
-        <socketName>sz9atduv5w</socketName>
+        <socketName>xxagtxwdjr</socketName>
       </ElseSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -15875,12 +16254,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </IfThenElse>
     <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
-      <systemName>IQDA:AUTO:0138</systemName>
+      <systemName>IQDA:AUTO:0144</systemName>
       <ExpressionSocket>
-        <socketName>yve96dayf9</socketName>
+        <socketName>se9eemxtwp</socketName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>vmw27x5acd</socketName>
+        <socketName>i5c33tykdg</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -15930,13 +16309,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Logix>
     <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
-      <systemName>IQDA:AUTO:0139</systemName>
+      <systemName>IQDA:AUTO:0145</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>
-        <socketName>s2fd5b5ant</socketName>
+        <socketName>tsl5y4rd1j</socketName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>fwzbpk3sd8</socketName>
+        <socketName>yi5j36gpi5</socketName>
         <systemName>IQDB:AUTO:0001</systemName>
       </ActionSocket>
       <MaleSocket>
@@ -15987,7 +16366,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Logix>
     <LogData class="jmri.jmrit.logixng.actions.configurexml.LogDataXml">
-      <systemName>IQDA:AUTO:0140</systemName>
+      <systemName>IQDA:AUTO:0146</systemName>
       <logToLog>yes</logToLog>
       <logToScriptOutput>no</logToScriptOutput>
       <formatType>OnlyText</formatType>
@@ -16041,7 +16420,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogData>
     <LogData class="jmri.jmrit.logixng.actions.configurexml.LogDataXml">
-      <systemName>IQDA:AUTO:0141</systemName>
+      <systemName>IQDA:AUTO:0147</systemName>
       <comment>A comment</comment>
       <logToLog>yes</logToLog>
       <logToScriptOutput>yes</logToScriptOutput>
@@ -16101,7 +16480,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogData>
     <LogData class="jmri.jmrit.logixng.actions.configurexml.LogDataXml">
-      <systemName>IQDA:AUTO:0142</systemName>
+      <systemName>IQDA:AUTO:0148</systemName>
       <comment>A comment</comment>
       <logToLog>yes</logToLog>
       <logToScriptOutput>yes</logToScriptOutput>
@@ -16161,7 +16540,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogData>
     <LogData class="jmri.jmrit.logixng.actions.configurexml.LogDataXml">
-      <systemName>IQDA:AUTO:0143</systemName>
+      <systemName>IQDA:AUTO:0149</systemName>
       <comment>A comment</comment>
       <logToLog>yes</logToLog>
       <logToScriptOutput>yes</logToScriptOutput>
@@ -16221,7 +16600,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogData>
     <LogData class="jmri.jmrit.logixng.actions.configurexml.LogDataXml">
-      <systemName>IQDA:AUTO:0144</systemName>
+      <systemName>IQDA:AUTO:0150</systemName>
       <comment>A comment</comment>
       <logToLog>yes</logToLog>
       <logToScriptOutput>yes</logToScriptOutput>
@@ -16293,7 +16672,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogData>
     <LogLocalVariables class="jmri.jmrit.logixng.actions.configurexml.LogLocalVariablesXml">
-      <systemName>IQDA:AUTO:0145</systemName>
+      <systemName>IQDA:AUTO:0151</systemName>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -16342,7 +16721,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogLocalVariables>
     <LogLocalVariables class="jmri.jmrit.logixng.actions.configurexml.LogLocalVariablesXml">
-      <systemName>IQDA:AUTO:0146</systemName>
+      <systemName>IQDA:AUTO:0152</systemName>
       <comment>A comment</comment>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -16392,10 +16771,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </LogLocalVariables>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0147</systemName>
+      <systemName>IQDA:AUTO:0153</systemName>
       <Actions>
         <Socket>
-          <socketName>vpx1chtvc2</socketName>
+          <socketName>yc6e2habox</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -16446,11 +16825,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DigitalMany>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0148</systemName>
+      <systemName>IQDA:AUTO:0154</systemName>
       <comment>A comment</comment>
       <Actions>
         <Socket>
-          <socketName>pe8n3x3krl</socketName>
+          <socketName>vjp4tew4db</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -16501,24 +16880,24 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DigitalMany>
     <Sequence class="jmri.jmrit.logixng.actions.configurexml.SequenceXml">
-      <systemName>IQDA:AUTO:0149</systemName>
+      <systemName>IQDA:AUTO:0155</systemName>
       <StartSocket>
-        <socketName>xrf4gchgqs</socketName>
+        <socketName>gm282fpv6v</socketName>
       </StartSocket>
       <StopSocket>
-        <socketName>v1mdz314z1</socketName>
+        <socketName>tmdblw9wdh</socketName>
       </StopSocket>
       <ResetSocket>
-        <socketName>t3fihe1imi</socketName>
+        <socketName>vzermykkwe</socketName>
       </ResetSocket>
       <Expressions>
         <Socket>
-          <socketName>f2cwy2z413</socketName>
+          <socketName>t8j7so5oxh</socketName>
         </Socket>
       </Expressions>
       <Actions>
         <Socket>
-          <socketName>vz5rpupjcy</socketName>
+          <socketName>bmdz8155n7</socketName>
         </Socket>
       </Actions>
       <startImmediately>yes</startImmediately>
@@ -16571,38 +16950,38 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Sequence>
     <Sequence class="jmri.jmrit.logixng.actions.configurexml.SequenceXml">
-      <systemName>IQDA:AUTO:0150</systemName>
+      <systemName>IQDA:AUTO:0156</systemName>
       <comment>A comment</comment>
       <StartSocket>
-        <socketName>k1eib6f91c</socketName>
+        <socketName>b7sb74p1xn</socketName>
         <systemName>IQDE:AUTO:0003</systemName>
       </StartSocket>
       <StopSocket>
-        <socketName>yc6e2habox</socketName>
+        <socketName>qgokngqprc</socketName>
         <systemName>IQDE:AUTO:0004</systemName>
       </StopSocket>
       <ResetSocket>
-        <socketName>vjp4tew4db</socketName>
+        <socketName>gqco7j554t</socketName>
         <systemName>IQDE:AUTO:0005</systemName>
       </ResetSocket>
       <Expressions>
         <Socket>
-          <socketName>vzermykkwe</socketName>
+          <socketName>prmxkt32ty</socketName>
           <systemName>IQDE:AUTO:0006</systemName>
         </Socket>
         <Socket>
-          <socketName>b7sb74p1xn</socketName>
+          <socketName>clar7ts2ws</socketName>
           <systemName>IQDE:AUTO:0007</systemName>
         </Socket>
       </Expressions>
       <Actions>
         <Socket>
-          <socketName>gm282fpv6v</socketName>
-          <systemName>IQDA:AUTO:0151</systemName>
+          <socketName>nnca3tu2cp</socketName>
+          <systemName>IQDA:AUTO:0157</systemName>
         </Socket>
         <Socket>
-          <socketName>t8j7so5oxh</socketName>
-          <systemName>IQDA:AUTO:0152</systemName>
+          <socketName>yxjppqdy2k</socketName>
+          <systemName>IQDA:AUTO:0158</systemName>
         </Socket>
       </Actions>
       <startImmediately>no</startImmediately>
@@ -16655,11 +17034,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Sequence>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0151</systemName>
+      <systemName>IQDA:AUTO:0157</systemName>
       <comment>Action socket 1</comment>
       <Actions>
         <Socket>
-          <socketName>tmdblw9wdh</socketName>
+          <socketName>yxy727baal</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -16710,429 +17089,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DigitalMany>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0152</systemName>
-      <comment>Action socket 2</comment>
-      <Actions>
-        <Socket>
-          <socketName>snxvx6y2sk</socketName>
-        </Socket>
-      </Actions>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </DigitalMany>
-    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
-      <systemName>IQDA:AUTO:0153</systemName>
-      <operation>ShutdownJMRI</operation>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </ShutdownComputer>
-    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
-      <systemName>IQDA:AUTO:0154</systemName>
-      <comment>A comment</comment>
-      <operation>ShutdownComputer</operation>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </ShutdownComputer>
-    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
-      <systemName>IQDA:AUTO:0155</systemName>
-      <comment>A comment</comment>
-      <operation>RebootComputer</operation>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </ShutdownComputer>
-    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
-      <systemName>IQDA:AUTO:0156</systemName>
-      <comment>A comment</comment>
-      <operation>ShutdownJMRI</operation>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </ShutdownComputer>
-    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
-      <systemName>IQDA:AUTO:0157</systemName>
-      <comment>A comment</comment>
-      <operation>RebootJMRI</operation>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </ShutdownComputer>
-    <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
       <systemName>IQDA:AUTO:0158</systemName>
-      <localVariable />
-      <rowOrColumnName />
-      <tableRowOrColumn>Column</tableRowOrColumn>
-      <Socket>
-        <socketName>prmxkt32ty</socketName>
-      </Socket>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </TableForEach>
-    <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
-      <systemName>IQDA:AUTO:0159</systemName>
-      <comment>A comment</comment>
-      <localVariable>MyLocalVariable</localVariable>
-      <table>IQT1</table>
-      <rowOrColumnName>North yard</rowOrColumnName>
-      <tableRowOrColumn>Row</tableRowOrColumn>
-      <Socket>
-        <socketName>yxjppqdy2k</socketName>
-        <systemName>IQDA:AUTO:0160</systemName>
-      </Socket>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </TableForEach>
-    <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0160</systemName>
+      <comment>Action socket 2</comment>
       <Actions>
         <Socket>
           <socketName>kzc9zljeks</socketName>
@@ -17185,16 +17143,325 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </DigitalMany>
-    <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
+    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
+      <systemName>IQDA:AUTO:0159</systemName>
+      <operation>ShutdownJMRI</operation>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShutdownComputer>
+    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
+      <systemName>IQDA:AUTO:0160</systemName>
+      <comment>A comment</comment>
+      <operation>ShutdownComputer</operation>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShutdownComputer>
+    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:0161</systemName>
+      <comment>A comment</comment>
+      <operation>RebootComputer</operation>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShutdownComputer>
+    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
+      <systemName>IQDA:AUTO:0162</systemName>
+      <comment>A comment</comment>
+      <operation>ShutdownJMRI</operation>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShutdownComputer>
+    <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
+      <systemName>IQDA:AUTO:0163</systemName>
+      <comment>A comment</comment>
+      <operation>RebootJMRI</operation>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShutdownComputer>
+    <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
+      <systemName>IQDA:AUTO:0164</systemName>
+      <localVariable />
+      <rowOrColumnName />
+      <tableRowOrColumn>Column</tableRowOrColumn>
+      <Socket>
+        <socketName>gar6tbjl2s</socketName>
+      </Socket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </TableForEach>
+    <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
+      <systemName>IQDA:AUTO:0165</systemName>
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
       <table>IQT1</table>
-      <rowOrColumnName>Second turnout</rowOrColumnName>
-      <tableRowOrColumn>Column</tableRowOrColumn>
+      <rowOrColumnName>North yard</rowOrColumnName>
+      <tableRowOrColumn>Row</tableRowOrColumn>
       <Socket>
-        <socketName>qmnvr8x6dh</socketName>
-        <systemName>IQDA:AUTO:0162</systemName>
+        <socketName>t3ga6iwyju</socketName>
+        <systemName>IQDA:AUTO:0166</systemName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -17244,10 +17511,122 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </TableForEach>
     <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
-      <systemName>IQDA:AUTO:0162</systemName>
+      <systemName>IQDA:AUTO:0166</systemName>
       <Actions>
         <Socket>
-          <socketName>cxpez7n4ev</socketName>
+          <socketName>yftc77a94b</socketName>
+        </Socket>
+      </Actions>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DigitalMany>
+    <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
+      <systemName>IQDA:AUTO:0167</systemName>
+      <comment>A comment</comment>
+      <localVariable>MyLocalVariable</localVariable>
+      <table>IQT1</table>
+      <rowOrColumnName>Second turnout</rowOrColumnName>
+      <tableRowOrColumn>Column</tableRowOrColumn>
+      <Socket>
+        <socketName>yw8m1pcmnn</socketName>
+        <systemName>IQDA:AUTO:0168</systemName>
+      </Socket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </TableForEach>
+    <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0168</systemName>
+      <Actions>
+        <Socket>
+          <socketName>ie3vivqew6</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -17298,18 +17677,18 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DigitalMany>
     <Throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
-      <systemName>IQDA:AUTO:0163</systemName>
+      <systemName>IQDA:AUTO:0169</systemName>
       <comment>A comment</comment>
       <LocoAddressSocket>
-        <socketName>de4nih7qjk</socketName>
+        <socketName>mxgcnbjq5v</socketName>
         <systemName>IQAE:AUTO:0001</systemName>
       </LocoAddressSocket>
       <LocoSpeedSocket>
-        <socketName>uhkz5o8ngb</socketName>
+        <socketName>h69jag1em1</socketName>
         <systemName>IQAE:AUTO:0002</systemName>
       </LocoSpeedSocket>
       <LocoDirectionSocket>
-        <socketName>fmes5114s7</socketName>
+        <socketName>ww2jevw81g</socketName>
         <systemName>IQDE:AUTO:0008</systemName>
       </LocoDirectionSocket>
       <MaleSocket>
@@ -17360,7 +17739,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </Throttle>
     <TriggerRoute class="jmri.jmrit.logixng.actions.configurexml.TriggerRouteXml">
-      <systemName>IQDA:AUTO:0164</systemName>
+      <systemName>IQDA:AUTO:0170</systemName>
       <addressing>Direct</addressing>
       <reference />
       <localVariable />
@@ -17418,7 +17797,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </TriggerRoute>
     <TriggerRoute class="jmri.jmrit.logixng.actions.configurexml.TriggerRouteXml">
-      <systemName>IQDA:AUTO:0165</systemName>
+      <systemName>IQDA:AUTO:0171</systemName>
       <comment>A comment</comment>
       <addressing>Direct</addressing>
       <reference />
@@ -17477,17 +17856,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </TriggerRoute>
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
-      <systemName>IQDA:AUTO:0166</systemName>
+      <systemName>IQDA:AUTO:0172</systemName>
       <comment>A comment</comment>
       <IfSocket>
-        <socketName>t3ga6iwyju</socketName>
+        <socketName>jeqqv9etpr</socketName>
         <systemName>IQDE:AUTO:0009</systemName>
       </IfSocket>
       <ThenSocket>
-        <socketName>u2toh81dwl</socketName>
+        <socketName>wgrnw6zbqd</socketName>
       </ThenSocket>
       <ElseSocket>
-        <socketName>zhmq5i5v7a</socketName>
+        <socketName>srtrcwzk5d</socketName>
       </ElseSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -17537,13 +17916,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </IfThenElse>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0167</systemName>
+      <systemName>IQDA:AUTO:0173</systemName>
       <ExpressionSocket>
-        <socketName>yfbvjw5r6g</socketName>
+        <socketName>rgzvizqzf4</socketName>
         <systemName>IQAE:AUTO:0003</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>sle4w6n658</socketName>
+        <socketName>nk1257mpsk</socketName>
         <systemName>IQAA:AUTO:0001</systemName>
       </ActionSocket>
       <MaleSocket>
@@ -17594,13 +17973,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0168</systemName>
+      <systemName>IQDA:AUTO:0174</systemName>
       <ExpressionSocket>
-        <socketName>u6jlrl5tq5</socketName>
+        <socketName>uigwusoxww</socketName>
         <systemName>IQAE:AUTO:0004</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>tj554qda29</socketName>
+        <socketName>wq1738uhho</socketName>
         <systemName>IQAA:AUTO:0002</systemName>
       </ActionSocket>
       <MaleSocket>
@@ -17651,13 +18030,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0169</systemName>
+      <systemName>IQDA:AUTO:0175</systemName>
       <ExpressionSocket>
-        <socketName>ve5q2jo279</socketName>
+        <socketName>ycyp8lj5kp</socketName>
         <systemName>IQAE:AUTO:0005</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>vp6oqkk6p1</socketName>
+        <socketName>czqgg1v4ai</socketName>
         <systemName>IQAA:AUTO:0003</systemName>
       </ActionSocket>
       <MaleSocket>
@@ -17708,13 +18087,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0170</systemName>
+      <systemName>IQDA:AUTO:0176</systemName>
       <ExpressionSocket>
-        <socketName>srtrcwzk5d</socketName>
+        <socketName>achosf6jvn</socketName>
         <systemName>IQAE:AUTO:0006</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>t3ru39u9cr</socketName>
+        <socketName>dvxbvw8ykg</socketName>
         <systemName>IQAA:AUTO:0004</systemName>
       </ActionSocket>
       <MaleSocket>
@@ -17765,13 +18144,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0171</systemName>
+      <systemName>IQDA:AUTO:0177</systemName>
       <ExpressionSocket>
-        <socketName>rlxuj5ywhd</socketName>
+        <socketName>wuzmw9jjop</socketName>
         <systemName>IQAE:AUTO:0007</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>wq1738uhho</socketName>
+        <socketName>ul7kl9ezd1</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -17821,13 +18200,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </MaleSocket>
     </DoAnalogAction>
     <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
-      <systemName>IQDA:AUTO:0172</systemName>
+      <systemName>IQDA:AUTO:0178</systemName>
       <ExpressionSocket>
-        <socketName>ycyp8lj5kp</socketName>
+        <socketName>d4f97lfzni</socketName>
         <systemName>IQAE:AUTO:0008</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>t9djjywrs6</socketName>
+        <socketName>v8bg367x34</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -17876,15 +18255,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </DoAnalogAction>
-    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0173</systemName>
+    <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0179</systemName>
       <ExpressionSocket>
-        <socketName>achosf6jvn</socketName>
-        <systemName>IQSE:AUTO:0001</systemName>
+        <socketName>x841cqux4d</socketName>
+        <systemName>IQAE:AUTO:0009</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>dvxbvw8ykg</socketName>
-        <systemName>IQSA:AUTO:0001</systemName>
+        <socketName>a1f65zj8fw</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -17932,183 +18310,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </DoStringAction>
-    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0174</systemName>
+    </DoAnalogAction>
+    <DoAnalogAction class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0180</systemName>
       <ExpressionSocket>
-        <socketName>j21qk6vr4o</socketName>
-        <systemName>IQSE:AUTO:0002</systemName>
-      </ExpressionSocket>
-      <ActionSocket>
-        <socketName>wuzmw9jjop</socketName>
-        <systemName>IQSA:AUTO:0002</systemName>
-      </ActionSocket>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </DoStringAction>
-    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0175</systemName>
-      <ExpressionSocket>
-        <socketName>ul7kl9ezd1</socketName>
-        <systemName>IQSE:AUTO:0003</systemName>
-      </ExpressionSocket>
-      <ActionSocket>
-        <socketName>k15a8yeu2r</socketName>
-        <systemName>IQSA:AUTO:0003</systemName>
-      </ActionSocket>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </DoStringAction>
-    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0176</systemName>
-      <ExpressionSocket>
-        <socketName>v8bg367x34</socketName>
-        <systemName>IQSE:AUTO:0004</systemName>
-      </ExpressionSocket>
-      <ActionSocket>
-        <socketName>lhclwjg93v</socketName>
-        <systemName>IQSA:AUTO:0004</systemName>
-      </ActionSocket>
-      <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
-          <errorHandling>Default</errorHandling>
-          <LocalVariable>
-            <name>A1</name>
-            <type>None</type>
-            <data />
-          </LocalVariable>
-          <LocalVariable>
-            <name>A2</name>
-            <type>Integer</type>
-            <data>32</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A3</name>
-            <type>FloatingNumber</type>
-            <data>41.429</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A4</name>
-            <type>String</type>
-            <data>My string</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A5</name>
-            <type>LocalVariable</type>
-            <data>index</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A6</name>
-            <type>Memory</type>
-            <data>IM2</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A7</name>
-            <type>Reference</type>
-            <data>{IM3}</data>
-          </LocalVariable>
-          <LocalVariable>
-            <name>A8</name>
-            <type>Formula</type>
-            <data>index * 2</data>
-          </LocalVariable>
-        </AbstractMaleSocket>
-      </MaleSocket>
-    </DoStringAction>
-    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0177</systemName>
-      <ExpressionSocket>
-        <socketName>raa2jylwab</socketName>
-        <systemName>IQSE:AUTO:0005</systemName>
+        <socketName>dvkgfhenpj</socketName>
+        <systemName>IQAE:AUTO:0010</systemName>
       </ExpressionSocket>
       <ActionSocket>
         <socketName>dk1vjqwvu5</socketName>
@@ -18159,15 +18366,299 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </DoStringAction>
+    </DoAnalogAction>
     <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
-      <systemName>IQDA:AUTO:0178</systemName>
+      <systemName>IQDA:AUTO:0181</systemName>
       <ExpressionSocket>
         <socketName>w7xyia9y2f</socketName>
+        <systemName>IQSE:AUTO:0001</systemName>
+      </ExpressionSocket>
+      <ActionSocket>
+        <socketName>yd2ldysquk</socketName>
+        <systemName>IQSA:AUTO:0001</systemName>
+      </ActionSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DoStringAction>
+    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
+      <systemName>IQDA:AUTO:0182</systemName>
+      <ExpressionSocket>
+        <socketName>g12apvck3y</socketName>
+        <systemName>IQSE:AUTO:0002</systemName>
+      </ExpressionSocket>
+      <ActionSocket>
+        <socketName>sgdj18u9cn</socketName>
+        <systemName>IQSA:AUTO:0002</systemName>
+      </ActionSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DoStringAction>
+    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
+      <systemName>IQDA:AUTO:0183</systemName>
+      <ExpressionSocket>
+        <socketName>y9e8ihx3i6</socketName>
+        <systemName>IQSE:AUTO:0003</systemName>
+      </ExpressionSocket>
+      <ActionSocket>
+        <socketName>rtitnkvpnu</socketName>
+        <systemName>IQSA:AUTO:0003</systemName>
+      </ActionSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DoStringAction>
+    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
+      <systemName>IQDA:AUTO:0184</systemName>
+      <ExpressionSocket>
+        <socketName>fcqgblarva</socketName>
+        <systemName>IQSE:AUTO:0004</systemName>
+      </ExpressionSocket>
+      <ActionSocket>
+        <socketName>q5ncpni3mk</socketName>
+        <systemName>IQSA:AUTO:0004</systemName>
+      </ActionSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DoStringAction>
+    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
+      <systemName>IQDA:AUTO:0185</systemName>
+      <ExpressionSocket>
+        <socketName>wdluapqp4h</socketName>
+        <systemName>IQSE:AUTO:0005</systemName>
+      </ExpressionSocket>
+      <ActionSocket>
+        <socketName>hy6t1wk6b9</socketName>
+      </ActionSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DoStringAction>
+    <DoStringAction class="jmri.jmrit.logixng.actions.configurexml.DoStringActionXml">
+      <systemName>IQDA:AUTO:0186</systemName>
+      <ExpressionSocket>
+        <socketName>q2n8pm13t9</socketName>
         <systemName>IQSE:AUTO:0006</systemName>
       </ExpressionSocket>
       <ActionSocket>
-        <socketName>snirnz1s9c</socketName>
+        <socketName>jhoyxdnefy</socketName>
       </ActionSocket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18222,19 +18713,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDB:AUTO:0001</systemName>
       <Actions>
         <Socket>
-          <socketName>qc6vymhcmw</socketName>
+          <socketName>gcf3hlmixs</socketName>
           <systemName>IQDB:AUTO:0002</systemName>
         </Socket>
         <Socket>
-          <socketName>px5k9le3q7</socketName>
+          <socketName>qm1fqiu6gx</socketName>
           <systemName>IQDB:AUTO:0003</systemName>
         </Socket>
         <Socket>
-          <socketName>wfubaackwj</socketName>
+          <socketName>uerxutuxfr</socketName>
           <systemName>IQDB:AUTO:0004</systemName>
         </Socket>
         <Socket>
-          <socketName>xxa2557ufv</socketName>
+          <socketName>c16uqv8odx</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -18289,7 +18780,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Actions>
         <Socket>
-          <socketName>o52nbru7j1</socketName>
+          <socketName>uigst3qzfq</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -18342,7 +18833,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE">
       <systemName>IQDB:AUTO:0003</systemName>
       <Socket>
-        <socketName>j9jwkmdqxj</socketName>
+        <socketName>vpx1chtvc2</socketName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
@@ -18395,7 +18886,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDB:AUTO:0004</systemName>
       <comment>A comment</comment>
       <Socket>
-        <socketName>xxagtxwdjr</socketName>
+        <socketName>pe8n3x3krl</socketName>
       </Socket>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
@@ -18749,7 +19240,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQAE:AUTO:0007</systemName>
       <Expressions>
         <Socket>
-          <socketName>uigwusoxww</socketName>
+          <socketName>zmo3qmkgfs</socketName>
         </Socket>
       </Expressions>
       <formula />
@@ -18805,7 +19296,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Expressions>
         <Socket>
-          <socketName>czqgg1v4ai</socketName>
+          <socketName>ro9t7c679m</socketName>
         </Socket>
       </Expressions>
       <formula>sin(a)*2 + 14</formula>
@@ -18856,6 +19347,107 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </AnalogFormula>
+    <TimeSinceMidnight class="jmri.jmrit.logixng.expressions.configurexml.TimeSinceMidnightXml">
+      <systemName>IQAE:AUTO:0009</systemName>
+      <type>SystemClock</type>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
+        <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </TimeSinceMidnight>
+    <TimeSinceMidnight class="jmri.jmrit.logixng.expressions.configurexml.TimeSinceMidnightXml">
+      <systemName>IQAE:AUTO:0010</systemName>
+      <comment>A comment</comment>
+      <type>FastClock</type>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>A1</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+          <LocalVariable>
+            <name>A2</name>
+            <type>Integer</type>
+            <data>32</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A3</name>
+            <type>FloatingNumber</type>
+            <data>41.429</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A4</name>
+            <type>String</type>
+            <data>My string</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A5</name>
+            <type>LocalVariable</type>
+            <data>index</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A6</name>
+            <type>Memory</type>
+            <data>IM2</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A7</name>
+            <type>Reference</type>
+            <data>{IM3}</data>
+          </LocalVariable>
+          <LocalVariable>
+            <name>A8</name>
+            <type>Formula</type>
+            <data>index * 2</data>
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </TimeSinceMidnight>
   </LogixNGAnalogExpressions>
   <LogixNGAnalogActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXml">
     <AnalogActionMemory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
@@ -18962,7 +19554,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQAA:AUTO:0003</systemName>
       <Actions>
         <Socket>
-          <socketName>ye9z4iltm2</socketName>
+          <socketName>t9djjywrs6</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -19017,7 +19609,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Actions>
         <Socket>
-          <socketName>rgzvizqzf4</socketName>
+          <socketName>hexq6xsdzi</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -19274,7 +19866,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQSE:AUTO:0005</systemName>
       <Expressions>
         <Socket>
-          <socketName>dvkgfhenpj</socketName>
+          <socketName>vs5sdc3jqn</socketName>
         </Socket>
       </Expressions>
       <formula />
@@ -19330,7 +19922,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Expressions>
         <Socket>
-          <socketName>yd2ldysquk</socketName>
+          <socketName>qunco96rry</socketName>
         </Socket>
       </Expressions>
       <formula>sin(a)*2 + 14</formula>
@@ -19487,7 +20079,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQSA:AUTO:0003</systemName>
       <Actions>
         <Socket>
-          <socketName>d4f97lfzni</socketName>
+          <socketName>q9yl4xcdhh</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -19542,7 +20134,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <Actions>
         <Socket>
-          <socketName>x841cqux4d</socketName>
+          <socketName>pz8tvcfxbu</socketName>
         </Socket>
       </Actions>
       <MaleSocket>
@@ -19596,9 +20188,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Jun 15 19:43:42 CEST 2021</date>
+      <date>Wed Jun 16 04:08:19 CEST 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.23.7ish+daniel+2021-06-15T17:43:10Z+R374c3a1 on Tue Jun 15 19:43:42 CEST 2021-->
+  <!--Written by JMRI version 4.23.7ish+daniel+2021-06-16T02:07:57Z+R170fe24 on Wed Jun 16 04:08:19 CEST 2021-->
 </layout-config>

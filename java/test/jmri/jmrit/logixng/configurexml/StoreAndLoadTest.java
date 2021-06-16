@@ -62,6 +62,8 @@ public class StoreAndLoadTest {
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
         light2.setUserName("Some light");
         light2.setCommandedState(Light.OFF);
+        VariableLight variableLight1 = (VariableLight)InstanceManager.getDefault(LightManager.class).provide("ILVariable");
+        variableLight1.setCommandedState(Light.OFF);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor1.setCommandedState(Sensor.INACTIVE);
         Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
@@ -510,6 +512,61 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionLightIntensity actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.Direct);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.Formula);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.Reference);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -3155,6 +3212,30 @@ public class StoreAndLoadTest {
         analogFormula.setComment("A comment");
         analogFormula.setFormula("sin(a)*2 + 14");
         maleSocket = analogExpressionManager.registerExpression(analogFormula);
+        doAnalogAction.getChild(0).connect(maleSocket);
+
+
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        TimeSinceMidnight timeSinceMidnight = new TimeSinceMidnight(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(timeSinceMidnight);
+        maleSocket.setEnabled(false);
+        timeSinceMidnight.setType(TimeSinceMidnight.Type.SystemClock);
+        doAnalogAction.getChild(0).connect(maleSocket);
+
+
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeSinceMidnight = new TimeSinceMidnight(analogExpressionManager.getAutoSystemName(), null);
+        timeSinceMidnight.setComment("A comment");
+        timeSinceMidnight.setType(TimeSinceMidnight.Type.FastClock);
+        maleSocket = analogExpressionManager.registerExpression(timeSinceMidnight);
         doAnalogAction.getChild(0).connect(maleSocket);
 
 
