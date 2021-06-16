@@ -33,7 +33,6 @@ public class DefaultModule extends AbstractBase
     private String _socketSystemName = null;
     private final List<Parameter> _parameters = new ArrayList<>();
     private final List<VariableData> _localVariables = new ArrayList<>();
-    private Lock _lock = Lock.NONE;
     private final Map<Thread, ConditionalNG> _currentConditionalNG = new HashMap<>();
 
 
@@ -174,16 +173,6 @@ public class DefaultModule extends AbstractBase
     @Override
     public boolean isExternal() {
         return false;
-    }
-
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
     }
 /*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {

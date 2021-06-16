@@ -28,13 +28,15 @@ public abstract class MaleSocketTestBase {
     }
     
     @Test
-    public void testLock() throws JmriException {
-        maleSocketA.setLock(Base.Lock.NONE);
-        Assert.assertTrue("lock is correct",
-                Base.Lock.NONE == maleSocketA.getLock());
-        maleSocketA.setLock(Base.Lock.USER_LOCK);
-        Assert.assertTrue("lock is correct",
-                Base.Lock.USER_LOCK == maleSocketA.getLock());
+    public void testLock() {
+        maleSocketA.setLocked(false);
+        Assert.assertFalse(maleSocketA.isLocked());
+        maleSocketA.setLocked(true);
+        Assert.assertTrue(maleSocketA.isLocked());
+        maleSocketA.setSystem(false);
+        Assert.assertFalse(maleSocketA.isSystem());
+        maleSocketA.setSystem(true);
+        Assert.assertTrue(maleSocketA.isSystem());
     }
     
     @Test

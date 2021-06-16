@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.util.JUnitAppender;
@@ -199,14 +198,6 @@ public class ConditionalNGTest {
             hasThrown = true;
         }
         Assert.assertTrue("exception thrown", hasThrown);
-    }
-
-    @Test
-    public void testGetLock() {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
-                .createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "A new conditionalng for test");  // NOI18N
-        Assert.assertEquals("conditionalNG is not locked", Lock.NONE, conditionalNG.getLock());
     }
 /*
     @Test

@@ -43,6 +43,9 @@ public interface Debugable extends Base {
      * LogixNG.
      */
     public interface DebugConfig {
+        
+        public DebugConfig getCopy();
+        
     }
     
 }

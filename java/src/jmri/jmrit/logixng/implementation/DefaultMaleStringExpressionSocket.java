@@ -205,6 +205,14 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
         // The result if the result is forced.
         public String _result = "";
         
+        @Override
+        public DebugConfig getCopy() {
+            StringExpressionDebugConfig config = new StringExpressionDebugConfig();
+            config._forceResult = _forceResult;
+            config._result = _result;
+            return config;
+        }
+        
     }
     
     

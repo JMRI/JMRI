@@ -12,7 +12,6 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.expressions.And;
@@ -118,30 +117,6 @@ public class LogixNGTest {
         boolean hasThrown = false;
         try {
             logixNG.isExternal();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-    }
-
-    @Test
-    public void testGetLock() {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        boolean hasThrown = false;
-        try {
-            logixNG.getLock();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-    }
-
-    @Test
-    public void testSetLock() {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        boolean hasThrown = false;
-        try {
-            logixNG.setLock(Lock.NONE);
         } catch (UnsupportedOperationException e) {
             hasThrown = true;
         }
@@ -398,13 +373,6 @@ public class LogixNGTest {
         System.err.format("=======================================%n");
 */
         Assert.assertEquals("Strings matches", expectedResult.toString(), resultStr);
-    }
-
-    @Test
-    public void testBaseLock() {
-        Assert.assertTrue("isChangeableByUser is correct", Base.Lock.NONE.isChangeableByUser());
-        Assert.assertTrue("isChangeableByUser is correct", Base.Lock.USER_LOCK.isChangeableByUser());
-        Assert.assertFalse("isChangeableByUser is correct", Base.Lock.HARD_LOCK.isChangeableByUser());
     }
 
     @Test

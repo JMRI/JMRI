@@ -225,6 +225,14 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         // The result if the result is forced.
         public double _result = 0.0f;
         
+        @Override
+        public DebugConfig getCopy() {
+            AnalogExpressionDebugConfig config = new AnalogExpressionDebugConfig();
+            config._forceResult = _forceResult;
+            config._result = _result;
+            return config;
+        }
+        
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogExpressionSocket.class);

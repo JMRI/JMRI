@@ -15,7 +15,6 @@ public abstract class AbstractStringExpression extends AbstractBase
         implements StringExpressionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = StringExpressionBean.UNKNOWN;
     boolean _triggerOnChange = true;    // By default, trigger on change
 
@@ -57,19 +56,6 @@ public abstract class AbstractStringExpression extends AbstractBase
     public int getState() {
         log.warn("Unexpected call to getState in AbstractStringExpression.");  // NOI18N
         return _state;
-    }
-    
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
     }
     
     /** {@inheritDoc} */

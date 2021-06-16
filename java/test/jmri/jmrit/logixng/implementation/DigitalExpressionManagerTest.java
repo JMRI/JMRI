@@ -183,16 +183,6 @@ public class DigitalExpressionManagerTest extends AbstractManagerTestBase {
         }
 
         @Override
-        public Lock getLock() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public void setLock(Lock lock) {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
         public void setup() {
             throw new UnsupportedOperationException("Not supported");
         }

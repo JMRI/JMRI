@@ -15,7 +15,6 @@ public abstract class AbstractAnalogExpression extends AbstractBase
         implements AnalogExpressionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = AnalogExpressionBean.UNKNOWN;
     boolean _triggerOnChange = true;    // By default, trigger on change
 
@@ -58,19 +57,6 @@ public abstract class AbstractAnalogExpression extends AbstractBase
     public int getState() {
         log.warn("Unexpected call to getState in AbstractAnalogExpression.");  // NOI18N
         return _state;
-    }
-    
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
     }
     
     /** {@inheritDoc} */

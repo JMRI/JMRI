@@ -81,52 +81,6 @@ public interface Base extends PropertyChangeProvider {
     public static final int SOCKET_DISCONNECTED = 0x04;
 
 
-    public enum Lock {
-
-        /**
-         * The item is not locked.
-         */
-        NONE("BaseLockNone"),
-
-        /**
-         * The item is locked by the user and can be unlocked by the user.
-         */
-        USER_LOCK("BaseLockUser"),
-
-        /**
-         * The item is locked by a hard lock that cannot be unlocked by the
-         * user. But it can be removed by editing the xml file. This lock is
-         * used for items that normally shouldn't be changed.
-         */
-        HARD_LOCK("BaseLockHard");
-
-
-        private final String _bundleKey;
-
-        private Lock(String bundleKey) {
-            _bundleKey = bundleKey;
-        }
-
-        public final boolean isChangeableByUser() {
-            switch (this) {
-                case NONE:
-                case USER_LOCK:
-                    return true;
-
-                case HARD_LOCK:
-                    return false;
-
-                default:
-                    throw new RuntimeException("lock has unknown value: "+this.name());
-            }
-        }
-
-        @Override
-        public String toString() {
-            return Bundle.getMessage(_bundleKey);
-        }
-    }
-
     /**
      * Get the system name.
      * @return the system name
@@ -343,21 +297,6 @@ public interface Base extends PropertyChangeProvider {
      * @return true if this is external
      */
     public boolean isExternal();
-
-    /**
-     * Get the status of the lock.
-     * @return the current lock
-     */
-    public Lock getLock();
-
-    /**
-     * Set the status of the lock.
-     *
-     * Note that the user interface should normally not allow editing a hard lock.
-     *
-     * @param lock the new lock
-     */
-    public void setLock(Lock lock);
 
     /**
      * Is this item active? If this item is enabled and all the parents are
