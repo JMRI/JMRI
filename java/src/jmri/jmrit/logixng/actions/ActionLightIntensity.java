@@ -221,9 +221,9 @@ public class ActionLightIntensity extends AbstractDigitalAction
         }
         
         if (intensity < 0.0) intensity = 0.0;
-        if (intensity > 1.0) intensity = 1.0;
+        if (intensity > 100.0) intensity = 100.0;
         
-        light.setTargetIntensity(intensity);
+        light.setTargetIntensity(intensity/100.0);
     }
 
     @Override

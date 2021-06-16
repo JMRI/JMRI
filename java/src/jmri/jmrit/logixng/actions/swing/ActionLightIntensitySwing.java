@@ -8,12 +8,9 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.actions.ActionLightIntensity;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
-import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionLightIntensity object with a Swing JPanel.
@@ -38,6 +35,7 @@ public class ActionLightIntensitySwing extends AbstractDigitalActionSwing {
         ActionLightIntensity action = (ActionLightIntensity)object;
         
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
         _tabbedPaneLight = new JTabbedPane();
         _panelLightDirect = new javax.swing.JPanel();
@@ -83,6 +81,12 @@ public class ActionLightIntensitySwing extends AbstractDigitalActionSwing {
         }
         
         panel.add(_tabbedPaneLight);
+        
+        panel.add(javax.swing.Box.createVerticalStrut(10));
+        
+        JPanel labelPanel = new JPanel();
+        labelPanel.add(new JLabel(Bundle.getMessage("ActionLightIntensity_Descr")));
+        panel.add(labelPanel);
     }
     
     /** {@inheritDoc} */
