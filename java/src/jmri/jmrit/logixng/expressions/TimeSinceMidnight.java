@@ -87,8 +87,6 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
                 throw new UnsupportedOperationException("_type has unknown value: " + _type.name());
         }
 
-        if (currentTime == null) return 0.0;
-        
         return (currentTime.get(Calendar.HOUR_OF_DAY) * 60) + currentTime.get(Calendar.MINUTE);
     }
 
