@@ -19,7 +19,7 @@
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 6</h1>
 
-      <h2>Expression Items</h2>
+      <h2>Digital Expression Items</h2>
 
         <p>The dialog for adding and editing expressions consists of an upper part that
         contains the item and the states for that item.  The lower part is common
@@ -251,6 +251,36 @@
               <li><strong>Route set:</strong> Evaluate to true if the specified turnout has been set.</li>
               <li><strong>Train is running:</strong> Evaluate to true if the specified route has a train running.</li>
             </ul>
+
+      <h2>Analog Expressions</h2>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter6/analog_expression_items.png">
+        <img src="images/chapter6/analog_expression_items.png"
+        alt="Chapter 6 analog expression items" width="279" height="129">
+        </a>
+        </div>
+
+        <h3>Analog constant</h3>
+        <p>Return a constant as an analog value.</p>
+
+        <h3>Memory as analog value</h3>
+        <p>Return value of a memory variable as an analog value.</p>
+
+        <a id="MidnightMinutes"></a>
+        <h3>Minutes since midnight</h3>
+        <p>Return the number of minutes since midnight using either the fast clock
+        or the system clock.</p>
+
+        <div style="margin-left: 2em;">
+        <a href="images/chapter6/analog_expression_common.png">
+        <img src="images/chapter6/analog_expression_common.png"
+        alt="Chapter 6 analog expression common" width="267" height="121">
+        </a>
+        </div>
+
+        <h3>Analog formula</h3>
+        <p>Return the result of a formula as an analog value.</p>
 
       <hr>
       <p><a href="chapter7.shtml">Chapter 7 - References</a></p>

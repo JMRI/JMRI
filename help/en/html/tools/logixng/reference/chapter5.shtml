@@ -74,7 +74,7 @@
           <div style="margin-left: 2em;">
           <a href="images/chapter5/action_list.png">
           <img src="images/chapter5/action_list.png"
-          alt="Chapter 5 action item list" width="256" height="431">
+          alt="Chapter 5 action item list" width="263" height="454">
           </a>
           </div>
 
@@ -157,6 +157,27 @@
               the specified light is not a variable light, or if a positive integer is not
               entered for the number of fast clock minutes, an error message results.</li>
             </ul>
+
+          <h5>Light intensity</h5>
+            <p>The Light intensity action is an alternate method to set the Variable Light
+            Intensity value.  The standard method sets the value directly from the action
+            using any of the standard input methods.</p>
+
+            <p>This action creates a child analog expression called <strong>Intensity</strong>.
+            Analog expressions are normally used to create a dynamic values, such as random
+            numbers.  Using the <code>sin()</code> function along with the
+            <a href="chapter6.shtml#MidnightMinutes">Minutes since midnight</a> analog
+            expression, it is possible to change light intensity based on the time of the
+            day using the fast clock or the system clock.</p>
+
+            <p>Here is an example using the sin() function.</p>
+
+            <div style="margin-left: 2em;">
+            <a href="images/chapter5/intensity_example.png">
+            <img src="images/chapter5/intensity_example.png"
+            alt="Chapter 5 intensity example" width="432" height="87">
+            </a>
+            </div>
 
           <h5>Local variable</h5>
             <p>Local variables are described in <a href="chapter8.shtml">Chapter 8 - Local Variables</a>.</p>
