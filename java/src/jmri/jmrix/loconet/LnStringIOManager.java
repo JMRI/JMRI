@@ -67,19 +67,6 @@ public class LnStringIOManager extends jmri.managers.AbstractStringIOManager imp
         // reach here for LocoNet sensor input command; make sure we know about this one
     }
 
-    /** {@inheritDoc} */
-//    @Override
-//    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
-//        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
-//    }
-
-    /** {@inheritDoc} */
-//    @Override
-//    @Nonnull
-//    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
-//        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
-//    }
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnStringIOManager.class);
 
 }
