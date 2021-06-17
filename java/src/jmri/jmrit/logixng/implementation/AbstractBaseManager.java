@@ -36,6 +36,8 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
      *            "CanDelete" will inquire with all listeners if the item can
      *            be deleted. "DoDelete" tells the listener to delete the item.
      * @param old The old value of the property.
+     * @throws java.beans.PropertyVetoException If the recipients wishes the
+     *                                          delete to be aborted (see above)
      */
     @OverridingMethodsMustInvokeSuper
     public void fireVetoableChange(String p, Object old) throws PropertyVetoException {
