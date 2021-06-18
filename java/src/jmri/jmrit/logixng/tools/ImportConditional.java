@@ -1074,21 +1074,19 @@ public class ImportConditional {
 
     private DigitalActionBean getLightAction(@Nonnull ConditionalAction ca, Light l, String reference) throws JmriException {
 
-        ActionLight action;
+        ActionLight action = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class)
+                .getAutoSystemName(), null);
+
+        if (reference != null) {
+            action.setAddressing(NamedBeanAddressing.Reference);
+            action.setReference(reference);
+        } else {
+            action.setAddressing(NamedBeanAddressing.Direct);
+            action.setLight(l);
+        }
 
         switch (ca.getType()) {
             case SET_LIGHT:
-                action = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class)
-                                .getAutoSystemName(), null);
-
-                if (reference != null) {
-                    action.setAddressing(NamedBeanAddressing.Reference);
-                    action.setReference(reference);
-                } else {
-                    action.setAddressing(NamedBeanAddressing.Direct);
-                    action.setLight(l);
-                }
-
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
                         action.setBeanState(ActionLight.LightState.Toggle);
@@ -1106,6 +1104,34 @@ public class ImportConditional {
                         throw new InvalidConditionalVariableException(
                                 Bundle.getMessage("ActionBadLightState", ca.getActionData()));
                 }
+                break;
+
+            case SET_LIGHT_INTENSITY:
+                int intensity = 0;
+                try {
+                    intensity = Integer.parseInt(ca.getActionString());
+                    if (intensity < 0 || intensity > 100) {
+                        intensity = 0;
+                    }
+                } catch (NumberFormatException ex) {
+                    intensity = 0;
+                }
+                action.setLightValue(intensity);
+                action.setBeanState(ActionLight.LightState.Intensity);
+                break;
+
+            case SET_LIGHT_TRANSITION_TIME:
+                int interval = 0;
+                try {
+                    interval = Integer.parseInt(ca.getActionString());
+                    if (interval < 0) {
+                        interval = 0;
+                    }
+                } catch (NumberFormatException ex) {
+                    interval = 0;
+                }
+                action.setLightValue(interval);
+                action.setBeanState(ActionLight.LightState.Interval);
                 break;
 
             default:

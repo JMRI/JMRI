@@ -715,12 +715,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     log.error("move count must be a number");
                 }
                 break;
-            case BUILT_COLUMN:
-                car.setBuilt(value.toString());
-                break;
-            case OWNER_COLUMN:
-                car.setOwner(value.toString());
-                break;
             case VALUE_COLUMN:
                 car.setValue(value.toString());
                 break;
@@ -733,9 +727,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 } catch (NumberFormatException e) {
                     log.error("wait count must be a number");
                 }
-                break;
-            case LAST_COLUMN:
-                // do nothing
                 break;
             default:
                 break;

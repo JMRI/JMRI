@@ -4,47 +4,45 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
-import jmri.Memory;
-import jmri.MemoryManager;
+import jmri.StringIO;
+import jmri.StringIOManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.actions.StringActionMemory;
+import jmri.jmrit.logixng.actions.StringActionStringIO;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
- * Configures an ActionMemory object with a Swing JPanel.
+ * Configures an StringActionStringIO object with a Swing JPanel.
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class StringActionMemorySwing extends AbstractStringActionSwing {
+public class StringActionStringIOSwing extends AbstractStringActionSwing {
 
-    private BeanSelectPanel<Memory> memoryBeanPanel;
+    private BeanSelectPanel<StringIO> _stringIOBeanPanel;
     
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        StringActionMemory action = (StringActionMemory)object;
+        StringActionStringIO action = (StringActionStringIO)object;
         
         panel = new JPanel();
-        memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _stringIOBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(StringIOManager.class), null);
         
         if (action != null) {
-            if (action.getMemory() != null) {
-                memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
+            if (action.getStringIO() != null) {
+                _stringIOBeanPanel.setDefaultNamedBean(action.getStringIO().getBean());
             }
         }
         
-        panel.add(new JLabel(Bundle.getMessage("BeanNameMemory")));
-        panel.add(memoryBeanPanel);
+        panel.add(new JLabel(Bundle.getMessage("BeanNameStringIO")));
+        panel.add(_stringIOBeanPanel);
     }
     
     /** {@inheritDoc} */
@@ -56,14 +54,14 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        StringActionMemory action = new StringActionMemory(systemName, userName);
-        if (!memoryBeanPanel.isEmpty()) {
-            Memory memory = memoryBeanPanel.getNamedBean();
+        StringActionStringIO action = new StringActionStringIO(systemName, userName);
+        if (!_stringIOBeanPanel.isEmpty()) {
+            StringIO memory = _stringIOBeanPanel.getNamedBean();
             if (memory != null) {
-                NamedBeanHandle<Memory> handle
+                NamedBeanHandle<StringIO> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
+                action.setStringIO(handle);
             }
         }
         return InstanceManager.getDefault(StringActionManager.class).registerAction(action);
@@ -72,33 +70,33 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof StringActionMemory)) {
-            throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
+        if (! (object instanceof StringActionStringIO)) {
+            throw new IllegalArgumentException("object must be an StringActionStringIO but is a: "+object.getClass().getName());
         }
-        StringActionMemory action = (StringActionMemory)object;
-        Memory memory = memoryBeanPanel.getNamedBean();
+        StringActionStringIO action = (StringActionStringIO)object;
+        StringIO memory = _stringIOBeanPanel.getNamedBean();
         if (memory != null) {
-            NamedBeanHandle<Memory> handle
+            NamedBeanHandle<StringIO> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
                             .getNamedBeanHandle(memory.getDisplayName(), memory);
-            action.setMemory(handle);
+            action.setStringIO(handle);
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("StringActionMemory_Short");
+        return Bundle.getMessage("StringActionStringIO_Short");
     }
     
     @Override
     public void dispose() {
-        if (memoryBeanPanel != null) {
-            memoryBeanPanel.dispose();
+        if (_stringIOBeanPanel != null) {
+            _stringIOBeanPanel.dispose();
         }
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemorySwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIOSwing.class);
     
 }
