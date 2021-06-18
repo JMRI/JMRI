@@ -424,6 +424,8 @@
 
   </tocitem>
   <tocitem text="LogixNG " target="html.tools.logixng.LogixNG">
+   <tocitem text="LogixNG Reference " target="html.tools.logixng.reference.index"/>
+
    <tocitem text="LogixNG Table " target="package.jmri.jmrit.beantable.LogixNGTable"/>
 
    <tocitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>
