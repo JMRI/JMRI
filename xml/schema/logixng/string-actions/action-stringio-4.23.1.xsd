@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!-- This file contains definitions for LogixNG StringActions.              -->
+<!-- This file contains definitions for LogixNG                             -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,33 +25,29 @@
             "
         >
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-actions/action-memory-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-actions/action-stringio-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-actions/many-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-actions/string-action-loconet-opc-peer-4.23.1.xsd"/>
-
-    <xs:complexType name="LogixNG_StringActionManagerType">
+    <xs:complexType name="LogixNG_StringAction_StringIOType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a StringActionManager implementation.
+          Define the XML stucture for storing the contents of a StringActionMemory class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.string.implementation.configurexml.StringAnalogActionManagerXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.string.actions.configurexml.StringActionMemory</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
         
-        <!-- Permit any of these tags in any order in any number -->
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:sequence>
 
-            <xs:element name="StringMany"                  type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="StringActionMemory"          type="LogixNG_StringAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="StringActionStringIO"        type="LogixNG_StringAction_StringIOType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="StringActionLoconetOpcPeer"  type="LogixNG_StringAction_LocoNetOPC_PEER_Type" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="stringIO" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-        </xs:choice>
-      </xs:sequence>
-      <xs:attribute name="class" type="classType" use="required"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
+            </xs:sequence>
+            
+			<xs:attribute name="class" type="classType" use="required"/>
+        
     </xs:complexType>
 
 </xs:schema>
