@@ -403,6 +403,8 @@
 
  </indexitem>
  <indexitem text="LogixNG " target="html.tools.logixng.LogixNG">
+  <indexitem text="LogixNG Reference " target="html.tools.logixng.reference.index"/>
+
   <indexitem text="LogixNG Table " target="package.jmri.jmrit.beantable.LogixNGTable"/>
 
   <indexitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>

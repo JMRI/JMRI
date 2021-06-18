@@ -137,7 +137,17 @@
 
         <h3>Lock / Unlock</h3>
 
-          <p> === pending === </p>
+          <p>Locking a row in the ConditionalNG tree is used to prevent accidental changes
+          to the selected portion of the tree.  When a row is locked, the row and all of
+          its descendants are locked.  The unlock menu item unlocks the row and its
+          descendants</p>
+
+          <p>If an item is locked, a lock icon is shown before that node.</p>
+
+          <p>An item can be edited, enabled and disabled if it's not locked.</p>
+
+          <p>An item can be added if the parent is not locked. An item can be cut or
+          removed if it's not locked and its parent is not locked.</p>
 
         <h3>Local variables</h3>
 
