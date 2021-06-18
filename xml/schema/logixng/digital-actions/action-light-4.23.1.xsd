@@ -34,7 +34,7 @@
             <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-        
+
             <xs:sequence>
 
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -55,6 +55,8 @@
                     <xs:enumeration value="Off"/>
                     <xs:enumeration value="On"/>
                     <xs:enumeration value="Toggle"/>
+                    <xs:enumeration value="Intensity"/>
+                    <xs:enumeration value="Interval"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -63,12 +65,19 @@
               <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
+              <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="lightValue" type="xs:int" minOccurs="0" maxOccurs="1"/>
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
+
 			<xs:attribute name="class" type="classType" use="required"/>
-        
+
     </xs:complexType>
 
 </xs:schema>
