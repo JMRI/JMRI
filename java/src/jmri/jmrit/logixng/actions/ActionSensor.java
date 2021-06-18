@@ -207,7 +207,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Sensor_SensorInUseSensorExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("Sensor_SensorInUseSensorActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N

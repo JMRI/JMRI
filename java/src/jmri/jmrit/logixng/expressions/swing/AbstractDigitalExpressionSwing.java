@@ -44,13 +44,9 @@ public abstract class AbstractDigitalExpressionSwing extends AbstractSwingConfig
                     JOptionPane.showMessageDialog(null,
                             Bundle.getMessage("ExecuteEvaluate_EvaluationCompleted", result),
                             Bundle.getMessage("ExecuteEvaluate_Title"),
-//                            "The result of the expression is: "+Boolean.toString(result),
-//                            "The expression has been evaluated",
                             JOptionPane.PLAIN_MESSAGE);
                 });
             } catch (JmriException | RuntimeException e) {
-    //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
-    //                        conditionalNG.getSystemName(), e, e);
                 log.warn("ConditionalNG {} got an exception during execute: {}",
                         conditionalNG.getSystemName(), e, e);
             }

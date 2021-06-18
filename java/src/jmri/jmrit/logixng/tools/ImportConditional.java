@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
+import jmri.jmrit.audio.AudioListener;
+import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -351,7 +353,7 @@ public class ImportConditional {
                 break;
 
             case AUDIO:
-                newAction = getAudioAction(conditionalAction);
+                newAction = getAudioOrSoundAction(conditionalAction);
                 break;
 
             case SCRIPT:
@@ -1182,7 +1184,7 @@ public class ImportConditional {
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadSignalHeadType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadSignalHeadType", ca.getType().toString()));
         }
 
         return action;
@@ -1235,7 +1237,7 @@ public class ImportConditional {
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadSignalMastType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadSignalMastType", ca.getType().toString()));
         }
 
         return action;
@@ -1268,7 +1270,7 @@ public class ImportConditional {
                 break;
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadEntryExitType", ca.getType().toString()));
         }
 
         return action;
@@ -1453,7 +1455,7 @@ public class ImportConditional {
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadEnableLogixType", ca.getType().toString()));
         }
 
         return action;
@@ -1489,7 +1491,91 @@ public class ImportConditional {
 
 
     private DigitalActionBean getAudioAction(@Nonnull ConditionalAction ca) throws JmriException {
-        return null;
+        ActionAudio action =
+                new ActionAudio(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.setAddressing(NamedBeanAddressing.Direct);
+
+        String sound = ca.getActionString();
+        if (sound != null && sound.length() > 0 && sound.charAt(0) == '@') {
+            action.setAddressing(NamedBeanAddressing.Reference);
+            action.setReference(sound.substring(1));
+        } else {
+            Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(ca.getDeviceName());
+            if (audio != null) action.setAudio(audio);
+        }
+
+        switch (ca.getActionData()) {
+            case Audio.CMD_PLAY:
+                action.setOperation(ActionAudio.Operation.Play);
+                break;
+            case Audio.CMD_STOP:
+                action.setOperation(ActionAudio.Operation.Stop);
+                break;
+            case Audio.CMD_PLAY_TOGGLE:
+                action.setOperation(ActionAudio.Operation.PlayToggle);
+                break;
+            case Audio.CMD_PAUSE:
+                action.setOperation(ActionAudio.Operation.Pause);
+                break;
+            case Audio.CMD_RESUME:
+                action.setOperation(ActionAudio.Operation.Resume);
+                break;
+            case Audio.CMD_PAUSE_TOGGLE:
+                action.setOperation(ActionAudio.Operation.PauseToggle);
+                break;
+            case Audio.CMD_REWIND:
+                action.setOperation(ActionAudio.Operation.Rewind);
+                break;
+            case Audio.CMD_FADE_IN:
+                action.setOperation(ActionAudio.Operation.FadeIn);
+                break;
+            case Audio.CMD_FADE_OUT:
+                action.setOperation(ActionAudio.Operation.FadeOut);
+                break;
+            case Audio.CMD_RESET_POSITION:
+                action.setOperation(ActionAudio.Operation.ResetPosition);
+                break;
+            default:
+                break;
+        }
+
+        return action;
+    }
+
+    private DigitalActionBean getSoundAction(@Nonnull ConditionalAction ca) throws JmriException {
+        ActionSound action =
+                new ActionSound(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.setSoundAddressing(NamedBeanAddressing.Direct);
+
+        String sound = ca.getActionString();
+        if (sound != null && sound.length() > 0 && sound.charAt(0) == '@') {
+            action.setSoundAddressing(NamedBeanAddressing.Reference);
+            action.setSoundReference(sound.substring(1));
+        } else {
+            action.setSound(sound);
+        }
+
+        return action;
+    }
+
+    private DigitalActionBean getAudioOrSoundAction(@Nonnull ConditionalAction ca) throws JmriException {
+        switch (ca.getType()) {
+            case CONTROL_AUDIO:
+                return getAudioAction(ca);
+
+            case PLAY_SOUND:
+                return getSoundAction(ca);
+
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadAudioOrSoundType", ca.getType().toString()));
+        }
     }
 
 
@@ -1503,7 +1589,7 @@ public class ImportConditional {
 
         String script = ca.getActionString();
         if (script != null && script.length() > 0 && script.charAt(0) == '@') {
-            action.setScriptAddressing(NamedBeanAddressing.Direct);
+            action.setScriptAddressing(NamedBeanAddressing.Reference);
             action.setScriptReference(script.substring(1));
         } else {
             action.setScript(script);
@@ -1520,7 +1606,7 @@ public class ImportConditional {
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadScriptType", ca.getType().toString()));
         }
 
         return action;
@@ -1553,7 +1639,7 @@ public class ImportConditional {
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadRouteType", ca.getType().toString()));
         }
 
         return action;
