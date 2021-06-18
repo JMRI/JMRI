@@ -26,40 +26,28 @@ import jmri.util.swing.BeanSelectPanel;
 public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
 
     private BeanSelectPanel<Memory> memoryBeanPanel;
-//    private JComboBox<MemoryOperation> stateComboBox;
     
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-//        AnalogActionMemory action = (AnalogActionMemory)object;
+        AnalogActionMemory action = (AnalogActionMemory)object;
         
         panel = new JPanel();
         memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-/*        
-        stateComboBox = new JComboBox<>();
-        for (MemoryOperation e : MemoryOperation.values()) {
-            stateComboBox.addItem(e);
-        }
         
         if (action != null) {
             if (action.getMemory() != null) {
                 memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
             }
-            stateComboBox.setSelectedItem(action.getMemoryOperation());
         }
-*/        
+        
         panel.add(new JLabel(Bundle.getMessage("BeanNameMemory")));
         panel.add(memoryBeanPanel);
-//        panel.add(stateComboBox);
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        if (1==0) {
-            errorMessages.add("An error");
-            return false;
-        }
         return true;
     }
     

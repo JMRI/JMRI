@@ -20,6 +20,7 @@ public class AnalogFactory implements AnalogExpressionFactory {
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> analogExpressionClasses = new HashSet<>();
+        analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionAnalogIO.class));
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionConstant.class));
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionMemory.class));
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, AnalogFormula.class));

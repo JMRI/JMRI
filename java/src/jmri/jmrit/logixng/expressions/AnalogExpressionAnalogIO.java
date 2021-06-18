@@ -12,16 +12,16 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 
 /**
- * Reads a Memory.
+ * Reads a AnalogIO.
  *
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2021
  */
-public class AnalogExpressionMemory extends AbstractAnalogExpression
+public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private NamedBeanHandle<Memory> _memoryHandle;
+    private NamedBeanHandle<AnalogIO> _analogIOHandle;
 
-    public AnalogExpressionMemory(String sys, String user)
+    public AnalogExpressionAnalogIO(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
 
         super(sys, user);
@@ -33,9 +33,9 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        AnalogExpressionMemory copy = new AnalogExpressionMemory(sysName, userName);
+        AnalogExpressionAnalogIO copy = new AnalogExpressionAnalogIO(sysName, userName);
         copy.setComment(getComment());
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        if (_analogIOHandle != null) copy.setAnalogIO(_analogIOHandle);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -43,16 +43,16 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
+            if (evt.getOldValue() instanceof AnalogIO) {
+                if (evt.getOldValue().equals(getAnalogIO().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("AnalogIO_AnalogIOInUseAnalogIOExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    removeMemory();
+            if (evt.getOldValue() instanceof AnalogIO) {
+                if (evt.getOldValue().equals(getAnalogIO().getBean())) {
+                    removeAnalogIO();
                 }
             }
         }
@@ -70,46 +70,46 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         return true;
     }
 
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
+    public void setAnalogIO(@Nonnull String analogIOName) {
+        assertListenersAreNotRegistered(log, "setAnalogIO");
+        AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean(analogIOName);
+        if (analogIO != null) {
+            setAnalogIO(analogIO);
         } else {
-            removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
+            removeAnalogIO();
+            log.error("analogIO \"{}\" is not found", analogIOName);
         }
     }
 
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+    public void setAnalogIO(@Nonnull NamedBeanHandle<AnalogIO> handle) {
+        assertListenersAreNotRegistered(log, "setAnalogIO");
+        _analogIOHandle = handle;
+        InstanceManager.getDefault(AnalogIOManager.class).addVetoableChangeListener(this);
     }
 
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    public void setAnalogIO(@Nonnull AnalogIO analogIO) {
+        assertListenersAreNotRegistered(log, "setAnalogIO");
+        setAnalogIO(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(analogIO.getDisplayName(), analogIO));
     }
 
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "setMemory");
-        if (_memoryHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _memoryHandle = null;
+    public void removeAnalogIO() {
+        assertListenersAreNotRegistered(log, "setAnalogIO");
+        if (_analogIOHandle != null) {
+            InstanceManager.getDefault(AnalogIOManager.class).removeVetoableChangeListener(this);
+            _analogIOHandle = null;
         }
     }
 
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
+    public NamedBeanHandle<AnalogIO> getAnalogIO() {
+        return _analogIOHandle;
     }
 
     /** {@inheritDoc} */
     @Override
     public double evaluate() {
-        if (_memoryHandle != null) {
-            return jmri.util.TypeConversionUtil.convertToDouble(_memoryHandle.getBean().getValue(), false);
+        if (_analogIOHandle != null) {
+            return jmri.util.TypeConversionUtil.convertToDouble(_analogIOHandle.getBean().getKnownAnalogValue(), false);
         } else {
             return 0.0;
         }
@@ -131,16 +131,16 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "AnalogExpressionMemory_Short");
+        return Bundle.getMessage(locale, "AnalogExpressionAnalogIO_Short");
     }
 
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "AnalogExpressionMemory_Long", _memoryHandle.getBean().getDisplayName());
+        if (_analogIOHandle != null) {
+            return Bundle.getMessage(locale, "AnalogExpressionAnalogIO_Long", _analogIOHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage(locale, "AnalogExpressionMemory_Long", "none");
+            return Bundle.getMessage(locale, "AnalogExpressionAnalogIO_Long", "none");
         }
     }
 
@@ -153,8 +153,8 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if ((! _listenersAreRegistered) && (_memoryHandle != null)) {
-            _memoryHandle.getBean().addPropertyChangeListener("value", this);
+        if ((! _listenersAreRegistered) && (_analogIOHandle != null)) {
+            _analogIOHandle.getBean().addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
     }
@@ -163,7 +163,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _memoryHandle.getBean().removePropertyChangeListener("value", this);
+            _analogIOHandle.getBean().removePropertyChangeListener("value", this);
             _listenersAreRegistered = false;
         }
     }
@@ -184,12 +184,12 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: AnalogExpressionMemory: bean = {}, report = {}", cdl, report);
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
+        log.debug("getUsageReport :: AnalogExpressionAnalogIO: bean = {}, report = {}", cdl, report);
+        if (getAnalogIO() != null && bean.equals(getAnalogIO().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemory.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionAnalogIO.class);
 
 }
