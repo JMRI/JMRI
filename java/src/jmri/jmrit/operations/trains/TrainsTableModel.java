@@ -489,7 +489,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    // one of four buttons: Report, Move, Conductor or Terminate
+    // one of five buttons: Report, Move, Reset, Conductor or Terminate
     private void actionTrain(int row) {
         // no actions while a train is being built
         if (build != null && build.isAlive()) {
