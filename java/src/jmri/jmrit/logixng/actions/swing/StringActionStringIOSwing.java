@@ -26,31 +26,23 @@ import jmri.util.swing.BeanSelectPanel;
 public class StringActionStringIOSwing extends AbstractStringActionSwing {
 
     private BeanSelectPanel<StringIO> _stringIOBeanPanel;
-//    private JComboBox<StringIOOperation> stateComboBox;
     
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-//        StringActionStringIO action = (StringActionStringIO)object;
+        StringActionStringIO action = (StringActionStringIO)object;
         
         panel = new JPanel();
         _stringIOBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(StringIOManager.class), null);
-/*        
-        stateComboBox = new JComboBox<>();
-        for (StringIOOperation e : StringIOOperation.values()) {
-            stateComboBox.addItem(e);
-        }
         
         if (action != null) {
             if (action.getStringIO() != null) {
-                memoryBeanPanel.setDefaultNamedBean(action.getStringIO().getBean());
+                _stringIOBeanPanel.setDefaultNamedBean(action.getStringIO().getBean());
             }
-            stateComboBox.setSelectedItem(action.getStringIOOperation());
         }
-*/        
+        
         panel.add(new JLabel(Bundle.getMessage("BeanNameStringIO")));
         panel.add(_stringIOBeanPanel);
-//        panel.add(stateComboBox);
     }
     
     /** {@inheritDoc} */
