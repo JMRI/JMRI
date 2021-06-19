@@ -35,10 +35,10 @@
       <ul>
         <li><a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a></li>
         <li><a href="chapter2.shtml">Chapter 2 - The clipboard</a></li>
-        <li><a href="chapter3.shtml">Chapter 3 - Basic actions and expressions</a></li>
-        <li><a href="chapter4.shtml">Chapter 4 - Working with sockets</a></li>
-        <li><a href="chapter5.shtml">Chapter 5 - Action Items</a></li>
-        <li><a href="chapter6.shtml">Chapter 6 - Expression Items</a></li>
+        <li><a href="chapter3.shtml">Chapter 3 - Working with sockets</a></li>
+        <li><a href="chapter4.shtml">Chapter 4 - Actions and Expressions</a></li>
+        <li><a href="chapter5.shtml">Chapter 5 - Action Descriptions</a></li>
+        <li><a href="chapter6.shtml">Chapter 6 - Expression Descriptions</a></li>
       </ul>
 
       <h3>Advanced Features</h3>

@@ -332,6 +332,7 @@
             <tr><td style="text-align:center">?~</td><td>Analog expression</td></tr>
             <tr><td style="text-align:center">!s</td><td>String action</td></tr>
             <tr><td style="text-align:center">?s</td><td>String expression</td></tr>
+            <tr><td style="text-align:center">?*</td><td>Generic expression</td></tr>
           </table>
         </div>
 
