@@ -26,40 +26,28 @@ import jmri.util.swing.BeanSelectPanel;
 public class AnalogExpressionMemorySwing extends AbstractAnalogExpressionSwing {
 
     private BeanSelectPanel<Memory> memoryBeanPanel;
-//    private JComboBox<MemoryOperation> stateComboBox;
     
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-//        AnalogExpressionMemory action = (AnalogExpressionMemory)object;
+        AnalogExpressionMemory action = (AnalogExpressionMemory)object;
         
         panel = new JPanel();
         memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-/*        
-        stateComboBox = new JComboBox<>();
-        for (MemoryOperation e : MemoryOperation.values()) {
-            stateComboBox.addItem(e);
-        }
         
         if (action != null) {
             if (action.getMemory() != null) {
                 memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
             }
-            stateComboBox.setSelectedItem(action.getMemoryOperation());
         }
-*/        
+        
         panel.add(new JLabel(Bundle.getMessage("BeanNameMemory")));
         panel.add(memoryBeanPanel);
-//        panel.add(stateComboBox);
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        if (1==0) {
-            errorMessages.add("An error");
-            return false;
-        }
         return true;
     }
     
@@ -98,7 +86,7 @@ public class AnalogExpressionMemorySwing extends AbstractAnalogExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("AnalogExpression_Short");
+        return Bundle.getMessage("AnalogExpressionMemory_Short");
     }
     
     @Override

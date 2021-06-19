@@ -19,6 +19,7 @@ public class StringFactory implements StringActionFactory {
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> stringActionClasses = new HashSet<>();
         stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionMemory.class));
+        stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionStringIO.class));
         stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, StringMany.class));
         return stringActionClasses;
     }

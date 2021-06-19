@@ -12,6 +12,8 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -35,10 +37,21 @@ import org.junit.*;
  */
 public class StoreAndLoadTest {
 
+//    private AudioManager audioManager;
+
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+/*
+        audioManager = new jmri.jmrit.audio.DefaultAudioManager(
+                InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+        audioManager.init();
+        JUnitUtil.waitFor(()->{return audioManager.isInitialised();});
 
+        audioManager.provideAudio("IAB1");
+        AudioSource audioSource = (AudioSource) audioManager.provideAudio("IAS1");
+        audioSource.setAssignedBuffer((AudioBuffer) audioManager.getNamedBean("IAB1"));
+*/
         Block block1 = InstanceManager.getDefault(BlockManager.class).provide("IB1");
         block1.setValue("Block 1 Value");
         Block block2 = InstanceManager.getDefault(BlockManager.class).provide("IB2");
@@ -49,6 +62,8 @@ public class StoreAndLoadTest {
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
         light2.setUserName("Some light");
         light2.setCommandedState(Light.OFF);
+        VariableLight variableLight1 = (VariableLight)InstanceManager.getDefault(LightManager.class).provide("ILVariable");
+        variableLight1.setCommandedState(Light.OFF);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor1.setCommandedState(Sensor.INACTIVE);
         Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
@@ -197,8 +212,89 @@ public class StoreAndLoadTest {
         int indexAction = 0;
 
 
+        ActionAudio actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        MaleSocket maleSocket = digitalActionManager.registerAction(actionAudio);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setComment("A comment");
+//        actionAudio.setAudio(audioSource);
+        actionAudio.setOperation(ActionAudio.Operation.Play);
+        actionAudio.setAddressing(NamedBeanAddressing.Direct);
+        actionAudio.setFormula("\"IT\"+index");
+        actionAudio.setLocalVariable("index");
+        actionAudio.setReference("{IM1}");
+        actionAudio.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        actionAudio.setOperationFormula("\"IT\"+index2");
+        actionAudio.setOperationLocalVariable("index2");
+        actionAudio.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionAudio);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setComment("A comment");
+//        actionAudio.setAudio(audioSource);
+        actionAudio.setOperation(ActionAudio.Operation.PlayToggle);
+        actionAudio.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionAudio.setFormula("\"IT\"+index");
+        actionAudio.setLocalVariable("index");
+        actionAudio.setReference("{IM1}");
+        actionAudio.setOperationAddressing(NamedBeanAddressing.Formula);
+        actionAudio.setOperationFormula("\"IT\"+index2");
+        actionAudio.setOperationLocalVariable("index2");
+        actionAudio.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionAudio);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setComment("A comment");
+//        actionAudio.setAudio(audioSource);
+        actionAudio.setOperation(ActionAudio.Operation.Pause);
+        actionAudio.setAddressing(NamedBeanAddressing.Formula);
+        actionAudio.setFormula("\"IT\"+index");
+        actionAudio.setLocalVariable("index");
+        actionAudio.setReference("{IM1}");
+        actionAudio.setOperationAddressing(NamedBeanAddressing.Reference);
+        actionAudio.setOperationFormula("\"IT\"+index2");
+        actionAudio.setOperationLocalVariable("index2");
+        actionAudio.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionAudio);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setComment("A comment");
+//        actionAudio.setAudio(audioSource);
+        actionAudio.setOperation(ActionAudio.Operation.PauseToggle);
+        actionAudio.setAddressing(NamedBeanAddressing.Reference);
+        actionAudio.setFormula("\"IT\"+index");
+        actionAudio.setLocalVariable("index");
+        actionAudio.setReference("{IM1}");
+        actionAudio.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionAudio.setOperationFormula("\"IT\"+index2");
+        actionAudio.setOperationLocalVariable("index2");
+        actionAudio.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionAudio);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setOperation(ActionAudio.Operation.Stop);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setOperation(ActionAudio.Operation.FadeIn);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setOperation(ActionAudio.Operation.FadeOut);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setOperation(ActionAudio.Operation.Rewind);
+
+        actionAudio = new ActionAudio(digitalActionManager.getAutoSystemName(), null);
+        actionAudio.setOperation(ActionAudio.Operation.ResetPosition);
+
+
         ActionBlock actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
-        MaleSocket maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setEnabled(false);
         maleSocket.setLocked(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -416,6 +512,61 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionLightIntensity actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.Direct);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.Formula);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
+        actionLightIntensity.setComment("A comment");
+        actionLightIntensity.setLight(variableLight1);
+        actionLightIntensity.setAddressing(NamedBeanAddressing.Reference);
+        actionLightIntensity.setFormula("\"IT\"+index");
+        actionLightIntensity.setLocalVariable("index");
+        actionLightIntensity.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionLightIntensity);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -1027,6 +1178,68 @@ public class StoreAndLoadTest {
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionSound simpleSound = new ActionSound(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(simpleSound);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        simpleSound = new ActionSound(digitalActionManager.getAutoSystemName(), null);
+        simpleSound.setComment("A comment");
+        simpleSound.setSound("bell.wav\n");
+        simpleSound.setOperationAddressing(NamedBeanAddressing.Direct);
+        simpleSound.setOperationFormula("a+b");
+        simpleSound.setOperationLocalVariable("myVar");
+        simpleSound.setOperationReference("{M1}");
+        simpleSound.setSoundAddressing(NamedBeanAddressing.Formula);
+        simpleSound.setSoundFormula("c+d");
+        simpleSound.setSoundLocalVariable("myOtherVar");
+        simpleSound.setSoundReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleSound);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        simpleSound = new ActionSound(digitalActionManager.getAutoSystemName(), null);
+        simpleSound.setComment("A comment");
+        simpleSound.setSound("bell.wav\n");
+        simpleSound.setOperationAddressing(NamedBeanAddressing.Formula);
+        simpleSound.setOperationFormula("a+b");
+        simpleSound.setOperationLocalVariable("myVar");
+        simpleSound.setOperationReference("{M1}");
+        simpleSound.setSoundAddressing(NamedBeanAddressing.LocalVariable);
+        simpleSound.setSoundFormula("c+d");
+        simpleSound.setSoundLocalVariable("myOtherVar");
+        simpleSound.setSoundReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleSound);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        simpleSound = new ActionSound(digitalActionManager.getAutoSystemName(), null);
+        simpleSound.setComment("A comment");
+        simpleSound.setSound("bell.wav\n");
+        simpleSound.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        simpleSound.setOperationFormula("a+b");
+        simpleSound.setOperationLocalVariable("myVar");
+        simpleSound.setOperationReference("{M1}");
+        simpleSound.setSoundAddressing(NamedBeanAddressing.Reference);
+        simpleSound.setSoundFormula("c+d");
+        simpleSound.setSoundLocalVariable("myOtherVar");
+        simpleSound.setSoundReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleSound);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        simpleSound = new ActionSound(digitalActionManager.getAutoSystemName(), null);
+        simpleSound.setComment("A comment");
+        simpleSound.setSound("bell.wav\n");
+        simpleSound.setOperationAddressing(NamedBeanAddressing.Reference);
+        simpleSound.setOperationFormula("a+b");
+        simpleSound.setOperationLocalVariable("myVar");
+        simpleSound.setOperationReference("{M1}");
+        simpleSound.setSoundAddressing(NamedBeanAddressing.Direct);
+        simpleSound.setSoundFormula("c+d");
+        simpleSound.setSoundLocalVariable("myOtherVar");
+        simpleSound.setSoundReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleSound);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -3002,6 +3215,30 @@ public class StoreAndLoadTest {
         doAnalogAction.getChild(0).connect(maleSocket);
 
 
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        TimeSinceMidnight timeSinceMidnight = new TimeSinceMidnight(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(timeSinceMidnight);
+        maleSocket.setEnabled(false);
+        timeSinceMidnight.setType(TimeSinceMidnight.Type.SystemClock);
+        doAnalogAction.getChild(0).connect(maleSocket);
+
+
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeSinceMidnight = new TimeSinceMidnight(analogExpressionManager.getAutoSystemName(), null);
+        timeSinceMidnight.setComment("A comment");
+        timeSinceMidnight.setType(TimeSinceMidnight.Type.FastClock);
+        maleSocket = analogExpressionManager.registerExpression(timeSinceMidnight);
+        doAnalogAction.getChild(0).connect(maleSocket);
+
+
 
 
         doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
@@ -3273,6 +3510,16 @@ public class StoreAndLoadTest {
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
+
+/*
+            audioManager.cleanup();
+            JUnitUtil.waitFor(()->{return !audioManager.isInitialised();});
+
+            audioManager = new jmri.jmrit.audio.DefaultAudioManager(
+                    InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+            audioManager.init();
+            JUnitUtil.waitFor(()->{return audioManager.isInitialised();});
+*/
 
             //**********************************
             // Try to load file

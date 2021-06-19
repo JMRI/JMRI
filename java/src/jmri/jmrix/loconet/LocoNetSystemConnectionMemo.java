@@ -196,6 +196,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.setLightManager(
                 getLightManager());
 
+        InstanceManager.setDefault(StringIOManager.class, getStringIOManager());
+
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
@@ -229,6 +231,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         // This must be done after the memo is registered
         getPredefinedMeters();
+
+        // This must be done after the memo is registered
+        getThrottleStringIO();
     }
 
     public LnPowerManager getPowerManager() {
@@ -307,6 +312,13 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return lncvdm;
     }
 
+    public LnStringIOManager getStringIOManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (LnStringIOManager) classObjectMap.computeIfAbsent(StringIOManager.class, (Class c) -> new LnStringIOManager(this));
+    }
+
     protected LnPredefinedMeters predefinedMeters;
 
     public LnPredefinedMeters getPredefinedMeters() {
@@ -329,6 +341,20 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             predefinedMeters = new LnPredefinedMeters(this);
         }
         return predefinedMeters;
+    }
+
+    LnThrottleStringIO throttleStringIO;
+
+    public void getThrottleStringIO() {
+        if (getDisabled()) {
+            log.warn("Aborting getThrottleStringIO account is disabled!");
+            return;
+        }
+        if (throttleStringIO == null) {
+            throttleStringIO = new LnThrottleStringIO(this);
+            InstanceManager.getDefault(jmri.StringIOManager.class)
+                    .register(throttleStringIO);
+        }
     }
 
     @Override
@@ -362,6 +388,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     @Override
     public void dispose() {
+        if (throttleStringIO != null) {
+            throttleStringIO = null;
+        }
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
+        }
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
@@ -388,9 +420,6 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
-        }
-        if (predefinedMeters != null) {
-            predefinedMeters.dispose();
         }
         super.dispose();
     }

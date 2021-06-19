@@ -19,7 +19,7 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
 
     public ActionLightXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -33,28 +33,37 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
         Element element = new Element("ActionLight");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         NamedBeanHandle light = p.getLight();
         if (light != null) {
             element.addContent(new Element("light").addContent(light.getName()));
         }
-        
+
         element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
-        
+
         element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
         element.addContent(new Element("lightState").addContent(p.getBeanState().name()));
         element.addContent(new Element("stateReference").addContent(p.getStateReference()));
         element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
         element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
 
+        element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
+        element.addContent(new Element("dataReference").addContent(p.getDataReference()));
+        element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
+        element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
+
+        if (p.getLightValue() > 0) {
+            element.addContent(new Element("lightValue").addContent(Integer.toString(p.getLightValue())));
+        }
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
@@ -75,36 +84,61 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
             if (elem != null) {
                 h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
-            
+
             elem = shared.getChild("reference");
             if (elem != null) h.setReference(elem.getTextTrim());
-            
+
             elem = shared.getChild("localVariable");
             if (elem != null) h.setLocalVariable(elem.getTextTrim());
-            
+
             elem = shared.getChild("formula");
             if (elem != null) h.setFormula(elem.getTextTrim());
-            
-            
+
+
             elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
-            
+
             Element lightState = shared.getChild("lightState");
             if (lightState != null) {
                 h.setBeanState(ActionLight.LightState.valueOf(lightState.getTextTrim()));
             }
-            
+
             elem = shared.getChild("stateReference");
             if (elem != null) h.setStateReference(elem.getTextTrim());
-            
+
             elem = shared.getChild("stateLocalVariable");
             if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-            
+
             elem = shared.getChild("stateFormula");
             if (elem != null) h.setStateFormula(elem.getTextTrim());
-            
+
+
+            elem = shared.getChild("dataAddressing");
+            if (elem != null) {
+                h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("dataReference");
+            if (elem != null) h.setDataReference(elem.getTextTrim());
+
+            elem = shared.getChild("dataLocalVariable");
+            if (elem != null) h.setDataLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("dataFormula");
+            if (elem != null) h.setDataFormula(elem.getTextTrim());
+
+
+            elem = shared.getChild("lightValue");
+            if (elem != null) {
+                try {
+                    h.setLightValue(Integer.parseInt(elem.getTextTrim()));
+                } catch (NumberFormatException ex) {
+                    h.setLightValue(0);
+                }
+            }
+
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
@@ -112,6 +146,6 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
 }

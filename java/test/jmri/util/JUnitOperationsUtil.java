@@ -563,8 +563,11 @@ public class JUnitOperationsUtil {
         Location l3 = lManager.newLocation("Test Loc C");
         l3.setLength(1003);
         Location l4 = lManager.newLocation("Test Loc B");
+        l4.addTrack("Yard Track", Track.YARD);
+        l4.addTrack("Interchange Track", Track.INTERCHANGE);
         l4.setLength(1004);
         Location l5 = lManager.newLocation("Test Loc A");
+        l5.addTrack("Staging Track", Track.STAGING);
         l5.setLength(1005);
     }
 

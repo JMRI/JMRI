@@ -131,7 +131,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "AnalogExpression_Short");
+        return Bundle.getMessage(locale, "AnalogExpressionMemory_Short");
     }
 
     /** {@inheritDoc} */

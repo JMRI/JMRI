@@ -347,7 +347,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
 
             case Formula:
-                return _operationExpressionNode != null
+                return _dataExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _dataExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)

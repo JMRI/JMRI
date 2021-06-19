@@ -291,12 +291,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li>Bugfixes in TAMS_LD_42.xml</li>
-            </ul>
-
-        <h4>Tam Valley Depot</h4>
-            <ul>
-                <li>Added support for new QuadLN_S Midpoint/Oscillate mode</li>
+                <li></li>
             </ul>
 
         <h4>TCS</h4>
@@ -469,11 +464,11 @@
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
-            <li>Updated link in documentation</li>
+            <li></li>
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>CCOR-1967 updated by Mark Ziebell</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
