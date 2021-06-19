@@ -22,7 +22,7 @@
      <!-- Version 3 - a lot of updates for new decoder firmware. -->
 
   <decoder>
-    <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels">
+    <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels">
 		<model model="Panel" lowVersionID="1" productID="4"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
@@ -32,7 +32,7 @@
       <variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Version No.</label>
-	  </variable>	  
+	  </variable>
       <variable CV="3" item="Serial Number" readOnly="yes" >
 		<splitVal highCV="4" upperMask="XXXXVVVV"/>
         <label>Decoder serial number</label>
@@ -53,10 +53,10 @@
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	  </variable> 
+	  </variable>
 
 <!--
-<group name="General">	  
+<group name="General">
 -->
 	<variable item="Interrogate at startup" CV="24" mask="VVVVVVVV">
 		<enumVal>
@@ -113,16 +113,16 @@
 	<variable item="LED max intensity" CV="100">
         <decVal />
 	</variable>
-	
+
 	<variable CV="86" item="Start Address Auto Reply" default="0">
 		<splitVal highCV="87" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	</variable>	
+	</variable>
 
 	<variable CV="88" item="Auto Reply No. Adresses" default="0">
 		<splitVal highCV="89" upperMask="XXXXXVVV"/>
 		<label>Number of Adresses</label>
-	 </variable>  
+	 </variable>
 
 
 <!--
@@ -139,15 +139,15 @@ in xsl
 
 
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+
     </variables>
   </decoder>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+
   <pane>
     <name>General decoder info</name>
     <column>
@@ -202,7 +202,7 @@ in xsl
 			<display item="Use Lock"/>
 			<label>
 				<text> </text>
-			</label>			
+			</label>
 			<display item="Toggle Switch without answer"/>
 			<label>
 				<text> </text>
@@ -214,8 +214,8 @@ in xsl
 			<display item="Acoustic feedback (0-15s)"/>
 			<label>
 				<text> </text>
-			</label>			
-			
+			</label>
+
 			<display item="LED Test Sequence"/>
 			<label>
 				<text> </text>
@@ -224,18 +224,18 @@ in xsl
 
 			<label>
 				<text>Auto Reply</text>
-				
+
 			</label>
 				<display item="Start Address Auto Reply"/>
 				<display item="Auto Reply No. Adresses"/>
 			<label>
 				<text> </text>
-			</label>		
-			
+			</label>
+
 		</column>
 	</pane>
-  
-  
+
+
   	<pane>
         <name>InputPane</name>
     </pane>
