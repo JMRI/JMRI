@@ -25,50 +25,47 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ThrottleType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionSoundType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a Throttle class.
+          Define the XML stucture for storing the contents of a ActionSound class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ThrottleXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionSoundXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
             <xs:sequence>
+
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="LocoAddressSocket" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
+
+              <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="operationType" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Play"/>
+                  </xs:restriction>
+                </xs:simpleType>
               </xs:element>
-              <xs:element name="LocoSpeedSocket" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="LocoDirectionSocket" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
+
+              <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="soundAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="sound" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="soundReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="soundLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="soundFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            <xs:attribute name="enabled" type="yesNoType" />
-            <xs:attribute name="class" type="classType" use="required"/>
+            
+			<xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

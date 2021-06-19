@@ -91,6 +91,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionAnalogIO.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionMemory.class);
+        classes.add(jmri.jmrit.logixng.expressions.TimeSinceMidnight.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
