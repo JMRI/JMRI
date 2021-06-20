@@ -509,11 +509,9 @@
         </tr>
       </table>
 
-      <p style="margin-bottom: 0in"><br></p>
-
-      <p style="margin-bottom: 0in"><br></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

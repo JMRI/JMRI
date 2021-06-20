@@ -442,6 +442,7 @@ Red, Red and Yellow respectively.
       <p>Located at en\html\tools\signaling\ </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

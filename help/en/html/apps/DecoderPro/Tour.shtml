@@ -335,9 +335,12 @@
         <p>More information on <a href="MoreInfo.shtml">how
         DecoderPro works</a>, including <a href=
         "CreateDecoder.shtml">how to add new Decoder Types</a>.</p>
+
+      </div>
+
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- close #mainContent -->
     </div><!-- close #mBody -->
-  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

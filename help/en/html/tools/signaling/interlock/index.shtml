@@ -301,6 +301,7 @@
 
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

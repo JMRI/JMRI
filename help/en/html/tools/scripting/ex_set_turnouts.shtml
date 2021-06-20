@@ -181,11 +181,12 @@ setStartup().start()          # create one of these, and start it running
         the JMRI Forum community; he provided the sample script,
         which I believe he interpreted and modified from JMRI's
         sample scripts.</p>
+      </div><!--closes section-->
 
-        <p>-- Page authored by Jerry Britton, March 2006.</p>
-        <!--#include virtual="/Footer.shtml" -->
+      <p>-- Page authored by Jerry Britton, March 2006.</p>
+      <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
-  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

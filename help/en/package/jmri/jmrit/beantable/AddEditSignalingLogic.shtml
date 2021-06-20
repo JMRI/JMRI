@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -8,8 +7,6 @@
 
   <title>JMRI: Adding/Editing Signal Mast Logic</title>
   <!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="Date.Modified" content="20150523">
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content=

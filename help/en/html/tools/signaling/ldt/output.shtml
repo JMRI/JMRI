@@ -16,7 +16,7 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: Examples of LDT Signaling</h2>
+      <h1>JMRI: Examples of LDT Signaling</h1>
 
       <p>This file contains a few configuration examples for the
       LDT LS-DEC signal head. There are examples of signals from
@@ -90,8 +90,10 @@
       "http://www.marathonmodel.cz/">http://www.marathonmodel.cz/</a>
 
       <p>DP2N 8 addresses 2 - 8 signal heads</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>
