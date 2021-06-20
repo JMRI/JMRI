@@ -1571,13 +1571,14 @@ public class TreeEditor extends TreeViewer {
                             Clipboard clipboard =
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             List<String> errors = new ArrayList<>();
-                            if (!clipboard.add(_currentFemaleSocket.getConnectedSocket(), errors)) {
+                            MaleSocket maleSocket = _currentFemaleSocket.getConnectedSocket();
+                            _currentFemaleSocket.disconnect();
+                            if (!clipboard.add(maleSocket, errors)) {
                                 JOptionPane.showMessageDialog(this,
                                         String.join("<br>", errors),
                                         Bundle.getMessage("TitleError"),
                                         JOptionPane.ERROR_MESSAGE);
                             }
-                            _currentFemaleSocket.disconnect();
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
