@@ -21,7 +21,7 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
     private Timebase _fastClock;
 
     TimerTask timerTask = null;
-    private int milisInAMinute = 60000;
+    private final int millisInAMinute = 60000;
 
 
     public TimeSinceMidnight(String sys, String user) {
@@ -180,7 +180,7 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
                 propertyChange(null);
             }
         };
-        TimerUtil.schedule(timerTask, System.currentTimeMillis() % milisInAMinute, milisInAMinute);
+        TimerUtil.schedule(timerTask, System.currentTimeMillis() % millisInAMinute, millisInAMinute);
     }
 
     /** {@inheritDoc} */

@@ -47,7 +47,8 @@ public interface MaleSocket extends Debugable {
     
     /**
      * Set whenether this male socket is enabled or disabled, without activating
-     * the male socket. This is used when loading the xml file.
+     * the male socket. This is used when loading the xml file and when copying
+     * an item.
      * <P>
      * This method must call registerListeners() / unregisterListeners().
      * 
