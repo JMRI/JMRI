@@ -8,15 +8,7 @@
   <!-- Copyright ($Author$) 2009 -->
 
   <title>JMRI: WiThrottle Protocol</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+  <!--#include virtual="/Style.shtml" -->
   <style type="text/css">
   	table.data, pre.code {
         margin: initial;
@@ -54,7 +46,6 @@
  		font-size: 90%;
 	}	
   </style>
-    <!-- /Style -->
 </head>
 
 <body>

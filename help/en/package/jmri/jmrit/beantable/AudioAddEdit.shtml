@@ -52,5 +52,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

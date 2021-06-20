@@ -409,5 +409,6 @@ Remember to save your new configuration by using the Save button in the Preferen
 <!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

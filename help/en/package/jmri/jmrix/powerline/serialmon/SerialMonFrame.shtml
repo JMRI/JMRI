@@ -7,19 +7,10 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Monitor Powerline Device Traffic</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help monitor powerline traffic message packet">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
