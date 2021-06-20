@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.7ish+jake+20210619T0216Z+Re7210e767f on Fri Jun 18 22:17:25 EDT 2021-->
-  <decoderIndex version="1058">
+  <!--Written by JMRI version 4.23.8ish+jake+20210619T0807Z+R029a0ffff6 on Sat Jun 19 04:07:23 EDT 2021-->
+  <decoderIndex version="1060">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -13950,7 +13950,7 @@
       <family name="BTLocobridge" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Bluetooth LocoNet interface" file="MGP_BT_LocoBridge.xml">
         <model model="BTLocobridge" lowVersionID="1" />
       </family>
-      <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
+      <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
         <model model="Panel" lowVersionID="1" productID="4" />
       </family>
       <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
