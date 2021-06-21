@@ -434,7 +434,7 @@
             </ul>
 
             <p>When For is executed, the Init action is run once. After that, the
-            Condition expression is evaluated. If the condition returns <strong>true</strong>,
+            While expression is evaluated. If the While returns <strong>true</strong>,
             the Do action is executed and at last the AfterEach action is executed. Then
             the process is repeated, except that the Init action is only executed once.</p>
 
@@ -463,7 +463,7 @@
 
           <h5>Sequence</h5>
           <p>The Sequence action executes a series of action/expression pairs.  For each
-          pair, the actions will be performed and then the expression will wait until it
+          pair, the action will be performed and then the expression will wait until it
           becomes true.  When it is true, the next action/expression pair will be
           started.  The sequence will repeat forever or until stopped.</p>
 
