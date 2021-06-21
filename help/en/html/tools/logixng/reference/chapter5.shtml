@@ -282,7 +282,7 @@
             </ul>
 
           <h5>Sensor</h5>
-            <p>The delayed options are handled by <a href="chapter3.shtml#ExecuteDelayed">
+            <p>The delayed options are handled by <a href="#ExecuteDelayed">
             Execute Delayed</a>.</p>
             <ul>
               <li><strong>Inactive:</strong> Set the selected sensor to inactive.</li>
@@ -340,7 +340,7 @@
           loco address and/or loco speed.</p>
 
           <h5>Turnout</h5>
-            <p>The delayed options are handled by <a href="chapter3.shtml#ExecuteDelayed">
+            <p>The delayed options are handled by <a href="#ExecuteDelayed">
             Execute Delayed</a>.</p>
             <ul>
               <li><strong>Closed:</strong> Set the selected turnout closed.</li>
@@ -647,10 +647,15 @@
           <p>The Many action is used together with the Logix action to let the Logix
           action have more than one action child.</p>
 
-          <h5>OnChange</h5>
+          <h5>On change</h5>
           <p>This action is used together with the LogixNG Logix action and gives you
-          the option to decide if the child action should be executed when the
-          expression changes to true, changes to false or changes either way.</p>
+          the option to decide if the child action should be executed.  The options are:</p>
+
+          <ul>
+            <li>On change to true</li>
+            <li>On change to false</li>
+            <li>On change</li>
+          </ul>
 
         <a id="analog_action_item"></a>
         <h3>Analog action :: Item</h3>
@@ -658,9 +663,12 @@
           <div style="margin-left: 2em;">
           <a href="images/chapter5/analog_action_item.png">
           <img src="images/chapter5/analog_action_item.png"
-          alt="Chapter 5 analog action item list" width="119" height="26">
+          alt="Chapter 5 analog action item list" width="141" height="44">
           </a>
           </div>
+
+          <h5>Light intensity</h5>
+          <p>Sets the intensity of the selected variable light to an analog value.</p>
 
           <h5>Memory</h5>
           <p>Sets a memory to an analog value.</p>
@@ -692,7 +700,10 @@
           <p>Sets a memory to a string value.</p>
 
           <h5>StringIO</h5>
-<p>-- pending --</p>
+
+          <p>The StringIO sets the string of a StringIO. There is currently one StringIO
+          that can be used with this action: The LocoNet "LCThrottles" StringIO that sends
+          a message to the LocoNet throttles.</p>
 
         <a id="string_action_common"></a>
         <h3>String action :: Common</h3>

@@ -434,7 +434,18 @@
           <p>Return a constant as an analog value.</p>
 
           <h5>AnalogIO</h5>
-<p>-- pending --</p>
+
+          <p>AnalogIO reads the value of an AnalogIO and returns its value. There is
+          currently two items that can be used with AnalogIO:</p>
+          <ul>
+          <li>Variable lights</li>
+          <li>Meters</li>
+          </ul>
+
+          <p>Some connections supports meters, for example current and/or voltage
+          meters. This depends on the hardware connected to JMRI. An example is
+          the Roco Z21 that has a current and voltage meter that JMRI can listen
+          to.</p>
 
           <h5>Memory as analog value</h5>
           <p>Return value of a memory variable as an analog value.</p>
