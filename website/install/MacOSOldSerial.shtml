@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: MacOS Classic Serial Port Configuration
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="java model railroad JMRI install Macintosh MacOS">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1> 
+      JMRI Install Guide: MacOS Classic Serial Port Configuration
+      </h1>
+
+Donn Welton provided this list of steps to get DecoderPro working through the
+single serial port on a PowerBook G3 laptop.  Originally, it would not work because
+MacOS was retraining ownership of the port and wouldn't release it.
+
+<dl>
+<dd>
+	<ul>
+	<li>The key is the Extensions Manager (which one gets through via Control Panel via Apple 
+	Icon).  I turned off all the extensions that were showing in the Chooser, i.e., I turned off all
+	printers and then AppleShare.
+	
+	<li>In that same Extensions Manager I also turned off file sharing, web sharing, remote 
+	access, infared, and modem.
+	
+	<li>In the chooser, I turned off Apple Talk.
+	
+	<li>Making sure that I had the recent version of Java 2.2.5 and Java Comms library (both 
+	partners of OS 9.0), I then reinstalled JMRI and reset the Preferences.
+	
+	</ul>
+Now it is up and running like a dolphin in cool water.  
+
+<p>
+A couple more notes:  I purposely left the TCP/IP (but set to Ethernet) and Internet 
+extensions active.  My hope is that they will not interfere with the operation of the serial 
+port when I link my lap top to two other Apple computers via Apple talk (this will give me 
+printing via one of them) and to the internet via my the cable internet connection.   I am 
+keen to keep the internet connection active on the G-3 as it will access this site and then 
+other downloads.  Still, I am tempted to do a clean sweep of the harddisk and start over as 
+this will give me more space and, perhaps, a bit of speed. 
+
+</dl>
+
+        <!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+<script src="/js/main.js"></script>
+</body>
+</html>

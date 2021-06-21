@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.7.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.7.4 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.7.4 release
+      </h2>
+
+	<p>Date: July 24, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.7.4 of JMRI/DecoderPro is available for download.
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the fourth in a series of test versions. We expect this series
+to end in a JMRI 2.8 production release in December 2009. 
+
+<p>
+It contains 
+many new features, including:
+<ul>
+<li>Improved support for the ECoS command station
+<li>A much better method of storing panel files so they can be moved 
+    from one computer to another (but see warning below!)
+<li>Improvements to Signal Head editing, Logix and Conditionals
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.6" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+JMRI 2.7.4 changes the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 and then written out again, 
+as the program will update them to the new format upon storing them.
+
+<h3>Warnings from older versions:</h3>
+
+(None)
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.4/JMRI.2.7.4.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.4/JMRI.2.7.4.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.4/JMRI.2.7.4.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.4/JMRI.2.7.4.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.4/JMRI.2.7.4.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.4/JMRI.2.7.4.tgz/download</a>
+
+
+<h3>Changes since test version 2.7.3</h3>
+
+Kevin Dickerson updated the ECoS support for better turnout operation, 
+and to add initial support for throttles to run locomotives through the ECoS.
+
+<p>
+Kevin Dickerson fixed a problem what would sometimes result in improperly disabled Logix and Conditionals.
+
+<p>
+Kevin Dickerson added turnout monitoring to the ECoS support.
+
+<p>
+Support for "Lunar" appearance has been added to signals.
+
+<p>
+A new "Four Output Signal Head" is available. It uses a 4th lamp (bulb or LED) to 
+show a Lunar or Flashing Lunar aspect.  The Logix/Conditional support has been updated
+to work with this.
+
+<p>
+Pete Cressman improved the memory spinner icon.
+
+<p>
+In preparation for new Signal Mast support, we've changed the interface to talk about
+Signal Heads instead of just Signals.
+
+<p>
+Fix a problem with PowerLine initialization that would prevent certain Light configurations from working.
+
+<p>
+Pete Cressman improved the Memory spinner icon support, allowed the Light icon to be edited,
+and added methods for better control of the icon editor.
+
+<p>
+Fixed a problem that prevented TwoOutput and ThreeOutput signal heads from being edited from the Signal Head Table.
+
+<p>
+Dan Boudreau added fields for RFID to the operations code.
+
+<p>
+Sakae Akanuma provided a Japanese translation.
+
+<p>
+Fixed a problem that prevented panel files from JMRI 2.7.3 from properly showing certain icons.
+(More detail:  If the file specified an icon location that started with "resource:resource", 
+JMRI 2.7.3 would not locate the icon)
+
+<p>
+Pete Cressman fixed a problem that prevented the format of panel editor Sensor Icon text
+from being properly stored and reloaded.
+
+<p>
+Kevin Dickerson added initial support for managing the locomotive information in an ECoS command station.
+
+<p>
+Pete Cressman added a "Memory Input Icon" to the panel editor.
+
+<p>
+More fixes to the portable filename support.
+
+<p>
+Pete Cressman fixed a problem where a panel editor sensor icon would be triggered when you
+opened its popup menu.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

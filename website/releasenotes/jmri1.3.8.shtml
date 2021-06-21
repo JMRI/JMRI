@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 1.3.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.3.8 CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.3.8 developer release
+      </h2>
+
+	<p>Date: Feb 16, 2004</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 1.3.8 of JMRI/DecoderPro is available for
+      download.</p>
+
+        <h3>Notes:</h3>
+	<ul>
+
+	<li>This is a test release.</li>
+	<li>Please post a note if you encounter any
+	new or old bugs!</li>
+	<li>Please back up your JMRI files before
+	installing this, in case you want to go back to an earlier
+	version.</li>
+
+	<li>Recent test versions are numbered 1.3.0, 1.3.4, 1.3.5 and 1.3.8.
+	Some version numbers were skipped to avoid confusion with the Java
+	version numbers; test versions 1.3.6 and 1.3.7 had problems and
+	never reached public announcement status.</li>
+	</ul>
+
+
+	<h3>New warnings:</h3>
+	<ul>
+	<li>These downloads are significantly larger than version 1.3.5 and
+	previous.  This is due to the addition of a help system starting in
+	test version 1.3.8.</li>
+	</ul>
+
+	<h3>Older warnings for the 1.3 series of test versions:</h3>
+	<ul>
+	<li>LocoNet sensor numbering has been changed starting in version
+	1.3.4!  This will effect people who have panel files (.xml files
+	containing panel definition) for LocoNet block occupancy sensors.
+	The sensor numbers now start with 1, not 0, so you'll have to edit
+	the panel files to change e.g. LS0 to LS1, LS23 to LS24, etc.  This
+	does not effect input via other (non-LocoNet) protocols, including
+	C/MRI, NCE AIU, etc.  If you use LocoNet sensor numbers for the
+	Speedometer, you'll have to increase them by one also.</li>
+
+	<li>There seems to be a problem with recent JMRI versions on
+	Macintosh Classic. The cause of this is not understood. For some
+	people it works fine, and for others it locks up totally. Because
+	of this, no Classic download for this test version has been
+	provided.</li>
+
+	If you haven't downloaded and run a 1.2.something or 1.3.something
+	version, this<li> version will require that you re-enter your
+	preferences. You might want to open the preferences window (from
+	the Edit menu) and write down your settings before installing this
+	version. (You'll be able to go back to the older version if you
+	need to)</li>
+
+	<li>If you have pre-1.2.3 roster entries that use Zimo decoder
+	definitions, you'll have to recreate them.  The Zimo decoder
+	definitions have been completely reworked in a better organization
+	starting with test version 1.2.3.</li>
+	</ul>
+
+	<h3>Changes since test version 1.3.5:</h3>
+
+	<ul>
+	<li>Jack Shall updated the appearance and added ToolTips in the
+	DecoderPro comprehensive programmer.</li>
+
+	<li>Dennis Miller added a "Help" system, which is accessed from the
+	main menubar. Initial contents are Joe Ellis' DecoderPro manual
+	(with some modifications), plus some additional pages.</li>
+
+	<li>Paul Bender added an initial version of a consist-manager tool,
+	based on a very general infrastructure. It should work for advanced
+	(CV19) consists on any system currently supporting ops mode
+	programming.</li>
+
+	<li>DecoderPro will now use "Direct Bit" programming mode first if
+	it's available in both the command station and decoder (previously,
+	priority had been given to paged mode)</li>
+
+	<li>Paul Bender added a Command Station Configuration manager. This
+	code attempts to enable only the portions of the JMRI library that
+	are useable with a given command station. For example, with the
+	Lenz Compact/Atlas Commander, the Programmer is disabled since
+	these units do not support programing from an XPressNet device. He
+	also added code to the tools menu to disable items for which a
+	manager does not exist.</li>
+
+	<li>MERG decoders updated (Len Royles, Phil Grainger and
+	others)</li>
+
+	<li>Support added for the SPROG command station, including initial
+	throttle support. This has had only limited testing, so feedback
+	would be greatly appreciated!</li>
+
+	<li>Alex Shepherd added support for the LocoNetOverTcp
+	protocol.</li>
+
+	<li>Plugin system added: See
+	http://jmri.org/Technical/plugins.html</li>
+
+	<li>Mac OS X now puts it's menus on the main menubar, making the
+	applications much more Mac-like; Updates to icons, etc, on
+	Macintosh systems.</li>
+
+	<li>Alex Shepherd added a new "LocoBuffer statistics tool" which
+	allows users of current LocoBuffer versions to view statistics on
+	LocoNet traffic.</li>
+
+	<li>A new "Decoder ID" page has been added to the web which is
+	based on the current DecoderPro definitions automagically:
+	http://jmri.org/xml/XSLT/index.html</li>
+
+	<li>Paul Bender added response message handling routines to Lenz
+	Turnout Code. Forced send of an "off" after an "on" is sent to an
+	accessory decoder. This corrects the "multiple fire issue" some
+	people are seeing (And I have been able to replicate using a
+	Switch-It, and a button to throw the turnout back to it's starting
+	position). Turnouts displayed through JMRI (either through a
+	Control Panel, the Turnout tool, or the turnout table) will now
+	react to commands sent via another Xpressnet device on systems
+	that have feedback.</li>
+
+	<li>Paul Bender started work on Lenz Sensor code. Skeleton in
+	place. Feedback encoders should be reflected in the sensor table,
+	though they are not currently handled. (this has not been
+	tested).</li>
+
+	<li>Paul Bender made modifications to the throttle GUI code so that
+	it actually registers as a PropertyChangeListener with the system
+	dependent throttle code. He also modified the throttle GUI and back
+	end code, so the "Dispatch" button can be shut off on systems for
+	which this makes no sense.</li>
+
+	<li>Code for finding "DTD" files reworked in an attempt to fix
+	startup problems on certain XP systems. Not really clear if it
+	worked, feedback greatly appreciated.</li>
+
+	<li>Paul Bender added ops mode programming support to Lenz.</li>
+
+	<li>Fixed bug in LocoNet monitor where the Throttle ID field was
+	being displayed wrong.</li>
+
+	<li>Initial public release of Jython support for scripting and
+	control (http://jmri.org/Technical/Jython.html)</li>
+
+	<li>Bug that prevented moving the Roster location (see advanced
+	preferences) is probably fixed.</li>
+
+	<li>Bug preventing display of SE8c example on some systems
+	(http://jmri.org/apps/Signalling/SimpleSignalExample.html) is believed
+	fixed.</li>
+
+	<li>Initial inclusion of "PacketPro" application for testing
+	decoders (nee PacketScript)</li>
+	</ul>
+
+    <h3>Download links:</h3>
+
+	<p>Please use these links for downloading, including the
+	"?download" at the end. That adds to SourceForge's advertising
+	statistics, which makes them happy to host our stuff.</p>
+
+	<ul>
+	<li> Mac OS X:
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.8.hqx?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.3.8.hqx?download</a>
+
+	<li> Windows:
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.8a.exe?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.3.8a.exe?download</a>
+
+	<li> Linux:
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.8.tgz?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.3.8.tgz?download</a>
+      </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

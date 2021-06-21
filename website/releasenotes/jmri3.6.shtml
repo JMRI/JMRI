@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.6 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.6 release
+      </h2>
+
+	<p>Date: December 18, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production version 3.6 of JMRI/DecoderPro is available for download.</p>
+ 
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+We are very pleased to announce that the 3.5 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production version 3.6" available for download today.
+
+<h3>Notes:</h3>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+This release requires Java 1.6 or later.
+<p>
+This release no longer supports the Digitrax MS100 on any computer.  If you have an MS100 working
+with an earlier release, please stay with that release. You should plan on updating
+to a better LocoNet interface before updating to this or any later release.
+
+<p>For users of JMRI on Microsoft Windows, the installer will now request
+Administrator permissions if the user running the installation is not a member
+of the administrators group. Users of Windows Vista or later may receive a
+UAC (User Account Control) pop-up message when installing.</p>
+
+<p>The TCS decoder definitions have been extensively reworked.  
+You'll notice that they list different families and the models are 
+organized differently.  This is to make the automatic identification 
+work much better.  Please let us know if you encounter any problems with this.
+
+<p>This release and all future releases will not support the NCE serial interface running at 19,200 baud. Use the default 9,600 baud instead.</p>
+
+<p>This release blocks Programming Track CV writes &gt; 256 with NCE Power Pro, due to a firmware issue. Current workaround is to use Programming on Main. It is planned to incorporate Programming Track workarounds for some decoder types in a future release.</p>
+
+<p>The decoder definition files have been extensively reworked for this release series
+to reduce their size and allow  them to be translated to other languages.
+Please keep an eye out for any inadvertent changes to the definitions 
+that might have been introduced.</p>
+
+<h3>Known problems with this release</h3>
+
+<p>Do not use this release for programming any ESU Select or V4.0 decoder. 
+Instead, please use <a href="jmri3.7.7.shtml">test release 3.7.7</a> or later.</p>
+
+<ul>The following scripts are broken in this release:
+<li>AAR105.py<br> 
+<li>RailDriver.py<br> 
+<li>RocoCrane46902.py<br> 
+<li>Zimo_pseudo_programmer.py
+</ul>
+Updated versions of these can be downloaded from
+<a href="http://www.jmri.org/jython/">http://www.jmri.org/jython/</a>
+on the JMRI web site.
+
+<p>NCE Macro Edit not saving changes. Fixed in 3.7.2</p>
+
+<!-- 
+<p>None at present</p>
+ -->
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.6-r24520.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.6-r24520.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.6-r24520.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.6-r24520.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.6-r24520.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.6-r24520.tgz/download</a></p>
+ 
+ 
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.6/ws/jmri/dist/release/">CI project page</a>.
+-->
+
+
+<h3>Changes since production release 3.4</h3>
+
+   <p>Dan Boudreau made the following enhancements to operations:</p>
+   <ul>
+    <li>New two column format for car pick ups and set outs. Go to the Manifest Print Options,
+     and under Message Format, select "Two Column" if you want your manifest and switch lists to use
+     two columns, one for pickups and one for set outs. The color options for pick up and set outs
+     aren't available when using this format.</li>
+    <li>You can now modify all of the manifest and switch lists text. See under Manifest Print
+     Options, Tools, "Edit Manifest Text" and "Edit Switch List Text".</li>
+    <li>Now when you modify the train manifest using the "Manifest Print Options" window, the
+     train manifests are immediately changed for trains that are built but haven't departed the
+     first location in their route.</li>
+    <li>The Yardmaster window now has a "Next" button which allows the window to be used with
+     the JMRI web server. The drop down menus unfortunately don't work when using a browser to
+     access the windows remotely.</li>
+    <li>Trains can now make local moves at the last location in a train's route. You can
+     disable this feature by not allowing pickups at the last location in the train's route.</li>
+    <li>New feature, you can now control the order passenger cars are shown on your manifests
+     and switch lists. In the edit car window, a new field called "Passenger Car Blocking Order"
+     will appear when you select the "Passenger" check box in the "Type" field. The text box allows
+     you to enter numbers between 0 and 100. Lower numbers will place the car near the front of the
+     train, and higher numbers towards the rear. Recommend that you start off using numbers
+     divisible by 10. For example, you might what to place an observation car at the end of the
+     train, a value of "90" would be appropriate. If you wanted a baggage car to be the first car in
+     the passenger train, a value of "10" would be a good value, cars in the middle of the train
+     could use "50".
+    <li>New feature, the ability to copy any track to a location. See under the Edit Location,
+     Tools, "Copy Track".</li>
+    <li>New manifest and switch list option, the ability to show the car's final destination
+     and track.</li>
+    <li>New feature for folks using schedules to route cars. On a per train basis, you can ask
+     the program to pull cars with a final destination where the train being built doesn't provide
+     the most efficient route for the car. Useful if you want to the train being built to move cars
+     "closer" to their final destination, even if other trains could do it more efficiently. This
+     option does two things, it will add cars to the train being built that wouldn't normally travel
+     on the train, thus freeing up track space. And second creates more work for your operators as
+     this option can and will increase the number of trains needed to move the car to its final
+     destination. See under Tools->Train Build Options from the Train Edit window, select "Service
+     all cars with a final destination" if you want your train to carry more cars.</li>
+    <li>Updated the "Show cars types serviced" tool for a train. The window now shows any track
+     destination restrictions for a selected car.</li>
+    <li>Fixed an issue with train manifest times when the "same" location was used back to
+     back.</li>
+    <li>Fixed a problem where the program would redirect cars from the alternate track for a
+     train that didn't have access to the spur that specified the alternate track. Thanks to Joe
+     Mattick for bring this to our attention.</li>
+    <li>Fixed a problem when a spur has a schedule and "Planned Pick Ups".</li>
+    <li>Improved car movement when the train's route move count is used up or the train's
+     length is maxed out when building the train.</li>
+    <li>Fixed the "Exclude" option in the Destination window for classification/interchange
+     tracks.</li>
+    <li>Fixed the "All Trains" feature when using consolidation mode in switch lists.</li>
+    <li>Fixed the "Return when Empty" when a car entered staging with a custom load, and the
+     remove custom loads option was enabled.</li>
+    <li>Fixed a problem with the train manifest showing the wrong number of utility cars for
+     pick ups and set outs. Thanks to Joe Mattick and Clay Smith for bring this to our attention.
+    <li>Fixed a couple of minor issues when building trains that had restrictions with regards
+     to local moves and cars traveling from origin to terminal.</li>
+    <li>Improved the page layout (line wrap) for manifests and switch lists when using variable
+     width fonts like sansSerif.</li>
+    <li>Improved text line wrapping for comments in the Conductor and Yardmaster windows.</li>
+    <li>Improved the Conductor and Yardmaster window layouts.</li>
+   </ul>
+
+   <p>Kevin Dickerson made the following changes:</p>
+
+   <ul>
+    <li>SignalMasts - Improved support for SignalMast unlit for DCC/LNCP &amp; Turnout based masts
+     - KD</li>
+    <li>SignalMasts - Log a warning to the console rather than throwing an error when trying to
+     set an aspect that has not been configured - KD</li>
+    <li>SignalMasts - Corrected the way in which a unlit/lit signal mast icon is displayed on a
+     panel - KD</li>
+    <li>SignalMasts - Add an option to allow a default DCC accessory aspect ID to be recorded
+     against a given aspect in a signaling system - KD</li>
+    <li>SignalMast Logic/Entry Exit - Consider the state of a crossing block on a Level
+     Crossing - KD</li>
+    <li>SignalMast Logic/Entry Exit - Handle layout editor crossovers where there are two
+     physical turnouts that need to be set/check rather than the primary turnout.- KD</li>
+    <li>Entry Exit - Update the Stack window to use a JDialog rather than a JFrame - KD</li>
+    <li>Editors - Fix an issue where a rotated icon based sensor icon is changed to a text
+     based icon fails as no text values were set. - KD</li>
+    <li>Editors - Change the loading of sensor icons, so that the text details are loaded
+     before the sensor is set, so that when the panel is loaded the sensor icon is displayed
+     correctly when first displayed. - KD</li>
+    <li>Layout Editor - Change the block edit so that it is now possible to access all of the
+     properties of the block, and not just those items that specifically relate to a layout block. -
+     KD</li>
+    <li>Layout Editor - Added in an Edge Connector to allow blocks to be connected over
+     multiple panels to form a single logical view.</li>
+    <li>Blocks - Remove the dependency for a block to have a valid sensor to move an object
+     about, but use the occupancy state of the neighboring blocks instead. - KD</li>
+   </ul>
+
+   <p>Suzie Tall provided support for three new signal systems:
+        <a href="http://jmri.org/xml/signals/CROR-2008/index.shtml">CROR-2008</a> from Transport Canada,
+        <a href="http://jmri.org/xml/signals/InfraBel-2013/index.shtml">InfraBel-2013</a> from Belgium and
+        <a href="http://jmri.org/xml/signals/ProRail-1954/index.shtml">ProRail-1954</a> from the Netherlands.
+        
+    <p>Michael Mosher provided an improved definition for the TCS WOW decoder
+    
+    <p>Dave Heap added a CV Reset Warning for all LokSound Decoders
+    
+    <p>Michael Mosher added the HO Challenger to the Sountraxx Tsuanmi Steam Genesis definition
+        and the U28B/U30B to the Sountraxx Tsuanmi Walthers Diesel definition
+        
+    <p>Martin Jahner improved the Kato FL12 decoder definition
+    
+    <p>Paul Bender Added base support for IEEE 802.15.4 messages.  All this does at this point is allows sending and receiving of raw IEEE 802.15.4 messages from a serial port connection.  This configuration was tested using an XBee in API mode connected to the computer via a SparkFun Electronics XBee Explorer USB device.  Other devices supporting the IEEE 802.15.4 protocol should work as well, but have not been tested.  This code should be considered experimental.  There are likely bugs.<p> 
+
+    <p> Michael Mosher updated the TCS WOW decoder definition.
+
+   <p>Matthew Harris made the following changes:</p>
+   <ul>
+   <li>Updated the InstallTest batch file to pause before exiting
+      in certain situations on 64-bit versions of Windows.</li>
+   <li>Update logging behavior to create individual per-session 
+       log files (session.log) and to collate several session log
+       files into messages.log</li>
+   <li>Updated the MS Windows launcher to check for an already running
+       instance of a JMRI application and to provide an option to
+       continue or abort.</li>
+   </ul>
+   
+   <ul>
+    <li>Add the ability to delay the re-allocation of sections for a train set with continuous running.  The delay can be set as either a duration in minutes or triggered by a sensor. - KD</li>
+   </ul>
+   
+   <p>The CV table in DecoderPro is now sortable and by default appears in order by number.
+
+   <p>Ken Cameron made the following changes:</p>
+   <ul>
+   	<li>Added code to prevent bad programming track writing to CV's greater than 255 which are not supported
+   		by the PowerHouse command station. Using the ops mode works as well as the PowerCab with the whole 1024 range.
+	</li>
+	<li>Fixed wrong properties name in NCE USB Interface panel.</li>
+	<li>Fixed memory addressing issue in NCE macro editor/backup/restore.
+		This bug was introduced prior to 3.4 when adding support for the updated
+		NCE USB for other functions. Currently Macro support via the NCE USB is a
+		work in progress.
+	</li>
+   </ul>
+      
+   <p>Dave Heap improved the NCE Monitor.
+   <p>John Lang provided a <a href="http://jmri.org/xml/signals/NYC-1956/index.shtml">signal definition for the New York Central on October 28, 1956</a>.
+
+    <p>Suzie Tall updated the <a href="http://jmri.org/xml/signals/ProRail-1954/index.shtml">ProRail 1954</a>
+    and <a href="http://jmri.org/xml/signals/InfraBel-2013">InfraBel-2013</a> signal definitions.
+    
+    <p>Martin Jahner fixed the behavior of constant checkboxes in DecoderPro
+    
+    <p>Pierre Billon translated some decoder definition elements into German, French and Spanish
+    
+    <p>Mike Mosher provided Tsunami updates
+    
+    <p>Robin Becker provided another Tam Valley decoder definition
+    
+
+
+   <p>Robin Becker updated the Tam Valley Quad Ln11 decoder
+    definition
+   
+   <p>Dave Heap updated help files
+   
+   <p>Walter Thompson fixed links in the help files
+
+    <p>Dave Heap improved DecoderPro slider support:
+    <ul>
+    <li>The "hslider" format displayed a plain slider for decVal and indexedPairVal variable types 
+        but a percentage slider for indexedVal type. The percentage display was currently only used in QSI definitions.
+    <li>Restored consistency so "hslider" displays a plain slider for all three variable types.
+    <li>Created a new "hslider-percent" format (using existing code) for all three variable types.
+    <li>Updated QSI pane definitions where necessary to restore pre-patch behavior.
+    <li>Note that the existing code for "hslider-percent" is a bit kludgy and customized specifically to accommodate some QSI features. 
+        Future development would be to replace with a new "hslider-custom" format giving better control of labels, 
+        if a way could be devised of specifying a hashtable-type custom label list in programmer pane definitions.
+    </ul>
+    
+    <p>Michael Mosher updated the TCS WOW decoder support.
+    
+    <p>Dave Heap added ESU V4/Select fixes, additions, new panes.
+    
+    <p>Jeff Schmaltz added a decoder definition for the Massoth pulsed smoke unit.
+
+   <p>Oscar Moutinho added a new webThrottle app, based on JSON and web sockets</p>
+
+   <p>Steve Todd updated the web version of the Operations Manifest to work properly for in-route trains, and rearranged 
+   and added some items to the JMRI Web Server local home page.</p>
+   
+    <p>Fixed problem where black-on-black panel icons would not display properly.
+
+    <p>Robin Becker improved the TAM quad decoder definition
+    
+    <p>Dave Heap improved the DecoderPro operation: 
+    Sheet Read and Write operations were ignoring readOnly and writeOnly attributes if the CV value was Unknown.
+    The readOnly and writeOnly attributes are now always respected for all Sheet operations. 
+    Read Changes will still attempt to read Unknown values but Write Changes will not attempt to write Unknown values.
+    
+    <p>Dave Heap added extra CVs, panes, workarounds for programmer issues and numerous fixes/improvements for ESU V4 files.
+    
+    <p>Alain Carasso improved the Mistral Gold decoder definition with "Other Sound Setting" (CV62)
+    
+    <p>Dave Heap improved the TCS WOW decoder definition.
+    
+    <p>Steve Lowens improved the Tsunami Rapido F9A definition.
+    
+    <p>Jeff Schmaltz added a decoder definition for the SoundTrax Piko decoder
+    
+    <p>Dispatcher - Added an AutoTerminate Option when creating new Trains - KD
+    <p>Layout Editor - Fix an NPE error when bring up a popup on a Turntable Ray - KD
+    <p>Layout Editor - Fix a bug with the linked connection point - KD
+
+
+<p>Changes to decoder programming and definition allow 
+specification of workarounds when a command station only handles a subset of CVs, and
+the decoder provides a way to access the full range locally.  Useful with ESU and Zimo
+decoders, but not all (close to none) of the decoder definitions have been updated to
+use this. 
+
+<p>NCE command station programmer updated to indicate when it can't access high-address CVs.
+
+
+   <p>Dave Heap added automatic display of CV numbers in DecoderPro tooltips. To see the CV
+    address for a decoder parameter, hover your mouse over it. By default this is off (DecoderPro
+    exists to hide this information, not show it), but you can turn in on with a preference under
+    Roster, then Programmer.
+   
+   <p>The OpenLCB lib was updated to the current version. This includes several memory-read
+    protocol fixes.
+
+<p>
+David Zuhn updated the Mac OS X launcher to handle different Java configurations,
+particularly when installing a clean version of Mac OS X.
+
+<p>
+Bjorn Kvisli and Pierre Billon created multiple Doehler &amp; Haass decoder definitions.
+
+<p>
+Bjorn Kvisli added decoder definitions for the Arnold N scale decoders.
+
+<p>
+Peter Ulvestad added a decoder definition for the MRC 1952,
+improved the definition for the MRC 1957, added the 1922 and 1916.
+
+<p>
+Suzie Tall fixed some cross-references that were preventing the CROR-2008 
+and InfraBel signals from displaying properly.
+
+<p>
+Dick Bronson provided additional UTCS track segment icons.
+
+<p>
+The timestamp on messages in the console output was changed to default to
+a real timestamp like "2013-11-17 15:16:07,486" in local time.
+
+
+   <p>Steve Todd fixed a problem with starting the LocoNetOverTcp server when running the JMRI
+    faceless app.
+   
+   <p>Suzie Tall created a new signal head type "Triple Output RGB". It is based on the existing
+    triple output class and takes the same input as the quad output. The three outputs drive the
+    red, green and blue inputs of a RGB searchlight head to give Red, Green, Yellow and Lunar
+    indications both steady and flashing as well as dark.
+
+    <p>Dave Heap improved the tooltips for lots and lots of decoder definitions to make them more consistent
+    
+    <p> M. Greene added Digitrax decoder types
+    
+    <p>A bug in SRCP support was fixed.  It preventing storing panel files with
+    certain kinds of SRCP information present.
+   
+   <p>Dan Boudreau fixed a problem that was preventing people from printing just
+    certain pages or page ranges.
+
+  
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

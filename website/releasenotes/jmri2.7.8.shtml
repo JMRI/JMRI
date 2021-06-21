@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.7.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.7.8 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.7.8 release
+      </h2>
+
+	<p>Date: November 15, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.7.8 of JMRI/DecoderPro is available for download.
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the eighth in a series of test versions. We expect this series
+to end in a JMRI 2.8 production release in December 2009. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Many improvements to JMRI throttles
+<li>New 
+    <a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrant</a>
+    feature for scripted running of trains
+<li>Support for lunar (4th appearance) signals
+<li>New 
+    "<a href="http://jmri.org/help/en/html/tools/scripting/Jynstruments.shtml">Jynstruments</a>"
+    capability for extending JMRI tools
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.7 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.8" available for download today. -->
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+XML input processing has been reworked.  This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile Javadoc for more information.
+
+<p>
+Linux users might encounter a problem with certain "Look and Feel" 
+selections in the preferences.
+We've had reports of problems with "Nimbus" and "GTK+".
+"Metal" and "CDE/Motif" seem to be OK.
+If you get odd errors while loading panels, try opening the preferences
+and selecting another appearance.  We're working on a more basic fix for this.
+
+<h3>Warnings from older versions:</h3>
+
+If you're using the "Function Label" or "Roster Image" panes with the 
+DecoderPro "Comprehensive" programmer format, you should change to using
+the "Advanced" format.  You select this at the bottom of the window when opening
+a locomotive for editing, or via the JMRI Preferences window.
+
+<p>
+Changes in JMRI 2.7.7 to the internal structure of the classes for the throttle windows (not the 
+throttle classes themselves) may cause trouble for scripts that were using them.
+
+<p>
+JMRI 2.7.7 uses a different set of libraries for processing the XML panel files.
+In turn, this means that if you've created your own startup scripts, you may need
+to adjust them.
+
+<p>
+Starting in JMRI 2.7.6,
+the Windows installer puts the Java libraries (jar files) in a lib subdirectory.
+This is the same layout used on Linux and Mac OS X, and makes the JMRI program directory
+much more organized and easier to understand.  If you have your own custom startup scripts,
+you may have to adjust them to the new library location.  If you're just using the JMRI 
+installer and its startup tools, you shouldn't have to change anything you do.
+
+<p>
+The orientation of the coordinate system in the new audio support
+changed in JMRI 2.7.6.  Starting with that
+release, when you are looking at the model railroad, X is positive toward the right, Y is positive into the layout
+(away from you), and Z is positive upward.  If you wrote scripts using the new audio support with
+JMRI 2.7.5, you'll have to swap axes.
+
+<p>
+The new audio support in JMRI 2.7.5 requires some new libraries.
+Those libraries are included in the JMRI downloads.  They, in turn, require that the
+startup scripts include the new libraries, so these have also been modified.
+The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
+created your own copies of startup scripts, you'll have to update those:
+
+<p>
+If your roster contains locomotives with Soundtraxx Steam Tsunami decoders,
+you should migrate those roster entries to the new decoder definition names.
+We've created a tool to make that easier.
+For information on how to use that tool, please see the 
+<a href="decoder2.7.5.shtml">separate note</a>.
+
+<p>
+JMRI 2.7.4 changes the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 or later and then written out again, 
+as the program will update them to the new format upon storing them.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.8.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.8.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.8.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.8.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.8.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.8.tgz/download</a>
+
+<h3>Changes since test version 2.7.7</h3>
+
+<p>
+Lionel Jeanson added a window listing active throttles.
+
+<p>
+The default memory limit on Mac OS X has been increased.
+
+<p>
+Kevin Dickerson fixed a problem with multi-sensor icons.
+
+<p>
+Randy McKenzie contributed some additional background images for CTC panels.
+
+<p>
+XML input processing has been reworked.  This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile Javadoc for more information.
+
+<p>
+Kevin Dickerson added features to add locos to the roster from an Ecos
+command station, and
+to add locos from the Ecos to the Roster.
+
+<p>
+Kevin Dickerson fixed a problem using an SPROG command station with 
+multiple layout connections.
+
+<p>
+Nigel Cliffe contributed an update for the CT Elektronik SL version 40
+decoder definition
+
+<p>
+Nigel Cliffe contributed an update for the ZTC 471
+decoder definition
+
+<p>
+Paul Bender improved error handling and reporting for the XPressNet ops-mode programmer
+
+<p>
+Giorgio Terdina added an Entry column to the Entry Point table in 
+the Add/Edit Section window of the Section table 
+to make it easier to set entry point direction.
+
+<p>
+Dan Boudreau added code to detect and report 
+when any changes occur to a train.  
+He also improved save coverage when terminating the program.
+
+<p>
+Kevin Dickerson added lunar signals to the Layout Editor.
+
+<p>
+Paul Bender added ops mode programming for the Hornby command station.
+
+<p>
+Lionel Jeanson added initial support for "Jynstruments", a 
+was to extend the JMRI user interface with scripts.
+For more information, see the 
+<a href="http://jmri.org/jython/Jynstruments/README">README file</a>.
+
+<p>
+Lionel Jeanson added a button so you can remove images from a roster entry.
+
+<p>
+Lionel Jeanson did some code cleanup and minor fixes in the throttle GUI,
+and in the abstract throttle internal code.
+
+<p>
+Lionel Jeanson improved the way release/dispatch is handled for multiple LocoNet throttles.
+
+<p>
+John Plocher improved the DS54 help page.
+
+<p>
+Peter Ulvestad added the Digitrax DZ123MO decoder.
+
+<p>
+Lionel Jeanson fixed the multi-throttle release issue in LocoNet by 
+better monitoring slot status in LocoNet Throttle.
+
+<p>
+Kevin Dickerson made a number of internal changes to the layout and panel editors.
+
+<p>
+Peter Ulvestad updated the Atlas Dual Mode and four function (342 and 345)
+decoder definitions to add
+the factory reset and update some limits and defaults.
+
+<p>
+The 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/mailreport/Report.shtml">Send Problem Report</a>"
+option in the main Help menu now works.
+The messages are filed in a  
+<a href="http://groups.google.com/forum/#!forum/jmri-problem-reports">dedicated Google group</a>.
+
+<p>
+Kevin Dickerson improved the file-load dialog so that it doesn't give 
+an error message if the user cancels the load.
+
+<p>
+Dan Boudreau made a small change in how operations staging works.  
+Previously any car in staging could be assigned to a train.  
+Now the cars in staging must also be serviced by the train being built.
+Also, users can name tracks using -number suffix.  
+Suffix isn't printed for manifests or switch lists.
+
+<p>
+Pete Cressman modified the create/edit dialogs for state variables and actions in Logix 
+to organize them according to item type (e.g. Sensors, turnouts, etc.).  
+The column expandability  has been somewhat improved.
+
+<p>
+Pete Cressman added new sub-menu under "Tools - Tables" called "Occupancy Blocks".
+This is a sub-system for defining  elements needed to run trains with 
+automated commands through 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>".  
+Some of the features of Warrants are:
+<ol>
+  <li>Routes can be determined by merely choosing the start and end points.
+  <li>Throttle commands are recorded in a "Learn Mode" that are then played back 
+        for automated running.
+  <li>Turnout and Signals are set automatically for automated running.
+</ol>
+Warrants need to have the layout described in terms of the elements defined by the 
+Occupancy Block Table.
+Although intended to operate with block detection, warrants can run trains without it, 
+however in this case, there is no protection against misaligned turnouts or cornfield meets.  Detailed information can be found in the Help files on the Occupancy Block Table menu.
+
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

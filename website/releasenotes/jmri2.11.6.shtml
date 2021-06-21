@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.11.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.11.6 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.11.6 release
+      </h2>
+
+	<p>Date: June 8, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.11.6 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+</p>
+<p>This is the sixth in a series of test versions. We expect this series
+to end in a JMRI 2.12 or 3.0 production release in 2011. </p>
+
+<p>
+It contains 
+many new features. See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p>
+
+<h3>New warnings for this version:</h3>
+
+(None yet)
+
+<h3>Older warnings</h3>
+
+Development Version 2.11.4 contains significant improvements to the Powerline Interfaces. 
+Some of these improvements involved a complete restructuring of the underlying code. 
+As a result, previously working Preferences may now show no connections for some of the Powerline Interfaces. 
+If this occurs, go to Preferences and setup the Powerline Layout Connections again. 
+Then save the Preferences and restart JMRI.
+
+<p>
+In Development Version 2.11.3 JMRI instituted a more robust and transparent system for handling missing panel icon files. 
+If missing icon files are discovered during the panel loading process 
+this system presents a dialog box that allows the user to either delete the offending reference 
+or use the file browser to find the proper location. 
+Older versions of JMRI didn't always fully remove the references to deleted panel icons. 
+Panels which contain these stray references will present the dialog box during the first panel load. 
+If the panel worked fine before, simply choose the delete option for each "missing" icon presented 
+to remove the stray references. Once the panel has finished loading, save/store the panel file, quit JMRI and then reload. As a precaution, we recommend either making a backup copy of your panel file before diving in or saving the modified file under a different name
+</p>
+<p>
+There have been extensive changes to the throttle code.
+If you have written scripts that use throttles, particularly
+multiple throttles, please check to make sure they still work.
+</p>
+<p>
+The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
+along with some of the other constants in the class.  
+This will have no impact on people just using the program.  
+If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
+</p>
+<h3>Known problems with this release</h3>
+
+NCE consist editor doesn't work properly.  Last version to work okay was 2.11.4, will
+be fixed in <a href="jmri2.11.7.shtml">2.11.7</a>.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+</p>
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.6.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.6.dmg/download</a>
+</p>
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.6.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.6.exe/download</a>
+</p>
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.6.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.6.tgz/download</a>
+</p>
+<h3>Changes since test release version 2.11.5</h3>
+
+<p>Walt Thompson contributed an improved SE8cSignalExample XML file</p>
+
+<p>Dan Boudreau:</p>
+
+<p>New operations features and bug fixes:</p>
+<ul>
+<li>You can now specify an alternative track for sidings with schedules.  See Tools-&gt;Options in the Schedule
+window.</li>
+<li>Fixed a couple of bugs that were introduced by using the change track type tool.  FIFO, LIFO, schedules, and train services
+are features that only certain track types support.  The program now only allows certain feature to work based on track type.</li>
+<li>Fixed the car and loco import tools to work correctly when the "comma" attribute is part of the import file.</li>
+<li>Improved car import by allowing users the option of having the program automatically create new locations and tracks
+during the car import.</li>
+<li>Print car and loco roster can now show the value field.</li>
+<li>Export car and loco now exports the value field.</li>
+<li>Switch lists now show the train's arrival and or departure direction.</li>
+</ul>
+
+<p>Pete Cressman</p>
+<ul>
+<li>Occupancy Block Tables, PickLists, Palette bean tables are sortable.</li>
+<li>Fix bug where auto trains waited indefinitely when resynchronizing block entry.</li>
+<li>Fix bug introduced in 2.11.5 where rotated SignalMasts were not stored properly.</li>
+<li>Add copy warrant button to warrant list table.</li>
+<li>Panel grants local control of block with "Out Of Service" status.</li>
+</ul>
+
+<p>Matthew Harris:</p>
+<ul>
+<li>Update context report to also include system manufacturer
+<li>Updated the Windows documentation to help debug JMRI shutdown problems
+<li>Enabled Blocks data to be populated via Reporters
+<li>Fixed bug that caused Layout Editor panels not to be deleted when Delete Panel chosen on File menu
+</ul>
+
+<p>Kevin Dickerson:</p>
+<ul>
+<li>Fixed an error that would occur if a cv value is left blank.  If the user blanks out a value and doesn't enter in a new, then the old value is restored.</li>
+<li>Prevented an error from occurring when the power on command is issued to the NCE Power Cab via the usb interface.</li>
+<li>Fixed a bug with the default selector for the throttle manager.</li>
+<li>Fixed a bug in the Speedo Console read button, where the correct address isn't correct read.</li>
+<li>Updated the file export facility on the Speedo Console, so that the forward and reverse values for a given speed step are on the same row.</li>
+<li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other.</li>
+</ul>
+
+<p>Stephen Lowens updated the Digitrax SFX definition.</p>
+
+<p>Bob Jacobsen:</p>
+<li>
+<li>Updated the OpenLCB support
+<li>Fixed problems with alternate CV selection
+<li>Updated a number of help files to make them consistent
+</ul>
+
+<p>Randall Wood updated the fast clock in memory variable support, and added some fixed memory 
+values to the XMLIO support so that web browsers can inquire about the JMRI version, etc.
+
+<p>Nigel Cliffe provided a new decoder definition for DCC Concepts loco decoder, developed using information from Richard Johnson of DCC Concepts.
+He also provided a new decoder definition for the CML Electronics DAC 20 decoder.
+
+<p>Michael Mosher improved the ESU LokSounds V4.0 decoder definition.
+
+<p>Gert Muller fixed some issues with international characters and improved the layout of the throttle address field when running Linux.
+
+<p>Mark Waters provided a large group of Zimo Unified decoder definitions.
+
+<p>Steve Todd added protocol to send MiniWebServer port to Wi-Fi devices.
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

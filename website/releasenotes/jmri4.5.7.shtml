@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 4.5.7
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.5.7 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 4.5.7 release
+      </h2>
+
+    <p>Date: Nov 30, 2016</p>
+    <p>From: Matthew Harris</p>
+    <p>Subject: Test version 4.5.7 of JMRI/DecoderPro is available for download.</p>
+
+<!--<p><b>This is a draft release note only; the download links do not yet work</b></p>-->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in the next JMRI production release around the end of 2016.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?state=open"><em>tentative</em> release schedule</a>)</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+<ul>
+<li>When a Digitrax DCS240 is the command station, JMRI throttles may not be able to take control 
+	of a locomotive or consist in some cases if the DCS240 "expanded slots" (i.e. 400 slots) feature is in use. 
+	Be sure to "dispatch" or "release" locomotives and consists from throttles which use "expanded 
+	slots" before attempting to acquire the locomotive or consist via a JMRI throttle, as this may 
+	enable JMRI to acquire the locomotive or consist.  This problem can affect throttles which 
+	use the JMRI WiThrottle interface and throttles controlled via the JMRI Web Server.  This issue
+	is thought to be present in all previous versions of JMRI.</li>
+<li>DCC++ connections on Linux may not work.</li>
+</ul>
+
+
+If any of those effect you, please either wait for
+<a href="jmri4.5.8.shtml">JMRI 4.5.8</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this version:</h3>
+
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.4.shtml#warnings">JMRI 4.4 release note</a> for warnings predating the 4.4 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<p><em>(Since JMRI 4.5.6)</em> 
+        As part of fixing the 
+        <a href="https://github.com/JMRI/JMRI/issues/2081">TMCC throttle issue</a>,
+        the handling of TMCC preferences was changed.  If you have a TMCC
+        connection configured, please go to the 
+        "<a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#Connection">Defaults</a>"
+        pane in the Preferences window and make sure that the 
+        TMCC connection is selected for the appropriate device types.
+
+<p><em>(Since JMRI 4.5.5)</em> 
+        Apple has released a new "Sierra" version of macOS (formerly known as OS X) which has
+        enhanced security for downloaded programs.  We're providing a new form of signed download
+        to work with this, see below.  We'd be interested to hear whether that download
+        works on older OS versions, so that we can just release this new form
+        without having to provide separate downloads.
+
+<p><em>(Since JMRI 4.5.2)</em>This and future versions of JMRI may not function on OS X if the Java SE 6 provided by Apple is installed. OS X
+    operating system updates routinely remove this version of Java SE 6. Please raise any issues concerning this on the
+    user's group.
+    <p>To remove Java SE 6 from OS X, follow these steps (these steps assume
+      JMRI is installed in the folder <em>/Applications/JMRI</em>, if not,
+      adjust the following paths as needed):</p>
+    <ol>
+      <li>Open <em>Terminal.app</em>.
+        <p><em>El Capitan only:</em> Reboot into Recovery Mode by restarting your
+          Mac and pressing Cmd-R until the Apple logo appears. Once in Recovery Mode,
+          select Terminal from the Utilities menu.</p>
+        </li>
+      <li>Run the command <code>/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh</code> It can take
+        up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.
+        <p><em>El Capitan only:</em> Run the command <code>bash /Volumes/Macintosh\ HD/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh /Volumes/Macintosh\ HD</code>
+          It can take up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.</p>
+        </li>
+      <li><em>El Capitan only:</em> Restart your Mac.</li>
+    </ol>
+  
+<p><em>(Since JMRI 4.5.2)</em>Support for directly executing AppleScript within JMRI has been removed
+    due to changes in macOS and Java outside our control. If you require the
+    ability to use AppleScript, you may be able to add this capability on your
+    own by visiting <a href="https://jmri.github.io/applescript">JMRI
+      AppleScript Support</a>, but please be aware that this may not work
+    on upcoming releases of macOS or Java.
+
+<p><em>(Since JMRI 4.5.1)</em>LocoTools, no longer supported since JMRI 2.10, has been removed from the Linux and OS X distributions.
+
+<p><em>(Since JMRI 4.5.1)</em>Internal turnouts and sensors need to have complete, individual system names.
+    The names "IT" and "IS" (without any suffix) are no longer permitted:
+    "IT12" is fine, but just "IT" is not. Most panel files that contain these should
+    automatically migrate them to new names when saved, but in some cases you might need to manually update them.
+
+<p><em>(Since JMRI 4.3.5)</em> When sharing a configuration between this version and JMRI 4.3.4 or older, the older version of JMRI will not
+    reflect changes in preferences, window position, table sorting, column order, or other user interface state. This is due to
+    changes in how user preferences and interface state are stored.
+
+<p><em>(Since JMRI 4.3.3)</em> You can now set the order of your startup items: If you're opening panel files, running scripts, etc as
+    the program starts up, there's a preferences pane that lets you easily set the order in which those happen.
+    If you've set the order manually (e.g. by editing configuration files) in the past, please check this
+    preference to make sure it's set the way you want.</p>
+
+<p><em>(Since JMRI 4.1.2)</em> Jython has been upgraded to version 2.7.0 with the following potentially breaking changes:</p>
+    <ul>
+      <li>The decodeJmriFilename() function is no longer available by default. Use the  FileUtil.getExternalFilename() method instead.</li>
+      <li>The simple propertyListener object is no longer available by default. Create your own, following the examples provided in the jython folder in the JMRI distribution.</li>
+      <li>jmri_defaults.py included in the JMRI distribution is no longer executed by default, but will be executed before any other Jython scipts if included in your User Files location.</li>
+      <li>The default behavior of python.cachedir.skip is now true. If using a custom python.properties file, include "python.cachedir.skip=false" in that file.</li>
+      <li>Certain Python scripts are too large to be evaluated in Jython. If a script fails with the <code>java.io.IOException: Mark invalid</code> error, set "jython.exec=true" in a custom python.properties file or rewrite the script to be less than 100,000 characters per file. Note that when using "jython.exec=true" it may be desirable to run the included script jmri_bindings.py as a startup action to emulate the evaluation environment used when jython.exec=false.</li>
+    </ul>
+
+<p><em>(Since JMRI 4.1.1)</em> Decoder definitions that use the "ivariable" form are now deprecated.  Definitions
+    included with this release have been converted to the new form.
+    If you have decoder definitions with the older "ivariable" form, they will no longer
+    validate, but can still be used for the first couple of test releases in this series.
+    Please ask on the JMRI Users group
+    for help converting them, or just drop them and use the current definitions.</p>
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>OS X: <a
+    href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.7-R3265cd6.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.7-R3265cd6.dmg/download</a><br/>
+    sha256: 68f9d4c8854f648a4eaeabc69d191db5a9b42171b569c6103b24a78adaef4c63</p>
+
+<p>Windows: <a
+    href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.7-R3265cd6.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.7-R3265cd6.exe/download</a><br/>
+    sha256: 57b8787927dd117b8fbb86391b9eb6d689fa00847730c13d7acae7ea8f53de12</p>
+
+<p>Linux: <a
+    href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.7-R3265cd6.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.7-R3265cd6.tgz/download</a><br/>
+    sha256: 4d5aed5be82000b77742e0a101a5016c0cf9362b62957d119b68c98396aef95d</p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.7/">CI project page</a>.
+
+
+<!--
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+-->
+
+<h3>Changes since <a href="jmri4.5.6.shtml">test release 4.5.6</a>:</h3>
+
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.5.7+">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+ <h4>Hardware Support</h4>		
+
+          <h5>OpenLCB</h5>		
+             <ul>		
+                 <li>User interface improvements in the Configuration		
+                 dialog. The dialog will now use an advanced and much faster		
+                 algorithm to load the initial values of the configuration from		
+                 the hardware. Users should not need to use the "Read All"		
+                 button anymore. Changed values are now highlighted in similar		
+                 way as DecoderPro does. The configuration dialog opens		
+                 immediately and shows the progress as the XML data is		
+                 downloaded via the network. It is also possible to re-try		
+                 loading if the first load fails. A cache allows opening the		
+                 same dialog instantly for the second time.</li>		
+                 <li>Fixed a software problem that lead to multiple issues when		
+                 CPU load is high, such as failed firmware downloads or		
+                 inability to open the configuration dialog. On some systems it		
+                 was enough to have the OpenLCB Monitor window open to trigger		
+                 the problem.</li>		
+             </ul>
+
+    <h4>Layout Editor</h4>		
+         <ul>		
+             <li>Fixed a problem with adding Train/loco icons to the panel</li>		
+          </ul>
+          
+    <h4>Signals</h4>
+        <ul>
+            <li>Fixed an issue to set aspects in the Signal Mast Table using the combobox. Sorting rows or moving columns in the table is fully supported.</li>
+        </ul>
+
+   <h4>Warrants</h4>
+        <ul>
+            <li>A bug when Calibrating a throttle speed factor in NXWarrants has been fixed.</li>
+            <li>SCWarrants are converted to regular Warrants with a "No Ramping" flag set.  Such warrants change speed as before upon entering
+            	the approach block. Now they use the speeds specified by the signals rather than one hard coded value. The new "No Ramping" flag
+            	may be turned off and on in the Warrant Editing window.</li>
+        </ul>
+        
+    <h4>Miscellaneous</h4>
+        <ul>
+            <li>The MS Windows launcher has had a number of updates including:
+                <ul>
+                    <li>a new method to calculate the maximum memory</li>
+                    <li>use the Windows look and feel as an initial default</li>
+                    <li>allow the classpath to be modified by either appending `--cp:a=CLASSPATH` or prepending `--cp:p=CLASSPATH`</li>
+                    <li>allow for default options to be specified in a `jmri.conf` file stored in `%userprofile%\JMRI`
+                </ul>
+            </li>
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

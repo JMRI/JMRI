@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 1.5.5
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.5.5 CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.5.5 test release
+      </h2>
+
+	<p>Date: November 29, 2004</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 1.5.5 of JMRI/DecoderPro is available for download.
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+
+<p>This test release is part of a series that will eventually lead up to a production release called version 1.6; no date has been set for when that will happen.
+
+<p>There was no public 1.5.1 test version; it was used for internal testing.
+
+
+<h3>New warnings for this test version:</h3>
+
+<p>(None)
+
+<h3>Older warnings for the 1.5 series of test versions:</h3>
+
+<p>The method for configuring the C/MRI protocol has changed since version 1.4.  If you use the C/MRI protocol, you will have to reconfigure your preferences the first time you run this version.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.hqx?download</a>
+
+<p>Windows:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.exe?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.exe?download</a>
+
+<p>Linux:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.tgz?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.tgz?download</a>
+
+<p>MacOS 8/9 "Classic":
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.5.Classic.hqx?download</a>
+
+<h3>Changes since test version 1.5.4:</h3>
+
+<p>Fix some minor Javadoc problems
+
+<p>Fix problem introduced in 1.5.4 that prevented SPROG from functioning
+
+<p>Update on US&amp;S lamp (yellow) that had wrong background
+
+<p>Updates to consisting code by Paul Bender
+
+<p>Update to consist tool to handle case when no consist selected; may be correcting a change to the way Java 1.5 works - Paul Bender
+
+<p>Update the XPressNet monitor to display additional messages in English - Paul Bender
+
+<p>Dennis Miller improved the Throttle panel layout so various parts display completely
+
+<p>Improve Digitrax ops-mode readback so that it works with Intellibox and other devices.
+
+<p>Fix a problem with SPROG where code listening to replies would get a second copy after sending a message.  This only effected people writing code within JMRI itself.
+
+<p>Turn off DirectX acceleration of Java3D on Windows.  This prevents a rare fault during startup. RFE 989410
+
+<p>Change DecoderPro code so that only variables coded red ("Unknown/Error", generally caused by a read or write that failed) or orange ("edited", due to manual changing of the value) will be read or written when you click the various "read/write changes" buttons.  This is a significant change to behavior; please try it and less us know whether it's an improvement!
+
+<p>Alex Shepherd:  Improve key-mapping for the Throttle.
+
+<p>Convert the NCE support to use "binary" commands instead of "ASCII" commands when talking to the command station.  This is intended to make JMRI simultaneously compatible with the existing and next versions of the NCE command station PROMs.
+
+<p>The internal fastclock mechanism was updated so that various clocks would stay synchronized when the minute changes.
+
+<p>Dennis Miller updated the Nixie clock so that it can be resized.  He also greatly improved the graphics.
+
+<p>Dennis Miller improved decoder printout by adding the CV number in the "All" version.
+
+<p>Improvements to support for one DecoderPro variable split across two CVs: Mask now works on both upper and lower bytes for both read and write to CVs.  Previously, this was only used in a special case for AD4 decoders, and hopefully that special case still works.
+
+<p>Paul Bender: Internal changes to consist tool to add hooks for system specific consist restrictions and error propagation.
+
+<p>Paul Bender: New XPressNet Specific Consist Manager.  Allows use of Lenz "Double Headers" and Decoder Assisted consisting through the use of Lenz's "Smart Consisting" facilities.
+
+<p>Joe Salemi contributed a decoder definition for the Atlas 345 decoder and updated the TCS Tx definition.
+
+<p>Michael Greene contributed new definitions for the E-Z Command and Zimo MX61_N decoders, and updated the Soundtraxx SHS F3 and F7 Diesel decoders.
+
+<p>Fix bug where a Roster selection box would have entries out of order after adding a new locomotive.
+
+<p>Alex Shepherd added some additional decoding to the LocoNet monitor in the fast clock area.
+
+<p>Alex Shepherd added the capability to synchronize the LocoNet fast clock to an internal clock.
+
+<p>Macintosh "Classic" build process rebuilt _again_.  The MacOS Classic JVM will lock up if certain synchronized constructs are compiled with a "modern" compiler, so the build process has been redone to ensure classes containing that are compiled with the "oldjavac" compiler.  This is a stopgap, however, as other constructs (local variables in anonymous inner classes) _require_ the newer compiler; eventually, we'll get a conflict between these.
+
+<p>The problem with "out of memory" when requesting certain DecoderPro programmer formats while running on MacOS ("Classic") has probably been fixed.
+
+   <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 1.7.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.7.2 CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.7.2 test release
+      </h2>
+
+	<p>Date: August 2, 2005</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 1.7.2 of JMRI/DecoderPro is available for download.
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+
+<p>This is the next in a series of test versions that contain long-awaited new features, particularly improved support for QSI decoders, wait cursors in the programmer, and significant internal updates.  Some of the changes involved are quite extensive, and may require a certain amount of experience before they are working well.  Therefore, this test version should be considered experimental.
+
+<p>This test version contains important fixes for users programming QSI decoders and Digitrax boards in the PM, BDL and SE series.
+
+<h3>New warnings for this test version:</h3>
+
+<p>We have added additional information to the roster files in this version to help properly handle short/long addressing in systems that allow low addresses (e.g. 65) to be either short or long addresses. The only current system we support that has this capability is NCE.  If you have an NCE system, and you have locomotives with addresses of 127 or less, you should open their roster entries in DecoderPro, check that the proper short or long address is selected,  and save them again.
+
+<h3>Older warnings from this series of test versions:</h3>
+
+<p>Indexed CVs will not be included in any printouts for this release.
+ 
+<p>QSI CVs 56.4, 56.10, and 56.12 may or may not be supported by a particular model but are included in the "Indexed CVs" tab.  Reading or writing these CVs, if not supported, will result in a programmer timeout and the value state will indicate "unknown".
+ 
+<p>QSI CV 56.129 Engine ID Access is not supported in this release.
+ 
+<p>QSI CVs 56.255_0, 56.255_1, and 56.255_2 are write only CVs and are intended to used in Ops mode only as they produce a verbal response. These are included in the Indexed CVs tab.
+ 
+<p>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), otherwise the writes will fail.
+ 
+<p>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
+ 
+<p>The function of the first four outputs of QSI decoders can not be changed in this release although version 6 decoders support this functionality.
+
+
+<h3>Download links:</h3>
+
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.hqx?download</a>
+
+<p>Windows:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.exe?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.exe?download</a>
+
+<p>Linux:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.tgz?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.tgz?download</a>
+
+<p>MacOS 8/9 "Classic":
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.2.Classic.hqx?download</a>
+
+
+
+<h3>Changes since test version 1.7.2:</h3>
+
+<p>Paul Bender has improved the Lenz LV102 (and LZV100) power station configuration tools. This includes separating the LZV100 tool into two parts - the LV102 configuration tool which already existed, and a new (separated) LZ100 configuration tool
+
+<p>Howard Penny has made improvements to the QSI locomotive definitions.
+
+<p>Alex Shepherd has improved the Windows startup (.bat) files.
+
+<p>Howard Penny improved the logic for retrying a failed read or write in DecoderPro.  In particular, this limits the number of retries so that other variables are still read or written.
+
+<p>Howard Penny improved DecoderPro's handling of CVs in speed tables so that extra CVs aren't read or written.
+
+<p>Paul Bender added an optional form to a Throttle so you can set it to specific speed steps.  Unfortunately, due to limitations of the older Java used by Macintosh Classic computers, this feature is not available there.
+
+<p>Howard Penny clarified the labels on the "Delete Roster Entry" window
+
+<p>Bob Scheffler fixed a problem addressing high-address (address greater than 512) accessory decoders on NCE, EasyDCC and SPROG systems.
+
+<p>Bob Jacobsen dded shortcuts to the PowerManager and ProgrammerManager in scripts (see jmri_defaults.py)
+
+<p>Dennis Miller figured out why the JButtonExample wasn't showing at the right size, so that's now fixed.
+
+<p>Bob Jacobsen dded OpsProgExample.py, a script showing how to automate changing a CV in a decoder when certain things happen.  This can be used to change sound volume, or adjust momentum to whether you're in a yard or not, etc.
+
+<p>Howard Penny added a tooltip to the DecoderPro comprehensive programmer about the decoder id variables
+
+<p>Paul Bender updated the XPressNet initialization so that it will generally be faster at startup
+
+<p>Bob Jacobsen made the usual Javadoc improvements and updates.
+
+<p>Bob Jacobsen provided a new scripting example showing how to do ops mode programming.
+
+<p>DecoderPro should now successfully identify the Bachman "four function" decoder (though it would be good if they actually used something that looks like a model name for their products)
+
+<p>Dave Duchamp updated a lot of internal infrastructure so that the names of turnout states (now "Closed" and "Thrown") can be changed as desired.
+
+<p>Howard Penny updated the DecoderPro pane programmers so that they'd show a "busy" cursor when doing programming operations, and so they'd have explicit "Stop" buttons to click to stop the programming operation. (RFE 1047078)
+
+<p>Bob Jacobsen added new support for the PRICOM Pocket Tester's trace mode.  The tool is currently in the Debug menu.  For more info on the product, please see <a href="http://www.pricom.com">http://www.pricom.com</a>.
+
+<p>Paul Bender added a new stack monitor tool for XPressNet systems.
+
+<p>Paul Bender extended decoding of XPressNet Ops Mode Programming instructions to include read instructions, and to correctly identify a bit read/write.
+
+<p>Turnouts with feedback configured now have their state set properly when the program starts up, courtesy of Dave Duchamp
+
+<p>Paul Bender updated the consisting tool to correct the transition from a "full" consist to a new consist.  Previously, it did not allow adding any new locomotives to the new consist when this occurs.
+
+<p>Dave Duchamp made it possible to use either upper or lower case letters when defining system names for Sensors, Turnouts, etc.  For example, ct12 and CT12 are now treated the same.
+
+<p>Bob Jacobsen updated the computer throttles so that you can specify long or short address for systems where addresses like 125 can be either (right now only NCE has this capability)
+
+<p>Dave Duchamp updated the LocoNet code so that it reads the status of sensors from the LocoNet when a panel (XML file) is read in.  This will automatically get the current state from the layout once the sensor definitions are read in.
+
+<p>Dave Duchamp updated Routes so that, in addition to "set closed" and "set thrown", they can toggle a Turnout when fired. This is useful for example if you want to use a route to toggle a turnout when a front panel button (Sensor) is pressed.
+
+<p>Peter Brandenburg contributed a new version of the Zimo MX66 decoder definition (Patch 1223037)
+
+<p>Lengthened the long LocoNet timeout during programming operations.  This was needed for Fleischmann Twin Centre command stations, which seem to take significantly longer to do read operations than others. Unfortunately, we've not received the test data to know if this timeout is right even now.
+
+<p>Bob Jacobsen, with help from Peter Ely, fixed a bug in the PM4 programmer where certain versions of the PM42 would not be read properly.  This happened mostly with recent versions of the cards.
+
+<p>By default, XML files are no longer being validated when read.  This greatly improves the startup time for large rosters and decoder definitions.  There's a new "Validate xml file" tool in the debug menu for doing validation if desired.  This change will also make it easier to have backward-compatible DTD changes in the future (although it can't help with previous versions of the library, of course)
+
+<p>Following a suggestion by Dick Bronson, the "store config" menu choices have been made more explicit about what they're doing, to help avoid problems with people storing configuration data over panels files.
+
+<p>When adding signals to the signal table, you can now create a "virtual signal head".  This has no connection to the layout, but can appear (or not appear) on a panel.  For an example of how this might be useful, please see the next item.
+
+<p>Add "repeater signal" capability to the simple signal logic.  Normally, a signal is tell the engineer about the need to slow down:  A yellow precedes a red signal, and green precedes yellow.  When "repeater" is selected on the Simple Signal Logic definition panel, however, the signal being defined will show the same state as the one it's protecting:  red will be preceded by red, yellow by yellow, etc.  This is useful for example in interlockings, where there is not very much space between signals. When combined with virtual signal heads, this can also be used to create more complicated logic. The "CrossoverDemo.xml" file in the xml/samples directory is an example of this.
+
+<p>Add a "selectable" attribute to the XML definition of a memory icon.  If present, and if there is a map of icons in the same element, the pop-up menu on the icon will let you select the current memory contents.
+
+<p>Allen Byrne cleaned up the XML handling code, and improved some Roster unit tests.
+
+<p>Walter Thompson updated the ESU decoder definitions so that they would work with the Comprehensive programmer, etc, so the corresponding ESU-specific programmer formats are no longer needed.
+
+<p>Bob Jacobsen improved the error handling at startup so that "Port in Use" and similar errors are more likely to still provide a running program (without a connection, but at least running well enough to redo the preferences)
+
+<p>John Harper fixed the problem with the script output window dying when a script thread ends early (patch 1249631)
+
+<p>You can now edit the "Simple Signal Logic" for a signal head on a panel from the signal's popup menu.
+
+   <!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

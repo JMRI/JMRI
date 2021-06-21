@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.15.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.15.4 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.15.4 release
+      </h1>
+
+    <p>Date: March 12, 2019</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.15.4 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release during early Summer 2019.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Update From Older JMRI Versions</h3>
+<p>If you are currently using JMRI 4.11.9 or earlier, we strongly recommend that you update to 
+        <a href="jmri4.12.shtml">JMRI 4.12</a> and make sure that's running OK before
+        updating to this test release.  Once you have JMRI 4.12 running OK, 
+        store your configuration and panel files and use those from then on.
+        There have been a number of 
+        changes in serial port support, panel file format and configuration options since those earlier releases, 
+        and moving to the stable <a href="jmri4.12.shtml">JMRI 4.12</a> release
+        is a good way to work through any possible problems.
+        </p>
+<p>If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    you <u>must</u> 
+    update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to this release.
+
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.11.3.shtml">JMRI 4.11.3</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<ul>
+    <li>
+        <span class="since">Since JMRI 4.15.4</span>
+        The calculation of Turnout Addresses for the
+        <a href="/help/en/html/hardware/dccpp/Turnouts.shtml" target="_blank">
+        Direct DCC Accessory Command ("a" command)</a> mode
+        has been fixed (commands are now sent to the correct accessory address rather
+        than 4 less than the nominated hardware address). For pre-existing panels,
+        changes will need to be made to either the actual decoder address or the panel.
+        If help is required, ask on the
+        <a href="https://groups.io/g/jmriusers/" target="_blank">jmriusers</a> group.
+    </li>
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.14.shtml#warnings">JMRI 4.14 release note</a> for more warnings predating the 4.15 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<p><span class="since">Since <a href="jmri4.15.3.shtml">JMRI 4.15.3</a></span>
+        The prefix that identifies a layout connection should be a single letter, like "N" or "L",
+        or a letter and some digits, like "K2" or "D3". Some older systems used to have
+        longer "legacy system prefixes" like "DX", "DCCPP", "DP", "MR", "MC", "PI", and "TM".
+        Those <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
+        will now cause JMRI to issues a warning at startup. In this release, JMRI will
+        still work with those prefixes, but they will need to be migrated to the proper form soon;
+        JMRI 4.17.1 and later will <u>require</u> that this have been fixed.
+        Therefore, this warning can't be suppressed
+        without migrating the prefix in the connection configuration (and any associated
+        panel files and scripts).
+        If you're getting this warning and therefore need to do that migration,
+        <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">migration page</a>.</li>
+
+<p><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+    There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+    <ul>
+        <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li><br>
+        <li>Do not enable extra debugging through default.lcf, nor open the system console window</li><br>
+        <li>Do not open the SPROG console window</li><br>
+        <li>Disable power conversion (CV 29) in all locos</li><br>
+        <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li><br>
+    </ul>
+    Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+    open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+      
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.dmg">https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.dmg</a><br/>
+  sha256: 58e54b96da61d87bb19597cc20a3d78475a5016a1fb7a0ca23bd4c76a0e43ef1 </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.exe">https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.exe</a><br/>
+   sha256: d29a79874e5a183b132ff3fb9348d77315a8a5ad36b32aa683cc9043981dbc0b</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.tgz">https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.tgz</a><br/>
+   sha256: f162bc608365e80c62b6c9f69e1fe9e9ccbf1ba24a68233a19a4012e67adb53a</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/TestReleases/job/4.15.4/">CI project page</a>.
+ -->
+
+During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ 
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.15.3.shtml">Test release 4.15.3</a>:</h2>
+ 
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.15.4">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+
+    <h3>Hardware Support</h3>
+
+    <h4>DCC++</h4>
+    <ul>
+        <li>
+            The calculation of Turnout Addresses for the
+            <a href="/help/en/html/hardware/dccpp/Turnouts.shtml" target="_blank">
+                Direct DCC Accessory Command ("a" command)</a> mode
+            has been fixed. Commands are now sent to the accessory address entered in
+            the JMRI Turnout Table. (Dave Heap)
+             <span class="since">Since JMRI 4.15.4</span>
+        </li>
+        <li>
+            The DCC++ Traffic Monitor no longer crashes when attempting to display some commands.
+        </li>
+    </ul>
+
+    <h4>LocoNet</h4>
+            <ul>
+                <li>"PR3 Standalone Programmer" mode has been updated so that only one LocoNet menu will be displayed, instead of displaying two menus.</li>
+                <li>Digitrax connections now support PR4, DCS240 and DCS210 via uniquely named connection types. <span class="since">Since JMRI 4.15.4</span></li>
+                <li>Addresses a problem when track power status is changed on the DCS52 which can cause a JMRI code failure. <span class="since">Since JMRI 4.15.4</span></li>
+            </ul>
+
+        <h4>Roco z21/Z21</h4>
+            <ul>
+                <li>Fixed Delay in throttle message processing</li>
+            </ul>
+
+
+    <h3>New / Updated decoder definitions</h3>
+
+        <h4>SoundTraxx</h4>
+            <ul>
+                <li>Michael Mosher fixed a bug in GP35 SP CV54</li>
+		        <li>Michael Mosher added more models to Athearn ECO OEM file</li>
+		        <li>Michael Mosher added more models to Athearn Genesis TSU2 OEM file</li>
+            </ul>
+
+        <h4>Uhlenbrock</h4>
+            <ul>
+                <li>A new definition was added for the 73xx5 IntelliDrive2 decoders. It also works on two Piko 4.1
+                sound decoder models.<br>
+                The definition is still under development and not complete. Please report read test results on
+                your hardware.</li>
+            </ul>
+
+    <h3>DecoderPro</h3>
+    <a id="DecoderPro" name="DecoderPro"></a>
+        <ul>
+            <li>Decoder definitions for indexed-access CVs can now use a "81=23.40" (cvFirst = false) /
+            "40.81=23" (cvFirst = true) syntax to specify an alternate PI and/or SI CV.<br>
+            The previous syntax continues to work unchanged.
+            </li>
+            <li>"output" definition elements can now be included in the "family" element, or
+                via including a fragment file.  The 0NMRA.xml file has an example of this.
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>Fix bug with launcher on Windows introduced when adding JDK 11 support in 4.15.3. This caused JMRI to not launch on certain 64-bit Windows systems that had only a 32-bit Java installation.</li>
+            <li>Fixed occasional problem where an item in the Turnout, Sensor, Memory or Light table couldn't be deleted.
+        </ul>
+
+   
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

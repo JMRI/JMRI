@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.13.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.13.4 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.13.4 release
+      </h2>
+
+	<p>Date: November 14, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.13.4 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.0 production release.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+None yet
+
+<h3>Older warnings</h3>
+
+The way in which UserNames are edited in the tables changed in JMRI 2.13.1, renames are now performed via a mouse pop-up menu and can not be directly edited.
+
+<p>
+The method we use for building release files was extensively changed with JMRI 2.13.1. Please let us know of any problems
+with installation or unpacking.
+
+<p>This release of "DecoderPro 3" is a test.  There are a few more features we'd
+like to add, but before doing that we need feedback from users; does it work for
+you, what do you want to see changed, etc. We'll look at all the information
+which comes back and incorporate it in future developments.
+We have tested "DecoderPro 3" and are not expecting major file-damaging faults.
+But with any test-release of software there is always a small risk that
+something has been overlooked.  So, please check that you have a backup of your
+Roster files just in case something unexpected happens.  If you install with the
+Windows installer, a backup copy of your old files (including the roster) is
+created by default.</p>
+
+<p>
+JMRI 2.12 is the last release which is completely supported by Java 1.5.
+Starting with this release, there will be minor interface features, such as 
+drag-and-drop of some items, that require your computer to have Java 1.6 installed.
+Computers with only Java 1.5 will still be able to use JMRI, including PanelPro and DecoderPro,
+through the end of this 2.13.* release cycle.  Releases in the next cycle
+will require Java 1.6.
+
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.4-r19103.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.4-r19103.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.4-r19103.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.4-r19103.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.4-r19103.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.4-r19103.tgz/download</a></p>
+
+<h3>Changes since test release 2.13.3</h3>
+
+<p>Dan Boudreau made the following enhancements to operations.</p>
+<ul>
+	<li>You can now restrict how a train delivers cars along its
+		route. You can now have all cars picked up along the route
+		delivered to the last location in the route.  See under Edit Train-&gt;Tools "Train Build Options"</li>
+	<li>Fixed a problem where train icons would not appear on a panel if car, engine, or train logging was enabled.</li>
+	<li>Fixed a problem when requesting an engine change in a train's route.  Sometimes the program would experience a null pointer which would cause the 
+	program to lock up.</li>
+	<li>Removed "Unit of Length" as part of localization and added the ability to select feet or meters in the Setting window.
+	<li>Changed the draw bar length when using meters as the unit of length from 4 meters to 1 meter.</li>
+	<li>New feature, blocking cars from staging.  The blocks are based on the location where the cars where picked up before terminating into staging.
+	So for example, if your train's route had three stops, A, B, and C, and then terminated into staging.  The cars from A would be blocked together
+	when the next train departed staging.  The same goes for pick ups from B and C, those cars would remain together.  The program when attempting to
+	find destinations for the cars departing staging, starts with the largest block of cars, and then checks the route, and attempts to send the largest
+	block to the location requesting the most moves.  After doing that, the program does the same with the next block of cars, it finds the second
+	location in the route and sends the cars there.  This is a very simplistic approach to blocking cars, it assumes that cars picked up at a location
+	were placed into the train as a group.  This blocking feature doesn't consider where in the train the cars are, as some operators when picking up cars, will
+	add the cars to any part of the train.  So the first stop in the train's route may not have the cars at the head of the train, but they should be in a group, somewhere in
+	the train.  The first time you depart staging with this feature on, the cars will not be blocked for you, you need to first terminate a new train into
+	staging, those cars will have the block tags assigned to them.  To enable this feature, see Edit Staging Track, "Optional Car Blocking" in the lower right corner of the window.</li>
+</ul>
+
+<p>Mini web server enhancements:</p>
+<ul>
+	<li>The mini web server now displays Open Windows from /frame as well as /panel. In a future release, /panel will no longer be usable to remotely display Open Windows. (Randall Wood)</li>
+	<li>The XMLIO protocol recognizes the <em>frame</em> type as well as the <em>panel</em> type to list Open Windows. In a future release, <em>panel</em> will no longer be usable to list Open Windows.(Randall Wood)</li>
+</ul>
+
+<p>Mac OS X usability:</p>
+<ul>
+	<li>The Quit command in the Application menu, and the Cmd-Q keyboard shortcut, now correctly quit JMRI applications. (Randall Wood)</li>
+	<li>The Preferences item in the Application menu, and the Cmd-, keyboard shortcut, now correctly open the preferences window. (Randall Wood)</li>
+</ul>
+
+<p>Kevin Dickerson made the following enhancements:</p>
+<ul>
+	<li><b>DecoderPro3</b></li>
+    <ul>
+        <li>Provided a "first" start" configuration Wizard to help guide users through the initial configuration of DecoderPro 3</li>
+        <li>When DecoderPro 3 opens with a blank roster, an introduction screen shows the user how to create their first entry.</li>
+        <li>When a loco is found via the identify button, the roster table will scroll so that the identified loco will be visible</li>
+        <li>Added the ability to launch the comprehensive programmer by double clicking on a roster entry in the table</li>
+        <li>Provided the right click pop-up menu in the roster table.</li>
+        <li>Updated the xml file and toolbar files, so that translations can be added.</li>
+    </ul>
+    
+    <li><b>SignalMast and SignalMast Logic</b></li>
+    <ul>
+        <li>In the SignalMast Logic, if a specific held aspect is not found then the aspect for Danger is used.</li>
+        <li>Updated the SignalMast logic so that when the logic changes from one destination mast to another this forces the source signal mast to go to a stop appearance.</li>
+        <li>Updated the SignalMast UI to use drop down boxes to select signal heads used to build the mast.</li>
+    </ul>
+    
+    <li><b>Editors</b></li>
+    <ul>
+        <li>Added to the Layout Editor turnout, the ability to configure a second turnout on Cross-overs, so that when the turnout is changed on the layout panel it will change both turnouts.
+        Note: That only a change in the primary turnout will update the status on the panel, not the secondary.</li>
+        <li>Fixed an issue where, slips, three-ways and cross-overs could not be added in the panel editor.</li>
+        <li>Updated the text based icon in the layout editor to use a separate properties window to edit the text styles.</li>
+    </ul>
+    <li>Updated the list of languages in the preferences to be in alphabetical order</li>
+    <li>Converted the roster entry xml files from using dtd to schema.</li>
+    <li>Updated the add/edit Routes screen so that trigger sensors/turnouts are selected from a combo box.</li>
+    <li>Fixed a bug in the Logix, where it was not possible to use the first aspect in the drop down list as part of a condition</li>
+    <li>Fixed a bug in the Throttle code that handled the disposing and releasing of throttles which could result in the throttle not being correctly disposed of.</li>
+    <li>Updated the "DCC Signal Decoder" signal head, so that you can specify which interface the signal is attached to.</li>
+</ul>
+
+<p>David Duchamp made the following enhancements to Dispatcher:</p>
+<ul>
+	<li>Fixed a throttle problem with automatic running of trains.</li>
+</ul>
+
+<p>Jos Wils updated the ESU LokPilot 3.0 decoder definition and provided two new ESU definitions.
+
+<p>Oscar Moutinho released a major update to the InControl browser-based throttle app.</p>
+
+<p>Steve Todd made the following enhancements to the mini web server:</p>
+<ul>
+	<li>Added a new html /frame page to the MiniWeb server which returns a clickable list of available frames (open windows).</li>
+	<li>Added navigation links below clickable frame images to allow return to list or home.</li>
+	<li>Added pref for disallowed frames and prevent them from being served by frame server.</li>
+</ul>
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

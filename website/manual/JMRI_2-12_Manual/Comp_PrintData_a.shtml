@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009, 2010 -->
+<!-- $Id: Comp_PrintData_a.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>
+DecoderPro&reg; Comprehensive Programmer
+</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<h1><a name="Top"><img src="images/Comp_09a_PrintData.png" alt="Comprehensive Programmer - Advanced Features"  border=5 height=494 width=382 hspace="20"></a></h1>
+
+<div align=right>
+<p><a href="Comp_PrintData.shtml#Print">Back</a>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+</div> <!-- closes #container, started in sidebar -->
+<script src="/js/main.js"></script>
+</body>
+</html>

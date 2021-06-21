@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+    JMRI: Release Notes for 4.20
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.20 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.20 release
+      </h1>
+
+    <p>Date: July 8, 2020</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Production Release 4.20 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<p>We are very pleased to announce that the 4.19 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production Release 4.20" available for download today.</p>
+
+<h2>Notes:</h2>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+
+
+If you are currently using a version older than JMRI 4.18, please follow these instructions carefully:
+
+<ol>
+<li>Is your current version older than <a href="jmri4.12.shtml">JMRI 4.12</a>? 
+    If so, then update to <a href="jmri4.12.shtml">JMRI 4.12</a> first, and ensure everything works correctly: check
+    start-up, check things you need to be working, and check the JMRI log as well.
+    Once all is well, store your configuration and panel files under a new name and use those from now on. 
+    Continue with step 2.
+    <p>
+    If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    then it's <u>very important</u> 
+    that you update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to any later relese.
+    </li>
+    
+<li>Is your current version older than <a href="jmri4.18.shtml">JMRI 4.18</a>? 
+    Then update to <a href="jmri4.18.shtml">JMRI 4.18</a> first, and ensure that works correctly: check
+    start-up, check things you need to be working, and check the JMRI log as well.
+    Once all is well, store your configuration and panel files under a new name and use those from now on. 
+
+<li>You can then install this release. 
+</ol>   
+ 
+Following this multi-step order of updating via stable major releases safeguards you against possible migration issues 
+that can arise from skipping these versions.
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+   <ul>
+    <li>You can not exit OperationsPro or JMRI without saving changes to OperationsPro. This is
+     a bug and has been fixed in 4.21.1.</li>
+   </ul>
+   <!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.17.2.shtml">JMRI 4.17.2</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this production release:</h3>
+
+<ul>
+<li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+        JMRI's scripting support now defaults to the UTF-8 character encoding for all
+        script files on all platforms. This may require that some scripts be re-saved
+        using UTF-8.</li>
+<li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+        <strong>Windows Only</strong> The JMRI installer removes the existing
+        <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
+        existing lib folder contents are retained in the backup folder.
+        <strong>This means that any files you have added to the <em>lib</em>
+            folder will be removed.</strong></li>
+<li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+        <strong>macOS Only</strong> This version includes changes to how
+        the final .dmg file is built, signed and notarized.  This was done to increase
+        compatibility with macOS 10.15 Catalina.
+        Please drag the JMRI icon to the Applications folder to install this release.
+        For more information on 
+        <a href="https://jmri.org/install/MacOSX.shtml#catalina">Catalina compatibility</a>,
+        see the 
+        <a href="https://jmri.org/install/MacOSX.shtml#catalina">JMRI web site</a>.
+
+<li><span class="since">Since <a href="jmri4.17.4.shtml">JMRI 4.17.4</a></span>
+        Panel file NamedBean items such as Turnouts, Sensors, etc are now written to panel
+        files in order by their Manager system prefix and system name.
+        Previously, they had (roughly) been written in the order they'd be 
+        read from the earlier file(s). This will result in a big change to the order
+        the first time a file is re-written, but after that it should be much more stable.</li>
+        
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.16.shtml#warnings">JMRI 4.16 release note</a> for more warnings predating the 4.17 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<ul>
+
+<li><span class="since">Since <a href="jmri4.15.6.shtml">JMRI 4.15.6</a></span>
+        Remembering the location and size of layout panels created and maintained
+        using Layout Editor, Panel Editor, Control Panel Editor, and Switchboard
+        Editor is no longer dependent on saving the panel.  The location and size
+        values are retained using the same processes used by other JMRI windows.  This
+        makes the window management behavior consistent.  To continue using the
+        old behavior, go to <strong>Preferences >> Display</strong> and enable
+        <strong>Use old location and size logic for editor panels</strong>.
+
+<li><span class="since">Since <a href="jmri4.15.6.shtml">JMRI 4.15.6</a></span>
+        Starting in <a href="jmri4.15.6.shtml">JMRI 4.15.6</a>, Memories
+        must have valid system names of the form "IM" folllowed by something.
+        "IM123" and "IMEAST" are both valid. 
+        The system name "IM", all by itself, has never been valid, but JMRI 
+        will now be enforcing that:
+        <ul>
+            <li>You won't be able to create a memory with that name via
+                the Memory table or scripts
+            <li>If you have that name in a panel file, an error will be 
+                logged and the panel file won't load. You'll have to 
+                remove it from he file or rename it in the file
+                before loading it.
+        </ul>
+        JMRI needs to start enforcing this in preparation for some
+        future code that will appear later this year.
+</li>
+
+<li><span class="since">Since <a href="jmri4.15.5.shtml">JMRI 4.15.5</a></span>
+        The handling of Turnout system names has been updated
+        to be (more, hopefully completely) consistent with the
+        <a href="/help/en/html/doc/Technical/Names.shtml">planned approach</a>.
+        Specifically, case now (generally) matters in system names:
+        <ul>
+            <li>You can now have an internal turnout named "ITsome lower case name".
+            <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
+                "ITSome LoWeR cAse Name" and get the same one.
+        </ul>
+        This should not require any migration for stored configurations or 
+        panel files, as they have been automatically been being kept consistent 
+        since JMRI 4.8.  But you might have case errors in i.e. scripts which
+        will fixing inconsistent references in your scripts.
+        Of course, bugs are always possible. If you find a place where 
+        names seem to be handled inconsistently, please let us know!
+
+<li><span class="since">Since <a href="jmri4.15.4.shtml">JMRI 4.15.4</a></span>
+        The calculation of Turnout Addresses for the
+        <a href="/help/en/html/hardware/dccpp/Turnouts.shtml" target="_blank">
+        Direct DCC Accessory Command ("a" command)</a> mode
+        has been fixed (commands are now sent to the correct accessory address rather
+        than 4 less than the nominated hardware address). For pre-existing panels,
+        changes will need to be made to either the actual decoder address or the panel.
+        If help is required, ask on the
+        <a href="https://groups.io/g/jmriusers/" target="_blank">
+        jmriusers</a> group.
+
+<li><span class="since">Since <a href="jmri4.15.3.shtml">JMRI 4.15.3</a></span>
+        The prefix that identifies a layout connection should be a single letter, like "N" or "L",
+        or a letter and some digits, like "K2" or "D3". Some older systems used to have
+        longer "legacy system prefixes" like "DX", "DCCPP", "DP", "MR", "MC", "PI", and "TM".
+        Those <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
+        will now cause JMRI to issues a warning at startup. In this release, JMRI will
+        still work with those prefixes, but they will need to be migrated to the proper form soon;
+        JMRI 4.19.1 and later will <u>require</u> that this have been fixed.
+        Therefore, this warning can't be suppressed
+        without migrating the prefix in the connection configuration (and any associated
+        panel files and scripts).
+        If you're getting this warning and therefore need to do that migration,
+        <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">migration page</a>.</li>
+
+<li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+    There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+    <ul>
+        <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+        <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+        <li>Do not open the SPROG console window</li>
+        <li>Disable power conversion (CV 29) in all locos</li>
+        <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+    </ul>
+    Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+    open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+
+</ul>
+      
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+ 
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.20/JMRI.4.20+Rc7ba8249b.dmg">https://github.com/JMRI/JMRI/releases/download/v4.20/JMRI.4.20+Rc7ba8249b.dmg</a><br/>
+  sha256: b9ccc8c7d27637c9b7caaa1e985a866fe245365110d4a3629841bf134d02af85 </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.20/JMRI.4.20+Rc7ba8249b.exe">https://github.com/JMRI/JMRI/releases/download/v4.20/JMRI.4.20+Rc7ba8249b.exe</a><br/>
+   sha256: 025d1b380d206ac827bfcc3610eaca33c79e20db8da3b83b62b3cc5fe5e83e49</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.20/JMRI.4.20+Rc7ba8249b.tgz">https://github.com/JMRI/JMRI/releases/download/v4.20/JMRI.4.20+Rc7ba8249b.tgz</a><br/>
+   sha256: f4019e3fa65801e7732ce99684d9fd8a05ba1bc47a17352e9fc3944bb6e8b68b</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/TestReleases/job/4.20/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+
+
+<h2>Changes since <a href="jmri4.16.shtml">production release 4.18</a>:</h2>
+
+<p>
+This production version is made from test releases 4.19.1 through 4.19.9.  The 
+<a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+merged%3A%3E%3D2019-07-05">full list of changes</a>
+in those is 
+<a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+merged%3A%3E%3D2019-07-05">available from our code repository</a>.
+
+
+
+    <h3>Hardware Support</h3>
+        <ul>
+          <li>JMRI 4.19.1 and later enforce the standard form of system names,
+                where the system is denoted by a single letter or a letter plus digits.
+                Some users of JMRI 4.18 or earlier might have incompatible values.
+                See warnings above.</li>
+          <li>Fixed a problem introduced in JMRI 4.19.1 that
+          prevented the function buttons in the on-screen throttles
+          from working on some types of computers.</li>
+          <li>Fixed a problem introduced in JMRI 4.17.7 that
+          causes a partial crash when reading in historical
+          consist data from the consist.xml file.
+          <li>A number of hardware-specific actions now require the system
+          connection be associated with them when used as a startup action.
+          In many cases, these actions will continue to "just work", but it is
+          recommended that actions be verified to be associated with the
+          correct connection in the Startup Actions Preferences.</li>
+        </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li>Fixed a problem where throttle functions would not
+                    work properly with certain locomotive addresses.</li>
+                <li>Update Digitrax Command Station definitions so that features
+                    better match command station type in preferences</li>
+                <li>Petr Šídlo added a timeout for SV2-mode programming.</li>
+                <li>You can now set the number of simulated command station
+                slots in the LocoNet simulator, courtesy Steve Todd.</li>
+                <li>Fixed problems acquiring and releasing LocoNet throttles.</li>
+            </ul>
+
+        <h4>MERG CBUS</h4>
+            <ul>
+                <li>Track Current Meter + Command Station Steal / Share are available unless proved otherwise.</li>
+                <li>Node Manager and Event Table no longer auto-start on JMRI startup.
+                <br>These can be added as Startup Actions in JMRI Preferences to enable
+                <br>Event or Node name translation in CBUS console, and other CBUS Tools.</li>
+                <li>Refactoring of CBUS OPC's, Filters and Node Manger functions for future maintainability.</li>
+                <li>Track Current Meter + Command Station Steal / Share are available unless proved otherwise.</li>
+                <li>Node Manager and Event Table no longer auto-start on JMRI startup.
+                <br>These can be added as Startup Actions in JMRI Preferences to enable
+                <br>Event or Node name translation in CBUS console, and other CBUS Tools.</li>
+                <li>Refactoring of CBUS OPC's, Filters and Node Manger functions for future maintainability.</li>
+                <li>Bootloader client for CBUS node firmware update.</li>
+                <li>Support for SPROG Generation 5 hardware using MERG CBUS and Gridconnect.</li>
+                <li>CBUS Console - Translation of Bootloading ( Firmware Update ) CAN Frames.</li>
+                <li>CBUS Console - Display JMRI Turnout, Sensor and Light status from CBUS On / Off Events.</li>
+                <li>CBUS Event Table - Improvements to UI</li>
+                <li>Support for <a href="https://www.jmri.org/help/en/html/hardware/can/cbus/CbusFastClock.shtml"
+                >CBUS Fast Clock</a> messaging.</li>
+                <li>Andrew Crosland added a CBUS multimeter.</li>
+            </ul>
+
+        <h4>SPROG</h4>
+            <ul>
+                <li>Connection methods for SPROG Generation 5 hardware using MERG CBUS/Gridconnect.</li>
+            </ul>
+
+
+    <h3>New / Updated decoder definitions</h3>
+
+        <h4>BLI</h4>
+            <ul>
+                <li>Blueline change version range</li>
+                <li>
+                    Marc Fourier updated a "Service Mode PWM Duty" slider
+                </li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li>Added LokPilot 5 family.</li>
+                <li>Updated LokSound 5 <strong>Consist</strong> and <strong>Sound Levels</strong> panes to handle latest firmware updates.</li>
+            </ul>
+
+        <h4>Hornby</h4>
+            <ul>
+                <li>Brian Jackson and Dave Heap updated the Hornby TTS definition</li>
+            </ul>
+
+        <h4>Public Domain and DIY decoders</h4>
+            <ul>
+                <li>Added a definition for the ARD-8SCOM-4VYH-TC decoder</li>
+            </ul>
+
+        <h4>SoundTraxx</h4>
+            <ul>
+                <li>DSD-100LC steam & diesel add CV59</li>
+                <li>Marc Fournier added 
+                    the Alco PA-PB and F7A-B to the
+                    SoundTraxx SndVal Diesel Walthers Mainline
+                    decoder definition.
+                </li>
+            </ul>
+
+   <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li>The <strong>Palette</strong> and <strong>Circuit Builder</strong>
+             windows make a "best effort" to open at a position minimizing 
+             any area that may obscure the panel display.</li>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+            <li>The system name is auto generated when the <strong>Add New Detector Circuit
+             </strong> window is opened. This name may be changed before the Occupancy
+             Block is created. After creating, the field is removed from the window
+             since the system name can no longer be edited.</li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+            <li>Each tab resizes to display itself with its preferred dimensions.</li>
+            <li>The <strong>Memory</strong> Tab has been modified to display generic 
+             forms of their respective devices.  Dragging is best accomplished by 
+             mouse down within the <strong>Drag to Panel</strong> box, but outside
+             of the device icon itself.</li>
+            <li>Bugs in the <strong>Signal Mast</strong> and <strong>Background</strong>
+             tabs have been fixed.</li>
+            <li>The <strong>Text</strong> tab items have been rearranged.</li>
+            </ul>
+        </ul>
+
+   <h3>Dispatcher</h3>
+        <a id="Dispatcher" name="Dispatcher"></a>
+        <ul>
+             <li>The displayed names in the <strong>Section</strong> and <strong>Transit</strong>
+             tables, along with the transit selection and block selections in the
+             <strong>Activate New Train</strong> Dispatcher window, now behave like other
+             JMRI tools.  Instead of the <strong>system name (user name)</strong> format,
+             the names use the <strong>display name</strong> format.  The display name format
+             uses the <strong>user name</strong>.  If not available, the system name is used.</li>
+             <li>The list size for the dropdown combo boxes use the content size instead of
+             the default 8 rows.</li>
+             <li>The Section, Transit, and Dispatcher help documents have been updated.  The
+             Section and Transit help have been cleaned up to reduce redundant verbiage.</li>
+        </ul>
+
+   <h3>Internationalization</h3>
+        <a id="I18N" name="I18N"></a>
+        <ul>
+            <li>Fixed a place in Transit table where language
+                wasn't taken into account on column sizes.</li>
+            <li>Catalan language corrections and more translated files.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"></a>
+        <ul>
+	        <li>George Warner added "Align to grid" options</li>
+	        <li>George Warner added the ability to rotate the Layout Editor display</li>
+            <li>Improved the output when 
+                <a href="https://www.jmri.org/help/en/html/apps/PanelPro/ShowPanel.shtml">displaying the contents of a panel file</a>
+                in a web browser.</li>
+            <li>Restore ability to type in new Block name in toolbar panel </li>
+            <li>Bridge Decoration line width problem fixed</li>
+            <li>Improve Track Segment Hit testing </li>
+            <li>
+                George Warner added quick keys to select LayoutEditor toolbar panel radio buttons</li>
+	        <li>
+	            Lots of internal work to improve Layout Editor structure
+	            so that new features can be added more reliably. Please
+	            keep an eye out for any new issues!
+	            <p>
+	            Note that files written by 4.19.6 may not be readable 
+	            by JMRI 4.19.5 and before.
+	        </li>
+            <li>
+                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+                longer maintained by the InstanceManager for the purposes of maintaining
+                a list of open Editors or LayoutEditors. Use the default instance of
+                <code>jmri.jmrit.display.EditorManager</code> in scripts instead.
+            </li>
+            <li>
+                George Warner added the ability to assign a block 
+                to a turntable to represent the track on the turntable bridge.
+                You enter the block from the Edit pane in the turntable's popup menu.</li>
+        </ul>
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li>Three new items have been added to the options dialog.  These make it
+                easier to use entry/exit capabilities when the panels are displayed using
+                the JMRI web server.  Note:  The NX icons do not flash when the panel
+                is displayed using the JMRI web server.
+                  <ul>
+                    <li>Route overlap action &mdash; Choices are Ask User, Cancel Route and Stack Route.</li>
+                    <li>Memory variable &mdash; Allocation messages can be sent to a memory
+                    variable instead of displaying a dialog.  The content can be displayed
+                    on a panel.</li>
+                    <li>Memory clear delay &mdash; Automatically clear the memory value after
+                    the selected amount of time. A value of zero disables automatic clearing.</li>
+                  </ul>
+                </li>
+            </ul>
+
+    <h3>Logix</h3>
+        <a id="Logix" name="Logix"></a>
+        <ul>
+          <li>The system names for generated Logix definitions created by Sensor Groups (SYS),
+          LRoutes (RTX*), Route Exports (RTX*), USS CTC and LE Slips now have a standard Logix
+          prefix of "IX:".  The existing names in panel xml files will be automatically
+          migrated during panel loading.  A dialog box will be displayed with the results.
+          The details of the affected Logix renames will be displayed in the JMRI System
+          console.  The migration will also apply to any other Logix which has a system
+          name that does not start with IX.
+          </li>
+        </ul>
+
+    <h3>Operations</h3>
+        <a id="Operations" name="Operations"></a>
+        <ul>
+            <li>Reset trains that were building during file save and would seem stuck
+                when the file was reloaded.</li>
+        </ul>
+
+   <h3>Panel Editors</h3>
+        <a id="PE" name="PE"></a>
+        <ul>
+            <li>Improved the output when 
+                <a href="https://www.jmri.org/help/en/html/apps/PanelPro/ShowPanel.shtml">displaying the contents of a panel file</a>
+                in a web browser.</li>
+        </ul>
+
+    <h3>Resources</h3>
+        <a id="Resources" name="Resources"></a>
+        <ul>
+            <li>Konrad Malkowski added icons for 
+                <a href="http://jmri.org/resources/icons/panels/DominoPanel">European domino-style</a>
+                panels.
+            <li>Added several missing index pages to the resource
+                directories for <a href="http://jmri.org/resources/">display on the web</a>.
+            </li>
+        </ul>
+
+    <h3>Roster</h3>
+        <a id="Roster" name="Roster"></a>
+        <ul>
+            <li>The "Export Complete Roster" and "Import Exported Roster"
+                actions now transfer the icons and images from the roster.
+                Note that for this to work, you have to do the export
+                with this JMRI version or later, and also do the import
+                with this JMRI version or later.
+                </li>
+        </ul>
+
+    <h3>Routes</h3>
+        <a id="Routes" name="Routes"></a>
+        <ul>
+		    <li>The system names for Routes are required to start with "IO" to avoid
+		    	ambiguity or confusion with Reporters (the system names of which start
+		    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+		    	correctly, but it is possible that references to those Routes will need
+		    	to be updated.
+			    </li>
+            <li>Fixed a problem setting up turnouts on a Lenz or DCC++ connection.</li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <a id="Scripting" name="Scripting"></a>
+        <ul>
+            <li>The JavaCSV API has been replaced with the Apache Commons CSV API.
+                This may impact some scripts. See
+                <a href="https://github.com/JMRI/JMRI/blob/master/jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
+                for an example of how to use the new CSV parsing API. If unable to
+                use the new API, the JAR for the old API can be
+                <a href="https://repo1.maven.org/maven2/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar">downloaded</a>
+                and added to jmri.conf using the
+                <em><a href="https://www.jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml">--cp:a=path/to/javacsv.jar</a></em>
+                parameter.</li>
+            <li>YetAnotherAutoTrain was updated to version 2.1
+            <li>Jython has been updated to version 2.7.2</li>
+            <li>Long deprecated <code>instance()</code> methods to get the default
+                instance of a manager have been removed. Use
+                <code>InstanceManager.getDefault(NameOfManager.class)</code>
+                instead.</li>
+            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286</a> revised the way 
+                that JMRI code should fire and catch events.  If you have code (Java or script)
+                of your own that implements event firing or tricky listening, you
+                should review those changes to see if they will or should affect your code.</li>
+            <li>
+                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+                longer maintained by the InstanceManager for the purposes of maintaining
+                a list of open Editors or LayoutEditors. Use the default instance of
+                <code>jmri.jmrit.display.EditorManager</code> in scripts instead. All
+                sample scripts have been updated to reflect this.
+            </li>
+    		<li>If you have a script that uses the AbstractShutDownTask class, you
+    			need to rename the "execute()" routine to "run()", and change the
+    			return statement from "return True" to just "return"               
+            <li>The jython/AC_PowerControl.py,
+                    jython/AutoDispatcher2.py,
+                    jython/IoT/JMRI_TcpPeripheral.py,
+                    jython/ShutDownExample.py, and
+                    jython/TurnoutStatePersistence.py    
+                    scripts have been updated to handle the change
+                    listed just above.  If you have your own version of these
+                    scripts, you should either copy the distributed ones
+                    or update your own.          
+		</ul>
+		
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"></a>
+	    <h4>Cab Signals</h4>
+            <ul>
+                <li>Better set row height in table.</li>
+            </ul>
+        <h4>Signal Masts</h4>
+            <ul>
+                <li>Matrix Signal Masts can now drive up to 10 outputs.</li>
+            </ul>
+        <h4>Signal Systems</h4>
+            <ul>
+                <li>Improved how the XML files defining a signal system
+                    are validated.  Unfortunately, some files are already inconsistent.
+                    Fixed a number of files with invisible appearance definitions
+                    by duplicating the appearance file (i.e. adding a -b version with
+                    the different appearances).  Temporarily commented out 
+                    some of the 
+                    <a href="http://jmri.org/xml/schema/appearancetable.xsd">schema checks</a>
+                    until the existing files can be resolved.
+                    </li>
+                <li>Bob Milhaupt and Greg McCarthy updated the 
+                    B&O semaphore,
+                    NW-1981,
+                    SOU-1981 and 
+                    WM-1980 signal systems to correct some internal inconsistencies.
+                    </li>
+               <li>Eckart Meyer updated the DB HV 1969 system to have proper aspect control.</li>
+            </ul>
+
+
+   <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li>Add a speed step dropdown to the extended throttle;
+                this makes it easier to select the speed step mode and
+                makes it possible to select the less common speed step modes
+                exposed by some systems.
+            </li>
+            <li>Consolidated the throttle layout code,
+                centralized the logic for determining if throttle icons should be shown,
+                and added unit tests for the control panel layout and some preferences.
+            </li>
+            <li>Added key shortcuts to the throttle window. Hold the shift
+                down, press and release key
+            <ul>
+                <li>A to switch to the "Address" section
+                <li>F to switch to the "Functions" section
+                <li>C to switch to the "Control" section which sets speed
+            </ul>
+                This is in addition to left arrow and right arrow, which 
+                move from one throttle to the next if you have more than one open.
+                Please note that this act when the key is released.
+            </li>
+            <li>
+                Chris Why fixed a bug in the speed-profiling support.
+            </li>
+        </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li>The Block Table and Memory Table use the User Name for ID Tag if it is available.</li>
+            <li>The ID Tag Table uses the Reporter User Name for location if it is available.</li>
+        </ul>
+
+   <h3>Warrants</h3>
+        <a id="Wt" name="Wt"></a>
+        <ul>
+            <li>The <strong>Warrant List</strong> now responds to changes in window size.
+            The length of the status field varies as needed and keeps the
+            <strong>Stop All Trains</strong> button visible even on small screens.</li>
+        </ul>
+        <ul>
+            <li>When creating a new warrant the system name is auto generated. This name may be
+            changed before the warrant is saved. After saving the field can not be edited.</li>
+        </ul>
+
+   <h3>Web Access</h3>
+        <a id="WA" name="WA"></a>
+        <ul>
+            <li>The RESTful API end point
+				<a href="http://127.0.0.1:12080/json/version">/json/version</a>
+				(start the JMRI web server on your local computer to follow that link)
+				has been added to provide a list of JMRI JSON API versions
+				supported by the running JMRI instance.</li>
+			<li>The JSON services have been rewritten to potentially support
+				multiple version of the JMRI JSON API in a future release.</li>
+            <li>JSON services now optionally take a version number as part of
+				the URL. See the
+				<a href="https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#package.description">JSON Server JavaDocs</a>
+				for details of this change. This should have no impact on
+				existing clients.</li>
+            <li>The JMRI JSON API version has been incremented to 5.3.0 to
+            	reflect the above changes.</li>
+            <li>Fixed a problem preventing JMRI application web services from working with iOS 9.3.6</li>
+            <li>Fixed a problem that could prevent opening a web throttle.</li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li>The new <strong>Where Used</strong> tool is used to search JMRI for references to a
+                selected item.</li>
+        </ul>
+
+
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
+        <ul>
+            <li>In the
+            <a href="https://groups.io/g/jmriusers/message/165236">jmriusers forum</a>
+            it has been suggested to open a JMRI throttle
+            automatically when a VSDecoder via Roster Entry is added.
+            VSD does already save the Path and the Profile of a VSDecoder in the Roster Media.
+            This PR adds a new attribute: VSDecoder_LaunchThrottle = yes launches
+            a JMRI throttle automatically.
+            The new attribute is stored when the user clicks the "Save to Roster" button.
+            The new attribute can be changed manually or by a Jython script.</li>
+            <li>Rework on Auto-Load, see
+            <a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#auto-load">the details</a>.</li>
+            <li>Added a further action "STOP_AT_ZERO" for the "ENGINE_STARTSTOP" trigger. See the
+            <a href="https://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#engine-startstop">VSD documentation</a></li>
+            <li>Fixed a crashing bug with short sequences.</li>
+            <li>Included the VSDecoderID instead of the file name to make the AudioBuffer system names unique for Diesel3Sound.</li>
+            <li>Made the VSD loop-player more robust. Another change concerns the timing. Depending on the speed of the
+	            computer hardware, the timing of the loop-player (sleep-interval) can now be adjusted.</li>
+            <li>The VSD old graphical user interface (GUI) was removed. For users who call VSD
+            from JMRI PanelPro, nothing changes. For users who call VSD from a Jython script,
+            theoretically the script can fail. Please see also
+            <a href="https://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
+            </li>
+            <li>Added a separate volume control for each decoder. See
+            <a href="https://groups.io/g/jmriusers/topic/vsdecoder_enhancement_request/73168521">
+            more details</a>.</li>
+            <li>Documentation updated regarding "VSD headless mode", "steam1 top speed reverse" and "sleep interval".</li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>The JMRI Demo shortcut has been removed from Windows installs</li>
+            <li>
+                The <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+                calls in the various <code>Manager</code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are 
+                <code>getByUserName</code> and <code>getBySystemName</code> 
+                respectively. 
+                If you use <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+                in script or Java code you've written, please 
+                switch to the new names.
+            </li>
+            <li>Petr Sidlo added a Pragotron clock, which is digital clock
+                found in many European train stations.</li>
+            <li>The <code>getBeanByUserName</code> and <code>getBeanBySystemName</code>
+                calls in the various <code>Manager</code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are
+                <code>getByUserName</code> and <code>getBySystemName</code>
+                respectively.
+                If you use <code>getBeanByUserName</code> and <code>getBeanBySystemName</code>
+                in script or Java code you've written, please
+                switch to the new names.
+            </li>
+		    <li>The system names for Routes are required to start with "IO" to avoid
+		    	ambiguity or confusion with Reporters (the system names of which start
+		    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+		    	correctly, but it is possible that references to those Routes will need
+		    	to be updated.
+			    </li>
+			<li>Daniel Bergqvist provided information on
+			    <a href="http://jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
+			    for JMRI development.
+			<li>Updated the JDOM library from 2.0.5 to 2.0.6. Removed the unused JDOM 1 support.</li>
+            <li>Added a feature which lets you set the height of rows
+                in the
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>,
+                so that signal icons can be made fully visible.</li>
+            <li>Lots of updates to the organization of the web site so that the sidebars
+                provide better navigation.</li>
+            <li><code>Manager.getSystemNameArray()</code> has been removed after being 
+                deprecated for two years. Please migrate to using
+                <code>Manager.getNamedBeanSet()</code> instead.  If you really
+                must have an array, use <code>Manager.getNamedBeanSet().toArray()</code>;
+                see <a href="https://www.techiedelight.com/convert-set-to-array-java/">this tutorial</a> for examples.</li>
+            <li>The included Jetty library was updated
+                from version 9.4.7.v20170914 to 9.4.26.v20200117
+            <li>The toString() method is NamedBeans has been standardized to return the system name.
+            There's an extension mechanism to add additional information if needed.</li>
+            <li>An internal library used for compilation has been updated from the NetBeans 11.0 version
+                to the NetBeans 11.3 (current) version.</li>
+            <li>The internal SMTP classes have been removed. Any users who depended on that capability
+                should manually add smtp.jar from <a href="https://javaee.github.io/javamail/">JavaMail</a>
+                to the JMRI classpath
+                (see <a href="/help/en/html/doc/Technical/StartUpScripts.shtml">Startup Scripts</a>)
+            <li>Windows Installer updated to support OpenJDK 8 from <a 
+                href="https://adoptopenjdk.net">AdoptOpenJDK.net</a>.</li>
+            <li>Andrew Crosland fixed some nasty flickering in the Nixie clock and 
+            	ammeter frames.</li>
+        </ul>
+
+<!-- Older notes above, for merging above -->       
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

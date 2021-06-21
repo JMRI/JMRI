@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: UK Signalling, Adding Turnouts and Sensors</title>
+    <meta content="Nigel Cliffe" name=Author>
+    <meta name="keywords"
+       content="clinics java model railroad JMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra signalling UK British">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+
+<h1>Signal Mast Logic - Adding Turnouts and Sensors to JMRI</h1>
+
+<p>The first stage of constructing our layout within JMRI is to make entries in
+  the Turnout Table and the Sensor Table. These define the turnouts and the occupancy 
+  sensors on the layout.</p>
+<p><img src="images/turnouttable.jpg" width="948" height="411"></p>
+<p>The above shows the turnout table with two entries. </p>
+<p>Turnouts can be added with the &quot;Add...&quot; button. Our finished turnout 
+  table for the layout will have three entries, one for each of our turnouts. 
+</p>
+<p>Note that we give them a meaningful &quot;User-Name&quot;, it is much simpler 
+  to work with meaningful names, and also subsequent hardware changes are quicker 
+  and easier if &quot;User-Names&quot; are used within JMRI. </p>
+<p>From the table, it is possible to control the turnouts by clicking on the button 
+  in the &quot;Cmd&quot; column - this is useful for testing that the table is 
+  correctly constructed !</p>
+
+<p>A similar set of entries are required for sensors in the Sensor Table. </p>
+<p><img src="images/sensortable.jpg" width="627" height="266"></p>
+<p>In the extract above, we have four LocoNet sensors (prefixed LS) and four internal 
+  sensors (prefixed IS). The LocoNet Sensors will show &quot;active&quot; when 
+  the hardware sensor detects stock on the track. Where we don't have physical 
+  hardware, but anticipate needing a sensor, an Internal Sensor (prefixed IS) 
+  is added. </p>
+<p>As with the Turnout Table, it is important to give things meaningful entries 
+  in the field &quot;User-Name&quot;. </p>
+<p>The video below will step through the addition of items to the Turnout and 
+  Sensor tables:</p>
+<iframe width="640" height="480" src="http://www.youtube.com/embed/ZCvJV4tnEig" frameborder="0" allowfullscreen></iframe>
+<p>The download below contains the JMRI file for the work so far, it can be saved 
+  locally and opened with &quot;Open Panels..&quot; on the &quot;Panels&quot; 
+  menu of JMRI. </p>
+<p>[ <a href="jmri_files/Demo%20Signal%201.xml">Link to download file - use &quot;Save 
+  As&quot; to save this file</a> ] </p>
+
+<p><a href="layout_editor.shtml">Move on to Part 5</a> </p>
+<p><a href="index.shtml">Back to Introduction</a></p>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

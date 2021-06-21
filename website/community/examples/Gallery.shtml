@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+ 	JMRI Gallery
+    </title>
+	<meta name="author" content="Bob Jacobsen, Egbert Broerse">
+	<meta name="Date.Modified" content="20150923"/>
+    <meta name="keywords" content="JMRI PanelPro control panel DCC C/MRI signals">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+    <hr class="hide">
+
+    <div class="no-sidebar" id="mBody">
+	<div id="mainContent">
+
+	    <h1>JMRI Gallery</h1>
+
+<p>This page highlights some of the neat things people have done with both <a href="#panelpro">JMRI
+Panelpro</a> and <a href="#libraries">JMRI Libraries</a>.</p>
+
+<H2><a name="panelpro">PanelPro applications</a></H2>
+<p>Many PanelPro users have each come up with their own PanelPro application, ranging from simple to complex: </p>
+
+<h3>Modular Signals in the UK</h3>
+
+The Essex Belt Lines group is using JMRI to add signalling, including CTC,
+to their large modular layouts.
+There was a
+<a href="http://thamesidersmrg.org.uk/ho-scale-modules-essex-belt-lines/signalling-essex-belt-lines/">nice writeup</a>
+in the Fall 2016 issue of the
+<a href="http://thamesidersmrg.org.uk/ho-scale-modules-essex-belt-lines/signalling-essex-belt-lines/">OPSIG BR eNews</a>.
+
+<h3>OWNry</h3>
+
+<!--
+<a href="http://ownry.squarespace.com/display/ShowImage?imageUrl=/storage/blog-photos/CTC_Panel_June2006.gif?__SQUARESPACE_CACHEVERSION=1302156072951"/>
+<img src="http://ownry.squarespace.com/storage/thumbnails/5519763-11612079-thumbnail.jpg" align="right" width="200" height="135"/>
+</a>
+-->
+<a href="images/5519763-11612079-thumbnail.gif"><img src="images/5519763-11612079-thumbnail.gif" align="right" width="200" height="135"/></a>
+
+Kent Williams'
+<a href="http://ownry.squarespace.com">Oregon Washington Navigation &amp; Railway</a>
+(now dismantled) used PanelPro for it's signal controls and
+<a href="http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">dispatcher panel</a>.
+
+<h3>Cashaway Valley Railroad</h3>
+
+Jim Thompson is using PanelPro to make a dispatcher's panel for his Cashaway Valley Railroad</a>.
+Watch this <a href="https://www.youtube.com/watch?v=oke5ea869FY">YouTube Video</a>.
+
+<h3>Cornwall RR</h3>
+Well over a decade ago, Nick Kulp already created a program to drive his
+<a href="Panels-Cornwall/Cornwall.shtml">Cornwall RR</a>
+
+<h3>Quaker Valley</h3>
+<a href="http://www.quaker-valley.com/CTC/JMRI_QV_CTC.gif"/>
+<img src="http://www.quaker-valley.com/CTC/JMRI_QV_CTC.gif" align="right" width="256" height="186"/>
+</a>
+
+Bob Bucklew built a realistic CTC panel for his
+Quaker Valley Railroad.
+He's created a very nice series of web pages on
+<a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html">how it's done</a>.
+<p>
+
+<h3>Bloomfield &amp; Oakland RR</h3>
+
+Alan Huberty created a multi-screen control panel for his Bloomfield &amp; Oakland Railroad.
+<a href="images/BORRCTCPanel.gif"><img src="images/BORRCTCPanel.gif" width="512" height="192"></a>
+
+<h3>Shasta Route</h3>
+
+<a href="http://spshastaroute.org/images/22.jpg">
+<img src="http://spshastaroute.org/images/thumb_22_jpg.gif" width="200" height="150" align="right">
+</a>
+
+<p>The goal of Otis McGee's
+<a href="http://www.spshastaroute.org/">SP Shasta Route</a>
+is prototypical fidelity to 1952 operations.
+At the time, the railroad was run from a CTC machine at the dispatcher's office in
+Dunsmuir, CA (see photo to right).
+To recreate that, Otis has installed a rebuilt United Switch and Signal CTC machine
+on his railroad (see below).
+<a href="SPShasta.shtml">PanelPro controls the machine and provides CTC control</a> for the layout
+via a large seven-node C/MRI installation.</p>
+
+<a href="http://spshastaroute.org/c/3.JPG">
+<img src="http://spshastaroute.org/c/thumb_3_JPG.gif" width="200" height="150">
+</a>
+<a href="images/ShastaCTTMachine.jpg">
+<img src="images/ShastaCTTMachine.jpg" width="200" height="150" alt="Picture of real CTC machine"/>
+</a>
+<br/>
+<a href="http://spshastaroute.org/c/14.JPG">
+<img src="http://spshastaroute.org/c/thumb_14_JPG.gif" width="200" height="150">
+</a>
+<a href="http://www.spshastaroute.org/e/4.jpg">
+<img src="http://www.spshastaroute.org/e/thumb_4_jpg.gif" width="200" height="150">
+</a>
+
+<h3>Durenver &amp; Silverton RR</h3>
+	<p>Egbert Broerse's <a href="http://www.ebroerse.nl/railroading.html#dcc">Durenver &amp; Silverton Railroad</a>
+    panel was made using Panel Editor and is displayed on a compact LCD monitor by <a href=
+    "http://jmri.org/help/en/html/apps/PanelPro/index.shtml">JMRI PanelPro 2.4.1</a> on OSX 10.4.6,
+    the last version supported by the MacMini hardware.The graphics on the panel match a generic (US-built)
+    Entrance-Exit (NX) CTC machine, in use from 1950 until the mid nineties. However, most turnouts are
+    operated with an Individual Function Switch (IFS); see the
+    <a href="https://en.wikipedia.org/wiki/Signalling_control">Signaling Wiki</a>.</p>
+<img src="http://www.nicospilt.com/scans/nx-tableau_eindhoven.JPG" width="300" height="200" alt="NX-panel Eindhoven/NL"><br/>
+The NX CTC machine in Eindhoven, The Netherlands (photo &copy; <a
+            href="http://www.nicospilt.com/index_seinhuizen.htm">Nico Spilt</a>)
+<p>Egbert started by drawing a compact track schematic in 4 pt white lines on a black background.
+Location names and block boundaries were added to help in the orientation of the dispatcher.
+Icons from the Small LED schematics group were added to show track occupancy and Medium LED
+icons display and control the current state of lighting etc. Turnouts in hidden trackage are
+monitored using Infrared detectors, shown on the panel, supported bij audio signals produced by JMRI.
+Later, signals were added on the layout as well as to the panel (below, center). All logic is controlled as Signal
+Mast Logic following a customized <a href=
+"http://jmri.org/xml/signals/RG-1965/index.shtml">Rio Grande 1965 Rule Book</a> signal definition.
+Physical control panels on the layout fascia sport the same graphic style, be it black on yellow
+(below, right; 3 images &copy; <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.ebroerse.nl"
+property="cc:attributionName" rel="cc:attributionURL">EJB</a> as
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a>)).</p>
+<img src="images/DSRR_Panel_Background.png" width="349" height="162" alt="DSRR background">&nbsp;
+<img src="images/DSRR_Panel_Screen.png" width="311" height="163" alt="DSRR screenshot w/icons">&nbsp;
+<img src="images/IMG_3536_D_SNGRR_panel.jpg" width="371" height="163" alt="DSRR physical panel">
+
+<h3>Czechoslovak State Railways &ndash; Elektrosignal Praga</h3>
+
+<p>Electromechanical interlocking equipment
+    <a href="https://de.wikipedia.org/wiki/Elektromechanisches_Stellwerk">wikipedia</a>
+    is widely used in Europe and North America.
+    The Siemens &amp; Halske 1912 model was first put into operation in 1894 in Prerau
+    at The Emperor Ferdinand Northern Railway
+    in the Austro-Hungarian Empire (now P&#345;erov in the Czech Republic).
+    In later years, this device was manufactured by more than one company.
+</p>
+
+<p>JMRI provides a look of appearance produced by Elektrosignal Praga &ndash; ESP
+for Czechoslovak State Railways &ndash; &#268;SD.
+Description of deployment in PanelPro is here
+<a href="https://sites.google.com/site/sidloweb/jmri/09-panel-editor">https://sites.google.com/site/sidloweb/jmri/09-panel-editor</a>.
+</p>
+
+<a href="images/CSD-ESP.png"><img src="images/CSD-ESP.png" width="400" height="244" alt="CSD ESP"></a>
+
+<h3>Czechoslovak State Railways &ndash; A&#381;D-71</h3>
+
+<p>A&#381;D-71 is relay interlocking system produced by Automatizace &#382;elezni&#269;n&#237; 
+    dopravy Praha &ndash; A&#381;D. It was developed in Czechoslovakia in the 1960s. 
+    The A&#381;D-71 system was deployed from 1970 to 1996 as the main relay 
+    interlocking system in the  network Czechoslovak State Railways &ndash; &#268;SD.
+</p>
+
+<p>JMRI provides a look of appearance A&#381;D-71 for Czechoslovak State Railways &ndash; &#268;SD. 
+    Description of deployment in PanelPro is here 
+    <a href="https://sites.google.com/site/sidloweb/jmri/14-layout-editor">https://sites.google.com/site/sidloweb/jmri/14-layout-editor</a>.
+</p>
+
+<a href="images/CSD-AZD-71.png"><img src="images/CSD-AZD-71.png" width="385" height="167" alt="CSD AZD-71"></a>
+
+<p>Operation of JMRI Layout Editor with relay interlocking A&#381;D-71 on modular layout 
+    <a href="https://youtu.be/2yM_s5HZbE8">https://youtu.be/2yM_s5HZbE8</a>.
+</p> 
+
+<h3>Czechoslovak State Railways &ndash; JOP</h3>
+
+<p>JOP &ndash; Jednotn&#233; Obslu&#158;n&#233; Pracovi&#353;t&#283; &ndash; Unified Control Place 
+    &ndash; is a standardized user interface for interlocking systems used in Czechoslovakia. 
+    For first time it was used in station D&#345;&#237;sy in 1991. Currently, 
+    the JOP user interface is standardized and used with interlocking systems 
+    from various manufacturers such as A&#381;D Praha, AK signal Brno 
+    or STARMON Choce&#328;.
+</p>
+
+<p>JMRI provides a JOP style look for Czechoslovak State Railways &ndash; &#268;SD and 
+   his successors. Tutorial for Control Panel Editor and Warrants with JOP is here 
+   <a href="https://sites.google.com/site/sidloweb/jmri/22-rozkazy">https://sites.google.com/site/sidloweb/jmri/22-rozkazy</a>.
+</p>
+
+<a href="images/CSD-JOP.png"><img src="images/CSD-JOP.png" width="347" height="363" alt="CSD JOP"></a>
+
+<p>Operation of JMRI Warrants with Control Panel Editor with JOP style on layout
+    <a href="https://youtu.be/NM7S6jYtH_o">https://youtu.be/NM7S6jYtH_o</a>. 
+</p>
+
+
+<h2><a name="libraries">Innovative uses of the JMRI Libraries</a></h2>
+
+<h3>Crandic Dispatcher</h3>
+
+The Cedar River and Iowa Central Railway (Crandic) has
+a great
+<a href="http://www.danook.com/crandic/ ">"Dispatching on the Crandic"</a>
+video, along with several others, available
+for download. The Crandic's control program and dispatcher panel
+called
+<a href="http://cats4ctc.org"><!-- was http://home.comcast.net/~kb0oys/ --> CATS</a>
+was built by Rodney Black on
+top of the JMRI libraries. He's kindly made it available as
+open-source software to anybody who wants to use it.
+
+<h3>Fall River Division</h3>
+CATS is also used on John Parker's
+<a href="http://www.bnsfrr.net/">BNSF Fall River Division</a>
+for their
+<a href="http://www.bnsfrr.net/operations.html">dispatcher's panel</a>.
+
+<a href="http://www.bnsfrr.net/uploads/3/2/2/4/32241659/5667722_orig.jpg"><img
+        src="http://www.bnsfrr.net/uploads/3/2/2/4/32241659/5667722_orig.jpg" width="400" height="300"
+        alt="BNSF Fall River panel"/></a>
+
+<h3>Model Railroad Manager</h3>
+
+The
+<a href="http://www.modelrailroadmanager.com">Model Railroad Manager</a>
+software provides inventory, operations, maintenance and layout control
+programs for model railroads.  The layout-related parts are
+<a href="http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html">based on the JMRI libraries</a>.
+
+<!--#include virtual="/Footer.shtml" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

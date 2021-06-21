@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 3.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.8 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.8 release
+      </h2>
+
+	<p>Date: July 3, 2014</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production version 3.8 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+We are very pleased to announce that the 3.7 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production version 3.8" available for download today.
+
+<h3>Notes:</h3>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<p><strong>This is the latest JMRI production or test version that will work with CATS 2.34 (Release2037)/Java 1.6.</strong></p>  
+
+<h3>New warnings for this version:</h3>
+
+<p>The decoder definition files have been reformatted to make them easier to maintain.
+If you want to make a change in a decoder definition file, please start with a 
+file from this release or later.</p>
+
+<p>The XmlIO web service has been deprecated and is scheduled to be removed in JMRI 3.11 (July 2015).
+All users who are relying on direct access to the XmlIO API are
+recommended to begin using the JSON API. inControl web throttle users are recommended to
+begin using webThrottle instead, or to plan on investing in devices that can support
+webThrottle, the iOS WiThrottle, or the Android Engine Driver.</p>
+
+<p>This release has some changes to the application-initialization structure, particularly in the 
+<a href="http://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a> class.  If you have written code of your own
+that runs applications based on JMRI, please check for use of deprecated methods.</p>
+
+<p>The internals for handling CV read and write addressing have been extensively 
+reworked.  The change should be transparent (invisible) to users. If you have written code of your own 
+involving CV reading, writing, storage or anything else, please check for compatibility and let us know of any problems.</p>
+
+<p>The configuration structure for JMRI is changing to use <em>Configuration
+Profiles</em>. Configuration Profiles allow a single JMRI application to have
+multiple, user selectable, configurations that can be changed as application
+startup. For some users, this change will have no impact; other users will be
+visibly impacted by this change. See the <a
+href="http://jmri.org/help/en/html/profiles.shtml">Configuration Profiles help page</a>
+for more information.</p>
+
+<p>The JMRI SRCP implementation is undergoing extensive revision, in part
+due to testing with 3rd party SRCP clients and servers.  
+If you are using the SRCP support, 
+you will need to upgrade both the client(s) and the server to the same JMRI version.</p>
+
+<p>The JMRI Web Server is being extensively rewritten. If you notice any problems using it, please let us know.</p>
+
+<h3>Known problems with this release</h3>
+<p>None at present</p>
+
+<h3>Download links:</h3>
+
+This release is being developed via a series of test releases that contain multiple 
+changes.  See those
+<a href="http://jmri.org/download/older.shtml">release notes</a> 
+for more information.
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.8-r26527.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.8-r26527.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.8-r26527.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.8-r26527.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.8-r26527.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.8-r26527.tgz/download</a></p>
+ 
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.6/ws/jmri/dist/release/">CI project page</a>.
+-->
+
+<h3>Changes since production release 3.6</h3>
+
+<h4>General</h4>
+
+<!-- from 3.7.1 note -->
+<p>Randall Wood added <a href="http://jmri.org/help/en/html/profiles.shtml">Configuration Profiles</a>.</p>
+<!-- from 3.7.2 note -->
+<ul>
+<li>The ability to duplicate Configuration Profiles has been added. A duplicate Profile contains a copy of everything in the existing Profile's directory.<!-- Randall Wood --></li>
+</ul>
+
+<!-- from 3.7.1 note -->
+<p>Matthew Harris:
+<ul>
+<li>Updated the Windows Launcher to allow for a <a href="http://jmri.org/help/en/html/profiles.shtml">configuration profile</a> to be specified.
+    For further details, see <a href="http://jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml#windows">technical details of how the startup scripts work</a>
+<li>Updated the Windows Launcher to bring memory calculations in-line with Linux and OS X
+</ul>
+
+<!-- from 3.7.2 note -->
+<p>Jeffrey Machacek made the following changes:</p>
+  <ul>
+    <li>Added a "Clear all non-in-use Slots" button to the LocoNet SlotMonitor.</li>
+    <li>Updated the WiThrottle server.</li>
+  </ul>
+
+<p>Matthew Harris updated the user interface font size change preference to no longer override the underlying font style.</p>
+
+<p>The Web server has been extensively updated by Randall Wood and Steve Todd:</p>
+<ul>
+	<li>The static index.html has been replaced with a home servlet responding to / and /index.html</li>
+	<li>The home, panels, and operations servlets have been updated with a new <a href="http://getbootstrap.com">Bootstrap</a> user interface.</li>
+	<li>The structure for the servlets resources has been changed to facilitate customization and internationalization.</li>
+	<li>The panels servlet uses JSON and WebSockets instead of XMLIO. This may prevent older browsers from receiving asynchronous updates to panels. Testers may notice some panel features do will not work correctly in this test release.</li>
+	<!-- from 3.7.3 note -->
+	<li>A conductor's view has been added to the operations servlet. (Randall Wood)</li>
+</ul>
+ 
+<!-- from 3.7.2 note -->
+<p>Steve Todd made the following changes:</p>
+<ul>
+  <li>fixed a WiThrottle read loop that could cause high CPU usage when devices were "lost".</li>
+  <li>added some fractional zoom values to LayoutEditor.</li>
+</ul>
+
+<!-- from 3.7.2 note -->
+<p>Dave Heap made the following changes:</p>
+  <ul>
+    <li>Improved the display of file locations under the Help menu.</li>
+    <li>Fixed issues with item state colour coding with OS X and Nimbus display GUIs.</li>
+  </ul>
+
+<p>The "Export Roster" and "Import Roster" menu items will now write your whole
+roster to a single file, and then read that back in.  You can use this to move your roster to
+another computer, for example.  On import, you'll be asked to confirm that you want to
+import each roster entry.  If there's already an entry with the same name (ID), you'll
+be asked if you want to replace it.
+
+<p>The Railroad name preference has been promoted from a Web Server setting to an application-wide setting.<!-- Randall Wood --></p>
+
+<!-- from 3.7.3 note -->
+<p>In the Preferences under Start Up, you can now set buttons for Preferences, Profiles and Rebuild Roster.
+
+<!-- from 3.7.4 note -->
+  
+<p>You can now open a PanelPro- or Decoderpro-style main window from the DecoderPro3 files menu,
+complete with the full menus you'd find if you were running PanelPro or DecoderPro from scratch.
+Please let us know if anything isn't working as you'd expect.</p>
+
+<!-- from 3.7.6 note -->
+<p>Added a "Check for Updates" item under the help menu.  If you want a button, you can configure it under startup preferences.</p>
+
+<p>Read-only enum decoder variables now are disabled (grey-out) in the DecoderPro/DP3 interface.  
+    This includes as combo (selection) boxes, check boxes and radio buttons.  They still track the CV value, but 
+    you can't change them yourself.  This may cause unexpected side-effects, e.g. if a decoder file 
+    has improperly set read-only on a variable and nobody noticed because it wasn't visible.</p>
+
+<h4>New / Updated decoder definitions</h4>
+<!-- from 3.7.1 note -->
+<p>Enzo Fortuna added many Italian translation terms, and fixed a couple of existing ones.
+<!-- from 3.7.2 note -->
+<!-- <p>Enzo Fortuna improved the Italian translation.</p> -->
+<!-- from 3.7.4 note --> 
+<!-- <p>Enzo Fortuna improved the Italian translation/p> -->
+<!-- from 3.7.6 note -->
+<!-- <p>Enzo Fortuna did more work on the Italian translation.</p> -->
+
+<!-- from 3.7.1 note -->
+<p>Pierre Billon provided more translation to French and German.
+
+<!-- from 3.7.6 note -->
+<p>Bernd Wisotzki improved the German translation, and added additional German translation, particularly in the DecoderPro/DP3 presentation.</p>
+<!-- from 3.7.7 note -->
+<!-- <p>Additional German translation, particularly in the DecoderPro/DP3 presentation, from Bernd W.-->
+
+<!-- from 3.7.2 note -->
+<p>Resolved an issue that caused some CVs to be skipped in Read Full Sheet operations. Particularly noticeable with ESU V4 decoders.</p>
+  
+ <!-- from 3.7.4 note --> 
+<p>Some improvements to the tooltips on the decoder selection window suggested by Alain Le Marchand.
+
+<!-- from 3.7.4 note -->
+<p>Dave Heap made the following changes:</p>
+  <ul>	
+    <li>Fixed a problem with printing CVs for some decoders.</li>
+	<!-- from 3.7.5 note -->
+    <li>Added the ability to import decoder CSV files, as created by the existing "Export CSV file..." command.</li>	
+  </ul>	
+  
+<h5>Atlas</h5>
+<!-- from 3.7.3 note -->
+<p>Alain Le Marchand added custom definitions for Atlas decoders sourced from Lenz (LE062XF, LE063FX) and NCE (N12A0, N12A1 and N12A2)
+
+<h5>Bachmann</h5>
+<!-- from 3.7.4 note -->
+<p>Peter Ulvestad updated the Bachmann "EZ Command 3 function decoder (36-553)" definition
+
+<h5>Digitrax</h5>
+
+<!-- from 3.7.4 note -->
+<p>Lou DeHayes provided a fix for the Digitrax DS54 decoder definition.</p>
+
+<!-- from 3.7.4 note -->
+<p>Alain Le Marchand provided multiple updates to the Digitrax decoder definitions (notably <a href="https://sourceforge.net/p/jmri/patches/979/">patch 979</a>). 
+  <ul>
+	<!-- from 3.7.3 note -->
+	<li>Add DN163A4 (derived from DN163A2) + fix width values, for DN163A1/A2, DN163I2, DN163K0E</li>
+	<!-- from 3.7.4 note -->
+	<li>Add DN135D, DN135PS, DN163A3, DN163K4A, DN163L0A, DZ123PS, DZ123Z0.</li>
+	<li>Renamed DZ123MO in DZ123M0 (zero) and fully updated definition.</li>
+	<li>Update DN143K2 output definition + add a note for swapped headlights for display on Function map pane.</li>
+	<!-- from 3.7.5 note -->
+	<li>New Digitrax series 6 sound decoders: SDH166D, SDXH166D, SDN136PS, SDXN136PS (including extended CVs/options for John McMasters sound projects)
+	<li>New Digitrax series 6 non-sound decoders DH126D, DH126P, DH126PD , DH166D, DH166P, DH166PD, DN136D, DN136PS, DN146IP, DN166PS, DZ126, DZ126PS, DS126IN, DZ126T, DZ146, DZ146PS
+	<li>Digitrax/Con-cor decoder definitions added for most of the existing ones.
+	<li>Functions labels added for sound decoders.
+	<li>New pane for sound decoders, with sound project information (Series 3 only).
+	<li>Comments/tooltips extended to most of the recent Digitrax decoders.
+	<li>Specifications (size, connectors) updated according to Digitrax documentation
+	<li>A lot of refactoring through new fragment/parts files in the digitrax directory. Will help further maintenance and internationalization.	
+</ul>
+    
+<h5>Doehler &amp; Haass</h5>
+ <!-- from 3.7.3 note -->
+<!-- <p>Pierre Billon updated the Doehler & Haass definitions.</p> -->
+<!-- from 3.7.7 note -->
+<p>Pierre Billon did a major update to the Doehler &amp; Haass decoder definitions.
+  
+<h5>ESU</h5>
+
+<!-- from 3.7.2 note -->
+<p>Dave Heap made the following changes:</p>
+  <ul>
+	<!-- from 3.7.1 note -->
+	<li>Improved the ESU V4/Select function mapping pane</li>
+	<!-- from 3.7.2 note -->
+    <li>Improved the ESU V4/Select decoder definitions.</li>
+    <li>Added the ability to import LokProgrammer CV value list files.</li>
+	<!-- from 3.7.3 note -->
+	<li>Added LokPilot Fx V4.0 and LokPilot XL V4.0</li>
+	<!-- from 3.7.4 note -->
+	<li>Informative tooltips on the ESU Function Map pane.</li>
+    <li>Many corrections and other improvements to existing ESU decoder definitions.</li>
+  </ul>
+
+<!-- from 3.7.5 note -->
+<!--
+<p>Dave Heap made the following changes:</p>
+  <ul>
+    <li>Corrections and other improvements to existing ESU decoder definitions.</li>
+  </ul> -->
+<!-- from 3.7.6 note -->
+<!--
+<p>Dave Heap made the following changes: Corrections and other improvements to existing ESU decoder definitions.</p>
+-->
+
+<h5>Hornby</h5>
+<!-- from 3.7.1 note -->
+<p>Peter Ulvestad updated the Hornby 8249 default values.
+
+<h5>Kuehn</h5>
+<!-- from 3.7.3 note -->
+<p>Alain Le Marchand improved the Kuehn definitions
+
+<h5>MRC</h5>
+<!-- from 3.7.1 note -->
+<p>Peter Ulvestad contributed new decoder definitions for MRC 1641,1642, 1659 and 1664 N scale motor control only decoders.
+
+<!-- from 3.7.5 note -->
+<p>John Crellin provided a decoder definition for the MRC Sound Brilliance 1806 and 1955.</p>
+
+<h5>QSI</h5>
+ <!-- from 3.7.3 note -->
+<p>Michael Mosher improved the QSI Version 9 decoder definition.</p>
+
+<h5>RR-CirKits</h5>
+<!-- from 3.7.3 note -->
+<p>Dick Bronson updated the RR-CirKits decoder definitions.
+
+<!-- from 3.7.4 note -->
+<p>Dick Bronson updated the Tower Controller Mark II decoder definition.
+
+<!-- from 3.7.8 note -->
+<p>Support for the RR-CirKits MotorMan (r26387)
+
+<h5>SoundTraxx</h5>
+<!-- from 3.7.2 note -->
+<p>Ken Mazer added the Athearn GP40-2 and made some corrections to the Soundtraxx definition.
+
+<!-- from 3.7.4 note -->
+<p>Dave Heap added a live Function Group Exchange feature on the Function Map pane for two sample Tsunami decoders (Diesel Genesis OEM and Steam Genesis OEM).</p>
+
+<!-- from 3.7.6 note -->  
+<p>Alain Le Marchand made the following changes:</p>
+  <ul>	   
+    <li>Extended the Soundtraxx Tsunami Function Groups Exchange feature (created by Dave Heap) to all Tsunami decoders</li>
+    <li>Fixed an issue with Tsunami 750 function map not displaying properly</li>    
+  </ul>
+
+<h5>Tam Valley Depot</h5>
+<!-- from 3.7.7 note -->       
+<p>Robin Becker provided a decoder definition for the Tam Valley Depot Quad-LN_S decoder.
+
+<h5>TAMS</h5>
+<!-- from 3.7.1 note -->
+<p>Pierre Billon contributed four additional TAMS decoder definitions.
+
+<h5>TCS</h5>
+<!-- from 3.7.5 note -->
+<p>Fixed a problem with the handling of decoder definitions that was causing certain TCS decoders (and perhaps others)
+to not display properly.</p>
+<!-- from 3.7.7 note -->
+<p>John Crellin added definitions for TCS function decoders.
+
+<p>John Crellin updated the TCS FL2 and FL4 decoder definitions
+
+<h5>Team Digital</h5>
+<!-- from 3.7.4 note -->
+<p>Ken Cameron has posted update for Team Digital SHD2 board.</p>
+
+<h5>Uhlenbrock</h5>
+<!-- from 3.7.3 note -->
+<p>Alain Le Marchand updated  the Uhlenbrock 73400 definition:
+<ul>
+<li> Increased High version value to 4 (from a decoder purchased in 2011)
+<li> Change family name to Mini instead of Micro (Mini is the name used on the decoder user manual)
+<li> Removed Speed Table, not supported by this decoder (only Vstart, Vmid, Vhigh)
+<li> Fix enum for CV54 (cannot use a mask, only two specific values allowed 128 and 132)
+</ul>
+
+<!-- from 3.7.6 note -->  
+<p>Alain Le Marchand added and updated the following Uhlenbrock decoder definitions:</p>
+<ul>
+	<li>Created: 73100, 73110, 73140, 75330, 76150, 76200, 76320, 76425, 76560</li>
+	<li>Reformatted (and completed): 76400, 76420</li>
+	<li>Changed family name (for consistency) for: 73400, 73410, 73500, 73510, 77500</li>
+<p></p>
+	<li>For new or reformatted files:</li>
+	<ul>        
+		<li>Heavy refactoring with fragment files (in new directory \decoders\uhlenbrock)</li>
+		<li>Used the generic function map pane</li>
+		<li>Used generic items on standard panes (motor, lights, analog) as much as possible</li>
+		<li>New ad-hoc Uhlenbrock pane, only for other parameters than listed above</li>
+		<li>Support of English and German versions, with terms as defined in official Uhlenbrock documentation, where possible</li>
+	</ul>
+</ul>
+  
+<h5>Zimo</h5>
+<!-- from 3.7.3 note -->
+<p>Nigel Cliffe updated the Zimo definitions to extend the volume controls.
+
+<!-- from 3.7.7 note -->
+<p>Nigel Cliffe provided a new Zimo decoder definition.
+
+  
+<h4>New / Updated signal definitions - icons</h4>
+
+<!-- from 3.7.1 note -->
+<p>Suzie Tall updated the BN 1989 signal definitions. Changes include:
+<ol>
+<li> Additional panel icons to support the new signal mast definitions.
+<li> A modified icon which was stopping the original 2-head mast from being added to a panel.
+<li> Twelve new signal mast definitions.
+<li> An updated index.shtml with a bit more information, reference to BN source and links to the new masts.
+<li> An updated aspects.xml with the addition of an unlit appearance and corrections to the appearance definitions.
+</ol>
+
+<p>Suzie Tall contributed a new signal system definition for the LMS speed signalling that was installed in parts of the UK in 1932 and continued in use until 1988. 
+The definition is as complete as is possible from the available documentation and covers all variations over the entire period of operation.
+
+<p>Suzie Tall added a new <a href="http://jmri.org/xml/signals/BNSF-1996/index.shtml">BNSF-1996 signal system</a>.
+
+<p>John Lang updated the NTC 1956 signal files.
+
+<p>Suzie Tall added non-rotating icons to the BNSF-1996 signal set.
+
+<p>Jim Duncan provided a set of icons for building an Armstrong tower control panel.</p>
+
+<!-- from 3.7.2 note -->
+<p>Suzie Tall added signal definitions for the
+<a href="http://jmri.org/xml/signals/UP-2008/index.shtml">2008 UP</a>, 
+<a href="http://jmri.org/xml/signals/Amtrak-2010/index.shtml">2010 Amtrak</a> and
+<a href="http://jmri.org/xml/signals/GWR-1931/index.shtml">1931 Great Western</a> systems.
+
+<!-- from 3.7.3 note -->
+<p>Suzie Tall updated the LMS-1932 and CR-2008 signal sets.</p>
+
+<!-- from 3.7.7 note -->
+<p>Kevin Dickerson added some British Rail signal icons
+
+<p>Kevin Dickerson arranged for an error message to be presented if an icon file
+    can't be found, instead of having it fail silently.
+
+<h4>Hardware / Systems</h4>
+
+<!-- from 3.7.1 note -->
+<p>Paul Bender improved support in the generic network client for automatic configuration.  This includes improvements to the generic  mDNS/ZeroConf/Bonjour automatic configuration tools.</p>
+
+<!-- from 3.7.2 note -->
+<p>Paul Bender updated the JMRI SRCP support in both the client and server to better conform to the letter of the SRCP protocol standard and improve compatibility with other SRCP implementations.</p>
+
+<p>Steve Williams fixed a problem with LocoNet Simulator's reading of data files.
+
+<!-- from 3.7.7 note -->
+<p>B. Milhaupt updated the LocoNet Download Firmware tool to provide automatic
+       identification of the firmware file's address format as well as extensive
+       checking of the firmware file for evidence of corruption or out-of-range
+       parameters.  These improvements significantly reduce the risk of 
+       corrupting a device's firmware when using this tool.  The associated help 
+       file was expanded to suit.</p> 
+	   
+<h5>Lenz</h5>
+<!-- from 3.7.1 note -->
+<p>Paul Bender updated the XPressNet network connections (LIUSB-Server, LIUSB-Etherenet, and XnTCP) to allow automatic reconnection attempts in the event of a dropped network connection.</P>
+
+<p>Paul Bender added mDNS support to the Lenz LIUSBEthernet adapter.</p>
+
+<h5>NCE</h5>
+
+<p>Ken Cameron made the following changes:</p>
+  <ul>
+	<!-- from 3.7.2 note -->
+	<li>Ken Cameron fixed a bug in NCE Macro Edit for updating macros.</li>
+	<!-- from 3.7.4 note --> 	
+	<li>Added support for NMRA signal decoders on NCE-USB connected systems.</li>
+	<li>Improved error message for not supported packets.</li>
+	<li>Fixed NCE-USB version identification handling.</li>
+	<!-- from 3.7.5 note -->
+	<li>Ken Cameron has fixed issue with NCE SB5/TWIN and ops mode programming. Was trying to use raw packet commands instead of specific ops mode programming commands in the USB.</li>	
+  </ul>
+  
+<!-- from 3.7.2 note -->
+<p>Dave Heap made the following changes:</p>
+  <ul>
+    <li>Added some more NCE menu items to the list of available startup actions and buttons.</li>
+    <li>Resolved the problem that caused function commands from JMRI or WiThrottles with NCE systems to be sent to seemingly random consist addresses.</li>
+    <li>Fixed a resize issue with the NCE Packet Analyzer window.</li>
+  </ul>
+
+<h5>Uhlenbrock</h5>
+<!-- from 3.7.4 note -->
+<p>Intellibox support received a communications update (<a href="https://sourceforge.net/p/jmri/patches/978/">patch 978</a>)
+to improve reliability of sensor readout.
+
+<h4>Operations</h4>
+<!-- from 3.7.1 note -->
+   <p>Allow Turnout icons to be "momentary".  (Sensor icons could already do this)
+   
+<!-- from 3.7.1 note -->
+
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+	<!-- from 3.7.1 note -->   
+    <li>The data in operations files has changed with this release. Previously the files
+     contained backward compatibility elements so that you could load a file created with the latest
+     release and read it back using one of the very early releases of operations. Now the backward
+     compatibility is limited to releases 3.4 and 3.6. In any case, you can always upgrade to a
+     newer release of operations, it is only the ability to go back to an older version of the
+     program using the latest data files that has changed.</li>
+    <li>The lists that operations provides for scripts has changed significantly. Instead of
+     lists containing ids of the objects, the actual object is now passed in the list. For example a list
+     of cars in operations was a list of car ids, and not the cars themselves. If you use
+     scripts you will need to edit your scripts. Here's the changes you need to do for cars:
+     <p>In each of your script files, search for "carId". You should find something like this:
+     <code><p>for carId in carList: 
+     <br>car = cm.getById(carId)</p></code>
+     <p>Change the first line to:
+     <code><p>for car in carList:</p></code>
+     <p>And delete the line that has "car = cm.getById(carId)".
+     <p>For scripts that deal with trains, search for "trainId". You should find something like this:
+     <code><p>for trainId in tList:
+     <br>train = self.tm.getTrainById(trainId)</p></code>
+     <p>Change the first line to:
+     <code><p>for train in tList:</p></code>
+     <p>And delete the line that has "train = self.tm.getTrainById(trainId)".
+     <p>
+    <li>New feature, you can now let the program create your locomotive consists for you. See <a
+     href="http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml#TrainBuildOptions">Train
+      Build Options</a> "Build loco consist from single locos if needed" for more details. The program
+     when building the consist can adjust the number of locos based on Horsepower per Ton (HPT) and
+     the route's grades.
+    <li>New feature, you can now adjust all of your train departure times by a selected number
+     of hours. See under "Tools" in the "Trains" window "Change Train Departure Times".</li>
+    <li>New feature, you can now edit or view two locations at the same time.</li>
+    <li>The train edit window now shows if there are road or load restrictions for the train.</li>
+    <li>Fixed a bug in track copy where the car types serviced weren't copied to the new track.</li>
+    <li>Fixed a bug in train copy where the train build options weren't copied to the new
+     train.</li>
+    <li>Fixed a bug in the router when the option to return a car to staging is enabled, and
+     the car get's a custom load from staging.</li>
+    <p>   
+	<!-- from 3.7.2 note -->   
+    <li>Made some improvements to car routing and build report messages.</li>
+    <li>You can now configure the build report to always preview, saves paper! See Build Report
+     Options under Trains-&gt;Tools.</li>
+    <li>The program now blocks a kernel for your manifests and switch lists (a group of cars)
+     by the order that you add cars to the kernel.</li>
+    <li>New checkbox option for the Cars window. Under Tools in the Cars window are two new
+     options, one shows the checkboxes, and the other resets the ones showing in the window. Useful
+     if your doing an audit of your cars using a PC or portable device. Great for those that don't
+     like to waste paper!</li>
+	 <p>  
+	<!-- from 3.7.4 note -->
+    <li>Better routing out of staging for cars with custom loads or final destinations. The
+     latest changes should reduce the chances of a build failure for cars in staging that used the
+     Return When Empty feature.</li>
+    <li>You can now specify a custom load when using the Return When Empty (RWE) feature for a
+     car.</li>
+    <li>Fixed an issue with Classification / Interchange tracks that have destination
+     restrictions. Now if a car without a final destination is placed on a C/I track with
+     destination restrictions, the program will only forward cars to that destination.</li>
+    <li>Made some improvements to the train build report.</li>
+    <li>Added three more manifest color options; orange, yellow, and gray.</li>
+    <li>Improved the tabular format with regards to rolling stock locations and track names.</li>
+    <li>Fixed a problem where non lead cars in a kernel didn't have the correct final
+     destination shown in the Cars window.</li>
+	 <p>  	 
+	<!-- from 3.7.7 note -->
+    <li>New manifest and switch list format. Two columns, one for pulls and one for spots, with
+     track names centered in each column.</li>
+    <li>Fixed a bug where a kernel's length (group of cars) wasn't being checked with regards
+     to spurs with schedules</li>
+    <li>Some build report improvement with regards to yard or interchanges that are full. Now
+     only the first occurrence of a full yard or interchange is shown.</li>	
+   </ul>  
+   
+<!-- from 3.7.2 note -->   
+<p>Pete Cressman made the following changes:</p>
+<ul>
+	<li>Control Panel Editor
+	<ul>
+		<li>NX warrants (eNtry/eXit) menu item was added to the warrants menu.</li>
+		<li>Menu item Select panel items by Type was added to the Edit menu.</li>
+		<li>Menu item Select panel items by Level was added to the Edit menu.</li>
+		<li>Menu item Disable Selecting Shapes was added to the Shapes menu.</li>
+		<li>Any item in a superimposed stack can be selected with Control-Shift-Click. See help CPE page</li> 		
+	</ul>
+	</li>
+	<li>Circuit Builder
+	<ul>
+		<li>An Edit Portal Direction menu item was added ti=o the CircuitBuilder menu. Direction arrows may be displayed at Portal locations
+			of a warrant route when the warrant is allocated.  Use this menu item to configure the arrows so they point to show entrance to 
+			the block.   Levels, rotation and scaling of an arrow can be done here also. 
+			with a right clck.</li>
+		<li>Improved item selection when creating and editing OBlocks, Portals and OPaths</li>
+		<!-- from 3.7.4 note -->   
+		<li>Added error messages and fixed bugs for editing Portals in CircuitBuilder</li>		
+	</ul>
+	</li>
+	<li>Item Palette
+	<ul>
+	<li>Portal tab was added to the Item Palette. The icons used when editing Portals in Circuit Builder
+		or showing direction may be modified.  The "Set Default Icons" button sets the icons for all portals in the panel.  
+		The panel must reloaded for the change to take effect.</li>
+		<li>Several bug fixes were made in the editing and updating icon families code.</li> 
+	</ul>
+	</li>
+	<li>Shapes
+	<ul>
+		<li>Positioning vertex handles of Polygons was improved. Note, handles of a selected Shape 
+			can only be grabbed from within the bounding rectangle of the shape.</li>
+		<li>Either the display level or hidden property of a shape can be controlled with the 
+			"visibility/Level Control Sensor".</li>
+		<!-- from 3.7.4 note -->   	
+		<li>Improved user interface and fixed bugs in Shape editor popup</li>			
+	</ul>
+	</li>
+	<li>Tracker
+	<ul>
+		<li>The Tracker Table keeps a history of Tracker events. Click on the "Status" field to display.</li>
+		<li>Dragging and Dropping a Loco marker icon on an Indicator Track icon will launch a tracker on that train.</li>
+		<li>Clicking on "persistent train marker" from a completed warrant (see below) will launch a tracker on that train.</li>
+		<li>Time spent occupying a block is logged in the "Status: field</li>
+	</ul>
+	</li>
+	<li>Warrants
+	<ul>
+		<li>The Warrant Table keeps a history of warrant events. Click on the "Status" field to display.</li>
+		<li>NX warrants (eNtry/eXit) may create manual warrants.</li>
+		<li>The train ID marker will persist after a warrant has terminated on the occupied Indicator Track
+			icons.  The Indicator Track icon must be configured to display markers.</li>
+		<li>Warrant routes, either standard or NX, can have their location blocks (Origin, Destination, 
+			Via, Avoid) entered into the respective text fields by clicking on an Indicator Track icon of
+			the Block.  Clicking on the text field sets the target for a subsequent Indicator Track icon click.
+		<li>Additional Status messages have been added.</li>
+		<!-- from 3.7.3 note -->	
+		<li>Added logging warrant and tracking messages to file. Use Log menu item in Warrant menu.</li>
+		<!-- from 3.7.4 note -->   	
+		<li>Added more options for creating NXWarrants</li> 		
+	</ul>
+	</li>
+	<!-- from 3.7.4 note -->   
+	<li>Fixed bug in acquiring LearnMode throttle.</li>	
+</ul>
+   
+<!-- from 3.7.3 note -->	
+<p>Ken Cameron has:</p>
+<ul>
+	<li>
+		Enabled startup features like scripts and panels to use portable filenames.
+		This replaces the absolute pathnames with relative pathnames within the scope of
+		other parts of JMRI like the users preferences.
+	</li>
+	<li>
+		Enabled Logix references like scripts and sounds to use portable filenames.
+		This replaces the absolute pathnames with relative pathnames within the scope of
+		other parts of JMRI like the users preferences.
+	</li>
+</ul>
+<ul>
+    <li>Added a scroll pane for the virtual signalmast panel.</li>
+    <li>Fix Bug 451</li>
+    <li>Layout Editor Crossover - Block 1's connection point is now highlighted in pink or blue depending upon if  a 
+    track segment is connected to aid identification</li>
+    <li>Layout Editor Turnouts can now be connected together by moving the turnout so that the connection points
+    overlap</li>
+    <li>Layout Editor Turnouts - When connecting a new LH or RH Turnout to an existing turnout, the editor will automatically
+    rotate the turnout to match the turnout that it is being connected to.</li>
+    <li>Fixed an issue with distance UK Semaphore signals</li>
+</ul>
+<!-- from 3.7.5 note -->
+<ul>
+	<li>Improved correlation of ramp down speeds with block length in NX warrants</li>
+</ul>
+
+<!-- from 3.7.4 note -->
+<p>Added a "Power Button" item that you can configure to directly include a button. 
+This is in addition to the existing "Open Power Controller" option.
+
+<p>Dispatcher - The delay trigger when running automatically is now correctly obeyed when using SignalMast Logics - KD
+<p>Layout Editor - Added a scroll bar to the top edit panel
+
+<!-- from 3.7.5 note -->
+<p>Additions to Warrants</p>
+   <ul>
+    <li>Added "Halt All" button to Warrant List window</li>
+    <li>Enabled recording warrant scripts when dark blocks are included in the route.</li>
+    <li>Improved correlation of ramp down speed timing with block length in NX warrants</li> 
+   </ul>
+
+<p>Operations</p>
+   <ul>
+    <li>Train manifests are now available in a JSON format.</li>
+    <li>Train manifests are in the web server again.</li>
+    <li>New feature for manifests and switch lists, the ability to add headers describing each
+     of the car attributes. Select "Print Headers" in the "Manifest Print Options" You can also
+     customize all of the header text, see under "Tools" in the "Manifest Print Options" window,
+     "Edit Header Text".
+    <li>Made some improvements to the train build report.</li>
+    <li>Fix a bug where the build report didn't always report which cars were ignored when all
+     of the moves for a route location were consumed.</li>
+    <li>The sorting for local moves has changed, if you sort by track, the program will sort
+     the cars by the pick up track name. If by destination, the program will sort the cars by the
+     set out track name.</li>
+   </ul>
+   
+<!-- from 3.7.7 note -->
+<p>Routes
+<ul>
+<li>When a route is loaded from a panel file, the system will now check the turnouts and trigger the aligned sensor, rather than wait for a change to occur</li>
+<li>Fix a bug in the Routes GUI, whereby if the user removes the "TurnoutsAlignedSensor" it doesn't actually get removed.</li>
+</ul>
+
+<h4>Scripts</h4>
+
+<!-- from 3.7.1 note -->
+
+<p>Nigel Cliffe and Dave Heap fixed problems with international characters in four Python scripts:
+AAR105.py<br>
+RailDriver.py<br>
+RocoCrane46902.py<br>
+Zimo_pseudo_programmer.py
+
+<p>Added sample scripts:
+<ul>
+<li><a href="http://jmri.org/jython/SensorToTurnout.py">jython/SensorToTurnout.py</a>: takes Sensor inputs from an external system and maps them to Internal turnouts
+<li><a href="http://jmri.org/jython/SignalHeadFromSensors.py ">jython/SignalHeadFromSensors.py</a>: takes Sensor inputs from e.g. an external signal system and drives SignalHead objects
+</ul>
+
+<!-- from 3.7.2 note -->
+<p>Dave Sand fixed RosterCsvExport.py to use new string format for CV definitions.</p>
+
+<h4>Documentation / Help</h4>
+<!-- from 3.7.2 note -->
+
+<p>Many additions to the 
+<a href="http://jmri.org/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#conditional">tools for structuring conditional decoder definitions</a>.</p>
+
+<p>Peter Ulvestad updated the clinics information.</p>
+
+<!-- from 3.7.6 note -->
+<p>The JMRI Web server has been rewritten to support a more-unified appearance and to better
+	provide dynamic, user customizable content.<br>If you wish to browse the /prefs directory
+	in your browser, but get the old web server home page instead, you will want to remove
+	the index.html file from your User Files directory.</p> 
+
+<p>Older versions of the JMRI manuals and associated PDF files have been 
+moved out of the JMRI distribution.  They are now 
+<a href="http://jmri.org/help/en/manual/index.shtml">available on the web</a>. This was done to make it easier to 
+keep the manual up-to-date, and reduce the download size.  
+You may have to update your bookmarks.</p>
+
+<!-- from 3.7.7 note -->
+<p>Egbert Broerse updated the signaling help.
+	
+<h4>For developers</h4>
+
+<!-- from 3.7.1 note -->
+
+<p>OpenLCB library updated to better handle hub operations.
+
+<p>Several internal updates for how CV reading and writing is changed 
+to improve handling of indexed CVs.  If you have your own code or scripts
+that write or read CVs directly, check to see if we've broken anything, please.
+
+<p>Improved the handling of decoders that contain only long addresses, no short addresses.
+
+<p>Dave Heap improved the handling of DCC addresses.  The decoder terminology has been 
+standardized.  There's more checking of values, to prevent erroneous behavior when an
+out-of-range value is entered.
+
+<p>Dave Heap improved handling of long addresses in NCE consists
+
+<p>The internals for handling CV read and write addressing have been extensively 
+reworked.  The change should be transparent (invisible) to users. If you do notice anything 
+problems involving CV reading, writing, storage or anything else, please let us know.
+
+<!-- from 3.7.3 note -->
+
+<!-- from 3.7.4 note -->
+<p>Dave Heap made the following changes:</p>
+  <ul>	
+    <li>Restored the ability to specify a fnmapping element by either output number OR name.</li>
+    <li>Added an optional "(alt)" suffix to a fnmapping element.</li>
+    <li>Added the facility to define "soundlabels" (like "functionlabels") in the decoder definition files.</li>
+    <li>Can now add "functionlabels" and "soundlabels" to individual models in the decoder definition files. These override corresponding labels at the family level.</li>
+    <li>Added a "soundlabel" element to the pane programmer, allowing sound labels to be displayed on panes.</li>
+    <li><i>(A "functionlabel" pane element and user-editable sound labels are planned for the next release.)</i></li>
+	<p></p>	
+	<!-- from 3.7.5 note -->
+	<li>Added a new
+      <a href="/help/en/html/apps/DecoderPro/Programmer.shtml#grid" target="_blank">Grid Layout</a>
+      feature to the decoder pane programmer, for greater control of pane layouts.</li>
+	<!-- from 3.7.6 note -->  
+    <li>Added extra features to
+      <a href="/help/en/html/apps/DecoderPro/Programmer.shtml#grid" target="_blank">Grid Layout</a>
+      for the decoder pane programmer.</li>
+    <li>Pane elements "label", "soundlabel", "row", "column", "grid" and "griditem" now support qualifiers.</li>
+    <li>Added a "group" pane element that can be used to apply the same qualifier to multiple pane elements.</li>
+    <li>The "pane" and "group" elements now support "include" and "exclude" attributes for decoder/family-specific configuration.</li>
+	<p></p>
+	<!-- from 3.7.7 note -->
+    <li>Fixed an issue that caused a hang when reading all sheets of an ESU decoder with some systems.</li>
+    <li>Fixed an issue with inherited attributes in
+      <a href="/help/en/html/apps/DecoderPro/Programmer.shtml#grid" target="_blank">Grid Layout</a>
+      for the decoder pane programmer.</li>
+  </ul>
+  
+<!-- from 3.7.6 note -->
+<p>Reformatted the decoder definition files using the xml/XSLT/normalizeDecoder XSLT transforms.
+    This cleans up some ambiguous attributes, adds missing elements, and formats them into a consistent (comparable) style
+    using xmllint. In the process some errors (usually missing elements) were found and fixed.
+    There were also some refinements and additions to the XML schema for panes and decoders.</p>
+
+<p>JMRI now implements a "transform-xslt" XML processing instruction for post-processing XML files with XSLT transforms.
+(If that doesn't mean anything to you, you can ignore the rest of this item).  For an example of invoking
+this, see the
+<a href="https://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/jmrit/XmlFileTest_PI.xml">test XML file</a> and
+<a href="https://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/jmrit/XmlFileTest_PI.xsl">test XSLT transform</a>.
+
+<h4>Bug fixes</h4>
+
+<!-- from 3.7.7 note -->
+<p>Fixed a problem that would leave the wrong DCC address on the DecoderPro roster pane at startup under certain circumstances.
+
+<p>Fixed a bug that would cause programming crashes in DecoderPro when using simulators.
+
+<!-- from 3.7.8 note -->
+
+<p>User request to only print or preview trains in the Trains window that are selected. (r26300)
+
+<p>Fix bug where characters would exceed the line width in the two column format, and tabular disabled. (r26301)
+
+<p>Fix problem with local move of utility car. (r26308)
+
+<p>User request to only show trains that can service a location (r26309)
+
+<p>Fix car type string length calculation (r26329)
+
+<p>Put the creation of each block xml element into a try/catch.  
+There is an issue where the block data isn't being saved but at this stage I have no idea what the trigger is and have had no log files from a user to help narrow it down or replicate it.  
+Doing this will at least prevent all block data from being lost during a save. (r26333)
+
+<p>Ensure that the file paths are correctly loaded from the configuration file, and that the user files (preferences:) path is loaded before other paths.
+Ensure that the scripts path ends with a file separator character.(r26344)
+
+<p>Minor improvement in how the program determines maximum location and track names for manifests and switch lists. (r26347)
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

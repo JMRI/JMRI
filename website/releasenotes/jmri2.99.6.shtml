@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.99.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.99.6 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.99.6 release
+      </h2>
+
+	<p>Date: June 10, 2012</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.99.6 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.0 production release, probably in Summer 2012.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+None
+
+<h3>Older warnings</h3>
+
+This release, and all other releases in this cycle, require Java 1.6.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.6-r20655.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.6-r20655.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.6-r20655.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.6-r20655.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.6-r20655.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.6-r20655.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/2.99.6/ws/jmri/dist/release/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+
+
+<h3>Changes since test release 2.99.5</h3>
+
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>The option "Print Valid" now also affects switch lists.</li>
+    <li>Improved the way cars, locomotives, and routes windows resize.</li>
+    <li>Switch lists now show the lead loco number as part of the train's name.  The
+    "Append Loco Number" must be selected in the Setting page.</li>
+    <li>Now when building trains that visit locations that have the "same" name, cars are no
+     longer moved between those locations unless a schedule is used. Locations with the "same" name
+     are locations that use the hyphen followed by a number feature. Also improved trains manifests
+     when "same" location names are used back to back.</li>
+    <li>Fixed a problem with auto backup where cars serviced by a train wasn't saved properly</li>
+   </ul>
+
+
+   <p>
+The <a href="">OpenLCB</a> support has been updated:
+<ul>
+<li>You can now use UTF-8 international characters in the board names and descriptions
+<li>The tree-display of your OpenLCB can now be resized so that really big layouts display well
+</ul>
+
+<p>Kevin Dickerson made the following changes:</p>
+<ul>
+<li>DP3 - Set the "Programming Type" states are remembered between sessions</li>
+<li>DP3 - Added a wait cursor while opening up a roster entry for editing</li>
+<li>DP3 - Altered the mouse action in the roster table, so that a double click on a non-selected item will open it for Editing, 
+          while a single click on an already selected item will allow editing of that field</li>
+<li>Layout Editor - Provided an option to set the default colour for occupied and alternative track states</li>
+<li>Layout Editor - Provided an option to automatically create and assign blocks to track and turnouts.
+                    This can aid in providing continuous layoutblock connectivity which can be used by the signalmast logic and entry/exit work.</li>
+<li>Fixed the Copy and Delete Roster items in the classic JMRI interface</li>
+</ul>
+
+<p>Paul Bender made the following changes:</p>
+<ul>
+<li> Internal changes to the consist manager to allow on demand updating of consist lists from the command station.</li>
+<li> Implemented consist reading for LocoNet systems.</li>
+<li> Changed Lenz and CVP EasyDCC consist managers so they update the consist list when the consist tool starts, not when the program does.</li>
+<li> Fixed several bugs in the LocoNet Consist manager.</li>
+</ul>
+
+Jeff Schmaltz fixed a bug in the Zimo decoders in Steam for diesel effect
+
+Walter Thompson fixed a broken link in the CMRI documentation.
+
+
+   <!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

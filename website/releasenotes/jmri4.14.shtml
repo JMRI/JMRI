@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.14
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.14 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.14 release
+      </h1>
+
+    <p>Date: December 23, 2018</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Production Release 4.14 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<p>We are very pleased to announce that the 4.13 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production Release 4.14" available for download today.</p>
+
+<h2>Notes:</h2>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Update From Older JMRI Versions</h3>
+<p>If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you update to 
+        <a href="jmri4.12.shtml">JMRI 4.12</a> and make sure that's running OK before
+        updating to this release release.  There have been a number of 
+        changes in serial port support, panel file format and configuration options since those earlier releases, 
+        and moving to the stable <a href="jmri4.12.shtml">JMRI 4.12</a> release
+        is a good way to work through any possible problems.
+        </p>
+<p>If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    you <u>must</u> 
+    update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to this release.
+
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.15.1.shtml">JMRI 4.15.1</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this production release:</h3>
+
+<ul>
+    <li>This release changes how "Internal" Throttles, Consisting, CV Programmers and Command Station
+        references are configured.  This is done to avoid <u>accidentally</u> getting
+        one of these configured as a default instead of using your attached hardware device
+        (the dreaded "programmer always reads 123" condition). 
+        Most JMRI users will not have to do anything.
+        If you do need to use 
+        an internal version of these, please go to preferences and add an internal "None"
+        connection in addition to the ones you already have, then set defaults.  
+    </li>
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.12.shtml#warnings">JMRI 4.12 release note</a> for more warnings predating the 4.13 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<p>When running JMRI using Java 9 or Java 10,
+    the script import statements need to be fully-qualified:
+    in addition to 'import java', you might need 'import java.beans'
+    and others. 
+
+<p><span class="since">Since <a href="jmri4.11.8.shtml">JMRI 4.11.8</a></span>
+    Some new display capabilities were introduced into Layout Editor
+    during JMRI 4.11-series development.   
+    This release changes some of the defaults in this area, which might 
+    change the appearance of some track segments on your panels if they're 
+    still using default values. If you select them and change their properties,
+    then save your panel file(s), you can restore their previous appearance.
+    There's a 
+    <a href="../community/LayoutEditorTrackChanges.pdf">PDF document</a>
+    with more details.
+    We apologize for the inconvenience.
+
+<p><span class="since">Since <a href="jmri4.11.8.shtml">JMRI 4.11.8</a></span>
+    Because of changes to the "node identification" algorithm used to tell 
+    one computer running JMRI from another, you might receive a warning message
+    about the "Node Identity" the first time you run JMRI version 4.11.8 or newer. (If you 
+    have more than one profile, this can happen with each).  There's no permanent
+    problem here, but you might have to reset your window preferences (i.e. position
+    and size, column layout, etc) in this case.
+    We apologize for the inconvenience.
+
+<p><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+    If you are running a local web site with a copy of the JMRI content, as
+    <a href="http://jmri.org/help/en/html/doc/Technical/WebSite.shtml#local">described here</a>,
+    please repeat 
+    <a href="http://jmri.org/help/en/html/doc/Technical/WebSite.shtml#locallink">the "setSymLinks.sh" step</a>
+    near the bottom of those instructions
+    after installing JMRI 4.11.4 (or later).  This will make some new formatting available
+    on your local site.
+
+<p><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+    There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+    <ul>
+        <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li><br>
+        <li>Do not enable extra debugging through default.lcf, nor open the system console window</li><br>
+        <li>Do not open the SPROG console window</li><br>
+        <li>Disable power conversion (CV 29) in all locos</li><br>
+        <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li><br>
+    </ul>
+    Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+    open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+
+<p><span class="since">Since <a href="jmri4.11.2.shtml">JMRI 4.11.2</a></span>
+    The system connection preferences (i.e. hardware preferences) are now
+    enforcing the <a href="jmri.org/help/en/html/doc/Technical/Names.shtml">correct form</a>
+    for system prefixes:  One upper case letter, 
+    optionally followed by a number (one or more digits, e.g. "L12").
+    Existing prefixes in existing configurations are unchanged, but
+    new ones will have to have the correct form.
+      
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.14/JMRI.4.14+Rd060e0b.dmg">https://github.com/JMRI/JMRI/releases/download/v4.14/JMRI.4.14+Rd060e0b.dmg</a><br/>
+  sha256: 3efa5322ab034063bc277371585086cf7fd328d8c335467760ae77c892f07a01 </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.14/JMRI.4.14+Rd060e0b.exe">https://github.com/JMRI/JMRI/releases/download/v4.14/JMRI.4.14+Rd060e0b.exe</a><br/>
+   sha256: 2b040677d4bb4138e1474ad2f07866d0494877a352aa9771db7dc170b1e0bbca</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.14/JMRI.4.14+Rd060e0b.tgz">https://github.com/JMRI/JMRI/releases/download/v4.14/JMRI.4.14+Rd060e0b.tgz</a><br/>
+   sha256: 78e53c0fb4f806b8e26951f27d5027c150c935ba12d7c401a7b1505bd5298978</li>
+</ul>
+
+<h2>Changes since <a href="jmri4.12.shtml">production release 4.12</a>:</h2>
+
+<p>The full lists of changes in each of the preceding test releases 
+(<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.1+">4.13.1</a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.2+">4.13.2</a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.3+">4.13.3</a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.4+">4.13.4</a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.5+">4.13.5</a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.6+">4.13.6</a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.13.7+">4.13.7</a>)
+are available in our 
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.</p>
+
+
+<!-- the follow are concatenated contents of the prior release notes, which should be cleaned up and merged -->
+
+    <h3>Hardware Support</h3>
+
+        <h4>DCC++</h4>
+            <ul>
+                <li>Costin Grigoras updated the DCC++ support
+                    to periodically refresh the function values.</li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li>Fixed scrolling in the LocoNet configuration tool panels</li>
+                <li>Added the ability to see and select the DCC track signal "Idle" state within the Power Control tool.  
+                This enables JMRI users to know when the Digitrax command station has placed the track signal into the "Idle" state, 
+                and enables JMRI users to select that "Idle" state.</li>
+            </ul>
+
+        <h4>MERG CBUS</h4>
+            <ul>
+                <li>There was work done on MERG consisting</li>
+                <li>The MERG CBUS help screens where improved</li>
+                <li>Improved MERG Event Capture</li>
+                <li>Steve Young made a number of updates to the
+                    MERG CBUS support:
+                    <a href="https://github.com/JMRI/JMRI/pull/5653">CBUS Event Table Update</a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5667">MERG CBUS Event Table Updates </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5678">Merg cbus event table Java bugs + CAN frame send + test OPC to bundle move </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5693">cbus swing bugfixes </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5701">Merg Cbus bundle transfer </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5712">MERG CBUS Console Improvements </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5719">CBUS Console Spotbugs </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5753">MERG CBUS Event Table Updates </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5655">Send CAN Frame Tool CBUS Priority </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5758">MERG CBUS Event Table tweak </a>,
+                    <a href="https://github.com/JMRI/JMRI/pull/5761">MERG CBUS EVTable Fixes </a>
+                    </li>
+            </ul>
+
+        <h4>MQTT</h4>
+            <ul>
+                <li>Documentation improved</li>
+            </ul>
+
+        <h4>NCE</h4>
+            <ul>
+                <li>Added auto-refresh to the Show Cabs tool<li>
+                <li>Fixed NCE Edit Macro</li>
+                <li>Improved the NCE Monitor</li>
+                <li>Fixed NCE Edit Consist</li>
+            </ul>
+
+        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+            <ul>
+                <li>Jeff Collell added Light support</li>
+                <li>A Signal Mast directly using OpenLCB Events for the
+                individual aspects can now be created using the UI of the
+                Signal Masts table.</li>
+                <li>There is a new dialog for configuring parameters of various
+                OpenLCB protocols, reachable from the Preferences
+                dialog->Connection, selecting the appropriate OpenLCB
+                connection and clicking the button "Protocol settings".</li>
+                <li>The JMRI computer can now have it's node identity (Node ID,
+                user name, user description) configurable in the Protocol
+                Settings dialog. This will make the JMRI computer(s) attached
+                to the layout appear in the Configure Nodes tree with their
+                appropriate descriptions.</li>
+                <li>Added support for Fast Clock using the Broadcast Time
+                Protocol draft. Enable it either in Clock Master or Clock Slave
+                mode in the Protocol Settings dialog. Each layout must have
+                exactly one generator. Not all features of the standard are
+                supported yet. Both Master and Slave mode allows setting the
+                time & rate in PanelPro main window -> Tools -> Clocks -> Setup
+                Fast Clock menu. For clock slave JMRIs it is advisable to set
+                in the Start Up options "Start with fast clock:" to "Don't
+                change" and untick the "Set Fast Clock Time" and "Set Clock
+                Rate" check boxes to avoid restarting JMRI from re-setting your
+                clock master.</li>
+                <li>The Connection name for an OpenLCB connection can now be
+                changed in the connection preferences dialog. This allows
+                renaming it to "LCC" if a user prefers that name.</li>
+                <li>In the connection preferences dialog the manufacturer list
+                now contains "LCC" as an alias to OpenLCB. There are no
+                differences between choosing one or the other, just the
+                label.</li>
+                <li>Internal bugfixes will make some rarely seen Java errors go
+                away. The sequencing of loopback operations will be more
+                deterministic, but Logix that were set up in a race condition
+                might behave differently due to the sequential execution. A
+                typical example that might change would be having a Sensor and
+                a Turnout object both be set to the same pair of event IDs,
+                then having a Logix change the sensor, and another Logix have
+                both that Sensor and that Turnout be in the antecedents but the
+                Turnout be non-triggering. The behavior of this setup used to
+                be non-deterministic in multi-processor computers.</li>
+                <li>The CAN Send Frame can now accept dotted-hex format Event
+                IDs.</li>
+                <li>The Firmware Upgrade dialog shows the Node list in sorted
+                order, also displaying User names and Descriptions for easier
+                selection of which node to upgrade.</li>
+                <li>Firmware upgrade via the Stream protocol draft is now
+                operational (at the time of this writing no commercial hardware
+                is available that uses this variant). The protocol to use is
+                auto-detected.</li>
+            </ul>
+
+        <h4>RFID</h4>
+            <ul>
+                <li>Changed the baud rate to 2400 for Parallax readers. Fixes <a href="https://github.com/JMRI/JMRI/issues/6026">issue 6026</a>.</li>
+            </ul>
+
+        <h4>Roco z21/Z21</h4>
+            <ul>
+                <li>Much technical work was done on this to improve operation</li>
+            </ul>
+
+    <h3>New / Updated decoder definitions</h3>
+      <ul>
+        <li>The decoder definition file structure was updated with a new "defaultItem" element.</li>
+     </ul>
+
+        <h4>Hornby</h4>
+            <ul>
+                <li>Brian Jackson updated the TTS definition</li>
+            </ul>
+
+        <h4>Mistral Train Models</h4>
+             <ul>
+                <li>Alain Carasso added a definition for the XR Trailer decoder</li>
+             </ul>
+
+        <h4>RR-CirKits</h4>
+            <ul>
+                <li>Dick Bronson updated the MotorMan2 decoder definition</li>
+            </ul>
+
+        <h4>SoundTraxx</h4>
+            <ul>
+                <li>Michael Mosher added an SD60 definition</li>
+                <li>Michael Mosher added definitions for several models</li>                
+            </ul>
+
+        <h4>TCS</h4>
+            <ul>
+                <li>Mike Mosher updated the WOW Steam V4 and various non-sound decoders</li>
+            </ul>
+	    
+	    <h4>Team Digital</h4>
+            <ul>
+                <li>Definitions for several Team Digital devices have been updated 
+                to indicate that they use Programming-on-the-Main mode even when
+                they are only connected to the LocoNet.  </li>
+            </ul>
+
+        <h4>Uhlenbrock</h4>
+            <ul>
+            <li>New decoder definitions were added for:
+                <ul>
+                    <li>the IntelliSound4 Module 325x</li>
+                    <li>the IntelliSound3 multi-protocol decoders 363x</li>
+                    <li>the IntelliSound4 multi-protocol decoders 365x</li>
+                </ul>
+                The programmer for these mobile decoders shows an additional IntelliSound tab for configuration of the
+                embedded and SUSI connected modules.<br>
+                The advanced sound functions are grouped logically, so select a SUSI range, than a Bank (or <i>Normal</i>
+                to disable sound programming). The CVs follow the full manufacturer's documentation. Test feedback is
+                appreciated, especially on the associated software version numbers (read from CV7).</li>
+                <li>Behind the scenes, common xml code has been combined in one place to ease work on translations.</li>
+            </ul>
+
+        <h4>Miscellaneous</h4>
+            <ul>
+                <li>Petr Sidlo provided a definition for the UNI16ARD NAV MX decoder</li>
+            </ul>
+
+    <h3>DecoderPro</h3>
+        <a id="DecoderPro" name="DecoderPro"/>
+        <ul>
+            <li>The decoder definition file structure was updated with a new "defaultItem" element.</li>
+        </ul>
+
+   <h3>Dispatcher</h3>
+        <a id="Dispatcher" name="Dispatcher"/>
+        <ul>
+             <li>Minor changes to use the new standard scale process.</li>
+        </ul>
+
+   <h3>Internationalization</h3>
+        <a id="I18N" name="I18N"/>
+        <ul>
+            <li>The Catalan translation was improved.</li>
+            <li>The Danish translation was improved.</li>
+            <li>The Dutch translation was improved.</li>
+            <li>The German translation was improved.</li>
+            <li>Petr Sidlo improved the Czech translation</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"></a>
+        <ul>
+	        <li>A problem that caused the Scale Track Tool to not work with Beziers was fixed</li>
+	        <li>The Color Chooser was updated and fixed</li>
+	        <li>Rotating animated GIFs should now work</li>
+        </ul>
+
+    <h3>Logix</h3>
+        <a id="Logix" name="Logix"/>
+        <ul>
+          <li>Fixed a crash in Logix Tools Find Cross Reference</li>
+        </ul>
+
+    <h3>Operations</h3>
+        <a id="Operations" name="Operations"/>
+        <ul>
+          <li>Multiple enchancements to operations, including improved build report message when tracks full in staging</li>
+        </ul>
+
+   <h3>Panel Editors</h3>
+        <a id="PE" name="PE"/>
+        <ul>
+	        <li>Rotating animated GIFs should now work</li>
+        </ul>
+
+    <h3>Preferences</h3>
+        <a id="Preferences" name="Preferences"/>
+        <ul>
+            <li>The process for defining defaults was changed
+                to reduce the change that internal programmers
+                would be inadvertantly selected.</li>
+        </ul>
+
+    <h3>Resources</h3>
+        <a id="Resources" name="Resources"/>
+        <ul>
+            <li>Several new sets of signal icons</li>
+        </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"/>
+        <ul>
+            <li>Fixes and updates to Sensor debouncing</li>
+            <li>Improvements to the Light Add/Edit dialog</li>
+            <li>Fixed a problem setting the sensor debounce timings.</li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <a id="Scripting" name="Scripting"/>
+        <ul>
+            <li>Better error messages if you try to run a script without an understandable file extension</li>
+            <li>When running JMRI using Java 9 or Java 10,
+                the script import statements need to be fully-qualified:
+                in addition to 'import java', you might need 'import java.beans'
+                and others. These have been added to the sample scripts.
+                (Although we might have missed a few...)
+            </li>
+            <li>JerryG improved some sample script documentation</li>
+        </ul>
+
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"/>
+        <h4>Signal Systems</h4>
+            <ul>
+                <li>The aspect definitions in the AAR signal system were improved.</li>
+                <li>Problems in the BR2003 signal definition were fixed</li>
+            </ul>
+
+        <h4>Signal Masts</h4>
+            <ul>
+                <li>There is now a native OpenLCB signal mast type</li>
+                <li>Egbert Broerse improved the setup page for the matrix signal mast.</li>
+                <li>The SignalMast definition and editing code has been refactored to
+                    make it much easier to add new types</li>
+            </ul>
+            
+    	<h4>Signal Groups</h4>
+            <ul>
+                <li>Fixes a bug which caused the system names of Signal Groups
+                    to be overwritten.</li>
+            </ul>
+
+    	<h4>Simple Signal Logic</h4>
+            <ul>
+                <li>Improved tooltips</li>
+            </ul>
+
+    <h3>Switchboard Editor</h3>
+        <a id="SW" name="SW"/>
+        <ul>
+            <li>A new "Auto Range" option allows you to release the fixed range of items and fill in any start and end
+            address between 1 and 10,000. When a range over 250 is entered, a confirmation dialog pops up.<br>
+            The actual range limit is 400 items, unless the <i>Hide unconnected items"</i> box is checked.</li>
+            <li>The spinner to set the number of items was renamed <i>Number of Rows</i>.</li>
+        </ul>
+   
+    <h3>Timetable</h3>
+        <a id="Timetable" name="Timetable"/>
+        <span class="since">since 4.13.4</span>
+        <ul>
+            <li>The Timetable tool uses layout and train information to create train graphs.  
+	        See <a href="http://jmri.org/help/en/html/tools/TimeTable.shtml">Timetable Help</a> for details.</li>
+           <li>Replace the timetable package layout scale enum with the new standard scale process.</li>
+            <li>Implement custom scale support for the new scale process.</li>
+        </ul>
+
+   <h3>Warrants</h3>
+        <a id="Wt" name="Wt"/>
+        <ul>
+            <li>Karl Johan Lisby updated SCWarrants
+                so they don't automatically turn off functions at end of run.
+                This lets you keep them on if e.g. you're starting another warrant.
+                </li>
+        </ul>
+
+   <h3>Web Access</h3>
+        <a id="WA" name="WA"/>
+        <ul>
+            <li>New Preference to allow wifi throttles to create turnouts</li>
+            <li>Add new Tables menu and pages to JMRI web server</li>	    
+            <li>Most JSON WebSocket lists now send individual and list changes</li>	    
+        </ul>
+
+   <h3>WiThrottle Server</h3>
+        <a id="WS" name="WS"/>
+        <ul>
+            <li>New Preference to allow wifi throttles to create turnouts</li>
+            <li>Return client message for invalid loco address, turnout and route requests</li>
+        </ul>
+        
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"/>
+        <ul>
+            <li>Klaus Killinger added the <strong>Advanced Location Following</strong> functionality. Please see the
+               <a href="http://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#advanced_location_following">
+               documentation website</a> for details.
+            </li>
+            <li>Steam1: acceleration and deceleration rates are now adjustable. 
+                Added throttle key functions like Brake key and Coast key (Klaus Killinger).</li>
+            <li>Klaus Killinger added an option to set the top speed for reverse direction (engine type "steam1", tag "top-speed-reverse").</li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"/>
+        <ul>
+            <li><span class="since">since 4.13.4</span>
+                Starting with this release, JMRI will create new profile directories with the
+                suffix ".jmri".  This allows them to be more properly accessed in macOS/iOS 
+                eco-system (we do it on all platforms for people who share profiles between
+                different types of computers). It also allows people to rename their
+                profiles (outside of JMRI, i.e. through their computer's file browser)
+                with a .jmri ending. 
+                For more background, please see 
+                <a  href="https://github.com/JMRI/JMRI/pull/5777">PR 5777</a>.
+                </li>
+            <li>This release contains a significant update to how defaults are 
+                handled for the various system components like programming tools, throttle tools, etc.
+                Previously, the "internal" versions of those were often selected as defaults,
+                causing some confusion.  Now, unless you have explicitly created an internal connection
+                by adding it on the connections page, they won't be, and hardware-specific connections
+                will be used instead.</li>
+        </ul>
+        <h4>New Layout Scale process</h4>
+          <ul>
+            <li>A default scale set is distributed with JMRI as an XML file rather than hardcoded lists.</li>
+            <li>A jmri.Scale instance is a constrained bean:
+              <ul>
+                <li>The user name defaults to the scale name and can be changed.
+                    The toString() method uses the user name and scale ratio, e.g. N (160).</li>
+                <li>The scale ratio can be changed.</li>
+                <li>The scale factor is automatically calculated from the scale ratio.</li>
+                <li>Vetoable listeners can be notified of changes and can prevent changes
+                    that might impact application stability.</li>
+              </ul>
+            </li>
+            <li>jmri.ScaleManager manages access to the Scale instances.</li>
+            <li>A "CUSTOM" scale entry is included which an application can implement if desired.</li>
+            <li>Any changes result in the default list being copied to the user file location.
+                This makes it possible for users to create their own scale list.
+                The distributed list is not used if the user file location list is present.</li>
+          </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

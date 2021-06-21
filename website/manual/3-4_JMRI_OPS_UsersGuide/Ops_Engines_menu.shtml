@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Operations Locomotives Menu Bar</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent"><a name="Top"></a>
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Operations Locomotive Window Menu Bar</h1>
+<div align="right">
+<p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Routes.shtml"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<hr><img style="width: 291px; height: 92px;" alt="menu bar" src="images/Ops_Engine_MenuBar.png"><br>
+<p><strong>Tools </strong></p>
+<ul>
+<li><strong>Locomotive Roster <img src="images/arrow.gif" alt="arrow" height="9" width="20"></strong>
+
+<ul>
+<li><a href="Ops_ImportEngines_FromRoster.shtml">Import from JMRI roster</a></li>
+<li><a href="Ops_ImportEngines_FromFiles.shtml">Import from file</a></li>
+<li>Export to file</li>
+</ul>
+<blockquote>
+<p>Displays the Export complete dialog. The file is
+exported automatically as a .csv file.<br>
+<img src="images/Ops_Engine_ExportFile.png" alt="export" height="122" width="742"><br>
+</p>
+</blockquote>
+<ul>
+<li><strong>Delete all locomotives</strong> --
+Opens the <strong>Delete all locomotives?</strong> OK will
+delete all locomotives in the Operations Roster , cancel will abort the
+deletion.<br>
+<img src="images/Ops_Engine_deleteRoster.png" alt="delete" height="122" width="446"></li>
+<li><strong>Reset move count all locomotives --
+allows resetting all locomotive move counts.</strong></li>
+</ul>
+<blockquote>
+<p> <img style="width: 564px; height: 122px;" alt="Operations Engine" src="images/Ops_Engine_Tool_resetMove.png"><br>
+</p>
+</blockquote>
+<ul>
+<li><strong>Print</strong> -- Opens your
+computers <strong>Print</strong> window and will print
+your locomotive roster.</li>
+</ul>
+<blockquote>
+<p><img src="images/Ops_Engine_print.png" alt="print" height="345" width="722"></p>
+</blockquote>
+<ul>
+<li><strong>Preview</strong> -- Opens your
+computers <strong>Print Preview </strong> window and
+shows the preview of your locomotive roster.</li>
+</ul>
+<blockquote>
+<p><img src="images/Ops_Engine_preview.png" alt="engine preview" height="301" width="670"></p></blockquote></li><li>Synchronize with NCE Consists (greyed out for LocoNet)</li>
+</ul>
+<p><strong>Operations</strong> -- same as DecoderPro&reg;
+Operations menu</p>
+<p><strong>Window</strong> -- same as other JMRI&reg;
+menus.</p>
+<p><strong>Help</strong> -- same as other JMRI menus.</p><div align="right">
+<p><a href="Ops_Engines.shtml"><span style="text-decoration: underline;">Back</span></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<!--#include virtual="/Footer.shtml" -->
+</div> <!-- closes #container, started in sidebar -->
+<script src="/js/main.js"></script>
+</body>
+</html>

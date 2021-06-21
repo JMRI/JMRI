@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.3.5
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.3.5 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.3.5 release
+      </h2>
+
+	<p>Date: May 5, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.3.5 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+ 
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.4 production release at mid-year.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+
+<h3>Older warnings</h3>
+
+<p>This release and all future releases will not support the NCE serial interface running at 19,200 baud.</p>
+
+<p>The decoder definition files have been extensively reworked for this release
+to reduce their size and allow  them to be translated to other languages.
+Please keep an eye out for any inadvertent changes to the definitions 
+that might have been introduced.</p>
+
+<P>This release, and all other releases in this cycle, require Java 1.6.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+ 
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.5-r23358.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.5-r23358.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.5-r23358.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.5-r23358.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.5-r23358.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.5-r23358.tgz/download</a></p>
+
+ 
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.5/ws/jmri/dist/release/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+
+<h3>Changes since test release 3.3.4:</h3>
+
+  <ul>
+
+  <li>Fixed the DP3 Quit from menu option - Kevin Dickerson</li>
+  <li>Fixed an issue where a new Roster Entry may not get saved correctly to the roster index. - Kevin Dickerson</li>
+  <li>Initial Support for Signal Mast in the Dispatcher including<ul>
+    <li>Automatic train responding to SignalMasts</li>
+    <li>Section generation based upon SignalMast Logic</li>
+    <li>SignalMast Logic based section blocks are populated at load</li>
+    </ul>
+  </li>
+  <li>Added the option to store the Roster Entry in allocated blocks from the dispatcher rather than just a text string - Kevin Dickerson</li>
+  <li>Provide access to the Dispatcher functions of create new train, allocate sections and terminate for an active train from a memory icon, if a Roster Entry is used - Kevin Dickerson</li>
+  <li>Store the train type as set in the Dispatcher New Train Window against the roster entry, and retrieve it when the entry is selected again - Kevin Dickerson</li>
+  <li>Added the option to set the state of an Internal Sensor at load/creation to something other than Unknown - Kevin Dickerson</li>
+  <li>Fixed a placement issue with the SignalMast/Sensor tool in the Layout Editor - Kevin Dickerson</li>
+  
+  <li>There's now a <code>layoutblocks</code> variable predefined
+    for access to the LayoutBlockManager from Jython scripts.</li>
+
+  <li>Mattias K updated the LocoNet support to track the time that LocoNet messages were received.
+    
+  <li>Dick Bronson updated the definitions for RR-CirKits products
+  
+  <li>Stephen Lowens updated the SoundTraxx Tsunami Rapido definition
+  <li>Dave Heap updated the ESU V4 decoder definitions
+  <li>Nigel Cliffe provided a definition for Harman DCC "Signalist" decoders.
+  
+  </ul>
+      
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

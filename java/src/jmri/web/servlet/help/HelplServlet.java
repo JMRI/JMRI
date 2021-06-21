@@ -33,24 +33,28 @@ public class HelplServlet extends HttpServlet {
 
     private String readAndParseFile(String fileName) throws IOException {
         
+        System.out.format("File: %s, %s%n", fileName, FileUtil.getProgramPath() + fileName);
+        
         fileName = FileUtil.getProgramPath() + fileName;
         
-        String content = new String(Files.readAllBytes(Paths.get(fileName)));
+        String content = "";
+        try {
+            content = new String(Files.readAllBytes(Paths.get(fileName)));
+        } catch (IOException ex) {
+            content = ex.getMessage();
+        }
         
         String serverSideIncludePattern = "<!--#include\\s*virtual=\"(.+?)\"\\s*-->";
         
         Pattern pattern = Pattern.compile(serverSideIncludePattern);
         Matcher matcher = pattern.matcher(content);
-        matcher.replaceAll(new java.util.function.Function<java.util.regex.MatchResult,String>() {
-            @Override
-            public String apply(MatchResult t) {
-                System.out.format("Group: %s%n", t.group(1));
-                try {
-                    return readAndParseFile("website" + t.group(1));
-                } catch (IOException ex) {
-                    log.warn("Cannot include SSI: %s", t.group(1), ex);
-                    return "";
-                }
+        content = matcher.replaceAll((MatchResult t) -> {
+            System.out.format("Group: %s%n", t.group(1));
+            try {
+                return readAndParseFile("website" + t.group(1));
+            } catch (IOException ex) {
+                log.warn("Cannot include SSI: %s", t.group(1), ex);
+                return "";
             }
         });
         return content;
@@ -59,9 +63,11 @@ public class HelplServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.format("HelpServlet: %s%n", request.getRequestURI());
         
+//        String fileName =
+//                FileUtil.getProgramPath()
+//                + request.getRequestURI().replaceFirst("/help2/", "help/");
         String fileName =
-                FileUtil.getProgramPath()
-                + request.getRequestURI().replaceFirst("/help2/", "help/");
+                request.getRequestURI().replaceFirst("/help2/", "help/");
         System.out.format("HelpServlet: %s%n", fileName);
         
         String content = readAndParseFile(fileName);

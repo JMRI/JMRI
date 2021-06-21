@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
+<title>Decoder definition Submission</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>Decoder Definition</h1>
+<h2>Submitting to JMRI</h2>
+
+<div align=right>
+<p><a href="Dcode_Testing.shtml">Previous</a></p>
+<p><a href="index.shtml#DecoderDefinition">Back to Index</a><a href="index.shtml#Main"></a></p>
+</div>
+
+<hr>
+<h3>Submitting to GitHub</h3>
+<p><strong>How do I go about getting my Decoder Definition approved and into the next release?</strong></p>
+
+<p>If you're happy with them, you can contribute them to the next release for the project.</p>
+<p>To do this, follow <a href="../../help/en/html/doc/Technical/gitdeveloper.shtml">the instructions</a> (updated 2015).</p>
+
+<hr>
+
+<div align="right">
+<p><a href="Dcode_Testing.shtml">Previous</a></p>
+<p><a href="index.shtml#DecoderDefinition">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+    </body>
+</html>

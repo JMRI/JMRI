@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 1.7.1
+</title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.7.1 CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.7.1 test release
+      </h2>
+
+	<p>Date: June 18, 2005</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 1.7.1 of JMRI/DecoderPro is available for download.
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+
+<p>Now that production version 1.6 is out, it's (already) time to start a series of test versions that contain long-awaited new features, particularly improved support for QSI decoders.  Some of the changes involved are quite extensive, and may require a certain amount of experience before they are working well.  Therefore, this test version should be considered experimental.
+
+<p>Indexed CVs (e.g. for QSI decoders) re supported in this release.  The format displayed in the "Indexed CVs" tab is "CV.PI.SI" where "CV" is the CV used to program the value.  "PI" is the primary index, and "SI" is the secondary index into the array of indexed CVs.  CVs listed in the "CV.PI_X" format are write only CVs where the value of X is the value that will be written to the CV.
+
+
+<h3>New warnings for this test version:</h3>
+
+<p>Indexed CVs will not be included in any printouts for this release.
+ 
+<p>QSI CVs 56.4, 56.10, and 56.12 may or may not be supported by a particular model but are included in the "Indexed CVs" tab.  Reading or writing these CVs, if not supported, will result in a programmer timeout and the value state will indicate "unknown".
+ 
+<p>QSI CV 56.129 Engine ID Access is not supported in this release.
+ 
+<p>QSI CVs 56.255_0, 56.255_1, and 56.255_2 are write only CVs and are intended to used in Ops mode only as they produce a verbal response. These are included in the Indexed CVs tab.
+ 
+<p>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), otherwise the writes will fail.
+ 
+<p>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
+ 
+<p>The function of the first four outputs of QSI decoders can not be changed in this release although version 6 decoders support this functionality.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.hqx?download</a>
+
+<p>Windows:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.exe?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.exe?download</a>
+
+<p>Linux:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.tgz?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.tgz?download</a>
+
+<p>MacOS 8/9 "Classic":
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.1.Classic.hqx?download</a>
+
+<h3>Changes since production version 1.6:</h3>
+
+<p>Howard Penny added functionality to support indexed CVs such as those used by QSIndustries
+ 
+<p>Howard Penny added new decoder files for the QSI family types 
+Steam and Articulated Steam.
+ 
+<p>Howard Penny added functionality to determine the exact QSI decoder
+equipped model when using the decoder "Ident" button.
+ 
+<p>Howard Penny added Factory Reset support.
+ 
+<p>Howard Penny added functionality to add an analog fast clock to
+panels.
+ 
+<p>Howard Penny added size "11" to the popup menu for a text item
+in a panel as this is the default size, at least in Windows.
+ 
+<p>Howard Penny added new decoder files for the QSI family types
+Steam, Articulated Steam, Diesel, Electric, and Gas Turbine.
+
+   <!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

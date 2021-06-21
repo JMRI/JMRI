@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Ubuntu Linux Install Guide</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<h1>JMRI Install Guide: Ubuntu Linux</h1>
+
+	<ul class="snav"><!-- TOC -->
+	<li><a href="#installation">Installation</a>
+	<li><a href="#startup">Starting JMRI</a>
+	<li><a href="#debug">Debugging</a>
+	<li><a href="#notes">Notes</a>
+	</ul>
+
+<p>Ubuntu (Linux/GNU) is based on Debian and is recognized as being
+a very user friendly distribution.<br>
+Is it free and it is also suitable for loading onto older machines
+which may no longer have a viable commercial OS. It is also far less
+resource hungry than current Windows distributions and this is particularly
+true of <a href="http://xubuntu.org">Xubuntu</a> and <a href="http://lubuntu.net">Lubuntu</a>.</p>
+
+<p>This short instruction deals with installing
+JMRI on a Ubuntu (or similar Debian based) desktop.</p>
+
+<a id="installation">
+<h2>Installation Procedure</h2></a>
+
+	<ol>
+	<li>Determine if your hardware supports Java and JMRI</li>
+	  
+	<a name="sysreq"></a><h3>JMRI System Requirements</h3>
+	<p>Using JMRI requires a combination of hardware (in this case running Linux),
+	Java software and a JMRI download for a specific version.
+	<p>JMRI&reg; version 4.2 requires Java 1.8.</p>
+	<p>
+	You'll need the correct serial port or USB port to attach to your layout hardware.
+	JMRI is compatible with USB-to-Serial adapters, so long as they have Linux drivers that make them look like regular serial ports.</p>
+	
+	<li>Get and Install Java (if needed)</li>
+	
+	<p>See if you have a version of Java already installed:<p>
+	<p class="example"> sh> java -version</p>
+	<p>
+	If the Java version is 1.8 or later, you may be fine, but be aware that if you did not install Java on your system yourself,
+	some systems have Java only partially installed. They will respond correctly to the above command, but still are not complete.
+	If your system does not have Java in the environment variable PATH, the install is probably not complete.
+	Check with the system manager or do a fresh Java installation anyway.<br>
+	If your version is not at least 1.8, or if you get a "java: not found" error, you will need to install it.<br>
+	<p>Most Linux distributions can get an automated install download
+	from Oracle by clicking on this button:<br>
+	<a href="http://www.java.com" target="_blank">
+	<img src="https://download.oracle.com/technetwork/java/get-java/getjavasoftware-88x31.png" alt="Get Java Software" border="0" width="88" height="31" />
+	</a>
+	<p>
+	You arrive at a page like this one:</p>
+	<p><img src="images/UbInstall1.png" width="482" height="237">
+	<p>
+	Next you download the Java software package that suits your computer and operating system.<br>
+	When the download finishes, you will be asked where to store the Java install archive:</p>
+	<p><img src="images/UbInstall2.png" width="404" height="291">
+	
+	<p>If that doesn't work or you need to manually install Java,
+	you can find further information on the 
+	<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle Java downloads page</a>.  
+		<ul>
+		<li>Java comes in several forms: 
+		JMRI needs the Standard Edition (SE) version, but
+		Java EE is also OK;<br>
+		neither Java ME or Java Embedded are sufficient.
+		<li>There are also different Java SE installers: JMRI can
+		run with either a proper SDK (Software Development Kit, for compiling and running Java)
+		or JRE (Java Runtime Environment, for just running Java) installation.
+		</ul>
+	</p>
+	
+	<li>After running the Java installer, give user-level application access to your serial ports:<br>
+	    <p>
+	    <tt>chmod 666 /dev/ttyS0</tt><br>
+	    <tt>chmod 666 /dev/ttyS1</tt></p>
+	    </li>
+	
+	<li>Get JMRI</li>
+	
+	<p>
+	Just to be safe, before installing a new version of JMRI, rename your existing JMRI folder to "JMRI-1":
+	<p>
+	<img src="images/UbInstall4.png" width="465" height="155">
+	</p>
+	<p><a href="../download/index.shtml#prod-rel">Download</a> a version of JMRI, either the
+	latest production version, or a "test version".
+	<br>
+	<img src="images/UbInstall3.png" width="94" height="73">
+	
+	<li>Installing JMRI</li>
+	<p>
+	Uncompress/untar the file you just downloaded. This will create a new "JMRI" folder so you should copy/move the installation file to the Home folder to create the JMRI folder there.</p>
+	<p><img src="images/UbInstall5.png" width="417" height="204"></p>
+	
+	<p>Note: Each JMRI release is an independent set of files: It's intended to be used as a whole. Each release provides new files, and sometimes removes old files.<br>
+	You should therefore not expand the download into the same place as an existing JMRI installation. Instead, expand it into a separate location, and move in to it's final destination, completely replacing any previous version of JMRI.
+	<p>
+	To complete the install, just move that new JMRI folder to where you want it on your computer.
+	<p><img src="images/UbInstall6.png" width="417" height="203"></p>
+	
+	<p>You may have special icons or other files that you want to copy from the previous JMRI-1 folder now to the new installation.<br>
+	Copy them from the JMRI-1/resources folder.</p>
+	<p><img src="images/UbInstall7.png" width="409" height="337"></p>
+	
+	<li>Finishing up</li>
+	<p>Next we make a start-up launcher icon from the PanelPro script.</p>
+	<p><img src="images/UbInstall8.png" height="175" width="396"></p>
+	<p>With the mouse middle button you launch the Create Launcher, give it a name, browse to the Command file and add an informative Comment.</p>
+	
+	<p>To give your launcher an icon too, click the launching spring and pick up an icon from the resources folder (normally stored in the main JMRI folder).<br>
+	Now your PanelPro as well as the other JMRI SoundPro, Throttles, DecoderPro etc. launchers look like the one below:</p>
+	<p><img src="images/UbInstall9.png" height="174" width="379"></p>
+	
+	<p>Installation is complete.<br>
+	You can run the program by using the "DecoderPro", "PanelPro", or "JmriDemo" scripts in the JMRI folder. Change directory there, and invoke a script by typing e.g. "./DecoderPro" in Terminal.
+	</p>
+	
+	</ol>
+
+<h2>JMRI version 2.9.2 and earlier</h2>
+
+<p>If you are updating from a JMRI version prior to 2.9.2 then
+Java needs to me "unmodified".</p>
+
+<a id="rxtx">
+<h3>RxTx</h3></a>
+
+<p>RxTx used to be a problem requiring modifications to Java to
+enable JMRI to run. Since JMRI version 3 this is no longer required. However, if
+you are using a version of JMRI prior to 2.9.2 then Java must be
+"unmodified". There is a script to do this in the JMRI Users group
+Files area, or one can work back from the following:</p>
+
+<p>For those who
+do not wish to use the new version, the instructions for modifying Java
+are given below. If one wishes to run both, then this is simply a
+matter of unmodifying or modifying Java using the scripts.
+
+<p>The problem was that the RxTx in the Ubuntu
+repositories would not work with JMRI! RXTX 2.1 uses a different structure than
+RXTX 2.0; JMRI requires the RXTX 2.0 structure.
+The "2.0.7pre2" is known to work well
+and that is what is included in the automated script which can currently be downloaded from
+<a href="http://downloads.sourceforge.net/jmri/RXTX-install-5.tar.gz">Download RXTX-Install</a>
+and placed
+in a spare directory. Unpack it by double clicking, and then
+extracting (select: "Extract") the file. 
+The script is run by opening a Terminal and giving the command: <code>./RXTXinstall</code>
+
+<p>The script will do the following:
+	<ul>
+	<li>Checks that the correct java version is installed, then copies the RXTX files to the following directories:
+		<ul>
+		<li>javax.comm.properties,&nbsp;ext/javax.comm.rxtx.properties, ext/comm.jar and ext/RXTXcomm.jar to
+		/usr/lib/jvm/java-6-sun-??/jre/lib/ and lib/ext</li>
+		<li>i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/</li>
+		</ul>
+	</li>
+	
+	<li>Makes a symbolic link in /i386/ so the program finds the correct
+	RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).</li>
+	
+	<li>Alters the permission on dev/ttyS0 and ttyS1.</li>
+	
+	<li>Backs up /etc/group and adds the user to it.</li>
+	</ul>
+<p>
+The above description is brief, but the script itself can be opened in a text editor and studied at leisure.
+
+<h3>The Environment</h3>
+<p>On a fresh install the environment is OK <code>java -version</code> will return something like:</p>
+<code>java version "1.6.0_15"<br>
+Java(TM) SE Runtime Environment (build 1.6.0_15-b03)<br>
+Java HotSpot(TM) Client VM (build 14.1-b02, mixed mode, sharing)</code><br>
+or<br>
+<code>java version "1.6.0_0"<br>
+OpenJDK Runtime Environment (IcedTea6 1.6.1) (6b16-1.6.1-3ubuntu1)<br>
+OpenJDK Client VM (build 14.0-b16, mixed mode, sharing)</code>
+
+<p>However, upgrading Ubuntu may create problems for JMRI releases prior to 2.9.2 as the upgrade may now point at the
+"wrong" java. In this case simply run the reinstall script.
+
+<h3>USB Ports</h3>
+<p>Currently the start up scripts work "out of the box". However, some versions may need altering to get the computer to "see" a USB
+port by adding "-Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0" as follows:</p>
+<example>java -noverify -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0 -Djava.security.policy</example>
+<p>Please see the <a href="http://jmri.org/install/FAQLinux.html">FAQ</a> for more details.</p>
+
+<a id="startup"><h2>Starting JMRI</h2></a>
+<p>To start JMRI, open a terminal and enter <code>./DecoderPro</code> or double click the icon.</p>
+<p>After a clean install, the JMRI Preferences pane will open. Select your Connection and USB port, click "Save"  and restart.</p>
+More on this on the <a href="../help/en/html/setup/index.shtml">JMRI Setup help page</a>.
+<p>The JMRI <a href="http://jmri.org/help/en/html/hardware/index.shtml">Hardware help page</a> lists the various types of layout equipment that JMRI can connect to, and gives links to instruction pages. Go there next to complete your setup.</p>
+
+<p>When PanelPro and DecoderPro are first run, they look
+for a hidden directory ".jmri" in the home directory.  
+If they do not find it they will create one.  To see this
+hidden directory in the file browser select "View" and then
+"Show Hidden Files".<br>
+This directory holds the Preferences. If you are
+experiencing difficulties  with JMRI failing to start up, removing the
+relevant Config2.xml file from this directory should fix it.</p>
+
+<a id="debug"><h2>Debugging</h2></a>
+<h3>Errors</h3
+
+	<dl>
+	<dt>bash: ./whatever.csh: bad interpreter: No such file
+	or directory
+	</dt><dd>Can not run the shell: Try installing csh.
+	
+	</dd><dt>bash; ./cats.csh: Permission denied
+	</dt><dd>Try setting the icon to executable.</dd>
+	
+	<dt>Port not Found.
+	</dt><dd>See <a href="#notes">above</a>, but be aware that when a Java update is installed, it creates
+	a new directory and alters the soft link to it. However all the
+	RxTx information is left behind in the old directory.<br>
+	The solution is to run the install script again.</dd>
+	</dl>
+<p>If you have any problems get back to the <a href="https://groups.io/g/jmriusers">JMRI users</a> Groups.io group.</p>
+
+<a id="notes"/>
+<h2>Notes</h2>
+
+<h3>Using the Serial Ports</h3>
+Dave Heap provided the following instructions for setting up serial ports in JMRI under Ubuntu Linux (Feb 2016):
+<p>
+Open a Terminal window and put in the following command <strong>exactly</strong>:</p>
+<div class="wide">
+<code class="block">
+    while : ;do clear;ls -lt /dev|head;i=$((i+1));echo $i;sleep 1;done
+</code>
+</div>
+<p>
+Press ENTER and watch the screen as you slowly plug/unplug the USB device, watching what device appears/disappears and record the name.<br>
+If nothing appears/disappears your device is not loading a driver.
+<p>
+You will also need to enter the following command <strong>exactly</strong>:</p>
+<code>sudo adduser ${USER} dialout</code>
+<p>
+(This assumes "dialout" is the group shown beside your device in the list above.)
+<p>
+Then logout and back in again so the group membership takes effect.<br>
+Next, go to JMRI Preferences -&gt; Connections and the device name you saw earlier should be in the dropdown list once you select a serial connection.</p>
+
+<p class="important">Do not:<br>
+- Try to bypass group membership by running as root. That will create further problems.<br>
+- Try to change permissions of the serial port you see. They will be lost every time you plug/unplug/logout/reboot.
+</p>
+
+<p>If you keep having problems, check the /var/lock directory and remove any stale lock files for the device.<br>
+In particular this can be a problem if you have ever run JMRI as root.</p>
+
+<h3>LocoBuffer-USB</h3>
+<p>We recommend you use Ubuntu 8.04 or later with the LocoBuffer-USB.
+If you are planning to use Ubuntu 7.10 or older and a
+<a href="http://rr-cirkits.com/locobuffer-usb/LB-manual-USB.pdf">LocoBuffer-USB</a>
+from 
+<a href="http://rr-cirkits.com/">RR-Cirkits</a>,
+you will need to download the patched
+<a href="http://rr-cirkits.com/locobuffer-usb/linux/ftdi_sio.ko">ftdi_sio.ko file</a>
+(right click on the link and save this file) to replace the one that came
+with the distribution.</p>
+
+<h3>CATS</h3>
+<p>CATS 2.34 (Release2037) is compatible with JMRI 3.3.1 thru 3.8. We recommend that you use <a href="../releasenotes/jmri3.8.shtml">JMRI release 3.8</a> with it.
+Newer releases currently do not support CATS.</p>
+<p>We have carried out limited testing on CATS
+with 2.9.2 and with a modified install script it runs. If you are
+running CATS, one drops the zip
+file into the JMRI directory, and unpacks it there. Then copy
+cradic.gif and put the copy into resources. We recommend to keep
+TrainStat in a separate directory. Also move CATS out of the JMRI install directory before updating JMRI in the future to prevent it being deleted by the installer.
+
+<h3>Installing Ubuntu</h3>
+<p>Details on installing Ubuntu can be found at <a href="http://www.ubuntu.com/getubuntu/download">Ubuntu Downloads</a><br>
+Follow the Path "Download" and read up on the Help page which gives advice on how to download the ISO image and
+then create a bootable CD to install Ubuntu.</p>
+JMRI Help also has details for <a href="http://jmri.org/install/decTop.shtml">installing Xubuntu</a>.</p>
+
+<h3>More info</h3>
+<p>You can find some more specific information
+on the "<a href="FAQLinux.html">JMRI Linux FAQ page</a>".
+
+<p>(Updated Ubuntu install instruction provided by Kai Vehmersalo Feb 2016; information on CATS and Java requirements Dec 2015)</p>
+
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody, started in sidebar-->
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.11.3
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.11.3 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.11.3 release
+      </h2>
+
+	<p>Date: March 1, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.11.3 of JMRI/DecoderPro is available for download.
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the third in a series of test versions. We expect this series
+to end in a JMRI 2.12 or 3.0 production release in early 2011. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Many operations improvements
+<li>support for the new Digitrax DCS51 Super Chief Xtra and the SPROG 3
+<li>Major additions to Logix and Editors
+<li>Improvements to throttles, including web and smartphone throttles.
+</ul>
+along with other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+<p>There have been extensive changes to the throttle code.
+If you have written scripts that use throttles, particularly
+multiple throttles, please check to make sure they still work.
+
+<p>Due to now working checking of panel files during the load,
+many users may see a popup about missing icon files.
+All past versions were silent if an icon file was not found.
+If the panel loaded 'clean' under the prior version, this is
+due to 'dirt' in the panel files of old icon file references that
+may be ignored. But save a copy of the panel file before updating.
+
+
+<h3>Older warnings</h3>
+
+The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
+along with some of the other constants in the class.  
+This will have no impact on people just using the program.  
+If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
+
+<h3>Known problems with this release</h3>
+
+Powerline interfaces for CP290 and Insteon broken. Thanks to
+Jim LaFevre for spotting this.
+<p>
+People have reported spurious warnings when setting up multiple 
+connections.  If you get one, and you're sure that you have not
+configured two connections to use the same serial port, just 
+click the button to continue.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.3.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.3.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.3.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.3.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.3.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.3.tgz/download</a>
+
+<h3>Changes since production version 2.11.2</h3>
+
+Paul Bender provided a new ThrottleBridge.py script.
+It is a proof of concept script showing how to bridge a throttle 
+from one system to another.
+
+<p>
+Paul Bender fixed a bug in Lenz XPressNet throttle implementation.
+
+<p>
+New operations features and bug fixes:
+<ul>
+<li>Users can now modify the train timetable.
+<li>Change switch list valid date to 24 hour clock
+<li>Code now checks the train's direction when determining a track for engines and cabooses.
+<li>Added "Modify Location by Car Type" tool to the location window.
+<li>Fixed operations bug introduced in 2.11.2.  When parsing a location or track name, if a name ends with "-x" the -x should be dropped if x is a number. 
+<li>Use the route departure time if set.
+<li>Allow user to select default printer for switch lists.
+<li>Add to train tool menu print and preview build report.
+<li>Rolling stock move count improved.
+<li>Allow user to change departure comment to loads and empties.
+<li>Users can now control which loads a track can service.
+<li>New tabbed manifest and switch lists.
+<li>Minor enhancement to check the car's load when placing car at a location.
+<li>Improve how operations moves cars when a route services a location more than once.
+<li>Improved car routing when car has a custom load.
+<li>All car loads in a kernel are now updated by siding's schedule.
+<li>User can now change all of the loads in a kernel when editing a car's load.
+<li>Add GUI for selecting tabbed manifests
+<li>Update "Show Car Types Serviced" Tool for train, now shows load status for train and track.
+<li>Fix bug when car has destination and train terminates into staging.
+<li>Fixed operations problem when two or more consecutive schedules were used to route cars.
+<li>Minor improvement to manifests when using colors.
+<li>Fix minor bug when restarting program: A track with a schedule would move to the next items during load when cars had that destination track.
+<li>Operations enhancement, in the Trains window, user can select "Show All" or "Show only build trains".
+<li>Operations enhancement, now the user can sort trains by status.
+<li>The program modifies all cars in kernel when using custom loads from staging.
+<li>Users can now preview or print out the car loads for the various car types.  This feature can be found in the Edit Car Loads->&gt;Tools
+<li>Users can now control which staging track a train will use.
+<li>Provided a new operations sample script to deselect the train build button when a train terminates: OperationsDeselectBuild.py 
+<li>Users can now run scripts after operation files have been loaded, and users can run scripts when the Trains window is closed. 
+<li>The program now checks car and engine length field during file imports.
+<li>Users can now select where to place the backup operations files.  See Settings / Tools / Backups.
+<li>The program now routes cars from staging with a custom load to a siding with a schedule demanding that car type and load.
+<li>Fixed trains terminate button, it should have terminated all trains that have been printed.
+<li>When printing car locations you can now optionally have a space or page break after each set of locations.</li>
+<li>New manifest print option, you can now show destination and track when picking up a car.</li>
+<li>Schedules can now operate in two modes, sequential or match.  Use match mode when you don't care about car order.</li>
+<li>New optional train requirements, you can now have two locomotive changes in the train's route, or request helper service.</li>
+</ul>
+
+<p>
+Pete Cressman added support for invisible icons on panels.  The file "Invisible.gif" in the program icon directory can be selected 
+as a dimensionless icon.  This can be used when sensors are stacked and allows "peeking through" a state of the top sensor
+to view the state of the sensor underneath.  For example. combining two sensors to depict a 3 state panel jewel.
+
+<p>
+Lionel Jeanson updated the JMRI mini web server
+index.html with entries to prefs/roster.xml and web/roster.html
+Also, added automatic creation of function buttons from the JMRI roster 
+to the web throttles application, including lockable buttons.
+
+<p>
+Dan Boudreau and Ken Cameron updated the NCE support to
+allow more than one NCE connection.
+
+<p>
+Dan Boudreau fixed a bug with configuring multiple port options.
+
+<p>
+Paul Bender updated how the throttles handle notifications internally.
+
+<p>
+Ken Cameron updated the main window to 
+show connection name for each line. 
+Nice confirmation for multiple connections.
+
+<p>
+Dan Boudreau added a warning when trying to load an icon with a bad url
+
+<p>
+Kevin Dickerson improved the script input window.
+
+<p>
+Kevin Dickerson improved how Blocks are saved and loaded
+
+<p>
+Matt Harris fixed a problem with the System Console configuration
+
+<p>
+Kevin Dickerson added a "New Throttle Window" to the File menu
+
+<p>
+Pete Cressman added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
+
+<p>
+Dennis Miller fixed some help page links
+
+<p>
+Giorgio Terdina updated AutoDispatcher2 to version 2.3.4, 
+which copes with some changes in SignalHeadicon and is backwards compatible.
+
+<p>
+James LeFevre added more functions to the TMCC throttle.
+
+<p>
+Lionel Jeanson improved the ZeroConf handling.
+
+<p>
+Pete Cressman added new Logix features
+<ul>
+<li>A dialog will display Logix errors if any occur during runtime</li>
+<li>Conditionals can be set to calculate the triggering of their actions whenever one of the state 
+variable changes state.  Until now Conditionals have only calculated the triggering of their actions  
+when the antecedent expression itself changed truth value.  In both cases, 
+actions are still triggered according to the truth value of the antecedent expression.</li>
+<li>State variables to test the status of Occupancy Blocks have been added.</li>
+<li>Actions for setting Occupancy Block conditions have been added.</li>
+</ul>
+
+<p>
+Pete Cressman added new ControlPanelEditor features
+<ul>
+<li>Clipboard Copy &amp; Paste can be done between two control panels.</li>
+<li>The Item Palette can hold multiple sets of icons for each item type.</li>
+<li>The Item Palette has "Indicator Track" and "Indicator Turnouts" that change color when their block sensor 
+shows occupacy.  When used with Occupancy Blocks and Warrants, indicator icons will show allocation, 
+path route, occupancy or error condition by color.</li>
+<li>Accelerator keys added for Item Palette and Table List.</li>
+<li>The Item Palette user interface has all tab items drag from a "Drag Panel" icon.  Dragging from a table
+row places a text label in the panel.</li>
+</ul>
+
+<p>
+Andrew Crosland added support for SPROG 3.
+
+<p>
+Andrew Crosland changed the defaults for the CBUS console to decimal, show events.
+
+<p>
+Kevin Dickerson added an option in the Ecos preferences to select if we always force control of the loco when trying to open a throttle or not.
+
+<p>
+Kevin Dickerson greatly improved the internals for throttle handling
+
+<p>
+Paul Bender made changes to the XPressNet code toward multiple connection support
+
+<p>
+Ken Cameron made it possible to select a default power manager when using multiple connections.
+
+<p>
+Pete Cressman changes:
+<ul>
+<li>edited tooltip-text is saved and default tooltip is its device display name
+<li>improved path detection and display for simultaneous manual and auto train running under warrants.
+<li>fixed duplication and copy of rotated Signal Masts bug.
+<li>improved path detection and display for simultaneous manual and auto train running under warrants.
+<li>added a loco icon to follow auto trains running under warrants
+<li>fixed bug where orthogonal rotations overrode degree rotations when loading a panel.
+</ul>
+
+<p>
+Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
+
+<p>
+Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
+Thanks go to Ed Sisk for the loan of a DCS51 to perform the development and testing.
+
+<p>
+Kevin Dickerson fixed NPE that can occur with some versions of unix and MAC OS X with getting the multiclick interval time that may not be supported
+
+<p>
+Matthew Harris added an example script to enable persistence of turnout states between sessions
+
+<p>
+Matthew Harris updated SerialPortRFID script - as per patch #3152534 from Nigel Cliffe and MERG member Ian King
+
+<p>
+Kevin Dickerson updated the user preference manager so that items and descriptions
+are now dynamically added via the using code.  The message preferences pane is 
+now dynamically created bases upon this information.  
+See AbstractTableAction and LogixTableAction for examples of its use.
+The old items stored in the xml files is no longer valid, but shouldn't 
+be a major issue as all these dealt with was the supression of message boxes.
+
+<p>
+Matthew Harris fixed a GUI anomaly on Tabbed Preferences window
+
+<p>
+Kevin Dickerson added the ability for the user to add icons to the panel editor via the mouse popup menu while in edit mode.   The icon will be placed at the co-ordinates of the mouse.
+Also Signal Masts and sensors can be added to boundary points on the layout editor
+
+<p>
+Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
+Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
+
+<p>
+Kevin Dickerson has done some work on storing frame positions and sizes
+via the user preference manager.
+
+<p>
+Lionel Jeanson improved the Jynstrument throttle support:
+<ul>
+<li>Added function control up to 28.
+<li>Removed filter on kind of acceptable devices so that any Jinput device 
+    can be used for throttle control (Keyboard, mouse...).
+<li>Added a sample driver for keyboards.
+Note: once the keyboard driver is running, all keyboard inputs will be considered even if the JMRI window is not on the front
+<li>A "None" device was introduced in the device list accessible on right click, 
+    avoids to have all key inputs redirected to the Throttle.
+</ul>
+
+<p>
+James LeFevre improved TMCC throttle support.
+
+<p>
+Matthew Harris corrected a bug where Layout Editor and Control Panel Editor Panels were not being deleted when 'Delete' was picked from the 'File' menu.
+
+<p>
+Matthew Harris changed the BeanTableDataModel to use internationalized strings for column names rather than hard-coded strings.
+
+<p>
+Paul Bender added a script showing how to add and remove a consist.
+
+<p>
+Fixed a problem with OpenLCB turnout and sensor device addresses in "dot" form: 12.34.56.7.8.AB.C.DE
+
+<p>
+Leo Bicknell improved the LocoNet monitor:
+<ul>
+<li>Adds symbolic names for the 0xD7 and 0xDF opcodes.
+<li>Tweaks a number of messages so they are easier to read, provide more useful information.
+<li>Reformats the fast clock query and response commands to make them clearer and take up less space.
+<li>Reworked the sensor reporting code to allow it to properly convert sensor numbers to DS-64 inputs and be much easier to understand.
+<li>Reworked the sensor probe decode to report which sensors are being probed, rather than the esoteric "bits a/c/b" information.
+<li>Added in a decode for what I call the PANEL QUERY (0xDF opcode).
+<li>Added in a decode for what I call the PANEL RESPONSE (0xD7 opcode). [Tested against UR-91 and UR-92, but not UR-90.]
+<li>I found the slot read/write stuff totally unclear, so I modified some of the terms and how it prints out and got what I think is a much clearer output.
+<li>Added decodes for the Duplex Group Name query and response.
+<li>Added decodes for the Duplex Group Channel query and response.
+<li>Added decodes for the Duplex Group Password query and response.
+<li>Added logic in the SEND IMMEDIATE decode to decode F-keys F13..F28 and print something nice.
+<li>Made numerous improvements in internal structure and documentation
+<li>Corrected the inconsistency of "." or no "." on messages to always have a ".".
+<li>Better report a request for Command Station OpSw values (slot=127).
+<li>Annotated things that were reverse engineered.
+<li>Removed unnecessary dest address from DISPATCH PUT display.
+<li>Prefixed LONG_ACK a few places it was missing.
+<li>Fixed sensor reporting logic to properly display SE8c information. Thanks to Bob Milhaupt.
+<li>Improved decode of switch status broadcast, even though I've never seen anything send one.
+<li>Changed OPC_PANEL_RESPONSE to indicate if it was duplex capable, if we're interpreting that bit correctly.
+<li>Included a long form decode of Command Station OpSw responses.
+</ol>
+
+<p>
+Leo Bicknell fixed a presentation problem in the LocoNet ID tool
+
+<p>
+Ken Cameron converted Powerline to support:
+<ul>
+<li>Multiple Connections.
+<li>Added a simulator connection.
+</ul>
+
+<p>
+Ken Cameron added a script, BlockLister.py, to investigate what is connected to a block.
+It displays which block connections, signals, signal masts, etc...
+
+<p>
+Ken Cameron updated RobotThrottle3.py to look past a block boundary without a signal.
+Added buttons to manually move a train at the red, yellow or green speed to add manual
+setups.
+
+<p>
+Mike Mosher fixed a minor bug in certain ESU decoder definitions.
+
+<p>
+Mike Mosher did a major update to the QSI V7 definitions.
+
+<p>
+Mike Mosher updated the BLI P2 steam decoder definition to 
+fix smoke control bug, CV116-117 bug, some pane tweeks, some default value changes, 
+add CV 121,122,203,204,205,206,207,211,234,235,236,237.
+
+<p>
+Mike Mosher added a decoder definition for the MRC 1906 genset.
+
+<p>
+Mike Mosher updated the DecoderPro consist pane to add F13-F28
+needed for BLI P2 steam.
+
+<p>
+Mike Mosher updated the Tsunami Diesel Genesis OEM decoder definition
+version 3 to change SD70ACe model and add SD70M-2 model
+
+<p>
+Walt Thompson added reset definitions to the TCS definitions.
+
+<p>
+Mike Mosher added new SoundTraxx MC and MC IMRC OEM decoder definitions
+
+<p>
+Steve Todd made multiple updates to the JMRI mini webserver:
+<ul>
+<li>greatly improved the speed
+<li>provided a favorite icon for the server
+<li>modified the miniserver fileservlet to return the appropriate status
+(i.e. 404, 403) instead of unhandled exception or blank 200 responses. 
+<li>removed GetHost() which was causing timeouts on every access on some networks
+<li>set a 5-minute expiration on static files to avoid unneeded retrievals.
+<li>turned off caching on jframe images
+<li>added css folder so existing help files find default.css
+<li>improved index.html and dir listings to match jmri.org
+<li>changed headers from HTTP 1.0 to HTTP 1.1
+<li>added jmri icon for miniweb panel
+<li>added MiniServer preferences panel (port, rebuild, refreshes)
+<li>updated various help files related to miniserver
+</ul>
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

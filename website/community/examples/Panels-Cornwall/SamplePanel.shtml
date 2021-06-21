@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Creating a Sample Panel</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+
+This page walks you through creating a simple control 
+panel for your own layout.  This example is based on the 
+Lickdale panel for Nick Kulp's Cornwall Railroad,
+but you should be able to create a panel for your own layout
+by following these instructions. More information is available
+on how to you can
+<a href="CornwallRunning.shtml">run Nick Kulp's Cornwall RR Program</a>
+to see what it's like, and on 
+<a href="Cornwall.shtml">how his program was written</a>.
+
+<a id="background"><h2>Step 1: Create the background image</h2></a>
+
+The first step is to draw the background of the panel as a GIF file.  
+Use your favorite
+In this case, the track schematic was drawn as 3-pixel white lines on a 
+black background, with connecting lines for turnouts drawn at a 45 degree angle.
+You can do this with any paint program you happen to have, but this picture
+was drawn with "GraphicConvertor" on a Macintosh.
+<br>
+<img src="./images/Lickdale.gif" width="644" height="324" hspace="0" vspace="0">
+<p>
+If you want to follow along here, download that picture (right click on the picture
+and "Save As...") as "Lickdale.gif".
+
+<h2><a id="initial">Step 2: Creating the initial panel</a></h2>
+
+To turn this picture into a control panel, you have JMRI create a 
+panel that displays this as a background.
+You then place "icons" in front of it that are redisplayed as the layout status
+changes.  
+<p>
+To create the control panel:
+<ol>
+<li>Start PanelPro.
+ <ul>
+ <li>If you've not used it before, set the preferences
+ to connect to your layout, save them, quit the program and restart.
+ <li>If you don't have a layout connection yet, you
+ can still experiment by selecting "LocoNet Simulator" which gives
+ you a "Simulated LocoNet".
+ </ul>
+ For more information on PanelPro, please see its
+ <a href="./apps/PanelPro/index.shtml">main page</a>.
+<li>Start the panel editor by selecting "New panel..." from the "Panel" menu.  
+You'll get a blank control panel, plus the editor window:
+<li>Click the "Pick background image..." button.  This will open
+the familiar dialog for picking an file.  Move to where your background
+file is, and open that file.  It will then appear as the background in the
+panel.
+<li>You can now resize the panel until your entire background image
+is visible, and move it to some convenient place on the screen.
+<li>Click the "Set panel name" button on the editor.  A dialog
+will open that lets you enter a name for this panel, which will appear 
+at the top of the window.
+</ol>
+At this point, you've defined the beginning of your panel, but you
+haven't permanently stored it yet.  
+You have to save the panel before you quit the program, or it will be lost.
+To do that:
+<ol>
+<li>From the "Panels" menu on the main PanelPro window,
+select "Store panels...". This will open
+a familiar file dialog.
+<li>Select a directory and filename to save your current panel
+setup.  We traditionally use a ".xml" extension, but you're welcome to
+use whatever you'd like.
+</ol>
+To check that the file was stored OK:
+<ol>
+<li>Close your panel window.  This will make both the new panel
+and the panel editor disappear.
+<li>From the "Panels" menu on the main PanelPro window, select
+"Load panels..."
+<li>In the file dialog that just opened, select and open the
+file you previously stored.
+</ol>
+Your panel should reappear on the screen, in the same position it was
+when you stored it.
+<p>
+Note that storing the panel layout saves all the control panels visible
+at that moment, even if you have more than one.
+
+<a id="autostart"></a><h2>Step 3: Have the panel show when the program starts</h2>
+
+Rather than manually loading the panel via the menu each time you
+start the program, you can have it loaded automatically.
+<ol>
+<li>From the "Edit" menu, select "Preferences..."
+<li>On the "Preferences" panel, check the box labelled "Show Advanced Preferences"
+<li>A number of sections of options will now be visible.  Under "Startup Files",
+click "Add File"
+<li>On the file dialog that opened just now, select the file
+in which you'd previously stored your panels.
+</ol>
+Now each time you start PanelPro, your panel will be automatically displayed.
+
+<a id="sensors"><h2>Step 4: Add block occupancy sensors</h2></a>
+
+PanelPro provides block occupancy sensors to control icons on the screen.
+A block occupancy sensor has four states:
+<ul>
+<li>Active - the block is occupied
+<li>Inactive - the block is unoccupied
+<li>Unknown - the layout hardware hasn't reported the block's status yet
+<li>Inconsistent - some sort of error has occurred, and we don't know the status
+</ul>
+PanelPro will display a different icon on the screen for each of these
+states.
+For example, there are icons for lit 
+<img src="./images/REDLED.gif">
+and unlit 
+<img src="./images/GRAYLED.gif">
+red LED indicators. By displaying a red LED when
+a particular block is occupied (sensor active), and a gray one when the
+block is unoccupied (sensor inactive), you get an occupancy indication on the
+panel.
+<p>
+You'll need to know the JMRI names for your block sensors.
+You can figure these out from the wiring
+(see the 
+<a href="../Technical/Names.html">JMRI naming pages</a> for info)
+but it's usually easier to have the program do it if you're connected to
+your layout.
+<ol>
+<li>From the "Tools" menu on the main window, select "Sensor Table".
+(You might need to make the window larger; you can also change the 
+width of the columns by dragging at the top)
+<br>
+<a href="sampleImages/SensorTable.gif"><img src="sampleImages/SensorTable.gif"
+alt="Screen shot of sensor table" width="233" height="209" hspace="0" vspace="0"></a>
+<li>If you have a Digitrax or C/MRI system connected, your occupancy sensors will have
+already made entries the table for each sensor.  They'll appear
+in the "System Name" table with names like CS21 (Input 21 on the C/MRI system)
+or LS34 (Loconet Sensor 34).  You can fill in the "User Name" column with
+anything you want to display about this sensor later.  For example, the 
+Cornwall Railroad gives geographic names to it's blocks, and includes them here.
+<li>If you're not connected to a layout, or have other hardware,
+you'll have to manually define your sensors. Click "Add..." at the bottom
+of the Sensor Table window, which will pop a dialog box.  Enter a 
+system name (and optionally a user name) for the new sensor, and click
+"OK".  You can repeat this as many times as needed.
+<li>The button at the right side of each row in the table will respond
+to changes read back from the layout.  If you put an engine in a block,
+the corresponding row should change to "Active", and then change to "Inactive"
+when you remove it.
+</ol>
+<p>
+Once you've found the system name for a block sensor (for example, "CS21"), you can add an indicator
+to the panel that follows that sensor:
+<ol>
+<li>Go to the panel editor window for your panel.
+<li>In the field next to "Add Sensor:", type the name
+(for example, CS21).
+<li>Click "Add Sensor:".  A small icon will appear near the
+upper-left on your panel. By default, it appears as a little red circle.
+<li>If you let the cursor arrow "dwell" over that circle, you should
+see a tooltip pop up that tells you it's name.
+<li>To move it to the right place, drag it with the right mouse button, or
+while holding down the option key, then drop it where you want it.
+<li>If you control-click (or right click) on it, you'll get a small pop-up
+menu that can be used to remove the icon, or rotate the icon.  (There's no
+reason to rotate the round default icon, but it will be useful later)
+</ol>
+You can repeat this as many times as you'd like to add extra icons.  You can
+also have more than one icon "listening" to a single input, for example
+if a block appears at both the right and left edges of the panel.
+
+<p>
+If you don't like the default icons, you can change them.
+<ol>
+<li>Click "Edit icons..." next to "Add Sensor:".
+<li>An icon editor window will open. (See right)
+<a href="sampleImages/EditSensorIcon.gif"><img src="sampleImages/EditSensorIcon.gif"
+alt="Screen shot of sensor icon edit" width="198" height="366" hspace="0" vspace="0" align="right"></a>
+<li>There are four icons at the top which you can change, plus a window
+containing a tree of available icons.  (You can also add your own, see below)
+<li>To find the nice LED icons, click "resources", then "icons", then
+"mediumschematics", then "LEDs". That will open up the tree so that it
+looks like the example to the right (you might have to resize the window
+to see it all).
+<li>Now you can change each icon by selecting the file from the window (the
+blue bar in the image to right), and clicking on the icon at the top
+that you want to change.  In the example to the right, the "Active" icon
+has just been clicked to show "REDLED.gif" when the sensor is active.
+</ol>
+
+<p>
+Be sure to save the panel to a file when you're done! This will also
+save any sensor definitions or user names you've entered.
+<p>
+If you have lots of icons to place, this can become unwieldy.  The panel
+definition is stored in a human-readable form in an XML file, which you
+can directly edit.  Each icon on the screen in one line on the screen, with
+some extra stuff at the top and bottom of the file.  The format is almost
+self-explanatory. x="12", for example, means draw the icon at an x coordinate
+of 12 pixels;  the top left corner is 0,0 (x, y), with y growing down the screen.
+You can duplicate and
+edit lines with your favorite editor.  For example, if you want to have
+to icons line up on a horizontal line, you might find it easier to position the 
+first item perfectly by hand, and then edit the rest of the lines to have the
+same y= coordinates.
+
+<a id="turnouts"></a><h2>Step 5: Add turnout controls</h2>
+
+Next, we add the turnout controls.  These send a message to the
+layout hardware when clicked, which changes the position of the 
+associated turnout. The icons
+show two different images depending on whether the turnout has been commanded
+to be "Closed/Normal"
+<img src="./images/plateSwitchN.gif">
+or "Thrown/Reversed"
+<img src="./images/plateSwitchR.gif">.
+
+<p>
+First, find the turnout number that controls the desired turnout. One way 
+to do this:
+<ol>
+<li>Open the Turnout Control tool from the Tools menu on the main window.
+<br>
+<img src="../images/TurnoutControl.jpg" alt="Turnout control frame" width="223" height="136" hspace="0" vspace="0">
+<br>
+You can enter a turnout number, and click the Thrown and Closed buttons to 
+see if it works right.
+<li>Once you've got the turnout working, open the "Turnout Table" from
+the Tools menu and find the system name for that turnout.  Note that
+you can also change the turnout state from the turnout table by clicking
+the button on the right side of the row.
+</ol>
+
+Once you have the correct number, to add the icon to the panel:
+<ol>
+<li>Go to the panel editor.
+<li>First, you need to select the proper icons to use.
+Click "Edit icons..." next to "Add right-hand turnout..."
+(Right-hand and left-hand turnout buttons are just provided to
+have different default icons; they work the same).
+<li>In the icon editor window that opens, open "resources", then "icons",
+then "CTCpanels", then "CtcPlates60x60".  
+<li>Select "plateSwitchN.gif", then click on the "Closed:" icon at the top.
+<li>Select "plateSwitchR.gif", then click on the "Thrown:" icon at the top.
+<li>Select "plateSwitch.gif", then click on the "Inconsistent:" icon at the top.
+<li>Select "plateSwitch.gif", then click on the "Unknown:" icon at the top.
+<li>Go back to the panel editor window.
+<li>Put the turnout name (e.g. LT21) in the field next to "Add right-hand turnout:"
+<li>Click "Add right-hand turnout:"
+<li>The icon should have appeared near the upper left of your panel.  
+Option-drag it to where you want (or drag with the right mouse button, depending
+on what type of computer you have)
+</ol>
+You can repeat the last few steps as many times as you want; your icon
+selections are remembered until you quit the program.
+
+<p>
+The turnout number over the switch plate was added as part of the background picture.
+You could also add text via the panel editor to do this.  (There is a popup menu
+on text added this way that lets you set it's size and color)
+
+<p>
+At this point, you've got a functional panel.
+Congratulations!
+The rest of this page discusses various ways to include additional
+neat features such as turnout sensing from the layout and signal 
+indicators.
+
+<a id="turnoutsensors"></a><h2>Step 6 (optional): Add turnout sensing</h2>
+
+<img src="./images/turnout.gif" ALIGN=RIGHT>
+Nick also wanted the turnout controls to look like they had small indicator
+lamps over each side to show the actual status of the turnout.  This was done
+by adding two sensor icons there.  The one on the left would show
+<img src="./images/yellow.gif"> if the turnout was closed, and 
+<img src="./images/gray.gif"> if it was thrown.  The icon on the right
+would do the reverse, showing 
+<img src="./images/gray.gif"> if the turnout was closed, and 
+<img src="./images/red.gif"> if it was thrown.  These were attached to inputs
+on the C/MRI system, so that the actual position of the turnouts on the
+layout was read back. This way the indicators on the panel showed the
+real position of the turnout, not just what command had been sent to the motor.
+<p>
+To add these, go back to the panel editor for your panel.  Click "Edit Icons..."
+next to "Add sensor", and select the images you want to display.  (Nick's small
+lights are in "Icons : smallschematics : LEDS"). Then enter the name of the sensor 
+for the first turnout, and click "Add sensor" to put it on the screen. Drag-click
+it to move it into position near the turnout control.  Repeat that for all 
+of the rest of the indicators on the thrown side of the turnout levers, providing
+the right sensor number each time.  Then change the icons to the 2nd set, and
+go back and add sensors to the other side of each lever.
+<p>
+
+A similar technique is used for the turnouts on the schematic.  The indicators
+on the schematic are meant to show the actual positions of the turnouts, not
+just the last status sent by the DCC system, so they respond to the C/MRI sensors
+using two icons:  
+<img src="./images/TurnoutClosedL.gif">
+and
+<img src="./images/TurnoutThrownL.gif">.
+These are positioned over the turnouts on the track schematic background. 
+They cover (with the little back blob) a bit of track on either the normal
+or diverging route, so that the screen displays only one line as complete.
+In this case, these icons were made by clipping a few pixels from the
+background drawing. 
+(<a href="CornwallDetails.shtml#turnout">Details...)</a>
+There are "left" and "right" sets for the two basic types
+of turnouts used; they can be rotated via the popup menu to work with the various
+turnout orientations on the schematic.
+
+<hr>
+Below here is not revised yet!
+<hr>
+
+<h2>Signaling</h2>
+Signaling is a vital part of the Cornwall Railroad's operations.  If JMRI
+was going to drive the railroad, it had to properly handle the signals.
+(There's no way to share the C/MRI system between the existing BASIC program for
+driving signals, and a new program for the dispatcher panel).
+
+<a id="definesignals"><h2>Step 7: Defining signals to the program</h2></a>
+
+<a href="sampleImages/SigTable.gif"><img src="sampleImages/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Table Figure"></a>
+
+To define the signals to the program, you use the "Signal Table" from the tools
+menu.
+The program can't detect what signals you have installed on your layout,
+so you have to define them individually. To do this, start by opening the 
+Signal Table, and then click the "Add..." button.  A new window will open.
+<p>
+PanelPro knows about several different types of signals.  Each has different
+information needed to specify it, so on the "Add" panel you first select the
+type of signal you have, and then provide additional information:
+      <dl>
+      <dt>Triple Turnout
+      <dd>This a signal head with red/yellow/green lights that
+      are driven by DCC turnout outputs.  To configure one of these,
+      enter it's name (typically something like IH2, etc), and
+      the names of the three turnouts that drive the lamps.
+      <dt>SE8c 4 aspect
+      <dd>This is one signal head driven by a Digitrax SE8c.  Enter
+      the the lower of the two "turnout address" that this head
+      responds to.  For example, if it's the first head on the first
+      card, you can control it by setting turnout 257 and 258 with
+      your throttle.  Enter LT257 in the turnout control box.
+      </dl>
+
+After filling in all the fields, click OK.  The signal will be added to the
+table.  You can use that same form to add all your signals by changing the values
+and clicking OK each time. Don't forget to save your work occasionally!
+<p>
+You can check your work by clicking on the buttons in the table. With each
+click, the signal will work its way through the sequence of available aspects:
+Red, Yellow, Flashing Yellow, Green. (The available aspects and the order they
+are presented will vary from one type of signal to another)  The signals
+on the layout should follow along.
+
+<a id="signalindicators"></a><h2>Step 8 (Optional): Adding signals to your panel</h2>
+
+Like input sensors and turnouts, JMRI can display signal icons on the screen
+that follow the appearance of a signal head. 
+
+<p>Prototype railroads would not usually display every signal head on
+a panel, but just summary information near signal levers.  But there are 
+advantages to having all your signals displayed on the panel:
+<ul>
+<li>It makes it really easy for a part-time dispatcher to see what's
+actually present on the railroad.  You can see which signal aspect an
+engineer is seeing, without having to guess.
+<li>Debugging the signals is made easier, because you can just click on the
+signal icon to change its appearance. That makes it easy to check for cross-wiring,
+burnt out bulbs, and wrong logic.
+<li>And it looks really cool!
+</ul>
+<p>
+To put these on the panel, you use a similar procedure to what you've
+already done with sensors and turnouts using the panel editor window.
+If the default icons are fine,
+just put the signal name in the box next to "Add signal" and click the
+button.  A signal icon will appear on the panel, which you can drag to
+the desired spot.  You can rotate it to another orientation using its popup
+menu.
+<p>
+The Cornwall panel was setup to 
+use small graphics to avoid making it too busy:
+red <img src="./images/right-red-short-white.gif">,
+yellow <img src="./images/right-yellow-short-white.gif">,
+flashing yellow <img src="./images/right-flashyellow-short-white.gif">,
+green <img src="./images/right-green-short-white.gif">.
+<p>
+If you prefer to use other signal icons, use the "Edit icons..." button to select them.  
+There 
+are several sets available with different backgrounds, different sizes, etc.
+<p>
+You can also create your own icons using a paint program, and then use them.
+If you do that, please email them in so that we can add them to the program!
+
+<a id="simplelogic"></a><h2>Step 9:Adding signal logic</h2>
+
+At this point, you have signals defined, and can change their appearance
+by clicking on them.  But they don't change appearance automatically
+in response to changes on the layout.  You need to have the right "logic"
+driving the signals.
+<p>
+The "Simple Signal Logic Tool" can provide logic for the most common
+cases.  It works particularly well for sidings and single-track blocks.
+A detailed example of it is 
+<a href="../../Signalling/SimpleSignalExample.html">available on another page</a>.
+<p>
+
+To use this, open the tool from the "Tools" menu.  You should get a 
+new window that looks like this:
+<a href="../images/SE8cExampleLogic.gif"><img src="../images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="345" HEIGHT="225" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
+<p>
+To define what you want done, you just enter values on this form.
+<ul>
+<li>In the top box, enter the name of the signal you want to control.
+This should be the same as the name in the signal table.
+	<li>The radio buttons below that select one of four possible uses
+	for this signal:
+		<ul>
+		<li>"On Single Block" - this signal protects one end of a straight
+		through block, with no signalled turnouts
+		<li>"On Main Leg of Trailing-Point Turnout" - this signal is along
+		 the main route through a turnout, which is defined as the direction
+		 taken by trains when the turnout is closed.  It's protecting the
+		 frog of the turnout so that trains will stop before running 
+		 through a turnout set against them.
+		<li>"On Diverging Leg of Trailing-Point Turnout" - this signal is along
+		 the diverging route through a turnout, which is defined as the direction
+		 taken by trains when the turnout is set to "thrown".  It's protecting the
+		 frog of the turnout so that trains will stop before running 
+		 through a turnout set against them.
+		<li>"On Facing-Point Turnout" - this signal is protecting the 
+		points-end of a turnout. Depending on whether the turnout is
+		thrown or closed, the train will take two different routes, and the
+		signal will protect different next blocks.
+		</ul>
+	<li>If you want the signal to go red when a block detector shows
+	occupied (sensor active), enter the sensor name in the next box.
+	<li>If this signal is protecting travel through a turnout, enter the
+	turnout number to be monitored in the 3rd box.
+	You'll have additional options depending on whether you've selected
+	a trailing or facing point turnout.
+	<li>If you want multi-block logic, e.g. Absolute Block Signaling,
+	enter the name of the following signal in the last box(es).  When that
+	signal shows red, this one will be set to yellow to warn the engineer
+	that the train must be able to stop at the next signal.
+	<br>
+	If you'd like to give additional warning, click the "with flashing
+	yellow" checkbox.  In that case, the signal before a red will show
+	flashing yellow, and the signal before that flashing yellow will
+	show a steady yellow.
+    <li>Once you've set the options, click "OK".  
+    <li>You can 
+      use this form repeatedly to enter logic for as many 
+      signals as you'd like.  Just enter the values, not forgetting
+      to change the signal name in the first box, and click OK
+      for each signal.
+	</ul>
+<p>
+Don't forget to save your work!
+<p>
+You can test this logic by changing the sensors, turnouts and signals
+using either the various tables, or by clicking on a panel.  The signals
+on the layout and the signal icons on the panel should respond appropriately.
+
+<a id="scriptinglogic"></a><h2>Step 10:Adding signal scripts</h2>
+
+If the "Simple Signal Logic" tool is too simple, you'll have to 
+write either a script or Java code to drive your signals.
+PanelPro provides a couple of ways to do that.
+The simplest, which is covered here, is to write a script file
+for each signal that you need to control.  Once started, that script
+will continue to run, controlling the signal each time the conditions 
+change.
+<p>
+Before you try to code and debug a script, you should get a clear understanding
+of what you want to do.  Try to write it down in words, like "If sensor 21 is active,
+and sensor 22 is not active, then signal 19 should be yellow". There 
+are two approaches to how to do this:
+<ol>
+<li>Start by saying the signal is red (Stop) by default.  Then make a list of
+all the conditions where it would be <i>safe</i> for a train to pass this
+signal, and write down the logic for each of those.
+<p>
+This is the way prototype signal engineering is usually done, but it often
+results in a lot more conditions to write down.
+<li>Start by saying that the signal is green (Proceed) by default.
+Then make a list of all the conditions where it would be <i>unsafe</I>
+for a train to pass the signal, either a full speed or sometime to pass
+at all. 
+<p>
+This is not so prototypical, and can sometimes lead to the signal
+being green when it isn't safe (if you missed something in your logic).
+But it's often easier to figure out.
+</ol>
+<p>In the case of Nick's railroad, the logic for each signal had
+already been worked out for his old BASIC program.  It was helpful to 
+have that working code when figuring out what the new logic should do.
+
+<p>
+Next, we'll walk through creating a script to implement this logic.
+You'll do this once for each separate signal; don't try to combine
+
+<hr>
+Below here is not revised yet!
+<hr>
+
+To actually drive the signal aspects from the turnout and occupancy status,
+Java code was written based on JMRI's 
+<a href="../Automat.html">automation classes</a>.
+Each of the 45 signals is driven by its own code snippet. 
+Since Nick already had a QBASIC program to use as an example, 
+the CrrSection class was created that would let the Java signal logic
+code look very similar.  For example, this is the logic for
+signal 13B:
+<code class="block">
+        int value = GREEN;
+        if ( !tu7 || bo15 || tu8 )
+            value = RED;
+        else if (!tu9 && bo22)
+            value = RED;
+        else if (tu9 && bo23)
+            value = RED;
+
+        if (value == GREEN && !tu9 && si87)
+            value = YELLOW;
+        else if (value == GREEN && tu9 && si90)
+            value = YELLOW;
+</code>
+<p>
+Note that although prototype signals use logic that "starts with red, and see
+if you can find a reason to turn it green", the existing Cornwall logic was
+written the other way around.  Rather than change that, we wanted to get that
+same logic into the new program with as little change as possible.
+
+<p>
+JMRI makes it very easy to debug this logic, as the program doesn't
+have to be connected to the layout to let you test it.  You can change the
+state of an occupancy detector or turnout sensor on the display (though clearly not
+on the layout itself!) by clicking on it, and then see whether the signals 
+respond appropriately.  Even complicated interlocking logic can be 
+checked out quickly using this.
+
+<h2>Summary</h2>
+The process to create the Cornwall signaling and dispatcher panel was 
+straightforward, if a little long.
+
+<p>Back to <a href="Cornwall.shtml">CornwallRR home</a></p>
+
+        <!--#include virtual="../../Footer.shtml" -->
+	</div>
+</div>
+<script src="/js/main.js"></script>
+</body>
+</html>

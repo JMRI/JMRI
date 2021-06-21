@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.1.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.1.1 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.1.1 release
+      </h2>
+
+	<p>Date: August 19, 2012</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.1.1 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.2 production release.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+None
+
+<h3>Older warnings</h3>
+
+This release, and all other releases in this cycle, require Java 1.6.
+
+<h3>Known problems with this release</h3>
+
+<p><b>The following problems are fixed in 
+<a href="jmri3.1.2.shtml">JMRI 3.1.2</a>, which you should use instead of this release.</b>
+<p>
+Digitrax PR3 Standalone mode is missing from the connection details.
+<p>
+Certain existing preference files won't be found, requiring you to re-enter your preferences.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.1-r21034.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.1-r21034.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.1-r21034.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.1-r21034.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.1-r21034.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.1-r21034.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.1/ws/jmri/dist/release/">CI project page</a>.
+ -->
+<!--  
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+
+<h3>Changes since production release 3.0</h3>
+
+Kevin Dickerson made the following changes<br>
+<ul>
+<li>Added in initial support for the M&auml;rklin Command Station 2 System with help from Jean-Francois - please note that this is still in development.</li>
+<li>Provide support for systems that can handle multi-protocols for throttle control and extend this to cover decoders and roster entries.  Additional supported protocols now include
+    <ul>
+    <li>Motorola</li>
+    <li>Selectrix</li>
+    <li>MFX</li>
+    </ul>
+    The change is only seen if the system that controls the throttle supports multiple protocols.
+</li>
+<li>Editors - Provided a method for external code to add menu items to the popmenus of icons on the panel</li>
+<li>Tables - User set column widths, order, sorting etc is now saved between sessions</li>
+<li>Tables - Added a "Copy User Name" item to the mouse popup menu</li>
+<li>Throttles - Provide a method to create a throttle by passing the Roster Entry rather than the DCC Address</li>
+<li>Throttles/Roster Enties - Records the duration that the loco has been operating for, along with the last time last was used, the information is stored as an attribute against the roster entry and can be viewed in the media pane.</li>
+<li>When setting a sensor in a block, if that sensor has a reporter associated against it the user is asked if they wish to use the reporter on that block.</li>
+<li>Updated the backend of the Connection Configuration to remove some limitations on the numbers of settings per connection</li>
+<li>Tweaked some of the GUI settings relating to the connection details</li>
+<li>ESU ECoS - Only update the throttle speed on the reply of the last throttle message which has been sent and ignore the event messages until all set speed messages have been processed, otherwise the throttle speed value jumps up and down like a yoyo until the last message is proceed.</li>
+<li>ESU ECoS - Update the loco import to blank out disabled functions and set non-descript function labels to be Fx.</li>
+<li>Programming - Fix an issue whereby the code doesn't wait for a reply to a programming command and other messages are sent/processed.  This happens if no message is required to put the command station into programming mode.</li>
+</ul>
+
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>Improved how cars are forwarded to alternate tracks. Now if the alternate track's spur
+     becomes available during the build, cars originally sent to the alternate are now redirected to
+     the spur.</li>
+     <li>Made some minor improvements to the train build reports when a train departs or enters staging.</li>
+     <li>Improved how the csv manifest counts empty cars with custom loads.</li>
+     <li>New operations feature, you can now control if arrival or departure times are shown on your train manifests. 
+     See under "Edit Train"-&gt;Tools-&gt;Options</li>
+     <li>You can now open a csv manifest directly from the trains window.</li>
+   </ul>
+   
+   <p>Gregory Madsen made the following changes to operations:</p>
+   <ul>
+   <li>Improvements to the Backup capabilities, including separate stores for "automatic" and "default" backups, 
+   dialog to select between automatic and regular backups when restoring, and a dialog to allow deleting automatic backups.</li>
+   </ul>
+
+  <p>Robin Becker added xxx-blink-web.gif icons with correct frame delays and dimensions for web and panel use.</p>
+  
+  <p>Steve Todd made the following changes:</p>
+    <ul>
+      <li>added a new JmriFaceless app for linux installs, and modified WiThrottle server and Loconet simulator to not show a window when JMRI is running in headless mode.</li>
+      <li>added the binaries needed by the Raspbian hard-float distro (for the Raspberry Pi).</li>
+    </ul>  
+
+  <p>Stephen Lowens:
+  <ul>
+    <li>updated decoder definitions for Digitrax sound/motor decoders. This version adds CV144 (Dynamic brake volume) and moves Con-cor Zephyr definitions to new file
+    <li>provided decoder definitions for Con-cor MP54 and Zephyr models. These use Digitrax SDH164D and/or SDN144PS with unique programming and/or sound projects.
+  </ul>
+  
+<p> D Heap:<blockquote>
+LokSound V4.0 Decoder CV249 (Min Steam Chuff Distance) was inadvertently assigned to CV248 instead of CV249.
+
+Also some others I wanted were missing, so I added CVs 47,48,51,122,123,129,130,133,250,255, which were the ones missing but present in LokProgrammer 4.3.3 and present in LokSound V4.0 Instruction manual 4. Edition, May 2012 from firmware 4.6.
+CV131 appears to be obsolete but I did not remove it.
+
+Had to move a few option numbers up and down to fit all on to existing panes.  
+</blockquote>
+
+<p>
+Clint Taylor added code to allow function buttons to work within the Loconet Slot Monitor.
+
+<p>
+John Crellin updated several MRC decoders and provided a new definition for the MRC 1905.
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<title>Installing JMRI on OLPC XO</title>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.3  (Unix)">
+	<META NAME="CREATED" CONTENT="20070720;11550900">
+	<META NAME="CHANGEDBY" CONTENT="Robert Myers">
+	<META NAME="CHANGED" CONTENT="20080407;17011000">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1>Installing JMRI on the OLPC XO</h1>
+		
+		<p>This document outlines the steps taken to install the JMRI
+		suite on an OLPC XO. 
+		</p>
+
+		<p><img src="OLPC_XO_files/xo_view1_v2.jpg" NAME="graphics1" ALIGN="LEFT" WIDTH="426" HEIGHT="370"
+		BORDER="0"><BR CLEAR="LEFT">
+		</p>
+
+		<p>The OLPC (One Laptop Per Child ) XO is a small, rugged, Linux
+		based sub-notebook designed to bring a
+		<a href="http://en.wikipedia.org/wiki/Constructionism_%28learning_theory%29">constructionist</a> learning
+		experience to the children of the world. Particularly to bring this to those living
+		in less developed countries.</p>
+		
+		<p>However, being a small, rugged Linux based sub-notebook, also
+		makes it an excellent candidate for running JMRI.</p>
+		
+		<a href="http://wiki.laptop.org/go/Hardware_specification">XO Hardware Specification</a>.</p>
+		<a href="http://wiki.laptop.org/go/Software_components">XO Software Description</a>.</p>
+
+		<p>More information about OLPC and the XO can be found at the
+		<a href="http://www.laptop.org">OLPC Web site</a>, and the
+		<a href="http://wiki.laptop.org">OLPC wiki</a>.</p>
+		<p>I also hope that this document will provide guidance to others
+		who are trying to install JMRI on other Linux machines.</p>
+
+		<h2>About the XO and Sugar</h2>
+		
+		<p>The XO is a flash-based device running a version of Linux based
+		on Fedora 7 and Linux kernel 2.6.22 with OLPC modifications. Because
+		of the limited space available with the flash drive, some Linux
+		kernel services and utilities are not installed. Space
+		considerations are an issue with adding software to this device.</p>
+		<p>The XO has a GUI, <a href="http://wiki.laptop.org/go/Sugar">Sugar</a>,
+		running over X which has been developed
+		specifically for its intended use. Sugar runs an application in a
+		single window, with the current application occupying the entire
+		screen, with rapid switching between open applications.</p>
+		<p>To install applications such as JMRI which have multiple windows
+		open requires that an alternative GUI be used. 
+		I installed <a href="http://www.xfce.org">XFCE</a>. 
+		It is a lightweight windowing system, that has already been
+		successfully installed on the XO. As you you will see in the
+		section discussing the installation of XFCE, it is simple to switch
+		between the two.</p>
+		<p>Any Linux installation of JMRI seems to be a matter of shooting
+		at a moving target. These are the parameters of my installation:</p>
+		<ul>
+			<li>Date (last installation) 3/29/08
+			<li>XO Firmware Q2D13 (also installed successfully on Q2D7)
+			<li>XO Build 699 (also installed successfully on 656)
+			<li>XFCE 4.4.2
+			<li>Java JDK 1.5.0_13
+			<li>Sun commapi 2.0? (see below)
+			<li>rxtx 2.0.7pre2
+			<li>JMRI 2.0
+			<li>Dynex DX-UBDB9 USB to Serial adapter
+			<li>Wangrow System One DCC system
+		</ul>
+		<h2>Installation procedure</h2>
+		<p>A certain familiarity with using the Linux shell, executing
+		commands in Linux, and editing files in Linux is assumed. I used vi
+		as my editor. If you have an editor that you are comfortable with,
+		use it instead.</p>
+		<p>The basic installation goes like this:</p>
+		<ul>
+			<li><a href="#Install_XFCE">Install XFCE</a>
+			<li><a href="#Install_Java">Install Java</a>
+			<li><a href="#Install_comm">Install commapi and rxtx</a>
+			<li><a href="#Install_USB">USB to Serial Adapter</a>
+			<li><a href="#Install_JMRI">Install JMRI</a>
+			<li><a href="#Install_Fini">Finishing touches</a>
+		</ul>
+		
+	<a name="Install_XFCE"></a><h2>Install XFCE</h2>
+		<p> To install XFCE you need simply to follow the instructions on the <a href="http://wiki.laptop.org/go/Xfce">XFCE page in the OLPC wiki</a>.
+		</p>
+		<p> One minor change that I'd suggest is that while following the instructions to make XFCE the default environment, to do this instead:
+		</p>
+		<ul>
+			<li><p>in /home/olpc/ create a copy of .xsession-example called .xsession-xfce.</p> 
+			<pre>cd
+cp .xsession-example .xsession-xfce</pre>
+
+        	<li><p>Edit the .xsession-xfce file to launch Xfce on startup.  
+        	In your favorite editor find the commented line that reads #exec xterm - below that line, add the following line:</p>
+        	<pre>exec startxfce4</pre>
+			<li><p>save and exit.</p>
+		</ul>
+		<p>Then, you can enable XFCE by doing the following in a terminal window:</p>
+		<pre>	cp .xsession-xfce .xsession</pre>
+		<p>followed by rebooting, while in the home directory. And</p>
+		<pre>	rm .xsession</pre>
+		<p> and a reboot to switch back to Sugar.</p>
+		
+	<a name="Install_Java"></a><h2>Install Java</h2>
+		To install Java, instructions exist in the OLPC Wiki, <a href="http://wiki.laptop.org/go/RestrictedFormats#Sun_Java">here.</a></p>
+		<p>Again some minor changes from the OLPC page. If you've installed XFCE and Firefox at this
+		time, and have internet connectivity from inside XFCE, you can download the '.bin' file directly to your XO, rather than following the 
+		instructions requiring download to another machine and transferring the '.bin' file to the XO.</p>
+		
+		<p>I installed JDK 1.5.0-13 rather than the JRE.
+		When I first tried to install JMRI I thought I'd have to compile rxtx, so I installed the JDK.
+		I haven't tried running JMRI with just the JRE at this time (see Issues below). I'm 
+		recommending JDK as a known successful path, so follow the 'Download JDK' link.</p>
+		<p>The XO has a very limited PATH environment. I ended up creating a soft link from the 
+		/usr/bin/ directory to the Java executable.</p>	
+		
+<pre>	su -
+	cd /usr/bin
+	ln -s /usr/java/jdk1.5.0_13/jre/bin/java
+	exit
+</pre>
+
+		
+		<p>at this point 'java -version' should return:</p>
+		
+<pre>	java version "1.5.0_13"
+	Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_13-b05)
+	Java HotSpot(TM) Client VM (build 1.5.0_13-b05, mixed mode, sharing)
+</pre>
+
+		<p>If this is what happened you have a successful Java install. Congratulations.
+		
+		<p>You can now discard the '.bin' and '.rpm' files to reclaim some space on your XO.</p>
+		
+	<a name="Install_comm"></a><h2>Install commapi and rxtx</h2>
+		
+		<p>JMRI requires that the Sun <a href= "http://java.sun.com/products/javacomm/">commapi</a>
+		extension be added over Java to support communications.
+		In addition, another library <a href="http://www.rxtx.org/">rxtx</a> 
+		needs to be added to go from commapi's abstract support to 
+		actually supporting physical serial ports.</p>
+		<p></p>
+		<p>Get the rxtx.tar.gz file from the JMRI Users files
+		<a href="http://groups.yahoo.com/group/jmriusers/files/Linux/RxTx%20Stuff/">here</a>.</p>
+		<p>This has all the files you need for installing commapi and rxtx. I believe the 'comm.jar'
+		file is Sun commapi version 2. The rxtx libraries are 2.0.7pre2, which work. The properties 
+		files provide the proper links from Java to the rxtx libraries from the rxtx libraries to
+		your serial port.</p>
+
+		<p>Place this file in your home (/home/olpc) folder.</p>
+		<p>Despite being called 'rxtx.tar.gz' this is not a gzip file, but is simply a tar archive.
+		Expand it by executing the command</p>
+	<pre>	tar xvf rxtx.tar.gz
+	</pre>
+		<p>This will create a folder 'lib' with the expanded contents of the library. Rename this 
+		directory, 'lib' is just too generic for safety.</p>
+		<pre>	mv lib rxtx-lib
+		</pre>
+		<p>Now copy the contents ot this folder to the approprite places within Java. The name of
+		the rxtx serial library as delivered will not be found, so we need a link from the desired
+		name too.</p>
+	<pre>	su
+	cd rxtx-lib
+	cp javax.comm.properties /usr/java/jdk1.5.0_13/jre/lib/
+	cp ext/* /usr/java/jdk1.5.0_13/jre/lib/ext
+	cp i386/* /usr/java/jdk1.5.0_13/jre/lib/i386/
+	cd /usr/java/jdk1.5.0_13/jre/lib/i386/
+	ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so
+	exit
+	</pre>
+
+		<p>You might also want to download the 3.0 commapi from Sun. This contains a suite of 
+		example programs for the commapi. I found that the Serial Demo program was useful for 
+		testing the installation of the commapi, rxtx, and USB to serial converter.</p>
+		
+		<p>Keep the expanded rxtx-lib folder that you have, you will need it for one final step when
+		installing JMRI.</p>
+
+	<a name="Install_USB"></a><h2>USB to Serial Adapter</h2>
+
+		<p>The XO has no user accessible serial ports. It has 3 USB 2.0 ports. A USB to serial 
+		adapter is required for connection to most DCC systems.</p>
+		
+		<p>There currently is somewhat limited 
+		<a href="http://wiki.laptop.org/go/USB_peripherals#Serial_Port">support for USB to serial devices on the XO</a>.
+		ftdi_sio is supported, but I have been led to believe that there is a ftdi_sio related bug in the 
+		2.6.22 kernel. Rather than having to deal with this I avoided these adapters. 
+		Keyspan adapters are not currently supported by the kernel. This is a 
+		<a href="http://dev.laptop.org/ticket/3050">known defect in the XO</a>,
+		and the fix is currently scheduled for 6/30/08.</p>
+		<p>So I chose to use an adapter that uses what seems to be the best supported chip set, the 
+		<a href= "http://www.prolific.com.tw/eng/Products.asp?ID=59">PL 2303</a>.</p>
+		<p>The adapter I chose is the 
+		<a href="http://www.bestbuy.com/site/olspage.jsp?skuId=7135664&type=product&id=1110263657278&ref=06&loc=01&ci_src=14110944&ci_sku=7135664">
+		Dynex DX-UBDB9</a>. This is Best Buy's private label adapter. Other  
+		PL 2303 based adapters should work.</p>
+		
+		<p>The adapter should work by simply being plugged in. It's presence can be checked for by
+		looking for the following device '/dev/ttyUSB0'. Checking should return something like:</p>
+		
+		<pre>
+	ls -l /dev/ttyUSB0
+	crw-rw---- 1 root uucp 188, 0 2008-04-09 11:12 /dev/ttyUSB0
+		</pre>
+		
+		<p>Proper operation can be checked using the Sun
+		SerialDemo Program and shorting pin 2 to pin 3 for loopback.
+		Note that you have do do this as root, because we haven't allowed user 'olpc' access
+		to the serial port yet.</p>
+		<pre>
+	su
+	cd commapi/examples/SerialDemo
+	java SerialDemo
+		</pre>	
+		
+		<p>Should return something like:	
+		</p>
+		<pre>	Experimental:  JNI_OnLoad called.
+	Devel Library
+	=========================================
+	Native lib Version = RXTX-2.0-7pre2
+	Java lib Version   = RXTX-2.0-7pre2
+		</pre>
+		
+		<p>and open the SerialDemo window. You should be able to select 'Port Name' /dev/ttyUSB0. 
+		Click 'Open Port'.
+		Click in the upper frame to focus.
+		Short pin 2 and 3 on your adapter.
+		What you type should be echoed in the lower frame.
+		</p>
+		<p>If this is the case, congratulations, you have a successful installation of the commapi 
+		and rxtx. If not, it's time to check your work and figure out what went wrong.
+		</p>
+		
+	<a name="Install_JMRI"></a><h2>Install JMRI</h2>
+		<p>Now determine what version of JMRI you want to install and 
+		<a href="http://jmri.org/download/index.shtml#prod-rel">download</a> 
+		the Linux version of 
+		it. Generally the latest release version is a good choice unless you have some specific 
+		reason for wanting to try something else.</p>
+		
+		<p>Uncompress and expand the archive.</p>
+		
+<pre>	su
+	gunzip JMRI.2.0.tgz (this file name will depend on what you downloaded)
+	tar xvf JMRI.2.0.tar
+	exit
+</pre>
+		<p>You now should have a folder JMRI. If you want to, move it to another location. 
+		I put JMRI in /usr/share, which is where OLPC puts a lot of support files.</p>
+<pre>	su
+	mv JMRI /usr/share/JMRI
+	exit
+</pre>
+		<p>Move a copy of javax.comms.properties to your JMRI folder. This is necessary to allow
+		JMRI to know about the commapi.		
+		</p>
+<pre>
+	cd /home/olpc/rxtx-lib		( or wherever you put the rxtx you downloaded )
+	cp javax.comm.properties /usr/share/JMRI ( or wherever you put JMRI )
+</pre>
+		<p>Having to have two copies of this file is bogus, but necessary. See
+		<a href="bogus_dup">below</a>.
+		</p>
+		
+		<p>At this point your basic installation of JMRI is complete. You should be able to
+		run JMRI as root from a terminal window.</p>
+<pre>	su
+	cd /usr/share/JMRI
+	./DecoderPro
+		( work inside of DecoderPo, eventually exiting )
+	exit
+</pre>
+
+	<a name="Install_Fini"></a><h2>Finishing touches</h2>
+
+	<p>There are now a few finishing touches that you will want to do to allow yourself to run JMRI
+	as user rather than root, and to open JMRI from the XFCE desktop, rather than from
+	a terminal window.</p>
+	
+			<h3>Add olpc to lock and uucp groups</h3>
+			<p>This is necessary to allow the olpc user account to have access to the serial ports.
+			Be very careful here, as messing up the user account group membership can have adverse
+			effects, up to and including needing to reinstall the entire XO software install.</p>
+			<p>There are two ways of doing this, editing the /etc/group file or using the usermod
+			command.</p>
+				<H4>editing /etc/group/</H4>
+				<ul>
+					<li>Change to root. 
+					<li>Open /etc/group for editing.
+					<li>Find the uucp group line, add ',olpc' to the end of it.
+					<li>Find the lock group line, add ',olpc' to the end of it.
+					<li>Save the file and exit.
+				</ul>
+				
+				<h4>usermod</h4>
+				<p>Execute the following:</p>				
+				<pre>	su
+	usermod -Gwheel,uucp,lock olpc
+			</pre>
+			<p>In either case, it is best to make sure that you did this correctly before logging 
+			out of the root account.</p>
+			<pre>	cat /etc/group | grep olpc
+			</pre>
+			<p>Should return:</p>
+			<pre>	wheel::10:root,olpc
+	uucp::14:uucp,olpc
+	lock::54:olpc
+	olpc::x:500:
+			</pre>
+			If so, you can:
+			<pre>	exit
+			</pre>
+			
+			
+			<h3>Modify the JMRI scripts so they can be executed from the
+			desktop</h3>
+			<p>The JMRI scripts like 'DecoderPro' are designed to be run while your are in their
+			directory. A small change must de done to allow them to be run from another location -- 
+			like what you'll be doing when you connect controls in the XFCE dock to them.</p>
+			
+			<p>Open the desired script file -- DeocderPro for example -- in an editor. You must
+			do this as root.
+			<pre>	su
+	vi DecoderPro
+			</pre>
+			
+			Find the line
+			<pre>	#   cd /usr/local/JMRI</pre>
+			<p>uncomment it, and change the cd to wherever you have JMRI installed --</p>
+			<pre>	cd /usr/share/JMRI</pre>
+			<p>save the file and exit.</p>
+			
+			<p>Set the script so that it can be executed by the user account and exit root.</p>
+			<pre>	chmod +x DecoderPro
+	exit
+			</pre>
+			
+			<p>Repeat this for whatever scripts you may want to run from the XFCE desktop.</p>
+			
+			<h3>Add links to the JMRI applications on the XFCE desktop</h3>
+			<p>Now you can add controls to a XFCE panel to run JMRI components.</p>
+			<ul>
+				<li>Right click on a panel on the desktop.
+				<li>Select 'Add New Item' from the pop-up menu.
+				<li>Select 'Launcher' from the dialog.
+				<li>Click 'Add'.
+				<li>'Name' and 'Description' are two lines of text that will appear when you hover
+				over the icon in the panel. Example -- 'DecoderPro', 'Part of JMRI'.
+				<li>The button with the gear-like thing allows you to select an icon, click it.
+				<li>Select 'Other' from the list.
+				<li>Navigate the file system browser to select '/usr/share/JMRI/resources/jmri48x48.gif'
+				<li>Click 'Open'.
+				<li>Click the folder button next to 'Command' to open a file system browser to
+				navigate to the scriipt you want. Example -- '/usr/share/JMRI/DecoderPro'.
+				<li>Click 'Close'.
+			</ul>
+		
+		<h2>Success</h2> 
+		
+		<p>If everything has gone right you should now be able to run JMRI simply by opening
+		it in the dock.</p>
+		<p><img src="OLPC_XO_files/xo1.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=640 HEIGHT=480
+		BORDER=0><BR CLEAR=LEFT>
+		</p>
+		<p>Here is a long view showing pretty much the whole XO running DecoderPro.</p>
+		<p><img src="OLPC_XO_files/xo2.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=640 HEIGHT=480
+		BORDER=0><BR CLEAR=LEFT>
+		</p>
+		<p>Here is a tighter view of the screen. There's plenty of memory left.</p>
+		
+		<p><img src="OLPC_XO_files/xo3.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=640 HEIGHT=480
+		BORDER=0><BR CLEAR=LEFT>
+		</p>
+		<p>XO running ruler activity, posed with an N scale locomotive to show how small it is. 
+		This is truly a N scale computer for N scale trains.</p>
+	
+		<h2>Issues</h2>
+		<p>There are still some issues to be resolved before this installation can be considered 
+		optimal. They include:
+		</p>
+			<h3>JRE vs. JDK</h3>
+			<p>Space is tight on the XO and JDK is obviously larger than JRE. It would be 
+			advantageous to install JRE rather than JDK. I see no reason that JRE 1.5.0_13 
+			should not work. I simply have not gotten around to trying it.</p>
+			
+			<h3>Java version</h3>
+			<p>I installed 1.5.0_13 on the strength of the recommendation on the XO wiki. It would 
+			be worthwhile to figure out what other versions work (and which do not).</p>
+			
+			<h3>commapi version</h3>
+			<p>I ended up installing the commapi version that was included in the rxtx lib posted 
+			to the JMRI Users group. I don't know its provenance. commapi 3.0 is the only
+			version actively supported by Sun. Some sources have complained about the stability 
+			of version 3 of the Sun commapi.</p>
+			
+			<h3>Install folder for JMRI</h3>
+			<p>I installed the JMRI suite in /usr/share/JMRI. Many resources are stored in 
+			/usr/share on the XO. However, the XO has a nasty habit of deleting items when updating 
+			-- and at this point updates are common. I don't know if this is the optimum or safe
+			location for JMRI.</p>
+			
+			<a name="bogus_dup"></a><h3>Having to duplicate javax.comm.properties</h3>
+			<p>Having to have two copies of a configuration file in two different places is 
+			definitely a bad thing. This need to be resolved. Is there a common place they could be?
+			Does an environment variable need to be tweaked?
+			Could one be a soft link?</p>
+			
+			<h3>Direct USB connection</h3>
+			<p>My install used a USB to serial adapter. A growing number of DCC command stations
+			use direct USB connections. Connecting to these have not been investigated at this time.</p>
+			
+			<h3>Getting an XO</h3>
+			<p>There is no easy way of purchasing XOs at the time of this writing. They were
+			available to the general public in the US and Canada directly from OLPC
+			for a six week period at the end of
+			2007 as part of a charitible giving program. There are no current plans to repeat such a
+			program or to make them available to
+			international buyers.</p>
+			
+			<p>OLPC has a <a href="http://laptopfoundation.org/participate/givemany.shtml">program</a>
+			for mass purchases by non-profits. The current minimum order is
+			for 100 units at $300 each.
+			</p>
+			
+			<p>There are usually XOs available on eBay (and likely other aftermarket vendors). A
+			recent search of eBay showed over twenty available.
+			</p>
+
+		<h2>Acknowledgements</h2> 
+
+	<p>My thanks to:</p>
+	<ul>
+		<li>everyone at OLPC for creating this small wonder.
+		<li>To Bob Jacobsen for creating, maintaining and evangelizing for JMRI, truly a great example
+		of what can be done with FOSS software.
+		<li>To the OLPC and JMRI communities for helping me get this going.
+	</ul>
+		<p>Special thanks to: Francisco Athens for doing the original XFCE install on the XO, and
+		making me aware of that path. Dick Bronson, and Bob Jacobsen (again) for support and advice
+		during the sometimes frustrating install. My son for letting me play with his XO.</p>
+		
+		<p>I hope that in some small way this document is giving back to those communities.</p>
+		<p>Any errors are mine alone.</p>
+
+		<p>Robert Myers, April 2008</p>
+
+<!--#include virtual="/Footer.shtml" -->
+ 	  </div> <!-- closes #mainContent-->
+ </div> <!-- closes #mBody, started in sidebar-->
+<script src="/js/main.js"></script>
+</body>
+</html>

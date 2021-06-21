@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.9.3
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.9.3 decoderpro panelpro loconet lenz nce easydcc">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.9.3 release
+      </h2>
+
+	<p>Date: September 13, 2014</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.9.3 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.10 production release around the end of 2014.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+<p>RFID support has been changed to allow for additional protocols - existing
+   CORE-ID readers <em>should</em> remain unaffected but, in certain
+   circumstances, it may be necessary to update connection configuration with 
+   the correct protocol.</p>
+
+<p>The activation.jar library is no longer included with the JMRI download.
+This shouldn't have any impact on you, but it's remotely possible that it
+might impact you if you have your own Java code that you're combining with JMRI
+and/or you're still using a Java version before Java 1.6.
+(Scripts and panel files will not be impacted.)</p>
+
+<p>Images associated with roster entries are now saved to the roster directory instead of
+the resources directory when added to the roster entry. Existing images are not moved.</p>
+
+<p>The JMRI 3.9.* releases series, including this one, and JMRI 3.10 (expected in December 2014),
+will be the last JMRI releases that will work with Java 1.6.  
+To use any later JMRI test or production releases, you'll have to 
+<a href="https://java.com/en/download/">update the Java on your computer</a> to Java 1.8 or later.
+All JMRI releases 3.9.3 and later are tested on Java 1.8, so you 
+can do the Java update now if you want to.
+
+<h3>Older warnings</h3>
+
+<!-- keep this warning in place through the 3.11/3.12 development cycle -->
+<p>The XmlIO web service has been deprecated and is scheduled to be removed in JMRI 3.11 (July 2015).
+All users and developers who are relying on direct access to the XmlIO API are
+recommended to begin using the JSON API. inControl web throttle users are recommended to
+begin using webThrottle instead, or to plan on investing in devices that can support
+webThrottle, <a href="http://www.withrottle.com">WiThrottle</a> for iOS, or
+<a href="http://enginedriver.rrclubs.org">Engine Driver</a> for Android.</p>
+
+<h3>Known problems with this release</h3>
+
+<p>None at the time of this release.</p>
+
+<h3>Download links:</h3>
+
+<!-- 
+<p>During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time. Make sure the
+builds status shows as OK before attempting to use one.</p>
+  -->
+  
+ <!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.3/ws/jmri/dist/release/">CI project page</a>.
+ --> 
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.3-r27204.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.3-r27204.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.3-r27204.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.3-r27204.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.3-r27204.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.3-r27204.tgz/download</a></p>
+
+<h3>Changes since test release 3.9.2:</h3>
+
+<p>
+The Speedometer now handles international format input.  If you live in a place where
+decimal numbers are written like "1,3" and JMRI is set to that locale
+(see the Locale section on <a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#Display">this page</a>), 
+then you can use commas for the decimal mark when inputting the distances.
+We'll be updating more parts of JMRI to do this in the future.
+
+<p>
+The AAR-1946 and B&amp;O-1957 signal system definitions had some internal problems fixed.
+This shouldn't cause any problems for people using them, but we can't be 100% certain.
+If you're using these, please check to make sure your signals are still working OK, 
+and let us know if they're not.
+
+<p>Removed the activation.jar library, along with various references to loading it.
+This is no longer needed since JMRI now requires Java 1.6 or later.</p>
+
+<h4>System Support</h4>
+    <p>Some improvements to the support for MRC command stations
+    via the Prodigy USB computer interface.</p>
+
+    <p><b>This is the first series of JMRI to support the Roco Z21 command stations
+    via its built in network connection.</b></p>
+
+    <h5>RFID</h5>
+
+    <h5>OpenLCB</h5>
+
+<h4>New / Updated decoder definitions</h4>
+    <p>Much work on improving the structure of the files, which has resulted in some 
+    internal changes.</p>
+    <p></p>
+    <p>Improvements to the Italian translation.</p>
+    <p></p>    
+    <p>Added Digitrax SFX006 &amp; DN166I2B definitions (Alain Le Marchand)</p>  
+    <p>Added Soundtraxx Tsunami definitions for:
+    <ul>        
+    <li>Bowser PCC Streetcar. Can be found in the "Tsunami Diesel Bowser OEM" family (Alain Le Marchand).</li>
+    <li>Diesel TSU-IM1000 (828070, 828071, 828074), TSU-GN1000 GEVO-12 (828059), TSU-KT1000 P42 (828068) (Alain Le Marchand).</li>    
+    </ul>
+    <p>Added MyLocoSound DCC decoder definitions (Alain Le Marchand)</p>      
+    <p>Robin Becker updated the Tam Valley Depot Quad-LN_S stationary decoder to add a Reset menu item when using the Service Mode programmer.</p>
+    <p>Dave Heap made the following changes to the Function Map:</p>
+    <ul>
+    <li>Added the ability to specify (f) or (r) suffixes for functions other than FL (see the <a href="/help/en/html/apps/DecoderPro/FnMapping.shtml" target="_blank">Function Map</a> page).</li>
+    <li>Added auto-generated tooltips for checkboxes (see the <a href="/help/en/html/apps/DecoderPro/FnMapping.shtml" target="_blank">Function Map</a> page).</li>
+    <li>Unused rows or columns are now automatically suppressed.</li>
+    <li>Increased flexibility of column naming, including the ability to suppress display of a column (see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanel.html" target="_blank">Javadoc page</a>).</li>
+    <li>Improved the warning displayed in the ESU Function Map pane if using the Mac OS X and Java 1.6 combination.</li>
+    </ul>
+    
+<h4>Scripting</h4>
+   <ul>
+   	<li>in AbstractAutomaton (used by some scripting) provide for timeout value when throttle not acquired, 
+	default to 30 seconds (Steve Todd)</li>
+</ul>
+
+
+<h4>Operations</h4>
+    <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>Improved how the alternate track feature works. You can now use the alternate track
+     feature without schedules or custom loads. Note that if you specify an alternate for a spur,
+     only cars destined for that spur will be placed on the alternate track.</li>
+    <li>New feature, random moves for any location in a train's route. In the route edit window
+     you will find a new column labeled "Random" with a menu of 10 items, The default is "Off" or
+     disabled, and there are values between 10 and 100. If you select 10, it tells the program to
+     randomly reduce the number of cars moves at the location by up to 10%. So if you asked for 10
+     moves, you could get 10 or 9 moves. If you selected 50, you could get any number of moves
+     between 10 and 5. If you select 100, you could get any number of moves between 10 and 0. Be
+     sure and press "Save" after you make your selection.
+     <li>New feature, the ability to copy a location.  See under "Tools" in the Locations window.
+     <li>Fixed a bug where cars out of staging used the same schedule item, even if the schedule was in
+     sequential mode.  Thanks to Dave Cochrun for identifying and helping us debug this problem.
+   </ul>
+
+   <h4>JSON and Web Throttles</h4>
+	<ul>
+	<li>Improved the ability for a JSON or Web Throttle client that has unexpectedly
+	dropped its connection to regain control of the throttle before JMRI automatically
+	stops the train. (Randall Wood)</li>
+	<li>JSON or Web Throttle clients that request a throttle for the same DCC address or
+	roster entry will share a throttle even if the supporting DCC system does not allow
+	multiple throttles per address. (Randall Wood)</li>
+	<li>Web Throttles only display function buttons that have labels assigned to them.
+	(Randall Wood)</li>
+	</ul>
+
+<h4>Miscellaneous</h4>
+	<ul>
+	<li>Images added to a roster entry are now stored within the roster directory instead
+	of the resources directory. (Randall Wood)</li>
+	<li>If multiple profiles are selected, only those actions that apply to multiple
+	profiles are available. (Randall Wood)</li>
+	<li>Clicking anywhere on the profile selection dialog cancels automatically starting
+	with the last used profile. (Randall Wood)</li>
+	<li>Changed the upload debugging info functions to now use SourceForge mailing 
+	list. This should avoid problems previously seen when attempting to access
+	previous mailing list directly. (Matthew Harris)</li>
+</ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

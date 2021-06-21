@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.8 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent" style=" width : 692px;">
+      <h2>
+      Release Notes for JMRI 2.8 release
+      </h2>
+
+	<p>Date: December 18, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production release 2.8 of JMRI/DecoderPro is available for download.
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b><p>
+ -->
+
+We are very pleased to announce that the 2.7 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production version 2.8" available for download today.
+
+<p>
+Among the enhancements since the last production release, JMRI 2.6, are:
+<ul>
+<li>Greatly improved throttle support, with more flexibility for customization, locomotive images, and
+ability to use iPhones, iPods and Wii remotes as throttles
+<li>Greatly improved Logix, signaling, operations, editors, and other tools
+<li>Many new decoder definitions, several new hardware connections, and 
+    a number of new system customization tools.
+</ul>
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>Warnings for this version:</h3>
+
+XML input processing was reworked in JMRI 2.7.8.  
+This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile Javadoc for more information.
+
+<p>
+If you want to use the "Function Label" or "Roster Image" panes with the 
+DecoderPro "Comprehensive" programmer format, you should change to using
+the "Advanced" format.  You select this at the bottom of the window when opening
+a locomotive for editing, or via the JMRI Preferences window.
+
+<p>
+Changes in JMRI 2.7.7 to the internal structure of the classes for the throttle windows (not the 
+throttle classes themselves) may cause trouble for scripts that were using them.
+
+<p>
+JMRI 2.7.7 uses a different set of libraries for processing the XML panel files.
+In turn, this means that if you've created your own startup scripts, you may need
+to adjust them.
+
+<p>
+The new audio support in JMRI 2.7.5 requires some new libraries.
+Those libraries are included in the JMRI downloads.  They, in turn, require that the
+startup scripts include the new libraries, so these have also been modified.
+The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
+created your own copies of startup scripts, you'll have to update those:
+
+<p>
+If your roster contains locomotives with Soundtraxx Steam Tsunami decoders,
+you should migrate those roster entries to the new decoder definition names.
+We've created a tool to make that easier.
+For information on how to use that tool, please see the 
+<a href="decoder2.7.5.shtml">separate note</a>.
+
+<p>
+JMRI 2.7.4 changed the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 or later and then written out again, 
+as the program will update them to the new format upon storing them.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.8.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.8.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.8.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.8.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.8.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.8.tgz/download</a>
+
+<h3>Changes since production version 2.6</h3>
+
+Ken Cameron updated the decoder definition for the Team Digital SMC4.
+
+<p>
+Fixed a problem when using the invert option on LocoNet sensors.
+
+<p>
+Pete Cressman added the capability to edit (change) the icons used by a particular item on a Panel Editor panel
+from the popup menu.
+
+<p>
+Paul Bender added "invert" capability to XPressNet turnouts.
+
+<p>
+Even more help page updates.
+
+<p>
+Panel Editor icons can be edited directly from the Panel by selecting the "edit" item from the popup menu of the icon.
+
+<p>
+Mark Fournier updated the Comprehensive programmer to handle more consisting options.
+
+<p>
+Peter Ulvestad updated the MRC Sound Brilliance 1806 decoder definition.
+
+<p>
+Marc Founier added and updated MRC Athearn decoder definitions.
+
+<p>
+Peter Ulvestad updated the Bachmann EZDCC decoder definition to put a max value on CV2.
+
+<p>
+Mark Waters updated several Zimo decoder definitions to include the right number of outputs and their controlling CVs.
+
+<p>
+Manually add Rautenhaus Digital Vertrieb to the list of decoder manufacturers, 
+which is unfortunately no longer being maintained online by the NMRA.
+
+<p>
+Pete Cressman fixed some problems when defining and deleting icons for a Panel Editor MultiSensor icon.
+
+<p>
+Paul Bender added initial support for connecting to a Lenz LI-USB via the Lenz server.
+
+<p>
+Nigel Cliffe added a SerialPortRFID.py script to allow MERG RFID equipment to be read into JMRI.
+
+<p>
+Pete Cressman made several improvements to the Panel Editor:
+<ul>
+<li>The icon editor's window title now shows which panel it's associated with.
+<li>The Icon editors now reset to their default settings whenever opened.
+<li>The "Add to Table" function of the Icon editors now has a button to enter the element. 
+    The new entry is highlighted in the table before adding it to the panel.
+<li>Sensor icons now have a text attribute to make them easier to use as buttons.
+<li>Moving all the panel text to a properties file so it can now be translated.
+<li>Having the image index only store user modified default icon settings.
+</ul>
+
+<p>
+Pete Cressman improved Logix Conditionals by
+<ul>
+<li>Adding a state variable memory-to-memory compare operation.  Two memory values may be tested for: less than, less than or equal, equals, greater than or equal, greater than.  When one or both values is numeric, the test is numeric.  Otherwise the compare is lexicographic.
+<li>The previous state variable "memory equals" comparing a memory value to a value, has been extended to test for: &lt;, &lt;=, =, &gt;=, &gt;.
+</ul>
+
+<p>
+Internal Lights (IL1, etc) now support variable intensity.
+
+<p>
+The bug causing the program to hang when editing a Logix, Route or Light has been fixed.
+(This fix was in JMRI 2.6.1, but not in JMRI 2.7.1)
+
+<p>
+Added a new Panel Editor icon for Memory objects that lets you set and modify numeric values.
+This is a simple initial implementation for values that range from 0 to 100, with more customization, etc, to follow
+if people are interested in this.
+
+<p>
+Fix the script input window so that large scripts can be entered.  Once the initial text window is full, scroll-bars will appear.
+Also, fixed a bug that could cause the "Execute" button to disappear.
+
+<p>
+Support for "Lunar" appearance has been added to signals.
+
+<p>
+A new "Four Output Signal Head" is available. It uses a 4th lamp (bulb or LED) to 
+show a Lunar or Flashing Lunar aspect.  The Logix/Conditional support has been updated
+to work with this.
+
+<p>
+Pete Cressman improved the memory spinner icon.
+
+<p>
+In preparation for new Signal Mast support, we've changed the interface to talk about
+Signal Heads instead of just Signals.
+
+<p>
+Fix a problem with PowerLine initialization that would prevent certain Light configurations from working.
+
+<p>
+Pete Cressman improved the Memory spinner icon support, allowed the Light icon to be edited,
+and added methods for better control of the icon editor.
+
+<p>
+Fixed a problem that prevented TwoOutput and ThreeOutput signal heads from being edited from the Signal Head Table.
+
+<p>
+Sakae Akanuma provided a Japanese translation.
+
+<p>
+Fixed a problem that prevented panel files from JMRI 2.7.3 from properly showing certain icons.
+(More detail:  If the file specified an icon location that started with "resource:resource", 
+JMRI 2.7.3 would not locate the icon)
+
+<p>
+Pete Cressman fixed a problem that prevented the format of panel editor Sensor Icon text
+from being properly stored and reloaded.
+
+<p>
+Pete Cressman added a "Memory Input Icon" to the panel editor.
+
+<p>
+Pete Cressman fixed a problem where a panel editor sensor icon would be triggered when you
+opened its popup menu.
+
+<p>
+Pete Cressman fixed a problem storing and loading the new Memory Spinner Icon, 
+improved some labeling in the icon selector, 
+and added more controls to the memory icon popup menu.
+
+<p>
+When storing references to files, e.g. custom icons in panel files
+if the file is stored in your home directory, JMRI will store a relative "home:" 
+reference, in addition to the already-present detection for files in the
+JMRI program and preferences directory. This makes it easier to move panel files
+from computer to computer; just make sure you have the icons, etc, in the same relative
+place on the two machines.
+
+<p>
+Ken Cameron added sensor support for X10 Powerline devices.  Once you have manually created
+a sensor using the Sensor Table, changed heard on the powerline will adjust the corresponding
+sensor's state.
+
+<p>
+Pete Cressman made some improvement to Panel Editor icon handling.
+
+<p>
+Pete Cressman added group icon capture and move in the Panel Editor.
+When a panel in put in "repositioned"  mode, 
+a click and drag that begins in an open area will draw a red rectangle.  
+All the non-fixed icons captured within this "fence" can be moved as a group by 
+dragging any one of the captured icons.   
+"Non-fixed" means the icons that do not have their "fixed" or "locked" 
+items checked in their popup menus.
+A group of icons captured by the "red fence" can be aligned by their upper left corners 
+horizontally or vertically by selecting the "Align Vertically", or "Align Horizontally" items 
+in one of the captured icon's popup menu.  
+These items appear only when the icon is captured.  
+This alignment will only occur to the unfixed and unlocked icons.
+
+<p>
+Paul Bender fixed a problem with XPressNet throttle setup that was particularly problematic for Hornby users.
+
+<p>
+Paul Bender corrected a bug in XPressNet LI100 programmer which made it difficult to read 
+multiple values from a decoder (single reads were ok).
+
+<P>
+Paul Bender added some additional error messages to the DCC programmer.
+
+<p>
+Sakae Akanuma added a Japanese translation.
+
+<p>
+Pete Cressman fixed a bug in the memory compare in Logix
+
+<p>
+Ken Cameron updated his DebounceSensor script.
+
+<p>
+Pete Cressman improved rotations of icons to the panel editor, and 
+added scaling and repositioning.
+A new "Rotate (degrees)" item was added to the popup menu.  
+The former "Rotation" item is now labeled "Rotate (Orthogonal)".  
+"Rotate (degrees)" will rotate an icon an arbitrary number of degrees.  
+Each "Rotation" item resets the other.  
+The "Scale (percentage)" popup item enlarges or shrinks the icon by the percentage input.  
+To scale and rotate, use "Rotate (degrees)".
+A "Shift-Drag" feature allows repositioning of the icons in a layer beneath an icon, while holding the top icon in place.
+
+<p>
+Ken Cameron fixed the problem that would cause startup errors if you configure a clock (analog, digital or Nixie) to open at startup.
+
+<p>
+Matt Harris fixed the way the preferences store the GUI selection to avoid occasional problems.
+
+<p>
+Matt Harris added great new <a href="http://jmri.org/help/en/html/tools/Audio.shtml">Audio support</a>,
+including a <a href="http://jmri.org/jython/AudioExample.py">demo script</a> that shows off many of the features.
+
+<p>
+Peter Ulvestad added a definition for the DN163K1D decoder and updated 'maxMotorCurrents' on the DN163K1A,B,C.
+
+<p>
+Jack Shall reworked the Soundtraxx Bachmann OEM decoder definition.
+
+<p>
+Mike Mosher updated the ESU XL V3.5 decoder definition to 
+fix acc/dec on motor tab and incorporate latest changes from LS V3.5 file.
+
+<p>
+Mike Mosher updated the QSI Gas Turbine decoder definition to add "Code Horn for Gas Turbine Startup".
+
+<p>
+Jack Shall and Mike Mosher updated the SoundTraxx Tsunami Diesel definition to add CVs, correct a couple bugs, and add tooltips.
+
+<p>
+Peter Ulvestad updated the Bachmann EZDCC 4fn definition to add a max value for CV2, 
+changed the Lenz tab name to Bachmann, updated
+dimensions and default values as per decoder manual and added factory reset menu items.
+
+<p>
+Paul Bender fixed an error when parsing an "unsupported command" XPressNet response message.
+
+<p>
+Paul Bender changed the XPressNet code: instead of sending emergency stop to a MultiMaus 
+(which doesn't support the emergency stop command?) send speed 0.
+
+<p>
+Peter Ulvestad updated the Bachmann EZ DCC, and EZ DCC 1 function
+decoder definitions to change the model name, added decoder dimensions, 
+update defaults and cleaned up the formatting.
+
+<p>
+Peter Ulvestad updated the ESU Bachmann 3 function to
+add CV17 - Extended address, corrected CV4 max value and CV5 default
+value.
+
+<p>
+Paul Fraker contributed a decoder definition for the MRC diesel 1829 decoder.
+
+<p>
+Jack Shall updated and combined the SoundTraxx Tsunami Steam decoder definitions.
+
+<p>
+Paul Fraker contributed a decoder definition for the MRC Athearn Genesis SD45-2.
+
+<p>
+Peter Ulvestad created a definition for the MRC 1820 Athearn RS3 Drop-in Decoder.
+
+<p>
+Peter Ulvestad updated the definition for the MRC 1806 decoder
+to correct CV67-94 (speed table), moved consist info to consist tab
+
+<p>
+Michael Mosher updated the QSI Version 7 decoder definitions to add new models
+and CV 55.21.0,CV53.15.0 thru CV53.30.0, CV55.154.SI CV56.9
+CV55.3.5 CV55.84.SI CV55.70.12 CV55.76.6,11,12,13 CV51.2
+
+<p>
+Nigel Cliffe provided a new decoder definition for the ZTC 471 sound decoder.
+
+<p>
+Nigel Cliffe provided a new decoder definition for the CT ElektroniK SL series (post v40) sound decoders.
+He also improved the CT Elektronik DCX decoder definitions.
+
+<p>
+Ilidio Serra provided a decoder definition for the Rapido TurboTrain.
+
+<p>
+Pete Cressman fixed a problem with italic text in the panel editor.
+
+<p>
+Pete Cressman fixed a bug in Logix support for Memories
+
+<p>
+Ken Cameron updated the RobotThrottle2 script to solve the 'waiting for throttle' problem,
+to add a horn button,
+and to provide smoother stops.
+
+<p>
+Matt Harris updated the build.xml file so that JMRI can be built with Java 1.7 (1.5 is still the default)
+
+<p>
+Ken Cameron added Jython command support to Logix.
+
+<P>
+There is now a IMCURRENTTIME memory variable that contains the current fast time.
+
+<p>
+Matt Harris provided a new "<a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a>" application.
+
+<p>
+Peter Ulvestad updated the Comprehensive programmer format to display built-in speed table information better.
+
+<p>
+Peter Ulvestad updated the MRC Sound Brilliance 1820 definition to better display CV 6. 
+He also provided new MRC 1637 and 1665 definitions, 
+and updated the MRC Diesel 1829.
+
+<p>
+Paul Fraker updated the MRC Athearn Genesis SD45-2 definition and updated the MRC Diesel 1829 definition.
+
+<p>
+Elmer McKay provided a nice help file describing how to start putting signals on your layout.
+
+<p>
+Jack Shall updated the SoundTraxx Diesel Tsunami definition to include the new ALCO 539 models.
+
+<p>
+Micheal Dunn and Peter Ulvestad provided a new definition for the MRC 1658 Sound Brilliance decoder.
+
+<p>
+The DecoderPro programmer definition files (in the xml/programmer directory) can now 
+control whether the "Function Label" and "Roster Media" panes are shown.
+By default, the Basic programmer and the Comprehensive don't show them.
+If you want those two panes, start using the new Advanced programmer format.
+"Advanced" is be the default programmer format, if you don't pick any other one.
+
+<p>
+David Duchamp fixed a problem with processing continuing sense when editing turnouts in Layout Editor
+
+<p>
+David Duchamp extended the Maple interface so JMRI can run multiple Maple input touchpanels.
+
+<p>
+David Duchamp added "<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Special Actions</a>"
+to Transits.
+These are actions that can be initiated automatically as a train running in automatic mode traverses 
+the layout.
+
+<p>
+Fixed a problem loading SE8c signal head definitions that include comments.
+
+<p>
+Simple Signal Logic now remembers whether you entered a user name or system name, and will
+use that same information in the future.  Previously, it converted whatever you entered into
+a system name and remembered that.
+
+<p>
+Update XML parsing routines to use Xerces-J library instead of Crimson.
+This may require users who have created their own startup scripts to reference
+the xercesImpl.jar file instead of crimson.jar.
+
+<p>
+David Duchamp fixed signal head placement problems in Layout Editor signal setup tool.
+
+<p>
+JMRI SignalHeads are supposed to start up DARK, so that whatever controls them can 
+then set their initial appearance.  SE8c SignalHeads were not doing that properly.
+Both the internal appearance (e.g. what shows on icons), and the actual signal, should
+now properly start at DARK.
+
+<p>
+Signal heads and Simple Signal Logic now remember whichever user name or system name you 
+provide.  Previously, names would be converted to system names before being stored.
+This is the first step in a general overhaul to get this behavior.
+
+<p>
+Paul Bender added a javadoc-uml build target to the Ant build.  
+This uses UmlGraph and GraphViz to build UML class diagrams to include in the Javadoc.  
+UmlGraph is included as a jar in lib, GraphViz will need to be installed.
+This requires Java 1.6. You can check out the results via the 
+<a href="http://jmri.org/help/en/html/doc/Technical/Javadoc.shtml">UML diagram listing</a>
+on the JMRI web page.
+
+<p>
+Andrew Crosland updated the SPROG programmer to log an error if no programmer listener has 
+been provided to the programmer, for example in a script.
+
+<p>
+Andrew Crosland added support for the CBUS DCC command station, CV programmer and layout power manager.
+
+<p>
+Peter Ulvestad provided a decoder definition for the MRC 1827.
+He also updated the MRC 1630, 1631, 1637, 1806, and 1819 definitions.
+
+<p>
+Nigel Cliffe added a definition for the Lenz Silver 21 Pin decoder.
+
+<p>
+Marc Fournier updated the Kato EM13 decoder definition file.
+
+<p>
+The default memory limit on Mac OS X has been increased.
+
+<p>
+Randy McKenzie contributed some additional background images for CTC panels.
+
+<p>
+XML input processing has been reworked.  This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile Javadoc for more information.
+
+<p>
+Nigel Cliffe contributed an update for the CT Elektronik SL version 40
+decoder definition
+
+<p>
+Nigel Cliffe contributed an update for the ZTC 471
+decoder definition
+
+<p>
+Paul Bender improved error handling and reporting for the XPressNet ops-mode programmer
+
+<p>
+Giorgio Terdina added an Entry column to the Entry Point table in 
+the Add/Edit Section window of the Section table 
+to make it easier to set entry point direction.
+
+<p>
+Paul Bender added ops mode programming for the Hornby command station.
+
+<p>
+John Plocher improved the DS54 help page.
+
+<p>
+Peter Ulvestad added the Digitrax DZ123MO decoder.
+
+<p>
+Peter Ulvestad updated the Atlas Dual Mode and four function (342 and 345)
+decoder definitions to add
+the factory reset and update some limits and defaults.
+
+<p>
+The 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/mailreport/Report.shtml">Send Problem Report</a>"
+option in the main Help menu now works.
+The messages are filed in a  
+<a href="http://groups.google.com/forum/#!forum/jmri-problem-reports">dedicated Google group</a>.
+
+<p>
+Pete Cressman modified the create/edit dialogs for state variables and actions in Logix 
+to organize them according to item type (e.g. Sensors, turnouts, etc.).  
+The column expandability  has been somewhat improved.
+
+<p>
+Pete Cressman added new sub-menu under "Tools - Tables" called "Occupancy Blocks".
+This is a sub-system for defining  elements needed to run trains with 
+automated commands through 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>".  
+Some of the features of Warrants are:
+<ol>
+  <li>Routes can be determined by merely choosing the start and end points.
+  <li>Throttle commands are recorded in a "Learn Mode" that are then played back 
+        for automated running.
+  <li>Turnout and Signals are set automatically for automated running.
+</ol>
+Warrants need to have the layout described in terms of the elements defined by the 
+Occupancy Block Table.
+Although intended to operate with block detection, warrants can run trains without it, 
+however in this case, there is no protection against misaligned turnouts or cornfield meets.  Detailed information can be found in the Help files on the Occupancy Block Table menu.
+
+<p>
+Giorgio Terdina provided screen icons for German signals.
+
+<p>
+Tjeerd Verhage provided an icon for our SourceForge.net page
+
+<p>
+SE8c Signal Heads can now work with non-Digitrax layout connections.
+There have been a number of changes to make this possible. 
+In particular, the convention for system names for SE8c signal heads has
+changed.  Existing ones (from saved layout files) will stay the same, but
+newly-added signal heads will have the new names.
+
+<p>
+Added a sample script to run the Heljan container crane from the screen.
+
+<p>
+Brett Hoffman added support for mobile devices to control throttles 
+through a wi-fi connection. 
+The first use of this is the
+<a nref="http://www.withrottle.com">WiThrottle</a>
+for iPhone and iPod Touch.
+
+<p>
+Peter Ulvestad provided a decoder definition for the MRC Rapido Turbotrain.
+
+<p>
+Andrew Crosland changed the standard/extended address boundary in the SPROG throttle software to match the SPROG hardware.
+
+
+<p>Peter Ulvestad improved the decoder definition for the MRC 1663
+Atlas S2/S4 decoder. 
+
+<p>Kevin Dickerson made several bug fixes and enhancements:
+<ul>
+<li>improved the file-load dialog so that it doesn't give an error message if the user cancels the load.
+<li>improved the way we check for duplicate roster IDs to catch some additional cases.
+<li>added support for the <a href="http://merg.co.uk">MERG</a> Signal Driver 2 board.
+<li>added support for groups in the DecoderPro roster.
+<li>added a new "failedThrottleRequest" function to the core Throttle support, so that if System-specific throttles are unable to create a throttle, then the address is removed from the throttleListeners Hashmap, and hence prevents the DCC address being locked out.
+<li>fixed a problem what would sometimes result in improperly disabled Logix and Conditionals.
+<li>fixed a problem controlling Turnouts and Signals through an SPROG, and greatly improved the internal structure of that code.
+<li>reduced to one the number of times a function is sent to a decoder by an SPROG system, thus for sound functions it prevents the sound being repeated three times or a turnout being set three times.
+<li>fixed a problem using an SPROG command station with multiple layout connections.
+<li>make extensive updates to the ECoS support:
+<ul>
+<li>updated the eCos support to now include S88 sensors
+<li>updated the ECoS support for better turnout operation, including turnout monitoring.
+<li>added support for throttles to turn locomotives through the ECoS 
+<li>added features to add locos to the roster from an Ecos command station, 
+</ul>
+</ul>
+<p>Kevin Dickerson made several bug fixes and enhancements to the Layout and Panel Editors:
+<ul>
+<li>made a number of internal changes to the layout and panel editors.
+<li>added formatting features into the Text and Memory Label in both Editors along with allow a sensor to be displayed as a text label in stead of an icon.
+<li>Set Fixed Size,
+<ul>
+<li>Set Margin Size (Not available if the size is fixed)
+<li>Text Label &amp; Background Colour
+<li>Border Size &amp; Border Colour
+</ul>
+<li>For the Memory Label he also added:
+<ul>
+<li>Justification - If the Size is fixed, it deals with the justification within the box, if the size is dynamic, then it is the justification around the x axis.
+<li>Double Click to present an Edit Memory value. 
+</ul>    
+<li>A sensor can now be displayed as a text label instead of an icon, with Formatting options similar to that above, with the default text will either be from the sensor username or if that is blank then they will use active, inactive.
+<li>improved how Layout Editor windows are loaded.
+<li>changed the pop up to start and stop the clock so that it now works in the Layout Editor in the same way it does in the Panel Editor; 
+<li>added code to enable a circle and ellipse to be drawn for a track segments in the Layout Editor.
+<li>added lunar signals to the Layout Editor.
+<li>MultiSensor Icons now function correctly in the layout editor.
+<li>made a number of internal changes to the layout and panel editors.
+<li>fixed a bug in sensor icons. When the icon was using different size images for the four states, these used to be centered. Starting in JMRI 2.7.4, this was inadvertently changed so that they were aligned in the upper left corner. This bug is now fixed, and the images have been moved back. This won't effect you if you're using the (recommended) same-size icons, but if you're using different size icons and have created a panel since JMRI 2.7.4, you may have to revisit it.
+</ul>
+
+<p>Lionel Jeanson improved rosters:
+<ul>
+<li>Added support for icons to rosters, so you can associate icons with your locomotives. Also updated the Roster combobox to display them.
+<li>Added support for images to rosters, so you can associate images with your locomotives. Also updated the Throttle to display them.
+<li>Added a button so you can remove image or icon from a roster entry.
+<li>Added a <a href="http://jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml">Roster Media pane in DecoderPro</a> to manage above improvements, available in Advanced mode.
+</ul>
+<p>Lionel Jeanson improved Throttles:
+<ul>
+<li>Added a <a href="http://jmri.org/help/en/html/tools/throttle/ThrottleToolBar.shtml">throttle window tool bar</a> in order to be able to have several throttles in one window (this involved some changes to the internal structure of the code that may cause problems for scripts if they were using
+the internal interfaces of the Throttles; please check your scripts).
+<li>Added default background image for DCC addresses 0 and 3.
+<li>Provided a <a href="http://jmri.org/help/en/html/tools/throttle/ThrottlesPreferencesPane.shtml">throttle preferences pane</a> for controlling these new features.
+<li>Improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a> to include much more information about advanced features.
+<li>Added a <a href="http://jmri.org/help/en/html/tools/throttle/ThrottlesListWindow.shtml">window listing JMRI managed throttles</a>.
+<li>Improved the way throttles and throttle windows layout are exported to xml.
+<li>Added default throttle xml files for throttles linked to a roster entry.
+<li>Reorganized <a href="http://jmri.org/help/en/html/tools/throttle/ToolsMenuThrottleEntry.shtml">the tools->throttle menu entries</a>.
+<li>Fixed the multi-throttle release issue in LocoNet by better monitoring slot status in LocoNet Throttle (also fixes function visual feedback to throttle frames)
+<li>Improved the way release/dispatch is handled for multiple LocoNet throttles.
+<li>Added initial support for <a href="http://jmri.org/help/en/html/tools/scripting/Jynstruments.shtml">"Jynstruments", a new way to extend the JMRI user interface with scripts</a>.
+<li>Added Jynstruments for the throttle frame, <a href="http://jmri.org/help/en/html/tools/throttle/HowToJMRIOrientedThrottle.shtml">allows for extended display or custom function control for throttles</a>.
+<li>Added Jynstruments for the throttle tool bar, <a href="http://jmri.org/help/en/html/tools/throttle/AdvancedThrottleControl.shtml">allows for USB devices and Nintendo Wiimote throttle frame browsing and throttle pilot</a>.
+</ul>
+
+
+<p>Dan Boudreau made several enhancements and bug fixes:
+<ul>
+<li>Fixed the panel editor to allow the user to use the + and - functions to nudge labels.  
+
+<li>Added a curved track icon, and fixed the straight track icon.
+
+<li>Fixed a marker bug:  Opening and closing marker frames caused the number of markers created to increase by one each time the marker frame was reopened.
+
+<li>Fixed a bug when rotating square icons.
+
+<li>Added and improved the NCE Show Cab feature.
+
+<li>Added a new save panel feature.  
+When saving a panel that already exists, the program now saves a backup copy of the panel in a directory called "backupPanels".  
+The backup panel's file name is modified with the current date and time.
+
+<li>Changes now take effect immediately when you change the level of a Panel Editor icon.
+</ul>
+<p>Dan Boudreau made many improvements and bug fixes to the
+operations code.
+
+<p>New features:
+<ul>
+<li>You can now print your manifests using colors for the car drops
+and pickups.
+
+<li>The "Modify Trains" and "Modify Locations" tools allows you
+to quickly edit which car types a train or location will service.
+
+<li>The location and track tool menu now has the option to show
+cars.
+
+<li>Added fields for RFID support.
+</ul>
+<p>Operation improvements:
+<ul>
+<li>Trains departing staging now check that the engines and cars
+are serviced by that train. This allows selective builds from staging.
+
+<li>More warnings about saving the operations database when closing
+the Train panel or shutting down JMRI.
+
+<li>Several improved panels that have been reorganized and can be
+resized.
+
+<li>Many of the build messages have been improved making it easier
+to understand why builds fail.
+
+<li>The car database is now automatically saved when you change the
+Car Types (Descriptive or AAR codes) in setup.
+
+<li>The route table now has a status field for each route.
+
+<li>When replacing an existing engine model with a new model, the
+new model will now take the old model's attributes of length, type, and
+horsepower.
+
+<li>Added three additional sort options for trains in the
+operations code: by route, departure, and destination.
+
+<li>Users can name tracks using -number suffix. Suffix isn't
+printed for manifests or switch lists.
+
+<li>The "engine import" now checks to see if the model exists and
+if not will ask if it should be created.
+
+<li>The Train panel can now disable the display of error messages.
+
+<li>Tested with a 10,000 plus car database and improved build
+and table performances when dealing with very large rolling stock
+collections.
+
+<li>Created a more random set of cars and engines when building
+trains.
+</ul>
+
+<p>Operation bug fixes:
+<ul>
+<li>You can now reset a train if you've modified the train's route
+after you've built the train.
+
+<li>Cars with scheduled loads didn't always pick up the next
+scheduled load.
+
+<li>Locations window didn't always show the correct number of car
+and engine pickups for each location.
+
+<li>Train reset no longer swaps car loads.
+
+<li>Builds would fail if the staging tracks didn't have engines.
+Trains can now be built from staging without requiring engines.
+
+<li>Program now allows terminating a train into staging without an
+engine.
+
+<li>Limited the number of cars printed in the build report to 500
+cars to avoid out-of-memory conditions when previewing a printout.
+
+<li>The program can now deal with certain errors when reading old
+operations configuration files. 
+</ul>
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

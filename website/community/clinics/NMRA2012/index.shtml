@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: NMRA 2012 Clinics</title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords"
+       content="clinics java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: NMRA 2012 Clinics</h1>
+
+<a href="http://www.gr2012.org/">
+<img src="http://www.nmra.org/common/gr_logo_vsm.jpg" alt="Convention logo" align="right" ></a>
+
+<p>
+There were several JMRI clinics at 2012 NMRA convention in Grand Rapids, including 
+both old favorites and several new ones.  
+
+<p>
+Slides:
+<p>
+<a href="DispatcherClinic2012.pdf">David Duchamp's clinic on "Running Trains with JMRI's Dispatcher"</a>
+
+<p>
+<a href="JMRI_CMRI_Clinic2012.pdf">David Duchamp's clinic on "Using JMRI with C/MRI Hardware"</a>
+<p>
+More information on the convention can be found on the  
+<a href="http://www.gr2012.org/">convention website</a>.
+Many interesting clinics are listed in addition to the ones listed here, 
+including two on 
+<a href="http://cats4ctc.org"><!-- was http://home.comcast.net/~kb0oys/ --> CATS</a>.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

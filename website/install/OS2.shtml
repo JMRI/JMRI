@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: OS/2 Install Guide
+ </title>
+	<meta name="author" content="Bob Jacobsen">
+	<meta name="keywords" content="java model railroad JMRI install windows">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+        <h1>JMRI Install Guide: OS/2</h1>
+
+        <ol>
+            <li>Determine if your hardware supports Java and JMRI</li>
+
+            <li>Get and Install Java (if needed)</li>
+
+            <p>You need to have Java (at least 1.1.8), Swing and javacomm
+            installed on your machine. These can be downloaded from the IBM
+            site.</p>
+
+            <p>A screen size of 800x600 or larger is strongly recommended.</p>
+
+            <li>Get JMRI</li>
+
+            <p>The latest production and test versions are not available for OS/2
+            because the build machine we were using is no longer available.</p>
+
+            <p>See the <a href="../download/index.shtml#prod-rel">Download</a> pages for v1.2.5, the
+            last production version that supported OS/2.
+            </p>
+
+            <li>Install JMRI</li>
+
+            <p>Unzip the file you downloaded above.  This will create the "JMRI" folder.</p>
+            <p>To install, you just have to move the JMRI folder to where you
+            want it on your computer.</p>
+
+            <li> Installation is complete.</li>
+            <p>
+            You can run the program by using
+            the "DecoderPro.CMD", "PanelPro.CMD" or
+            "JmriDemo.CMD" scripts in the JMRI folder.
+        </ol>
+
+        <!--#include virtual="/Footer.shtml" -->
+
+       </div><!-- closes #mainContent-->
+      </div> <!-- closes #mBody-->
+    <script src="/js/main.js"></script>
+</body>
+</html>

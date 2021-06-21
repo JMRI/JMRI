@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Install Guide for Intel-based Mac OS X Computers
+ </title>
+		<meta content="Bob Jacobsen" name="Author">
+		<meta name="keywords" content="java model railroad JMRI install MacOSX">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1> 
+      JMRI: Install Guide for Intel-based Mac OS X Computers
+      </h1>
+
+For information on Mac OS X, Intel-based computers, and JMRI,
+please got to the 
+<a href="MacOSX.shtml">main JMRI Mac install page</a>.
+
+        <!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

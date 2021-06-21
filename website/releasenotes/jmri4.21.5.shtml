@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.21.5
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.21.5 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.21.5 release
+      </h1>
+
+    <p>Date: February 20, 2021</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.21.5 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please 
+<a href="https://groups.io/g/jmriusers">post a note</a>
+if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release in early 2021.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+
+If you are currently using a version older than JMRI 4.20, please follow these instructions carefully:
+
+<ol>
+<li>Is your current version older than <a href="jmri4.12.shtml">JMRI 4.12</a>? 
+    If so, then update to <a href="jmri4.12.shtml">JMRI 4.12</a> first, and ensure everything works correctly: check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else.
+    Store your configuration and panel files under a new name and use those from now on. 
+    Then continue with step 2.
+    <p>
+    If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    then it's <u>very important</u> 
+    that you update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to any later relese.
+    </li>
+    
+<li>Is your current version older than <a href="jmri4.20.shtml">JMRI 4.20</a>? 
+    Then update to <a href="jmri4.20.shtml">JMRI 4.20</a> first, and ensure that works correctly (check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else
+    Store your configuration and panel files under a new name and use those from now on.</li>
+
+<li>You can then install this release. 
+
+</ol>   
+ 
+Following this multi-step order of updating via stable major releases safeguards you against possible migration issues 
+that can arise from skipping these versions.
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.19.6.shtml">JMRI 4.19.6</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">development build installer</a>
+from
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+<ul>
+    <li>
+        None yet
+    </li>
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.20.shtml#warnings">JMRI 4.20 release note</a> for more warnings predating the 4.21 development series,
+including pointers to various migration issues.
+These may be relevant to you if you're updating from an earlier version;
+we strongly recommend you update to <a href="jmri4.20.shtml">JMRI 4.20</a>
+installing this test release.
+
+<ul>
+    <li><span class="since">Since <a href="jmri4.21,1.shtml">JMRI 4.21.1</a></span>
+        The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+        interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+        require changes to scripts.  If you have a script that references
+        jmri.jmrix.SystemConnectionMemo, please change it to either
+        jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+        (it's easier to have you just try the two than to explain which 
+        one will work in which case)
+    </li>
+    
+    <li><span class="since">Since <a href="jmri4.21.1.shtml">JMRI 4.21.1</a></span>
+        The way preferences are loaded at startup has been slightly
+        modified.  There is no impact to JMRI applications, but Non-JMRI
+        applications that are not derived from apps.Apps or apps.AppsBase
+        but are using jmri.implementation.JmriConfigurationManager to load
+        preferences will no longer see preferences if an error occurs.  To
+        restore the old behavior, use apps.AppsConfigurationManager instead.
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.19.1.shtml">JMRI 4.19.1</a></span>
+        The <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+        calls in the various <code>Manager</code> classes
+        are no longer needed with Java 8 and have been deprecated for eventual
+        removal.  Their replacements are 
+        <code>getByUserName</code> and <code>getBySystemName</code> 
+        respectively. 
+        If you use <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+        in script or Java code you've written, please 
+        switch to the new names.
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+        There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+        <ul>
+            <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+            <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+            <li>Do not open the SPROG console window</li>
+            <li>Disable power conversion (CV 29) in all locos</li>
+            <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+        </ul>
+        Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+        open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+    </li>
+</ul>   
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.21.5/JMRI.4.21.5+R9c40019f7.dmg">https://github.com/JMRI/JMRI/releases/download/v4.21.5/JMRI.4.21.5+R9c40019f7.dmg</a><br/>
+  sha256: 84fc78a02c78c88d8bc661f2c5b43bd1d69661975a0a9eb65ac6e457945af2dd </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.21.5/JMRI.4.21.5+R9c40019f7.exe">https://github.com/JMRI/JMRI/releases/download/v4.21.5/JMRI.4.21.5+R9c40019f7.exe</a><br/>
+   sha256: ca77944e39d96dfde9df7a87169001aa3745d96858f9aea9a42287ebb089975c</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.21.5/JMRI.4.21.5+R9c40019f7.tgz">https://github.com/JMRI/JMRI/releases/download/v4.21.5/JMRI.4.21.5+R9c40019f7.tgz</a><br/>
+   sha256: ca254edfe6993f5008f66399d6ac1b083253fde6e329f145d785dc008dd721d2</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="https://builds.jmri.org/jenkins/job/testreleases/job/4.21.4``/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+ 
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.21.4.shtml">Test Release 4.21.4</a>:</h2>
+ 
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=milestone%3A4.21.5+is%3Amerged">list of included changes</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+
+    <h3>Hardware Support</h3>
+
+        <h4>CBUS</h4>
+            <ul>
+                <li>
+                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
+                </li>
+                <li>
+                    Corrected links to images on SPROG Generation 5 hardware help page.
+                </li>
+                <li>
+                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
+                </li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+              <li>When connected to the LocoNet HexFile Simulator, simulated replies from selected devices are
+                sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
+            </ul>
+            
+    <h3>New / Updated decoder definitions</h3>
+
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Updated the QuadLN_S template to support the 16 servo capability in the Version 3 software</li>
+            </ul>
+
+        <h4>Uhlenbrock</h4>
+            <ul>
+                <li>New definitions to program Power4, Power8 (boosters) and IntelliLight 28x0 modules.</li>
+                <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
+                  The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
+                <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
+                <li>When connected to the LocoNet HexFile Simulator, simulated replies from LNCV devices are
+                  sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
+            </ul>
+
+   <h3>Internationalization</h3>
+        <a id="I18N" name="I18N"></a>
+        <ul>
+            <li>Dutch translations added for the Where Used, Meters and Issue Reporting tools.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"></a>
+        <ul>
+	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
+            .</li>
+        </ul>
+
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+          <li>The Settings menu was slightly reorganized with submenus for each value.</li>
+          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
+          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
+          <li>Meters now use meter max and resolution to default integer and decimal digits</li>
+        </ul>
+
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li>Turnouts with 1 Sensor Feedback update to Inconsistent state when the Sensor being followed enters an Unknown or Inconsistent state.
+            <br>See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">Turnout Feedback</a></li>
+        </ul>
+
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"></a>
+
+	    <h4>Cab Signals</h4>
+            <ul>
+                <li>Better set row height in table.</li>
+            </ul>
+
+    <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
+            <li>Added local and global preferences to show/hide speed step selector. <a href="https://groups.io/g/jmriusers/topic/change_background_color_and/80665867"> User message 80665867</a></li>
+            <li>Added global throttle preference to use or not large speed slider. <a href="https://groups.io/g/jmriusers/topic/change_background_color_and/80665867"> User message 80665867</a></li>
+            <li>Refactored VideoView Jynstrument for camera view in Throttle, reworked using <a href="https://github.com/sarxos/webcam-capture"> a new third party library.</a></li>
+        </ul>
+
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>Improved how JavaHelp handles non-HTML files on some platforms.</li>
+        </ul>
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

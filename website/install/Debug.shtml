@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>JMRI: Debugging Your Installation</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1> 
+JMRI: Debugging Your Installation
+</h1>
+
+	This page presents an orderly method for debugging
+	problems that first appear when JMRI/DecoderPro is installed.
+	<p>
+	Even if you're an experienced debugger, we suggest you work
+	your way through these steps in order. That way, if all else
+	fails and you have to call for help, most of the initial 
+	stuff will be known to be OK.
+	
+    <h2>Step 1: Do you have Java installed? </h2>
+
+	<p> Start by making sure you have an appropriate version of Java on
+	your system by typing</p>
+
+	<p class=example> java -version </p>
+
+	at a command prompt and looking the message that produces.</p>
+	<p>JMRI&reg; version 4.2 requires Java 1.8.<br>
+	Version 3.10.1 requires Java 1.6 or later.<br>
+	Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop).<br>
+	Version 2.12 requires Java 1.5 or later.
+	</p>
+	<p>If you get a message about "command not found"
+	or similar, then Java is not properly installed; consult the
+	install pages for your 
+    <a href="MacOSX.html">Mac OS X</a>,
+    <a href="Linux.html">Linux</a>,
+    <a href="WindowsNew.shtml">Windows</a> computer for advice on how to fix this.
+	
+    <h2>Step 2: Does the program start? </h2>
+
+    Try to start DecoderPro.  (The method to do this
+    depends on whether you are using a
+    <a href="MacOSX.html">Mac OS X</a>,
+    <a href="Linux.html">Linux</a>,
+    <a href="WindowsNew.shtml">Windows</a> computer; see the relevant page)
+    <p>
+    
+    This tests whether the basic installations of Java and JMRI are
+    OK.  If the program doesn't start up and run at least as far 
+    as producing it's title screen and menus, there's something
+    wrong with either the JMRI installion, or perhaps with the Java
+    installation.
+    <p>
+    In that case, look for console messages that might describe what went
+    wrong.  Those appear in different places:
+    <dl>
+    <dt>Mac OS X<dd>In the "Console" application, found in the Applications/Utilities folder, which you have to start
+    <dt>Linux<dd>In the shell window from which you started the program
+    <dt>Windows<dd>In the "Java" window; you might have to find this in the start bar
+    at the bottom of the screen and expand it
+    </dl>
+    <p>
+    See if the messages tell you anything useful about missing pieces, etc.  If
+    not, cut and paste them into an email to the jmriusers discussion list, and
+    somebody will help you figure out what went wrong.
+    
+    <h2>Step 3: Are the Java communications libraries present?</h2>
+    
+    Once the program is running, pull down the 'Edit' menu and select the
+    'Preferences ...' item.  This opens the preferences panel.  
+    Select the proper protocol for your layout.
+    <p>
+    At this point, do the names of one or more serial ports appear in the
+    selection box on the right?  
+    <p>
+    If not, does your computer actually have any serial ports?  You
+    can't use JMRI without them (Well, you can use the program, but you
+    can't communicate with a layout).  You need to either get a serial
+    port, or install a 
+    <a href="/help/en/html/hardware/USBtoSerial.shtml">USB-serial adapter</a>.
+    <p>
+    But if you have one or more serial ports, and they're not showing,
+    this could mean that the Java communications libraries aren't properly
+    installed. Check for error messages (see the note on how to 
+    do this in Step 2 above) If you see messages about "failed to load"
+    or "missing class", then the communications libraries weren't found.
+    <p>
+    To fix this, please see the system-specific pages for your 
+    <a href="MacOSX.html">Mac OS X</a>,
+    <a href="Linux.html">Linux</a>,
+    <a href="WindowsNew.shtml">Windows</a> computer.
+    
+    
+    <h2>Step 4: Is the communications port configured right?</h2>
+    
+    For most protocols, you have to configure the baud rate, and perhaps
+    other options.  These have to be set consistently with the layout
+    hardware for communications to be possible.
+    
+    <h2>Step 5: Can the program talk to the layout?</h2>
+    
+    The method to check whether the program can talk to the
+    hardware of your layout depends a little bit on what you 
+    have installed.  Basically, you want to command the system
+    to do something that you can see.  See if each of the 
+    following works:
+    
+	    <ul>
+	    <li>With most DCC systems, you can use the "Power Control"
+	    in the "Tools" menu to turn layout power on and off.  
+	    By doing that and seeing if the layout actually does as
+	    commanded (e.g. locomotive lights go on and off), you
+	    can check that the communication is working.  
+	    <p>If this tool
+	    is unavailable (e.g. grayed-out in the menu), your 
+	    DCC system doesn't have this option, and you should try something
+	    else.
+	    <li>If you have turnouts connected to accessory decoders, 
+	    you can command them to flip via the "Turnout Control"
+	    in the "Tools Menu".
+	    <li>If you're using a C/MRI system, all of the LEDs on the 
+	    controller cards (SMINI, etc) should be flashing rapidly once
+	    the program has started polling, which happens
+	    when you 
+	    <a href="../help/en/package/jmri/jmrit/beantable/SensorAddEdit.shtml">add a Sensor</a>
+	    via the <a href="../help/en/package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>.
+		  </ul>
+
+    <h2>Step 6: Can decoders be programmed?</h2>
+
+	Typically, this is what people want to do first.  But
+	by going through the prior steps, we know that communications
+	between  the program and the layout are fine, and we're
+	just working through the last details now.
+	
+	<p>
+	To check this:
+		<ul>
+		<li>Put a decoder-equipped locomotive on your programming track.
+		<li>Using your DCC throttle (not the program!) make sure you can
+		read the decoder's address, CV1. If so, the locomotive's connections
+		are OK.
+		<li>On a running and configured version of DecoderPro, 
+		select the "Single CV programmer" from the "Tools" menu.
+		<li>Enter "1" in the CV number, and click "Read"
+		</ul>
+	<p>
+	If all goes well, you'll get a succesful read of the same address
+	you saw previously.
+	<p>
+	If not, check for a message. Among the possibilities are:
+	<dl>
+	<dt>No Locomotive Detected
+	<dt>No Acknowledge from Locomotive
+	<dd>These comes from the command
+	station.  It means that the program was able to talk with the 
+	command station OK, but the command station could not talk to the 
+	locomotive.  Go back to reading with the throttle and make sure
+	what works.  If it does, try selected different programming modes
+	(e.g. paged, direct, etc) in DecoderPro and retrying the read.
+	<dt>Timeout talking to command station<dd>This means that
+	the program didn't hear any response from the command station when it
+	requested the CV to be read. This is unexpected, because we found
+	that communications to and from the command station were OK in step 5.
+	Check that step again.  And look for error messages that might provide
+	a clue (see step 3 for info on how to do that)
+	</dl>
+	
+<!--#include virtual="/Footer.shtml" -->
+	 </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+ </body>
+</html>

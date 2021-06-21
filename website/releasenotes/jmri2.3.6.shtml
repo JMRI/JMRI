@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.3.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.3.6 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.3.6 release
+      </h2>
+
+	<p>Date: November 16, 2008</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.3.6 of JMRI/DecoderPro is available for download.
+
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the sixth in a series of test versions.
+
+It contains 
+many new features, including:
+<ul>
+<li>Improved Throttle options: You can now label what each 
+function key does for each locomotive in DecoderPro, and have
+those automatically shown when you open a throttle for that locomotive.
+<li>Tools to make it easier to download new decoder definitions
+from a local file or via the Internet.
+
+</ul>
+along with lots of other changes.  See the complete list below.
+
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.3 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.4" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(None)
+
+<h3>Warnings from older versions:</h3>
+
+Windows desktop shortcuts have been restructured to make them more reliable.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be effected by this change.
+
+<p>
+Starting with the 2.3.4 test release, by default JMRI is allowed to use
+up to 200MB of memory (up from a limit of 60MB or 64MB previously).
+If this is more memory than you have available, and you notice JMRI
+slowing down a lot, please let us know so we can provide a work-around.
+<p>
+Staring with the 2.3.3 test release, JMRI builds the classpath (the
+list of .jar libraries used by the program) dynamically on Windows.  
+We'll use this in the future for plug-ins and other features, and
+other platforms have been doing this for a while.
+If you have added any .jar files to your JMRI program directory, they
+may cause problems when the program is starting.  Also, if originally
+installed a very old version of JMRI, there might still be files around
+that can cause this problems.
+If so, you can fix it by moving aside those extra
+.jar files from the JMRI program directory, or by asking Windows to un-install JMRI,
+before reruning the installer.
+For more information on this, please see this
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/conversations/topics/35065">discussion</a>
+on the JMRI Users group.
+
+<p>JMRI is moving toward requiring Java 1.5 or later.  Certain new features may not work if you are using an earlier
+version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. 
+We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. 
+Code has been added to detect if AIU broadcasts are enabled, and if so a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
+
+<p>Indexed CVs will not be included in any printouts for this release.
+ 
+<p>QSI CV 56.129 Engine ID Access is not supported in this release.
+  
+<p>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), otherwise the writes will fail.
+ 
+<p>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
+ 
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.3.6.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.6.dmg?download</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.3.6.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.6.exe?download</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.3.6.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.6.tgz?download</a>
+
+
+
+<h3>Changes since test version 2.3.5:</h3>
+
+Dan Boudreau made several additions to the operations code. He added
+termination of trains to operations for batch mode, AAR type code for
+cars, and the ability to specify a commodity for cars. Fixed a bug when
+adding or editing routes in which the train direction wasn't properly
+saved.
+
+<p>
+Fixed a bug that would result in user names for Blocks being lost when Layout Editor wasn't being used.
+
+<p>
+Dan Boudreau made some tweaks to the Throttle window layout and
+added the ability to save your throttle preference. Now you can
+configure how you want your throttle buttons to appear and save it using
+the "Save Throttle Preference" in the Tools->Throttles menu. He also
+changed the Throttle's default text for buttons F0, F1 and F3 to Light,
+Bell, and Horn. The Horn button is also set to momentary.
+
+<p>
+David Duchamp added Logix actions to set variable light intensity and light transition time.
+
+<p>
+You can now configure the labels on the throttle function keys as part of your locomotive roster.
+A new "Function Key Labels" pane in DecoderPro lets you assign a label to each function, which will then be
+displayed on the function button when using a JMRI throttle to control that locomotive.
+For example, F2 in a sound-equipped locomotive might be labelled "Bell".
+
+<p>
+Support for TCH Technology hardware has been removed.
+
+<p>
+David Duchamp fixed a bug where Block system names were being changed when loading a Layout Editor panel while restarting after Layout Editor edits that changed the block structure of the panel.
+
+<p>
+Added a Help button to the DecoderPro and PanelPro main windows, and a Quit button to the PanelPro main window.
+Also, when the setup fails and the preferences window is opened at startup, also open the help window for preferences.
+
+<p>
+Added "Import Decoder File" and "Import Decoder URL " in the Debug menu, which 
+will take a user-selected decoder definition file, copy it in the right place, and 
+rebuild the decoder index. The two forms are for selecting a local file, perhaps downloaded
+from a web page, and for downloading directly from a web page via an internet connection.
+See the 
+<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">help page</a>
+for more information.
+
+<p>
+Added text to the "roster could not be read" message so it's clear this is normal if you haven't added any decoders yet
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI Install Guide: 64-bit Windows</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1>JMRI Install Guide: 64-bit Windows</h1>
+
+This page is a start at documenting how to use
+JMRI on 64-bit Windows.
+
+<p>
+JMRI runs in 32-bit mode, even on 64-bit Windows systems.
+
+<p>
+Even after installing Java on a Windows Vista 64-bit computer, 
+JMRI applications won't start because the "java" command can't be
+found.
+<p>
+John Sacrey provided instructions on how to update the 
+Windows "path" variable so that Java is found:
+<dl>
+	<dd>
+	This will get you to where the System Environment variables are defined:
+		<ul>
+		<li>Right Click on "My Computer" and select "Properties"
+		<li>Click the "Advanced" tab
+		<li>Click the "Environment Variables" button
+		<li>Scroll the System variables list until you see "Path", select it
+		<li>Click the "Edit" button and it will bring up an edit box
+		<li>Locate "%SystemRoot%\system32;" in the string and insert
+		"%systemroot%\SysWOW64;" after it, minus the quotation marks.
+		</ul>
+	<p>
+	This works on BOTH XP x64 and Vista x64.
+	</dd>
+</dl>
+
+<p>
+Two java.com links that might provide help:
+	<ul>
+	<li><a href="http://java.sun.com/javase/6/webnotes/install/jre/install-windows-64.html">http://java.sun.com/javase/6/webnotes/install/jre/install-windows-64.html</a>
+	<li><a href="http://java.com/en/download/help/path.xml">http://java.com/en/download/help/path.xml</a>
+	</ul>
+
+    <a id="installation"></a>
+<h2>Installation Procedure</h2>
+
+    <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

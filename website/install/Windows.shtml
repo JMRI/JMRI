@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI 2.14 and earlier Install Guide: Windows
+ </title>
+	<meta content="Bob Jacobsen" name="Author">
+	<meta name="keywords" content="java model railroad JMRI install windows">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+
+    <h1>
+    JMRI 2.14 and earlier Install Guide: Windows
+    </h1>
+
+<p class="important">This Install Guide is suitable for JMRI versions 2.14 and earlier - for versions 3.0 and later, <a href="WindowsNew.shtml">refer to the new Windows Install Guide</a>.</p>
+	
+<a id="installation"></a>
+<h2>Installation Procedure</h2>
+
+<ol>
+  <li>Determine if your hardware supports Java and JMRI</li>
+      
+	<h3>JMRI System Requirements</h3>
+	<p>Using JMRI requires a combination of hardware (in this case running Windows), Java software and a JMRI download for a specific version.<br>
+	Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop).<br>
+	Version 2.5 requires Java 1.5 or later.
+ </p>
+	<p>We have had a report that a 100&nbsp;MHz Pentium is too slow to use, and
+	another that a 120&nbsp;MHz Pentium II is fine, so somewhere around there is
+	the minimum machine configuration, but it's important to have enough
+	memory.  We recommend you have at least 96&nbsp;MB of memory for Windows 98,
+	and 128&nbsp;MB of memory for Windows 2000 or later.  Having 128&nbsp;MB or
+	256&nbsp;MB respectively would give better performance.  For the more
+	complicated programmer screens, a display with a resolution of 800x600
+	or larger is strongly recommended. Note that used PC hardware is 
+	available for very little money; it might be cheaper to buy a used
+	computer than to update your existing one.</p>
+
+	<li>Get and Install Java (if needed)</li>
+
+	<p>You need to have Java 1.5 or later installed on your machine.  We
+	test with JRE 1.6 and recommend you use it or a later version.  
+	<p>If
+	you don't yet have Java installed, or you have an older version,
+	you can get installers from Oracle
+	by clicking this button:<br>
+<a href="http://www.java.com" target="_blank">
+<img src="https://download.oracle.com/technetwork/java/get-java/getjavasoftware-88x31.png" alt="Get Java Software" border="0" width="88" height="31" />
+</a><br>	
+	or by going to <a href="http://java.com/java/download/index.jsp">http://java.com/java/download/index.jsp</a>.
+	
+	<p>You must run the Java installer (or have previously done so) before
+	running the JMRI installer in the next step, or it will issue an error
+	message and stop.</p>
+
+	<p>Oracle offers both an "online" and an "offline" installer for
+	the Java Runtime Engine (JRE). The online installer is about
+	1.5&nbsp;MB, but needs an Internet connection to complete the install.
+	The offline installer is about 20MB, but includes everything.</p>
+
+	<p>As the size of software you can download from the Internet has
+	increased, distributors have looked for ways to decrease the time
+	it takes to do this. Since a software package may include features
+	a user doesn't need or want, one way to decrease the time is to
+	make the installation "live". You initially download a small program,
+	which is an Internet installer. When you run the program you are asked
+	what components of the package you want to install. Only those
+	components are downloaded and installed.</p>
+
+	<p>Here's what java.com has to say about this:
+			<ul>
+			<li>Windows Installation
+			<p>
+			Saves download time if installing only some of the features. This 
+			install first downloads and runs a small program that prompts the user 
+			for options to download and install. The user must be connected to the 
+			Internet in order to complete this installation. Includes support for 
+			additional languages, fonts and media. This choice downloads and 
+			installs Microsoft Windows Installer 2.0 if not already installed. If 
+			you are behind an authenticated proxy server, you must use the Windows 
+			Offline Installer instead. Before making this choice, turn off any 
+			download managers, other than the Sun Download Manager, if you are using it.</p>
+			</li>
+			<li>Windows Offline Installation
+			<p>This downloaded file includes everything required to perform a complete 
+			installation. It can be copied to a machine that is disconnected from 
+			the network and executed to perform a complete or custom install. 
+			Includes Microsoft Windows Installer 2.0 and support for additional 
+			languages, fonts and media. Use this installer if the normal Windows 
+			Installer does not work.</p>
+			</li></ul>
+    
+    If the "java" command doesn't work after you've installed
+    Java, there might be a problem with the 
+    Windows "path" variable.  This is particularly common on 
+    64-bit Windows systems.  For more information, see the
+    page on <a href="Win64.shtml">JMRI under Windows 64-bit</a>.
+    
+	<li>Get JMRI</li>
+
+	<p><a href="../download/index.shtml#prod-rel">Download</a> a version of JMRI, either the
+	latest production version, or a "test version".  Since the version
+	numbers change with every release, this link takes you to the general
+	JMRI download page, where you can select whichever version you like.</p>
+
+	<p>The JMRI project is continuously adding features, bug fixes,
+	examples and tutorials to the release, and so new "test" versions
+	appear every couple of weeks.  You may find one of these has features
+	that you really want.  These are announced in the "JMRI users" Groups.io
+	discussion group at
+	<a href="https://groups.io/g/jmriusers">https://groups.io/g/jmriusers</a>.
+	</p>
+
+	<li>Run the JMRI Windows installer</li>
+
+	<p>It will ask you to read some licensing information, and
+	then install the needed libraries, plus add a "JMRI" program group to 
+	your Start menu and put a shortcut to the DecoderPro program on your
+	desktop. Th installer for version 2.5.2 will present the following screens:
+	
+	    <ol type="i">
+	      <li>Installer start-up
+	        <p><img src="images/WinInstall-01_Welcome.png" height="393" width="503" alt="installer welcome page"></p></li>
+	      <li>Check for a previous version
+	        <p>It will then check to see if a previous version of JMRI exists, backup any Preference, Roster and other settings and, if necessary, uninstall the old JMRI version.
+	        <br><img src="images/WinInstall-02_BackupAndRemove.png" height="393" width="503" alt="installer backup and remove page">
+	        <br>or<br><img src="images/WinInstall-02_BackupOnly.png" height="393" width="503" alt="installer backup page"></p>
+	        <p>Uninstall of version 2.5.1 or earlier:</p>
+	        <p>Initial confirmation
+	        <br><img src="images/WinInstall-03a_UninstallOld.png" height="126" width="471" alt="installer uninstall old version confirmation"></p>
+	        <p>Uninstaller progress
+	        <br><img src="images/WinInstall-03b_UninstallOld.png" height="144" width="323" alt="installer uninstall old version progress"></p>
+	        <p>Uninstaller complete
+	        <br><img src="images/WinInstall-03c_UninstallOld.png" height="126" width="231" alt="installer uninstall old version complete"></p>
+			<p>In some circumstances, the removal of version 2.5.1 or earlier is not successful:</p>
+			<p>Uninstaller failed
+			<br><img src="images/WinInstall-03d_UninstallOldFailed.png" height="126" width="497" alt="installer uninstall old version failed"></p>
+			<p>In such cases, it is necessary to download and run the following file and then re-run the installer:
+			<br><a href="support/RemoveOldJMRIUninstallEntry.exe">RemoveOldJMRIUninstallEntry.exe</a></li>
+	      <li>Choose installation type
+	        <p>If supported by your Windows version and depending on the permissions of your user, the installer may ask you to choose to install JMRI just for yourself or for all users of the computer.
+	        <br><img src="images/WinInstall-04_ChooseUsers.png" height="393" width="503" alt="installer user choice"></p></li>
+	      <li>Choose components
+	        <p>The installer will now present a list of the components to be installed.
+	        <br><img src="images/WinInstall-05_ChooseComponents.png" height="393" width="503" alt="installer component choice">
+	        <br>This will install JMRI to the default location, place shortcuts for DecoderPro and PanelPro on the desktop and create a JMRI Start Menu folder containing shortcuts for typically used JMRI programs.</p>
+	        <p>If you wish to change where JMRI is installed, change the install type to 'Custom (select to choose program folder)'.
+	        <br><img src="images/WinInstall-05a_ChooseInstallType.png" height="393" width="503" alt="installer type choice"></li>
+	      <li>Check for Java
+	        <p>It will check for a suitable version of Java on your computer and, if required, will connect to the internet to download the most current version for your computer. (For an offline installation, refer to the <a href="#offline">offline installation notes</a> below).
+	        <br><img src="images/WinInstall-06a_NoJavaAskDownload.png" height="393" width="503" alt="installer ask Java download"></p>
+	        <p>Downloading java
+	        <br><img src="images/WinInstall-06b_StartJavaDownload.png" height="393" width="503" alt="installer start Java download"></p></li>
+	
+	      <li>Install files
+	         <p>Once existence of a suitable Java Runtime Environment has been confirmed, it will then install the needed libraries, plus add a "JMRI" program group to your Start menu and put shortcuts to the DecoderPro and PanelPro programs on your desktop.
+	        <br><img src="images/WinInstall-06_InstallFiles.png" height="393" width="503" alt="installer files install"></p></li>
+	
+	      <li>Installation is complete.
+	        <p><img src="images/WinInstall-08_Finish.png" height="393" width="503" alt="installer finish"></p></li>
+	    </ol>
+	 </ol>
+
+	<li>Installation is complete.
+	<br>
+	You can start the programs from the JMRI group under Programs in your
+	Start menu.</li>
+
+    <li>Configure the program to connect to your layout
+    <br>
+    The JMRI
+    <a href="http://jmri.org/help/en/html/hardware/index.shtml">hardware page</a>
+    lists the various types of layout equipment that
+    JMRI can connect to, and gives links to 
+    instruction pages. Go there next to complete your
+	setup.</li>
+	</ol>
+	
+<h2>Notes:</h2>
+	
+<a id="largewindow">
+<h3>Large Windows</h3></a>
+<img src="images/TaskbarOptions.png" height="228" width="202" align="right" alt="control panel"/>
+Depending on what it wants to display, JMRI can open up very large
+windows.  Generally, JMRI uses the size of the screen and 
+information about fixed things like the start bar to decide the
+maximum size for an opening window so that e.g. the corners can't 
+be reached to resize the window.
+<p>
+Depending your Windows display operation, large JMRI windows
+will either resize to stay on the large part of the screen, clear
+of start bars and menu bars, or will be displayed at the full size of 
+the screen, appearing under the start bar and menu bars.
+<p>
+This is controlled by the 
+<a href="images/TaskbarOptions.png">Taskbar and Start Menu Properties</a>
+control panel.
+JMRI windows can open to the full screen size if the
+'Keep the taskbar on top of other windows' option is de-selected.
+
+Also, they can open to the full screen size if the 'Auto hide the taskbar' 
+option is selected
+
+<h3>Windows Themes and Skins</h3>
+If you're using a "skinning" utility which changes the appearance of
+programs running on your computer, you should tell it to ignore 
+the "java.exe" program.  That's how JMRI and DecoderPro will appear to
+it, and they weren't written with such "skins" in mind.
+
+<h3>Serial port configuration</h3>
+<p>DecoderPro may encounter problems if the serial port used to
+connect to the layout shares an interrupt with another serial
+port.  
+Typically COM1 and COM3 share an interrupt, as do COM2 and COM4.
+In particular, some systems are unable to communicate
+(and may experience a lockup)
+when the layout's serial port shares an interrupt with a port
+used for a serial mouse.  Please make sure that the serial port
+connected to your layout does not share an interrupt with
+another serial port.</p>
+
+<p>With Windows XP, your serial port parameters might not be properly set for 
+hardware flow control. To fix this, right-click on 
+My Computer and select Properties. Go to the Hardware tab and click on 
+Device Manager. Open up the section that says Ports (COM &amp; LPT). 
+Right-click on the serial port you have the LocoBuffer hooked to and 
+select Properties. Go to the Port Settings tab and set the options 
+to 19200, 8, None, 1, Hardware. Click OK. Close everything. 
+Restart JMRI and verify your connection settings.</p>
+
+<h2>Debugging</h2>
+Sometimes things go wrong.  The information in this section can help.
+
+<h3>The Log Screen</h3>
+
+JMRI logs information about errors to a "messages.log" file in the
+JMRI distribution directory, and to a console window. This window
+is generally white text on a black background, and is labelled either
+"Java" or "DOS".
+If something is going wrong, look there for more information.
+<p>
+If asked for a copy of the error messages, you can usually get them
+from the messages.log file.  If not, to make a copy of the 
+log window:
+
+	<ol>
+	<li>In the command prompt window, left-click on the JMRI icon to the
+	left of the  words "DecoderPro" (or "PanelPro").  You will get a
+	drop-down menu.
+	
+	<li>In that menu, put your cursor over "Edit" to get a sub-menu.  
+	
+	<li>Left-click on "Select All" in that sub-menu.  All the text in the
+	window will reverse colors with the background, and the menus will
+	disappear.  
+	
+	<p>
+	Alternately, you can left click on "Mark" in that sub-menu. The
+	menus will disappear.  Then, left-click and hold while dragging the
+	cursor over the text to be copied.  Only the selected text will
+	reverse colors with the background. 
+	
+	<li>Repeat Steps 1 and 2 above, then left click "Copy" on the sub-menu.
+	 The text and window will revert to their original colors.  The text
+	is now on XP's clipboard.
+	
+	<li>In your e-mail client, Notepad,
+	Wordpad, favorite word processor, etc, position your cursor and
+    left-click on Edit and then Paste, or press the "Ctrl" and "V" keys.</li>
+	</ol>
+
+    <h4>Keeping The Log Window Open</h4>
+    Usually the log window closes when the program ends, and
+    that's what you want.  Sometimes, you want it to stay around
+    so you can see error messages that happen during shutdown, or even caused
+    the shutdown.
+    <p>
+    To get the window to stay open:
+	<ol>
+	<li>Right click and select "show properties" on the program icon
+	<li>Deselect "Close window on program end"
+	</ol>
+	
+<p>If you're asked for a copy of the error messages, you can usually get them from the messages.log file.  If you can't find it there, make a copy of the log window:</p>
+	
+<h4>For JMRI version 2.11.1 or later</h4>
+	<ol>
+	<li>From the main JMRI window, choose "Help > System Console ...".
+	<br><img src="images/Win-JMRISystemConsole.png" height="409" width="850" alt="JMRI system console">
+	
+	<li>Click the button "Copy to clipboard".
+	
+	<li>In your e-mail client, Notepad, Wordpad,
+	favorite word processor, etc, position your cursor and left-click on Edit and
+	then Paste, or press the "Ctrl" and "V" keys.
+	</ol>
+    
+    <h4>For JMRI version 2.10 or earlier</h4>
+	<ol>
+        <li>In the command prompt window, left-click on the JMRI icon to the left of the  words "DecoderPro" (or "PanelPro").  You will get a drop-down menu.
+
+        <li>In that menu, put your cursor over "Edit" to get a sub-menu.
+
+        <li>Left-click on "Select All" in that sub-menu.  All the text in the window will reverse colors with the background, and the menus will disappear.
+
+        <br>Alternately, you can left click on "Mark" in that sub-menu. The menus will disappear.  Then, left-click and
+        hold while dragging the cursor over the text to be copied.  Only the selected text will reverse colors with the
+        background.</li>
+
+        <li>Repeat Steps 1 and 2 above, then left click "Copy" on the sub-menu.  The text and window will revert to their original colors.  The text is now on XP's clipboard.
+
+        <li>In your e-mail client, Notepad, Wordpad, favorite word processor, etc, position your cursor and left-click on Edit and then Paste, or press the "Ctrl" and "V" keys.
+	</ol>
+
+        <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

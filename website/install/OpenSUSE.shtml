@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JMRI Install Guide: OpenSure Linux</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1> 
+JMRI Install Guide: OpenSure Linux
+</h1>
+
+It's recommended that you install the Java SDK (Software Development Kit), 
+which includes the Java compiler, etc, rather than just the 
+JRE (Java Runtime Environment).  Using the SDK seems to prevent various 
+obscure problems.
+
+<p>
+The next part of this page was provided by Rob Plevier,
+and describes his successful experience installing
+JMRI on OpenSUSE Linux.  Most of the effort when into 
+getting the Java communications library installed and 
+working.
+      
+<pre>
+First I deleted all references to rxtx from my java directory as
+follows:
+
+rm /usr/lib/jvm/java/jre/lib/i386/rxtx*
+rm /usr/lib/jvm/java/jre/lib/ext/comm.jar
+rm /usr/lib/jvm/java/jre/lib/ext/RXTXcomm.jar
+
+Then I re-installed rxtx-2.0-7pre2 as follows
+1. make sure there's a JAVA_HOME environment variable
+# echo $JAVA_HOME
+  should display something like
+/usr/lib/jvm/java
+
+2. add JAVA_HOME to the PATH
+# PATH=$JAVA_HOME/bin:$PATH
+
+3. unpack rxtx
+# tar zxf rxtx-2.0-7pre2.tar.gz
+
+4. install it
+# cd rxtx-2.0-7pre2
+# ./configure
+        
+    during configure it asks you whether to run the script to place
+    comm.jar in the appropriate directory. On a side note, when I
+    specified the comm.jar that you sent me (the 28034 byte one) it
+    told me it was a Windows version of comm.jar so I grabbed the
+    one that I downloaded the second time which is 29411 bytes which
+    I got from javacomm20-x86. I thought Macs ran a flavor of
+    linux? Oh well.
+    This is the file I used:
+    -rw-r--r-- 1 root root  29411 2007-05-27 10:40 comm.jar
+
+# make
+# make install
+
+and everything ended up in
+
+/usr/lib/jvm/java/jre/lib/javax.comm.properties
+/usr/lib/jvm/java/jre/lib/ext/comm.jar
+/usr/lib/jvm/java/jre/lib/ext/RXTXcomm.jar
+/usr/lib/jvm/java/jre/lib/i386/librxtxParallel-2.0.7pre2.so
+/usr/lib/jvm/java/jre/lib/i386/librxtxParallel.la
+/usr/lib/jvm/java/jre/lib/i386/librxtxParallel.so
+/usr/lib/jvm/java/jre/lib/i386/librxtxSerial-2.0.7pre2.so
+/usr/lib/jvm/java/jre/lib/i386/librxtxSerial.la
+/usr/lib/jvm/java/jre/lib/i386/librxtxSerial.so 
+
+and javax.comm.properties contains
+
+Driver=gnu.io.RXTXCommDriver
+
+with a line feed after it :^)
+
+some other notes.. openSuse has no lock group, only uucp,  
+I edited my /etc/group file like this:
+
+uucp:x:14:robert
+
+and permissions on /dev/ttyS0 are
+crw-rw---- 1 root uucp 4, 64 2007-05-27 11:56 /dev/ttyS0 
+
+
+Essentially I think I'd been messing around with it for so long I had
+different versions of rxtx and comm.jar everywhere. At least I didn't
+have to reinstall Linux (again!). Lesson - make sure you follow the
+instructions. If I'd loaded commapi version 2 in the first place it
+would have been fine :^) instead I just grabbed the first one I saw on
+the sun site which was version 3.
+
+</pre>
+
+<p>Stephen Williams added a little more info about setting permissions:
+
+<pre>
+The basic problem here is that you will need to add yourself to the
+appropriate groups both to open the serial devices (/dev/ttyS*) and to
+be able to create files in the lock file directory.  This is another
+area where the RedHat-ish distributions (and Suse is in that camp) differ
+from the Debian/Ubuntu distributions.
+
+On your Suse system, do the following command:
+
+    stevew@wallace:~/rxtx-2.0-7pre2$ ls -l /dev/ttyS*
+    crw-rw---- 1 root dialout 4, 64 2008-02-10 17:08 /dev/ttyS0
+    crw-rw---- 1 root dialout 4, 65 2008-02-10 17:08 /dev/ttyS1
+    crw-rw---- 1 root dialout 4, 66 2008-02-10 17:08 /dev/ttyS2
+    crw-rw---- 1 root dialout 4, 67 2008-02-10 17:08 /dev/ttyS3
+
+The output is from my own machine which runs Debian.  Your system will
+likely have a different group name listed after the 'root' user.  That
+is one of the groups you need to belong to.  Then look at the
+permissions and group ownership of /var/lock (ls -al /var/lock and look
+at the entry for '.').  If there is a group other than root listed
+there, you need to belong to that group (it is often "uucp" or "lock").
+
+Hope that helps.
+</pre>
+
+<!--#include virtual="/Footer.shtml" -->
+  </div> <!-- closes #mainContent-->
+ </div> <!-- closes #mBody, started in sidebar-->
+<script src="/js/main.js"></script>
+</body>
+</html>

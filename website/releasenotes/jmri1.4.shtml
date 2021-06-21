@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 1.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.4 CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.4 production release
+      </h2>
+
+	<p>Date: April 8, 2004</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production version 1.4 of JMRI/DecoderPro is available for download</p>
+
+        <h3>Notes:</h3>
+	<ul>
+	<li><p>Although there are many important items on the to-do lists, it was
+	time to put out a new production version. There are several known bugs
+	that remain in this version, and we'll probably continue to find new
+	ones.  For information on bugs, please see our bug tracker at:</p>
+
+   	<p><a href="http://sourceforge.net/p/jmri/bugs/">
+   	    http://sourceforge.net/p/jmri/bugs/</a></p>
+
+	<p>Requests for enhancements (RFEs) are tracked via:</p>
+
+   	<p><a href="http://sourceforge.net/p/jmri/feature-requests/">
+	   http://sourceforge.net/p/jmri/feature-requests/</a></p>
+
+	<p>Please feel free to add to either of these!</p>
+	</ul>
+
+	<h3>Warnings:</h3>
+	<ul>
+	<li>Panel files written by 1.3.11 and later versions may not be readable 
+	with versions before 1.3.0.  Older files will remain readable, but if 
+	you edit them with this version and then store them, you might not be 
+	able to read them if you go back to version 1.2.5.</li>
+
+	<li>There is no OS/2 version of this test release because our OS/2
+	test machine is no longer online.  If you have a suitable OS/2
+	machine and are willing to host our release testing, please let me
+	know.</li>
+
+	<li>If you are building your own copy of the program from the source
+	code using Ant, please make sure to update the build.xml file.
+	There have been some changes in the build procedure during the
+	1.3.9 build.</li>
+
+	<li>These downloads are significantly larger than version 1.3.5 and
+	previous.  This is due to the addition of a help system starting in
+	test version 1.3.8.</li>
+
+	<li>LocoNet sensor numbering has been changed starting in version
+	1.3.4!  This will effect people who have panel files (.xml files
+	containing panel definition) for LocoNet block occupancy sensors.
+	The sensor numbers now start with 1, not 0, so you'll have to edit
+	the panel files to change e.g. LS0 to LS1, LS23 to LS24, etc.  This
+	does not effect input via other (non-LocoNet) protocols, including
+	C/MRI, NCE AIU, etc.  If you use LocoNet sensor numbers for the
+	Speedometer, you'll have to increase them by one also.</li>
+
+	<li>If you have pre-1.2.3 roster entries that use Zimo decoder
+	definitions, you'll have to recreate them.  The Zimo decoder
+	definitions have been completely reworked in a better organization
+	starting with test version 1.2.3.</li>
+	</ul>
+
+    <h3>Download links:</h3>
+
+	<p>Please use these links for downloading, including the
+	"?download" at the end. That adds to SourceForge's advertising
+	statistics, which makes them happy to host our stuff.</p>
+
+	<ul>
+	<li> Mac OS X:
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.hqx?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.4.hqx?download</a>
+
+	<li> MacOS 8/9 "Classic":
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.Classic.hqx?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.4.Classic.hqx?download</a>
+
+	<li> Windows:
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.exe?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.4.exe?download</a>
+
+	<li> Linux:
+      <a
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.tgz?download">
+      http://prdownloads.sourceforge.net/jmri/JMRI.1.4.tgz?download</a>
+      </ul>
+
+	<h3>Changes since production version 1.2.5:</h3>
+	<ul>
+	<li> Many bugs when using JMRI with Java 1.1.8 (Classic Mac) found and
+		removed;  again runs complete test suite there.  
+	<li> Roster printout includes a graphical speed table (D Miller) 
+	<li> Bug preventing access to C/MRI sensor 128 fixed 
+	<li> C/MRI monitor display was NFG for bytes with high bit set; fixed.  
+	<li> Throttle bug fix: stop at 100% (Paul Bender) 
+	<li> Printing bug fix: Some hex values not formatted right (Dennis Miller) 
+	<li> Roster "Delete" entry changed to "Delete entry" to avoid confusion 
+	<li> More German translations (Simon Ginsburg) 
+
+	<li> Lenz improvements (Paul Bender)
+	<ul>
+		 <li>System info panel for inquiring about XPressNet command
+			 station version, etc (P Bender) 
+		 <li>LI101 tool update (P Bender)
+
+	</ul>
+	<li> Configuration improvements (advanced preferences):
+	<ul>
+
+		 <li> Allow rename of roster file location
+
+		 <li> Make adv prefs panel display faster by deferring list
+		 of Locales
+
+		 <li> "Start action" now has more options
+
+		 <li> Can now add buttons to main window at startup time
+		 via advanced preferences
+
+		 <li> Can configure default roster values, e.g. Owner
+
+	</ul>
+	<li> Signal improvements:
+	<ul>
+
+		 <li> Signal table lets you configure, control signals via GUI
+
+		 <li> "Simple signal logic" works, including protecting facing
+		 point sidings
+
+		 <li> "SE8cSignalExample.xml" file provided to show SE8c operation
+		 on a loop+siding layout.
+
+	</ul>
+	<li> Control panel improvements:
+	<ul>
+
+		 <li> Italic text problematic in menu; fixed
+
+		 <li> Displays name of panel, allows editing
+
+		 <li> Can enable/disable pop-up menus, drag&amp;drop, click to activate
+		 by checkboxes on the editor panel
+
+		 <li> Icon file chooser now stays in place
+
+		 <li> Load/store file chooser sees new files
+
+		 <li> Several minor graphics bugs (screen refresh) fixed
+
+	</ul>
+	<li> LocoNet improvements:
+	<ul>
+
+		 <li> The EStop buttons for the individual slots in the LocoNet
+		 slot monitor now act on button-down, without waiting for
+		 a complete click.
+
+		 <li> Fix BDL16 programmer GUI
+
+		 <li> Bring SE8c programmer up to date with new SE8c features
+
+		 <li> PM4 programmer crashed if opened with no LocoNet present; fixed
+	</ul>
+
+	<li> Updates to Cornwall RR signals, panel
+
+	<li> Jython support in startup scripts.
+
+	<li> Create utility package to handle string parsing, hex output formatting, etc.
+
+	<li> Advanced preferences panel now has scroll bars if it gets too big. 
+	I'd appreciate feedback on this; the sizing and resizing logic might 
+	not be right yet.
+
+	<li> Printing now removes duplicates, has better borders. Fixed a bug that 
+	prevents decoders with more than 80 CVs from printing. (Dennis Miller)
+
+	<li> Fixed bug(s) in roster that prevents changing the roster location. 
+	That feature in the advanced prefs should now work. (Paul Bender)
+
+	<li> Wangrow now shows as an explicit choice in the preferences, and as a 
+	separate system type.
+
+	<li> XpressNet improvements:  Turnout messages corrected, should now work. 
+	Internal improvements to ops mode programming and throttle. (Paul 
+	Bender)
+
+	<li> Improvements to LocoNet Monitor output text for INPUT_REP, SW_REP 
+	messages.  (Suggested by David Townend, more changes to come)
+
+	<li> Larger space for address on PM4 programmer and add PM42 options,
+
+	<li> Fixed bug causing inconsistent addressing of LocoNet sensors; see 
+	note under warnings.
+
+	<li> Digitrax Zephyr is a DCS50, not DB50 (pointed out by Ron Wojtylko)
+
+	<li> Fixed wrong logic for one signal in SE8cSignalExample
+
+	<li> Fixed missing "on" bit in SE8c signal messages
+
+	<li> Jar file now carries index, manifest, so it should be possible to 
+	launch JmriDemo directly from it.
+
+	<li> Update some signal logic for the Cornwall RR signals 6A, 6B, 18A and 
+	18B, add Conewago pocket.
+
+	<li> LI100/LI101 Communications timing bug fix (corrects LI101 lock up 
+	problems) (Paul Bender)
+
+	<li> Internal code cleanup in the XPressNet Tools (Paul Bender)
+
+	<li> Empty DecoderPro tabs are now grayed-out; an advanced option is 
+	provided to suppress them completely if desired.
+
+	<li> Another attempt at advanced preferences panel scroll bars and 
+	limiting the size of the panel so it fits on the screen. I'd 
+	appreciate feedback on this; the sizing and resizing logic might not 
+	be right yet.
+
+	<li> More improvements to the LocoNet monitor display of addresses.
+
+	<li> French translation available for many menus and labels. (Francois Taburet)
+
+	<li> LocoNet fast clock tool now available: lets you set and query the clock.
+
+	<li> CornwallRR program has a new crossover installed, a better algorithm 
+	for setting the turnouts at power up, some minor improvements to the 
+	signal logic, and a new graphic (Nick Kulp)
+
+	<li> Fixed a bug that was causing some preference options to appear multiple times.
+
+	<li> DS54 definition file now correctly displays CV47
+
+	<li> Jack Shall updated the appearance and added ToolTips in the 
+	DecoderPro comprehensive programmer.
+
+	<li> Dennis Miller added a "Help" system, which is accessed from the main 
+	menubar.  Initial contents are Joe Ellis' DecoderPro manual (with 
+	some modifications), plus some additional pages.
+
+	<li> Paul Bender added an initial version of a consist-manager tool, based 
+	on a very general infrastructure.  It should work for advanced (CV19) 
+	consists on any system currently supporting ops mode programming.
+
+	<li> DecoderPro will now use "Direct Bit" programming mode first if it's 
+	available in both the command station and decoder (previously, 
+	priority had been given to paged mode)
+
+	<li> Paul Bender added a Command Station Configuration manager.  This code 
+	attempts to enable only the portions of the JMRI library that are 
+	useable with a given command station.  For example, with the Lenz 
+	Compact/Atlas Commander, the Programmer is disabled since these units 
+	do not support programing from an XPressNet device. He also added 
+	code to the tools menu to disable items for which a manager does not 
+	exist.
+
+	<li> MERG decoders updated (Len Royles, Phil Grainger and others)
+
+	<li> Support added for the SPROG command station, including initial 
+	throttle support.  This has had only limited testing, so feedback 
+	would be greatly appreciated!
+
+	<li> Alex Shepherd added support for the LocoNetOverTcp protocol.
+
+	<li> Plugin system added:  See http://jmri.org/Technical/plugins.html
+
+	<li> Mac OS X now puts it's menus on the main menubar, making the 
+	applications much more Mac-like; Updates to icons, etc, on Macintosh 
+	systems.
+
+	<li> Alex Shepherd added a new "LocoBuffer statistics tool" which allows 
+	users of current LocoBuffer versions to view statistics on LocoNet 
+	traffic.
+
+	<li> A new "Decoder ID" page has been added to the web which is based on 
+	the current DecoderPro definitions automagically: 
+	http://jmri.org/xml/XSLT/index.html
+
+	<li> Paul Bender added response message handling routines to Lenz Turnout 
+	Code. Forced send of an "off" after an "on" is sent to an accessory 
+	decoder.  This corrects the "multiple fire issue" some people are 
+	seeing (And I have been able to replicate using a Switch-It, and a 
+	button to throw the turnout back to it's starting position). 
+	Turnouts displayed through JMRI (either through a Control Panel, the 
+	Turnout tool, or the turnout table) will now react to commands sent 
+	via another XpressNet device on systems that have feedback.
+
+	<li> Paul Bender started work on Lenz Sensor code.  Skeleton in place. 
+	Feedback encoders should be reflected in the sensor table, though 
+	they are not currently handled. (this has not been tested).
+
+	<li> Paul Bender made modifications to the throttle GUI code so that it 
+	actually registers as a PropertyChangeListener with the system 
+	dependent throttle code. He also modified the throttle GUI and back 
+	end code, so the "Dispatch" button can be shut off on systems for 
+	which this makes no sense.
+
+	<li> Code for finding "DTD" files reworked in an attempt to fix startup 
+	problems on certain XP systems.  Not really clear if it worked, 
+	feedback greatly appreciated.
+
+	<li> Paul Bender added ops mode programming support to Lenz.
+	Fixed bug in LocoNet monitor where the Throttle ID field was being 
+	displayed wrong.
+
+	<li> Initial public release of Jython support for scripting and control 
+	(http://jmri.org/Technical/Jython.html)
+
+	<li> Bug that prevented moving the Roster location (see advanced 
+	preferences) is probably fixed.
+
+	<li> Bug preventing display of SE8c example on some systems 
+	(http://jmri.org/apps/Signalling/SimpleSignalExample.html) is believed fixed.
+
+	<li> Initial inclusion of "PacketPro" application for testing decoders 
+	(nee PacketScript)
+
+	<li> XpressNet connection can now be made via an XPA telephone adapter &amp; 
+	modem (Paul Bender)
+
+	<li> Tooltips can now be added to items in the decoder definition files. 
+	If present, they override the definitions in the programmer 
+	definition file.
+
+	<li> Phil Grainger added the Digitrax DH83FX decoder, and the needed 5th 
+	output function to the Digitrax "Basic" decoder definition.
+
+	<li> Robin Becker updated the Soundtraxx LC Steam and Diesel decoder definitions
+
+	<li> Wayne Eric provided a decoder definition for the MRC AD370 sound decoder.
+
+	<li> Ian Havercroft updated the version identification in ESU decoders so 
+	they successfully identify.
+
+	<li> Digitrax DZ123 definition added, with ident info courtesy Robert Johnson
+
+	<li> Jack Shall updated the Lenz 80 decoder file.
+
+	<li> DH163 can now do direct-bit mode programming
+
+	<li> Fix problem with creating two copies of roster entries, Bug 871882
+
+	<li> Allow multi-line comments in roster comment fields:  Dennis Miller
+
+	<li> New NCE D13SR Torque Compensation decoder file from Michael Mosher
+
+	<li> Panes from decoder files (but not programmer files) are active even 
+	if they contain no variables (Requested by Manhart Matthias)
+
+	<li> LocoNet Throttles were behaving poorly in version 1.3.8, with the 
+	speed slider not moving correctly.  Fixed.
+
+	<li> Fix problem with not prompting to save file when closing window after 
+	changing a speed table entry, bug 881556
+
+	<li> Better diagnostics if a LocoNet RMI connection (LocoNet 
+	server/client) fails (RFE 874488)
+
+	<li> Peter Brandenburg has contributed a new CT_Elektronik_Sound_GE_70_80 
+	decoder definition file.
+
+	<li> Fixed bug 874472 causing DecoderPro not to have a LocoNet menu when 
+	connected via a Loconet server
+
+	<li> Added size information to several more decoders. (Doesn't effect 
+	DecoderPro operations, but does appear on the selection web pages)
+
+	<li> Improved formatting of the throttle ID in the LocoNet Monitor 
+	(suggested by Glen Colbert)
+
+	<li> Added title to PowerPanel frame so that it's easier to find the icon
+
+	<li> Lenz LI100/LI101 connection has improved timeout logic, so that it 
+	doesn't slow the computer at startup
+
+	<li> New TCS M1 decoder definition from Eddie Delozier
+
+	<li> Paul Bender improved and extended the XPressNet configuration tools.
+
+	<li> Fixed a technical bug in the debug Programmer that would cause 
+	occasional intermittent test failures.
+
+	<li> Fix bug where programmer window would close even when close operation 
+	was cancelled during save
+
+	<li> Updated Ant control files to separate out development uses from the 
+	less-common functions, which improves build time
+
+	<li> Added sample scripts for a siglet and a simple automaton to the 
+	jython directory. Added PacketPro.bat for Windows. These features are 
+	still quite preliminary, as evidenced by a lack of documentation, and 
+	is certain to change.
+
+	<li> Soundtraxx DSD, DSX, LC decoders updated by Robin Becker
+
+	<li> Bug where decoders that differ only in family name, esp. certain NCE 
+	decoders, could not be properly selected.
+
+	<li> Roco LocoMouse has now been tested to work (Paul Bender)
+
+	<li> QSI decoder in the Lionel Challenger now identifies (Walter Thompson) 
+	Additional QSI models added using identification info provided by 
+	Randy Jones.
+
+	<li> Tooltips now displayed in the decoder-selection tree from the 
+	comments in the definition files (Jack Shall)
+
+	<li> Tooltips added to some NEC, Digitrax decoders (Jack Shall)
+
+	<li> New TCS M1 decoder definition contributed by Eddie Delozier.
+
+	<li> Lenz sensor inputs now supported (Paul Bender)
+
+	<li> Problem with Lenz throttles in top part of speed range corrected (Paul Bender)
+
+	<li> Added "Load Throttle" as one of the available buttons/startup actions 
+	in advanced preferences. Also added I8N to those items (only English 
+	at present), and made the mechanism easy to extend.
+
+	<li> Added example of creating your own button via a script 
+	(jython/JButtonExample.py)
+
+	<li> Various small improvements to panel load/store to improve robustness 
+	of storing signaling information
+
+	<li> "Simple Signal Logic" tool now allows a signal to drop red if any one 
+	of up to four blocks is occupied. Old panel files still work, but 
+	will be automatically rewritten in a new format when stored again.
+
+	<li> Fixed bug #912806: Read Sheet doesn't read CV7, CV8
+
+	<li> Fixed bug #879990: Changing Roster Entry pane fields doesn't set file-dirty
+
+	<li> Michael Green provided an update to the SoundTraxx LC Diesel PNP FX 
+	decoder definition to fix some misleading typos
+
+	<li> Michal Basta provided internationalization for the Czech language, so 
+	DecoderPro is not available in Czech both with and without 
+	diacritical marks.
+
+	<li> (Paul Bender) Improvements to handling of XPressNet input sensors. 
+	Added a timeout for sending turnout "off" messages on certain Lenz 
+	systems.
+
+	<li> Added CV7, CV8 to the Digitrax DS54 programmer (Walt Thompson)
+
+	<li> Paul Bender fixed some problems with XpressNet throttles that first 
+	appeared in JMRI 1.3.10.  These included odd behavior in 128 and 28 
+	step mode, and the speed scale being wrong in 28 step mode.
+
+	<li> Nick Kulp contributed three new sets of signal icons, available at:
+		<ul>
+		<li> resources/icons/smallschematics/PRRsignals
+		<li> resources/icons/smallschematics/bordersearchlights
+		<li> resources/icons/smallschematics/RDG_Catface_Signals
+		</ul> 
+
+	<li> Michael Green provided new decoder definitions for the S Helper 
+	Service F3 and F7 DCC Sound decoders. These decoders were custom 
+	manufactured by SoundTraxx for S Helper Service's engines.
+
+	<li> The sample panel for Nick Kulp's PanelPro clinic is in the distribution at
+	     <ul>
+	     <li> xml/samples/NicksClinic.xml
+	     </ul>
+
+        <li> Paul Bender improved handling of XPressnet turnout and sensor 
+	messages for certain Lenz command stations.
+
+	<li>Windows installer no longer removes old files from the xml, resources 
+	and lib directories, so that user-added files will be kept.
+
+	<li> Paul Bender updated the XPressNet algorithms for driving turnouts, 
+	with help from Marco Forcone
+
+	<li> Fix a problem with the SE8 example file that kept the background from 
+	being visible. (Bug 928363)
+
+	<li> Randy Jones provided decoder ID for the BLI AC5 Cab Forward
+
+	<li> Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
+
+	<li> Paul Bender changed the handling of flow control on an XPressNet port 
+	when hardware flow control is disabled.
+	</ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

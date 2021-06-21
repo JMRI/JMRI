@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.19.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.19.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.19.2 release
+      </h1>
+
+    <p>Date: January 12, 2020</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.19.2 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please 
+<a href="https://groups.io/g/jmriusers">post a note</a>
+if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release in early summer 2020.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+<p>If you are currently using JMRI 4.11.9 or earlier, we strongly recommend that you update to 
+        <a href="jmri4.12.shtml">JMRI 4.12</a> and make sure that's running without errors 
+        during startup or on the JMRI log.  
+        Once you have JMRI 4.12 running OK, 
+        store your configuration and panel files and use those from then on.
+        There have been
+        changes in serial port support, panel file format and configuration options since those earlier releases, 
+        and moving to the stable <a href="jmri4.12.shtml">JMRI 4.12</a> release
+        is a good way to work through any possible problems.
+        </p>
+<p>If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+        you <u>must</u> 
+        update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+        carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+        before updating to this release.
+<p>If you are currently using JMRI 4.17.7 or earlier, including if the previous paragraphs
+        convinced you to update to JMRI 4.12, 
+        we strongly recommend that you update to 
+        <a href="jmri4.18.shtml">JMRI 4.18</a> and make sure that's running without errors 
+        during startup or on the JMRI log.
+        Once you have JMRI 4.18 running OK, 
+        store your configuration and panel files and use those from then on.
+        There have been
+        changes panel file format and configuration options since earlier releases, 
+        and moving to the stable <a href="jmri4.18.shtml">JMRI 4.18</a> release
+        is a good way to work through any possible problems.
+        </p>
+
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.11.3.shtml">JMRI 4.11.3</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<ul>
+   
+    <li>The system names for Routes are required to start with "IO" to avoid
+    	ambiguity or confusion with Reporters (the system names of which start
+    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+    	correctly, but it is possible that references to those Routes will need
+    	to be updated.
+	  </li>
+    <li>The Logix system names for LRoutes (RTX*) and Sensor Groups (SYS) now start with
+    "IX:".  These changes are <strong>NOT</strong> backward compatible.  Once a panel
+    xml file has been saved with the new names, opening it in previous versions of JMRI will
+    result in errors.
+      <ul>
+        <li>The RTXINITIALIZER Logix will fail with an error message.</li>
+        <li>The Sensor groups will not be active.  Attempting to edit them will result
+        in a Java null pointer exception.</li>
+      </ul>
+    To recover, delete IX:SYS and/or IX:RTXINITIALIZER from the Logix table and re-create
+    them.  Hint:  Use the Logix table Select >> Browse feature to get the current contents
+    before deleting them.
+    </li>
+
+</ul>
+
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.18.shtml#warnings">JMRI 4.18 release note</a> for more warnings predating the 4.19 development series,
+including pointers to various migration issues.
+These may be relevant to you if you're updating from an earlier version.
+
+<ul>
+<li><span class="since">Since <a href="jmri4.19.1.shtml">JMRI 4.19.1</a></span>
+        JMRI now enforces the standard form of system names,
+        where the system is denoted by a single letter or a letter plus digits.
+        Some users of JMRI 4.18 or earlier might have incompatible values.
+        If you have one of these hardware connections:
+        <ul>
+            <li>Anyma DX512 using “DX”
+            <li>DCC++ using “DCCPP"
+            <li>DCC4PC using “DP"
+            <li>JSON client using “json”
+            <li>MRC using “MR"
+            <li>Marklin CS2 using “MC"
+            <li>Raspberry PI using “PI"
+            <li>TAMS using “TM”
+        </ul>
+        you may have to migrate. Please update to JMRI 4.18 prior 
+        to installing JMRI 4.19.1 (or later) and check the JMRI Console to
+        see if there are any instructions there. See the 
+        <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">migration page</a>
+        for additional information.
+    </li>
+<li><span class="since">Since <a href="jmri4.19.1.shtml">JMRI 4.19.1</a></span>
+        The <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+        calls in the various <code>Manager</code> classes
+        are no longer needed with Java 8 and have been deprecated for eventual
+        removal.  Their replacements are 
+        <code>getByUserName</code> and <code>getBySystemName</code> 
+        respectively. 
+        If you use <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+        in script or Java code you've written, please 
+        switch to the new names.
+    </li>
+
+
+<li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+        JMRI's scripting support now defaults to the UTF-8 character encoding for all
+        script files on all platforms. This may require that some scripts be re-saved
+        using UTF-8.</li>
+<li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+        <strong>Windows Only</strong> The JMRI installer removes the existing
+        <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
+        existing lib folder contents are retained in the backup folder.
+        <strong>This means that any files you have added to the <em>lib</em>
+            folder will be removed.</strong></li>
+<li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+        <strong>macOS Only</strong> This version includes changes to how
+        the final .dmg file is built, signed and notarized.  This was done to increase
+        compatibility with macOS 10.15 Catalina.
+        Please drag the JMRI icon to the Applications folder to install this release.
+        For more information on 
+        <a href="https://jmri.org/install/MacOSX.shtml#catalina">Catalina compatibility</a>,
+        see the 
+        <a href="https://jmri.org/install/MacOSX.shtml#catalina">JMRI web site</a>.
+
+<li><span class="since">Since <a href="jmri4.17.4.shtml">JMRI 4.17.4</a></span>
+        Panel file NamedBean items such as Turnouts, Sensors, etc are now written to panel
+        files in order by their Manager system prefix and system name.
+        Previously, they had (roughly) been written in the order they'd be 
+        read from the earlier file(s). This will result in a big change to the order
+        the first time a file is re-written, but after that it should be much more stable.</li>
+
+<li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+    There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+    <ul>
+        <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+        <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+        <li>Do not open the SPROG console window</li>
+        <li>Disable power conversion (CV 29) in all locos</li>
+        <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+    </ul>
+    Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+    open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+
+</ul>   
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+
+ <ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.19.2/JMRI.4.19.2+R846b684.dmg">https://github.com/JMRI/JMRI/releases/download/v4.19.2/JMRI.4.19.2+R846b684.dmg</a><br/>
+  sha256: 3595d0d0f454a7dddc773cbad5467566e0b7efdd92653c651f8a469849dd6f16 </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.19.2/JMRI.4.19.2+R846b684.exe">https://github.com/JMRI/JMRI/releases/download/v4.19.2/JMRI.4.19.2+R846b684.exe</a><br/>
+   sha256: 6a8f85c547d64f8223b9b8af5cc5499fd341b197c29c41e49a1f2703fc538859</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.19.2/JMRI.4.19.2+R846b684.tgz">https://github.com/JMRI/JMRI/releases/download/v4.19.2/JMRI.4.19.2+R846b684.tgz</a><br/>
+   sha256: c442ab5cb146d8acdcf35dcbe0df0ae93b3e25160c26cc0c0580fa23d3f3556c</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.8/">CI project page</a>.
+
+During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+  
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.19.1.shtml">Test Release 4.19.1</a>:</h2>
+ 
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=milestone%3A4.19.2+is%3Amerged">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+    <h3>Hardware Support</h3>
+        <ul>
+          <li>Fixed a problem introduced in JMRI 4.19.1 that
+          prevented the function buttons in the on-screen throttles
+          from working on some types of computers.</li>
+          <li>Fixed a problem introduced in JMRI 4.17.7 that
+          causes a partial crash when reading in historical
+          consist data from the consist.xml file.
+        </ul>
+
+    <h3>Logix</h3>
+        <a id="Logix" name="Logix"></a>
+        <ul>
+          <li>The system names for generated Logix definitions created by Sensor Groups (SYS),
+          LRoutes (RTX*), Route Exports (RTX*), USS CTC and LE Slips now have a standard Logix
+          prefix of "IX:".  The existing names in panel xml files will be automatically
+          migrated during panel loading.  A dialog box will be displayed with the results.
+          The details of the affected Logix renames will be displayed in the JMRI System
+          console.  The migration will also apply to any other Logix which has a system
+          name that does not start with IX.
+          </li>
+        </ul>
+
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"></a>
+
+        <h4>Signal Masts</h4>
+            <ul>
+                <li>Matrix Signal Masts can now drive up to 10 outputs.</li>
+            </ul>
+
+   <h3>Web Access</h3>
+        <a id="WA" name="WA"></a>
+        <ul>
+            <li>The RESTful API end point
+				<a href="http://127.0.0.1:12080/json/version">/json/version</a>
+				(start the JMRI web server on your local computer to follow that link)
+				has been added to provide a list of JMRI JSON API versions
+				supported by the running JMRI instance.</li>
+			<li>The JSON services have been rewritten to potentially support
+				multiple version of the JMRI JSON API in a future release.</li>
+            <li>JSON services now optionally take a version number as part of
+				the URL. See the
+				<a href="https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#package.description">JSON Server JavaDocs</a>
+				for details of this change. This should have no impact on
+				existing clients.</li>
+            <li>The JMRI JSON API version has been incremented to 5.3.0 to
+            	reflect the above changes.</li>
+        </ul>
+
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
+        <ul>
+            <li>In the
+            <a href="https://groups.io/g/jmriusers/message/165236">jmriusers forum</a>
+            it has been suggested to open a JMRI throttle
+            automatically when a VSDecoder via Roster Entry is added.
+            VSD does already save the Path and the Profile of a VSDecoder in the Roster Media.
+            This PR adds a new attribute: VSDecoder_LaunchThrottle = yes launches
+            a JMRI throttle automatically.
+            The new attribute is stored when the user clicks the "Save to Roster" button.
+            The new attribute can be changed manually or by a Jython script.</li>
+            <li>Rework on Auto-Load, see
+            <a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#auto-load">the details</a>.</li>
+            <li>Added a further action "STOP_AT_ZERO" for the "ENGINE_STARTSTOP" trigger. See the
+            <a href="https://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#engine-startstop">VSD documentation</a></li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>Petr Sidlo added a Pragotron clock, which is digital clock
+                found in many European train stations.</li>
+            <li>The <code>getBeanByUserName</code> and <code>getBeanBySystemName</code>
+                calls in the various <code>Manager</code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are
+                <code>getByUserName</code> and <code>getBySystemName</code>
+                respectively.
+                If you use <code>getBeanByUserName</code> and <code>getBeanBySystemName</code>
+                in script or Java code you've written, please
+                switch to the new names.
+            </li>
+		    <li>The system names for Routes are required to start with "IO" to avoid
+		    	ambiguity or confusion with Reporters (the system names of which start
+		    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+		    	correctly, but it is possible that references to those Routes will need
+		    	to be updated.
+			    </li>
+			<li>Daniel Bergqvist provided information on
+			    <a href="http://jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
+			    for JMRI development.
+			<li>Updated the JDOM library from 2.0.5 to 2.0.6. Removed the unused JDOM 1 support.</li>
+        </ul>
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

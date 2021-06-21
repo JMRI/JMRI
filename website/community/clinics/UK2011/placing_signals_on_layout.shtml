@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: UK Signalling, Placing Signals on Layout</title>
+    <meta name="author" content="Nigel Cliffe">
+    <meta name="keywords"
+       content="clinics java model railroad JMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra signalling UK British">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+<h2>Adding Signal Masts to the Layout, and creating Signal Mast Rules</h2>
+<p>Signal Mast Rules work from signal to signal. If we consider our layout, and 
+  the down line, there is a signal controlling access to platform 2 or into the 
+  bay platform (platform 1).</p>
+<p><img src="images/layoutoverview.png" width="830" height="278"></p>
+<p>The Down Approach Mast has a signal ahead of it on the Down main line at the 
+  end of Platform 2, but currently there are no signals along the bay for the 
+  rules from the Down Approach Mast. Therefore, we need to create a virtual signal 
+  for use at the buffer stop on the Bay platform (one can think of this as the 
+  red lamp or red flag often hung on buffer stops). </p>
+<p>Once all the Masts are created, they can be positioned. This is done in the 
+  Layout Editor by a command to position a Mast on the context menu (right click) 
+  of the block boundaries. </p>
+<p>Once Masts are positioned, the rule between them can be created, using the 
+  context menu (right click) on the originating mast. This will bring up a dialogue 
+  which can &quot;discover&quot; the masts beyond the signal in question, and 
+  calculate the rules to use. </p>
+<p>The following video illustrates the creation of the virtual signal for the 
+  Buffer Stop, the positioning of Masts, and the creation of Rules between them. 
+</p>
+<iframe width="640" height="480" src="http://www.youtube.com/embed/eNfmfuSMYxk" frameborder="0" allowfullscreen></iframe>
+
+<p>The Panel file for the layout at the end of this stage of the tutorial can 
+  be downloaded here </p>
+<p>[ <a href="jmri_files/Demo%20Signal%204.xml">Link to Panel file 4</a> (masts 
+  positioned)]</p>
+<p>[ <a href="jmri_files/Demo%20Signal%205.xml">Link to Panel file 5</a> (masts 
+  rules added)]</p>
+
+<p><a href="permissive_working.shtml">Move on to Part 8</a> </p>
+<p><a href="index.shtml">Back to Introduction</a></p>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

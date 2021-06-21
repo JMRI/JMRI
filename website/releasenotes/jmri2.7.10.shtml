@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.7.10
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI 2.7.10">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.7.10 release
+      </h2>
+
+	<p>Date: December 11, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.7.10 of JMRI/DecoderPro is available for download.
+
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the tenth, and hopefully last, in a series of test versions. 
+We expect this series
+to end in a JMRI 2.8 production release in December 2009. 
+
+<p>
+It contains 
+mostly minor changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.7 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.8" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(none)
+
+<h3>Warnings from older versions:</h3>
+
+XML input processing was reworked in JMRI 2.7.8.  
+This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile Javadoc for more information.
+
+<p>
+If you're using the "Function Label" or "Roster Image" panes with the 
+DecoderPro "Comprehensive" programmer format, you should change to using
+the "Advanced" format.  You select this at the bottom of the window when opening
+a locomotive for editing, or via the JMRI Preferences window.
+
+<p>
+Changes in JMRI 2.7.7 to the internal structure of the classes for the throttle windows (not the 
+throttle classes themselves) may cause trouble for scripts that were using them.
+
+<p>
+JMRI 2.7.7 uses a different set of libraries for processing the XML panel files.
+In turn, this means that if you've created your own startup scripts, you may need
+to adjust them.
+
+<p>
+Starting in JMRI 2.7.6,
+the Windows installer puts the Java libraries (jar files) in a lib subdirectory.
+This is the same layout used on Linux and Mac OS X, and makes the JMRI program directory
+much more organized and easier to understand.  If you have your own custom startup scripts,
+you may have to adjust them to the new library location.  If you're just using the JMRI 
+installer and its startup tools, you shouldn't have to change anything you do.
+
+<p>
+The orientation of the coordinate system in the new audio support
+changed in JMRI 2.7.6.  Starting with that
+release, when you are looking at the model railroad, X is positive toward the right, Y is positive into the layout
+(away from you), and Z is positive upward.  If you wrote scripts using the new audio support with
+JMRI 2.7.5, you'll have to swap axes.
+
+<p>
+The new audio support in JMRI 2.7.5 requires some new libraries.
+Those libraries are included in the JMRI downloads.  They, in turn, require that the
+startup scripts include the new libraries, so these have also been modified.
+The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
+created your own copies of startup scripts, you'll have to update those:
+
+<p>
+If your roster contains locomotives with Soundtraxx Steam Tsunami decoders,
+you should migrate those roster entries to the new decoder definition names.
+We've created a tool to make that easier.
+For information on how to use that tool, please see the 
+<a href="decoder2.7.5.shtml">separate note</a>.
+
+<p>
+JMRI 2.7.4 changes the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 or later and then written out again, 
+as the program will update them to the new format upon storing them.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.tgz/download</a>
+
+<h3>Changes since test version 2.7.9</h3>
+
+Ken Cameron updated the RobotThrottle2 sample script.
+
+<p>
+Andrew Crosland changed the standard/extended address boundary in the SPROG throttle software to match the SPROG hardware.
+
+<p>
+Kevin Dickerson improved the code for saving panel files.
+
+<p>
+Brett Hoffman updated the WiFi communications code.
+
+<p>
+Lionel Jeanson improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a>
+to include much more information about advanced features.
+
+<p>Dan Boudreau made several improvements to the operations code.
+You can now print your manifests using colors for the car drops and
+pickups. You can now reset a train if you've modified the train's route
+after you've built the train. And the car database is automatically
+saved when you change the Car Types (Descriptive or AAR codes) in setup.
+
+<p>
+Peter Ulvestad improved the decoder definition for the MRC 1663 Atlas S2/S4 decoder.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

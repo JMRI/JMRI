@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        JMRI: Website templates 2021
+    </title>
+    <meta name="author" content="Egbert Broerse">
+    <meta name="keywords" content="java model railroad JMRI web site html css javascript">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <div id="container">
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+    <!--#include virtual="/Header.shtml" -->
+	<div class="no-sidebar" id="mBody">
+
+	<hr class="hide">	<!-- only shows up on printouts -->
+    <!-- load last to see mainContent on top of small screen, block is positioned via css -->
+        <div id="mainContent">	<!-- Body of page -->
+
+        <ul class="hor-nav">
+            <li><a href="/index.shtml">Return to JMRI Landing Page</a></li>
+        </ul>
+
+        <div id="teaser">
+            <h1>JMRI Web page styles and templates</h1>
+
+            As you see here, we ignore a no-sidebar (formerly nomenu) #mBody page.<br>
+            TODO: add some small Sidebar on all pages so the Hamburger menu always has work to do.<br>
+            And note that if you do not wrap text in a &lt;p&gt; (like the next paragraphs) it will flow up to the
+            sides. A quick test!
+
+            <p>To demonstrate some of the current html and css options built into the jmri.org site, this page
+            describes the most important ones.</p>
+            <p>You can also study the comments in the html code of the main page templates:</p>
+            <ul>
+                <li>For pages with a sidebar "menu" to the left: <a href="template.shtml">template.shtml</a></li>
+                <li>For pages without a sidebar: <a href="template-no-sidebar.shtml">template-nosidebar.shtml</a></li>
+            </ul>
+            <p>When you include a link to <code>/Sidebar.shtml</code> you will see the one currently shown (see
+            <em>Responsive HTML</em> note).</p>
+
+            <h2>Color scheme</h2>
+            <p>In the jmri.org cascading stylesheet (CSS) we manage tho color scheme and all other styling used on our
+            web site and help pages.</p>
+
+            <p>Three main colors:</p>
+            <ul>
+                <li style="color: #554FA0;">var(--primary-color1) = #554FA0; /* Purple */</li>
+                <li style="color: #FFD700;">var(--primary-color2) = #FFD700; /* Orange */ =
+                attention</li>
+                <li style="color: #778899;">var(--primary-color3) = #778899; /* LightSlateGray */ = navigation,
+                boxes</li>
+            </ul>
+
+            Button hover color is LightGray. This is applied in the menu buttons along the top.
+
+            <p>Two supporting background colors, light enough to read black/purple text:</p>
+            <ul>
+                <li style="background-color: #B695C0;">var(--background-color1) = #B695C0; /* LightPurple */</li>
+                <li style="background-color: #F5F5DC;">var(--background-color2) = #F5F5DC; /* Sand Beige */</li>
+            </ul>
+
+            <p class="important">Fine lines, fade shadows for floating/box, graphic weight in headers/color only.</p>
+            <p>To guarantee <a href="https://www.w3.org/standards/webdesign/accessibility">accessibility</a>:
+            sufficient contrast, information (read, or text-to-speech...)</p>
+            <p>For <a href="https://www.w3.org/People/Bos/DesignGuide/maintainability.html">maintainability</a>:
+            please focus your contributions on contents, and follow along with the available style guide.<br>
+            Avoid adding your own custom formatting, empty &lt;p&gt; tags to add space around other elements or
+            make an effort to align stuff on a page by embeddding it inside html tables etc.</p>
+
+            <h2>Screen parts</h2>
+            <h3>main</h3>
+
+            <h3>Sidebar</h3>
+
+            <h3>Header</h3>
+
+            <h3>Footer</h3>
+
+            <h4>Includes</h4>
+            <p>Note the h4 header before this line uses a color as a var. Please report your browser and
+            version if the above title is <em>not</em> displayed on a light purple colored band.</p>
+            <p>Style: </p>
+            <p>Scripts: </p>
+
+            <h2>Standard Components</h2>
+            <p>Flex is a set for responsive positioning on different screen sizes. We provide 4 of them:</p>
+            <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+                <div id="icon-large" class="flex-item-30">
+                    <img src="images/ios_prev1_Rel4_22.png" alt="JMRI site viewed on iphone"
+                         style="object-fit: scale-down;">
+                </div>
+
+                <div class="flex-item-70">
+                    <h2>Responsive HTML</h2>
+                    <p>To present the optimum viewing experience on different screen sizes, since fall 2020 jmri.org
+                    supports so called 'responsive' page layout and matching css style sheets.</p>
+                    <p>An obvious example of this is the collapsed Sidebar when you view this page on a mobile device
+                    (portrait mode). Instead of filling part of the screen, you will find a hamburger menu on the top left.
+                    Click it to see the Sidebar slide in from the left.</p>
+                </div>
+            </div>
+            <p>Subjects to be added:</p>
+                <ul>
+                    <li>#side (width 250px)
+                    <li>#main
+                    <li>images: flex/100% width/420px view, caption + alt
+                    <li>3 columns > flex
+                    <li>h1,h2
+                    <li>p
+                    <li>p important (warnings)
+                    <li>Display List dl
+                    <li>button
+                    <li>bar-1
+                    <li>flex-30/-70
+                    <li>Javascripts included in Header file or in the js directory?
+                    <li>Breakpoints (max width to fit): 420/800/1040/1500px
+                    <li>Header collapsing menu/420px
+                    <li>Searchform width/floating/breakpoint 420px
+                    <li>i18n</li>
+
+                    <li>
+                    Tables:<br>
+                    No special class tags required for simple, small tables:
+                    <br>
+                    Wrap wide tables (or anything containing eg hyperlinks longer than 80 characters) in a
+                    <code>&lt;div class="wide"&gt;</code> so they will scroll:
+                    <div class="wide">
+                        <table>
+                            <tbody><tr>
+                                <th>Connection</th>
+                                <th>In/Out</th>
+                                <th>Entry</th>
+                                <th>Meaning</th>
+                                <th>makes System Name</th>
+                                <th>Mask</th>
+                                <th>Equivalent</th>
+                                <th>Minimum</th>
+                                <th>Maximum</th>
+                            </tr>
+                            <tr>
+                                <td>C/MRI</td>
+                                <td>i/o</td>
+                                <td>1003</td>
+                                <td>Node 1, Input 3</td>
+                                <td>CS1003</td>
+                                <td>n digits (node) + 3 digit (pin)</td>
+                                <td>1:3</td>
+                                <td>node: 1; pin: 1</td>
+                                <td>node: 127; pin: 999</td>
+                            </tr>
+                            <tr>
+                                <td>C/MRI</td>
+                                <td>o</td>
+                                <td>3</td>
+                                <td>Node 0, Output 3</td>
+                                <td>CT3</td>
+                                <td> </td>
+                                <td> </td>
+                                <td>1</td>
+                                <td>999</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </li>
+
+                    <li>code:<br>
+                    Use the tag <code>&lt;code&gt;</code> to show short pieces of code (will fit in a scrolling box)<br>
+                    Use the tag <code>&lt;code class="block"&gt;</code> to show multi-line code (it will display
+                    every whitespace in those lines, so start at the left margin):
+                    <pre><code class="block">
+// Get the navbar
+var navbar = document.getElementById("mainNav");
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+function stickyFunction() {
+  if (window.pageYOffset >= sticky) {
+    mainNav.classList.add("sticky")
+  } else {
+    mainNav.classList.remove("sticky");
+  }
+}
+            </code></pre></li>
+                </ul>
+
+        </div> <!-- closes #teaser-->
+
+        <h3>Accordions</h3>
+        <!-- Accordions -->
+        <div class="flex-container">
+            <div class="flex-item-50">
+                <h4 onclick="collapse('id-1')" class="button card-1">flex-item-50, style: card-1</h4>
+                <div id="id-1" class="hidden">
+                    <p>Opens and collapses on clicking the header</p>
+                </div>
+            </div>
+
+            <div class="flex-item-50">
+                <h4 onclick="collapse('id-2')" class="button card-1">flex-item-50, style: card-1</h4>
+                <div id="id-2" class="hidden">
+                    <p>Another one, filling the right half of the screen on large displays. Flows into a single
+                    column, below the first item on narrow screens &lt; 400 pixels.</p>
+                </div>
+            </div>
+        </div>
+
+        <!--#include virtual="../Footer.shtml" -->
+	  </div> <!-- closes #mainContent-->
+
+    </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+    <script src="../js/main.js"></script>
+</body>
+</html>

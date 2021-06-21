@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.7.9
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI 2.7.9">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.7.9 release
+      </h2>
+
+	<p>Date: December 2, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.7.9 of JMRI/DecoderPro is available for download.
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the ninth in a series of test versions. We expect this series
+to end in a JMRI 2.8 production release in December 2009. This test version is
+(intended to be) the last that contains new features.
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Improved throttle customization possibilities
+<li>SE8c signal decoders can now be used with non-Digitrax DCC systems
+<li>S88 sensors on eCos systems can now be used
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.7 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.8" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(none)
+
+<h3>Warnings from older versions:</h3>
+
+XML input processing was reworked in JMRI 2.7.8.  
+This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile Javadoc for more information.
+
+<p>
+If you're using the "Function Label" or "Roster Image" panes with the 
+DecoderPro "Comprehensive" programmer format, you should change to using
+the "Advanced" format.  You select this at the bottom of the window when opening
+a locomotive for editing, or via the JMRI Preferences window.
+
+<p>
+Changes in JMRI 2.7.7 to the internal structure of the classes for the throttle windows (not the 
+throttle classes themselves) may cause trouble for scripts that were using them.
+
+<p>
+JMRI 2.7.7 uses a different set of libraries for processing the XML panel files.
+In turn, this means that if you've created your own startup scripts, you may need
+to adjust them.
+
+<p>
+Starting in JMRI 2.7.6,
+the Windows installer puts the Java libraries (jar files) in a lib subdirectory.
+This is the same layout used on Linux and Mac OS X, and makes the JMRI program directory
+much more organized and easier to understand.  If you have your own custom startup scripts,
+you may have to adjust them to the new library location.  If you're just using the JMRI 
+installer and its startup tools, you shouldn't have to change anything you do.
+
+<p>
+The orientation of the coordinate system in the new audio support
+changed in JMRI 2.7.6.  Starting with that
+release, when you are looking at the model railroad, X is positive toward the right, Y is positive into the layout
+(away from you), and Z is positive upward.  If you wrote scripts using the new audio support with
+JMRI 2.7.5, you'll have to swap axes.
+
+<p>
+The new audio support in JMRI 2.7.5 requires some new libraries.
+Those libraries are included in the JMRI downloads.  They, in turn, require that the
+startup scripts include the new libraries, so these have also been modified.
+The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
+created your own copies of startup scripts, you'll have to update those:
+
+<p>
+If your roster contains locomotives with Soundtraxx Steam Tsunami decoders,
+you should migrate those roster entries to the new decoder definition names.
+We've created a tool to make that easier.
+For information on how to use that tool, please see the 
+<a href="decoder2.7.5.shtml">separate note</a>.
+
+<p>
+JMRI 2.7.4 changes the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 or later and then written out again, 
+as the program will update them to the new format upon storing them.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.tgz/download</a>
+
+<h3>Changes since test version 2.7.8</h3>
+
+Giorgio Terdina provided screen icons for German signals.
+
+<p>
+Tjeerd Verhage provided an icon for our SourceForge.net page
+
+<p>
+Dan Boudreau added three additional sort options for trains in the operations code:  by route, departure, and destination.
+
+<p>
+Matt Harris updated the Audio package.
+
+<p>
+Dan Boudreau fixed a marker bug:  Opening and closing marker frames caused the number of markers created to increase by one each time the marker frame was reopened.
+
+<p>
+Dan Boudreau made an Operations enhancement.  When replacing an existing engine model with a new model, the new model will now take the old model's attributes of length, type, and horsepower. He also improved some of the build messages with regards to cabooses and cars with FRED, and made a minor improvement in build messages for engines.  Note that if the train requires 2 or more engines that they be in a consist.
+
+<p>
+Lionel Jeanson added a first Jynstrument for throttle tool bar, allows for USB devices throttle frame browsing and throttle pilot.
+
+<p>
+Kevin Dickerson fixed a bug in sensor icons.  When the icon was using
+different size images for the four states, these used to be centered. 
+Starting in JMRI 2.7.4, this was inadvertently changed so that they were
+aligned in the upper left corner.  This bug is now fixed, and the
+images have been moved back.  This won't effect you if you're using
+the (recommended) same-size icons, but if you're using different size 
+icons and have created a panel since JMRI 2.7.4, you may have to revisit it.
+
+<p>
+Andrew Crosland changed the default power manager state for CBUS to agree
+with the hardware.
+
+<p>
+Kevin Dickerson updated the eCos support to now include S88 sensors.
+
+<p>
+SE8c Signal Heads can now work with non-Digitrax layout connections.
+There have been a number of changes to make this possible. 
+In particular, the convention for system names for SE8c signal heads has
+changed.  Existing ones (from saved layout files) will stay the same, but
+newly-added signal heads will have the new names.
+
+<p>
+Added a sample script to run the Heljan container crane from the screen.
+
+<p>
+Brett Hoffman added support for mobile devices to control throttles 
+through a wi-fi connection. 
+The first use of this is the
+<a nref="http://withrottle.com">WiThrottle</a>
+for iPhone and iPod Touch.
+
+<p>
+For better Snow Leopard compatibility, on Mac OS X the JMRI applications
+now pass the "-d32" option to the Java startup.
+This will (usually) force Java into 32-bit mode.
+
+<p>
+Peter Ulvestad provided a decoder definition for the MRC Rapido Turbotrain.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

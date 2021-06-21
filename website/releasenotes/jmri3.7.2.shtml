@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.7.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.7.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.7.2 release
+      </h2>
+
+	<p>Date: Feb 16, 2014</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.7.2 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.8 production release around the middle of 2014.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+This release has some changes to the application-initialization structure, particularly in the 
+<a href="http://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a> class.  If you have written code of your own
+that runs applications based on JMRI, please check for use of deprecated methods.
+
+<h3>Older warnings</h3>
+
+<p>The internals for handling CV read and write addressing have been extensively 
+reworked.  The change should be transparent (invisible) to users. If you do notice anything 
+problems involving CV reading, writing, storage or anything else, please let us know.</p>
+
+<p>The configuration structure for JMRI is changing to use <em>Configuration
+Profiles</em>. Configuration Profiles allow a single JMRI application to have
+multiple, user selectable, configurations that can be changed as application
+startup. For some users, this change will have no impact; other users will be
+visibly impacted by this change. See <a
+href="http://jmri.org/help/en/html/profiles.shtml">http://jmri.org/help/en/html/profiles.shtml</a>
+for more information.</p>
+
+<p>The JMRI SRCP implementation is undergoing extensive revision, in part
+due to testing with 3rd party SRCP clients and servers.  If you are using the SRCP support, you will need to upgrade both the client(s) and the server to the same JMRI version.</p>
+
+<p>The JMRI Web Server is being extensively rewritten. Some functionality has been temporarily lost while this rewrite continues.</p>
+
+<P>This release, and all other releases in this cycle, require Java 1.6 or newer.
+
+<h3>Known problems with this release</h3>
+
+<p>Do not use this release for programming any ESU Select or V4.0 decoder. 
+Instead, please use <a href="jmri3.7.7.shtml">test release 3.7.7</a> or later.</p>
+
+
+<h3>Download links:</h3>
+
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.2-r25234.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.2-r25234.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.2-r25234.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.2-r25234.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.2-r25234.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.2-r25234.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.2/ws/jmri/dist/release/">CI project page</a>.
+ -->
+ 
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ --> 
+ 
+<h3>Changes since test release 3.7.1:</h3>
+
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>Made some improvements to car routing and build report messages.</li>
+    <li>You can now configure the build report to always preview, saves paper! See Build Report
+     Options under Trains-&gt;Tools.</li>
+    <li>The program now blocks a kernel for your manifests and switch lists (a group of cars)
+     by the order that you add cars to the kernel.</li>
+    <li>New checkbox option for the Cars window. Under Tools in the Cars window are two new
+     options, one shows the checkboxes, and the other resets the ones showing in the window. Useful
+     if your doing an audit of your cars using a PC or portable device. Great for those that don't
+     like to waste paper!</li>
+   </ul>
+
+   <p>Enzo Fortuna improved the Italian translation.</p>
+
+<p>Jeffrey Machacek made the following changes:</p>
+  <ul>
+    <li>Added a "Clear all non-in-use Slots" button to the Loconet SlotMonitor.</li>
+    <li>Updated the WiThrottle server.</li>
+  </ul>
+  
+  <p>Ken Cameron made the following changes:</p>
+  <ul>
+  	<li>Fix bug in NCE Macro Edit for updating macros.</li>
+  </ul>
+
+<p>Many additions to the 
+<a href="http://jmri.org/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#conditional">tools for structuring conditional decoder definitions</a>.</p>
+
+<p>Matthew Harris updated the user interface font size change preference to no longer override the underlying font style.</p>
+
+<p>Paul Bender updated the JMRI SRCP support in both the client and server to better conform to the letter of the SRCP protocol standard and improve compatibility with other SRCP implementations.</p>
+
+<p>Dave Heap made the following changes:</p>
+  <ul>
+    <li>Improved the display of file locations under the Help menu.</li>
+    <li>Improved the ESU V4/Select decoder definitions.</li>
+    <li>Added some more NCE menu items to the list of available startup actions and buttons.</li>
+    <li>Resolved the problem that caused function commands from JMRI or WiThrottles with NCE systems to be sent to seemingly random consist addresses.</li>
+    <li>Fixed a resize issue with the NCE Packet Analyzer window.</li>
+    <li>Fixed issues with item state colour coding with OS X and Nimbus display GUIs.</li>
+    <li>Added the ability to import LokProgrammer CV value list files.</li>
+  </ul>
+
+<p>Peter Ulvestad updated the clinics information.</p>
+
+<p>Resolved an issue that caused some CVs to be skipped in Read Full Sheet operations. Particularly noticeable with ESU V4 decoders.</p>
+
+
+<p>The Web server has been extensively updated by Randall Wood and Steve Todd:</p>
+<ul>
+	<li>The static index.html has been replaced with a home servlet responding to / and /index.html</li>
+	<li>The home, panels, and operations servlets have been updated with a new <a href="http://getbootstrap.com">Bootstrap</a> user interface.</li>
+	<li>The structure for the servlets resources has been changed to facilitate customization and internationalization.</li>
+	<li>The panels servlet uses JSON and WebSockets instead of XMLIO. This may prevent older browsers from receiving asynchronous updates to panels. Testers may notice some panel features do will not work correctly in this test release.</li>
+</ul>
+
+
+<p>Steve Todd made the following changes:</p>
+<ul>
+  <li>fixed a WiThrottle read loop that could cause high CPU usage when devices were "lost".</li>
+  <li>added some fractional zoom values to LayoutEditor.</li>
+</ul>
+
+<p>Pete Cressman made the following changes:</p>
+<ul>
+	<li>Control Panel Editor
+	<ul>
+		<li>NX warrants (eNtry/eXit) menu item was added to the warrants menu.</li>
+		<li>Menu item Select panel items by Type was added to the Edit menu.</li>
+		<li>Menu item Select panel items by Level was added to the Edit menu.</li>
+		<li>Menu item Disable Selecting Shapes was added to the Shapes menu.</li>
+		<li>Any item in a superimposed stack can be selected with Control-Shift-Click. See help CPE page</li>
+	</ul>
+	</li>
+	<li>Circuit Builder
+	<ul>
+		<li>An Edit Portal Direction menu item was added ti=o the CircuitBuilder menu. Direction arrows may be displayed at Portal locations
+			of a warrant route when the warrant is allocated.  Use this menu item to configure the arrows so they point to show entrance to 
+			the block.   Levels, rotation and scaling of an arrow can be done here also. 
+			with a right click.</li>
+		<li>Improved item selection when creating and editing OBlocks, Portals and OPaths</li>
+	</ul>
+	</li>
+	<li>Item Palette
+	<ul>
+	<li>Portal tab was added to the Item Palette. The icons used when editing Portals in Circuit Builder
+		or showing direction may be modified.  The "Set Default Icons" button sets the icons for all portals in the panel.  
+		The panel must reloaded for the change to take effect.</li>
+		<li>Several bug fixes were made in the editing and updating icon families code.</li> 
+	</ul>
+	</li>
+	<li>Shapes
+	<ul>
+		<li>Positioning vertex handles of Polygons was improved. Note, handles of a selected Shape 
+			can only be grabbed from within the bounding rectangle of the shape.</li>
+		<li>Either the display level or hidden property of a shape can be controlled with the 
+			"visibility/Level Control Sensor".</li>
+	</ul>
+	</li>
+	<li>Tracker
+	<ul>
+		<li>The Tracker Table keeps a history of Tracker events. Click on the "Status" field to display.</li>
+		<li>Dragging and Dropping a Loco marker icon on an Indicator Track icon will launch a tracker on that train.</li>
+		<li>Clicking on "persistent train marker" from a completed warrant (see below) will launch a tracker on that train.</li>
+		<li>Time spent occupying a block is logged in the "Status: field</li>
+	</ul>
+	</li>
+	<li>Warrants
+	<ul>
+		<li>The Warrant Table keeps a history of warrant events. Click on the "Status" field to display.</li>
+		<li>NX warrants (eNtry/eXit) may create manual warrants.</li>
+		<li>The train ID marker will persist after a warrant has terminated on the occupied Indicator Track
+			icons.  The Indicator Track icon must be configured to display markers.</li>
+		<li>Warrant routes, either standard or NX, can have their location blocks (Origin, Destination, 
+			Via, Avoid) entered into the respective text fields by clicking on an Indicator Track icon of
+			the Block.  Clicking on the text field sets the target for a subsequent Indicator Track icon click.
+		<li>Additional Status messages have been added.</li>
+	</ul>
+	</li>
+</ul>
+	
+<p>Dave Sand fixed RosterCsvExport.py to use new string format for CV definitions.</p>
+
+<p>The "Export Roster" and "Import Roster" menu items will now write your whole
+roster to a single file, and then read that back in.  You can use this to move your roster to
+another computer, for example.  On import, you'll be asked to confirm that you want to
+import each roster entry.  If there's already an entry with the same name (ID), you'll
+be asked if you want to replace it.
+
+<p>The ability to duplicate configuration profiles has been added. A duplicate profile contains a copy of everything in the existing profile's directory.<!-- Randall Wood --></p>
+<p>The Railroad name preference has been promoted from a Web Server setting to an application-wide setting.<!-- Randall Wood --></p>
+
+<p>Ken Mazer added the Athearn GP40-2 and made some corrections to the Soundtraxx definition.
+
+<p>Suzie Tall added signal definitions for the
+<a href="http://jmri.org/xml/signals/UP-2008/index.shtml">2008 UP</a>, 
+<a href="http://jmri.org/xml/signals/Amtrak-2010/index.shtml">2010 Amtrak</a> and
+<a href="http://jmri.org/xml/signals/GWR-1931/index.shtml">1931 Great Western</a> systems.
+
+<p>Steve Williams fixed a problem with LocoNet Simulator's reading of data files.
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

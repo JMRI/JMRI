@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+ 	JMRI: Contact us
+  </title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords"
+        content="java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div id="container">
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+    <hr class="hide">
+    <div class="no-sidebar" id="mBody">
+      <div id="mainContent">
+
+  <h1>Contact Information</h1>
+  <h2>Email discussion group</h2>
+  <p>There is an active "Groups.io" user community called <a href="https://groups.io/g/jmriusers">JMRI users</a>.</p>
+  <p>This discussion group is for people using the JMRI model railroad
+     software.<br>
+     It is a good place to discuss any aspect of these.
+     If you have questions about how to do things, suggestions, or
+     even complaints, post them here.</p>
+
+  <p>In addition to the above user community, there are several developer
+  focused mailing lists hosted on Groups.io that you may find useful:</p>
+  <ul>
+	<li> <a href="https://groups.io/g/jmri-announce/topics">jmri-announce Archives</a>
+	(<a href="https://groups.io/g/jmri-announce/join">Subscribe</a>)
+	&nbsp;Announcements of new JMRI versions.</li>
+	
+	<li> <a href="https://jmri-developers.groups.io/g/commits/topics">jmri-commits Archives</a>
+	(<a href="https://jmri-developers.groups.io/g/commits/join">Subscribe</a>)
+	&nbsp;CVS/Git commit notifications.</li>
+
+	<li><a href="https://jmri-developers.groups.io/g/jmri/topics">jmri-developers Archives</a>
+	(<a href="https://jmri-developers.groups.io/g/jmri/join">Subscribe</a>)
+	&nbsp;Discussion of current and future development.</li>
+  </ul>	
+
+	<p>
+	All of the JMRI code is maintained on GitHub. See the:</p>
+	<ul>
+	<li><a href="https://github.com/JMRI/JMRI/issues">JMRI/JMRI GitHub Issue List</a>
+	(<a href="https://github.com/JMRI/JMRI/subscription">Subscribe</a>)
+	&nbsp;Repository for notes on work in progress.</li>
+  </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

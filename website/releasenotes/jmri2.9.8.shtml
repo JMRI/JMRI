@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.9.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.9.8 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.9.8 release
+      </h2>
+
+	<p>Date: June 13, 2010</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.9.8 of JMRI/DecoderPro is available for download.
+
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the eighth in a series of test versions. It carries the last major
+new features for the JMRI 2.10 production release expected in Summer 2010. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Several improvements for remote (iPhone, Android) throttles
+<li>A new preference lets you specify where your user files are stored.
+<li>Several improvements to how windows use screen space.
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(None yet)
+
+<h3>Older warnings</h3>
+
+Panel files written with JMRI 2.9.6 or later that contain Lights 
+will not be readable by earlier versions of JMRI.
+
+<p>
+JMRI system names start with two capital letters, e.g. LT10 or NS23 or PLA5.
+Past versions have tried to cope when people enter lower cases letters,
+e.g. lt10 or Ns23 or pLA5, with various degrees of success. 
+Unfortunately, this code isn't compatible with some new systems that are
+being working on, and we have to remove it.  Starting with this version,
+JMRI requires that you enter consistent system names, including using the right case.
+If you use system names, and haven't been using consistent names, you'll
+probably have to practice a little to get in the habit. If you have any problems
+reading old files, etc, please post a note on the JMRI Users group and
+somebody will help you.
+
+<p>
+The LocoTools application is no longer supported, and is being removed.
+Some parts of it are still present, but you should use e.g. PanelPro or
+DecoderPro instead.  They can do everything that LocoTools can.
+
+<p>
+The preferences have been significantly reworked. In some cases,
+preferences to add a button or do an action at startup may have to be 
+deleted and re-entered before they will work.
+
+<p>
+The communications libraries for Mac OS X have been updated.  
+We've tested these extensively, but there may be combinations of 
+hardware and software versions that still aren't right.  If the program
+can't see your layout connection, please post to the JMRI Users group
+with what type of Mac you're using (PowerBook, PowerMac, MacBook, etc), 
+processor type (PPC G3, G4, G5 or Intel) and Mac OS X version (10.4, 10.5, 
+etc; names like Leopard are OK) too.  We've got several library versions 
+and most likely have one that will work, we just have to figure out which.
+
+<p>
+If you're using a Lenz XPressNet connection, please
+uncheck the "Check Buffer Status" box in the preference
+pane where you selected the Lenz protocol.
+
+<p>
+This version of JMRI uses the new communications libraries introduced in 
+<a href="jmri2.9.3.shtml">JMRI 2.9.3</a>.
+On Windows, the installer should take care of all installation and deinstallation 
+required.  On Linux, you may have to install and/or uninstall 
+various communications library parts, see the
+<a href="../install/Linux.html">JMRI Linux pages</a> for more info.
+On Mac, depending on which version you were previously using you
+may have to remove a communications library, see the
+<a href="../install/MacOSX.html">JMRI Mac OS X page</a>.
+
+<p>
+You may get some messages like:
+<code><pre>
+WARNING:  RXTX Version mismatch
+        Jar version = RXTX-2.2pre1
+        native lib Version = RXTX-2.2pre2
+</pre></code>
+For now, this should be considered normal.  We'll try to get it
+removed before the next production release. 
+
+<p>
+The JInput USB library was updated in  
+<a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, and again in
+<a href="jmri2.9.1.shtml">JMRI 2.9.5</a>, which (should) 
+have fixed problems on
+Windows Vista, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+input devices, so please check to make sure that your USB-attached devices still work.
+
+<p>
+When loading an older panel file containing signal head icons, you may
+get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
+To make these stop, just store the file again so that it's rewritten in the most recent format.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.8.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.8.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.8.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.8.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.8.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.8.tgz/download</a>
+
+<h3>Changes since test version 2.9.7</h3>
+
+Brett Hoffman updated the WiThrottle protocol to separate functions for lead loco in consist.
+
+<p>
+Pete Cressman fixed an occasional error message from Logix when using the clock.
+
+<p>
+Pete Cressman updated the panel editors to keep background locked when using global positionable flag.
+
+<p>
+Paul Bender made technical changes to the internals of the XPressNet throttle support.
+
+<p>
+Improved how LocoNet Slot Monitor uses screen space.
+
+<p>
+Steve Todd updated the Engine Driver throttle for Android.
+
+<p>
+Paul Bender and Lionel Jeanson improved the internal structure of the throttle support.
+You may see changes in the way that real (handheld) throttles and the program interact.
+There's a new throttle preference to control whether the speed should be set to 0
+and functions turned off when a throttle is released.
+
+<p>
+Brett Hoffman changed how the WiThrottle protocol creates a throttle.
+The throttle no longer shows in the "Windows" menu or
+in the "Throttles List" window.
+
+<p>
+Paul Bender did more work on Lenz turnout control.
+
+<p>
+Paul Bender made some changes to make the XPressNet support compatible with OpenDCC command stations.
+
+<p>
+Web browsers can now access layout power via XMLIO.
+
+<p>
+Allow the user to specify the default preferences and jython script directory locations.  
+This helps to get around an issue reported with windows 7 directory/file permissions.
+It also allows the user to set where they wish to save panel/throttle/etc files without having to modify the launcher. 
+Feature is handy where multiple Windows user profiles have to access a common set of panel and roster files.
+
+<p>
+Improved window for adding Signal Masts so that it's clearer how many SignalHeads are needed,
+and to give more space for entering them.
+
+<p>Dan Boudreau added a new operations schedule feature: Users can now
+specify the destination and track for a car. Also, the schedule now
+shows the current car count in schedule table when the car count is greater
+than 1.
+
+<p>
+Fixed a problem with SignalMast system names when using signal heads with ":" characters in their
+names, e.g. SE8c signal heads.
+
+<p>
+Mike Mosher added decoder definitions for the TCS V51+ decoders.
+
+<p>
+Steve Todd updated the wireless throttle support to avoid confusion with IPv6 connections.
+
+<p>
+Jack Shall updated the Tsunami Diesel decoder definition to add the BW1000 series decoders.
+
+<p>
+John Stewart provided a decoder definition for the Lenz Plus 2010 decoder.
+
+<p>
+Mike Mosher added decoder definitions for the Soundtraxx Tsunami OEM decoders for Genesis locomotives.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

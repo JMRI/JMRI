@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: Clinics</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="clinics java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+  
+<h1>JMRI Clinics</h1>
+
+    <h2>Upcoming JMRI Clinics</h2>
+    
+    <p>Upcoming JMRI Clinics as submitted or found on the web:
+
+    <dl>
+        <dt>
+        July 3-10, 2016 - Indianapolis, IN
+        </dt>
+        <dd>
+        <a href="http://www.nmra2016.org">NMRA 2016 National Convention</a>
+        </dd>
+
+        <dt>
+        September 3, 2016  - Liverpool, NSW, Australia
+        </dt>
+        <dd>
+        <a href="http://www.nmra.org.au/index.html">NMRA Australasian Regional Convention</a>
+        </dd>
+
+        <dt>
+        September 21-24, 2016 - Los Angeles, CA
+        </dt>
+        <dd>
+        <a href="http://www.psrconvention.org/lajunction/">NMRA 2016 PSR Convention</a>
+        </dd>
+
+        <dt>
+        October 28-30, 2016  - Meridan, Birmingham, West Midlands, England
+        </dt>
+        <dd>
+        <a href="http://www.nmrabr.org.uk/annual-convention">NMRA British Region Annual Convention 2016</a>
+        </dd>
+
+    </dl>
+
+    <h2>Past JMRI Clinics</h2>
+
+    These are links to various clinics that have been presented by 
+    JMRI users in the past. They've made them available here for 
+    your use, but please contact the original author before presenting 
+    them yourself.
+
+		<p>At the <a href="http://www.railroadhobbyshow.com/index.php">Amherst Railway Society's annual Railroad Hobby Show</a> Ken Cameron presented an 
+		<a href="http://www.railroadhobbyshow.com/clinics.php#track3">Overview and what's new Clinic on JMRI</a> as well as an LCC overview and what's new Clinic.
+
+    <p id="nmra2015">
+    There were 2 
+    <a href="http://nmra2015.sbcrailway.ca/clinic-presentations">JMRI clinics at the 2015 NMRA convention</a>
+    in Portland, OR:
+    <ul>
+    <li>Dick	Bronson presented <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">Basics of signaling and automating your layout</a>
+    <li>With Greg Madsen he also presented a <a href="http://nmra2015.sbcrailway.ca/sites/default/files/clinics/Cameron_JMRI_2015_Portland.pdf">JMRI overview and current status</a>
+    <li><a href="http://nmra2015.sbcrailway.ca/taxonomy/term/61">More DCC clinics</a> presentations
+    </ul>
+    
+    <p>
+    Les Fowler presented a 3 part  
+    <a href="http://www.nmra.org.au/Convention%20Clinics/Notes.html">JMRI clinic at the 2015 NMRA Australasian Regional Convention</a> in Cleveland, OH.   
+     
+    <p>
+    There were seven 
+    <a href="NMRA2014/index.shtml">JMRI clinics at the 2014 NMRA convention</a>
+    in Cleveland, OH.
+    
+    <p>
+    There were four 
+    <a href="NMRA2013/index.shtml">JMRI clinics at the 2013 NMRA convention</a>
+    in Atlanta.
+        
+    <p>
+    Bob Bucklew's excellent
+    <a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">PanelPro tutorial</a>
+    is available online.
+    
+    <p>
+    Martyn Jenkins presented a 
+    <a href="http://www.nmra.org.au/Clinics/WiThrottle%20Clinic%202012%20handout.pdf">WiThrottle clinic</a> in 2012 for the NMRA Australasian Regional Convention.
+    
+    <p>
+    There were several 
+    <a href="NMRA2012/index.shtml">JMRI clinics at the 2012 NMRA convention</a>
+    in Grand Rapids.
+        
+    <p>
+    There was a
+    <a href="UK2011/index.shtml">UK Based Signalling Clinic at the 2011 Lancashire and Yorkshire DCC Exhibition</a>
+    in Rawtenstall.
+        
+    <p>
+    There were six
+    <a href="NMRA2011/index.shtml">JMRI clinics at the 2011 NMRA convention</a>
+    in Sacramento.
+
+    <p>
+    There were seven 
+    <a href="NMRA2010/index.shtml">JMRI clinics at the 2010 NMRA convention</a>
+    in Milwaukee.
+
+    <p>
+    Laurie McLean and Gerry Hopkins did a 
+    <a href="http://www.nmra.org.au/region/videos.html">clinic on programming sound decoders</a>
+    using DecoderPro at the 
+    2009 Australian Narrow Gauge Convention.
+    
+    <p>
+    David McDowell of the North Raleigh Model Railroad Club
+    has posted the slides from a 
+    <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">PanelPro clinic</a>
+    covering Block Occupancy, Transponding and Simple Signal Logic using JMRI.
+    
+    <p>
+    There were seven 
+    <a href="NMRA2009/index.shtml">JMRI clinics at the 2009 NMRA convention</a>
+    in Hartford.
+
+    <p>
+    We have a page of 
+    <a href="NMRA2008/index.html">JMRI clinics from the 2008 NMRA convention</a>
+    in Anaheim. Several of those are available as movies from the
+    <a href="http://model-railroad-hobbyist.com/mrht_decoderpro">Model Railroad Hobbyist</a> web site.
+
+    <p>
+    Dick Bronson has provided several animated introductions
+    to DecoderPro and PanelPro on
+    <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">his own web pages</a>. The most recent version was presented at the
+    2007 NMRA convention in Detroit.
+    
+    <p>
+    Nick Kulp has posted a 
+    <a href="NickKulpMarch2004/index.html">PanelPro clinic</a>
+    that he presented in 2004.
+
+    <p>
+    Keith Albright has posted a clinic on
+    <a href="http://www.members.optusnet.com.au/nswmn1/y_Speed_Matching_DecPro">speed matching locomotives using DecoderPro</a>.
+    <hr class="hide">
+
+        <!--#include virtual="/Footer.shtml" -->
+
+ </div> <!-- closes #mainContent-->
+</div> <!-- closes #mBody--> 
+</body>
+</html>

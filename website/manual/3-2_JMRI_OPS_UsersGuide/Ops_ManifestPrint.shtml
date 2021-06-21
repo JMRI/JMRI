@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_AddTrain.shtml 18290 2011-08-25 09:06:42Z dat7719 $ -->
+<title>Operations-Add Train</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Manifest Print<br>
+</h1>
+
+<div align=right>
+<p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<blockquote>
+  <p><img src="images/Ops_ManifestPrint.png" width="900" height="1163"></p>
+</blockquote>
+
+<div align=right>
+  <p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+</div> <!-- closes #container, started in sidebar -->
+<script src="/js/main.js"></script>
+</body>
+</html>

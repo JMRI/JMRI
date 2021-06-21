@@ -1,0 +1,39 @@
+<!-- This is the 'responsive' common sidebar definition for /install pages -->
+
+<hr class="hide">
+<div id="side" class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left">
+    <!-- Block of text on left side of page -->
+    <button class="w3-right w3-button w3-hide-large fa fa-close" onclick="side_close()"></button>
+    <div style="text-align: center">Download and install JMRI&reg;</div>
+
+    <dl>
+    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
+
+   <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+	
+  <dt><a href="../download/index.html">Release Notes</a></dt>
+
+  <dt>Source Code</dt>
+  <dd>
+	<ul>
+        <li><a href="/help/en/html/doc/Technical/getcode.shtml">Get the Code</a></li>
+	</ul>
+  </dd>
+
+  <dt>Issues</dt>
+  <dd>
+	<ul>
+        <li><a href="https://github.com/JMRI/JMRI/issues">JMRI Issues</a></li>
+        <li><a href="https://github.com/JMRI/website/issues">JMRI Site Issues</a></li>
+	</ul>
+  </dd>
+  
+ </dl>
+
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
+
+ </div> <!-- closes #side -->
+
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
+<!-- Sidebar.shtml -->

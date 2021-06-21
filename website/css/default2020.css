@@ -1,0 +1,898 @@
+/* Derived from the mozilla.org css */
+/* which was written by dave shea, http://www.mezzoblue.com/ */
+/* Modified L. David Baron. */
+/* Modified and simplified for use by JMRI by John Plocher. */
+/* vim:ts=4:noet:
+*/
+
+
+/* JMRI web site Base Styles
+ * maintained by John Plocher
+ * (Original Mozilla classes are defined in the Markup Guide
+ *   http://fantasai.inkedblade.net/mozilla/web/guide/markup)
+ */
+
+/* TOC:
+   Random HTML Styles
+   General Structure
+   Navigation
+   Comments and Other Asides
+   Emphasis
+   Computers - General
+   Code
+   Examples and Figures
+   Q and A (FAQ)
+   Tables
+   Meta
+*/
+
+/* Random HTML Styles */
+
+	dt {
+		font-weight: bold;
+	}
+
+	form {
+		margin: 0;
+		display: inline;
+	}
+	span.button {
+		border: thin solid #888;
+		display: inline;
+		background: #AAA;
+	}
+
+/* General Structure */
+
+	.subtitle {
+		font-style: italic;
+	}
+
+	p {
+		text-indent: 0;
+	}
+	div.para {
+		margin: 1em 0;
+	}
+	div.para > * {
+		margin-top: 0.2em;
+		margin-bottom: 0.2em;
+	}
+
+	div.section {
+		display: block;
+		padding-left: 3%;
+	}
+
+	div.section > h2,
+	div.section > h3,
+	div.section > h4,
+	div.section > h5,
+	div.section > h6 {
+		margin-left: -1.0%;
+	}
+
+	blockquote address:before {
+		content: "\2015";
+	}
+
+/* Navigation */
+
+	.ex-ref {
+		font-style: italic;
+	}
+
+	dl.toc dt {
+		margin-top: 0.5em;
+		font-size: 90%;
+	}
+	dl.toc p {
+		margin: 0;
+		font-size: 80%;
+		text-indent: 1em;
+	}
+	dl.toc p:first-child {
+		text-indent: 0;
+	}
+	dl.toc > dd {
+		margin-left: 1em;
+	}
+
+	ol.toc ol {
+		list-style-type: circle;
+	}
+	ol.toc > li > ol {
+		font-size: 80%;
+	}
+
+	ul.snav {/* section navigation or short navigation, whichever you prefer */
+		margin: 0.7em 10%;
+		padding: .2em;
+		text-align: center;
+	}
+	ul.snav li {
+		list-style-type: none;
+	}
+	ul.snav > li {
+		display: inline;
+	}
+	ul.snav > li:before {
+		content: " | ";
+	}
+	ul.snav > li:first-child:before {
+		content: "";
+	}
+
+	a.cont {
+		display: block;
+		margin-right: 0;
+		text-align: right;
+		border: thin solid red;
+	}
+
+/* Comments and other Asides */
+
+	/* AsciiDoctor styles */
+	.admonitionblock>table {
+		border-collapse:separate;
+		border:0;
+		background:none;
+		width:100%
+	}
+	.admonitionblock>table td.content {
+		padding-left:1.125em;
+		padding-right:1.25em;
+		border-left:1px solid #dddddf;
+		color:rgba(0,0,0,.6)
+	}
+	.admonitionblock.note:before {
+		content: ""; /* nothing */
+	}
+
+	.note {
+		font-style: italic;
+	}
+	.note:before {
+		content: "Note: ";
+	}
+
+	.remark {
+		font-size: smaller;
+	}
+	.remark:before {
+		content: "[";
+	}
+	.remark:after {
+		content: "]";
+	}
+
+	.sidebar {
+		clear: both;
+		margin: .75em .5em;
+		padding: .2em;
+		border: 1px solid;
+		background: white;
+
+		/* Block NS4 from floating */ /*/*/
+		float: right;
+		width: 30%;
+		min-width: 15em;
+		/* */
+	}
+	/* Reduce main header sizes */
+	.sidebar h1 {font-size: 1.40em;}
+	.sidebar h2 {font-size: 1.25em;}
+	.sidebar h3 {font-size: 1.10em;}
+
+/* Emphasis */
+
+	/* em, strong */
+
+	strong.stronger {
+		font-style: italic;
+		font-weight: bold;
+	}
+
+	strong.very-strong {
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	*.important,
+	div.important,
+	p.important {
+		margin: 1em;
+		padding: 0.1em;
+		border: solid #F00;
+	}
+
+        p.noted,
+        div.noted {
+		margin: 1em;
+		padding: 0.1em;
+		border: 2px solid blue;
+	}
+
+	span.important,
+	em.important,
+	strong.important {
+		font-size: large;
+	}
+
+/* small [Since JMRI 1.2.3] sticker to mark  introductory version number in Release Notes */
+	span.since {
+		color: #fff;
+		font-weight: normal;
+		float: right;
+		background: #222696;
+	    background-size: 100% 100%;
+	    border-radius: 4px;
+	    margin: 2px 2px 2px 2px;
+	    padding: .2em .3em;
+	}
+	.since a:link {
+			color: #fff;
+			font-weight: normal;
+	}
+	.since a:visited {
+			color: #fff;
+			font-weight: normal;
+	}
+	.since a:link:hover, :visited:hover {
+			color: #fff;
+			font-weight: normal;
+	}
+
+/* Computers - General */
+
+	span.application {
+		font-style: italic;
+	}
+
+	kbd.command,
+	span.command {
+		font-family: monospace;
+		white-space: pre;
+	}
+
+	tt.filename,
+	span.filename {
+		font-style: italic;
+		white-space: nowrap;
+	}
+
+	tt.productnumber,
+	span.productnumber {
+		font-size: 90%;
+		font-family: monospace;
+	}
+
+/* Code */
+
+	code {
+		font-family: monospace;
+		white-space: nowrap;
+	}
+
+	pre.incorrect-code { color:red; }
+
+	pre.code,
+	pre.incorrect-code {
+		overflow: auto;
+		margin: 1em .5em;
+		padding: .2em;
+		border: solid 1px;
+	}
+
+	pre.code .remark,
+	pre.incorrect-code .remark  {
+		font-size: 1em;
+		font-style: italic;
+	}
+
+	/* turn off content generation */
+	pre.code .remark:before,
+	pre.incorrect-code .remark:before,
+	pre.code .remark:after,
+	pre.incorrect-code .remark:after,
+	pre.code .note:before,
+	pre.incorrect-code .note:before {
+		content: "";
+	}
+
+
+/* Examples and Figures */
+
+	/* turn off borders so we don't need border=0 on image links */
+	:link img, :visited img {
+		border: 0;
+	}
+	.deepLevel #mainContent :link img, .deepLevel #mainContent :visited img {
+		border: medium solid;
+	}
+
+	.example,
+	.incorrect-example {
+		margin: 1em 3%;
+		padding: .25em;
+		border: 2px solid blue;
+		font-family: monospace;
+	}
+	.Xexample:before,
+	.Xincorrect-example:before {
+		display: block;
+		font-weight: bold;
+		content: "Example";
+	}
+	.Xincorrect-example:before {
+		content: "Incorrect Example";
+	}
+	.example[title]:before,
+	.incorrect-example[title]:before {
+		content: attr(title);
+	}
+
+	.figure,
+	.screenshot {
+		display: block;
+		margin: .75em auto;
+	}
+	.screenshot[title]:after,
+	.figure[title]:after {
+		display: block;
+		margin: 0 8% .05em;
+		font-style: italic;
+		font-size: small;
+		text-align: right;
+		content: attr(title);
+	}
+
+	pre.screen {
+		overflow: auto;
+		margin: 1em .5em;
+		padding: .2em;
+		border: solid 1px;
+		font-family: monospace;
+		white-space: pre-wrap;
+	}
+
+	.co,
+	.callout {
+		text-decoration: underline;
+	}
+
+	.incorrect.incorrect,
+	.incorrect-example,
+	.incorrect-code {
+		border: solid red;
+	}
+
+	.right { float:right!important }
+
+	.image.right { margin-left:.625em }
+
+/* Q and A (FAQ) */
+
+	.qandaset .question {
+		font-size: large;
+		font-weight: bold;
+	}
+
+	.qandaset .answer {
+		margin-top: 1em;
+	}
+
+/* Tables */
+
+	table.data {
+		border-collapse: collapse;
+		margin: 0.5em auto;
+		border: 1px solid;
+	}
+
+	table.data caption {
+		margin: 1em auto 0.2em;
+		font-size: small;
+		font-style: italic;
+		text-align: center;
+	}
+
+	table.data th,
+	table.data td {
+		padding: 0.2em;
+		border: 1px solid;
+	}
+
+/* Meta */
+
+	address {
+		text-align: right;
+	}
+	.author {
+		margin-bottom: 1em;
+		text-align: left;
+	}
+/* end Base styles */
+
+/*html elements*/
+html {
+	padding: 0;
+	margin: 0;
+}
+body {
+	padding: 0;
+	margin: 0;
+	background: #fff;
+	color: #000;
+	font-family: Verdana,Sans-serif;
+	font-size: 90%;
+}
+
+label, input {
+	font-weight: bold;
+	color: #3D2DF3;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin: 1em 0 0.5em 0;
+	border: dotted 1px #BEBFD7;
+	border-right: 0;
+	border-left: 0;
+	background-color: #EEECF6;
+}
+h1 { font-size: 150%; color: #222696; padding: 9px; padding-left: 1em; }
+h2 { font-size: 120%; color: #1D24ED; padding: 7px; padding-left: 3em; }
+h3 { font-size: 100%; color: #383DB3; padding: 5px; padding-left: 5em; }
+h4 { font-size: 100%; color: #666666; padding: 3px; padding-left: 7em; }
+h5 { font-size: 90%;  color: #222696; padding: 2px; padding-left: 9em; }
+h6 { font-size: 90%;  color: #1D24ED; padding: 1px; padding-left: 11em; }
+
+sup {
+	font-size: 70%;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+:link {
+	color: #554FA0;
+	font-weight: bold;
+}
+:visited {
+	color: #090051;
+	font-weight: bold;
+}
+:link:hover, :visited:hover {
+	color: #5B52CB;
+}
+hr {
+	padding: 0;
+	height: 4px;
+	border: 0;
+	margin: 2em 0;
+}
+
+.floatLeft {
+	float: left;
+	margin: 5px 10px 5px 0;
+	border: dotted 1px #BEBFD7;
+}
+.floatRight {
+	float: right;
+	margin: 5px 0 5px 10px;
+	border: dotted 1px #BEBFD7;
+}
+
+/* page structure*/
+#mBody {
+	background: #EEF;
+	position: absolute;
+	top: 146px;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	width:100%
+}
+
+.nomenu #mBody, /* .nomenu @deprecated, replaced by .no-sidebar since 4.2.23 because that's what is means */
+.no-sidebar #mBody {
+	background: #EEF;
+}
+
+/*sidebar menus and links*/
+#side {
+	background: #EEF;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 10px 15px;
+	width: 174px;
+	voice-family: inherit;
+	border-top: solid 2px #CCF;
+	border-bottom: solid 2px #AAB;
+	border-right:  solid 2px #AAB;
+}
+
+.nomenu #side,
+.no-sidebar #side {
+	display: none;
+	}
+
+#side h2 {
+	margin-top: 1em;
+	color: #33B;
+}
+#side h3 {
+	color: #333;
+	margin: 2em 0 0 0;
+	padding-left: 2em
+}
+#side h4 {
+	color: #999;
+	font-size: 90%;
+	margin-top: 0;
+	margin-bottom: 0.5em;
+}
+#side p {
+	margin: 0 0 2em 0;
+	font-size: 87%;
+}
+#side dl {
+	margin-top: 0;
+}
+#side dt {
+	font-weight: bold;
+	display: inline;
+	font-size: 87%;
+}
+#side dd {
+	padding: 0 0 5px 5px;
+	margin: 0 0 1em 0;
+	border-left: solid 3px #D4D4E4;
+	font-size: 87%;
+}
+#side ul {
+	padding: 0;
+	margin: 0;
+}
+#side li {
+	list-style: none;
+	/* background: transparent url(../images/w6.gif) top left no-repeat; */
+	padding: 0 0 0.3em 11px;
+}
+#side li.here {
+	/* highlight current page */
+	background-color: #99D;
+}
+
+
+/*header*/
+#header {
+	background: #AAC;
+}
+#header img {			/* Used for the JMRI logo */
+	float: left;
+	margin: 0;
+	width:  170px;
+	height: 135px;
+	padding: 5px 20px 5px 16px;
+	background: #AAC;	/* light purple */
+}
+#mainNav { /* top row of top-of-page navbar */
+	background: #99D;	/* light purple */
+	margin: 0 3px 0 205px;	/* Size of background box */
+	padding:20px 0 0 0;	/* location of text in the box */
+	width: auto;		/* resize with window width */
+	height: 89px;		/* how much box below the text? */
+	text-align: right;	/* memu aligns to the right */
+	border: solid 3px #AAE;
+	border-bottom-color: #88E;
+	border-right-color: #88E;
+}
+#mainNav li {			/* list items are used for navbar menu choices */
+	white-space: nowrap;
+	list-style-type: none;
+	display: inline;
+	padding-right: 0.6em;
+}
+#mainNav :link, #mainNav :visited {
+				/* list items are usually links ... */
+	font-size: 90%;
+	text-transform: lowercase;
+	text-decoration: none;
+	font-weight: bold;
+	color: #fff;
+}
+#mainNav :link:hover, #mainNav :visited:hover {
+				/* give them some animation ... */
+	padding-bottom: 4px;
+	border-bottom: solid 3px #33F;
+}
+
+/* Search Form constructs */
+
+#sf, #searchform {	/* search form */
+	border: solid 2px #CCF;
+	border-bottom-color: #AAB;
+	border-right-color: #AAB;
+	background: #BBD;
+	margin: 0 6px 0 295px;
+	position: relative;
+	top: -16px;
+	text-align: right;
+	padding: 5px 15px 0 0;
+	voice-family: inherit;
+	height: 22px;	/* bottom "reveal" */
+}
+
+#sf label, #searchform label {
+	font-size: 80%;
+	color: #77B;
+}
+
+#q {			/* Search query text box */
+	font-size: 70%;
+	font-weight: normal;
+	background: #EEF;
+	border: solid 1px #AAC;
+	border-bottom-color: #CCD;
+	border-right-color: #CCD;
+	padding: 2px;
+}
+#q:hover, #q:focus {
+	background: white;
+}
+#submit {
+	background-color: #99D;
+	color: #FFF;
+	border: solid 1px #AAC;
+	border-top-color: #CCD;
+	border-left-color: #CCD;
+}
+#submit:hover, #submit:focus {
+	padding-bottom: 2px;
+	border-bottom: solid 3px #33F;
+}
+
+/* End of search form */
+
+
+
+#title {
+	background: #AAC;
+	margin: 0 0 0 205px;	/* Size of background box */
+	width: auto;		/* resize with window width */
+	top: -14px;
+	height: 59px;		/* how much box below the text? */
+	position: relative;
+}
+
+#title p {
+	width: auto;		/* resize with window width */
+	height: 50px;		/* how much box below the text? */
+	position: relative;
+	top: -6px;
+	border: solid 3px #AAE;
+	border-bottom-color: #88E;
+	border-right-color: #88E;
+	text-align: center;
+	font-size: 120%;
+	font-weight: bold;
+	background: #99D;	/* light purple */
+	color:#FFF;
+}
+
+/*body*/
+#mainContent {
+	background: #fff;
+	line-height: 1.3; /* value other than 'normal' needed for WinIE */
+	margin-left: 206px;
+	padding: 20px 30px;
+	voice-family: inherit;
+}
+
+.nomenu #mainContent,
+.no-sidebar #mainContent {
+	/* margin-left: 0; */
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	background: #fff;
+}
+
+/*what's new*/
+#teaser p {
+	color: #5C5885;
+	margin-top: 0;
+}
+
+/* 2 column list panel */
+.image100w TD {vertical-align: top }
+.image100w H2 {
+	    color: #554FA0;
+	    background-color: #EEECF6;
+	    background-position: center left;
+	    padding: 7px;
+	    border: dotted 1px #D6CCBD;
+	    border-right: 0;
+	    border-left: 0;
+	    margin-top: 0;
+	    margin-bottom: 0;
+	}
+.list {
+	margin: 2em 0 0 0;
+}
+.list h1 {
+	color: #554FA0;
+	background-color: #EEECF6;
+	background-position: center left;
+	padding: 2px;
+	border: dotted 1px #BEBFD7;
+	border-right: 0;
+	border-left: 0;
+	margin-bottom: 0;
+	clear:left;
+}
+.list h2 {
+	color: #554FA0;
+	background-color: #EEECF6;
+	background-position: center left;
+	padding: 7px;
+	border: dotted 1px #BEBFD7;
+	border-right: 0;
+	border-left: 0;
+	margin-bottom: 0;
+}
+.list dl {
+	margin: 0;
+}
+.list dt {
+	margin: 0 0 0 10em;
+	padding: 0.4em 0 0 0.7em;
+	border-left: dotted 1px #BEBFD7;
+}
+.list .im100w {
+	clear: left;
+	float: left;
+	width: 102px;
+	text-align: center;
+	border: 0;
+	margin: 0;
+	padding: 1em 0 0.5em 0;
+	}
+.list .im {
+	clear: left;
+	float: left;
+	width: 10em;
+	text-align: center;
+	border: 0;
+	margin: 0;
+	padding: 1em 0 0.5em 0;
+	}
+.list .left {
+	clear: left;
+	float: left;
+	width: 10em;
+	text-align: center;
+	border: 0;
+	margin: 0;
+	padding: 0.25em 0 0.25em 0;
+	}
+.list dd.first {
+	border-top: dotted 1px #BEBFD7;
+}
+.list dd {
+	margin: 0 0 0 10em;
+	padding: 1px 0 0.4em 0.7em;
+	border-bottom: dotted 1px #BEBFD7;
+	border-left: dotted 1px #BEBFD7;
+}
+.list dd p, .list dd ul {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+}
+
+.list dd .quotes {
+	color: #5C5885;
+}
+
+.list dd .quotes p {
+	float: left;
+	width: 40%;
+	margin: 1em 5%;
+}
+
+/* generic reusable style */
+
+.highlight {
+	display: block;
+	border-top: double 3px #ccc;
+	border-bottom: double 3px #ccc;
+	padding: 8px;
+	margin: 20px 40px;
+}
+.highlight img {
+	float: right;
+	margin: 0 20px 0 20px;
+}
+.highlight dl {
+	padding: 1em;
+}
+.highlight dd {
+	white-space: nowrap;
+}
+
+.this { font-weight: bold;
+	border: solid 1px #E6E0D7;
+}
+
+.mice {
+	font-size: 70%;
+	line-height: 1.1;
+	color: #999;
+	margin-top: 2em;
+}
+.mice :link, .mice :visited {
+	color: #666;
+}
+.linkset {
+	padding: 10px;
+	margin: 0 0 0.5em 0;
+	background: #eee;
+	border-top: double 3px #ccc;
+	border-bottom: double 3px #ccc;
+}
+.linkset li {
+	list-style-type: none;
+	padding-left: 20px;
+	margin: 12px;
+}
+#rhs, #rhs2 {
+	position: absolute;
+	left: 650px;
+	top: 160px;
+	width: 160px;
+}
+#rhs2 {
+	top: 0;
+}
+#rhs img {
+	padding-left: 35px;
+	margin-bottom: -20px;
+}
+
+
+/*footer*/
+#bn {
+	clear: both;
+	border-top: solid 1px #EAE6DE;
+	padding: 0 0 0 0.5em;
+	margin: 3em 0 0.5em 0;
+	/* background: transparent url(../images/bg8.gif) top left repeat-y; */
+}
+#bn li {
+	list-style: none;
+	display: inline;
+	white-space: nowrap;
+}
+#bn :link, #bn :visited {
+	padding: 0 1em 0 0.5em;
+	/* background: transparent url(../images/bg8.gif) top right repeat-y; */
+}
+#bn :visited {
+	font-weight: bold;
+}
+#footer p {
+	font-size: 73%;
+	line-height: normal;
+	margin: 0 0 0 1em;
+}
+
+/*accessibility tweaks*/
+.skipLink {
+	position: absolute;
+	left: -999px;
+	width: 990px;
+}
+hr.hide {
+	display: none;
+}

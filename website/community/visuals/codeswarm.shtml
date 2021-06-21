@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!-- $Id: codeswarm.shtml,v 1.7 2010-04-12 12:05:41 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <title>JMRI Code Swarm</title>
+    <meta name="Author" content="Dennis Miller">
+    <meta name="keywords" content="codeswarm code swarm java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+
+    <h1>JMRI Code Swarm</h1>
+    
+    <h3>Download the Video</h3>
+    <p>You can download the 2009 JMRI Code Swarm <a href="/images/jmricodeswarm.zip">here</a>. 
+    Note that this is a large file (~15M) and is in zip format.  After downloading, you 
+    will need to unzip it to extract the mpeg file, then play it in your favorite video 
+    player.  It has been tested on Windows XP with Windows Media Player(V9) and Irfanview, 
+    on Ubuntu with Totem (after installing the Gstreamer codec and its plugins) 
+    as well as on the Mac. 
+    <p>The video is &copy; copyright JMRI and the musical track is copyright <i>AdHoc</i>, see 
+    <a href="#details">license details.</a>
+
+    <h3>Introduction</h3>
+    <p><b><em>What the heck is a Code Swarm?</em></b>
+    
+    <p><a href="http://code.google.com/p/codeswarm/">Code Swarm </a> is an open source
+    visualization package that was released in 2008.  It can be used to 
+    provide a dynamic video history of a software project, in this case JMRI.
+    
+    <p>Each time a developer "commits" (i.e. saves) a new file or a change to an 
+    existing one, a color-coded dot appears on the screen.  The dots coalesce around 
+    the developer's name and the names move around the screen as others join in.  
+    The file dots fade away if there is no further activity on them, or flare up if changed again.
+    The names fade as well if that 
+    developer has no more activity, or change to bold font if more contributions are made.
+    <p>Although it sounds simple, it can be quite mesmerizing 
+    as the developers and files swirl around and it gives a very clear view of the increasing 
+    JMRI activity, especially over the last two years.
+    
+    <p>The resulting video gives a lively perspective of how JMRI has developed and who has been 
+    involved.  
+    The 4 minute JMRI Code Swarm covers the beginning, with the very first commits in 
+    June of 2001, through to early January 2009, a period of about seven and a half years and encompassing
+    nearly 23,000 commits.
+    
+    <p>Here is an animated gif sample of about 1.5 secs from the video (covers about 2 weeks in April 2008):
+    <p><img src="/images/jmricodeswarm.gif"
+    width="640" height="480" alt="Code Swarm sample">   
+     
+    <p>After viewing the JMRI code swarm, one thing is abundantly clear, and 
+    that is the great debt we owe Bob Jacobsen. The large number of commits he has made is 
+    very evident and is an order of magnitude higher than any other developer. Knowing 
+    how quick Bob is to highlight others' contributions, I'm sure he 
+    would be the first to point out that his commits also include those of many others 
+    on the <a href="/help/en/Acknowledgements.shtml" title="Acknowledgements">Acknowledgements</a>
+    list who submit files or patches and don't commit directly. Unfortunately, the code swarm 
+    can't separate out these contributions and attribute them to the true originators, but even
+    if it could, Bob's own contributions are still huge.
+    
+    <p>Enjoy!</p>
+    
+    <p>Also view our <a href="codeflower.shtml">2017 CodeFlower</a>.</p>
+    
+    <h3>Technical Details</h3>
+    <p><b>Warning!</b> Any non-Geeks who have wandered into this section by mistake should stop now 
+    before any permanent damage is done to your intellect or personality. Proceeding further may result 
+    in glazed eyes, confusion and disorientation.  Serious cases could result in an all-consuming interest in 
+    programming with the accompanying loss of social skills and deterioration in personal hygiene.  Do not read
+    while operating heavy machinery.  Reader discretion is advised. </p>
+    
+    <h4>Data Source</h4>
+    <ul>
+    <li>All of this was done in Windows XP, but the process will be  essentially identical for other platforms.</li>
+    <li>First, the project repository HEAD is checked out of CVS into a local directory.  This can be done
+    as a read-only version as described <a href="/help/en/html/doc/Technical/index.shtml">here</a>.  For Windows
+    based systems, an excellent tool for this is <a href="http://www.tortoisecvs.org">TortoiseCVS</a></li> 
+    <li>Next, the commit data is extracted from the local repository into log files.  This is obtained by issuing
+    the command line statement:<br><br><code>cvs log > activity.log</code><br><br> in each of the following subdirectories 
+    of the repository:
+	    <ul>
+	    <li>help</li>
+	    <li>java</li>
+	    <li>jython</li>
+	    <li>lib</li>
+	    <li>resources</li>
+	    <li>web</li>
+	    <li>xml</li>
+	    </ul><br>
+    </li>
+    <li>The <code>activity.log</code> files now in each subdirectory have to be combined into a single file 
+    for processing. Pick one of them as the master and save a copy so you can go back if you make a mistake
+    while combining the files.  Then open each of the other files in turn and copy the entire file contents 
+    with the exception of the first two lines.  (The first line contains the file name and the second line 
+    is blank).  Paste the copied contents at the end of the master file and repeat for each of the 
+    <code> activity.log </code>files.</li>
+    </ul>
+    
+    <h4>Code Swarm Frame Generation</h4> 
+    <ul>
+    <li>See <a href="http://code.google.com/p/codeswarm/wiki/HowtoBuild">this page</a> for instructions 
+    on downloading the Code Swarm software using an SVN client and building from source.  I use Eclipse, so 
+    I downloaded the Eclipse module from SVN and simply ran the software from within Eclipse.
+    </li>  
+    <li>Once the Code Swarm software is ready and the log files have been combined, the video generation 
+    process can begin.
+    The basic process described <a href="http://code.google.com/p/codeswarm/wiki/GeneratingAVideo">
+    here</a> is used to generate the code swarm frames. The following steps give more detail and assume 
+    the code swarm software has been downloaded into a directory called <code> codeswarm </code>:
+    
+    <ul>
+    <li>Convert the master <code> activity.log </code> file to a properly formatted xml file.  To do this, copy 
+    it to the <code> codeswarm/convert_logs </code> directory. (Note: Python must be installed and working before 
+    proceeding. If you don't have it, install it now).  In a command 
+    session, change to the <code> convert_logs </code> directory and issue the command:<br><br>
+    <code>python convert_logs.py -c activity.log -o activity.xml</code><br><br>
+    This will generate a file called <code> activity.xml </code> in the <code> codeswarm/convert_logs </code> 
+    directory<br></li>
+    
+    
+    <li>This step is optional.  Open the <code> activity.xml </code> file in a text editor and do a Replace All 
+    for each user id to replace it with the committer's name.  The names are available on our SourceForge site.</li>
+    
+    <li>One statement in the source code for code_swarm can be changed to make the Legend
+    more visible, especially when compressed video versions of the swarm will be generated. 
+    In the <code>code_swarm.java</code> file, find the <code>drawLegend()</code> method and change the line<br>
+    <code>textFont(font)</code> to<br>
+    <code>textFont(boldFont)</code></li>
+    <li>The code swarm config file <code> sample.config</code>, which comes with the program in the 
+    <code> codeswarm/data </code> directory, has the following options changed 
+    (all others are left at default):<br><br>
+    <code>
+    InputFile=convert_logs/activity.xml<br>
+    FontSize=14<br>
+	BoldFontSize=18<br></code>
+	comment out: <code>MillisecondsPerFrame=21600000<br></code>
+	uncomment and set: <code>FramesPerDay=2<br>
+	ColorAssign1="Documentation","(.*doc.*)|(.*htm.*)|(.*html.*)|(.*shtml.*)|(.*css.*)|(.*properties.*)", 0,0,255, 0,0,255<br>
+	ColorAssign2="Java/Jython Files","(.*java.*)|(.*py.*)", 255,255,0, 255,255,0<br>
+	ColorAssign3="Resource Files","(.*xml.*)|(.*dtd.*)|(.*gif.*)|(.*xsl.*)|(.*png.*)|(.*jpg.*)", 255,0,0, 255,0,0<br></code>
+	comment out all other ColorAssign statements<br><code>
+	TakeSnapshots=true<br>
+	DrawFilesSharp=true<br>
+	DrawFilesFuzzy=false<br>
+	DrawFilesJelly=true<br>
+	ShowEdges=true<br>
+	EdgeLength=50<br>
+	PersonSpeed=1.50<br>
+	PersonMass=20.0<br>
+	HighlightPct=10<br>
+	</code>
+    </li>
+    </ul>
+    <li>The <code> ColorAssign </code> statements above in the config file color-codes the files to be 
+    displayed as:<br>
+    <dl>
+    <dt>Documentation<dd>in Blue; files: all help files, but not web site (doc, html/css) and 
+    language translations(properties)
+    <dt>Java/Jython<dd>in Yellow; files: all program files (java) and scripts (py)
+    <dt>Resources<dd>in Red; files: all decoder and programmer definitions (xml/dtd/xsl) and images (gif, png, jpg)
+    </dl>
+    <p>All other files types are considered Misc and are shown in gray.
+    </li>
+    <li>Create an empty folder under the <code> codeswarm </code> directory called <code> frames </code>
+    <li>Execute <code> code_swarm</code>, which will open a graphics window showing the frames as they are 
+    generated and saved in the <code> codeswarm/frames </code> directory.  They are saved as a series of 
+    <code> .png </code> files, with names in the form of <code> code_swarm-#####.png </code> where ##### starts
+    at 0000 and counts up to the number of frames.  This naming format is required for the benefit of the software
+    that is used to convert the series of still pictures into a video.</li>
+    </ul>
+        
+    <a name="details"><h4>Music</h4></a>
+    <ul>
+    <li>If music is desired obtain it now.</li>
+    <li>For this video, the musical track used is <i>Sumbala</i> from the album <i>Toutes directions</i>, 
+    copyright <i>AdHoc</i> and used under the Creative Commons license (attribution; non-commercial; share-alike).  
+    The music can be found at
+    <a href="http://www.jamendo.com/en/album/357">Jamendo</a>.</li>
+    </ul>
+    
+    <h4>Video Generation</h4>
+    <ul>
+    <li>After <code>code_swarm</code> has created the frames, <a href="http://ffmpeg.mplayerhq.hu/">
+    ffmpeg</a> can be used to combine the frames and the mp3 file of the music into a single mpeg file.
+    For Windows, a pre-compilied binary version is available <a href="http://ffmpeg.arrozcru.org/builds/">
+    here</a>.  It needs to be unzipped to a folder before use (for the purposes of these instructions, the folder
+    name is assumed to be <code>ffmpeg</code>).  
+    </li>
+    <li>Copy the <code>codeswarm/frames</code> directory to the <code>ffmpeg/bin</code> directory.  Also, copy 
+    the mp3 (<code>sumbala.mp3</code> in this case) file to the same <code>ffmpeg/bin</code> directory.  
+    Copying these files isn't really necessary but it keeps the path names short in the following command.</li>
+    <li>In a command session, change to the directory containing the <code>ffmpeg/bin</code> directory and issue
+    the following command:<br><br>
+    <code>ffmpeg -i sumbala.mp3 -f image2 -r 24 -i frames\code_swarm-%05d.png -qmax 15 jmricodeswarm.mpg</code><br>
+    
+    This creates an mpeg file called <code>jmricodeswarm.mpg</code> in the same directory that is a combination of
+    the video (made from the individual frames) and the musical sound track.</li>
+    <li>The quality of the video can be changed by modifying the <code>-qmax 15</code> setting in the above
+    command.  This value was chosen to give a balance between quality and file size (decreasing <code>-qmax 15</code>
+    improves quality but increases file size).  For a high quality but
+    much larger file, change <code>-qmax 15</code> to <code>-sameq</code></li>
+    </ul>
+
+    <p>Also view our <a href="codeflower.shtml">2017 CodeFlower</a>.</p>
+
+<!--#include virtual="/Footer.shtml" -->
+    </div> <!-- closes mainContent -->
+  </div> <!-- closes mBody -->
+<script src="/js/main.js"></script>
+</body>
+</html>

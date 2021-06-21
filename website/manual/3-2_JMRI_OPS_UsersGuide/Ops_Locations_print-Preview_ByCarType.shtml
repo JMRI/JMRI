@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_Locations.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+<title>Operations-Locations</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Print Preview: Locations Serving Car Types Window</h1>
+
+<div align=right>
+<p><a href="Ops_Locations_byCar.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The Modify Locations by Car Type Tool menu , opens the Print Preview: Locations Servicing Car Types window as shown. Locations are places on your railroad that trains visit to pickup or  drop off cars and engines.</p>
+<blockquote>
+  <blockquote>
+    <p><img src="images/Ops_Locations_printLocationsbyCarType.png" width="660" height="957" alt="preview"></p>
+  </blockquote>
+</blockquote>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Locations_byCar.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+</div> <!-- closes #container, started in sidebar -->
+<script src="/js/main.js"></script>
+</body>
+</html>

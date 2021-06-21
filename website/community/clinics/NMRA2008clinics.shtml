@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>JMRI Clinics at the NMRA 2008 Anaheim Convention</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<div class="no-sidebar" id="mBody">
+  <div id="mainContent">
+
+<h1>
+JMRI Clinics at the NMRA 2008 Anaheim Convention</h1>
+
+<a href="http://www.nmra.org/2008/">
+<img src="http://www.nmra.org/2008/NMRA2008.jpg" align="right"/></a>
+
+At the 
+<a href="http://www.nmra.org">NMRA</a>
+<a href="http://www.nmra.org/2008/">Anaheim National Convention</a>, 
+July 13th thru July 19th, 2008, 
+there were six JMRI clinics and our traditional annual user meeting was held.
+Two of the six clinics were repeated.
+
+<p>
+The slides and JMRI files from David Duchamp's Layout Editor clinic and
+Dick Bronson's PanelPro clinic are availble on
+<a href="clinics/NMRA2008/index.html">another page</a>.
+
+<p>
+Several of the clinics were filmed by 
+<a href="http://model-railroad-hobbyist.com/">Model Railroad Hobbyist</a>
+magazine, and are 
+<a href="http://model-railroad-hobbyist.com/mrht_decoderpro">available from their web site</a>.
+
+<p>
+The rest of this page is the original schedule announcement
+from before the meeting.
+<p>
+Our JMRI User Group Meeting will be Wednesday night.
+The two introductory clinics will be presented
+on Sunday and repeated on Friday.
+
+<p>
+The following JMRI clinics have been scheduled:
+
+<table border="1">
+<tr><th>Time</th><th>Title</th><th>Presenter</th></tr>
+<tr><td>7:00 PM, Sunday, July 13th</td>
+<td>Intro to Decoder Programming with JMRI/ 
+DecoderPro</td>
+<td>Dave Duchamp
+</tr>
+
+<tr><td>8:30 PM, Sunday, July 13th</td>
+<td>Introduction to Layout Control with JMRI/ 
+PanelPro</td>
+<td>Dick Bronson
+</tr>
+
+<tr><td>10:00 PM, Sunday, July 13th</td>
+<td>Add Signals to your Layout with JMRI/ 
+PanelPro</td>
+<td>Dick Bronson
+</tr>
+
+<tr><td>7:00 PM, Monday, July 14th</td>
+<td>Advanced Decoder Programming with JMRI  
+DecoderPro</td>
+<td>Bob Jacobsen
+</tr>
+
+<tr><td>8:30 PM, Monday, July 14th</td>
+<td>Using the JMRI/PanelPro Layout Editor</td>
+<td>Dave Duchamp
+</tr>
+
+<tr><td>10:00 PM, Monday, July 14th</td>
+<td>Create a Detailed CTC Machine Model with JMRI PanelPro</td>
+<td>Dick Bronson
+</tr>
+
+<tr><td>10:00 PM, Wednesday, July 16th</td>
+<td>JMRI User Group Meeting - What's New in JMRI?</td>
+<td>Bob Jacobsen
+</tr>
+
+<tr><td>2:00 PM, Friday, July 18th</td>
+<td>Intro to Decoder Programming with JMRI DecoderPro</td>
+<td>Dave Duchamp
+</tr>
+
+<tr><td>4:00 PM, Friday, July 18th</td>
+<td>Introduction to Layout Control with JMRI PanelPro</td>
+<td>Dick Bronson
+</tr>
+</table>
+
+<p>
+In addition, there are a couple of clinics scheduled about other
+topics that involve JMRI:
+<table border="1">
+<tr><th>Time</th><th>Title</th><th>JMRI Connection</th></tr>
+<tr><td>4:00 PM, Monday, July 14th</td>
+<td>
+<a href="http://www.nacservicesinc.com/">Railway Positioning System</a> (RPS)</td>
+<td>JMRI provides the user interface for RPS</td>
+</tr>
+<tr><td>1:00 PM, Monday, July 15th</td>
+<td>
+<a href="http://www.spshastaroute.com/">The SP Shasta Route</a></td>
+<td>JMRI provides controls for 
+<a href="../apps/PanelPro/SPShasta.shtml">this layout</a>,
+including driving a prototype CTC machine</td>
+</tr>
+</table>
+<p>
+(Please let us know if we've missed any JMRI-related clinics)
+
+<p>
+More information on the NMRA Anaheim convention can be found on the  
+<a href="http://www.nmra.org/2008/">Anaheim website</a>
+(click on 
+<a href="http://www.nmra.org/2008/Clinics/Clinics.htm">Clinics</a> 
+to see 
+all clinics). 
+Many interesting clinics are listed in addition to these.
+
+<p>Hope to see you there!</p>
+    
+<!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 4.1.2
+ </title>
+    <meta content="Matthew Harris" name="Author">
+    <meta name="keywords" content="java model railroad JMRI 4.1.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 4.1.2 release
+      </h2>
+
+	<p>Date: September 18, 2015</p>
+	<p>From: Matthew Harris</p>
+	<p>Subject: Test version 4.1.2 of JMRI/DecoderPro is available for download.</p>
+
+<!--<p><b>This is a draft release note only; the download links do not yet work</b></p>-->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in the next JMRI production release around the end of 2015.</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+None at release time.
+
+<!--
+If any of those effect you, please either wait for
+<a href="jmri4.1.3.shtml">JMRI 4.1.3</a>, due out shortly after this one,
+or pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<h3>New warnings for this version:</h3>
+
+<p>Mac OS X 10.11 El Capitan requires signed drivers for USB adapters. If you've upgraded
+from an earlier version, your drivers may not work.  That will cause JMRI to throw errors
+when it doesn't find communications links.  To fix this, go to the web site for your 
+adapter manufacturer, find the drivers that are listed to work with Mac OS X 10.9 or later, 
+download, and install, then retry JMRI again.
+
+<!-- retain through 4.2 -->
+<p>Jython has been upgraded to version 2.7.0 with the following potentially breaking changes:</p>
+<ul>
+  <li>The decodeJmriFilename() function is no longer available by default. Use the  FileUtil.getExternalFilename() method instead.</li>
+  <li>The simple propertyListener object is no longer available by default. Create your own, following the examples provided in the jython folder in the JMRI distribution.</li>
+  <li>jmri_defaults.py included in the JMRI distribution is no longer executed by default, but will be executed before any other Jython scipts if included in your User Files location.</li>
+  <li>The default behavior of python.cachedir.skip is now true. If using a custom python.properties file, include "python.cachedir.skip=false" in that file.</li>
+  <li>As supplied, the 'MakeOriginalDecoderPro.py' script no longer functions as a result of this change. This is fixed in <a href="jmri4.1.3.shtml">JMRI 4.1.3</a>.</li>
+  <li>Scripts larger than 100,000 characters cannot be run. This is fixed in JMRI 4.1.3</a>.</li>
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.0.shtml">JMRI 4.0 release note</a> for warnings predating the 4.1 development series.
+
+<p>Decoder definitions that use the "ivariable" form are now deprecated.  Definitions
+    included with this release have been converted to the new form.
+    If you have decoder definitions with the older "ivariable" form, they will no longer
+    validate, but can still be used for the first couple of test releases in this series.
+    Please ask on the JMRI Users group
+    for help converting them, or just drop them and use the current definitions.
+
+<!--<p>The OpenLCB 0.6.4 library in this version has a bug in its alias
+    calculations which prevents JMRI from communicating occasionally.
+    A patch has been submitted to the OpenLCB group.
+    In the meantime, the workaround is to restart JMRI and/or the node
+    and try again; that might allocate different alias values.
+-->
+
+<h3>Download links:</h3>
+
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.1.2-r29999.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.1.2-r29999.dmg/download</a><br/>
+    sha256: ddba756abe430f0202baccc4536fb73533d87a9cd231ec1685ae95cd13b45a6a</p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.1.2-r29999.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.1.2-r29999.exe/download</a><br/>
+    sha256: 7b46c10e78bb0f7173fcf1253aa21ec10ce0dc07db95ce14ce7762040c2e7ce2</p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.1.2-r29999.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.1.2-r29999.tgz/download</a><br/>
+    sha256: 88a40e0d2dd9d17aa4b83f84a8f33f20b868b6190dbcdc782a7b4cede2c187c5</p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.2/ws/jmri/dist/release/">CI project page</a>.
+-->
+
+<!--
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+-->
+
+<h3>Changes since test release 4.1.1:</h3>
+
+    <h4>Hardware Support</h4>
+
+        <p></p>
+<!--
+        <h5>C/MRI</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+        <h5>JMRI Simple Server/JMRI Client</h5>
+            <ul>
+                <li>Fixed bugs in both the JMRI Simple Server and JMRI Client
+                    that prevented reporter information from being passed from
+                    the server to the client.</li>
+                <li>Fixed bugs in both the JMRI Simple Server and the JMRI
+                    Client that caused the server crash when a lower case
+                    letter was used in the transmitted prefix.</li>
+                <li>Make client attempt to reconnect if the connection is
+                    closed unexpectedly.</li>
+            </ul>
+
+        <h5>LocoNet</h5>
+            <ul>
+                <li>More work on the LN SV2 programming protocol.
+                    Please see the
+                    <a href="http://jmri.org/help/en/html/hardware/loconet/Addressing.shtml#SVs">documentation page</a>.
+                    It's basically ready for people to
+                    start defining board definition files.
+                    A basic definition is available
+                    under "Public Domain and DIY" decoders, then
+                    "LNSV2-using boards".</li>
+                <li>LocoNet Monitor now decodes LN SV2 programming protocol messages.</li>
+                <li>A programmer mode for the original LocoIO boards,
+                    which use the LN SV1 programming protocol,
+                    is <a href="http://jmri.org/help/en/html/hardware/loconet/Addressing.shtml#SVs">also available</a>.
+                    A basic DecoderPro decoder definition is available
+                    under "Public Domain and DIY" decoders, then
+                    "Hans De Loof LocoIO".</li>
+                <li>You can now configure a connection to a
+                    <a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">Bluetooth LocoBridge adapter</a>
+                    in the Digitrax connection preferences.</li>
+
+            </ul>
+
+		<h5>NCE</h5>
+			<ul>
+				<li>Dave Heap added display of USB &amp; Serial computer cab context pages to the NCE Cabs Monitor.</li>
+			</ul>
+
+		<h5>OpenLCB</h5>
+			<ul>
+				<li>The OpenLCB support library has been updated to version 0.6.5</li>
+			</ul>
+
+        <h5>RFID</h5>
+            <ul>
+                <li>Network connections to RFID readers are now possible.  Each connection
+                    configured into JMRI can talk to a single RFID reader, or to multiple ones
+                    through a MERG-style concentrator or equivalent.  JMRI can have
+                    as many RFID readers connected via network connections as desired.</li>
+                <li>Oscar A. Pruitt provided the implementation to support RFID readers using the EM-18 protocol</li>
+            </ul>
+<!--
+        <h5>Uhlenbrock Intellibox</h5>
+            <ul>
+            </ul>
+
+        <h5>Zimo MXULF</h5>
+            <ul>
+            </ul>
+
+    <h4>Signals</h4>
+    	<h5>Signal Mast Editor</h5>
+    		<ul>
+    			<li></li>
+    		</ul>
+-->
+    <h4>New / Updated decoder definitions</h4>
+
+        <h5>ESU</h5>
+        <p>Dave Heap made the following changes:</p>
+        <ul>
+            <li>Preliminary support for ESU LokSound Select L.</li>
+        </ul>
+
+<!--        <h5>MERG</h5>
+             <ul>
+             <li></li>
+             </ul>
+
+		<h5>MTH</h5>
+			<ul>
+             <li></li>
+			</ul>
+
+        <h5>QSI</h5>
+             <ul> -->
+<!--
+             <li>All QSI decoder definitions have been converted to the
+             modern format of their internal variables from the older
+             "ivariable" form.
+ -->
+<!--             </ul>
+
+        <h5>RR-CirKits</h5>
+             <ul>
+             <li></li>
+             </ul>
+-->
+        <h5>SoundTraxx</h5>
+             <ul>
+	             <li>
+	             	Updated the Econami Steam to use a separate SoundPane to warn about
+	             	the issue with the chuff and 'original' Econami decoders.
+	             	The value range now supports 0-255, but 'original' Econami decoders
+	             	will go silent if value is >127.
+	             	Soundtraxx will reprogram the decoder to allow the new range.
+	             </li>
+             </ul>
+<!--
+        <h5>TCS</h5>
+             <ul>
+             <li></li>
+             </ul>
+
+        <h5>Miscellaneous</h5>
+            <p></p>
+-->
+
+
+   <h4>Operations</h4>
+   <ul>
+    <li>Improved the train build when using aggressive mode and small move counts in a train's
+     route. Now there's a slight bias to pick up an extra car during the first couple of passes.</li>
+    <li>Improved the "Change Train Departure Times" tool to also adjust departure times in a
+     train's route.</li>
+   </ul>
+
+   <h4>Roster</h4>
+   <ul>
+     <li>Clarify if an entry will be deleted from the Roster or from a group in the context menu. (Randall Wood)</li>
+     <li>Allow a multiple selection of entries in the Roster or a group to be deleted. (Randall Wood)</li>
+   </ul>
+<!--
+   <h4>OBlocks</h4>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h4>Preferences</h4>
+        <p></p>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h4>logix</h4>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h4>Panel Editors</h4>
+        <ul>
+            <li></li>
+        </ul>
+-->
+    <h4>Scripting</h4>
+    <ul>
+      <li>Support for running ECMAScript and JavaScript from external files has been added in all cases except within Jynstruments.</li>
+      <li>Jython has been upgraded to version 2.7.0.</li>
+      <li>Any Java-compatible ScriptEngine can be included by including the ScriptEngine JAR file in the JMRI Classpath.</li>
+      <li>The decodeJmriFilename() function is no longer available by default. Use the  FileUtil.getExternalFilename() method instead.</li>
+      <li>The simple propertyListener object is no longer available by default. Create your own, following the examples provided in the jython folder in the JMRI distribution.</li>
+      <li>jmri_defaults.py included in the JMRI distribution is no longer executed by default, but will be executed before any other Jython scipts if included in your User Files location.</li>
+      <li>The default behavior of python.cachedir.skip is now true. If using a custom python.properties file, include "python.cachedir.skip=false" in that file.</li>
+    </ul>
+
+    <h4>Miscellaneous</h4>
+        <ul>
+            <li>A bug that caused panels not to be stored when empty AudioBuffers had been created via a script has been fixed. (Matthew Harris)</li>
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

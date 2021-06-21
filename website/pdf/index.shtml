@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+ 	JMRI: Information for Older Releases
+    </title>
+    <meta name="author" content="YOUR NAME HERE">
+    <meta name="keywords" content="JMRI decoderpro dcc nmra">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<hr class="hide">
+
+    <div class="no-sidebar" id="mBody">
+	<div id="mainContent">
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>Information for Older JMRI Releases</H1>
+
+		<div class="para">
+		<p>This page provides access to help and manual information
+		from older versions of JMRI.  You can find the most 
+		current information directly from the 
+		<a href="http://jmri.org">main JMRI web site</a> and the
+		<a href="../download/index.shtml">JMRI downloads page</a>.</p>
+		</div>
+
+		<div class="list">
+		<h1>PDF Versions of DecoderPro Manual</h1>
+		<p>This section contains links to older versions
+		of the PDF version of the <a href="http://jmri.org/manual">DecoderPro Manual</a>.</p>
+		<dl>
+		    <dt class="left">JMRI 2.4</dt>
+		    <dd class=first>
+			<p><a href="DecoderProManual_2_4.pdf">Manual (PDF)</a></p>
+		    </dd>
+
+		    <dt class="left">JMRI 2.8</dt>
+		    <dd class=first>
+			<p><a href="DecoderProMan_2_8.pdf">Manual (PDF)</a></p>
+		    </dd>
+
+		</dl>
+		</div>
+
+		<div class="list">
+		<h1>JMRI Help Files</h1>
+		<p>This section contains links to older versions
+		of the  <a href="http://jmri.org/help/en">JMRI help files</a>.</p>
+		<dl>
+		    <dt class="left">JMRI 2.12</dt>
+		    <dd class="first">
+			<p><a href="http://jmri.org/releases/releases/2.12/help/en/webtoc.shtml">Table of Contents</a></p>
+			<p><a href="http://jmri.org/releases/releases/2.12/help/en/webindex.shtml">Index</a></p>
+		    </dd>
+
+		    <dt class="left">JMRI 2.13.1</dt>
+		    <dd class="first">
+			<p><a href="http://jmri.org/releases/releases/2.13.1/help/en/webtoc.shtml">Table of Contents</a></p>
+			<p><a href="http://jmri.org/releases/releases/2.13.1/help/en/webindex.shtml">Index</a></p>
+		    </dd>
+
+		</dl>
+		</div>
+
+        <!--#include virtual="/Footer.shtml" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

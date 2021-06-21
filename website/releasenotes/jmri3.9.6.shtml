@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.9.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.9.6 decoderpro panelpro loconet lenz nce easydcc">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.9.6 release
+      </h2>
+
+	<p>Date: December 7, 2014</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.9.6 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is one of the last in a series of test versions. We expect this series
+to end in a JMRI 3.10 production release around the end of 2014.</p> 
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+The JMRI 3.9.* releases series, including this one, and JMRI 3.10 (expected in December 2014),
+will be the last JMRI releases that will work with Java 1.6.  
+To use any later JMRI test or production releases, you'll have to 
+<a href="https://java.com/en/download/">update the Java on your computer</a> to Java 1.8 or later.
+All JMRI releases 3.9.3 and are tested on Java 1.8, so you 
+can do the Java update now if you want to.
+
+<p>The 3.9.5 release had some changes to XML file processing.  They're meant to be transparent
+for existing files (roster, panels, etc), but mistakes happen. If you encounter trouble
+with existing roster or panel files, please let us know.  Most importantly, if 
+that happens, immediately make a back up copy of your files!
+
+<p>RFID support has been changed to allow for additional protocols - existing
+   CORE-ID readers <em>should</em> remain unaffected but, in certain
+   circumstances, it may be necessary to update connection configuration with 
+   the correct protocol.</p>
+
+<p>The activation.jar library is no longer included with the JMRI download.
+This shouldn't have any impact on you, but it's remotely possible that it
+might impact you if you have your own Java code that you're combining with JMRI
+and/or you're still using a Java version before Java 1.6.
+(Scripts and panel files will not be impacted.)</p>
+
+<p>Images associated with roster entries are now saved to the roster directory instead of
+the resources directory when added to the roster entry. Existing images are not moved.</p>
+
+<!-- keep this warning in place through the 3.11/3.12 development cycle -->
+<p>The XmlIO web service has been deprecated and is scheduled to be removed after JMRI 3.12 (July 2015).
+All users and developers who are relying on direct access to the XmlIO API are
+recommended to begin using the JSON API. inControl web throttle users are recommended to
+begin using webThrottle instead, or to plan on investing in devices that can support
+webThrottle, <a href="http://www.withrottle.com">WiThrottle</a> for iOS, or
+<a href="http://enginedriver.rrclubs.org">Engine Driver</a> for Android.</p>
+
+<!-- keep this warning in place through the 3.11/3.12 development cycle -->
+<p>Several methods in the InstanceManager class have been deprecated and will be removed
+after JMRI 3.12 (July 2015). This doesn't affect JMRI users, but if you have your own 
+code that uses JMRI, please 
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/src/jmri/InstanceManager.java">take a look at the code</a>
+and make any necessary changes.
+
+<h3>Known problems with this release</h3>
+
+<p>None at this time.</p>
+
+<h3>Download links:</h3>
+
+<!-- 
+<p>During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time. Make sure the
+builds status shows as OK before attempting to use one.</p>
+-->
+ <!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.6/ws/jmri/dist/release/">CI project page</a>.
+ --> 
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.6-r27781.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.6-r27781.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.6-r27781.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.6-r27781.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.6-r27781.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.9.6-r27781.tgz/download</a></p>
+
+<h3>Changes since test release 3.9.5:</h3>
+
+<h4>New / Updated decoder definitions</h4>
+    <ul>
+        <li>A problem in the QDecoder ZBasic definition was fixed.
+        <li>Decoder definitions can now be written for accessory decoders that use
+            accessory ops mode programming.  
+            See the <a href="http://jmri.org/xml/decoders/0NMRA_accessory.xml">xml/decoders/0NMRA_accessory.xml</a> file
+            for an example.  This is new support which needs more work and testing. If you
+            have one of these decoders and want to help, please contact us.
+        <li>Peter Ulvestad fixed some spelling errors in BLI Blueline decoder definitions.
+        <li>Fixed a problem with addresses in some older TCS BEMF decoders
+    </ul>
+
+<h4>Signaling</h4>
+    <ul>
+        <li>Additional icons in the <a href="http://jmri.org/resources/icons/USS/">USS series</a>
+        <li>Fixed a problem with the Approach aspect and diverging in the basic signal set
+    </ul>
+
+ 
+<h4>Scripting</h4>
+    <ul>
+    <li>The Python interpreter is now initialized on demand, when first used. If the former
+    default behavior of initializing the Python interpreter during application launch is
+    required, include -Dorg.jmri.python.preload=true in the JMRI_OPTIONS environment
+    variable.</li>
+    <li>It is now possible to influence the initialization of the Python interpreter by
+    setting Jython and Python properties in the file "python.properties" in a Configuration
+    Profile directory, or in the JMRI Settings directory.</li>
+    <li>A Jython interpreter must be in the Java CLASSPATH. JMRI is shipped with a Jython
+    interpreter, so unless the JMRI installation is modified, one should be available.</li>
+    </ul>
+
+<h4>Operations</h4>
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>New feature. You can now manually select a background color for a train's row in the
+     "Trains" window. There's also an "Auto" option that allows you to select a background color for
+     when a train is built, build fails, or is terminated. See under Tools in the Trains window
+     "Trains Table Colors".</li>
+    <li>Removed in manifest and switch list title any references to "manifest" or "switch
+     list". Now manifests and switch lists text is completely under the control of a user.</li>
+   </ul>
+
+<h4>Miscellaneous</h4>
+    <ul>
+    <li>LocoNet turnouts that use EXACT feedback now transition through INCONSISTENT as 
+        they move from THROWN to CLOSED or CLOSED to THROWN.  
+    <li>SE8c signal heads now try to track the layout status to detect changes
+        in their state caused by external events, e.g. something outside JMRI
+        changing them.  This is useful when e.g. you've got two computers controlling
+        a LocoNet.  Note that this works for RED, YELLOW, GREEN and DARK, but 
+        not for the FLASHING aspects, nor for Held and Lit states.  The recommendation
+        is still to have all your layout Logix running in a single running copy
+        of JMRI.
+    <li>NCE Network Connection method fixed to enable the different NCE menu items. (Ken C)
+    <li>RFID support has been added for Seeed Studio RDM630 readers. (Matthew Harris)
+    <li>Walter Thompson improved the LocoNet stats help.
+    <li>Improved handling of long vs short in AbstractAutomat scripting
+    </ul>
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

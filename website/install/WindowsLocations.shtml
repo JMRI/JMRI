@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>JMRI - File Locations on Windows</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<h1>JMRI File Locations on Windows</h1>
+
+When a JMRI script such as "C:\Program Files\JMRI\DecoderPro.bat" is started, 
+it creates the Java command line needed to start the JMRI program.
+In turn, the program looks for information on how the hardware is
+set up in the file:
+"C:\Documents and Settings\[Username]\JMRI\DecoderProConfig2.xml" or similar. 
+(Each application in the JMRI suite stores its information in different file
+in that directory).
+"[Username]" is the User name you have signed on to Windows during the system start up.
+
+<p>
+The first time you open a JMRI application, it has you fill in the info 
+on the preference pane and then it stores it so it's there the 
+next time you open JMRI.
+
+<p>
+When you read a decoder on the programming track and save the information,
+JMRI saves the file to the folder
+"C:\Documents and Settings\[Username]\JMRI\roster\".  
+JMRI also adds that file's ID to a list in "
+C:\Documents and Settings\[Username]\JMRI\roster.xml". 
+
+<p>
+When you create and store a panel it is also stored in
+"C:\Documents and Settings\[Username]\JMRI" by default.  
+This allows the JMRI release files at "C:\Program Files\JMRI"
+to be updated without over writing your files.
+
+<p>
+Each program in the JMRI suite stores files for itself in various locations.
+JMRI provides a facility to allow you to verify where various files are stored.
+On the 'Help' menu, choose the option 'Locations...'.
+This will then  open a window displaying the default
+locations for files, for example:
+<pre>
+Preferences directory: C:\Documents and Settings\[Username]\JMRI\ 
+Program directory: C:\Program Files\JMRI 
+</pre>
+
+For more information follow these links:
+<a href="/help/en/html/apps/DecoderPro/Files.shtml">Files</a>,
+<a href="/help/en/html/apps/DecoderPro/RosterFile.shtml">Roster</a>,
+<a href="/help/en/html/apps/DecoderPro/NetworkFiles.shtml">Network files</a>.
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

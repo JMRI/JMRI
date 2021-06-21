@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 3.1.5
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.1.5 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.1.5 release
+      </h2>
+
+	<p>Date: November 11, 2012</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.1.5 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.2 production release.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+To allow use of UTF-8 characters (special characters with accents, Japanese text, etc) in XML
+files, particularly decoder definitions, the default file encoding has been changed to UTF-8.
+This requires a change to the startup scripts distributed with JMRI.
+If you're just using the JMRI-provided startup tools, you should be all set.
+If you're using your own custom startup scripts, 
+you need to add a "-Dfile.encoding=UTF-8" option to them. 
+If you have any problems with special characters in your existing files, 
+please let us know as soon as possible.
+
+
+<h3>Older warnings</h3>
+
+This release, and all other releases in this cycle, require Java 1.6.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+  
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.5-r21632.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.5-r21632.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.5-r21632.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.5-r21632.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.5-r21632.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.1.5-r21632.tgz/download</a></p>
+
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.5/ws/jmri/dist/release/">CI project page</a>.
+ -->
+ 
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+
+
+<h3>Changes since test release 3.1.4</h3>
+
+<p>Randall Wood made the following changes:</p>
+<ul>
+<li>Added JSON server at port 2056</li>
+<li>Added JSON WebSocket services to the web server</li>
+</ul>
+
+<p>Steve Todd made the following changes:</p>
+<ul>
+<li>Changed Linux startup script to distinguish hard vs. soft float arm libraries.</li>
+<li>Added Operations data to json servers (trains, locations, engines, cars).</li>
+<li>Initial version of browser-based Operations functions (train list and manifest).</li>
+<li>Fixed issue with WiThrottle handling of wildcard multi-throttles (seen with EngineDriver only).</li>
+<li>Added signalmast list and monitoring to xmlio server, added memory and signalmast to json servers</li>
+<li>Added signalmast aspect image list to /panel servlet</li>
+</ul>
+
+<p>Enzo Fortuna provided an full Italian translation.  (There are still a few bits
+of English that will require some code changes)
+
+
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>The schedules window status has been improved to show more cases where a schedule has a
+     problem.</li>
+    <li>The edit train window will now only launch one edit route window</li>
+    <li>Train reset in the Trains window now checks to see if the departure staging track was
+     allocated to another in bound train. This prevents using reset for the departure train, and
+     then ending up with two trains on the same staging track.</li>
+    <li>You can now allow cars to return to staging by train. The train has to be a turn, it must depart
+     and return to the same staging location. The option can be found under Edit Train -&gt; Tools,
+     Train Build Options.</li>
+     <li>New feature "Show Cars in Train" can be found under Tools in the Conductor window or from the 
+     train icon menu.  Now you can see which cars are in the train at the various locations, and where
+     picked up cars are to be placed in the train.</li>
+   </ul>
+
+   To allow use of UTF-8 characters (special characters with accents, Japanese text, etc) in XML
+files, particularly decoder definitions, the default file encoding has been changed to UTF-8.
+This requires a change to the startup scripts distributed with JMRI.
+If you're using your own custom startup scripts, you need to add 
+a "-Dfile.encoding=UTF-8" option to them.
+
+<p>
+Tighe Kuykendall provided some documentation updates and fixes.
+
+<p>
+Robin Becker provided a new Tam Valley Quad Ln decoder definition.
+
+<p>Ken Cameron edited the BN-1989 signal mast set to have required specific aspects and a basic set of aspect mapping.</p>
+
+<p>James Koretsky submitted the icon files for the BN-1989 and
+   aspects.</p>
+
+<p>Mark Underwood submitted the following changes to Virtual Sound Decoder</p>
+<ul>
+  <li> Sound will now follow the locomotive if you use one of the
+  following location tracking systems:
+  <ul>
+    <li>Digitrax Transponding (verified)</li>
+    <li>RPS (not verified)</li>
+    <li>RFID (not verified)</li>
+    <li>Dcc4PC (not verified)</li>
+    <li>ECoS (not verified)</li>
+  </ul>
+  </li>
+  <li>Listener position does not have to be the origin now.</li>
+  <li>Roster "Save" button on the VSD window now saves to the file on
+  disk</li>
+  <li>New Diesel engine model (still under development)</li>
+</ul>
+
+<p>If you have one of the location reporting hardware systems listed
+above as "not verified", and would like to help verify correct
+operation, please contact Mark (user "twindadrails") on the JMRI Users
+Group.</p>
+
+<p>Kevin Dickerson made the following changes:</p>
+<ul>
+    <li>ECOS - Update some of the back end code relating to the turnout and throttle control</li>
+    <li>NCE USB - Updated the throttle so that speed step 1 (as shown in the GUI) actually sets the loco speed.</li>
+</ul>
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

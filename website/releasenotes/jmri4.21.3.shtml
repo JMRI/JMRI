@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.21.3
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.21.3 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.21.3 release
+      </h1>
+
+    <p>Date: December 18, 2020</p>
+    <p>From: (pumpkin)</p>
+    <p>Subject: Test Release 4.21.3 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please 
+<a href="https://groups.io/g/jmriusers">post a note</a>
+if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release in early 2021.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+
+If you are currently using a version older than JMRI 4.20, please follow these instructions carefully:
+
+<ol>
+<li>Is your current version older than <a href="jmri4.12.shtml">JMRI 4.12</a>? 
+    If so, then update to <a href="jmri4.12.shtml">JMRI 4.12</a> first, and ensure everything works correctly: check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else.
+    Store your configuration and panel files under a new name and use those from now on. 
+    Then continue with step 2.
+    <p>
+    If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    then it's <u>very important</u> 
+    that you update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to any later relese.
+    </li>
+    
+<li>Is your current version older than <a href="jmri4.20.shtml">JMRI 4.20</a>? 
+    Then update to <a href="jmri4.20.shtml">JMRI 4.20</a> first, and ensure that works correctly (check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else
+    Store your configuration and panel files under a new name and use those from now on.</li>
+
+<li>You can then install this release. 
+
+</ol>   
+ 
+Following this multi-step order of updating via stable major releases safeguards you against possible migration issues 
+that can arise from skipping these versions.
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.19.6.shtml">JMRI 4.19.6</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">development build installer</a>
+from
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<ul>
+   
+    <li><span class="since">Since <a href="jmri4.21.3.shtml">JMRI 4.21.3</a></span>
+        The Layout Editor code has been substantially restructured in this release.
+        If you have scripts that reference the jmri.jmrit.display.layoutEditor package
+        please check them carefully, as new classes have been created and 
+        some methods have moved.  Panel files containing Layout Editor panels
+        that are stored (written out) by this release may not be readable 
+        by earlier releases; this release should load older files just fine.
+    </li>
+</ul>
+
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.20.shtml#warnings">JMRI 4.20 release note</a> for more warnings predating the 4.21 development series,
+including pointers to various migration issues.
+These may be relevant to you if you're updating from an earlier version;
+we strongly recommend you update to <a href="jmri4.20.shtml">JMRI 4.20</a>
+installing this test release.
+
+<ul>
+    <li><span class="since">Since <a href="jmri4.21,1.shtml">JMRI 4.21.1</a></span>
+        The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+        interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+        require changes to scripts.  If you have a script that references
+        jmri.jmrix.SystemConnectionMemo, please change it to either
+        jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+        (it's easier to have you just try the two than to explain which 
+        one will work in which case)
+    </li>
+    
+    <li><span class="since">Since <a href="jmri4.21.1.shtml">JMRI 4.21.1</a></span>
+        The way preferences are loaded at startup has been slightly
+        modified.  There is no impact to JMRI applications, but Non-JMRI
+        applications that are not derived from apps.Apps or apps.AppsBase
+        but are using jmri.implementation.JmriConfigurationManager to load
+        preferences will no longer see preferences if an error occurs.  To
+        restore the old behavior, use apps.AppsConfigurationManager instead.
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.19.1.shtml">JMRI 4.19.1</a></span>
+        The <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+        calls in the various <code>Manager</code> classes
+        are no longer needed with Java 8 and have been deprecated for eventual
+        removal.  Their replacements are 
+        <code>getByUserName</code> and <code>getBySystemName</code> 
+        respectively. 
+        If you use <code>getBeanByUserName</code> and <code>getBeanBySystemName</code> 
+        in script or Java code you've written, please 
+        switch to the new names.
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+        There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+        <ul>
+            <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+            <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+            <li>Do not open the SPROG console window</li>
+            <li>Disable power conversion (CV 29) in all locos</li>
+            <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+        </ul>
+        Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+        open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+    </li>
+</ul>   
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.dmg">https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.dmg</a><br/>
+  sha256: 20c2000b00ca9b6c403bb17a187a2e9670b4c27e4a64a12ca3d592b888ca1a3a </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.exe">https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.exe</a><br/>
+   sha256: b4ed4c1cd7c61becbd10f964cba7e85579e3b7101f7b3e858f28272fb7e86a6d</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.tgz">https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.tgz</a><br/>
+   sha256: 057fa69849f5383def665dd9e7e84335ada9e39a5d8b60c5f1c39227f9ba40ae</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="https://builds.jmri.org/jenkins/job/testreleases/job/4.21.2``/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+ 
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.21.2.shtml">Test Release 4.21.2</a>:</h2>
+ 
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=milestone%3A4.21.3+is%3Amerged">list of included changes</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+
+    <h3>Hardware Support</h3>
+
+        <h4>CBUS</h4>
+            <ul>
+                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
+                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
+                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
+                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
+                <li>Refer to MERG section of this not for changes in JMRI support for MERG hardware.</li>
+                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
+            </ul>
+
+        <h4>C/MRI</h4>
+            <ul>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
+            </ul>
+
+        <h4>Internal</h4>
+            <ul>
+                <li>Sensor, Turnout, Light and Reporter Address ranges do not have to be fully numeric, and will be incremented using the final number in an address.<br>
+                For example, a range can be created from "My Yard 77 Sensor 1" which would increment to "My Yard 77 Sensor 2"</li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
+              configure these boards.</li>
+              <li>LocoNet support for "Voltage/Current Meters" has been extended to
+                  include support for multiple sources of meter information, and
+                  to include automatic discovery of LocoNet devices which support
+                  voltage and current reporting.  Each discovered device is identified
+                  by its device type and serial number.  These "friendly" identifiers
+                  appear in the "Voltage Meter" and "Current Meter" menus in the
+                  "Voltage/Current Meter" tool. Further information may be found at the
+                  <a href="/help/en/html/hardware/loconet/DigitraxMeters.shtml">
+                      Digitrax "Meters"</a> web page.</li>
+                <li>Start-up "Interrogation" of LocoNet Sensor and Turnout state
+                    has re-worked to provide better operation for LocoNet connections
+                    with large numbers of Sensors and/or Turnouts.  The JMRI
+                    interrogation mechanism now implements a minimum delay from
+                    the last Sensor Report, Turnout Report or Interrogate Query
+                    message before sending the next Interrogate Query message.</li>
+                <li>The "DS64 Configuration Tool" was updated:
+                    <ul>
+                        <li>to correctly perform the "Factory Reset" operation
+                            without encountering a "Java Exception";</li>
+                        <li>to correctly perform the "Factory Reset" operation to
+                            the correct DS64 as specified in the "Unit Address" field;</li>
+                        <li>to correctly manage the values shown on the "OpSw Values"
+                            tab and maintain value coherency between the "OpSw Values" tab
+                            and the "Basic Settings" tab.</li>
+                    </ul>
+                </li>
+                <li>Keep slot status in line with CS after setting COMMON or true slot moves</li>
+                <li>Allow selection of "Stand-alone LocoNet (with external LocoNet Data
+                    Termination!)" for Digitrax PR4.</li>
+            </ul>
+
+        <h4>Maple</h4>
+            <ul>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
+            </ul>
+
+        <h4>MERG</h4>
+            <ul>
+                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
+                <li>Refer to CBUS section of this not for changes in JMRI support for CBUS.</li>
+                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
+            </ul>
+
+        <h4>MQTT</h4>
+            <ul>
+                <li>Added support for creating ranges of Turnouts and Lights.<br>
+                Sensor, Turnout and Light Address ranges do not have to be fully numeric,
+                and will be incremented using the final number in an address.</li>
+                <li>Added support for changing the default quality of service and
+                retention policy for transmissions.  See the
+                <a href="http://jmri.org/jython/SetMqttOptions.py">jython/SetMqttOptions.py</a>
+                script for an example.</li>
+                <li>Fix a nasty threading bug in the MQTT Light support that can
+                cause a JMRI lockup on the first access after adding a Light.</li>
+
+                <li>Update the Paho MQTT library from version 0.4.0 to 1.2.5 (current)</li>
+                <li>Better handling of wildcards in topic subscriptions</li>
+            </ul>
+
+
+        <h4>RFID</h4>
+            <ul>
+                <li>Network connections: Support added for auto-reconnect.</li>
+                <li>Network connections: TCP/UDP port configuration option promoted to main configuration settings panel and no longer under Additional Connection Settings.</li>
+            </ul>
+
+
+        <h4>SPROG DCC</h4>
+            <ul>
+                <li>EStop for 28 Step mode is now sent correctly</li>
+		<li>Updated programming mode switcher for Pi-SPROG 3</li>
+		<li>Added mode switcher for SPROG 3 Plus</li>
+		<li>Added help content for new generation 5 hardware</li>
+            </ul>
+
+        <h4>Uhlenbrock Intellibox</h4>
+            <ul>
+                <li>The 73900 decoder definition was renamed 7x900, and updated to support decoder models:
+                  <ul>
+                    <li>73800</li>
+                    <li>73900</li>
+                    <li>76900 (V1)</li>
+                    <li>76900V7</li>
+                    <li>Piko 56126</li>
+                  </ul>
+                  Existing roster entries will suggest this replacement.
+                </li>
+            </ul>
+
+    <h3>CTC Tool</h3>
+        <a id="PE-CTC" name="PE-CTC"></a>
+        <ul>
+            <li>Include detail information for vetoed object deletes.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"></a>
+        <ul>
+	        <li>The Layout Editor code has been substantially restructured in this release.
+	            If you have scripts that reference the jmri.jmrit.display.layoutEditor package
+	            please check them carefully, as new classes have been created and
+	            some methods have moved.  Panel files containing Layout Editor panels
+	            that are stored (written out) by this release may not be readable
+	            by earlier releases; this release should load older files just fine.
+	        </li>
+        </ul>
+
+    <h3>Logix</h3>
+        <a id="Logix" name="Logix"></a>
+        <ul>
+          <li>The "Copy Logix" feature has been enhanced to provide more assistance
+          in copying conditionals. See the updated help files for details.</li>
+
+          <li>Fixed a couple of bugs there Logix wasn't correctly listening on
+          signal head lunar state, signal head flash lunar state, signal mast
+          lit state and signal mast held state. See PR #9059.</li>
+
+          <li></li>
+        </ul>
+
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li>Icons of tracks indicators and signals in the style of the &#268;SD Czechoslovak State Railway 
+	    - Unified Control Place - JOP style.</li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li>Circuit Builder track colors (Allocated, Not In Use, ...) are now supported on Web Server
+                  panels. See OBlocks and JSON.</li>
+                <li>OBlock and associated tables can be edited like the 'standard' tables (see
+                  <a href="#TLae">OBlocks</a>).</li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+          <li>Increased address validation for multiple hardware types.</li>
+          <li>Access to OBlocks in Web Server via JSON messages was added.</li>
+          <li>Occupancy Blocks, Portals and Paths used in Warrants can be edited in an optional table style
+            like that used in the 'standard' tables (Turnouts, Lights etc). The information is stored in the exact
+            same way, so you may change the UI as desired (see Preferences &gt; Display. Restart required)</li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <a id="Scripting" name="Scripting"></a>
+        <ul>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and
+                post on the JMRI Users Group for any assistance with updating.</li>
+            <li>The Manager method getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) has been
+            deprecated, please use getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting)</li>
+        </ul>
+
+
+   <h3>Switchboard Editor</h3>
+        <a id="SW" name="SW"></a>
+        <ul>
+          <li>When the Switchboard pane is resized by the user, the number of rows will adjust to show the largest
+            size switch tiles (default On for new boards). If you prefer to set the number of rows in the Editor,
+            uncheck "Automatically set optimum grid" in the Options menu).</li>
+          <li>Switchboards immediately update after a change in shapes, types, connection or range. The [Update
+            Switchboard] button is still available, and occasionally required.</li>
+          <li>Switches display the user name on the switches (default On for new boards, set "Show user name on
+            switches" in the Options menu.</li>
+        </ul>
+
+    <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li>Fix issue where Jynstrument would not start correctly <a href="https://groups.io/g/jmriusers/topic/78674589">(user group message)</a>.</li>
+            <li>Added a throttle frame Jynstrument that hides throttle window menubar and toolbar and switches to semitransparent mode (and vice versa) (idea from <a href="https://groups.io/g/jmriusers/topic/76582490">this user message</a>).</li>
+        </ul>
+
+   <h3>Warrants</h3>
+        <a id="Wt" name="Wt"></a>
+        <ul>
+            <li>The table of throttle commands shown when creating or editing warrants has been changed:
+            	<ul>
+            		<li>The <b>Command</b> column is now a drop down combo box. This will allow the
+            			command names to be translated into languages other than English.</li>
+            	    <li>The <b>Value</b> column is a drop down combo box for throttle commands
+            	    	other than "Speed" or "Run Warrant". Again, done to permit translation
+            	    	into other languages.</li>
+            	</ul>
+            </li>
+            <li>The algorithm for executing speed changes due to track conditions for warrants
+                has been modified and is better able to restore the scripted speeds once the
+                track speed restrictions are lifted.</li>
+            <li>The constant used to approximate track speed of trains has been changed to 
+            	yield a scale speed of 100mph at full throttle. This change has <b>no effect</b>
+            	on roster entries having Speed Profiles.</li>
+            <li>The Address column of the Warrant Table list and the Address fields of the
+            	NXWarrant or Create Warrant windows
+            	now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
+            <li>When scripted speeds are overridden due to signals or obstructions ahead, the  
+            	non-speed script commands are executed at approximately the same elapsed times as  
+            	were written in the script.</li>
+ 			<li>Track speeds of running warrants are recorded automatically and a SpeedProfile  
+            	is built that can be seen by  pressing the <b>View Profile</b> button in the
+            	edit warrant window. These profiles can be merged into the existing profiles
+            	for the Roster entry used by the loco of the warrant when the layout session 
+            	is closed. (Recall that Warrant Preferences has 3 options for this merging.)</li>
+            <li>An <b>Update Track Speeds</b> button is added to the window where warrant throttle
+            	settings and commands are edited. This button updates the <b>Speed</b> column to
+            	list the track speeds (mm/sec) for the current Speed Profile measurements of
+            	the locomotive address entered in the 'Engine Consist' box.</li>           	
+            <li>Bugs introduced during the past year to the 'Wait Sensor' command and merging of 
+            	speed profiles are fixed.</li>          	
+			<li>When OBlocks are imported from LayoutEditor blocks, the turnout settings of paths 
+            	are also added to the imported OPaths.</li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li>Implement data collection for CTC references for sensors, signal heads,
+            signal masts, turnouts and blocks.</li>
+        </ul>
+
+   <h3>Web Server</h3>
+        <ul>
+            <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
+            <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
+              Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
+            <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
+              items control layout is selected in the Editor Options menu).</li>
+            <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
+              panels.</li>
+            <li>OBlocks access was added as a JSON Servlet to allow this.</li>
+        </ul>
+
+
+   <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li>jmri.MultiMeter is split into jmri.Meter.</li>
+            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
+            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
+            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
+            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
+            <li>LocoNet supports discovery of the sources of voltage and current
+                data and makes them available in the "Voltage/Current Meter" tool.</li>
+        </ul>
+
+   <h3>AbstractProxyManager</h3>
+        <a id="Proxy" name="Proxy"></a>
+        <ul>
+            <li>AbstractProxyManager can now automatically create system specific managers.</li>
+            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
+			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
+			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
+			already exists. This works as long as the system specific manager doesn't need to have
+			system specific knowledge of the named beans.</li>
+            <li>This means that, for example, the user may create a Jython script that creates a Meter
+			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
+			manager is automatically created.</li>
+			<li>Once a specific connection needs to store specific data about meters, a connection
+			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
+            <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
+            <li></li>
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

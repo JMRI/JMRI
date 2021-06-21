@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Control Panels</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="Author" content="Bob Jacobsen">
+    <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+    <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+
+        <p>JMRI was used to create the <a href="SamplePanel.shtml">dispatcher control panel</a> for Nick Kulp's
+        Cornwall RR. <a href="Cornwall.shtml">Another page</a>
+        briefly describes how it was done.
+        This page includes additional detail on some topics.</p>
+
+        <a id="turnout"><h2>Setting turnout icons</h2></a>
+
+        <a id="open"><h2>Opening a panel at program startup</h2></a>
+        <p>The CornwallRR program was modified to automatically open the dispatcher
+        panel at startup.  This was an OK solution because that was a custom
+        program anyway.  But it's also possible to edit the Preferences so
+        that a panel is automatically opened.</p>
+
+        <p>Back to <a href="Cornwall.shtml">CornwallRR home</a></p>
+
+        <!--#include virtual="../../Footer.shtml" -->
+    </div>
+</div>
+<script src="/js/main.js"></script>
+</body>
+</html>

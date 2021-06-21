@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 3.3.7
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.3.7 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.3.7 release
+      </h2>
+
+	<p>Date: June 15, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.3.7 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.4 production release at mid-year.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>For users of JMRI on Microsoft Windows, the installer will now request
+Administrator permissions if the user running the installation is not a member
+of the administrators group. Users of Windows Vista or later may receive a
+UAC (User Account Control) pop-up message when installing.</p>
+
+<p>The TCS decoder definitions have been extensively reworked.  
+You'll notice that they list different families and the models are 
+organized differently.  This is to make the automatic identification 
+work much better.  Please let us know if you encounter any problems with this.
+
+<p>This release and all future releases will not support the NCE serial interface running at 19,200 baud.</p>
+
+<p>The decoder definition files have been extensively reworked for this release series
+to reduce their size and allow  them to be translated to other languages.
+Please keep an eye out for any inadvertent changes to the definitions 
+that might have been introduced.</p>
+
+<p>This release, and all other releases in this cycle, require Java 1.6 or later.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.7-r23644.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.7-r23644.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.7-r23644.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.7-r23644.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.7-r23644.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.7-r23644.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.7/ws/jmri/dist/release/">CI project page</a>.
+ -->
+
+<!--
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+-->
+
+<h3>Changes since test release 3.3.6:</h3>
+
+  <ul>
+
+  <li>Andrew Crosland added dynamic changing of speed step modes to the SPROG throttle
+  <li>Andrew Crosland made changed to the Bachrus Speedo following user feedback
+	<ul>
+	<li>Change window layout to show dial and graph together
+	<li>Added optional grid overlay
+	<li>Added selectors for programming track or main track operation (doesn't do very much at present)
+	<li>Added User editable title string
+	</ul>
+  <li>Dave Heap added further Patches to fix ESU V4 Indexed CVs decoder definitions, plus some code in LocoFile.java to correct existing roster entry files as they are read, in order to match corrected definitions.
+    
+    <li>Joan de Castro added additional Catalan translation.
+
+  </ul> <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

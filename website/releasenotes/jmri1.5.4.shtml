@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 1.5.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.5.4 CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.5.4 test release
+      </h2>
+
+	<p>Date: October 31, 2004</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 1.5.4 of JMRI/DecoderPro is available for download.
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+
+<p>This test release is part of a series that will eventually lead up to a production release called version 1.6; no date has been set for when that will happen.
+
+<p>There was no public 1.5.1 test version; it was used for internal testing.
+
+
+<h3>New warnings for this test version:</h3>
+
+<p>The problem with "out of memory" when requesting certain DecoderPro programmer formats while running on MacOS ("Classic") has not yet been fixed.
+
+<h3>Older warnings for the 1.5 series of test versions:</h3>
+
+<p>The method for configuring the C/MRI protocol has changed since version 1.4.  If you use the C/MRI protocol, you will have to reconfigure your preferences the first time you run this version.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.hqx?download</a>
+
+<p>Windows:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.exe?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.exe?download</a>
+
+<p>Linux:
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.tgz?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.tgz?download</a>
+
+<p>MacOS 8/9 "Classic":
+     <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.5.4.Classic.hqx?download</a>
+
+
+<h3>Changes since test version 1.5.3:</h3>
+
+<p>Fixed erroneous "failed" message when connected to a LocoNet server (Bug# 901206).
+
+<p>The "Script Entry" windows weren't independent. If you had more than one open, only the first would work properly. (Bug# 1021632)
+
+<p>Joe Ellis contributed a "Train Show Basic" programmer format.
+
+<p>Alfredo Sola updated the Spanish translation
+
+<p>BDL16 programmer has two additional BDL168 settings, better descriptions
+
+<p>Scripting wasn't working with headless (no GUI applications); fixed
+
+<p>Status of the fast clock (rate, run/stop, time) stored and loaded with panel files
+
+<p>Add Lenz LV102 configuration tool to XPressNet menu (Paul Bender)
+
+<p>Power manager tool now can come up in correct layout state if the hardware lets that be known (Paul Bender)
+
+<p>Lenz command station support update: Add Decoding/Encoding of System Status Response/Request.  Also Add encoding/decoding of Specific commands to set the Command Station Startup mode, instead of changing function status for address 0. (Paul Bender)
+
+<p>At the suggestion of Michael Greene, prefer "Direct Byte" mode to "Paged"  mode when selecting a programming mode.  This should be a little faster.
+
+<p>Fix a positioning error in the MemoryIcon; when initially loaded, the positioning of the default icon wasn't being done correctly.
+
+<p>Connections via LocoNet server were marked "failed" even when OK; fixed.
+
+<p>Doing a write all or write changes to the CV panel in a DecoderPro panel would also write the read-only CVs; this is incorrect behavior.  Now fixed so that write all or write changes (single panel or all panels) will skip those, but the individual CV write buttons still work.
+
+<p>Present a dialog if the program can't load the javax.comm library.  This makes it much clearer to the user what has gone wrong.
+
+<p>SPROG fixes: Accepts P> or R> as prompt to solve problem with run-on entries in monitor.  Note that there's a new SPROG firmware version to fix the problems with operating functions on locomotives.
+
+<p>Routes were being restored from a panel file in an "inactive" state, so that they couldn't/wouldn't trigger until you went to the Route Table and "updated" them.  This is now fixed so they work from the time they are reloaded.
+
+<p>Fix some extra-verbose error messages that would occur when the program started up without a programmer (command station) connection.
+
+<p>Digitrax DH121 decoders have been seen with version 46, so this is now included in the identification
+
+<p>SPROG now starts up in Direct Bit mode instead of Paged programming mode, as suggested by Andrew Crosland.  XPressNet systems now do this to (Paul Bender)
+
+<p>Scripting was missing convenience aliases for "DARK", "FLASHRED", "FLASHYELLOW" and "FLASHGREEN" appearance of signals.
+
+<p>Format of various DCC monitors improved by Alex Shepherd:  Time and raw information, if displayed, appears on the same line to reduce space used.  More lines in the history.  Default window size larger, and controls arranged more nicely.  Hexadecimal raw data is how has two digits and consistent capitals (e.g. "0A 11 00" instead of "a 11 0")
+
+<p>Manufacturer ids updated to complete list on NMRA web site, including the new Bachmann ID.
+
+<p>Fixed Java version compatibility bug with Mac Classic 8.6 when recreating decoder index
+
+<p>Update the LocoNet BDL16 programmer to have complete set of BDL168 op switches; switch 42 was added, and 36 given a proper label
+
+<p>The jython.jar file needed for scripting is now included in the distribution
+
+<p>A new set of PanelPro icons for US&amp;S panels was provided by Dick Bronson. It includes signal and turnout switch panels, light icons in various colors, a very nice background image for the panel, and a complete set of track-schematic icons so you can animate your schematic.  They are located in resources/icons/USSpanels
+
+<p>Change to Digitrax slot manager to improve ops-mode readback error handling
+
+<p>New PanelPro icon, courtesy David Falkenburg and Dick Bronson
+
+   <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

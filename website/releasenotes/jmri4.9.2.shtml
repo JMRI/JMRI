@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 4.9.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.9.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.9.2 release
+      </h1>
+
+    <p>Date: August 13, 2017</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.9.2 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the second in a series of test releases.
+We expect this series to end in the next JMRI production release around the end of 2017.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a href="images/jmri-4.7.4-B.png"><img src="images/jmri-4.7.4-B.png" alt="after image" align="right" height="173" width="293"></a>
+<a href="images/jmri-4.7.4-A.png"><img src="images/jmri-4.7.4-A.png" alt="before image" align="right" height="173" width="295"></a>
+<a id="migration" name="migration"></a>
+<h3>Required Migration Step<span class="since">Since <a href="jmri4.7.4.shtml">JMRI 4.7.4</a></span></h3>
+JMRI was updated in JMRI 4.7.4 to use a new serial library. Depending on your exact
+circumstances, you may need to do some migrations:
+<ul>
+<li>If you are using JMRI on Linux or Mac OS X and are updating from an older JMRI version,
+<em>you must open the JMRI preferences and make sure that the selections are 
+correct for your serial device(s).</em> Be sure to save the changes.
+<p>
+In general, previous versions used serial device names like 
+"/dev/cu.usbserial-ABC123FG". This version will generally omit the prefix, and
+use serial device names like "cu.usbserial-ABC123FG".
+(If given the choice if a name starting with "tty" and one starting with "cu", 
+pick the "cu" one). See the before and after images to the right.
+<li>
+If you are using Linux and have previously used the "JMRI_SERIAL_PORTS"
+option to make sure your serial device is visible to JMRI, you'll have 
+to change that to use the "purejavacomm.portnamepattern" option instead.
+See the 
+<a href="http://jmri.org/install/FAQLinux.shtml#usb">JMRI Linux install page</a> for more information.
+<li>
+If you have your own JMRI scripts to access a serial device, you'll have to update
+their library references:
+    <ul>
+    <li>Any 
+        <code>import gnu.io</code> statements will have to be replaced by 
+        <code>import purejavacomm</code> statements.
+    <li>More generally, any reference to 
+        <code>gnu.io</code>, e.g. a reference to a class like 
+        <code>gnu.io.SerialPort</code>, statements will have to be replaced by 
+        a reference to the corresponding 
+        <code>purejavacomm</code> class.
+    </ul>
+</ul>
+
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>Some users are reporting the program is incredibly slow to start, even
+        crashing during startup. 
+        <p>This version has a problem processing a <code>decoderIndex.xml</code> file in the profile 
+        directory that can cause this.  The work-around is to go to the profile directory
+        and remove that file.  JMRI will recreate it if it needs it.
+    </li>
+    <li>JMRI now saves the Uhlenbrock connection's "baud" rate as an Internationalized string, 
+    and, upon loading a configuration profile, requires an Internationalized "baud" 
+    rate in the .XML file.  JMRI will fail to properly configure the serial port if the
+    "baud" rate from the configuration profile does not match one of the baud rate 
+    strings for the current Internationalization "locale".  If you experience problems 
+    where JMRI start-up of a Uhlenbrock-based connection does not configure the serial 
+    port, it may be necessary to edit the connection's preferences, select the 
+    appropriate "baud" rate, and save the connection.  This updates the configuration profile 
+    .XML file to use one of the "baud" rate strings expected by the Uhlenbrock-specific 
+    code in JMRI.  It is necessary to re-start JMRI for this change to take effect.</li>
+
+</ul>
+
+If this affects you, please either 
+wait for
+<a href="jmri4.9.3.shtml">JMRI 4.9.3</a>, due out shortly after this one,
+or pick up a
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">development build installer</a>
+(which now include the fix)
+from
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<p><span class="since">Since <a href="jmri4.9.2.shtml">JMRI 4.9.2</a></span>
+    The build process for JMRI software has changed. (This won't affect you
+    if you're just downloading and running a pre-built installer.) 
+    If you're building your own version of the JMRI software, this should continue to 
+    just work from the command line or if you're using NetBeans. 
+    If you're using Eclipse, you must use the Ant-based process
+    <a href="http://jmri.org/help/en/html/doc/Technical/Eclipse.shtml">our Eclipse instructions page</a>.
+    Using Eclipse in other modes currently doesn't work.
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.8.shtml#warnings">JMRI 4.8 release note</a> for more warnings predating the 4.9 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<p><span class="since">Since <a href="jmri4.7.5.shtml">JMRI 4.7.5</a></span>
+    This version of JMRI (and all later) writes a slightly streamlined
+    version of panel file contents.  
+    Older files should still be readable by this version of JMRI, 
+    but files written by this version may not be readable by versions
+    before JMRI 4.2 depending on their contents.
+
+<p><span class="since">Since <a href="jmri4.7.5.shtml">JMRI 4.7.5</a></span>
+    The LocoNetOverTCP server has changes that may break scripts that reference it. Scripts refering to
+    the class jmri.jmrix.loconet.loconetovertcp.Server need to refer instead to
+    jmri.jmrix.loconet.loconetovertcp.LnTcpServer.
+
+<p><span class="since">Since <a href="jmri4.7.3.shtml">JMRI 4.7.3</a></span> 
+    This release will not start cleanly if installed over earlier versions of JMRI (the Windows installer ensures
+    this is not an issue). Remove the JAR files <em>jackson-annotations-2.0.6.jar</em>, <em>jackson-core-2.0.6.jar</em>,
+    and <em>jackson-databind-2.0.6.jar</em> from the <em>lib</em> directory within the previous installation directory to resolve
+    this.
+
+<p><span class="since">Since <a href="jmri4.7.1.shtml">JMRI 4.7.1</a></span> JMRI no longer supports the portable paths <code>resource:</code> or <code>file:</code> that
+        were deprecated in JMRI 2.13. When loading a panel, an error message will be displayed
+        if the panel contains a path that starts with <code>resource:</code> and the panel will
+        not load until changed using an external editor. Paths starting with <code>file:</code>
+        cannot be automatically flagged because JMRI allows file: URLs.
+        
+<p><span class="since">Since <a href="jmri4.7.1.shtml">JMRI 4.7.1</a></span>
+        The LocoNet Server (the LocoNetRMI service; not the LocoNetOverTcp service)
+        in this version of JMRI doesn't properly interoperate with 
+        <a href="jmri4.7.1.shtml">JMRI 4.7.1</a> through <a href="jmri4.7.4.shtml">JMRI 4.7.4</a>.
+        It does work fine with <a href="jmri4.6.shtml">JMRI version 4.6</a> or before.
+        If you encounter a problem with version compatibility, you'll see an error
+        message that includes "<code>local class incompatible</code>".
+        The workaround is to update both client and server JMRI machines to the same
+        JMRI version. 
+        
+<p><span class="since">Since <a href="jmri4.7.1.shtml">JMRI 4.7.1</a></span> 
+        JMRI applications will not load a panel file that fails XML validation; an error will be
+        shown that should explains the error, allowing it to be fixed using an editor. (The
+	    explanations remain a work in progress.) If you have a problem loading a
+	    panel file, please
+	    <ul>
+	        <li>Configure your JMRI startup to first run the 
+	            <a href="http://jmri.org/jython/TurnOffXmlValidation.py">jython/TurnOffXmlValidation.py</a>
+	            script which will suppress the error.
+	        <li>Write out a new version of the panel file (after saving a backup!)
+	        <li>Use that new version from now on.
+	        <li>And drop use of the jython/TurnOffXmlValidation.py script.
+	    </ul>
+
+<p><span class="since">Since <a href="jmri4.5.6.shtml">JMRI 4.5.6</a></span>  
+        As part of fixing the 
+        <a href="https://github.com/JMRI/JMRI/issues/2081">TMCC throttle issue</a>,
+        the handling of TMCC preferences was changed.  If you have a TMCC
+        connection configured, please go to the 
+        "<a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#Connection">Defaults</a>"
+        pane in the Preferences window and make sure that the 
+        TMCC connection is selected for the appropriate device types.
+
+<p><span class="since">Since <a href="jmri4.5.2.shtml">JMRI 4.5.2</a></span> This and future releases of JMRI may not function on OS X if the Java SE 6 provided by Apple is installed. OS X
+    operating system updates routinely remove this version of Java SE 6. Please raise any issues concerning this on the
+    user's group.
+    To remove Java SE 6 from OS X, follow these steps (these steps assume
+      JMRI is installed in the folder <em>/Applications/JMRI</em>, if not,
+      adjust the following paths as needed):</p>
+    <ol>
+      <li>Open <em>Terminal.app</em>.
+        <p><em>El Capitan only:</em> Reboot into Recovery Mode by restarting your
+          Mac and pressing Cmd-R until the Apple logo appears. Once in Recovery Mode,
+          select Terminal from the Utilities menu.</p>
+        </li>
+      <li>Run the command <code>/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh</code> It can take
+        up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.
+        <p><em>El Capitan only:</em> Run the command <code>bash /Volumes/Macintosh\ HD/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh /Volumes/Macintosh\ HD</code>
+          It can take up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.</p>
+        </li>
+      <li><em>El Capitan only:</em> Restart your Mac.</li>
+    </ol>
+  
+<p><span class="since">Since <a href="jmri4.5.2.shtml">JMRI 4.5.2</a></span> Support for directly executing AppleScript within JMRI has been removed
+    due to changes in macOS and Java outside our control. If you require the
+    ability to use AppleScript, you may be able to add this capability on your
+    own by visiting <a href="https://jmri.github.io/applescript">JMRI
+      AppleScript Support</a>, but please be aware that this may not work
+    on upcoming releases of macOS or Java.
+
+<p><span class="since">Since <a href="jmri4.5.1.shtml">JMRI 4.5.1</a></span> 
+    Internal turnouts and sensors need to have complete, individual system names.
+    The names "IT" and "IS" (without any suffix) are no longer permitted:
+    "IT12" is fine, but just "IT" is not. Most panel files that contain these should
+    automatically migrate them to new names when saved, but in some cases you might need to manually update them.
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+<!--
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases">Github servers</a>.
+If that doesn't work for you, the files are also still available from the
+<a href="https://sourceforge.net/projects/jmri/files/test%20files">SourceForge.net servers</a>. 
+Please <a href="mailto:jmri.@jmri.net">let us know</a> of any problems.
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.9.2/JMRI.4.9.2.Rff24066.dmg">https://github.com/JMRI/JMRI/releases/download/v4.9.2/JMRI.4.9.2.Rff24066.dmg</a><br/>
+  sha256: 61cc6eb66a6a7600376990e7181ae119fef33846824073f86483a18f5e7ad725 </p>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.9.2/JMRI.4.9.2.Rff24066.exe">https://github.com/JMRI/JMRI/releases/download/v4.9.2/JMRI.4.9.2.Rff24066.exe</a><br/>
+   sha256: 2b21fa42fd1979cc65450a9e8ed97c1274e1a6c5ac2f68955a130f33383e0f98</p>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.9.2/JMRI.4.9.2.Rff24066.tgz">https://github.com/JMRI/JMRI/releases/download/v4.9.2/JMRI.4.9.2.Rff24066.tgz</a><br/>
+   sha256: 794fd80964d710aee2a962d2597b8a7e9329e238e16399a7f8cb6e64595b1c98</p>
+</ul>
+-->
+
+Because of issues with this test release, we recommend that you 
+download and install [JMRI 4.9.3](jmri4.9.3.shtml) or later instead of this one.
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.6/">CI project page</a>.
+ -->
+
+<!-- 
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+ 
+<h2>Changes since <a href="jmri4.9.1.shtml">test release 4.9.1</a>:</h2>
+
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.2">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+    <h3>Hardware Support</h3>
+
+        <h4>C/MRI</h4>
+            <ul>
+                <li>Chuck Catania made multiple updates:
+                <ul>
+                    <li>Created NodeConfigManager - Opened from the CMRI menu by selecting the Configure Nodes menu item. 
+                        Creates a table view of configured nodes for the selected Connection Memo with node UA, node type, 
+                        input/output card and bit counts displayed. 
+                        Nodes can be added from this window. Nodes are loaded into an Arraylist for function processing. 
+                        From the Select column, nodes can be edited and deleted, bit assignments displayed window. 
+                        A printed listing of nodes can be done. Only NodeConfigManagerBundle.properties created.
+
+                    <li>The existing NodeConfig tool will be retained during the development cycle and deprecated at the appropriate later time.
+
+                    <li>SerialNode data items added: Text Description, CMRInet Options, Node Options. 
+                        Node option "Enable Polling at Startup" which is enabled as default, 
+                        provides for selective node polling control when launching PanelPro.
+
+                    <li>Node configuration window format updated with additional data items.
+
+                    <li>Multiple CMRI connection memo added to new and updated classes.
+
+                    <li>ConnectionConfigXml updated to load and store additional node fields. 
+                        Backward compatibility is maintained with existing configuration XML files. 
+                        Checks for new configuration data fields is implemented. 
+                        Loading an existing connection config profile and not doing a Save from the preferences
+                        will not update the connection profile with the new data fields.
+
+                    <li>Added support for the MRCS cpNode.
+                        A cpNode is defined as node type CPNODE = 3, NDP "C", 8 bit cards, two input cards, two output cards.
+                        Input/Output Expander (IOX) card assignment is supported. 
+                        cpNode initialize(I) message conforms to NMRA LCS 9.10.1. 
+                        Node type 4 is reserved for a future Open Source Node (OSN) offering.
+
+                    <li>Bit Assignment listing function has Comment field added. Assignment listing can be printed.        
+                </ul>    
+            </ul>
+
+        <h4>CTI</h4>
+            <ul>
+                <li>Egbert Broerse and Ken Cameron fixed a problem with startup 
+                    for the Acela system.</li>
+            </ul>
+
+        <h4>DCC++</h4>
+            <ul>
+                <li>Kevin Dickerson made several improvements to improve the robustness the DCC-4-PC support:
+                    <ul>
+                    <li>Reader board discovery is now in its own class so that the message/reply sequence no longer interferes with the polling messages.
+
+                    <li>Solicited replies now contain the original message. 
+                    As the reply contains no information as to its source 
+                    this removes the requirement for the message sender to try and keep track of
+                    what messages it has sent and had or missed replies for. 
+                    This information can now be retrieved from the reply and, 
+                    removes any issues of sender getting out of sync with board 
+                    poll status requests and the replies.</li>
+                    </ul></li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li>Work by Paul Bender and Bob Milhaupt on improving how "throttle stealing"
+                    is handled.</li>
+            </ul>
+
+        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+            <ul>
+                <li>Balazs Racz updated the OpenLCB support:
+                    Ensures that set of sensor state generates an outgoing bus message, 
+                    even if the new state is the same as the previous. 
+                    This is desired by advanced users in order to be able to 
+                    write scripts that initialize the entire system to a known state.</li>
+            </ul>
+
+
+    <h3>New / Updated decoder definitions</h3>
+
+        <h4>BLI</h4>
+            <ul>
+                <li>Michael Mosher updated BLI decoders</li>
+            </ul>
+
+        <h4>Rautenhaus</h4>
+            <ul>
+                <li>Ronald Kuhn added support for the RMX992 and RMX993</li>
+            </ul>
+
+        <h4>TCS</h4>
+            <ul>
+                <li>Micheal Mosher updated the TCS WOW 4 decoder</li>
+            </ul>
+
+   <h3>Dispatcher</h3>
+        <ul>
+             <li>Craig48 fixed a bug in in the startup of Dispatcher: If a user name is '
+                defined for the transit or starting block or destination block, 
+                the validation process fails. The validation code expects either the 
+                system name or the user name, but not both. 
+                The createActiveTrain method is using a concatenated string of both, causing the validation failure.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <ul>
+	        <li>Fixed a problem with validation of layout panel files
+	            containing certain kinds of slip definitions.</li>
+	        <li>George Warner make a number of improvements:
+             <ul>
+                <li>TrackSegments now support Bezier curves… (flex-track!)</li>
+                <li>Added setDefaultButton(okButton) in a lot (but not 100%) of dialogs.</li>
+                <li>Disable popup menu items that just show info (no actions).</li>
+                <li>Alt-(Option-) scroll wheel zooms in/out (centered on cursor!).</li>
+                <li>Added “Zoom to Fit”.</li>
+                <li>More normalize[System|User]Names.</li>
+                <li>TrackSegment width bug fixed.</li>
+                <li>Added secondary grid size.</li>
+                <li>Added antialiasing rendering hint for macOS and Windows.</li>
+                <li>Convert more (all?) JTextField's to JmriBeanComboBox's.</li>
+                <li>Removing orthogonal requirements for adding signal heads!</li>
+                <li>Added per-PositionableLabel font support.</li>
+                <li>Rotated PositionableLabel's are drawn correctly (and looks NICE!)!</li>
+                <li>Alt key inverts Add and Drag "align to grid" behavior</li>
+                <li>Added Rotation Menu info and set items.</li>
+                <li>Add Signal Head Info to popup menus</li>
+                <li>Added (de-)select All checkboxes to Layout Editor Tools</li>
+                <li>Selection rect can now go up/left.</li>
+                <li>Turnout comboboxes edit field now highlight (background color: exists=green, valid=yellow, invalid=red)</li>
+                <li>Turnout comboboxes drop down lists now highlight (green = available, red = assigned to this layout)</li>
+            </ul></li>
+       </ul>
+
+    <h3>Logix</h3>
+        <ul>
+          <li>Dave Sand added a tree-based editor for Logix Conditionals:
+            The new editor uses a tree to represent the conditional structure of a Logix. 
+            The pane is split, with the tree on the left side and an edit pane on the right side. 
+            The contents of the edit pane change depending on the current tree node selection.
+            <p>
+            The traditional list-based conditional editor is the default editor in the new structure.
+          </li>
+        </ul>
+
+    <h3>Turnouts, Lights and other elements</h3>
+        <ul>
+            <li>Egbert Broerse added tooltips and validation to the 
+            field where you supply the hardware address when creating new
+            Sensors, Turnouts and Lights.  This should make it much
+            easier for users to figure out what to put there.</li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <ul>
+            <li>Provides a new getTextArea() method to allow scripts access to the display area in protocol-monitor windows. 
+            This follows from a JMRIusers discussion.</li>
+        </ul>
+
+    <h3>Signals</h3>
+        <ul>
+            <li>The Siglet class, used by Simple Signal Logic and some user scripts for
+            signal logic, was reimplemented to avoid a (small) change of missing
+            a signal operation.</li>
+        </ul>
+    	<h4>Simple Signal Logic</h4>
+            <ul>
+                <li>Simple Signal Logic now has a "restricting" option.</li>
+            </ul>
+
+	    <h4>USS CTC Logic</h4>
+            <ul>
+                <li>Several updates to make the USS CTC support appear more realistic.
+                </li>
+            </ul>
+   <h3>Warrants</h3>
+        <ul>
+            <li>Help files have been edited to document the following feature additions:</li>
+	    <li>When created, warrant throttle command scripts record the track speeds of the recording power address,
+	        if a speed profile exists for the power. On playback, when possible, they use 
+	        this track speed and look up the corresponding throttle settings rather than the directly recorded 
+		throttle setting. The intention is to have the warrant run at the same speeds regardless of changes 
+		in DCC address or size of the train load.</li>
+	    <li>Warrants compute the track speeds for the DCC address on playback of the warrant when OPath lengths
+	        are known and throttle settings are known. These are saved in Session Speed Profiles.</li>
+	    <li>Session Speed Profiles are kept for all DCC addresses running in warrants during a layout session.</li>
+	    <li>Session Speed Profiles can be merged into Roster Speed Profiles when layout sessions end.</li>
+	    <li>Warrant Preferences provides three choices for how to handle speed profile merging at shutdown.</li>
+	    <li>Speed profiles are viewable when creating or editing warrants or nxwarrants.</li>
+	    <li>Speed profiles are checked to be monotonic increasing, and when not, an editing facility is provided.</li>
+	    <li>The NXWarrant GUi is split into two successive windows: selecting the route and setting the run parameters</li>
+        </ul>
+
+   <h3>Internationalization</h3>
+        <ul>
+            <li>Ronald Kuhn improved the German translation</li>
+            <li>Sonnys Hansen improved the Danish translation</li>
+        </ul>
+        
+    <h3>Miscellaneous</h3>
+        <ul>
+            <li>Fixed a problem, new in JMRI 4.9.1, that prevented creating new profiles.</li>
+            <li>Many improvements to the internal tests and technical documentation.</li>
+            <li>A number of internal classes have had their singletons (i.e. 'instance()' 
+                methods) put onto the instanceManager.  This might have a tiny chance of 
+                impacting certain esoteric user scripts.
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

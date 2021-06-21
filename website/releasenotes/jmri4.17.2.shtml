@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.17.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.17.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.17.2 release
+      </h1>
+
+    <p>Date: July 26, 2019</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.17.2 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please 
+<a href="https://groups.io/g/jmriusers">post a note</a>
+if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release late in 2019.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+<p>If you are currently using JMRI 4.11.9 or earlier, we strongly recommend that you update to 
+        <a href="jmri4.12.shtml">JMRI 4.12</a> and make sure that's running OK before
+        updating to this test release.  Once you have JMRI 4.12 running OK, 
+        store your configuration and panel files and use those from then on.
+        There have been a number of 
+        changes in serial port support, panel file format and configuration options since those earlier releases, 
+        and moving to the stable <a href="jmri4.12.shtml">JMRI 4.12</a> release
+        is a good way to work through any possible problems.
+        </p>
+<p>If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    you <u>must</u> 
+    update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to this release.
+
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>LocoNet connections - New and updated LocoNet connections with this release might 
+        end up with the wrong baud rate, which will cause them to not function.  
+        This is resolved in  
+        <a href="jmri4.17.3.shtml">JMRI 4.17.3</a></li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.11.3.shtml">JMRI 4.11.3</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<ul>
+   
+   <li>None<li>
+</ul>
+
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.16.shtml#warnings">JMRI 4.16 release note</a> for more warnings predating the 4.17 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<ul>
+<li><span class="since">Since <a href="jmri4.15.6.shtml">JMRI 4.15.6</a></span>
+        Remembering the location and size of layout panels created and maintained
+        using Layout Editor, Panel Editor, Control Panel Editor, and Switchboard
+        Editor is no longer dependent on saving the panel.  The location and size
+        values are retained using the same processes used by other JMRI windows.  This
+        makes the window management behavior consistent.  To continue using the
+        old behavior, go to <strong>Preferences >> Display</strong> and enable
+        <strong>Use old location and size logic for editor panels</strong>.
+
+<li><span class="since">Since <a href="jmri4.15.6.shtml">JMRI 4.15.6</a></span>
+        Starting in <a href="jmri4.15.6.shtml">JMRI 4.15.6</a>, Memories
+        must have valid system names of the form "IM" folllowed by something.
+        "IM123" and "IMEAST" are both valid. 
+        The system name "IM", all by itself, has never been valid, but JMRI 
+        will now be enforcing that:
+        <ul>
+            <li>You won't be able to create a memory with that name via
+                the Memory table or scripts
+            <li>If you have that name in a panel file, an error will be 
+                logged and the panel file won't load. You'll have to 
+                remove it from he file or rename it in the file
+                before loading it.
+        </ul>
+        JMRI needs to start enforcing this in preparation for some
+        future code that will appear later this year.
+</li>
+
+<li><span class="since">Since <a href="jmri4.15.5.shtml">JMRI 4.15.5</a></span>
+        The handling of Turnout system names has been updated
+        to be (more, hopefully completely) consistent with the
+        <a href="/help/en/html/doc/Technical/Names.shtml">planned approach</a>.
+        Specifically, case now (generally) matters in system names:
+        <ul>
+            <li>You can now have an internal turnout named "ITsome lower case name".
+            <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
+                "ITSome LoWeR cAse Name" and get the same one.
+        </ul>
+        This should not require any migration for stored configurations or 
+        panel files, as they have been automatically been being kept consistent 
+        since JMRI 4.8.  But you might have case errors in i.e. scripts which
+        will fixing inconsistent references in your scripts.
+        Of course, bugs are always possible. If you find a place where 
+        names seem to be handled inconsistently, please let us know!
+
+<li><span class="since">Since <a href="jmri4.15.4.shtml">JMRI 4.15.4</a></span>
+        The calculation of Turnout Addresses for the
+        <a href="/help/en/html/hardware/dccpp/Turnouts.shtml" target="_blank">
+        Direct DCC Accessory Command ("a" command)</a> mode
+        has been fixed (commands are now sent to the correct accessory address rather
+        than 4 less than the nominated hardware address). For pre-existing panels,
+        changes will need to be made to either the actual decoder address or the panel.
+        If help is required, ask on the
+        <a href="https://groups.io/g/jmriusers/" target="_blank">
+        jmriusers</a> group.
+
+<li><span class="since">Since <a href="jmri4.15.3.shtml">JMRI 4.15.3</a></span>
+        The prefix that identifies a layout connection should be a single letter, like "N" or "L",
+        or a letter and some digits, like "K2" or "D3". Some older systems used to have
+        longer "legacy system prefixes" like "DX", "DCCPP", "DP", "MR", "MC", "PI", and "TM".
+        Those <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
+        will now cause JMRI to issues a warning at startup. In this release, JMRI will
+        still work with those prefixes, but they will need to be migrated to the proper form soon;
+        JMRI 4.17.1 and later will <u>require</u> that this have been fixed.
+        Therefore, this warning can't be suppressed
+        without migrating the prefix in the connection configuration (and any associated
+        panel files and scripts).
+        If you're getting this warning and therefore need to do that migration,
+        <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">migration page</a>.</li>
+
+<li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+    There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+    <ul>
+        <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+        <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+        <li>Do not open the SPROG console window</li>
+        <li>Disable power conversion (CV 29) in all locos</li>
+        <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+    </ul>
+    Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+    open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+
+</ul>   
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/">Github servers</a>.
+People are welcome to distribute the download files further via other websites, etc.
+If you want to check that you've received original, unmodified versions, please
+check the files against the checksums shown below.
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.17.2/JMRI.4.17.2+Re9dde08.dmg">https://github.com/JMRI/JMRI/releases/download/v4.17.2/JMRI.4.17.2+Re9dde08.dmg</a><br/>
+  sha256: 7b42a549476c8af8b109e568eb77eecbddc730433bfade208559d7f88271b8d2 </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.17.2/JMRI.4.17.2+Re9dde08.exe">https://github.com/JMRI/JMRI/releases/download/v4.17.2/JMRI.4.17.2+Re9dde08.exe</a><br/>
+   sha256: d8215c1b1051c591e43306d7f250170ceb0e3e3c428677cf567c8b05a9ad30a5</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.17.2/JMRI.4.17.2+Re9dde08.tgz">https://github.com/JMRI/JMRI/releases/download/v4.17.2/JMRI.4.17.2+Re9dde08.tgz</a><br/>
+   sha256: 8248b66466b063e5b9b0e0c3e989aae57f265712554516e501f107137ec1ce9e</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/TestReleases/job/4.15.8/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+ 
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.17.1.shtml">Test Release 4.17.1</a>:</h2>
+ 
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=milestone%3A4.17.2+is%3Amerged">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+
+    <h3>Hardware Support</h3>
+        <h4>MERG CBUS</h4>
+            <ul>
+                <li>Fixed issue with Throttle Direction Changes ( while moving ) not being sent to Command Station</li>
+            </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li>JMRI no longer modifies "system names" as provided by the user.
+                There may be cases where a script or panel file is creating an
+                object with a system name that is slightly different than a system
+                name used elsewhere, and JMRI used to change these to be the same.
+                Users may have to modify scripts and panel files to ensure system
+                names match in all places.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"></a>
+        <ul>
+            <li>Layout Editor combo boxes have been changed to support the migration
+                from JmriBeanComboBox to NamedBeanComboBox.  The affects the Toolbar,
+                the Edit context menu, Set Signal Heads, Set Signal Masts, and Set Sensors.
+                <ul>
+                    <li>Typing a name into the combo box field no longer works.  The
+                    items have to be selected from the combo box drop down.</li>
+                    <li>Typing a letter or two will position the selection.</li>
+                    <li>Positioning is based on both the user name and the system name.
+                    For example, typing <strong>i</strong> will select items with user names starting
+                    with the letter i/I as well as internal items using the system name which starts with i/I.</li>
+                    <li>With this release, it is not possible to create new Block entries
+                    using the Edit context item.</li>
+                    <li>If a block is selected that does not have a user name, a
+                    dialog will prompt for a user name.</li>
+                </ul>
+            </li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>We "deprecate" certain methods and members in the Java code when they're
+                no longer recommended for use.  After some time, we then remove them.
+                This version of JMRI removes all deprecated methods and members up
+                through JMRI 4.10, which was released in December 2017.
+                If you still have code or scripts that reference these, please
+                look at
+                <a href="https://github.com/JMRI/JMRI/tree/v4.16">the code in JMRI 4.16</a>
+                for suggestions on what to substitute.</li>
+        </ul>
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

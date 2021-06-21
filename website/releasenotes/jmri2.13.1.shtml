@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.13.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.13.1 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.13.1 release
+      </h2>
+
+	<p>Date: Sept 20, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.13.1 of JMRI/DecoderPro is available for download.</p>
+ 
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the first in a series of test versions. We expect this series
+to end in a JMRI 2.14 or 3.0 production release.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<b>DecoderPro 3</b>
+<p>"DecoderPro 3" is a new presentation of locomotives/decoders in the roster,
+making it easier to organise and access decoder programming features.  It has a
+new menu structure, locomotives are listed in a table which can be sorted on any
+column. "DecoderPro 3" has two programmer types; Basic and Comprehensive, plus
+setup of features such as throttle function keys and roster media (pictures of
+locomotives).   We have tried with the design of "DecoderPro 3" to focus on the
+needs of those who use JMRI primarily for adjusting CV settings in their
+locomotives.</p>
+
+<p>This release of "DecoderPro 3" is a test.  There are a few more features we'd
+like to add, but before doing that we need feedback from users; does it work for
+you, what do you want to see changed, etc..  We'll look at all the information
+which comes back and incorporate it in future developments.</p>
+
+<p>We have tested "DecoderPro 3" and are not expecting major file-damaging faults.
+But with any test-release of software there is always a small risk that
+something has been overlooked.  So, please check that you have a backup of your
+Roster files just incase something unexpected happens.  If you install with the
+Windows installer, a backup copy of your old files (including the roster) is
+created by default.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+The way in which UserNames are edited has now changed in the tables, 
+renames are now performed via a mouse pop-up menu and can not be directly edited.
+
+<p>
+The method we use for building release files has been extensively changed. Please let us know of any problems
+with installation or unpacking.
+
+<p>
+JMRI 2.12 is the last release which is completely supported by Java 1.5.
+Starting with this release, there will be minor interface features, such as 
+drag-and-drop of some items, that require your computer to have Java 1.6 installed.
+Computers with only Java 1.5 will still be able to use JMRI, including PanelPro and DecoderPro,
+through the end of this 2.13.* release cycle.  Releases in the next cycle
+will require Java 1.6.
+
+<h3>Older warnings</h3>
+
+(None yet)
+
+<h3>Known problems with this release</h3>
+
+After the release, a problem opening certain QSI decoder definitions was found.  Most
+decoder definitions do work, but QSI V6 (and perhaps a few other QSI decoders) do not.
+This will be fixed in the next test release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1-r18570.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1-r18570.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1-r18570.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1-r18570.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1-r18570.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1-r18570.tgz/download</a></p>
+    
+<h3>Changes since production release 2.12</h3>
+
+<p>Dan Boudreau made the following enhancements to operations.</p>
+<ul>
+	<li>You can now show the timetable name on your manifests and switch lists.  See under Settings-&gt;Tools
+	Print Options, Manifest Comments, select Show Timetable.</li>
+	<li>You can now show the loco consist name and car kernel name on manifests and switch lists.
+	See Print Options under Settings-&gt;Tools</li>
+	<li>You can now select which staging track a train is to terminate on.
+	See Options under Settings-&gt;Tools</li>
+	<li>You can now optionally select 12 hour format for your manifests and switch lists.  See under Settings-&gt;Tools
+	Print Options, Manifest Comments "12hr Format" check box.</li>
+	<li>Fixed a minor issue with cars in a kernel and their destinations when performing a train reset.</li>
+	<li>Improved build report when a train is departing staging.</li>
+	<li>The program can now generate a csv switch list file.  This allows you to create custom switch lists
+	for your railroad.  See Settings-&gt;Tools-&gt;Options.</li>
+	<li>You can now print the loco's or car's owner name on manifests and switch lists.</li>
+	<li>You can now print the car's return when empty (RWE) on manifests and switch lists.</li>
+	<li>Added RWE location and track to csv manifests and switch lists</li>
+	<li>You can now optionally print the route comment on manifests.  See Print Options under Settings-&gt;Tools</li>
+	<li>The loco consist name is now printed on the roster when sort by consist is selected in the locomotives window</li>
+	<li>Custom loads can now be defined as a "load" or an "Empty".  This is useful when using the loads and empties feature
+	when creating manifests.</li> 
+	<li>Manifest and switch list font size can now be increased to 14 points.</li>
+	<li>Fixed a problem where a car would be set out to a track that wasn't to be serviced as determined by the train's direction.
+	This only occurred when a train visited a location more than once.  Thank you Steve Davis for bring this bug to our attention.</li>
+	<li>Fixed a problem when generating a car load from staging and the spur would not service the default load empty.  Thank
+	you Frank Wyatt for bringing this bug to our attention.</li> 	
+	<li>You can now use a text editor to preview and edit your train manifest and switch lists. Requires Java 1.6 and jar file from
+	my <a href="http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar">site</a>. See Print Options under Settings-&gt;Tools.</li>
+	<li>Improved how the program selects the departure track from staging, now if the train requires a caboose or car with FRED,
+	all tracks in staging are checked.</li>
+	
+</ul>
+
+<P>Dan also improved how panel markers (locos) save their text info.  Now when you save your panel, the marker's text size, font, etc. is also saved.</P>
+
+<p>Kevin Dickerson made the following enhancements.</p>
+<ul>
+    <li>Developed DecoderPro 3 with Nigel Cliffe into a format that is ready for Beta testing, additional
+    enhancements to the Roster Groups in DP3 have been made by Randall Wood</li>
+	<li>Ensured that the order that items are saved and loaded in the panel XML files is consistent</li>
+    <li>Updated a number of files relating to the validation of the XML files (Bug 3370027)</li>
+    <li>Allowed layout block routing to be enable from the Signal Mast Logic 
+    table when performing a "discover all pairs"</li>
+    <li>Introduced a manager to help control the way in which changes to user names are handled</li>
+    <li>Changed the way in which UserNames are edited in the tables, so that 
+    renames are performed via a mouse pop-up menu and not directly editable</li>
+    <li>Did some work on the LocoNet Over TCP so that it appears correctly in the connection preferences</li>
+    <li>Caught an issue when clearing a connection from the preferences that could
+    prevent a new connection from being created</li>
+    <li>Fixed an issue with the sensor icon that prevented icon from being changed once placed on the panel (Bug 3361033)</li>
+    <li>Add the option in the Layout Editor to change sensor and Signal Head 
+    icons for an item already on the panel</li>
+    <li>Fixed an issue with the Sensor Debounce on LocoNet connected Sensors (Bug 3368304)</li>
+    <li>Fixed an issue in the layout editor, where undashed track segments would become dashed</li>
+    <li>Updated the way in which Signal Heads are created, by using drop down boxes to select existing turnouts
+    or a separate method to create turnouts on the fly using a drop down box to select the connection and a text
+    field to enter in the hardware address.</li>
+</ul>
+
+<p>Matthew Harris made the following enhancements.</p>
+<ul>
+    <li>Fixed the RXTX version warning message seen in the System Log</li>
+    <li>Updated the NetBeans project files and usage instructions after the change of source code repository to Subversion</li>
+    <li>Updated the documentation for logging procedures</li>
+    <li>Deprecated doppler factor for AudioSources</li>
+    <li>Added support to retrieve length and frequency information from AudioBuffer objects</li>
+    <li>Fixed a problem that caused the configuration help not to be displayed when no valid connections were detected</li>
+    <li>Fixed a problem that stopped JMRI being compiled using JDK 1.7</li>
+    <li>Updated LaunchJMRI on Windows to support the new automated restart mechanism</li>
+    <li>Modified the ant build script to support the new automated restart mechanism in development environments</li>
+    <li>Added a new FontCombo class that can provide a preview of the font being selected</li>
+    <li>Updated the System Console to allow the displayed font to be customized and added a right-click menu</li>
+</ul>
+
+<p>David Zuhn made the following changes:</p>
+<ul>
+  <li>Moved the source code from CVS to Subversion.</li>
+  <li>Simplified the process for creating installer release images.</li>
+</ul>
+<p>Dick Bronson Updated the CSX-1998 signal mast image set.</p>
+
+<p>Mark Underwood fixed a problem with looping sounds.</p>
+
+<p>Darryl Van Nort added an MRC 1803 definition</p>
+
+<p>Jack Shall added Soundtraxx definitions Added definitions for: EMD 567D (Turbo), EMD 567 (Dual), 
+GE FDL-16 (Modern), ALCO 251C (Supercharged), TSU-750 UP Gas Turbine, TSU-GN1000 EMD 710 G3C-T2, 
+TSU-KT1000 for KATO GP35 and TSU-4664N Challenger.
+
+<p>Jeff Schmalz provided decoder definitions for Massoth sound and motor
+decoders and the Uhlenbrock 77500 large scale decoder, also sold as the
+PIKO 3612x series large scale decoders. He also provided new decoder
+definitons for the CHAMPEX-LINDEN CL6300 series Sound Modules, the Massoth
+eMOTION S sound-only decoder (including a SUSI version), the LGB 6500x
+series sound modules, the LGB model 22592 locomotive, the PIKO 3612x series
+large scale decoders built by Massoth, and the Uhlenbrock 32100 and 32400
+IntelliSound SUSI sound modules, also sold as the PIKO 3619x Series sound
+modules.
+
+<p>Nigel Cliffe provided a script which sends Cab-Signalling messages on a 
+per-loco basis to Digitrax DT402 throttles. 
+Includes basic user interface. 
+Only works when throttle is plugged into LocoNet (ie. does not send messages to Duplex 
+throttles connected by radio).
+
+<p>Mark Waters did a major update to the Zimo decoder definitions
+
+<p>Additional speeds were added to the MERG CBUS CAN-RS support.  You may
+have to modify your CAN-RS to use these, consult their Yahoo email group for details.
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

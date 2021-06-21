@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.7.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.7.1 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.7.1 release
+      </h2>
+
+	<p>Date: July 3, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.7.1 of JMRI/DecoderPro is available for download.
+
+<br><b>This is a draft release note only; the download links do not yet work</b>
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the first in a series of test versions. We expect this series
+to end in a JMRI 2.8 production release in December 2009. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Several new and updated decoder definitions
+<li>Significant improvements in Panel Editor icon support
+<li>Turnout invert capability for XPressNet
+<li>Fix to invert for LocoNet sensors
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.6" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(None)
+
+<h3>Warnings from older versions:</h3>
+
+(None)
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.7.1.dmg">http://downloads.sourceforge.net/jmri/JMRI.2.7.1.dmg</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.7.1.exe">http://downloads.sourceforge.net/jmri/JMRI.2.7.1.exe</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.7.1.tgz">http://downloads.sourceforge.net/jmri/JMRI.2.7.1.tgz</a>
+
+
+
+<h3>Changes since production version 2.6</h3>
+
+<p>
+Ken Cameron updated the decoder definition for the Team Digital SMC4.
+
+<p>
+Dan Boudreau fixed an operations bug: Cars with scheduled loads didn't always pick up the next scheduled load.
+
+<p>
+Fixed a problem when using the invert option on LocoNet sensors.
+
+<p>
+Pete Cressman added the capability to edit (change) the icons used by a particular item on a Panel Editor panel
+from the popup menu.
+
+<p>
+Dan Boudreau added a curved track icon, and fixed the straight track icon.
+
+<p>
+Paul Bender added "invert" capability to XPressNet turnouts.
+
+<p>
+Even more help page updates.
+
+<p>
+Panel Editor icons can be edited directly from the Panel by selecting the "edit" item from the popup menu of the icon.
+
+<p>
+Dan Boudreau made sure that changes take effect immediately when you change the level of a Panel Editor icon.
+
+<p>
+Mark Fournier updated the Comprehensive programmer to handle more consisting options.
+
+<p>
+Peter Ulvestad updated the MRC Sound Brilliance 1806 decoder definition.
+
+<p>
+Marc Founier added and updated MRC Athearn decoder definitions.
+
+<p>
+Peter Ulvestad updated the Bachmann EZDCC decoder definition to put a max value on CV2.
+
+<p>
+Mark Waters updated several Zimo decoder definitions to include the right number of outputs and their controlling CVs.
+
+<p>
+Manually add Rautenhaus Digital Vertrieb to the list of decoder manufacturers, which is unfortunately no longer being maintained online by the NMRA.
+
+<p>
+Pete Cressman fixed some problems when defining and deleting icons for a Panel Editor MultiSensor icon.
+
+<p>
+Dan Boudreau made some internal changes to the operations support
+
+<p>
+And some more help page updates...
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

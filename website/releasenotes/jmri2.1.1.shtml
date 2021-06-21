@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.1.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.1.1 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.1.1 release
+      </h2>
+
+	<p>Date: January 14, 2008</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.1.1 of JMRI/DecoderPro is available for download.
+
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<!-- <p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version. -->
+
+<p>This is the next in a series of test versions.
+It contains 
+many new features, including:
+<ul>
+<li>Support for the ProTrak Grapevine system,
+<li>improved fast clock support,
+<li>additions to the layout editor,
+<!-- <li>additional sounds and graphics for creating USS CTC panels, -->
+<li>lots of additions to the help screens
+<li>and several decoder definitions were added and improved.
+</ul>
+along with lots of other changes.  See the complete list below.
+
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.1 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.2" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+JMRI is moving toward requiring Java 1.4 or later.  Certain new features may not work if you are using an earlier
+version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<h3>Warnings from older versions:</h3>
+
+<p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
+
+<p>Indexed CVs will not be included in any printouts for this release.
+ 
+<p>QSI CV 56.129 Engine ID Access is not supported in this release.
+  
+<p>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), otherwise the writes will fail.
+ 
+<p>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
+ 
+<p>The beginnings of support for the QSI Programmer device are present, but it's not complete yet
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.1.1.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.1.dmg?download</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.1.1.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.1.exe?download</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.1.1.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.1.tgz?download</a>
+
+<h3>Changes since production version 2.0:</h3>
+
+<p>
+Initial support for Protrak Grapevine systems, with thanks to Stephen Brooks and Jim Moir.
+
+<p>
+Dan Boudreau updated the NCE consist support to fix a bug that would cause multiple locomotives to be improperly consisted when the "replace" button was used
+
+<p>
+The "invert" option is now available for NCE sensors.
+
+<p>
+David Duchamp and Ken Cameron fixed important bugs in the fast clock support and made some additional improvements.
+
+<p>
+David Duchamp made it possible to build layout editor panel backgrounds from multiple images, so for example you can build a USS CTC panel of any width from the provided slices
+
+<p>
+(Most) windows can be closed via keyboard shortcut.
+
+<p>
+Dan Boudreau added a new feature to consisting to allow the user to get a locomotive from the roster.  He also added a verify checkbox that confirms that the loco address isn't a lead or rear loco. 
+
+<p>
+Dan Boudreau improved how communications is handled, which should greatly reduce the number of timeouts on slow computers
+
+<p>
+David Duchamp updated the Layout Editor to allow the user to resize turnouts.
+
+<p>
+Jeff Schmalz provided a decoder definition for the Zimo M69 and M690 decoders.
+
+<p>
+Bug fixed so that you can now enter multiple Light definitions with blank user names
+
+<p>
+Added a feature to let you insert lines in a communication monitor log, e.g. so you can make notes on what you're doing next.
+
+<p>
+(Internal item) Fixed JUnit tests so you can now reload the classes without quitting the GUI.
+
+<p>
+Several updates to the TrakTronix SECSI code, looking for beta testers!
+
+<hr class="hide">
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

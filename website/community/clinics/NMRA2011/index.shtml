@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: NMRA 2011 Clinics</title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords"
+       content="clinics java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: NMRA 2011 Clinics</h1>
+
+<a href="http://www.x2011west.org/">
+<img src="http://www.x2011west.org/images/X2011_Logo.jpg" alt="NMRA convention logo" align="right" width="205" height="68"></a>
+
+<p>
+We will be presenting several clinics at the X2011 West NMRA convention in Sacramento, including 
+both old favorites and several new ones.  The final 
+clinic schedule hasn't been issued yet, but we have received tentative times for 
+our clinics.
+
+<dl>
+<dt><b>JMRI: Operations</b><dd>
+    <a href="http://www.x2011west.org/clinicsTable.php#C060">Wednesday, 2:30 PM - 3:30 PM</a> 
+    and <a href="http://www.x2011west.org/clinicsTable.php#C108">Friday, 4:00 PM - 5:00 PM</a>
+    (<a href="JMRI-Operations-X2011.pdf">Slides</a>)
+<dt><b>JMRI: LocoNet Signaling</b><dd>
+    <a href="http://www.x2011west.org/clinicsTable.php#C061">Wednesday, 4:00 PM - 5:00 PM</a> 
+    and <a href="http://www.x2011west.org/clinicsTable.php#C089">Thursday, 4:00 PM - 5:00 PM</a>
+<dt><b>JMRI Users Meeting</b><dd><a href="http://www.x2011west.org/clinicsTable.php#C062">Monday, 9:00 PM - 11:00 PM</a>
+(<a href="2011JmriUserMeeting.pdf">slides, including comments added during discussion</a>)
+</dl>
+(Unfortunately, the Advanced DecoderPro clinic had to be cancelled due to schedule conflict)<p>
+
+Some other clinics are JMRI and/or DecoderPro related:
+
+<dl>
+<dt><b>Model Railroading with Arduino: Applications</b><dd><a href="http://www.x2011west.org/clinicsTable.php#C019">Monday, 4:00 PM - 5:00 PM</a>
+<dt><b>OpenLCB</b><dd><a href="http://www.x2011west.org/clinicsTable.php#C091">Monday, 7:30 PM - 8:30 PM</a>
+    (<a href="openlcb/">slides</a>)
+<dt><b>CATS: a CTC Panel that Grows</b><dd><a href="http://www.x2011west.org/clinicsTable.php#C293">Wednesday, 9:00 PM - 10:00 PM</a>
+and <a href="http://www.x2011west.org/clinicsTable.php#C090">Friday, 2:30 PM - 3:30 PM</a>
+<dt><b>DCC: Programming Decoders</b><dd><a href="http://www.x2011west.org/clinicsTable.php#C016">Monday, 11:00 AM - 12:00 PM</a>
+and <a href="http://www.x2011west.org/clinicsTable.php#C111">Friday, 4:00 PM - 5:00 PM</a>
+</dl>
+
+<p>
+More information on the X2011 West Sacramento convention can be found on the  
+<a href="http://www.x2011west.org/">convention website</a>
+(click on the
+<a href="http://www.x2011west.org/clinicsTable.php">Clinics</a> 
+link to see 
+all clinics). 
+Many interesting clinics are listed in addition to the ones listed here, 
+including two on 
+<a href="http://cats4ctc.org"><!-- was http://home.comcast.net/~kb0oys/ --> CATS</a>.
+A full list of clinics mentioning JMRI is 
+<a href="http://www.x2011west.org/clinicsTable.php?match=JMRI">here</a>.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

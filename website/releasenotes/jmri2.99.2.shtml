@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.99.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.99.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.99.2 release
+      </h2>
+
+	<p>Date: January 12, 2012</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.99.2 of JMRI/DecoderPro is available for download.</p>
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.0 production release, probably in Summer 2012.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+None
+
+<h3>Older warnings</h3>
+
+This release, and all other releases in this cycle, require <a href="https://java.com/en/download/">Java 1.6</a> or later.
+
+<h3>Known problems with this release</h3>
+There are currently some connectivity issues for Users running Windows v7 64-bit and a Digitrax PR3 interface.
+If you are experiancing issues, then please raise a question on the JMRI Users group for assistance.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.2-r19720.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.2-r19720.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.2-r19720.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.2-r19720.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.2-r19720.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.2-r19720.tgz/download</a></p>
+
+<!--Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Release%202.99.2/lastSuccessfulBuild/artifact/jmri/dist/release/">CI project page</a>.
+-->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Packager/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+ 
+<h3>Changes since test release 2.99.1</h3>
+
+<p>Dan Boudreau made the following enhancements and fixes to operations.</p>
+<ul>
+<li>Added a new tool to help with custom loads and schedules.  Now you can select a car type
+and load and see which spur with schedules will receive and ship that commodity.  See under
+Tools "Show schedules by car type and load" in the Schedules window.</li>
+<li>Schedules in match mode now shows a hit count.  The hit count is incremented every time a
+schedule's line item is used during a build.</li>
+<li>Improved the car import feature.  Now the program can be told to automatically create new car types
+and adjust track lengths during the import.  Saves a lot of time if your importing a lot of cars with new
+car types.</li>
+<li>Improved loco and caboose changes in a train's route.  Now you can depart without a caboose and add one
+later in the route, or depart with a caboose and remove it in the route.</li>
+<li>The switch list button in the Trains window is now highlighted in red when changes occur to switch lists that have
+been printed.</li>
+
+</ul>
+
+<p>Kevin Dickerson
+<li>Fixed a bug where the PR3 could not operate a throttle in Programming Mode</li>
+<li>Add a warning message when a logic is created/edited, that if the source or destination mast is used as part of the criteria with the logic, it may result in unexpected behavior.</li>
+<li>Updated the logic behind the SignalMastLogic in determining routes on the layout editor involving a Double Crossing</li>
+<li>Updated the CAN BUS code so that it can handle multiple connections and be configured with other systems at the same time.</li>
+
+<p>Randall Wood made various improvements to Mac OS X support.</p>
+
+<p>Steve Todd updated jmdns.jar to v3.4.1 (latest release from http://sourceforge.net/projects/jmdns/).</p>
+
+<p>David Zuhn fixed the problem with preferences in Mac OS X that first appeared in JMRI 2.99.1</p>
+
+   <!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

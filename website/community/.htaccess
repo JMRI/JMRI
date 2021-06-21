@@ -1,0 +1,10 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+# index.html redirected to main Acknowledgements page
+RewriteRule ^index\.html /help/en/Acknowledgements.shtml [R=302,L]
+
+# codeflower.html redirected to visuals folder
+RewriteRule ^codeflower\.html visuals/codeflower.shtml [R=302,L]
+RewriteRule ^codeswarm\.html visuals/codeswarm.shtml [R=302,L]

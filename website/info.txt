@@ -1,0 +1,16 @@
+
+# Contact info submission
+
+url: jmri.org/
+site_owner: JMRI
+address1: 
+address2: 
+city: 
+state: 
+country: United States
+postal_code: 
+phone_number: unlisted
+display_email: jmri@jmri.net
+site_name: JMRI: A Java Model Railroad Interface
+site_description: Open source project for model railroads. Control 
+panel creation, decoder programming and configuration and debug tools.

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
+<!-- $Id: Comp_FunctionLabel.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
+<title>
+DecoderPro&reg; Comprehensive Programmer
+</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h1>Function Labels Pane</h1>
+
+<div align="right">
+<p><a href="Comp_FMap.shtml">Previous | </a><a href="Comp_LightFX.shtml">Next </a></p>
+<p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+<hr>
+<p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed. It also interacts  with the <a href="Ops_Throttle.shtml">JMRI throttle</a>. </p>
+<p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
+<p>You may also set the text in the Function Labels from the button propertes of an active JMRI throttle when you save them to the Roster. Subsequent uses of the throttle will use the new labels.</p>
+<p><img src="images/Function_Labels.png" alt="function labels" width="922" height="627"></p>
+
+<hr>
+
+<div align="right">
+<p><a href="Comp_LightFX.shtml"></a><a href="Comp_FMap.shtml">Previous | </a><a href="Comp_LightFX.shtml">Next </a></p>
+<p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+</div> <!-- closes #mBody, started in sidebar -->
+<script src="/js/main.js"></script>
+</body>
+</html>

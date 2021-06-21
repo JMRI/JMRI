@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.5.5
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.5.5 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.5.5 release
+      </h2>
+
+	<p>Date: November 17, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.5.5 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.6 production release around the end of the year.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>This release and all future releases will not support the NCE PowerHouse Pro serial interface running at 19,200 baud.</p>
+
+<P>This release, and all other releases in this cycle, require Java 1.6 or newer.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.5-r24398.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.5-r24398.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.5-r24398.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.5-r24398.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.5-r24398.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.5-r24398.tgz/download</a></p>
+
+ 
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.6/ws/jmri/dist/release/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+
+<h3>Changes since test release 3.5.4:</h3>
+
+<p>Changes to decoder programming and definition allow 
+specification of workarounds when a command station only handles a subset of CVs, and
+the decoder provides a way to access the full range locally.  Useful with ESU and Zimo
+decoders, but not all (close to none) of the decoder definitions have been updated to
+use this. 
+
+<p>NCE command station programmer updated to indicate when it can't access high-address CVs.
+
+
+   <p>Dave Heap added automatic display of CV numbers in DecoderPro tooltips. To see the CV
+    address for a decoder parameter, hover your mouse over it. By default this is off (DecoderPro
+    exists to hide this information, not show it), but you can turn in on with a preference under
+    Roster, then Programmer.
+   
+   <p>The OpenLCB lib was updated to the current version. This includes several memory-read
+    protocol fixes.
+   
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>New feature, the ability to copy any track to a location. See under the Edit Location,
+     Tools, "Copy Track".</li>
+    <li>Fixed an issue with train manifest times when the "same" location was used back to
+     back.</li>
+    <li>Made some improvements to the train build reports.</li>
+    <li>Made some minor improvements to the conductor and yard master windows.</li>
+    <li>New manifest and switch list option, the ability to show the car's final destination
+     and track.</li>
+    <li>Fixed a problem when a spur has a schedule and "Planned Pick Ups".</li>
+    <li>Improved car movement when the train's route move count is used up or the train's length
+     is maxed out when building the train.</li>
+   </ul>
+
+	<p>Ken Cameron made the following changes:</p>
+	<ul>
+		<li>Fixed memory addressing issue in macro editor/backup/restore.
+			This bug was introduced prior to 3.4 when adding support for the updated
+			NCE USB for other functions. Currently Macro support via the NCE USB is a
+			work in progress.
+			</li>
+	</ul>
+
+<p>
+David Zuhn updated the Mac OS X launcher to handle different Java configurations,
+particularly when installing a clean version of Mac OS X.
+
+<p>
+Bjorn Kvisli and Pierre Billon created multiple Doehler &amp; Haass decoder definitions.
+
+<p>
+Bjorn Kvisli added decoder definitions for the Arnold N scale decoders.
+
+<p>
+Peter Ulvestad added a decoder definition for the MRC 1952,
+improved the definition for the MRC 1957, added the 1922 and 1916.
+
+<p>
+Suzie Tall fixed some cross-references that were preventing the CROR-2008 
+and InfraBel signals from displaying properly.
+
+<p>
+Dick Bronson provided additional UTCS track segment icons.
+
+<p>
+The timestamp on messages in the console output was changed to default to
+a real timestamp like "2013-11-17 15:16:07,486" in local time.
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

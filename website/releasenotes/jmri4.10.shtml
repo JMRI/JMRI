@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 4.10
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.10 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.10 release
+      </h1>
+
+    <p>Date: December 19, 2017</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Production Release 4.10 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<p>We are very pleased to announce that the 4.9 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production Release 4.10" available for download today.</p>
+
+<h2>Notes:</h2>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<a href="images/jmri-4.7.4-B.png"><img src="images/jmri-4.7.4-B.png" alt="after image" align="right" height="173" width="293"></a>
+<a href="images/jmri-4.7.4-A.png"><img src="images/jmri-4.7.4-A.png" alt="before image" align="right" height="173" width="295"></a>
+<a id="migration" name="migration"></a>
+<h3>Required Migration Step<span class="since">Since <a href="jmri4.7.4.shtml">JMRI 4.7.4</a></span></h3>
+JMRI was updated in JMRI 4.7.4 to use a new serial library. Depending on your exact
+circumstances, you may need to do some migrations:
+<ul>
+<li>If you are using JMRI on Linux or macOS / OS X and are updating from an older JMRI version,
+<em>you must open the JMRI preferences and make sure that the selections are 
+correct for your serial device(s).</em> Be sure to save the changes.
+<p>
+In general, previous versions used serial device names like 
+"/dev/cu.usbserial-ABC123FG". This version will generally omit the prefix, and
+use serial device names like "cu.usbserial-ABC123FG".
+(If given the choice between a name starting with "tty" and one starting with "cu", 
+pick the "cu" one). See the before and after images to the right.
+<li>
+If you are using Linux and have previously used the "JMRI_SERIAL_PORTS"
+option to make sure your serial device is visible to JMRI, you'll have 
+to change that to use the "purejavacomm.portnamepattern" option instead.
+See the 
+<a href="http://jmri.org/install/FAQLinux.shtml#usb">JMRI Linux install page</a> for more information.
+<li>
+If you use your own JMRI scripts to access a serial device, you'll have to update
+their library references:
+    <ul>
+    <li>Any 
+        <code>import gnu.io</code> statements will have to be replaced by 
+        <code>import purejavacomm</code> statements.
+    <li>More generally, any reference to 
+        <code>gnu.io</code>, e.g. a reference to a class like 
+        <code>gnu.io.SerialPort</code>, statements will have to be replaced by 
+        a reference to the corresponding 
+        <code>purejavacomm</code> class.
+    </ul>
+</ul>
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+
+<ul>
+    <li>This release will occasionally set the default connection
+        to internal, which prevents programming decoders.  One 
+        symptom is getting 123 every time you read a CV.
+        This is fixed in 
+        <a href="jmri4.14.shtml">JMRI 4.14</a>.
+        We recommend you update to that version.
+    </li>
+</ul>
+
+<!--
+If any of those effect you, please either wait for
+<a href="jmri4.11.1.shtml">JMRI 4.9.1</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>Warnings for this release:</h3>
+
+<p>See the <a href="jmri4.8.shtml#warnings">JMRI 4.8 release note</a> for more warnings predating the 4.9 development series.
+These may be relevant to you if you're updating from a version earlier than JMRI 4.8.</p>
+
+<p><span class="since">Since <a href="jmri4.9.4.shtml">JMRI 4.9.4</a></span>
+    Due to changes in the capitalization of some method and property names, some scripts may fail until
+    adjusted to use the new capitalization. The <a href="http://jmri.org/JavaDoc/doc">Javadocs</a> for any
+    JMRI class will list the correct capitalization.</li>
+
+<p><span class="since">Since <a href="jmri4.9.4.shtml">JMRI 4.9.4</a></span>
+    For Windows users only: <a href="jmri4.9.3.shtml">JMRI 4.9.3</a> (and all later) has a new 
+    version of the "LaunchJMRI.exe" program.  It's used to set options as
+    JMRI is starting up, and is a completely normal part of JMRI.  Because it's
+    new and different, however, your anti-virus program may reject it. 
+    You might get a message about "file removed" or "file quarantined" or similar
+    and then JMRI might not start.
+    The solution is to make sure that your anti-virus program doesn't interfere
+    with JMRI's installation and running. There are so many of those, unfortunately,
+    that we can't really provide useful instructions beyond that.
+
+<p><span class="since">Since <a href="jmri4.9.2.shtml">JMRI 4.9.2</a></span>
+    JMRI saves the Uhlenbrock connection's "baud" rate as an Internationalized string, 
+    and, upon loading a configuration profile, requires an Internationalized "baud" 
+    rate in the .XML file.  JMRI will fail to properly configure the serial port if the
+    "baud" rate from the configuration profile does not match one of the baud rate 
+    strings for the current Internationalization "locale".  If you experience problems 
+    where JMRI start-up of a Uhlenbrock-based connection does not configure the serial 
+    port, it may be necessary to edit the connection's preferences, select the 
+    appropriate "baud" rate, save the connection.  This updates the configuration profile 
+    XML file to use one of the "baud" rate strings expected by the Uhlenbrock-specific 
+    code in JMRI.  It is necessary to re-start JMRI for this change to take effect.
+
+<p><span class="since">Since <a href="jmri4.7.6.shtml">JMRI 4.7.6</a></span>
+    If you're having trouble getting your DCC programmer to work, try
+    checking that the "Defaults" under "Preferences" are set to your
+    hardware system.
+    The reason: This version of JMRI (and all later) provides more options for
+    "default systems": If you have multiple sets of hardware attached, which
+    should be used for throttles, for programming, etc.  JMRI tries to 
+    guess the right settings for these when you upgrade to this version, but 
+    apparently it sometimes gets that wrong (we haven't been able to track
+    that down yet). Setting them manually fixes any wrong guesses.
+
+<p><span class="since">Since <a href="jmri4.7.5.shtml">JMRI 4.7.5</a></span>
+    This version of JMRI (and all later) writes a slightly streamlined
+    version of panel file contents.  
+    Older files should still be readable by this version of JMRI, 
+    but files written by this version may not be readable by versions
+    before JMRI 4.2 depending on their contents.
+
+<p><span class="since">Since <a href="jmri4.7.5.shtml">JMRI 4.7.5</a></span>
+    The LocoNetOverTCP server has changes that may break scripts that reference it. Scripts refering to
+    the class jmri.jmrix.loconet.loconetovertcp.Server need to refer instead to
+    jmri.jmrix.loconet.loconetovertcp.LnTcpServer.
+
+<p><span class="since">Since <a href="jmri4.7.3.shtml">JMRI 4.7.3</a></span> 
+    This release will not start cleanly if installed over earlier versions of JMRI (the Windows installer ensures
+    this is not an issue). Remove the JAR files <em>jackson-annotations-2.0.6.jar</em>, <em>jackson-core-2.0.6.jar</em>,
+    and <em>jackson-databind-2.0.6.jar</em> from the <em>lib</em> directory within the previous installation directory to resolve
+    this.
+
+<p><span class="since">Since <a href="jmri4.7.1.shtml">JMRI 4.7.1</a></span>
+        JMRI no longer supports the portable paths <code>resource:</code> or <code>file:</code> that
+        were deprecated in JMRI 2.13. When loading a panel, an error message will be displayed
+        if the panel contains a path that starts with <code>resource:</code> and the panel will
+        not load until changed using an external editor. Paths starting with <code>file:</code>
+        cannot be automatically flagged because JMRI allows file: URLs; these will have to 
+        be changed manually.
+        
+<p><span class="since">Since <a href="jmri4.7.1.shtml">JMRI 4.7.1</a></span>
+        The LocoNet Server (the LocoNetRMI service; not the LocoNetOverTcp service)
+        in this version of JMRI doesn't properly interoperate with 
+        <a href="jmri4.7.1.shtml">JMRI 4.7.1</a> through <a href="jmri4.7.4.shtml">JMRI 4.7.4</a>.
+        It does work fine with <a href="jmri4.6.shtml">JMRI version 4.6</a> or before.
+        If you encounter a problem with version compatibility, you'll see an error
+        message that includes "<code>local class incompatible</code>".
+        The workaround is to update both client and server JMRI machines to the same
+        JMRI version. 
+        
+<p><span class="since">Since <a href="jmri4.7.1.shtml">JMRI 4.7.1</a></span>
+        JMRI applications will not load a panel file that fails XML validation; an error will be
+        shown that should explains the error, allowing it to be fixed using an editor. (The
+	    explanations remain a work in progress.) The usual cause of something like this is (imperfect) 
+	    manual editing of the file, but it can happen for multiple reasons. If you encounter this, try these things:
+	    <ul>
+	    <li>Use a copy of JMRI 4.6 to 
+	    load and rewrite the file into the proper format; 
+	    <li>Or set your
+	    preferences to execute the 
+	    "<a href="http://jmri.org/jython/TurnOffXmlValidation.py">TurnOffXmlValidation.py</a>" script
+	    <em>before</em> JMRI loads your panel file;
+	    <li>Or finally, ask for help fixing the file on the JMRIusers list.
+	    </ul>
+	    <p>It's a good idea to keep a copy of the original file as you work on this, just in case.</p>
+
+<p><span class="since">Since <a href="jmri4.5.2.shtml">JMRI 4.5.2</a></span>
+    This and future releases of JMRI may not function on MacOS / OS X if the Java SE 6 provided by Apple is installed,
+    but it may be reinstalled with other software programs. macOS
+    operating system updates routinely remove this version of Java SE 6. Please raise any issues concerning this on the
+    user's group.
+    To remove Java SE 6 from macOS / OS X, follow these steps (these steps assume
+      JMRI is installed in the folder <em>/Applications/JMRI</em>. If you've installed it in a different location,
+      adjust the following paths as needed):</p>
+    <ol>
+      <li>Open <em>Terminal.app</em>.
+        <p><em>OS X El Capitan only:</em> Reboot into Recovery Mode by restarting your
+          Mac and pressing Cmd-R until the Apple logo appears. Once in Recovery Mode,
+          select Terminal from the Utilities menu.</p>
+        </li>
+      <li>Run the command <code>/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh</code><br>It can take
+        up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.
+        <p><em>OS X El Capitan only:</em> Run the command <code>bash /Volumes/Macintosh\ HD/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh /Volumes/Macintosh\ HD</code>
+      <br>It can take up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.</p>
+        </li>
+      <li><em>OS X El Capitan only:</em> Restart your Mac.</li>
+    </ol>
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+<p>Please note that the download links in this and future JMRI releases link to 
+<a href="https://github.com/JMRI/JMRI/releases/tag/v4.8">Github servers</a>.
+If that doesn't work for you, the files are also still available from the
+<a href="https://sourceforge.net/projects/jmri/files/production%20files">SourceForge.net servers</a>. 
+Please <a href="mailto:jmri.@jmri.net">let us know</a> of any problems.</p>
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.10/JMRI.4.10.R419243e.dmg">https://github.com/JMRI/JMRI/releases/download/v4.10/JMRI.4.10.R419243e.dmg</a><br/>
+  sha256: c78aca9f75cc94a9db285ecbb075702c015aed59cbc7403549a51380e445a91c </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.10/JMRI.4.10.R419243e.exe">https://github.com/JMRI/JMRI/releases/download/v4.10/JMRI.4.10.R419243e.exe</a><br/>
+   sha256: 856cd800c6b54c8dd6d64f87d35ee951810ad4ba8f54c65d31d4139e08e23200</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.10/JMRI.4.10.R419243e.tgz">https://github.com/JMRI/JMRI/releases/download/v4.10/JMRI.4.10.R419243e.tgz</a><br/>
+   sha256: 7da8d6f95acfb95be1a6c6a6f1bc0220a532596eb95363adc4d0c26910a1f91a</li>
+</ul>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.10/">CI project page</a>.
+ -->
+
+<!-- 
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+
+<h2>Changes since <a href="jmri4.8.shtml">production release 4.8</a>:</h2>
+
+<p>The full lists of changes in each of the preceding test releases 
+(<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.1+">4.9.1<a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.2+">4.9.2<a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.3+">4.9.3<a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.4+">4.9.4<a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.5+">4.9.5<a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.6+">4.9.6<a>,
+<a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.9.7+">4.9.7<a>)
+are available in our 
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.</p>
+
+    <h3>DecoderPro</h3>
+      <ul>
+        <li>
+          The <code>&lt;functionlabel&gt;</code> and <code>&lt;soundlabel&gt;</code>
+          element names in decoder definitions can now be internationalized by using
+          <code>&lt;text&gt;</code> elements instead of raw text.
+        </li>
+        <li>Randall Wood improved the speed of rebuilding the decoder index.</li>
+        <li>
+          Dave Heap improved the procedure for
+            <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#update"
+            target="_blank">updating decoder definitions</a>
+            in a user's existing roster.
+        </li>
+        <li>Dave Heap reenabled loading of soundlabels from a roster entry</li>
+        <li>Dave Heap made the following changes:
+            <ul>
+              <li>
+                Added "altsignal" as another possible "Address Type" in
+                <a href="../help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#accessoryops"
+                target="_blank">Accessory Decoder Ops Mode</a>.
+              </li>
+              <li>
+                Added "Delay" as a new optional parameter in 
+                <a href="../help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#accessoryops"
+                target="_blank">Accessory Decoder Ops Mode</a>.
+              </li>
+              <li>
+                Added a new
+                <a href="../help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#opsdelayed"
+                target="_blank">Ops Mode Delayed Programming</a>
+                mode to throttle the Program on Main rate for those decoders that need it.
+                You will need to configure your definition to enable this, as per
+                <a href="../help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#opsdelayed"
+                target="_blank">this link</a>.
+              </li>
+            </ul>
+        </ul>
+        
+    <h3>Hardware Support</h3>
+        <ul>
+          <li>Paul Bender improved consist management.</li>
+        </ul>
+
+        <h4>CAN</h4>
+            <ul>
+                <li>The CAN tools were updated for display and support of translations.</li>
+            </ul>
+        
+        <h4>C/MRI</h4>
+            <ul>
+                <li>The C/MRI tools were updated for display and support of translations.</li>
+                <li>Chuck Catania made multiple updates:
+                <ul>
+                    <li>Created NodeConfigManager - Opened from the CMRI menu by selecting the Configure Nodes menu item. 
+                        Creates a table view of configured nodes for the selected Connection Memo with node UA, node type, 
+                        input/output card and bit counts displayed. 
+                        Nodes can be added from this window. Nodes are loaded into an Arraylist for function processing. 
+                        From the Select column, nodes can be edited and deleted, bit assignments displayed window. 
+                        A printed listing of nodes can be done. Only NodeConfigManagerBundle.properties created.
+
+                    <li>The existing NodeConfig tool will be retained during the development cycle and deprecated at the appropriate later time.
+
+                    <li>SerialNode data items added: Text Description, CMRInet Options, Node Options. 
+                        Node option "Enable Polling at Startup" which is enabled as default, 
+                        provides for selective node polling control when launching PanelPro.
+
+                    <li>Node configuration window format updated with additional data items.
+
+                    <li>Multiple CMRI connection memo added to new and updated classes.
+
+                    <li>ConnectionConfigXml updated to load and store additional node fields. 
+                        Backward compatibility is maintained with existing configuration XML files. 
+                        Checks for new configuration data fields is implemented. 
+                        Loading an existing connection config profile and not doing a Save from the preferences
+                        will not update the connection profile with the new data fields.
+
+                    <li>Added support for the MRCS cpNode.
+                        A cpNode is defined as node type CPNODE = 3, NDP "C", 8 bit cards, two input cards, two output cards.
+                        Input/Output Expander (IOX) card assignment is supported. 
+                        cpNode initialize(I) message conforms to NMRA LCS 9.10.1. 
+                        Node type 4 is reserved for a future Open Source Node (OSN) offering.
+
+                    <li>Bit Assignment listing function has Comment field added. Assignment listing can be printed.        
+                </ul>    
+                <li>Chuck Catania updated the C/MRI menu and improved the C/MRI serial monitor.</li>        
+            </ul>
+                        
+        <h4>CTI</h4>
+            <ul>
+                <li>Egbert Broerse and Ken Cameron fixed a problem with startup 
+                    for the Acela system.</li>
+            </ul>
+
+        <h4>DCC++</h4>
+            <ul>
+                <li>Kevin Dickerson did some work on the DCC++ support structure</li>
+                <li>Costin Grigoras added an option to allow the DCC++ TCP server to be started from JmriFaceless</li>
+                <li>Kevin Dickerson made several improvements to improve the robustness the DCC-4-PC support:
+                    <ul>
+                    <li>Reader board discovery is now in its own class 
+                        so that the message/reply sequence no longer interferes with the polling messages.
+                    <li>Solicited replies now contain the original message. 
+                        As the reply contains no information as to its source 
+                        this removes the requirement for the message sender to try and keep track of
+                        what messages it has sent and had or missed replies for. 
+                        This information can now be retrieved from the reply and, 
+                        removes any issues of sender getting out of sync with board 
+                        poll status requests and the replies.</li>
+                    </ul>
+                </li>
+                <li>Paul Bender improved the output of the command monitor</li>
+                <li>Paul Bender improved how raw packets (used for consisting) are sent</li>
+                <li>Paul Bender updated the DCC++ support with
+                    several corrections to message and reply formats for DCC++, 
+                    and to fix sending of raw DCC packets.</li>
+            </ul>
+
+        <h4>Digitrax LocoNet</h4>
+            <ul>
+                <li>Added a jython/SendReceiveLocoNetPeerXfrMessage.py sample script for communication between
+                two computers using LocoNet Peer Transfer messages.</li>
+                <li>Traffic explanations in the LocoNet Console changed slightly to improve reading and allow localization.</li>
+                <li>Work by Paul Bender and Bob Milhaupt on improving how "throttle stealing"
+                    is handled.</li>
+                <li>Lionel Jeanson provided documentation on how to connect a Digikeijs DR5000 to JMRI using Loconet over TCP/IP</li>
+                <li>Egbert Broerse improved the command station configuration tools</li>
+                <li>JMRI now supports Roster-based programming of BDL16/BDL162/BDL168, DS64, 
+		            PM4/PM42, and SE8C devices.  This makes programming of these devices very
+		            much like programming a mobile decoder!  Some limitations apply:
+		            <p>Some device features are not accessible via Roster entries, including
+		            DS64 output addresses, DS64 routes, and SE8C "alternate" addressing (i.e. 
+		            SE8C address programming via OpSw17).  These configurable features will
+		            not be saved, restored, or modified when using a Roster entry.
+		            <p>Each device type has limitations on which Board ID (or Board Address) values
+		            may be used.
+		            <p>The "old" tools, in the LocoNet menu item, are still in-place.  Those tools
+		            provide access to some aspects of device configuration which the Roster-based
+		            mechiansm does not.
+		        </li>
+            </ul>
+
+        <h4>DMX512</h4>
+            <ul>
+                <li>George Warner added support for DMX512 lights</li>
+            </ul>
+
+        <h4>ECoS</h4>
+            <ul>
+                <li>The ECoS tools were updated for display and support of translations.</li>
+            </ul>
+                
+        <h4>Lenz</h4>
+            <ul>
+                <li>The Lenz tools were updated for display and support of translations.</li>
+                <li>The Command Monitor can show translated descriptions.</li>
+            </ul>
+                         
+        <h4>M&auml;rklin</h4>
+            <ul>
+                <li>The M&auml;rklin tools were updated for display and support of translations.</li>
+            </ul>
+
+        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+            <ul>
+                <li>Balazs Racz updated the OpenLCB support:
+                    Ensures that set of sensor state generates an outgoing bus message, 
+                    even if the new state is the same as the previous. 
+                    This is desired by advanced users in order to be able to 
+                    write scripts that initialize the entire system to a known state.</li>
+            </ul>
+
+        <h4>RFID</h4>
+            <ul>
+                <li>Support for the Olimex MOD-RFID1356MIFARE has been added.</li>
+            </ul>
+
+        <h4>Roco</h4>
+            <ul>
+                <li>The Roco tools were updated for display and support of translations.</li>
+            </ul>           
+
+        <h4>SPROG</h4>
+            <ul>
+                <li>Egbert Broerse updated the SPROG support for system prefixes</li>
+            </ul>
+
+        <h4>Uhlenbrock Intellibox</h4>
+            <ul>
+                <li>Initial creation of a JMRI connection to a Uhlenbrock command station now saves
+		        the default serial port "baud" rate in a format which can be properly read by the 
+		        Uhlenbrock connection.</li>
+            </ul>
+
+
+    <h3>New / Updated decoder definitions</h3>
+        <h4>BLI</h4>
+            <ul>
+                <li>Michael Mosher updated BLI decoders.</li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li>David Heap made the ESU definitions less confusing by hiding some older ones.</li>
+                <li>Ronald Huhn provided small corrections for ESU LokSound v3.5 definition</li>
+                <li>Alain Carasso added a ESU LokPilot V1.0 definition</li>
+            </ul>
+
+        <h4>LaisDCC</h4>
+            <ul>
+                <li>Updated xml file for LAISDCC family decoders to fix problem in CV15/CV7/CV8
+                    and update the model numbers and the function numbers of new models 860015/16/19</li>
+            </ul>
+
+        <h4>NCE</h4>
+            <ul>
+                <li>Micheal Mosher updated the definition for version 3.8 and added  new models</li>
+                <li>Support for the new Light-It and Illuminator multipurpose mobile/accessory/signal decoders. (Dave Heap)</li>
+            </ul>
+
+        <h4>Rautenhaus</h4>
+            <ul>
+                <li>Ronald Kuhn added support for the RMX992 and RMX993</li>
+            </ul>
+
+        <h4>RR-CirKits</h4>
+            <ul>
+                <li>Dick Bronson updated the MotorMan definition</li>
+            </ul>
+
+        <h4>Soundtraxx</h4>
+            <ul>
+                <li>Michael Mosher updated some decoder definitions: add new CV from V1.5 Eco manual and TSU-4400 models.</li>
+                <li>Michael Mosher updated the Soundtraxx TSU2 diesel to add Poppet Valves select 
+                    and more PM to Baldwin and other decoders</li>
+            </ul>
+
+        <h4>TCS</h4>
+            <ul>
+                <li>Micheal Mosher updated the TCS WOW 4 decoder</li>
+                <li>Alain Le Marchand added the K7D4 for Kato N-Scale ACS-64</li>
+            </ul>
+
+        <h4>ZIMO</h4>
+            <ul>
+                <li>Peter Ulvestad fixed some spelling errors in decoder definitions.</li>
+                <li>Ronald Kuhn translated the ZIMO MX600 decoder definitions</li>
+            </ul>
+
+
+   <h3>Dispatcher</h3>
+        <ul>
+             <li>Craig48 fixed a bug in in the startup of Dispatcher: If a user name is '
+                defined for the transit or starting block or destination block, 
+                the validation process fails. The validation code expects either the 
+                system name or the user name, but not both. 
+                The createActiveTrain method is using a concatenated string of both, causing the validation failure.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <ul>
+	        <li>Some of the text boxes for entering input (e.g. names of items to add)
+	            have been updated to selection boxes.</li>
+	        <li>Fixed a problem with validation of layout panel files
+	            containing certain kinds of slip definitions.</li>
+	        <li>George Warner make a number of improvements:
+              <ul>
+                <li>TrackSegments now support Bezier curves… (flex-track!)</li>
+                <li>Added setDefaultButton(okButton) in a lot (but not 100%) of dialogs.</li>
+                <li>Disable popup menu items that just show info (no actions).</li>
+                <li>Alt-(Option-) scroll wheel zooms in/out (centered on cursor!).</li>
+                <li>Added “Zoom to Fit”.</li>
+                <li>More normalize[System|User]Names.</li>
+                <li>TrackSegment width bug fixed.</li>
+                <li>Added secondary grid size.</li>
+                <li>Added antialiasing rendering hint for macOS and Windows.</li>
+                <li>Convert more (all?) JTextField's to JmriBeanComboBox's.</li>
+                <li>Removing orthogonal requirements for adding signal heads!</li>
+                <li>Added per-PositionableLabel font support.</li>
+                <li>Rotated PositionableLabel's are drawn correctly (and looks NICE!)!</li>
+                <li>Alt key inverts Add and Drag "align to grid" behavior</li>
+                <li>Added Rotation Menu info and set items.</li>
+                <li>Add Signal Head Info to popup menus</li>
+                <li>Added (de-)select All checkboxes to Layout Editor Tools</li>
+                <li>Selection rect can now go up/left.</li>
+                <li>Turnout comboboxes edit field now highlight (background color: exists=green, valid=yellow, invalid=red)</li>
+                <li>Turnout comboboxes drop down lists now highlight (green = available, red = assigned to this layout)</li>
+              </ul>
+            </li>
+	        <li>Fixed a problem where a Layout Editor panel stored while a train icon
+	            was showing wouldn't validate properly when loaded.</li>
+	        <li>George Warner did a lot of work on the Layout Editor:
+	            <ul>
+	            <li>Popup menu for Edge Connector now shows linked layout and edge connector.</li>
+                <li>Turnout control circles are now drawn for turnout controlled turntable rays.</li>
+                <li>LayoutEditorTools now lazy loaded to speed up LayoutEditor panel loading.</li>
+                <li>EntryExitPairs colors can now be parsed as hex values as well as named colors</li>
+                <li>LayoutEditorAux now lazy loaded to speed up LayoutEditor panel loading.</li>
+                <li>ColorUtil.colorToString used instead of .nameToString (since it didn’t parse hex color string).</li>
+                <li>Layout turnout (& slip) hidden, disabled and disableWhenOccupied attributes now save/load property</li>
+                <li>Turnout and slip loading code optimized for speed</li>
+                <li>Colors (including blocks and tracks) can now be parsed as hex values as well as named colors</li>
+                <li>All track editors lazy load to speed up LayoutEditor panel loading.</li>
+                <li>All track editors are now one per-layout instead of one per track (saves memory!).</li>
+                <li>Layout slip editor now rotates editor slip to match layout slip being edited</li>
+                <li>Tracks now draw at layer 3 (so Labels, train icons, etc. can be drawn behind or in front of tracks).</li>
+                <li>Zoom now goes to x8 max (x7 & x8 menu choices added).</li>
+                <li>Slips now correctly display slip state on load (based on the assigned turnout states).</li>
+                <li>Layout turnout, slip and turntable popups include state info with turnout assignments</li>
+                <li>Unconnected layout track end points now highlight while dragging to connect a track segment.</li>
+                <li>Default window size is now the screen size.</li>
+                <li>Signal masts and sensors can now be added to Edge Connectors. <strong>Note:</strong> The position and rotation will need adjusting.</li>
+                <li>You can now right click on a track segment and split it into two (JMRI adds a new anchor point).</li>
+                <li>You can now right click on an anchor point and merge the track segments either side (both must be in the same block).</li>
+                <li>New Tools->check menu for unconnected tracks, unblocked tracks and non-contiguous blocks.</li>
+                <li>The "Highlight selected block" has moved into the tool palette, next to the block dropdown list.</li>
+                <li>Buffer stops now display an end bar.</li>
+                <li>Edge connectors now display as an "X".</li>
+                <li>Right click on an anchor point, buffer stop or edge connector and you can now change it into any of the other two.</li>
+                <li>Re-organisation of the main layout editor options menu to make things easier to find for new users.</li>    
+                <li>More use of drop down combo-boxes so you can choose from a list instead of having to type or paste.</li>
+                </ul>
+	        </li>
+        </ul>
+
+    <h3>Logix</h3>
+        <ul>
+          <li>Dave Sand added a tree-based editor for Logix Conditionals:
+            The new editor uses a tree to represent the conditional structure of a Logix. 
+            The pane is split, with the tree on the left side and an edit pane on the right side. 
+            The contents of the edit pane change depending on the current tree node selection.
+            <p>
+            The traditional list-based conditional editor is the default editor in the new structure.
+          </li>
+          <li>The content of a Logix Conditional Browser window can be saved to a text file.</li>
+        </ul>
+
+    <h3>Operations</h3>
+       <ul>
+          <li>Daniel Boudreau fixed a switch list bug when running in consolidation mode</li>
+       </ul>
+
+   <h3>Panel Editors</h3>
+        <ul>
+            <li>A problem with reading really old panel files (pre-JMRI 4.0) was fixed.
+            <li>Pete Cressman did some work on the Control Panel Editor:
+                <ul>
+                    <li>The image palette is now a single window shared by all CPE panel windows</li>
+                </ul>
+            <li>Paul Bender provided a partial fix for a problem where 
+                changing text label properties font size or bold changes background color
+        </ul>
+        
+    <h3>Preferences</h3>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Resources</h3>
+        <ul>
+            <li>Chuck Catania added some ATSF CTC icons.</li>
+        </ul>
+
+    <h3>Roster</h3>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Turnouts, Lights and other elements</h3>
+        <ul>
+            <li>The Turnout Table now makes it clear(er) which turnouts can 
+                use the turnout locking feature and which Connections don't have it available.
+                </li>
+            <li>Improved the turnout locking GUI in the Turnout Table to make it
+                clearer what's going on.
+            <li>Egbert Broerse added tooltips and validation to the 
+                field where you supply the hardware address when creating new
+                Sensors, Turnouts and Lights.  This should make it much
+                easier for users to figure out what to put there.</li>
+            <li>Egbert Broerse has done a lot of work to add hints and validity checks when entering
+                the hardware address to create a new Turnout, Light or Sensor.</li>
+            <li>Fixed a problem where Simple Signal Logic make it not
+                possible to delete a Turnout from the Turnout Table</li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <ul>
+            <li>Added SensorGroupAutoItem sample script to handle the case of an "all-but-one" group.
+                For example, if you have sensor inputs for the left and right positions of a CTC signal level, 
+                but not the center one, this will let you use an internal sensor for that position.</li>
+            <li>Provides a new getTextArea() method to allow scripts access to the display area in protocol-monitor windows. 
+                This follows from a JMRIusers discussion.</li>
+            <li>Gerald Wolfson provided a ython/ClearFileHistory.py sample script to empty the file history before writing out an XML file</li>
+        </ul>
+
+    <h3>Signals</h3>
+        <ul>
+            <li>The Siglet class, used by Simple Signal Logic and some user scripts for
+                signal logic, was reimplemented to avoid a (small) change of missing
+                a signal operation.</li>
+        </ul>
+        <h4>Signal Systems</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Signal Heads</h4>
+            <ul>
+                <li>
+                  Corrected the Aspect used when "Lit" is unchecked from
+                  Aspect 8 to the Aspect specified by the "Dark" appearance.
+                  (Dave Heap)
+                </li>
+            </ul>
+
+        <h4>Signal Masts</h4>
+            <ul>
+                <li>George Warner fixed a problem that could cause signal masts to not display</li>
+                <li>Dave Heap fixed a problem with the aspect range in DCC signal heads</li>
+            </ul>
+            
+    	<h4>Signal Groups</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    	<h4>Simple Signal Logic</h4>
+            <ul>
+                <li>SSL now has a "Restricting Speed" option that limits the 
+                fastest shown appearance to Flashing Red (Restricting).  This can be
+                useful in the entrance to a yard. A script can turn it on and off
+                for e.g. permission to switch on a lead.</li>
+                <li>Simple Signal Logic now has a "restricting" option.</li>
+                <li>Egbert Broerse improved the Simple Signal Logic GUI</li>
+                <li>Fixed a problem where Simple Signal Logic make it not
+                    possible to delete a Turnout from the Turnout Table</li>
+</ul>
+
+	    <h4>NX Entry/Exit Logic</h4>
+            <ul>
+                <li>George Warner updated EntryExitPairs colors so they can now be parsed as hex values as well as named colors</li>
+                <li>Dave Sand added support for cross-panel Entry/Exit when Edge Connectors are use to join Layout Editor panels. 
+                    <ul>
+                        <li>Use <strong>Auto Generate Entry-Exit Pairs</strong> to create pairs.  <strong>Add Pair</strong> cannot be used to create a pair that spans the Edge Connector boundary.</li>
+                        <li>When setting routes using the sensors, a route can only go to the first sensor in the next panel.</li>
+                    </ul>
+                </li>
+            </ul>
+
+	    <h4>USS CTC Logic</h4>
+            <ul>
+                <li>Added Route and Traffic lock capabilities.</li>.
+                <li>Several updates to make the US&amp;S CTC support appear more realistic.</li>
+            </ul>
+            
+   <h3>Warrants</h3>
+        <ul>
+            <li>Help files have been edited to document the following feature additions:</li>
+            <li>When created, warrant throttle command scripts record the track speeds of the recording power address,
+                if a speed profile exists for the power. On playback, when possible, they use 
+                this track speed and look up the corresponding throttle settings rather than the directly recorded 
+                throttle setting. The intention is to have the warrant run at the same speeds regardless of changes 
+                in DCC address or size of the train load.</li>
+            <li>Warrants compute the track speeds for the DCC address on playback of the warrant when OPath lengths
+                are known and throttle settings are known. These are saved in Session Speed Profiles.</li>
+            <li>Session Speed Profiles are kept for all DCC addresses running in warrants during a layout session.</li>
+            <li>Session Speed Profiles can be merged into Roster Speed Profiles when layout sessions end.</li>
+            <li>Warrant Preferences provides three choices for how to handle speed profile merging at shutdown.</li>
+            <li>Speed profiles are viewable when creating or editing warrants or nxwarrants.</li>
+            <li>Speed profiles are checked to be monotonic increasing, and when not, an editing facility is provided.</li>
+            <li>The NXWarrant GUi is split into two successive windows: selecting the route and setting the run parameters</li>
+            <li>The range of automatically Recorded track speeds is much wider than was anticipated.  The feature
+	            introduced in 4.9.2 using the throttle setting corresponding to the desired track speed is disabled. 
+	            Warrants use the throttle setting as stated in the script.</li>
+	        <li>The option to not use ramps for speed changes required by signals, blocks or rogue occupation is
+	            added to the NXWarrant windows.</li>
+	        <li>NXWarrants use power series for start and end ramps.  Start ramp throttle increments are incresed
+	            by 8% at each time interval. End ramp throttle increments are decreased by 8% at each interval.</li>
+            <li>Pete Cressman did some work on Warrants</li>
+        </ul>
+
+   <h3>Web Access</h3>
+        <ul>
+            <li>Improved handling of roster entry IDs:
+                <ul>
+                <li>URL-encode roster entry Ids in URL paths and only in URL paths.
+                <li>Accept URL-encoded roster entry Ids in request paths in the Roster servlet.
+                <li>Accept URL-encoded types and object Ids in request paths in the JSON servlet.
+                </ul>
+            </li>
+            <li>Several components were updated to current versions.</li>
+        </ul>
+
+   <h3>Internationalization</h3>
+        <ul>
+            <li>CAN, M&auml;rklin, C/MRI, ECoS, Roco and Lenz tools were slightly updated and fully support translations (Egbert Broerse)</li>
+            <li>Egbert Broerse expanded the German and Dutch translations</li>
+            <li>Sonnys Hansen expanded the Danish translation</li>
+            <li>Ronald Kuhn improved the German translation</li>
+            <li>Sonnys Hansen improved the Danish translation</li>
+            <li>Ronald Kuhn improved the German translation</li>
+            <li>Dave Heap and Ronald Kuhn arranged for translation of locomotive function and sound labels.</li>
+            <li>Hervé Blorec provided an updated French translation of the help pages.</li>
+            <li>Ronald Kuhn translated ESU decoder definitions</li>
+            <li>Ronald Kuhn translated the ZIMO MX600 decoder definitions</li>
+            <li>Egbert Broerse improved the German and Dutch translations</li>
+            <li>Petr Šídlo updated the Czech translation</li>
+        </ul>
+        
+   <h3>Virtual Sound Decoder</h3>
+        <ul>
+            <li>Klaus Killinger provided additional user help pages and documentation</li>
+            <li>Klaus Killinger fixed a problem when shutting down sound use</li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <ul>
+            <li>Made some changes to how JMRI validates panel files to accept how AnyRail writes the files.</li>
+            <li>Quite a bit of code that has been deprecated since JMRI 4.2 or before was removed.</li>
+            <li>A problem with validating XML panel files created by XtrkCadReader was bypassed.</li>
+            <li>USB support using the USB library has been <a href="https://github.com/JMRI/JMRI/pull/3679">updated to usb4java</a> and a new USB browser added.</li>
+            <li>Fixed a problem, new in JMRI 4.9.1, that prevented creating new profiles.</li>
+            <li>Many improvements to the internal tests and technical documentation.</li>
+            <li>A number of internal classes have had their singletons (i.e. 'instance()' 
+                methods) put onto the instanceManager.  This might have a tiny chance of 
+                impacting certain esoteric user scripts.
+            <li>The Windows installer has been updated to a new version of the
+                NSIS tool.  This shouldn't be visible to users.</li>
+            <li>The Windows installer in JMRI 4.9.3 is compatible with current
+                Java 9 versions.  (Some of the initial early-access Java 9 versions
+                had problems that you can avoid by keeping up to date with Java 9
+                updates if you want to use Java 9)</li>
+            <li>Fixed the problem in JMRI 4.9.2 where an existing xml/decoderIndex.xml
+                file would cause delays or even a crash during start up.</li>
+            <li>Ronald Kuhn improved how the consist tool is laid out on the screen</li>
+            <li>The <kbd>--profile</kbd> command line argument to start a JMRI application with a specific profile
+	            now takes the profile ID or the path to the profile directory as an argument (<a href="https://github.com/JMRI/JMRI/pull/3968">#3968</a>).</li>
+	        <li>Excessive work and potential StackOverflow errors opening a profile have been fixed (<a href="https://github.com/JMRI/JMRI/pull/4005">#4005</a>).</li>
+	        <li>The capitalization of many method and property names in JMRI has been changed to be internally
+	            consistent within JMRI and to adhere to standard Java naming principles (<a href="https://github.com/JMRI/JMRI/pull/4034">#4034</a>).</li>
+            <li>The <kbd>--profile</kbd> command line argument to start a JMRI application with a specific profile
+	            now takes the profile ID or the path to the profile directory as an argument (<a href="https://github.com/JMRI/JMRI/pull/3968">#3968</a>).</li>
+	        <li>Excessive work and potential StackOverflow errors opening a profile have been fixed (<a href="https://github.com/JMRI/JMRI/pull/4005">#4005</a>).</li>
+	        <li>The capitalization of many method and property names in JMRI has been changed to be internally
+	            consistent within JMRI and to adhere to standard Java naming principles (<a href="https://github.com/JMRI/JMRI/pull/4034">#4034</a>).</li>
+            <li>Lionel Jeanson provided bug fixes and improvements for the throttle window toolbar Jynstruments (Wiimote and dccthrottle)</li>
+            <li>Daniel Bergqvist updated the shutdown processing to allow it to terminate partway through.</li>
+        </ul>
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

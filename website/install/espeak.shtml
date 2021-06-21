@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Installing espeak for JMRI</title>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
+	<META NAME="CREATED" CONTENT="20070720;11550900">
+	<META NAME="CHANGEDBY" CONTENT="peter">
+	<META NAME="CHANGED" CONTENT="20070720;13070200">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1>Installing espeak for JMRI</h1>
+
+This is a rough page of notes on installing the espeak
+set of programs on your computer. They're useful in making
+JMRI scripts talk!
+
+<p>
+There's a lot of information available on the
+<a href="http://espeak.sourceforge.net/">main espeak web site</a>.
+
+<h3>For Mac OS X</h3>
+
+Unlike Linux and Windows, there's no pre-built version 
+of espeak for Mac OS X.  For technical reasons, it's 
+difficult to build the entire "espeak" package, 
+which includes various libraries and demo programs,
+so we provide instructions for building just an
+espeak "command" here.
+
+<pre>
+install XCode from DVD or apple.com/developer
+
+install Darwin Ports:
+
+http://darwinports.com
+
+download, install package
+(update .login for tcsh from .profile)
+
+sudo port -d selfupdate 
+
+install portaudio
+http://portaudio.darwinports.com/
+
+sudo mkdir -p /opt/local/bin/portslocation/dports/portaudio
+cd /opt/local/bin/portslocation/dports/portaudio
+sudo port install portaudio
+
+
+download espeak
+http://espeak.sourceforge.net/
+
+cd ~/Downloads/espeak-1.31-source
+
+add -L/opt/local/lib  two places to make file
+remove define of LIBRARY, one place, because it defines USE_ASYNC,
+which doesn't compile in event.cpp, others
+
+cp portaudio19.h portaudio.h
+make speak
+
+cd ..
+sudo mv espeak-data /usr/share
+</pre>
+
+<!--#include virtual="/Footer.shtml" -->
+	  </div> <!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.11.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.11.8 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.11.8 release
+      </h2>
+
+	<p>Date: MMM DD, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.11.8 of JMRI/DecoderPro is available for download.
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b>  -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the eighth in a series of test versions. We expect this series
+to end in a JMRI 2.12 or 3.0 production release in 2011. 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(None yet)
+
+<h3>Older warnings</h3>
+
+Development Version 2.11.4 contains significant improvements to the Powerline Interfaces. 
+Some of these improvements involved a complete restructuring of the underlying code. 
+As a result, previously working Preferences may now show no connections for some of the Powerline Interfaces. 
+If this occurs, go to Preferences and setup the Powerline Layout Connections again. 
+Then save the Preferences and restart JMRI.
+
+<p>
+In Development Version 2.11.3 JMRI instituted a more robust and transparent system for handling missing panel icon files. 
+If missing icon files are discovered during the panel loading process 
+this system presents a dialog box that allows the user to either delete the offending reference 
+or use the file browser to find the proper location. 
+Older versions of JMRI didn't always fully remove the references to deleted panel icons. 
+Panels which contain these stray references will present the dialog box during the first panel load. 
+If the panel worked fine before, simply choose the delete option for each "missing" icon presented 
+to remove the stray references. Once the panel has finished loading, save/store the panel file, quit JMRI and then reload. As a precaution, we recommend either making a backup copy of your panel file before diving in or saving the modified file under a different name
+
+<p>
+There have been extensive changes to the throttle code.
+If you have written scripts that use throttles, particularly
+multiple throttles, please check to make sure they still work.
+
+<p>
+The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
+along with some of the other constants in the class.  
+This will have no impact on people just using the program.  
+If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.8.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.8.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.8.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.8.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.8.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.8.tgz/download</a>
+
+<h3>Changes since test release version 2.11.7</h3>
+
+
+<p>Pete Cressman -
+Add user's name to loconet titles when user has modified default name to distinguish multiple connections
+</p>
+
+<p>
+The initial display of the CBUS console was fixed so that the buttons show properly.
+</p>
+
+<p>Dan Boudreau</p>
+
+<p>New operations features and bug fixes:</p>
+<UL>
+	<li>Fixed some of the operations windows so the input text fields
+	now work correctly when using large font sizes.</li>
+	<li>Fixed a bug were the program didn't check to see if a train
+	could service a track when the car had a destination assigned to it
+	before the build.</li>
+</UL>
+
+<p>Steve Todd</p>
+<ul>
+  <li>Fixed web server panel click on Positionable components,</li>
+  <li>JMRIMobile speed improvements</li>
+</ul>  
+
+<p>Greg Watkins provided a decoder definition for the Hornby R8245 decoder
+
+<p>Walter Thompson updated the SE8c signaling example.
+
+<p>Ken Cameron</p>
+
+<ul>
+	<li>Fix in roster copy for NPE that prevented the copy from working.</li>
+</ul>
+
+<p>Kevin Dickerson</p>
+
+<ul>
+	<li>Fixed an error in the loading of Simple Signaling Logic (SSL) where an invalid entry potentially causes all of the logic not be loaded and are lost on 
+    any subsequent stores.</li>
+    <li>Fixed an error that potentially prevented the pop-up menu for a turnout from being displayed.</li>
+    <li>Fixed an error in the global sensor de-bounce load process that potentially prevented sensors from not being loaded correctly.</li>
+</ul>
+
+<p>Dick Bronson</p>
+<ul>
+    <li>Added the CSX-1998 Signal Masts</li>
+    <li>Updated the AAR-1946 Signal Masts to work with the Signaling Logic.</li>
+</ul>
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

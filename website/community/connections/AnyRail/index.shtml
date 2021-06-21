@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+ 	  AnyRail with JMRI
+    </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI AnyRails ">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1>AnyRail with JMRI</h1>
+<a href="http://www.anyrail.com">
+        <img src="https://www.anyrail.com/img/AR6Logo.svg" alt="AnyRail logo" height="33" width="120"></a>
+
+    <p>The <a href="http://www.anyrail.com" target="_blank">AnyRail layout planning software</a>
+    can now export a layout design as a JMRI panel file that can be loaded by PanelPro.
+    See the <a href="https://www.anyrail.com/help_en/index.html" target="_blank">AnyRail documentation</a>.</p>
+
+    <h2>Prerequisites</h2>
+    <p> The AnyRail software should be the latest version.  Version 6.29 added support for exporting
+    AnyRail designs that use flex track.</p>
+    <p>JMRI 4.18 or later (4.20 recommended) with at least Java 8.  See <a href="https://www.jmri.org/help/en/html/setup">
+    JMRI Setup</a> for new installs.</p>
+    <p>For people new to JMRI, or new to PanelPro and Layout Editor,
+    do   the <a href= "https://www.jmri.org/help/en/html/apps/PanelPro/GettingStarted.shtml">
+    Getting Started with PanelPro</a> tutorial.</p>
+
+    <h2>Create the AnyRail design</h2>
+    <p>Create the layout design using the AnyRail tools</p>
+    <p>Use the Label feature to assign names to turnouts because those labels will be used as User Names in JMRI which 
+    will be easier to understand than the automatically generated names. 
+    Also, if Blocks will be used in PanelPro, use the Label feature to assign names to sections because those labels will 
+    be used as Block User Names in JMRI.</p>
+
+    <h2>Export the AnyRail design as a JMRI PanelPro file</h2>
+      <h3>JMRI</h3>
+      <ol>
+        <li>Start PanelPro.</li>
+        <li>Select <strong>Help &rArr; Locations</strong> from the PanelPro menu.</li>
+        <li>The <strong>User Files Location</strong> entry will be used during the AnyRail export. Make a note of it.</li>
+        <li>If desired, click on the <strong>Open User Files Location</strong> button.
+        This will open the operating system file manager at that location.</li>
+        <li>Quit PanelPro.</li>
+      </ol>
+
+      <h3>AnyRail</h3>
+      <ol>
+        <li>If necessary, start AnyRail and open the layout design file.</li>
+        <li>Select <strong>File &rArr; Export as</strong>; select <strong>JMRI Layout file</strong>.</li>
+        <li>In the <strong>Save as</strong> dialog, navigate to the <strong>user files location</strong>
+        noted earlier. The exported file name will default to the AnyRail file name with
+        <strong>.xml</strong> replacing <strong>.any</strong>, but the name can be changed to something more
+	descriptive if desired.</li>
+        <li>Click on <strong>Save</strong>.  Two files will be created:
+          <ul>
+            <li>The PanelPro file which contains a <strong>Layout Editor</strong> panel
+            and the related tables.</li>
+            <li>A jpg image of the AnyRail layout design (including the background and scenery).</li>
+          </ul>
+        </li>
+      </ol>
+
+    <h2>Using the exported PanelPro file</h2>
+      <ol>
+        <li>Start PanelPro. Unless specifically desired, it is best to not load any other Panels in PanelPro when
+	loading an AnyRail export file.</li>
+        <li>Select <strong>Help &rArr; System Console...</strong> from the PanelPro menu.
+        This may be important for the first load of the exported PanelPro file to see any errors when loading.</li>
+        <li>Select <strong>Panels &rArr; Load Panels...</strong> from the PanelPro menu.</li>
+        <li>In the <strong>Load Panel File</strong> dialog, select the exported panel
+        name and click on <strong>Load</strong>.</li>
+        <li>Review the system console for warnings or errors during the load step.  If errors
+        or warnings have occurred and they don't have any meaning (to you), use the <strong>Copy to clipboard</strong>
+        button and paste the clipboard contents into a message to the JMRI User Group.</li>
+        <li>The following content is now available in PanelPro:
+          <ul>
+            <li>The Layout Editor panel:  It is displayed in Edit mode to facilitate
+            post import modifications.  See
+            <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">
+            Layout Editor Help</a> for details on using Layout Editor.</li>
+            <li>The exported jpg image file is loaded with the xml file and acts as a background
+            for the track plan.</li>
+            <li>The <strong>Turnout</strong> table:  <strong>Tools &rArr; Tables &rArr; Turnouts</strong> will
+            have the list of turnouts.  If labels had been assigned to the turnouts in AnyRail they
+            will be used for the <strong>user name</strong>.  If not, a cryptic user name will be
+            assigned.</li>
+            <li>The <strong>Block</strong> table:  <strong>Tools &rArr; Tables &rArr; Blocks</strong> will
+            have the list of blocks.  The AnyRail <strong>Sections</strong> are exported as JMRI <strong>Blocks</strong>.
+            If labels have been assigned to the AnyRail Sections they
+            will be used for the <strong>user name</strong>.  If not, a cryptic user name will be
+            assigned.</li>
+          </ul>
+        </li>
+        <li>If changes have been made to the imported file, store the changes using <strong>File &rArr;
+        Store Panels...</strong> in Layout Editor or <strong>Panels &rArr; Store Panels...</strong>
+        using the main PanelPro menu. Whether to replace the existing file or use a new file name
+        depends on personal file management philosophy.  If <strong>Overwrite</strong> is selected, the old file
+        will be moved to the <strong>backupPanels</strong> directory with the date and time added to the file name.</li>
+      </ol>
+
+
+
+    <h2>Additional notes for using AnyRail's export files</h2>
+
+      <h3>Missing jpg image file</h3>
+        <p>If the exported PanelPro file and its related jpg file are manually moved to a different
+        location (or if exported to a different location than the <strong>User Files Location</strong>), the jpg image
+	will not be found during the first PanelPro load.
+        A <strong>Icon Not Found</strong> dialog will be displayed.  There are two optons:
+        <ul>
+          <li>Either type the correct location of the jpg file in the location field and click on
+          <strong>Continue</strong>.</li>
+          <li>Or click on <strong>Delete</strong> or <strong>Ignore Errors</strong> to skip loading
+          the jpg image.  When the PanelPro file is stored, the reference to the jpg will be removed.</li>
+        </ul>
+
+      <h3>Other errors or unexpected results</h3>
+        <p>Use the system console, <strong>Help &rArr; System Console...</strong>, to open a window
+        that has details on JMRI and can contain warnings and errors.
+
+    <!--#include virtual="/Footer.shtml" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Copyright ($Author: zoo $) 2009, 2010 -->
+<!-- $Id: Comp_ManfSpecific.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+    <title>Comprehensive Programmer</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h2>Manufacturer Specific Data Pane</h2>
+
+<div align="right">
+<p><a href="Comp_GlobalCVs.shtml">Previous</a> | <a href="Comp_PrintData.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<hr>
+<p>
+This pane in the <b>Comprehensive Programmer</b> provides programming
+for functions that are specific to an individual manufacturer, but outside
+the realm of the DCC standard. While items like <b>Transponding</b> may eventually find a place in the NMRA DCC standard, and are therefore in the Advanced pane, these items are obviously beyond that category.
+
+This pane will be manufacturer dependent and decoder family dependent
+<p><img src="images/Comp_12_Manufacturer.png" width="920" height="510" alt="mfr"></p>
+
+<p align="center"><img src="images/Comp_12A_Manufacturer.png" width="932" height="667" alt="mfr">
+<p>These items will, by definition, vary greatly between manufacturers.
+  Once again, your best resource is the documentation for the specific decoder
+  you are programming and this pane in the programmer for that decoder.
+  
+<p>
+<hr>
+<div align="right">
+<p><a href="Comp_PrintData.shtml"></a>
+  <a href="Comp_GlobalCVs.shtml">Previous</a> | <a href="Comp_PrintData.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+    </body>
+</html>

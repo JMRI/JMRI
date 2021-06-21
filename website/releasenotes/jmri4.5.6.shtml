@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 4.5.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.5.6 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 4.5.6 release
+      </h2>
+
+    <p>Date: November 13, 2016</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test version 4.5.6 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in the next JMRI production release around the end of 2016.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?state=open"><em>tentative</em> release schedule</a>)</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+<ul>
+<li>There may be problems dragging and dropping to and from tables if the 
+        table has been sorted or had its columns reordered.
+<li>The Signal Mast table doesn't properly show default (initial) aspects.
+        You have to select the initial aspects by hand.
+<li>When a Digitrax DCS240 is the command station, JMRI throttles may not be able to take control 
+	of a locomotive or consist in some cases if the DCS240 "expanded slots" (i.e. 400 slots) feature is in use. 
+	Be sure to "dispatch" or "release" locomotives and consists from throttles which use "expanded 
+	slots" before attempting to acquire the locomotive or consist via a JMRI throttle, as this may 
+	enable JMRI to acquire the locomotive or consist.  This problem can affect throttles which 
+	use the JMRI WiThrottle interface and throttles controlled via the JMRI Web Server.  This issue
+	is thought to be present in all previous versions of JMRI.</li>
+</ul>
+
+If any of those effect you, please either wait for
+<a href="jmri4.5.7.shtml">JMRI 4.5.7</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this version:</h3>
+
+<ul>
+    <li>As part of fixing the 
+        <a href="https://github.com/JMRI/JMRI/issues/2081">TMCC throttle issue</a>,
+        the handling of TMCC preferences was changed.  If you have a TMCC
+        connection configured, please go to the 
+        "<a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#Connection">Defaults</a>"
+        pane in the Preferences window and make sure that the 
+        TMCC connection is selected for the appropriate device types.
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.4.shtml#warnings">JMRI 4.4 release note</a> for warnings predating the 4.4 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<p><em>(Since JMRI 4.5.5)</em> 
+        Apple has released a new "Sierra" version of macOS (formerly known as OS X) which has
+        enhanced security for downloaded programs.  We're providing a new form of signed download
+        to work with this, see below.  We'd be interested to hear whether that download
+        works on older OS versions, so that we can just release this new form
+        without having to provide separate downloads.
+
+
+<p><em>(Since JMRI 4.5.2)</em>This and future versions of JMRI may not function on OS X if the Java SE 6 provided by Apple is installed. OS X
+    operating system updates routinely remove this version of Java SE 6. Please raise any issues concerning this on the
+    user's group.
+    <p>To remove Java SE 6 from OS X, follow these steps (these steps assume
+      JMRI is installed in the folder <em>/Applications/JMRI</em>, if not,
+      adjust the following paths as needed):</p>
+    <ol>
+      <li>Open <em>Terminal.app</em>.
+        <p><em>El Capitan only:</em> Reboot into Recovery Mode by restarting your
+          Mac and pressing Cmd-R until the Apple logo appears. Once in Recovery Mode,
+          select Terminal from the Utilities menu.</p>
+        </li>
+      <li>Run the command <code>/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh</code> It can take
+        up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.
+        <p><em>El Capitan only:</em> Run the command <code>bash /Volumes/Macintosh\ HD/Applications/JMRI/PanelPro.app/Contents/Resources/uninstall-java6.sh /Volumes/Macintosh\ HD</code>
+          It can take up to a half hour to complete. Wait for the message <em>Removed Apple Java SE6</em>.</p>
+        </li>
+      <li><em>El Capitan only:</em> Restart your Mac.</li>
+    </ol>
+  
+<p><em>(Since JMRI 4.5.2)</em>Support for directly executing AppleScript within JMRI has been removed
+    due to changes in macOS and Java outside our control. If you require the
+    ability to use AppleScript, you may be able to add this capability on your
+    own by visiting <a href="https://jmri.github.io/applescript">JMRI
+      AppleScript Support</a>, but please be aware that this may not work
+    on upcoming releases of macOS or Java.
+
+<p><em>(Since JMRI 4.5.1)</em>LocoTools, no longer supported since JMRI 2.10, has been removed from the Linux and OS X distributions.</li>
+
+<p><em>(Since JMRI 4.5.1)</em>Internal turnouts and sensors need to have complete, individual system names.
+    The names "IT" and "IS" (without any suffix) are no longer permitted:
+    "IT12" is fine, but just "IT" is not. Most panel files that contain these should
+    automatically migrate them to new names when saved, but in some cases you might need to manually update them.
+
+<p><em>(Since JMRI 4.3.5)</em> When sharing a configuration between this version and JMRI 4.3.4 or older, the older version of JMRI will not
+    reflect changes in preferences, window position, table sorting, column order, or other user interface state. This is due to
+    changes in how user preferences and interface state are stored.
+
+<p><em>(Since JMRI 4.3.3)</em> You can now set the order of your startup items: If you're opening panel files, running scripts, etc as
+    the program starts up, there's a preferences pane that lets you easily set the order in which those happen.
+    If you've set the order manually (e.g. by editing configuration files) in the past, please check this
+    preference to make sure it's set the way you want.</p>
+
+<p><em>(Since JMRI 4.1.2)</em> Jython has been upgraded to version 2.7.0 with the following potentially breaking changes:</p>
+    <ul>
+      <li>The decodeJmriFilename() function is no longer available by default. Use the  FileUtil.getExternalFilename() method instead.</li>
+      <li>The simple propertyListener object is no longer available by default. Create your own, following the examples provided in the jython folder in the JMRI distribution.</li>
+      <li>jmri_defaults.py included in the JMRI distribution is no longer executed by default, but will be executed before any other Jython scipts if included in your User Files location.</li>
+      <li>The default behavior of python.cachedir.skip is now true. If using a custom python.properties file, include "python.cachedir.skip=false" in that file.</li>
+      <li>Certain Python scripts are too large to be evaluated in Jython. If a script fails with the <code>java.io.IOException: Mark invalid</code> error, set "jython.exec=true" in a custom python.properties file or rewrite the script to be less than 100,000 characters per file. Note that when using "jython.exec=true" it may be desirable to run the included script jmri_bindings.py as a startup action to emulate the evaluation environment used when jython.exec=false.</li>
+    </ul>
+
+<p><em>(Since JMRI 4.1.1)</em> Decoder definitions that use the "ivariable" form are now deprecated.  Definitions
+    included with this release have been converted to the new form.
+    If you have decoder definitions with the older "ivariable" form, they will no longer
+    validate, but can still be used for the first couple of test releases in this series.
+    Please ask on the JMRI Users group
+    for help converting them, or just drop them and use the current definitions.</p>
+
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>OS X and macOS: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.6-R9bfae82.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.6-R9bfae82.dmg/download</a><br/>
+    sha256: e7223f2ba8163f4b607f1d77d8817eeaff6227b0345d16a92c8cba961f837809 </p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.6-R9bfae82.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.6-R9bfae82.exe/download</a><br/>
+    sha256: 27c8542568624dec65943b7787e80235f3cad73f7e598ea1c883573cf7837263</p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.6-R9bfae82.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.5.6-R9bfae82.tgz/download</a><br/>
+    sha256: 84cb9ad5411eda97802a86ecaca53e718ec23353b8a57767fa287359bd5d4057</p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6/">CI project page</a>.
+-->
+
+<!--
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+
+<h3>Changes since <a href="jmri4.5.5.shtml">test release 4.5.5</a>:</h3>
+
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.5.6+">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+    <h4>Hardware Support</h4>
+
+        <h5>DCC++</h5>
+            <ul>
+                <li>Fixed the timeout when programming in Ops Mode.</li>
+            </ul>
+
+        <h5>Digitrax</h5>
+            <ul>
+                <li>Adds Digitrax DCS210 as a possible command station in connection, and   
+		        shows appropriate OpSw descriptions in the LocoNet Command Station Configuration 
+		        tool for a LocoNet connection configured as using a DCS210 command station.</li>
+            </ul>
+
+        <h5>OpenLCB / LCC</h5>
+	    <ul>
+            
+                <li>UI improvements in the CDI configuration dialog, such as collapsible sections, faster
+		scrolling and tabbed UI for repeated groups. This makes configuring nodes with large I/O
+		count or many repeated groups more convenient.</li>
+
+                <li>UI improvements in the network view dialog: the nodes on the layout are sorted by
+                their node ID, and when available, the node Name and Description is printed in the
+                overview to better identify which tree branch to expand.</li>
+
+                <li>Turnouts have a new feedback mode implemented: MONITORING. This mode allows turnout
+                change requests sent from other sources, such as fascia buttons or other JMRI computers
+                connected to the same layout to be respected in the JMRI Turnout's state. New turnouts
+                created with JMRI 4.5.6 or later will default to MONITORING feedback. Turnouts created
+                with older versions of JMRI or turnouts in panel XML files saved by older versions of
+                JMRI will be set to DIRECT feedback mode, and users of version 4.5.6 and above will have
+                to edit the turnouts one by one to set the desired feedback mode to MONITORING if they
+                wish to use the new behavior.</li>
+
+                <li>Improvements in the standards compliancy of JMRI Turnouts and Sensors; these will now
+                advertise as Producers and Consumers on the layout, as well as respond to Identify
+                Producer and Consumer requests coming from other sources. These advertisement messages
+                will appear as a short surge of a large number of messages transmitted to the layout upon
+                panel XML loads if there are many Turnouts and/or Sensors defined in the tables.</li>
+
+                <li>Turnouts (when configured for MONITORING feedback mode) and all Sensors inquire the
+                layout state upon startup, loading the panel file, or creating a new table entry, instead
+                of initializing to Unknown state. When a layout has multiple JMRI computers connected, a
+                newly started JMRI will load the layout state from an already running JMRI computer so
+                long as they have the respective Turnout and Sensor entries in both of their tables.</li>
+
+                <li>Fixed bug that caused duplicate processing of packets when using the TCP/IP "Hub"
+		feature in the OpenLCB menu. This allows multiple JMRI computers to share a single CAN
+		adapter by secondary computers connecting to the Hub started by the JMRI with CAN
+		connection.</li>
+
+		<li>Better error handling and reporting on Firmware Upgrade. The Supported Protocol list
+		now displays Firmware Upgrade for compatible nodes.</li>
+                
+	    	<li>Identification information such as Node name, version and protocol support
+		information is automatically reloaded when a node restarts, for example due to a Firmware
+		upgrade performed.</li>
+
+	    	<li>JMRI now replies to Simple Node Identification Information requests coming from other
+	    	sources on the bus. This allows multiple JMRI computers connected to a single layout to
+	    	correctly see each other in their network view dialog.</li>
+
+                <li>Miscellaneous standards compliancy improvements, such as fixes to JMRI replying to
+                Verify Node ID requests, and not sending messages with alias=000 to the bus.</li>
+
+	    </ul>
+
+        <h5>TMCC</h5>
+            <ul>
+                <li>Fixed the problem with
+                    <a href="https://github.com/JMRI/JMRI/issues/2081">TMCC throttles not working</a>.
+                    As part of this, the handling of TMCC preferences was changed.  If you have a TMCC
+                    connection configured, please go to the 
+                    "<a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#Connection">Defaults</a>"
+                    pane in the Preferences window and make sure that the 
+                    TMCC connection is selected for the appropriate device types.</li>
+            </ul>
+
+    <h4>New / Updated decoder definitions</h4>
+      <ul>
+        <li></li>
+     </ul>
+
+        <h5>ESU</h5>
+            <ul>
+                <li>
+                  Added&nbsp;various&nbsp;new&nbsp;models; LokSound&nbsp;V4.0&nbsp;M4, LokSound&nbsp;V4.0&nbsp;M4&nbsp;OEM,
+                  LokPilot&nbsp;V4.0&nbsp;M4, LokPilot&nbsp;V4.0&nbsp;M4&nbsp;MKL, LokPilot&nbsp;Micro&nbsp;SlideIn&nbsp;V4.0&nbsp;DCC,
+                  LokPilot&nbsp;Fx&nbsp;Nano&nbsp;V1.0, Scale&nbsp;Trains&nbsp;Tender&nbsp;Light
+                  (Dave&nbsp;Heap)
+                </li>
+            </ul>
+
+        <h5>LaisDCC</h5>
+            <ul>
+                <li>Claudio Capaccio of <a href="http://laisdcc.com">LaisDCC</a> provided definitions for their family of decoders.</li>
+            </ul>
+
+        <h5>SoundTraxx</h5>
+            <ul>
+                <li>
+                  "Read type from decoder" should now correctly identify
+                    individual Tsunami 2 and Econami models
+                    (Michael Mosher/Dave Heap).
+                  </li>
+            </ul>
+
+
+   <h4>Panel Editors</h4>
+        <ul>
+            <li>Dragging to and from sorted tables or Copy and Paste in sorted tables now operates correctly.</li>
+        </ul>
+
+    <h4>Control Panel Editor Shapes</h4>
+        <ul>
+            <li>Fix bug of not loading or saving control sensor.</li>
+            <li>Editing results are shown immediately when parameters are changed</li>
+            <li>Editing Cancel button restores shape to previous settings.</li>
+        </ul>
+
+   <h4>Warrants</h4>
+        <ul>
+            <li>Re-implemented the ramping code. Better handling signal and block occupancy speed restrictions
+            		when they interact with user interventions.</li>
+            <li>The "Halt" GUI command now ramps down and brings the train down to a stop smoothly.</li>
+            <li>A "Stop" GUI command has been added. This is an EStop, similar to the old Halt command 
+           			that was an immediate change to speed 0.</li>
+            <li>The "Resume" GUI command now does a ramp up rather than immediate restoration of former speed.</li>
+            <li>Ramps will use as many blocks as they need to change speed. Previous ramp down code did not look ahead properly.</li>
+            <li>/nReminder: Having reasonable values for block path lengths and speed factors is vital for calculating ramp
+            		start times.</li>
+            <li>Additional messages of running status are displayed</li>
+            <li>Double entry in the session log bug is fixed.</li>
+            <li>Rouge entry into a warrant route now changes the icon color.</li>
+            <li>Warrants can be started, ended and pass through Dark blocks.</li>
+        </ul>
+
+   <h4>Web Access</h4>
+        <ul>
+            <li>The method by which system-specific actions are populated has been changed.
+	        They should now be dynamically created depending on which system connections
+	        are configured.</li>
+        </ul>
+
+    <h4>Miscellaneous</h4>
+        <ul>
+            <li>Logging Preferences in a file named "default.lcf" in the
+	    <a href="http://jmri.org/help/en/html/setup/Files.shtml#location">settings directory</a> take precedence over
+	    logging preferences that ship with JMRI. The "default.lcf" can be copied from the JMRI installation as a
+	    starting point. (<a href="https://github.com/JMRI/JMRI/pull/2448">#2448</a>)</li>
+	    <li>Petr Šídlo provided a large update to the Czech translations of JMRI</li>
+	    <li>Added a new SignalFollower.py sample script</li>
+        <li>Fixed the AmpMeter crash on Linux systems.</li>
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

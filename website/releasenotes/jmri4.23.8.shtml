@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+    JMRI: Release Notes for 4.23.8
+ </title>
+    <meta content="Bob Jacobsen" name="author">
+    <meta name="keywords" content="java model railroad JMRI 4.23.7 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+ <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.23.8 release
+      </h1>
+
+    <p>Date: MM NN, 2021</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.23.8 of JMRI/DecoderPro is available for download.</p>
+
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please
+<a href="https://groups.io/g/jmriusers">post a note</a>
+if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release in Summer 2021.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/Copyright.html">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+
+If you are currently using a version older than JMRI 4.20, please follow these instructions carefully:
+<!-- Note:  At this point, we're not requiring an update to 4.22; change if needed-->
+<ol>
+<li>Is your current version older than <a href="jmri4.12.shtml">JMRI 4.12</a>?
+    If so, then update to <a href="jmri4.12.shtml">JMRI 4.12</a> first, and ensure everything works correctly: check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else.
+    Store your configuration and panel files under a new name and use those from now on.
+    Then continue with step 2.
+    <p>
+    If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this),
+    then it's <u>very important</u>
+    that you update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to any later relese.
+    </li>
+
+<li>Is your current version older than <a href="jmri4.20.shtml">JMRI 4.20</a>?
+    Then update to <a href="jmri4.20.shtml">JMRI 4.20</a> first, and ensure that works correctly (check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else
+    Store your configuration and panel files under a new name and use those from now on.</li>
+
+<li>You can then install this release.
+
+</ol>
+
+Following this multi-step order of updating via stable major releases safeguards you against possible migration issues
+that can arise from skipping these versions.
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either
+wait for
+<a href="jmri4.19.6.shtml">JMRI 4.19.6</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">development build installer</a>
+from
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<ul>
+
+    <!-- While this release is in development, the     -->
+    <!-- list of new warnings is kept in               -->
+    <!-- help/en/releasenotes/current-draft-warnings.shtml -->
+    <!-- in the JMRI/JMRI repository. Please edit      -->
+    <!-- there.  Changes to this file won't be merged. -->
+
+    <!--#include virtual="/help/en/releasenotes/current-draft-warnings.shtml" -->
+
+</ul>
+
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.20.shtml#warnings">JMRI 4.20 release note</a> for more warnings predating the 4.21 development series,
+including pointers to various migration issues.
+These may be relevant to you if you're updating from an earlier version;
+we strongly recommend you update to <a href="jmri4.20.shtml">JMRI 4.20</a>
+installing this test release.
+
+<ul>
+    <li><span class="since">Since <a href="jmri4.21,1.shtml">JMRI 4.21.1</a></span>
+        The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+        interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+        require changes to scripts.  If you have a script that references
+        jmri.jmrix.SystemConnectionMemo, please change it to either
+        jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+        (it's easier to have you just try the two than to explain which
+        one will work in which case)
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.21.1.shtml">JMRI 4.21.1</a></span>
+        The way preferences are loaded at startup has been slightly
+        modified.  There is no impact to JMRI applications, but Non-JMRI
+        applications that are not derived from apps.Apps or apps.AppsBase
+        but are using jmri.implementation.JmriConfigurationManager to load
+        preferences will no longer see preferences if an error occurs.  To
+        restore the old behavior, use apps.AppsConfigurationManager instead.
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+        There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+        <ul>
+            <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+            <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+            <li>Do not open the SPROG console window</li>
+            <li>Disable power conversion (CV 29) in all locos</li>
+            <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+        </ul>
+        Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+        open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+    </li>
+</ul>
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+<!--
+<div class="wide">
+    <ul>
+    <li>OS X / macOS: <a
+        href="https://github.com/JMRI/JMRI/releases/download/v4.23.5/JMRI.4.23.5+R0e79567f8.dmg">https://github.com/JMRI/JMRI/releases/download/v4.23.5/JMRI.4.23.5+R0e79567f8.dmg</a><br/>
+      sha256: aac695b2ce1bfd15937135b6f77f6d1e18673d6f771493bdf56011dfaf50b876 </li>
+
+    <li>Windows: <a
+        href="https://github.com/JMRI/JMRI/releases/download/v4.23.5/JMRI.4.23.5+R0e79567f8.exe">https://github.com/JMRI/JMRI/releases/download/v4.23.5/JMRI.4.23.5+R0e79567f8.exe</a><br/>
+       sha256: c8b38c66f9bbe7d8262731e1ec40e79d99d5188f47b6469d3c5ccc2d47b29e4f</li>
+
+    <li>Linux: <a
+        href="https://github.com/JMRI/JMRI/releases/download/v4.23.5/JMRI.4.23.5+R0e79567f8.tgz">https://github.com/JMRI/JMRI/releases/download/v4.23.5/JMRI.4.23.5+R0e79567f8.tgz</a><br/>
+       sha256: f48f7afb2869efd4cbc5630f4ce013ec986ba0f4c811e528b352fddeca2876d0</li>
+    </ul>
+</div>
+ -->
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="https://builds.jmri.org/jenkins/job/testreleases/job/4.23.7``/">CI project page</a>.
+ -->
+
+During development leading to the actual release, you can find test download files on the
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.23.7.shtml">Test Release 4.23.7</a>:</h2>
+
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=milestone%3A4.23.8+is%3Amerged">list of included changes</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+    <!-- While this release is in development, the     -->
+    <!-- new release note items are kept in            -->
+    <!-- help/en/releasenotes/current-draft-note.shtml -->
+    <!-- in the JMRI/JMRI repository. Please edit      -->
+    <!-- there.  Changes to this file won't be merged. -->
+
+    <!--#include virtual="/help/en/releasenotes/current-draft-note.shtml" -->
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

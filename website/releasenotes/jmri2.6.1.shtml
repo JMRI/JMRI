@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.6.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.6.1 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.6.1 release
+      </h2>
+
+	<p>Date: July 11, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production release 2.6.1 of JMRI/DecoderPro is available for download.
+
+<!--
+<br><b>This is a draft release note only; the download links do not yet work</b>
+-->
+
+<p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a 
+version that's good enough to be recommended for general use, including by new users. 
+We're therefore making that version, "Production version 2.6.1" available for download today.
+
+<p>
+JMRI 2.6.1 replaces production version 2.6, which contained a bug that could cause
+the program to freeze while editing Logix, Routes and Lights.  The fix for this bug
+is the only difference between JMRI 2.6 and 2.6.1.
+
+<p>
+Among the enhancements since the last production release, JMRI 2.4, are:
+<ul>
+<li>Routes and Logix are both more powerful and simpler to configure.
+<li>Many improvements to the operations support.
+<li>The hardware support for Digitrax, NCE, Lenz, CTU Acela, C/MRI, and CBUS systems were all improved.
+<li>Greatly improved icon handling in the Panel Editor, making it
+    much easier to use the specific images you want.
+<li>Many improvements to the <a href="http://jmri.org/help/en/webtoc.shtml">help screens</a>.
+<li>Many decoder definition updates.
+<li>Greatly improved Windows installer.
+<li>More options in the
+    <a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher support</a>.
+</ul>
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>Warnings for this version:</h3>
+
+The Panel Editor has been greatly improved, but it might take a little
+while for you to get used to it.  If you have trouble figuring out how it
+works, please see the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/PanelEditor.shtml">help pages</a>.
+
+<p>
+JMRI version 2.5.5 introduced reorganized definitions for 
+SoundTraxx Tsunami Diesel definitions.  Several definition files have been
+removed, and are replaced by one common file.  
+If you haven't modified your Tsunami XML files, you don't have to read
+the rest of this paragraph.
+If you have modified or replaced the Tsunami definitions in 
+the program directory in a previous
+copy of JMRI, you should back up the modified files before installing
+JMRI 2.5.5. This version removes the old files, so if you have modifications,
+you'll have to put them back manually afterwards.  In general, it's better
+to put local modifications in the preferences directory, not the program directory,
+so you won't have to do this in the future.
+
+<p>
+If you're using a MERG CAN-RS or CAN-USB unit to talk to a MERG CBUS, you should
+check that your preferences are set properly.
+
+<p>
+Starting with version 2.5.3, JMRI uses a new version of the Log4J library, and 
+several additional libraries.  If you've written your own
+Java code using JMRI, or have your own startup scripts, you
+might have to make some changes to adapt to these new libraries.
+If you don't get messages about missing or deprecated methods,
+you don't have to worry about this.
+
+<p>
+The XSLT location was moved back to the web in JMRI 2.5.3.
+
+<p>
+Starting in JMRI 2.5.2, Logix support has a lot of
+new capabilities, but panel files that use these capabilities
+can't be read by previous versions of the program. 
+Please keep backup copies of your panel files in case you
+want to move back to a previous version.
+
+<p>
+Starting in JMRI 2.5.2, 
+there have been extensive changes to the way JMRI installs and starts on Windows.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be affected by this change.
+
+<p>
+The downloads are significantly larger due to more text and images
+in the help pages, especially the updated manual.
+
+<p>JMRI now requires Java 5 or later. (Java 5 is also called Java 1.5)
+If you are using an older version of Java, please
+<a href="https://java.com/en/download/">upgrade your Java installation</a>.  
+To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<p>
+Starting in JMRI 2.5.1,
+the way you drag things in the Layout Editor has changed if you
+are using a Linux computer. 
+
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.6.1.dmg">http://downloads.sourceforge.net/jmri/JMRI.2.6.1.dmg</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.6.1.exe">http://downloads.sourceforge.net/jmri/JMRI.2.6.1.exe</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.6.1.tgz">http://downloads.sourceforge.net/jmri/JMRI.2.6.1.tgz</a>
+
+<h3>Changes since production version 2.4</h3>
+
+JMRI 2.6.1 contains all the changes in the JMRI 2.5.* series of releases; 
+the following is a list of the accumulated changes from those release notes)
+
+<p>
+Fixed an error with the Digitrax SoundLoader if you cancelled before opening a file.
+
+<p>
+Reformatted the DecoderPro speed table to fit better on narrow screens.
+
+<p>
+Update Throttle 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">Edit Throttle Frame</a>" 
+so user is less likely to enter a new frame title and not have it appear.
+
+<p>
+Several technical updates were made. These shouldn't affect users, but
+things don't always go perfectly...
+<ul>
+<li>Standard build for debugging now uses Java 1.5, builds Java 1.5 classes.
+    This required some minor code edits to remove warnings.
+<li>Removed obsolete methods from Routes, deprecated since JMRI 1.7.6
+<li>Removed varoius Ugly Hacks associated with the JSpinner class not being
+    available in pre-1.5 JVMs.  This changed Throttle, Turnout Operations, LocoNet Over TCP.
+</ul>
+
+<p>
+Dan Boudreau added several new features to the operations code: 
+<ul>
+<li><a href="http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml#demo">operations demo</a>.
+<li>Optionally add operations menu to main menu bar
+<li>The ability to copy a route.  
+<li>The ability to control whether there are car drops and pickups at a location in a route.
+<li>A new schedule feature for sidings.
+</ul>
+
+<p>
+A duplicate definition for the Hornby 8215 was removed.
+
+<p>
+Much internal work on handling multiple types of programmers.
+The first indication of this at the user level is in the "Single CV programmer",
+which now will let you pick a programmer if more than one is present.
+
+<P>
+Ken Cameron updated his DebounceSensor.py sample scripts to make it more reliable.
+
+<p>
+Simon Ginsburg updated some of the German translation.
+
+<p>
+Fixed a problem when importing a decoder definition for the first time.
+
+<p>
+Updated the port-selection in the preferences to only show serial ports.
+This will mostly affect Windows machines, where the "LPT1:" choice would
+occasionally be shown whether or not it would work.
+
+<p>
+The RXTX communication libraries are now packaged with the 
+Mac OS X version so a separate installer is no longer needed.
+
+<p>
+Paul Bender arranged for the Lenz support to 
+automatically retransmit turnout messages when certain errors are received.
+
+<p>
+Fixed a crash when loading panel files that contained certain types of
+SignalHeads with comments.
+
+<p>
+Matt Harris updated the Windows application launcher so that 
+the "DOS" log window is minimized (not shown full size).
+
+<p>
+David Duchamp changed the Layout Editor drag gesture on Linux.
+
+<p>
+Michael Mosher updated the ESU LokSound 3.5 definitions.
+
+<p>
+Robert Coleman updated the CTI Acela connection to have
+blink and pulse support, activate the "invert" option in the Turnout table, adjusted the timeout settings to shorter waits, and
+updated format of the configuration file.
+
+<p>
+Fixed a problem in the TCS BEMF decoder definition that prevented showing the "BEMF Enable" option.
+
+<p>
+Fixed a bug that was preventing the tooltips on DecoderPro radiobuttons from showing on some platforms.
+
+<p>
+Nigel Cliffe 
+added more details to the "uncoupling" features within CT DCX series
+decoders, mostly to the panel which displays the options for uncoupling
+movement controls. 
+He also extended the version number range to 66 (he recently bought a DCX74 with v66
+software). CT's use of version numbering remains a problem with JMRI, the
+version numbers in different types of DCC chips will overlap.
+
+<p>
+Michael Mosher updated the SoundTraxx Tsunami definition for the EMD 645 decoder.
+
+<p>
+Bill Chown and others added a decoder definition for the MRC Brilliance 1819 G scale decoder
+and updated the Sound Brilliance definition.  
+He also updated the TCS BEMF decoders definition to complete BEMF and Decoder Lock support.
+
+<p>
+Bob Coleman fixed a bug in the CTI Acela support that sometimes resulted in reversed turnout operation.
+
+<p>
+Fixed some links within help pages.
+
+<p>
+Xavier Chazelle provided a new decoder definition for the Uhlenbrock 73400 mini decoder.
+
+<p>
+New NMRA manufacturer numbers:
+<ul>
+    <li>49 - Joka Electronic
+    <li>50 - N&amp;Q Electronics
+    <li>51 - DCC Supplies, Ltd
+</ul>
+
+<p>
+Matt Harris improved the Windows startup scripts to 
+put the messages.log log file and the Jython cache files
+in the JMRI preferences directory. 
+This lets JMRI run cleanly on Windows 7.
+
+<p>
+Nigel Cliffe and Mark Waters provided new definitions for the
+Zimo MX620 decoder.
+
+<p>
+Dan Boudreau made several enhancements to the operations program.
+You can now specify car loads, and define the name of the load received
+or shipped for a siding by using the schedule feature. Schedules can now
+be accessed from the Locations menu under Tools. You can now also modify
+the default load names for empty and loaded. Edit frames now appear on
+top when launched from tables. He also fixed a print problem when a car
+with a FRED was printed in a switch list or manifest. Trains, Train, and
+Route windows now have print and preview tools. Also fixed a problem
+where some buttons were not visible on some operations windows.
+
+<p>
+Matt Harris fixed a problem launching JMRI on a Windows 64-bit machine with
+more than 2GB of memory installed.
+
+<p>
+Ken Cameron fixed a problem saving the Powerline CP290 configuration.
+
+<p>
+The Linux startup scripts should now have executable permission set automatically.
+
+<p>
+Bob Coleman added Acela Signal Head support.  
+Double and Triple will now work, 
+but they send individual on and off commands rather 
+than more optimal Acela signal commands down to the hardware.
+So, added an Acela Aspect option that will do things efficiently 
+for Acela and also correctly supports BiPolar and Wigwags.
+
+<p>
+Matt Harris made the startup scripts more reliable on Windows 98.
+
+<p>
+John Plocher updated the instructions for using Eclipse to build JMRI.
+
+<p>
+Andrew Crosland improved the CBUS and CAN utility tools.
+
+<p>
+David Duchamp added automatic setting of turnouts to Dispatcher
+
+<p>
+Bob Coleman did a lot of important work on improving the JUnit build tests for the operations feature.
+
+<p>
+Walter Thompson did a lot of work to improve sample scripts.
+
+<p>
+Jack Shall updated the "Lenz 54" decoder definition.
+
+<p>
+Tom Starbuck updated and organized the model numbers in the TCS BEMF decoder definitions.
+
+<p>
+A bunch more baud rates were added for CAN connections.
+
+<p>
+Paul Bender updated the XPressNet support to properly handle non-standard operations by the Hornby Elite. 
+He also added a configuration tool for the Lenz LI-USB.
+
+<p>
+Andrew Crosland improved the CBUS support and added a new "Event Table" tool.
+
+<p>
+Marc Fournier improved the TCS BEMF decoder definition.
+
+<p>
+Peter Ulvestad improved the LnSendTool.py sample script.
+
+<p>
+Walt Thompson improved some web pages.
+
+<p>
+Mark Waters provided a new Zimo MX640 definition for version 1, 2, 3 and 4 decoders.
+
+<p>
+Jack Shall updated the Comprehensive programmer to add some lighting options.
+
+<p>
+Dan Boudreau and Mark Schutzer improved the reliability of ops-mode (on the main)
+programming when using an NCE system and certain non-NCE decoders
+
+<p>
+Ken Cameron updated the Team Digital Sic24 decoder, plus added the Sic24AD version.
+
+<p>
+Matt Harris added a decoder definition for versions 41 to 43 of the 
+Lenz LE103XF.
+
+<p>
+Matt Harris updated the definition for the Digitrax TF4 and TF2
+with information from Bob Grosh.
+
+<p>
+Jeff Schmaltz updated the Massoth decoder definitions.
+
+<p>
+Jeff Schmaltz added additional detail to the Zimo MX69 and MX690 definitions.
+
+<p>
+Jeff Schmaltz updated the version numbers for several ESU decoders.
+
+<p>
+Mark Waters fixed CV38 in the Zimo MX620 series of decoder definitions,
+updated the more recent versions to include additional CVs,
+and created a new definition for the MX620 decoder version 9.12.
+
+<p>
+David Duchamp updated Blocks to contain length and curvature information,
+and improved the associated help files.
+
+<p>
+David Duchamp added saving and restoring train setup information 
+and the ability to select layout scale to Dispatcher.
+
+<p>
+Dan Boudreau added a tool to the NCE menu that
+provides a table of active NCE cabs addresses, loco speed, and function keys.
+
+<p>
+Matt Harris has created a new, much more professional Windows installer.
+
+<p>
+Bob Jacobsen updated the RPS support to handle large number of points better.
+
+<p>
+David Duchamp added a continuous running option to Dispatcher.
+
+<p>
+Fixed a problem with the function mapping in DecoderPro when a decoder
+has a large number of functions and outputs, which was causing trouble 
+for the MRC Sound Brilliance 1644 decoder.
+
+<p>
+Pete Cressman and David Parks fixed a problem with a tiny active 
+area for MultiSensors when the default inactive, etc, icons are still used.
+
+<p>
+Ken Cameron added methods so you can enable and disable polling of 
+C/MRI, etc, nodes via scripts.
+
+<p>
+Peter Cressman provided a large update to Logix. In particular, the 
+Conditionals in the Logix can now compute more complicated logical
+expressions; more than two actions can be attached to a conditional;
+the user interface is more flexible; and certain internal race conditions
+that resulted in inconsistent results have been fixed.
+
+<p>
+Richard Sauerbrun provided info for the TCS 1278 decoder model.
+
+<p>
+David Duchamp added a 3-way turnout tool and other additions to Layout Editor tools
+
+<p>
+Simon Ginsburg updated the German, Czech and Spanish translations.
+
+<p>
+Ken Cameron provided an example script for turning CMRI node polling on and off.
+
+<p>
+Fixed a bug in C/MRI error handling that would cause the wrong node to be reset
+if several polls were missed.  (This only affected C/MRI, not other hardware types)
+
+<p>
+Matt Harris added scrolling options to the panel editor and layout editor
+windows.
+
+<p>
+Dan Boudreau fixed a problem a with the EPROM revision error message when using NCE and a TCP/IP connection.
+
+<p>
+Mark Waters updated the decoder definitions for the various versions of the Zimo MX640.
+
+<p>
+Mike Mosher updated the QSI Version 7 decoder definitions.
+
+<p>
+Nigel Cliffe updated the CT Elektronik DCX decoder definition.
+
+<p>
+Peter Cesaro updated the MRC Sound Brilliance 1663 and 1656 definitions.
+
+<p>
+Jim Thompson provided a new "PM42forCTC.py" sample script,
+and greatly improved the previous PM4Announce.py script.
+
+<p>
+Lou DeHayes provided a definition for the MRC Sound Brilliance 1806 decoder.
+
+<p>
+Pete Cressman improved the user interface for defining Sensor Groups. 
+Also, Sensor Groups can now be migrated to become a Logix conditional 
+by viewing the group and then pressing the 'make group' button.
+(This deletes the group as a series of routes and implements it as a Logix Conditional.  
+This is a special type of Conditional for radio button type action 
+and cannot be edited as a Conditional.) 
+A Panel for the names of existing groups is added to the Sensor Group window.  
+Editing of Sensor Groups is done from Sensor Group window - view the group, make changes, 
+press make group.
+
+<p>
+Pete Cressman removed the limitation on the number of turnouts or sensors that
+can be set in a route.
+
+<p>
+Pete Cressman made it possible to export Routes to Logix conditionals - 
+there, additional attributes can be added to the triggering controls or 
+outputs by ordinary conditional editing.  
+Pressing 'Add Route' still creates a traditional route in the Route Table.  
+Existing Routes can be migrated to their equivalent implementation as Logix 
+Conditionals by pressing the 'Export to Logix' button on the Route Editing window.
+
+<p>
+Marc Fornier added the K1D4 decoder to the TCS definitions.
+
+<p>
+Jim Betz added the Z2 TCS decoder
+
+<p>
+Ken Cameron added CmriNodeTool.py, a sample script that acts as 
+an interactive tool to enable/disable polling of CMRI nodes.
+
+<p>
+Simon Ginsburg has updated the German translation.
+
+<p>
+Various improvements to help screens
+
+<p>
+Ian Birchenough provided a definition for the Bachmann 3 function decoder.
+
+<p>
+Dan Boudreau added more help pages on operations, and 
+resized some figures so they take less screen and disk space.
+
+<p>
+Some pages in the help system link to pages on other web sites.
+The help viewer isn't a full-function web browser, so these pages
+don't always display well, PDF files can't be displayed, etc.
+Starting in JMRI 2.5.3, if you have Java 1.6 or later installed, 
+your native web browser will be launched to display these pages.
+
+<p>
+If you run into a problem with JMRI, and the people trying to help
+you need more information, you can 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/mailreport/Report.shtml">send a problem report</a>"
+(from the Help menu)
+that contains information about your JMRI and Java versions, configuration, error messages, etc.
+Developers can then look at that to get the information they need to help find a solution.
+This feature is still in development, and might not work with all
+email systems yet.
+
+<p>
+David Duchamp fixed a problem with Block initialization at startup.
+
+<p>
+The Log4J library used by JMRI has been updated to the current version.
+This won't change the user experience, but helps us handle errors in a cleaner way.
+Dan Boudreau did 1300+ updates to use this!
+
+<p>
+Pete Cressman improved error handling in the sensor group GUI.
+
+<p>
+More help files.  Also, some help pages were reformatted to be more readable,
+and image files were reformatted to save some space.
+
+<p>
+Fixed a problem that was making some buttons disappear when editing
+Digitrax SPJ sound projects. Fixed a problem when editing the SDF
+control sequence in SPJ projects that used certain looping options.
+Added more editing capabilities for SDF instructions.
+
+<p>
+Dan Boudreau updated the operations feature to 
+allow users to place and resize the Settings, Edit Location, Trains, and Edit Trains windows.
+
+<p>
+We have again changed the references to the XLST transform in 
+newly written panel files, trying to get the 
+<a href="http://jmri.org/help/en/html/apps/PanelPro/ShowPanel.shtml">browser display</a> to work by default.
+
+<p>
+The LocoNet Monitor now displays information on several more messages.
+
+<p>
+Pete Cressman added tests for Logix, which resulted in several
+updates to the JUnit test structure.
+
+<p>
+The XSLT location was moved back to the web.
+
+<p>
+The Digitrax SDF editor can better handle complicated sound instructions.
+
+<p>
+A problem with decoder definitions requiring 28 functions was fixed. 
+For earlier versions, the workaround is to claim that the decoder has only 27 functions.
+
+<p>
+Pete Cressman arranged for edit windows to open in front of tables.
+
+<p>
+David Duchamp fixed a problem in how the Layout Editor creates signal Logix.
+
+<p>
+Matt Harris updated the Windows installer to fix a bug when reinstalling or uninstalling from
+a non-default location, and to make the selections for program location and start menu setup
+visible in all installation types.
+
+<p>
+Pete Cressman added "Change level" to the popup menus on Panel Editor icons.
+'Set x &amp; y' was changed to 'Set Location', whose dialog window now also allows setting the display level of the icon.
+
+<p>
+Ken Cameron fixed a problem in the DebounceSensor sample script.
+
+<p>
+Pete Cressman made some updates to Logix. 
+A copy Logix  and Conditional  function was added by 
+    turning the 'Edit Logix' button into a drop down 'Select' menu list for 
+    'Edit', 'Copy', or 'Delete' operations.
+    Edit and Delete act as before.
+    Copy allows a duplicate Logix to be created or it can copy Conditionals into an existing Logix.
+Also, a 'Toggle' option is added for Conditional actions that have only two action settings.
+The Logix behavior after an 'Export to Logix'  function in the Edit Route 
+window now  more closely matches the behavior of regular Routes.
+
+<p>
+Pete Cressman added an 'LRoutes Table' that uses pick lists for Sensors, Turnouts, Lights and 
+Signals to make Logix(es) similar to Routes, 
+but somewhat more generalized in that an unlimited number of items can be included for 
+both input and output, and Lights and Signals are also included.
+
+<p>
+Jon Miller provided info for the new BLI Paragon steam and
+diesel decoder definitions.  Note that these require
+features that are only present in JMRI 2.5.3.
+
+<p>
+Our internal testing now uses JFCUnit for GUI testing, in addition to JUnit.
+
+<P>
+JMRI now allows you to select any of the baud rates supported by C/MRI
+hardware, including 115,200 bits per second.  Note that not all 
+installations (software/hardware/wiring) can operate at this speed, but some
+can, so we provide the option.
+
+<p>
+Team Digital updated the decoder definition for their SIC24AD to allow ops-mode
+(on the main) programming.
+
+<p>
+Andrew Crosland sorted out a problem with the GridConnect connections to CAN and CBUS.
+This fixes a problem sending frames that was present in JMRI 2.5.1 and 2.5.2.
+Note that if you're using a MERG CAN-RS or CAN-USB unit, you should
+check that your preferences are set properly.
+
+<p>
+Dan Boudreau made some operations updates. 
+The "show route" location box as grayed out if train can't service that location.
+The location print/preview now includes which car types and roads are serviced 
+by each location and track.
+
+<p>
+Dan Boudreau improved reporting and printing in the operations tools.
+You can now see and print what type of cars and engines can be serviced by a location.
+You can also request that all of the info provided by the edit location be printed.
+
+<p>
+Paul Bender added support for F13-F28 on Lenz systems upgraded to XPressNet version 3.6.
+
+<p>
+Paul Bender updated the XPressNet support for the Hornby Elite: 
+Do not send the "OFF" XPressNet message 
+(The Elite appears to react in the same manner to both the "ON" messages and the "OFF" messages).
+
+<p>
+Dick Bronson improved the USS CTC panel background images in 
+<a href="http://jmri.org/resources/icons/USS/background/">icons/USS/background</a> 
+to remove the appearance of repetitive blotches in the track background area.
+He also added some new 850 pixel high background slices sized to fit the new 1440 x
+900 pixel wide screen monitors. 
+
+<p>
+A number of JMRI implementation classes have been moved to clean up the code organization.
+This only effects you if you've written somehat low-level Java or Python code to e.g.
+implement a new system.  If you've done that, and you encouter compilation problems,
+look in the jmri.managers and jmri.implementation packages.
+
+<p>
+Jeff Schmaltz updated the Massoth LBG, eMotion motor and sound decoders, and LGB 55027 decoder definition.
+
+<p>
+Nigel Cliffe fixed a bug found earlier CT DCX decoder definition (actually a bug in the decoders). 
+CVs 152/153 take different values if the decoder is v27-59 or v66. 
+Splitting the decoder file on the version number of the decoder seems
+easiest, so there are now two definitions.
+
+<p>
+Paul Bender has added initial support for an "XPressNet Simulator" connection type.
+It currently handles only certain basic message types.
+
+<p>
+Dan Boudreau added an operations control for whether
+car lengths and car colors are printed on manifests and switch lists.
+
+<p>
+Jack Shall updated the Comprehensive programmer format to look better with 
+complex sound decoders.
+
+<p>
+Dave Duchamp has updated the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/SectionTable.shtml">dispatcher support</a>
+to fix some bugs,
+and to
+add tools to Section Table to automatically add direction sensors to signal logic for simple APB signaling.
+
+<p>
+Dan Boudreau changed the Panel Editor info message when closing a panel.  You can now decide to hide or delete
+the panel when closing.
+
+<p>
+Ken Cameron fixed an error in the RobotThrottle demo script
+that happened when items didn't have user names.
+
+<p>
+Dan Boudreau improved printing in operations:
+When printing locations, tracks now only 
+show which rolling stock types are accepted;
+provide users the option to only print cars that have a valid location.
+
+<p>
+Paul Bender fixed a problem when XPressNet simulator is starting up.
+
+<p>
+Dan Boudreau updated some internal deprecated references.
+
+<p>
+Fixed a problem preventing the "exclude" option in decoder definitions
+from working when "include" was also in use.
+
+<p>
+Simon White added support for
+<a href="http://jmri.org/help/en/html/doc/Technical/FindBugs.shtml">FindBugs</a>
+to our software build process.
+
+<p>
+Dan Boudreau updated the code to remove some Java 1.5 generics warnings.
+
+<p>
+Paul Bender improved the consisting performance and added code to handle
+certain kinds of I/O errors.
+
+<p>
+Jack Shall has updated the SoundTraxx Tsunami diesel definitions so that they
+now live in a single file, and share definitions of most CVs.
+
+<p>
+Matt Harris fixed a bug in the startup code that could prevent JMRI applications
+from starting up on Windows.
+
+<p>
+Paul Bender improved how the connection configuration dialog works.
+
+<p>
+Peter Cressman fixed a problem with Conditional names.
+
+<p>
+In the JMRI 2.5 series, the values of Memory objects are stored in panel
+files and restored when the file is reloaded.  This version fixes a problem
+with replacing "empty" (null) values with a space character; in JMRI
+2.5.5, empty values are restored as empty, not as a space character.
+
+<p>
+You can now use "Internal" lights with more setups.
+
+<p>
+Dick Bronson updated the signal icons for USS CTC machine schematic panels.
+
+<p>
+Ken Cameron added a new "FileLogging.py" script, which logs sensor changes to a 
+comma-separated-variable (CSV) for later examination.
+
+<P>
+Paul Bender made two improvements to the XPressNet (Lenz) throttle:
+<ol>
+<li>When doing a version check, compare to the BCD version sent from the command station, 
+    rather than the float value calculated in the program (fixes a bug with functions F13-F28).
+<li>Instead of dropping messages when they are outgoing, queue the meessages for in-order delivery.
+</ol>
+
+<p>
+Ken Cameron added some initial code for "extended commands" in the Powerline (X10) support
+
+<p>
+Dan Boudreau updated the operations tools to remove any train icon(s) from the panel(s) when a train is reset.
+
+<p>
+Fix an off-by-one error when doing manual reads and writes with the DecoderPro indexed-CV pane.
+
+<p><a id="pe">
+Pete Cressman made some significant improvements to the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>.
+The textfields that required users to type in the system name of a JMRI entity, e.g. a turnout, sensor, etc, and then press an
+'Change Icon' button to open a window to assign icons to it, have been replaced by a dropdown menu.  
+Selecting an item from this comboBox opens a window similar to the previous version.   
+These new versions of the Add.. window have several 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/IconAdder.shtml">new features</a>:
+<ol>
+<li>A picklist table is displayed for the JMRI entities that have creation tools.  
+Selecting a row from the table activates an 'Add' button that adds icons for the selection to the Panel.
+<li>There is a similar panel containing trees for changing icons.  
+The new version displays all the icons contained in a node of the tree and icons are changed by dragging the image 
+from the preview panel to the entity's icons and dropping it there.
+<li>There are menu items for help and file system searches
+<li>Any directory accessible from the computer can be searched for images 
+    and then added to the trees that provide icons for importing to the Panel
+<li>An Image Index can be created and a permanent copy saved to organize the icons for import to the Panel.  
+This index is usable globally (i.e. not confined to the Panel under construction)
+<li>Panel Editor users may now change the default icons to be icons of their own choosing.
+<li>Icons can be edited directly from the Panel by using the dropdown popup item "edit".
+</ol>
+See also the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/catalog/ImageIndex.shtml">Image Index</a>
+help page.
+
+<p>
+Dan Boudreau improved the operations help and updated the images.
+He also fixed a bug: When terminating a train, 
+the train's engine(s) were not always sent to the destination track if the free track space was less than the engine(s) length.  
+He also added minor GUI improvements for locations and tracks,
+and updated it to
+allow users to enter similar location names in operations by using a hyphen and a number in the name.  
+Hyphen and number are no longer printed in manifests and switch lists.
+
+<p>
+Peter Ulvestad added a 
+<a href="http://jmri.org/jython/BackAndForthWithMidStop.py">BackAndForthWithMidStop.py</a>
+sample script that uses two different detectors for the stop because of the location of the station and detection blocks. 
+This allows the RDCs to stop exactly if front of the station in both directions. 
+You can change it to one detector if that works for your situation.
+
+<p>
+Chris Zurek updated the version number and number of functions for the Digitrax DH123 decoder.
+
+<p>
+Marc Fournier updated the TCS BEMF decoder tooltips.
+
+<p>
+Dan Boudreau added a user prompt if something goes wrong when loading a panel file.
+This will remind people to check their preferences, so they don't lose any contents of the file.
+
+<p>
+Added "lights" alias for scripting
+
+<p>
+Improvements to the Hornby DCC support.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

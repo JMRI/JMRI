@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: UK Signalling, Semaphore Signals</title>
+    <meta content="Nigel Cliffe" name=Author>
+    <meta name="keywords"
+       content="clinics java model railroad JMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra signalling UK British">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+<h1>Using Semaphore Signals rather than Colour Lights</h1>
+
+<p>So far, this tutorial has used colour light signals. However, semaphore signals
+  can be used in place of colour lights. </p>
+<p>Bear in mind that this approach to signal control is based on signalling techniques 
+  which are not the same as a lever frame in a signal box. There is a presumption 
+  that the signals will go to &quot;proceed&quot; if the line is clear ahead, 
+  rather than the signalman in his box only pulling the levers for the signals 
+  when he is ready for a train to proceed. </p>
+<p>There is also a feature yet to be developed; at present the instructions to 
+  change state are sent to all signal heads simultaneously. Thus, if you have 
+  a mast with two semaphore arms (say a home plus distant), it is likely that 
+  both arms will move together. A feature enhancement request to change this within 
+  JMRI has been made, but no date yet given for implementation. </p>
+<h3>Creating semaphore masts</h3>
+<p>A Semaphore Mast is created in the same way as a colour light mast. The arms 
+  are each defined as &quot;signal heads&quot; and the combination of arms (heads) 
+  are made onto a Mast. The definition of the Mast is in the signalling rules 
+  of the prototype, in our demonstration layout this is BR signalling. </p>
+<p>Once the Mast has been created, it is positioned at a block boundary in the 
+  same way as the colour light signals, and the rules from one signal to the next 
+  created in the same manner as before. </p>
+<p><i>The Video covering this part of the tutorial is in preparation. </i></p>
+<p>The download of the panel file with the bay signal replaced with a semaphore 
+  can be downloaded below:</p>
+<p>[ <a href="jmri_files/Demo%20Signal%208.xml">Link to download panel file</a> 
+  ]</p>
+
+<p><a href="index.shtml">Back to Introduction</a></p>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.3.8 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.4 release
+      </h2>
+
+	<p>Date: December 21, 2008</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production version 2.4 of JMRI/DecoderPro is available for download.
+
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>We are very pleased to announce that the 2.3 series of JMRI test releases has resulted in a 
+version that's good enough to be recommended for general use, including by new users. 
+We're therefore making that version, "Production version 2.4" available for download today.
+It contains 
+many new features, including:
+<li>Many updates to decoder definitions and new decoder definitions.
+   
+<li>New systems and devices supported:
+        <ul>
+    	<li><a href="http://jmri.org/help/en/html/hardware/can/cbus/index.shtml">CBUS</a>
+    	<li><a href="http://jmri.org/help/en/html/hardware/ecos/index.shtml">ESU ECoS</a>
+    	<li><a href="http://jmri.org/help/en/html/hardware/maple/index.shtml">Maple Systems</a>
+    	<li><a href="http://jmri.org/help/en/html/hardware/rps/index.shtml">RPS</a>
+        </ul>
+
+<li>Many new decoders, including:
+        <ul>
+        <li>New Lenz Standard decoder definition
+        <li>Several new MRC sound decoder definitions
+        <li>New Team Digital SRC16 definition
+        <li>Multiple updates for ESU decoders
+        <li>Many new Tsunami definitions, including several diesels
+        <li>New definition for the Hornby 8249
+        <li>Many new and updated QSI definitions
+        </ul>
+
+<li>New features:
+        <ul>
+        <li>A new 
+            <a href="http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml">operations</a>
+            section to help you build car manifests for your railroad
+    	<li>New 
+            &quot;<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Import Decoder File</a>&quot; and 
+            &quot;<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Import Decoder URL</a>&quot;
+            items in the Debug menu to make it easier to install new decoder definitions
+    	<li>New icons for 
+            <a href="http://jmri.org/resources/icons/mediumschematics/BandOsignals/">medium B&amp;O signal heads</a>, 
+            <a href="http://jmri.org/resources/icons/smallschematics/BandOsignals/">small B&amp;O signal heads</a>, 
+            <a href="http://jmri.org/resources/icons/mediumschematics/PRRsignals/">medium PRR signal heads</a>.
+            and some improvements to the 
+            <a href="http://jmri.org/resources/icons/smallschematics/PRRsignals/">small PRR signal heads</a>
+    	<li>Support for 
+            <a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a> and 
+            <a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>, 
+            which are used in layout automation
+    	<li>Much more robust startup procedures are now used
+    	<li>You can now create and edit roster entries from the Roster menu, without a layout connection
+    	<li>The new "Window" menu lets you rapidly move to any open window
+        <li>JMRI now uses British railroad terminology when the language is set to &quot;en_GB&quot;
+    	<li>JMRI windows can now be <a href="http://jmri.org/help/en/html/web/index.shtml">accessed from a web browser</a>
+    	</ul>
+
+<li>Updates:
+        <ul>
+        <li>Throttle tool has been updated to improve it's interface and operation.
+            It now gets labels for the function buttons from the individual roster entry,
+            so you can label the proper buttons with the sounds, etc, they control.
+        <li>Updated the Lenz XPressNet code to take advantage of XPressNet 3.6 capabilities if available.
+    	<li>The Layout editor has been improved with many features: snap-to-grid, zooming, a reporter icon, train markers,
+    	    selectable scroll bars.  
+    	</ul>
+
+<li>Many new and updated help pages.
+    
+<li>New sample scripts:
+        <ul>
+	 	<li><a href="http://jmri.org/jython/NumberInput.py">NumberInput</a>, showing how to 
+	 	    use a series of sensors on a control panel to e.g. enter a track number in a memory
+	 	<li><a href="http://jmri.org/jython/ParallelPortTest.py">ParallelPortTest</a>
+	 	    and <a href="http://jmri.org/jython/ParallelPortTurnouts.py">ParallelPortTurnouts</a>, which
+	 	    demonstrate connecting JMRI to layout hardware through a parallel (printer) port.
+	 	<li><a href="http://jmri.org/jython/RosterLoop.py">RosterLoop</a> shows how to access
+	 	    the entire locomotive roster
+	 	<li><a href="http://jmri.org/jython/RobotThrottle.py">RobotThrottle</a> for automated
+	 	    running of trains
+	 	<li><a href="http://jmri.org/jython/USBThrottle.py">USBThrottle</a> for configuring a
+	 	    USB joystick or other control to act as a throttle.
+        </ul>
+</ul>
+along with lots of other changes. The complete list can be found in the 
+release notes from the test releases leading up to this production release:
+<ul>
+	    <li><a href="../releasenotes/jmri2.3.8.shtml">JMRI 2.3.8</a>
+	    <li><a href="../releasenotes/jmri2.3.7.shtml">JMRI 2.3.7</a>
+	    <li><a href="../releasenotes/jmri2.3.6.shtml">JMRI 2.3.6</a>
+	    <li><a href="../releasenotes/jmri2.3.5.shtml">JMRI 2.3.5</a>
+	    <li><a href="../releasenotes/jmri2.3.4.shtml">JMRI 2.3.4</a>
+	    <li><a href="../releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>
+	    <li><a href="../releasenotes/jmri2.3.2.shtml">JMRI 2.3.2</a>
+	    <li><a href="../releasenotes/jmri2.3.1.shtml">JMRI 2.3.1</a>
+</ul>
+along with a few updates listed at the bottom of this note.
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>Warnings:</h3>
+
+Linux users, especially Ubuntu users, of Panel Editor and Layout Editor 
+may experience trouble with displaying popup menus and  
+repositioning items on their panels.  This is a known problem that is  
+being worked on. It is expected to be fixed in an early 2.5.x test  
+version.
+
+<p>
+Windows desktop shortcuts have been restructured to make them more reliable.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be effected by this change.
+
+<p>
+By default JMRI is now allowed to use
+up to 200MB of memory (up from a limit of 60MB or 64MB previously).
+If this is more memory than you have available, e.g. on an older computer,
+and you notice JMRI
+slowing down a lot, please let us know so we can provide a work-around.
+
+<p>
+When starting up, JMRI now builds the classpath (the
+list of libraries used by the program) dynamically on Windows.  
+We'll use this in the future for plug-ins and other features, and
+other platforms have been doing this for a while.
+If you have added any .jar files to your JMRI program directory, they
+may cause problems when the program is starting.  Also, if originally
+installed a very old version of JMRI, there might still be files around
+that can cause this problems.
+If so, you can fix it by moving aside those extra
+.jar files from the JMRI program directory, or by asking Windows to un-install JMRI,
+before rerunning the installer.
+For more information on this, please see this
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/conversations/topics/35065">discussion</a>
+on the JMRI Users group.
+
+<p>JMRI is moving toward requiring Java 1.5 or later.  Certain new features may not work if you are using an earlier
+version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<p>To improve reliability for NCE users, 
+we recommend that if you use NCE AIUs, that you upgrade the command station EPROM
+to version 2007 or newer and turn off AIU broadcasts. 
+Code has been added to detect if AIU broadcasts are enabled, 
+and if so a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
+
+<p>Indexed CVs will not be included in any printouts for this release.
+ 
+<p>QSI CV 56.129 Engine ID Access is not supported in this release.
+  
+<p>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), otherwise the writes will fail.
+ 
+<p>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
+ 
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.4A.dmg">http://downloads.sourceforge.net/jmri/JMRI.2.4A.dmg</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.4A.exe">http://downloads.sourceforge.net/jmri/JMRI.2.4A.exe</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.4A.tgz">http://downloads.sourceforge.net/jmri/JMRI.2.4A.tgz</a>
+
+<h3>Changes since test version 2.3.8:</h3>
+
+Paul Bender added a work-around a couple of Elite Specific throttle issues:
+<ol>
+<li>The Hornby Elite does not send out a message indicating another throttle h
+as taken control.  The code now polls the command station every 5 seconds 
+to get the current status of the throttle.
+<li>The Throttle information response messages sent by the Hornby Elite 
+always indicate the throttle is in 14 speed step mode and the 
+locomotive is part of an MU.  
+Ignore the speed step setting so we do not reset the software throttle 
+to 14 speed steps and loose control of the train.  
+Note:  This requires the user to change the speed step setting in the 
+throttle if using a mode other than the default (the default is 128 speed step mode).
+</ol>
+
+<p>
+Dan Boudreau made a number of improvements to the operations code.
+
+<p>
+Paul Bender updated the throttle to fix a problem with mismatched speed steps.
+
+<p>
+Chris Zurek added a new MRC 1662 definition, 
+and updated the MRC 1666 definition to include more info on bells and horn.
+
+<p>
+Ken Cameron fixed a problem in the X10 support that was preventing the 16th device on a housecode from working.
+
+<p>
+Dan Boudreau fixed a problem in the operations code that could cause lots of additional
+entries in various operations tables.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI Install Guide: Windows</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<h1>
+JMRI Install Guide: Windows
+</h1>
+
+<p class="important">This Install Guide is for JMRI versions 3 and later -<br>
+for earlier versions (2012 and before), <a href="Windows.html">refer to the old Windows Install Guide</a>.</p>
+
+	<ul>
+	<li><a href="#installation">Installation procedure</a>
+	  <ul>
+	  <li><a href="#offline">Offline installation</a></li>
+      </ul></li>
+	<li><a href="#startup">Starting JMRI</a></li>
+	<li><a href="#notes">Notes</a>
+		<ul>
+		<li><a href="#serialconfig">Serial Port configuration</a></li>
+		<li><a href="#largewindow">Large Windows</a></li>
+		<li><a href="#themes">Windows Themes and Skins</a></li>
+		<li><a href="#revert">Reverting to an earlier version</a></li>
+		</ul>
+	<li><a href="#debugging">Debugging</a>
+		<ul>
+		<li><a href="#errors">Error Messages</a>
+		    <ul>
+		    <li><a href="#stoppedworking">"The JAVA SE Platform binary has stopped working"</a></li>
+		    <li><a href="#registry">".. prefs root node Software\JavaSoft\Prefs .. Windows RegCreateKeyEx(...)..."</a></li>
+		    </ul>
+        </li>
+		<li><a href="#logscreen">The Log Screen</a></li>
+		<li><a href="#startupissues">Startup issues</a></li>
+		<li><a href="#shutdownissues">Shutdown issues</a></li>
+		</ul>
+    </li>
+	</ul>
+
+<a id="installation"></a>
+<h2>Installation Procedure</h2>
+	<ol>
+	  <li>Determine if your hardware supports Java and JMRI.
+	  <a name="sysreq"></a><h3>JMRI System Requirements</h3>
+	  <p>Using JMRI requires a combination of hardware (in this case running Windows), Java software and a JMRI download for a specific version.
+	  <p>JMRI&reg; version 4.2 requires Java 1.8.<br>
+	  Version 3.10.1 requires Java 1.6 or later.<br>
+	  Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop).</p>
+
+		<p>Windows 7-10 and Vista SP2 can run the <a href="http://jmri.org/download/index.shtml">current JMRI test and production releases</a> with Java 8.
+		If your computer runs one of these Windows versions, just go to the next step.<br>
+		Computers running Vista SP1 can run <a href="http://jmri.org/releasenotes/jmri3.10.1.shtml">JMRI 3.10.1</a> using Java 1.7.<br>
+		Windows2000 SP3 and XP systems can run <a href="http://jmri.org/releasenotes/jmri2.14.1.shtml">JMRI 2.14.1</a> using Java 1.6.<br>
+		Windows98 and ME can run <a href="http://jmri.org/releasenotes/jmri2.14.1.shtml">JMRI 2.8</a>.
+                <p>Note: It is possible to install Java 1.8 onto machines running Windows XP or Vista SP1,
+                but this is <em>unsupported</em> by Oracle.
+                <ul>
+                <li>To do this for Windows XP, visit
+                    the <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java Releases Archive page</a>
+                    and choose the "Java SE Runtime Environment 8u151" installer for "Windows x86 Offline".
+                    The file name is <code>jre-8u151-windows-i586.exe</code>.
+                    This is the last installer that worked for Windows XP; if you later get prompted to do a Java
+                    Update to a newer version than 151, cancel it instead of applying it (if you do apply the update, you'll have to reinstall
+                    the 151 version of Java as described here.)
+                    The installer will complain that it is unsupported,
+                    but should allow you to continue with the installation. Assuming that this is successful, proceed with
+                    installation of <a href="http://jmri.org/download/index.shtml">current JMRI test and production releases</a>.
+                <li>To do this for Windows Vista SP1, visit
+                    the <a href="http://www.java.com/en/download/manual.jsp">Manual Java Downloads page</a> and
+                    choose the Offline Installer for Windows. The installer will complain that it is unsupported,
+                    but should allow you to continue with the installation. Assuming that this is successful, proceed with
+                    installation of <a href="http://jmri.org/download/index.shtml">current JMRI test and production releases</a>.
+                </ul>
+	  <p>
+	  It's important to have enough memory and free hard disk space.
+	  We recommend you have at least 256&nbsp;MB of memory for Windows 98, 512&nbsp;MB of memory for Windows 2000 and 2&nbsp;GB for the newer W7-W10 systems.
+	  Note that used PC hardware is available for very little money; it might be cheaper to buy a used computer than to update your existing one.</p>
+	  <p>
+	  Note: JMRI is developed with Java 1.8.  It should work fine with later versions (java 1.9, Java 10, 11, etc)
+	  but you may get a message about "WARNING: An illegal reflective access operation has occurred" and "WARNING: Please consider reporting this to the maintainers".
+	  We know about this, and it'll get fixed in due course; you can ignore the messages.
+	</li>
+
+	<li>Get JMRI
+	    <p><a href="../download/index.shtml#prod-rel">Download</a> a version of JMRI, either the latest production version, or a "test version".
+	    Since the version numbers change with every release, this link takes you to the general JMRI download page,
+	    where you can select whichever version you like.
+	    Get the file labeled "Windows" with a .exe extension.</p>
+
+	    <p>JMRI also supports an offline installation - to setup,  refer to the <a href="#offline">Offline Installation</a> section below.
+
+	    <p>The JMRI project is continuously adding features, bug fixes, examples and tutorials to the release, and so
+	new "test" versions appear every couple of weeks.  You may find one of these has features that you really want.
+	These are announced in the <a href="https://groups.io/g/jmriusers">JMRI users</a> Groups.io group.</p>
+	</li>
+
+
+  <li><a id="update"></a>Run the JMRI installer
+  <p>When the JMRI download is ready, you will be asked to either save it to disk or directly run the installer.</p>
+    <ol type="i">
+      <li>Installer start-up
+        <p><img src="images/WinInstall02.png" height="489" width="597" alt="installer welcome page"></p></li>
+      <li>Check for a previous version
+        <p>It will then check to see if a previous version of JMRI exists, backup any Preference, Roster and other settings and, if necessary, uninstall the old JMRI version.
+        <br>You may choose to have the installer make a backup of the existing files, and provide a location on disk for this set.<br>
+        <img src="images/WinInstall03.png" height="489" width="597" alt="installer backup?"></p>
+		<p>In some circumstances, the removal of version 2.5.1 or earlier is not successful:</p>
+		<p>Uninstaller failed
+		<br><img src="images/WinInstall-03d_UninstallOldFailed.png" height="126" width="497" alt="installer uninstall old version failed"></p>
+		<p>In such cases, it is necessary to download and run the following file and then re-run the installer:
+		<br><a href="support/RemoveOldJMRIUninstallEntry.exe">RemoveOldJMRIUninstallEntry.exe</a></li>
+      <li>Choose Users
+        <p>If supported by your Windows version and depending on the permissions of your user, the installer may ask you to choose to install JMRI just for yourself or for all users of the computer.
+        <br><img src="images/WinInstall04.png" height="489" width="597" alt="installer user choice"></p></li>
+      <li>Choose Components
+        <p>The installer will now present a list of the components to be installed.
+        <br><img src="images/WinInstall05.png" height="489" width="597" alt="installer component choice">
+        <br>This will install JMRI to the default location, place shortcuts for DecoderPro and PanelPro on the desktop and create a JMRI Start Menu folder containing shortcuts for typically used JMRI programs.</p>
+        <p>If you wish to change where JMRI is installed, change the install type from 'Typical' to 'Custom (select to choose program folder)' using the drop-down menu.</li>
+       <li>Choose Install Location
+         <p>The next screen suggests a place for the install.
+        <br><img src="images/WinInstall06.png" height="489" width="597" alt="installer files install"></p></li>
+       <li>Choose Start Menu Folder
+         <p>The following screens lets you choose a place for JMRI in your Start menu.
+        <br><img src="images/WinInstall07.png" height="489" width="597" alt="installer files install"></p></li>
+      <li>Check for Java
+        <p>It will check for a suitable version of Java on your computer and, if required, will connect to the internet to download the most current version for your computer (for an offline installation, refer to the <a href="#offline">Offline installation notes</a> below).
+        <br><img src="images/WinInstall-06a_NoJavaAskDownload.png" height="393" width="503" alt="installer ask Java download"></p>
+        <p>Downloading java
+        <br><img src="images/WinInstall-06b_StartJavaDownload.png" height="393" width="503" alt="installer start Java download"></p></li>
+
+      <li>Install files
+         <p>Once existence of a suitable Java Runtime Environment has been confirmed, it will then install the needed libraries, plus add a "JMRI" program group to your Start menu and put shortcuts to the DecoderPro and PanelPro programs on your desktop.
+        <p><img src="images/WinInstall08.png" height="489" width="597" alt="installer files install"></p>
+        <p><img src="images/WinInstall09.png" height="489" width="597" alt="installer completed"><br>
+        Click Next.</p></li>
+
+      <li>Installation is complete.
+	        <p><img src="images/WinInstall10.png" height="489" width="597" alt="installer finish"></p></li>
+    </ol>
+  </li>
+ </ol>
+
+	<a id="offline"></a>
+	<h3>Offline installation</h3>
+	<p>The Windows JMRI installer for version 2.5.2 or later supports an offline installation of Java and JMRI. Typically, this would be used when the computer on which you wish to run JMRI does not have internet access.</p>
+
+	<p>(The following instructions assume that you are setting up a blank removable flash drive - creation of a CD will be similar but may depend on the capabilities of your CD authoring software)</p>
+		<ol>
+		<li>Copy the <a href="../download/index.shtml#prod-rel">previously downloaded</a> JMRI installer onto the root of the flash drive.
+		<li>Create a directory in the root of the flash drive and name it:
+		<ul>
+		<li>JRE
+		<p>The following image shows the resulting structure:
+		<br><img src="images/WinOfflineInstall-Folders.png" height="119" width="230" alt="Offline installer folder structure">
+		</ul>
+		<li>In the JRE directory, place a copy of the Java offline installer for Windows 2000 or later. If required, the latest version can be <a href="http://java.com/winoffline_installer/">downloaded from Sun Microsystems here</a>. A typical name for this file is 'jre-8u66-windows-i586.exe'.
+		</ol>
+	<p>Setup of the JMRI offline installation media is now complete.</p>
+
+	<h3>Clean Install</h3>
+	<p>If for any reason you wish to start totally clean and discard all previously stored Connections, Roster entries
+	and Panels, run "Uninstall JMRI", found in the Windows Start Menu &gt; All Programs &gt; JMRI &gt; Tools and Demos
+	before
+	reinstalling a new version of JMRI.</p>
+
+ <a id="startup"><h2>Starting JMRI</h2></a>
+ <ul>
+  <li>Connect your computer to your <a
+     href="../help/en/html/hardware/index.shtml">Command Station hardware</a>.
+  <li>Start one of the applications from the JMRI group under Programs in your Start menu.
+    <p><img src="images/WinStartMenu.png" height="97" width="477" alt="JMRI Start menu">
+    <br>(This shows the Start menu following a 'Typical' install - a 'Full' install will place additional icons in this menu)
+
+  <li>Configure the program to connect to your layout. The Connections Preferences will open automatically on first run, or you can open the Preferences pane from the Edit menu. More on this on the <a href="../help/en/html/setup/index.shtml">JMRI Setup help page</a>.
+    <br>The JMRI <a href="http://jmri.org/help/en/html/hardware/index.shtml">Hardware help page</a> lists the various
+        types of layout equipment that JMRI can connect to, and gives links to instruction pages</li>
+  <li>When you start DecoderPro 3.8 or later on Windows for the first time, the <strong>JMRI StartUp Wizard</strong> displays a series of screens to guide you through the setup proces:
+    <ol type="i">
+    <li>Welcome Screen:<br>
+    <img src="images/InstallWin1.png" height="271" width="469" alt="JMRI Start Wizard">
+    <li>Set your Language:<br>
+    <img src="images/InstallWin2Language.png" height="271" width="469" alt="JMRI Start Wizard Set Language">
+    <li>Choose your DCC System's Manufacturer (protocol):<br>
+    <img src="images/InstallWin3Connection.png" height="271" width="469" alt="JMRI Start Wizard  Choose Manufacturer">
+    <li>Choose your hardware Connection Type:<br>
+    <img src="images/InstallWin4Connection.png" height="271" width="469" alt="JMRI Start Wizard Choose Interface">
+    <li>That's all!<br>
+    <img src="images/InstallWin5Finished.png" height="271" width="469" alt="JMRI Start Wizard Finished">
+    </ol>
+  </li>
+  </ul>
+
+<a id="notes"></a>
+<h2>Notes</h2>	<a id="serialconfig"></a>
+
+	<h3>Serial Port configuration</h3>
+	<p>DecoderPro may encounter problems if the Serial Port used to connect to the layout shares an interrupt with another Serial Port.  Typically COM1 and COM3 share an interrupt, as do COM2 and COM4. In particular, some systems are unable to communicate (and may experience a lockup) when the layout's Serial Port shares an interrupt with a port used for a serial mouse. Make sure that the Serial Port connected to your layout does not share an interrupt with another Serial Port.</p>
+	<p>With Windows XP, your Serial Port parameters might not be properly set for hardware flow control. To fix this, right-click on My Computer and select Properties. Go to the Hardware tab and click on Device Manager. Open up the section that says Ports (COM &amp; LPT). Right-click on the Serial Port you have the LocoBuffer hooked up to and select Properties. Go to the Port Settings tab and set the options to:<br>
+	19200, 8, None, 1, Hardware.<br>
+	Click OK. Quit the application and restart JMRI. Verify your connection settings.</p>
+
+<a id="largewindow"></a>
+<h3>Large Windows</h3>
+<img src="images/TaskbarOptions.png" height="228" width="202" align="right" alt="control panel">
+<p>Depending on what it wants to display, JMRI can open up very large windows.  Generally, JMRI uses the size of the screen and information about fixed things like the start bar to decide the maximum size for an opening window so that e.g. the corners can't be reached to resize the window.</p>
+
+<p>Depending your Windows display operation, large JMRI windows will either resize to stay on the large part of the screen, clear of start bars and menu bars, or will be displayed at the full size of the screen, appearing under the start bar and menu bars.</p>
+
+<p>This is controlled by the <a href="images/TaskbarOptions.png">Taskbar and Start Menu Properties</a> control panel. JMRI windows can open to the full screen size if the 'Keep the taskbar on top of other windows' option is de-selected.</p>
+
+<p>Also, they can open to the full screen size if the 'Auto hide the taskbar' option is selected</p>
+
+<a id="themes"></a>
+<h3>Windows Themes and Skins</h3>
+<p>If you're using a "skinning" utility which changes the appearance of programs running on your computer, you should tell it to ignore the "java.exe" program.  That's how JMRI and DecoderPro will appear to it, and they weren't written with such "skins" in mind.</p>
+
+<a id="revert"></a>
+<h3>Reverting to an earlier version</h3>
+<p>During installation, JMRI can do a number of things automatically that
+makes it easier to revert to a previous working setup if a major problem is
+encountered in a test release.</p>
+<p>Note: This procedure will not preserve work done since upgrading; it restores
+everything back to the state at the time of upgrade.</p>
+<p>A backup copy of all your user files (Panel files, Roster entries, Preferences etc.)
+is saved when a new revision of JMRI is installed.
+This is done by the installer when it asks to save a backup copy which, if
+selected, is saved in a folder named "JMRI_backup".</p>
+<p>When installing a newer version of JMRI than that already installed, backup
+creation is defaulted to "Yes"; when installing an older version, it is defaulted to "No".</p>
+<p>If problems occur with the new version and it is necessary to revert to the
+last version in use, you should install the older version right over the version
+currently installed. Then find the folder that holds the folder named "JMRI_backup".
+This will normally be located in your user-profile folder - a quick way to
+find this is to follow the "Preferences" link in "JMRI > Tools and Demos" from the Start menu.
+<br><img src="images/WinDebugLog-01_StartMenuPreferences.png" height="358" width="531" alt="Preferences link in JMRI > Tools and Demos start menu">
+<br>Once opened, navigate up one level to your user-profile folder.
+<p>Depending on the version of Windows, this will typically be one of:</p>
+	<dl>
+	<dt>Windows 2000 - XP
+	<dd>C:\Documents and Settings\[username]
+	<dt>Windows Vista - 7 - 10
+	<dd>C:\Users\[username]
+	</dl>
+Within this folder, look for - and delete - the folder "JMRI", then rename
+the folder "JMRI_backup" to "JMRI".
+<p>Restart JMRI and you should be back to where you were before installing the new version.</p>
+
+<a id="debugging"></a>
+<h2>Debugging</h2>
+<p>Sometimes things go wrong.  The information in this section can help.</p>
+
+<a name="errors"><h3>Error messages</h3></a>
+	<ul>
+	<li><a name="stoppedworking" id="stoppedworking"></a>
+	<code>The JAVA SE Platform binary has stopped working</code><br>
+	There is a <a href="WindowsSeStoppedWorking.shtml">separate Help page</a>
+	for debugging the "The JAVA SE Platform binary has stopped working" error message.</li>
+	<li><a name="registry" id="registry"></a>
+    <div class="wide">
+	<code class=block">
+        WARN - Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5
+    </code>
+    </div>
+	You can ignore this one. This is an internal warning from Java itself. Certain combinations of
+	Windows configuration and Java 8 version emit it, but it doesn't have any adverse
+	impact on JMRI or the computer.  Oracle has said they'll fix it in Java 9, i.e.
+	<a href="http://www.catb.org/jargon/html/R/Real-Soon-Now.html">Real Soon Now</a>.
+	</ul>
+
+<a name="installtest"><h3>Run InstallTest</h3></a>
+<p>With JMRI a utility called InstallTest.exe is installed. To execute a series of tests on your Windows JMRI installation, start InstallTest from the Start menu -&gt; Programs -&gt; JMRI -&gt; Tools and Demos -&gt; InstallTest. The following screen will open:</p>
+<img src="images/WinInstallTest.png" height="323" width="512" alt="Preferences link in JMRI > Tools and Demos start menu">
+<p>Press any key to continue (after reading the screen).</p>
+
+<a id="logscreen"></a>
+<h3>The Log Screen</h3>
+
+<p>JMRI logs information about errors to a "messages.log" file in the "systemfiles" sub-directory of the JMRI preferences directory, and to a console window. This window is generally white text on a black background, and is labelled either "Java" or "DOS". If something is going wrong, look there for more information.</p>
+
+	<ol>
+	<li>To view the "systemfiles" sub-directory, follow the "Preferences" link in "JMRI > Tools and Demos" from the Start menu.
+	<br><img src="images/WinDebugLog-01_StartMenuPreferences.png" height="358" width="531" alt="Preferences link in JMRI > Tools and Demos start menu">
+
+	<li>Once the preferences folder is opened, navigate to the "systemfiles" folder.
+	<br><img src="images/WinDebugLog-02_SystemFiles.png" height="299" width="663" alt="systemfiles folder within JMRI preferences">
+
+	<li>Finally, within the "systemfiles" folder, is "messages.log".
+	<br><img src="images/WinDebugLog-03_MessagesLog.png" height="299" width="663" alt="messages.log file within systemfiles folder">
+	</ol>
+
+<p>If you're asked for a copy of the error messages, you can usually get them from the messages.log file.  If you can't find it there, make a copy of the log window:</p>
+
+	<ol>
+	<li>From the main JMRI window, choose "Help > System Console ...".
+	<br><img src="images/Win-JMRISystemConsole.png" height="409" width="850" alt="JMRI system console">
+
+	<li>Click the button "Copy to clipboard".
+
+	<li>In your e-mail client, Notepad, Wordpad,
+	favorite word processor, etc. position your cursor and left-click on Edit and
+	then Paste, or press the "Ctrl" and "V" keys.
+	</ol>
+
+<a id="startupissues"></a>
+<h3>Startup issues</h3>
+<p>To assist with resolving JMRI start-up issues, it is possible to modify the Start Menu shortcut used to launch JMRI.</p>
+
+<p>Shortcuts are modified as follows:</p>
+
+	<ol>
+	<li>From the Start button, navigate to the JMRI menu and right-click the DecoderPro icon
+	(the PanelPro and/or SoundPro icons can be similarly modified)
+	<br><img src="images/WinDebug-01_StartMenuItemProperties.png" height="358" width="456" alt="start menu properties">
+
+	<li>Insert the '/debug' option into the shortcut 'Target'
+	<br><img src="images/WinDebug-02_ModifyShortcutTarget.png" height="509" width="367" alt="modify shortcut target">
+	<p>When launched, the following window will appear showing various useful information:
+	<br><img src="images/WinDebug-03_LauncherDebugWindow.png" height="295" width="426" alt="launcher debug window"></p>
+	<p>Copy the contents of this window by 'right-clicking' and then choosing 'Copy Details to Clipboard'
+	<li>In your e-mail client, Notepad, Wordpad,
+	favorite word processor, etc, position your cursor and left-click on Edit and
+	then Paste, or press the "Ctrl" and "V" keys.
+	</ol>
+
+<p>For further information on the JMRI shortcuts, see the <a href="/help/en/html/doc/Technical/StartUpScripts.shtml#windows">page outlining the start-up procedure on Windows</a>.</p>
+
+<a id="shutdownissues"></a>
+<h3>Shutdown issues</h3>
+<p>To assist with resolving JMRI shutdown issues, it is possible to modify the
+start menu shortcut used to launch JMRI.</p>
+
+<p>Shortcuts are modified as follows:</p>
+
+	<ol>
+	<li>From the Start button, navigate to the JMRI menu and right-click the DecoderPro icon
+	(the PanelPro and/or SoundPro icons can be similarly modified)
+	<br><img src="images/WinDebug-01_StartMenuItemProperties.png" height="358" width="456" alt="start menu properties">
+
+	<li>Insert the '/noisy' option into the shortcut 'Target'
+	<br><img src="images/WinExitDebug-02_ModifyShortcutTarget.png" height="509" width="367" alt="modify shortcut target">
+
+	<p>When launched, the Java System Console window will appear showing various
+	messages from the JMRI program:
+	<br><img src="images/WinExitDebug-03_JavaSystemConsole.png" height="338" width="669" alt="java system console window"></p>
+
+	<li>When the shutdown of JMRI appears to hang, click in the Java System Console
+	window and then press 'Ctrl-Break' on the keyboard - this will print a Java
+	Thread Dump showing all active threads still running in JMRI:
+	<br><img src="images/WinExitDebug-04_ConsoleThreadDump.png" height="338" width="669" alt="java thread dump">
+
+	<li>Once the Java Thread Dump has been printed, select all the text in the
+	window by clicking the top-left icon and choosing 'Edit > Select all':
+	<br><img src="images/WinExitDebug-05_ConsoleSelectAll.png" height="338" width="669" alt="java thread dump">
+
+	<li>Once selected, copy the text to the clipboard by clicking the top-left icon
+	and choosing 'Edit > Copy':
+	<br><img src="images/WinExitDebug-06_ConsoleCopyToClipboard.png" height="338" width="669" alt="java thread dump">
+
+	<li>In your e-mail client, Notepad, Wordpad,
+	favorite word processor, etc, position your cursor and left-click on Edit and
+	then Paste, or press the "Ctrl" and "V" keys.
+	</ol>
+
+<p>For further information on the JMRI shortcuts, see the <a href="/help/en/html/doc/Technical/StartUpScripts.shtml#windows">Help page outlining the start-up procedure on Windows</a>.</p>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody, started in sidebar-->
+ <script src="/js/main.js"></script>
+ </body>
+</html>

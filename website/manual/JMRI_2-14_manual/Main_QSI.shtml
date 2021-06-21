@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<title>
+DecoderPro&reg; Main Window
+</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<h1>DecoderPro&reg; Main Window</h1>
+<h2>QSI Menu</h2>
+
+<div align="right">
+<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+</div>
+
+<hr>
+<p><strong>Command Monitor</strong></p>
+<p>Opens the <a href="Main_Monitor_Window.shtml">Communications  Monitor Window</a> and automatically displays the information that is being sent and  received on the communications link between your computer and your DCC  system.</p>
+<p><strong>Send Command</strong></p>
+<p>Opens the <strong>Send QSI command</strong> prompt to type in a <strong>Command:</strong> and click on 
+  <input type="submit" name="button" id="button" value="Send"> 
+  .
+</p>
+<p><img src="images/Main_QSI_01.png" alt="Send Command" width="226" height="99"></p>
+
+<div align="right">
+<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

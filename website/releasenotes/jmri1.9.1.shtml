@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 1.9.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 1.8 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <hr class="hide">
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 1.9.1 release
+      </h2>
+
+	<p>Date: November 4, 2007</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 1.9.1 of JMRI/DecoderPro is available for download.
+
+<!--     <br><b>This is a draft release note only; the download links do not yet work</b>  -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+
+<p>This is the next in a series of test versions.
+It contains 
+many new features, including:
+<ul>
+<li>A new layout editor for creating panels
+<li>NCE PowerCab support
+<li>Lots of new and updated decoder definitions
+<li>The way that layout information and panels is stored has been improved
+</ul>
+along with lots of other changes.  See the complete list below.
+
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 1.7 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 1.8" available for download today. -->
+
+<b><p>
+Note that starting with this release, JMRI is only available 
+under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+<p>The way that panels are opened, closed and accessed has changed:
+<OL>
+<li>A panel is not deleted when its panel window is closed.
+<li>To delete a panel, select "Delete this panel..." in the panel's File menu.  A validation message is displayed before the panel is actually deleted. This action deletes the panel from the program.  To permanently delete the panel from files, panels must be saved to disk after deleting the panel.
+<li>A new entry "Show Panel" has been added to the Panels menu.  All panels currently present in the program are listed in the submenu of Show Panel, independent of whether the panel window is closed (checked in the submenu), frontmost, or minimized. Selecting a particular panel makes it visible and frontmost.
+<li>When "New panel..." is selected, a small window is displayed allowing the user to select a "Panel Editor" panel or a "Layout Editor" panel.  The default choice is "Panel Editor".
+</OL>
+
+
+<p>This version of JMRI no longer supports NCE AIU broadcasts.  This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts.  Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
+
+<p>This version of JMRI requires Java 1.3 or later.  
+To see JMRI's plans for which Java versions will be required when, please see our
+<a href="../help/en/html/doc/Technical/TechRoadMap.shtml">technological roadmap page</a>.
+
+<p>If DecoderPro finds more than one matching decoder type when trying to automatically identify a decoder, it will now show all the possibilities in the selection tree.  It used to just select the first possible choice.
+
+<h3>Warnings from older versions:</h3>
+
+<p>For Lenz users: There are now separate choices for each of the serial-based Lenz Computer Interfaces 
+(i.e. the LI100,LI100F,LI101F). Since release 1.7.3, to aid in backwards compatibility, all the interfaces 
+currently have the same options as far as port speed is concerned. 
+Eventually, the port speeds which are not supported by each interface WILL be removed. 
+If you're using one of the interfaces listed above with this release, please check your configuration 
+and select the correct device-specific option. There is no impact for LIUSB users with this change.
+
+<p>We have added additional information to the roster files in this version to help properly handle short/long addressing 
+in systems that allow low addresses (e.g. 65) to be either short or long addresses. 
+The only current system we support that has this capability is NCE.
+If you have an NCE system, and you have locomotives with addresses of 127 or less,
+you should open their roster entries in DecoderPro, check that the proper short or long address is selected, and save them again.
+
+<p>Indexed CVs will not be included in any printouts for this release.
+ 
+<p>QSI CV 56.129 Engine ID Access is not supported in this release.
+  
+<p>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), 
+otherwise the writes will fail.
+ 
+<p>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
+ 
+<p>The Route interface has had significant changes.  New member functions have been provided for configuring the Turnouts and Sensors that are changed with the Route fires.  The old methods are deprecated. If you've written your own code that uses Routes directly, you should update it.  The deprecated methods will be removed after the next production release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.1.9.1.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.1.dmg?download</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.1.9.1.exe?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.1.exe?download</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.1.9.1.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.1.tgz?download</a>
+
+
+
+<h3>Changes since production version 1.8:</h3>
+
+<p>Dan Boudreau contributed new "smallschematics" track icons.
+
+<p>Several people worked to update the code to use Java 1.3; this will have some impact on interfaces in the software, if you're writing your own code that uses JMRI.
+
+<p>Dan Boudreau updated the NCE macro editor so that it could handle macro 0, and made other improvements.
+
+<p>
+Bob Jacobsen added tooltips to the Panel Editor to explain that the "Add" buttons are disabled until information is entered in the text boxes
+
+<p>
+Micheal Mosher added a definition for the TCS "BEMF" decoders, and updated the definition for the TCS X decoders to contain CV23, 24 and auto mars light
+
+<p>
+Dan Boudreau added tools to backup, restore and edit NCE macros.
+
+<p>
+Michael Mosher updated the QSI decoder definitions, adding many new models and features to the "Version 7" definitions.
+
+<p>
+Bob Blackwell updated the Digitrax SFX decoder definition to include a selection for CV11 on the Sound Pane. The added value is name "Sound Time Out". 
+
+<p>
+Solve a long-standing problem with SwitchIt accessory decoders on LocoNet systems by sending a "turnout off" command after each "turnout on" command. Real LocoNet throttles send "on" when you push the button and "off" when you release it.  Before this change, JMRI sent only the "message", which seemed to work fine.  However, when configured in certain ways, SwitchIt accessory decoders needed to see the "off" message to trigger.  With this change, the "off" message is sent whenever turnout is directly triggered (note "on" and "off" are complete separate from the "closed" and "thrown" directions).
+
+<p>
+Dennis Miller fixed a long-standing problem with the appearance of the startup image.
+
+<p>
+David Falkenburg added support for the NCE PowerCab.  This includes some changes to programming timeout values, and checking for the program erroneously sending unsupported commands to the PowerCab.
+
+<p>
+Brett Scott contributed scripts for configuring many DCC Specialties products, including the Hare, Wabbit, Block Watcher and PSX.
+
+<p>
+Michael Mosher updated the BLI Blueline decoder definitions to no longer use paged mode, as it doesn't work well
+
+<p>
+Michael Mosher updated the NCE DS13SR decoder definition to the recently-observed identifiers
+
+<p>
+David Duchamp added a completely new layout (panel) editor! In particular, note the very nice help files.
+
+<p>
+The "held" icon for a SignalHead on a panel wasn't rotating properly, now fixed.
+
+<p>
+Dan Boudreau updated the NCE consist manager
+
+<p>
+Alex Shepherd fixed a bug that would cause a LocoNetOverTcp connection to hang if the remote stopped responding.
+
+<p>
+Paul Bender added the Silver Direct to the Lenz Silver decoder family
+
+<p>
+Stephen Williams found and fixed a bug that caused LocoNet slot 119 (a normal slot) to be only shown when system slots were being shown
+
+<p>
+Protect against an error where errors are thrown while trying to start the program on certain Linux machines.
+
+<p>
+Through the magic of XSLT, decoder files and the decoder index now show useful information when viewed in a web browser
+
+<p>
+Dan Boudreau added X&amp;Y positions to the popup menus for panel icons
+
+<p>
+Simon Ginsburg updated the German translation
+
+<p>
+Dennis Miller changed the way decoder identification is presented by DecoderPro.  If more than one decoder can possibly match when you ask DecoderPro to identify the decoder, they will now all be highlighted and the user will be asked to select one.
+
+<p>
+The programs will now log various "INFO" messages as part of running. This is normal, and is meant to help with debugging.
+
+<p>
+This release has debugging information included with the code, so that if there's a fault you'll get a useful traceback to send back to us.
+
+<p>
+Lots of little Javadoc improvements
+
+<p>
+DecoderPro now creates a decoder index that displays it's contents when viewed in a modern web browser. Note you need to be connected to the internet for this to work.
+
+<p>
+The Decoder Definition Files now display (using XSLT stylesheets) when viewed in a web browser.  Note you need to be connected to the internet for this to work.
+
+<p>
+David Duchamp added a "delayed set turnout" action to Logix conditionals
+
+<p>
+David Duchamp updated Panel menu and the storing and deleting of panels:
+<ol>
+<li>A panel (either type) is not deleted when its panel window is closed.
+<li>To delete a panel (either type), select "Delete this panel..." in the panel's File menu.  A validation message is displayed before the panel is actually deleted. This action deletes the panel from the program.  To permanently delete the panel from files, panels must be saved to disk after deleting the panel.
+<li>A new entry "Show Panel" has been added to the Panels menu.  All panels currently present in the program are listed in the submenu of Show Panel, independent of whether the panel window is closed (checked in the submenu), frontmost, or minimized. Selecting a particular panel makes it visible and frontmost.
+<li>When "New panel..." is selected, a small window is displayed allowing the user to select a "Panel Editor" panel or a "Layout Editor" panel.  The default choice is "Panel Editor".
+</ol>
+
+<p>
+Alfredo Sola updated the Spanish version of the interface
+
+<p>
+The NCE code has been updated to try to fix a problem with reading specific CV values, most often seen when reading QSI decoders.
+The fix is different for each of the various NCE EPROM versions, and it's not clear that we have properly covered all the cases.
+
+<p>
+Walter Thompson updated the SoundTraxx DSD Steam decoder so that the CV lists display in order.
+
+<p>Michael Mosher fixed a bug in the horn/bell default in the SoundTraxx DSX Diesel and DSD Diesel files.
+
+<p>Bob Blackwell and Michael Mosher updated the Digitrax "3" definition to include the DN123K3 decoder.
+Also, Christopher Zurek removed the "Rear Headlight Controlled by F4", which is not supported in this series of decoders.
+
+<p>
+Michael Mosher updated the QSI V7 decoder definitions to add "grade crossing" as an output type and define CV62 bit 2
+
+<p>
+Petr Koud'a made it possible to use Littfinski Daten Technik (<a href="http://www.ldt-infocenter.com/">LDT</a>) signal decoders with JMRI. These decoders can display up to 8 aspects. One position of a turnout is associated with each signal aspect. This new signal type assigns turnout positions to all 7 JMRI signal aspects.
+
+<p>
+A definition was added for the MRC 1656 sound decoder
+
+<p>
+Dan Boudreau provided help pages for many of the tables.
+
+<p>
+Ken Cameron updated the NCE fast clock support.
+
+<p>
+Daniel Boudreau has added a turnout lock feature which allows the user to selectively disable accessory (turnout) commands from cabs.  By locking a turnout, the JMRI program will monitor the turnout's accessory address and if it detects a change command from a cab, will cancel the command immediately by sending out the opposite command to the turnout.  To help you select a set of turnouts to lock, a route can be locked.  All turnouts that are being monitored by the JMRI program and are included in the route will be locked.  In the route edit window, a new optional lock control turnout is available. You can use the lock control turnout to enable or disable the locks from a panel icon.  The lock control turnout can be an internal or external turnout.  To use this new feature the system must be NCE using 2007 EPROM or newer, and the turnouts to be locked must use MONITORING for feedback.
+
+<hr class="hide">
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

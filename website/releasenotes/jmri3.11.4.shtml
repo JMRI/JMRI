@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.11.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.11.4 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.11.4 release
+      </h2>
+
+	<p>Date: March 20, 2015</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.11.4 of JMRI/DecoderPro is available for download.</p>
+ 
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in the next JMRI production release around the middle of 2015.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+None at release time.
+
+<!-- 
+If any of those effect you, please either wait for 
+<a href="jmri3.11.2.shtml">JMRI 3.11.2</a>, due out shortly after this one,
+or pick up a 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>This release, and all later releases in this cycle, require Java 1.8 or higher.
+To use this or any later JMRI releases, you'll have to 
+<a href="https://java.com/en/download/index.jsp">update the Java on your computer</a> to Java 1.8 or higher.
+</p>
+
+<p>JMRI 3.11.3, and therefore this version, removes some files that were present in earlier versions.
+Failure to remove these can result in some portions of
+JMRI (notably the web server) failing to function correctly.
+If you are updating an existing JMRI installation to this version on
+<a href="../install/Linux.html#update">Linux</a>, 
+you must remove any older version of JMRI or unpack this
+version of JMRI in an alternate location. 
+The recommended update procedures for JMRI on
+<a href="../install/WindowsNew.shtml#update">Microsoft Windows (run the installer)</a> 
+and 
+<a href="../install/MacOSX.html#update">Mac OS X (open disk image and drag to final location, e.g. Applications folder)</a> 
+remove/replace the older version of JMRI, ensuring that these obsolete files are not 
+present.
+</p>
+
+<p>This release uses JDOM 2.0.5, which requires some code changes if you are directly
+calling the parts of JMRI that interchange XML objects.</p>
+
+<p>There are now separate settings for the default Service Mode Programmer and 
+for the default Ops Mode Programmer.  If you're using two or more system connections,
+this lets you use one connection for ops mode (on track) programming and another connection
+for your programming track. If you're using two separate connections, you
+should go to the Defaults pane on the Preferences window and check that those 
+defaults were set properly.</p>
+
+<p> If you are making a direct connection to a Intellibox unit via
+    serial or USB, you will have to reselect your preferences.
+    See the 
+    <a href="http://jmri.org/help/en/html/hardware/loconet/Uhlenbrock.shtml">Uhlenbrock support page</a> 
+    for instructions.</p>
+
+<p> If you are using an NCE USB adapter, you will have to reselect your preferences
+     the first time you use a JMRI 3.11 version (if you set them using JMRI 3.10 or earlier).
+    See the 
+    <a href="http://jmri.org/help/en/html/hardware/nce/NCE.shtml">page on configuring JMRI for NCE</a> 
+    for instructions.</p>
+
+<p>The Save button in the Preferences window now only prompts for restarts if required.
+There may be instances when pressing save incorrectly fails to prompt to restart JMRI or
+prompts to restart JMRI when it should not.</p>
+
+<p>Because of internal code changes, this version of JMRI may not be compatible with
+<a href="http://cats4ctc.org"><!-- was http://home.comcast.net/~kb0oys/ --> CATS 2.34</a> or earlier.  Keep using 
+<a href="jmri3.10.shtml">JMRI 3.10</a> with CATS until there's a CATS update that
+says it will work with JMRI 3.11.</p>
+
+<p>The XmlIO web service has been removed. All users who were relying on the
+XmlIO API are recommended to begin using the JSON API. inControl web throttle
+users are recommended to begin using webThrottle instead, or invest in devices
+that can support webThrottle, the iOS WiThrottle, or the Android Engine
+Driver.</p>
+
+
+
+<h3>Download links:</h3>
+
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.4-r28907.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.4-r28907.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.4-r28907.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.4-r28907.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.4-r28907.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.4-r28907.tgz/download</a></p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.5/ws/jmri/dist/release/">CI project page</a>.
+ --> 
+
+<!--
+<p>During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+-->
+ 
+<h3>Changes since test release 3.11.3:</h3>
+
+
+<h4>Hardware Support</h4>
+    <h5>Uhlenbrock Intellibox</h5>
+        <ul>
+        </ul>
+    <h5>ESU - ECOS</h5>
+        <ul>Fixed an issue where the Loco Database from the Ecos wasn't always loaded correctly</ul>
+        
+<h4>Signals</h4>
+    <p>Egbert Broerse improved the signaling system documentation</p>
+    <p>Balazs Racz: For single output signal head, whenever the underlying turnout changes
+        (due to change in the turnout table, turnout feedback, or JMRI listening on the command bus and picking up a turnout change event), 
+        the signal head will adjust the displayed output.
+        Also fixed a bug at JMRI startup: 
+            The single output signal head implementation was generating a turnout change command every 
+            time JMRI started up (at panel.xml load time).</p>
+    <p>Oscar Moutinho updated the DB-HV-1969 signals definition to improve speed control and icons</p>
+    <p>The signal speed definition has been updated for consistent operation. Also, a release
+        test has been added to keep it that way.</p>
+    
+<h4>New / Updated decoder definitions</h4>
+
+<!-- 
+    <h5>Fleischmann</h5>
+        <p></p>
+            
+    <h5>SoundTraxx</h5>
+        <p></p>
+        
+    <h5>TCS</h5>
+        <p></p>
+
+    <h5>ESU</h5>
+        <p>
+        <ul>
+        <li>
+        </ul>
+ -->
+
+    <h5>Digitrax</h5>
+        <p>Economy Serie 6: version (CV7) starts with 51 instead of 52 (Alain Le Marchand)</p>
+        
+    <h5> Doehler &amp; Haass</h5>
+    <p>Global update (Pierre Billon)</p>
+        <ul>
+         <li>Added: 1 new Decoder / 4 Fw versions (DH22A)</li>
+         <li>Added: 3 new Fw version(s) (DH05C, DH06A, DH10C, DH12A, DH16A, DH18A, DH21A)</li>
+         <li>Added: 1 new Fw version(s) (FH05A, SD18A, SD21A, SH10A, generic profile)</li>
+         <li>Added: SUSI pane, moved relevant options there (All decoders)</li>
+         <li>Added: Start/Brake/Shunt pane, moved relevant options there (All decoders)</li>
+         <li>Change: Adv. mapping now in standard mapping table (All Decoders)</li>
+         <li>Change: Railcom pane (grid + qualifier) (All Decoders)</li>
+         <li>Change: Adapted Trix 66840 def to match above changes to the core D&amp;H XMLs.</li>         
+         <li>Fixed: Consistent Reset function / translation (All Decoders)</li>
+         <li>Fixed: Removed non applicable Motorola options (FH05A, DH05A, DH05B, DH10A, DH10B, DHP160, DHP250, DHP260)</li>         
+         <li>Info: New ProductID format for future versions (e.g.: DH05A_2014.10)</li>
+         <li>Info: No new models created for new Fw on long deprecated models (DH05A/B, DH10A/B, DHP160/250/260). Use generic profile if needed.</li>         
+        </ul>        
+        
+    <h5>Miscellaneous</h5>
+        <p>Add <a href="http://www.dccconcepts.com/">DCCconcepts</a> Zen series of decoders (Alain Le Marchand)</p>        
+        <p>Peter MacKenzie added definitions for the Hattons MD4 and Gaugemaster Opti DCC25 decoders.
+        
+<h4>Operations</h4>
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>New feature, you can now have the program assign a locomotive to a train based on the
+     train's tonnage, route grades, and engine horsepower. See the operation's help "Optional Train
+     Requirement" for more details.</li>
+    <li>Changed the date and time format when logging rolling stock and trains to be more MS
+     Excel compatible. Makes it easier to combine several Excel sheets and then sort by date and
+     time.</li>
+     <li>Export of cars and locomotives now includes the "Moves" count associated with them.</li>
+    <li>Improved how the program deals with cars on a FIFO or LIFO track. Previously, cars on a
+     FIFO or LIFO track were stuck behind cars that couldn't move. Program will now bypass a stuck
+     car and process the next cars in the order defined by FIFO or LIFO. A car could be "temporary"
+     stuck if the car's destination was full and couldn't accept the car.
+    <li>Improved how the "Edit Car" window blocking feature deals with cars that are defined as
+     "Passenger" and also in a kernel. Now the program won't ask if all passenger cars should have
+     the same blocking number if the car is also in a kernel</li>
+     <li>Made improvements to the car router to allow routing through staging. This allows users to
+     model industries that aren't on the layout. Feature is still disabled by default.</li>
+    <li>Fixed a problem where a caboose or car with FRED would lose its departure track in in
+     staging after reseting a train that also departed and returned to the same staging track.</li>
+    <li>Fixed a problem where a car's final destination and custom load didn't reset properly
+     when a car was departing staging and was assigned to staging that was full. Thanks to Dave
+     Waraxa for finding and reporting the two last problems.</li>
+   </ul>
+
+   <h4>Blocks</h4>
+    <p></p>
+     
+<h4>Preferences</h4>
+	<p>A Warrants panel is added to Preferences.  Warrants can now interpret the Aspect Speed Map 
+	four ways: % of Normal, % of Full Throttle, Miles per Hour or Kilometers per hour.  A
+	global Throttle Factor to aid trains in running at scale track speed is added.  Also added is
+	a combo box to set the layout scale.  See the warrant's help documentation for details.</p>
+	
+<h4>Warrants</h4>
+    <ul>
+	<li>The algorithm to change speeds due to track conditions is improved to more accurately predict
+	speed change start and end points.</li>
+	<li>Warrants now respond to block speed changes.</li>
+	<li>Aspect speed changes for warrants may be indicated by actual prototype speeds - e.g. mph 
+	or kmph.</li>
+	<li>Individual engine addresses may be calibrated with a "Throttle Factor" so they can run at
+	scale track speeds.  The NXWarrants have a new feature to calibrate an address.</li>
+	<li>The "Offset(sec)" column in the Signal Table at <i>Add Items->Occupancy Blocks</i> now can 
+	adjust the the end point of a speed change (+/-).</li>
+	<li>Warrant help documentation is updated.</li>
+	</ul>
+	
+<h4>Miscellaneous</h4>
+	<p>The name of the active profile is displayed on the PanelPro main window and in the
+	status bar on all Roster windows (including the DecoderPro 3 main window).
+	(Randall Wood)</p>
+	
+	<p>Fixed an issue where editing the DecoderPro 3 Preferences could cause the configuration
+	to be corrupted or destroyed. (Randall Wood)</p>
+	
+	<p>Lisby made an enhancement to the train tracking as implemented in Block.java:
+        When the existing code has not been able to track the train, i.e. the train ID in terms of block value will be lost.
+        The enhancement stores the candidate Blocks that a train may have arrived from when a block becomes occupied 
+        and then when a block becomes unoccupied, it informs its neighbors who can then choose to use their candidate list to 
+        determine where their train came from.
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

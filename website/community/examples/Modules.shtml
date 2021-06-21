@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+ 	JMRI on a Modular Railroad
+    </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI PanelPro control panel DCC Modular">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+    <hr class="hide">
+
+    <div class="no-sidebar" id="mBody">
+	<div id="mainContent">
+
+<h1>JMRI on a Modular Railroad</h1>
+
+<a href="images/module/anson2.jpg"><img src="images/module/anson2.jpg" width="180" height="240"></a>
+<a href="images/module/anson1.jpg"><img src="images/module/anson1.jpg" width="320" height="240"></a>
+
+<p>
+JMRI 
+<a href="/help/en/html/apps/PanelPro/index.shtml">PanelPro</a>
+can be used to operate modular railroads. 
+The long runs make it very convenient to have a central dispatcher
+controlling the layout.
+With PanelPro, you can create separate panel files for each module, and 
+combine them on the computer screen.
+
+<p>
+<a href="images/module/Ansonall.gif"><img src="images/module/Ansonall.gif" width="450" height="125"></a>
+
+<a href="images/module/StorageYardRev.gif"><img src="images/module/StorageYardRev.gif" width="250" height="125"></a>
+
+<p>
+You can also define JMRI
+<a href="/help/en/html/tools/Routes.shtml">Routes</a>
+to rapidly set turnouts as needed.
+
+<p>
+<a href="images/module/Anson.png"><img src="images/module/Anson.png" width="640" height="512"></a>
+
+<!--#include virtual="/Footer.shtml" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>

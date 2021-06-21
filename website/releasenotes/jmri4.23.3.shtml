@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <title>
+ JMRI: Release Notes for 4.23.3
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.23.3 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h1>
+      Release Notes for JMRI 4.23.3 release
+      </h1>
+
+    <p>Date: April 2, 2021</p>
+    <p>From: Bob Jacobsen</p>
+    <p>Subject: Test Release 4.23.3 of JMRI/DecoderPro is available for download.</p>
+
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<h2>Notes:</h2>
+
+<p>This is a test release.  Please 
+<a href="https://groups.io/g/jmriusers">post a note</a>
+if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test releases.
+We expect this series to end in the next JMRI production release in Summer 2021.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?direction=asc&sort=due_date&state=open"><em>tentative</em> release schedule</a>)
+</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test release should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/Copyright.html">copyright and licensing page</a>.</b></p>
+
+<a id="update" name="update"></a>
+<h3>Update From Older JMRI Versions</h3>
+
+If you are currently using a version older than JMRI 4.20, please follow these instructions carefully:
+<!-- Note:  At this point, we're not requiring an update to 4.22; change if needed-->
+<ol>
+<li>Is your current version older than <a href="jmri4.12.shtml">JMRI 4.12</a>? 
+    If so, then update to <a href="jmri4.12.shtml">JMRI 4.12</a> first, and ensure everything works correctly: check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else.
+    Store your configuration and panel files under a new name and use those from now on. 
+    Then continue with step 2.
+    <p>
+    If you are currently using JMRI 4.7.3 or earlier on Linux or macOS (Windows doesn't need this), 
+    then it's <u>very important</u> 
+    that you update to <a href="jmri4.12.shtml">JMRI 4.12</a> and
+    carrying out the <a href="jmri4.12.shtml#migration">migration process described in the JMRI 4.12 release note</a>
+    before updating to any later relese.
+    </li>
+    
+<li>Is your current version older than <a href="jmri4.20.shtml">JMRI 4.20</a>? 
+    Then update to <a href="jmri4.20.shtml">JMRI 4.20</a> first, and ensure that works correctly (check
+    start-up, check things you need to be working, and check the JMRI log as well) before doing anything else
+    Store your configuration and panel files under a new name and use those from now on.</li>
+
+<li>You can then install this release. 
+
+</ol>   
+ 
+Following this multi-step order of updating via stable major releases safeguards you against possible migration issues 
+that can arise from skipping these versions.
+
+<a id="problems" name="problems"></a>
+<h3>Known problems with this release</h3>
+<ul>
+    <li>None</li>
+</ul>
+<!--
+If any of those affect you, please either 
+wait for
+<a href="jmri4.19.6.shtml">JMRI 4.19.6</a>, due out shortly after this one,
+or (once there's a fix for the problem) pick up a
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">development build installer</a>
+from
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this release:</h3>
+
+<ul>
+   
+   <!-- While this release is in development, the     -->
+   <!-- list of new warnings is kept in               -->
+   <!-- help/en/releasenotes/current-draft-warnings.shtml -->
+   <!-- in the JMRI/JMRI repository. Please edit      -->
+   <!-- there.  Changes to this file won't be merged. -->
+   
+   <!--#include virtual="/help/en/releasenotes/current-draft-warnings.shtml" --> <!-- #include once this is current -->
+</ul>
+
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.20.shtml#warnings">JMRI 4.20 release note</a> for more warnings predating the 4.21 development series,
+including pointers to various migration issues.
+These may be relevant to you if you're updating from an earlier version;
+we strongly recommend you update to <a href="jmri4.20.shtml">JMRI 4.20</a>
+installing this test release.
+
+<ul>
+    <li><span class="since">Since <a href="jmri4.21,1.shtml">JMRI 4.21.1</a></span>
+        The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+        interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+        require changes to scripts.  If you have a script that references
+        jmri.jmrix.SystemConnectionMemo, please change it to either
+        jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+        (it's easier to have you just try the two than to explain which 
+        one will work in which case)
+    </li>
+    
+    <li><span class="since">Since <a href="jmri4.21.1.shtml">JMRI 4.21.1</a></span>
+        The way preferences are loaded at startup has been slightly
+        modified.  There is no impact to JMRI applications, but Non-JMRI
+        applications that are not derived from apps.Apps or apps.AppsBase
+        but are using jmri.implementation.JmriConfigurationManager to load
+        preferences will no longer see preferences if an error occurs.  To
+        restore the old behavior, use apps.AppsConfigurationManager instead.
+    </li>
+
+    <li><span class="since">Since <a href="jmri4.11.4.shtml">JMRI 4.11.4</a></span>
+        There are issues with the Pi-SPROG One command station operation. A number of workarounds should be applied:
+        <ul>
+            <li>Do not turn on the track power until the power supply to the Pi-SPROG ONE is turned on</li>
+            <li>Do not enable extra debugging through default.lcf, nor open the system console window</li>
+            <li>Do not open the SPROG console window</li>
+            <li>Disable power conversion (CV 29) in all locos</li>
+            <li>If connecting via VNC (or similar), setup the screen layout before turning on the track power</li>
+        </ul>
+        Pi-SPROG One with version 2.4 or earlier firmware will cause a timeout after a track short circuit. A dialog box will
+        open to inform the user of this. The track power will be turned off and must be turned on again using the power control.
+    </li>
+</ul>   
+
+<a id="download" name="download"></a>
+<h2>Download links:</h2>
+
+<ul>
+<li>OS X / macOS: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.23.3/JMRI.4.23.3+R528b9f0d6.dmg">https://github.com/JMRI/JMRI/releases/download/v4.23.3/JMRI.4.23.3+R528b9f0d6.dmg</a><br/>
+  sha256: 95003157192c539139a02f16f34d5703eaa268c66bfa6c11520de263a03121b7 </li>
+
+<li>Windows: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.23.3/JMRI.4.23.3+R528b9f0d6.exe">https://github.com/JMRI/JMRI/releases/download/v4.23.3/JMRI.4.23.3+R528b9f0d6.exe</a><br/>
+   sha256: d4c262b245d8b516b69eaa834ca2270bd54300cf1b31e490d1bfcf512799ac47</li>
+
+<li>Linux: <a
+	href="https://github.com/JMRI/JMRI/releases/download/v4.23.3/JMRI.4.23.3+R528b9f0d6.tgz">https://github.com/JMRI/JMRI/releases/download/v4.23.3/JMRI.4.23.3+R528b9f0d6.tgz</a><br/>
+   sha256: c3dc3d500f782e623968e9dff9b697f0004fa928bcd000d8750cbb42ba783589</li>
+</ul>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="https://builds.jmri.org/jenkins/job/testreleases/job/4.23.1``/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the
+<a href="https://builds.jmri.org/jenkins/job/development/job/packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+ 
+<a id="changes" name="changes"></a>
+<h2>Changes since <a href="jmri4.23.2.shtml">Test Release 4.23.2</a>:</h2>
+ 
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=milestone%3A4.23.3+is%3Amerged">list of included changes</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+    <h3>Hardware Support</h3>
+
+        <h4>CBUS</h4>
+            <ul>
+                <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+		
+            </ul>
+
+        <h4>DCC++ and DCC-EX</h4>
+            <ul>
+                <li>Improved CV read speeds by included startVal</li>
+            </ul>
+
+        <h4><a href="http://openlcb.org">OpenLCB / LCC</a></h4>
+            <ul>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+		<li>Configuration editor functional and visual updates:
+            <ul>
+                <li>If a configuration window is closed with unsaved changes, a warning dialog will appear.</li>
+                <li>Updated fonts and geometric arrangement to make the dialog easier to oversee.</li>
+                <li>The dialog will open with all segments closed to reduce clutter and ease navigation.</li>
+                <li>Fixed bug in resizing the window.</li>
+                <li>Accessibility updates: the segment headers are now part of tab order and can collapse/expand on enter or space key.</li>
+            </ul>
+		</li>
+		<li>JMRI will now respond to the Global Identify Events message as the standard requires.</li>
+            </ul>
+
+        <h4>SPROG</h4>
+            <ul>
+                <li>Increased maximum command station slots to 64 and added advanced connection preference to select.</li>
+                <li>Added support for current CV value hint when reading (requires a future SPROG 4.5 firmware release).</li>
+            </ul>
+
+    <h3>New / Updated decoder definitions</h3>
+        <ul>
+          <li>All decoder.xsd XML validation schema from now on require an "item" attribute on each variable
+          element. It is needed to apply qualifier selections to translated definitions.<br>
+          All current decoder definitions in JMRI were updated where necessary (see below for specific ESU, LDH and
+          Zimo series).</li>
+        </ul>
+
+        <h4>Doehler &amp; Haas</h4>
+            <ul>
+                <li>New - for all new D&amp;H definitions: decoder model (product ID) is now detected automatically thanks to the introduction of CV 261 in updated firmware.</li>
+                <li>DH05C (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH10C (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH16A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH21A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>PD05A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>PD12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH05B (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>SH05A (fw 1.14.050 - including update path from older fw versions definitions)</li>
+                <li>SH10A (fw 1.14.050 - including update path from older fw versions definitions)</li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.</li>
+            </ul>
+
+        <h4>LDH</h4>
+            <ul>
+              <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.<br>
+                Common CVs were moved to cv33-39mapping.xml and cv67-94speed.xml respectively.</li>
+            </ul>
+
+        <h4>ZIMO</h4>
+            <ul>
+                <li>MX605 (Kato type plug N sound decoder for ICE 4)</li>
+                <li>Missing "item" attributes were added to the CVSwissMapping_v36.xml include and the Decoder
+                Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
+            </ul>
+
+    <h3>PanelPro</h3>
+      <a id="PanelPro" name="PanelPro"></a>
+      <ul>
+        <li>The main PanelPro menu has changed.
+          <ul>
+            <li>The Load, Store, and History menu items have moved from the <strong>Panels</strong>
+            menu to the <strong>File</strong> menu.</li>
+            <li>The script related menu items have been moved to a new <strong>Scripting</strong> menu.</li>
+            <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
+            <li>A dialog will be displayed if a second load is invoked.  The message can be suppressed using the checkbox.</li>
+            <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
+            <li>When the Close button on a panel window is clicked, a dialog will be displayed to
+            indicate that the panel has been hidden.  The message includes instructions on making the
+            panel visible and how to delete the panel.  The message can be suppressed using the checkbox.</li>
+            <li>When a panel is added, deleted or renamed, a pending update flag is set.  If PanelPro is stopped before
+            doing the <strong>Store</strong> process, a dialog will be displayed.  Select <strong>Yes</strong>
+            to store the changes before the shutdown proceeds.</li>
+          </ul>
+        </li>
+      </ul>
+
+   <h3>Dispatcher</h3>
+        <a id="Dispatcher" name="Dispatcher"></a>
+        <ul>
+             <li>Use full length of section when stopping by speed profile.</li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"></a>
+        <ul>
+            <li>Fix <strong>Options &rArr; Track Options &rArr; Hide Track Construction Lines</strong>.</li>
+        </ul>
+
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+
+    <h3>Preferences</h3>
+        <a id="Preferences" name="Preferences"></a>
+        <ul>
+            <li>Throttles : Keyboard shortcuts can be customized in JMRI throttle preferences screen (second pane, warning, no consistency check is made)</li>
+        </ul>
+
+    <h3>Roster</h3>
+        <a id="Roster" name="Roster"></a>
+        <ul>
+            <li>Media/Function tab : Added an entry in function buttons icons contextual menu that will open a system file manager located into the JMRI functions icons library (allows easy drag'n drop)</li>
+            <li>Media/Function tab : If an existing icon or image file (same name, same size) is aded an icon, it will no longer be duplicated, existing instance will be used</li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <a id="Scripting" name="Scripting"></a>
+        <ul>
+            <li>Added script "SensorFromBxpa1AutoRev.py".  This script monitors 
+                LocoNet for messages pertaining to BXPA1 autoreverse events and
+                updates a JMRI sensor to reflect the state.  When monitoring a
+                specific BXPA1 (by BoardID), one JMRI sensor is used.  When 
+                monitoring all BXPA1 devices, a separate JMRI sensor is defined
+                for each reporting BXPA1 device.  Further details on script 
+                configuration and some known limitations may be found in the 
+                comments included within the script's code.</li>
+        </ul>
+
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"></a>
+
+    	<h4>Simple Signal Logic</h4>
+            <ul>
+                <li>The SSL tool has been updated to include the ability to
+                <strong>delete</strong> a SSL defintion.</li>
+            </ul>
+
+    <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>            
+            <li>Function Panel now displays all functions buttons at once, with a scrollbar if required</li>
+            <li>There are as many function buttons as defined by the used throttle</li>
+            <li>Added an entry in function buttons icons contextual menu that will open a system file manager located into the JMRI functions icons library (allows easy drag'n drop</li>
+            <li>If an existing icon file (same name, same size) is aded an icon, it will no longer be duplicated, existing instance will be used</li>
+            <li>Keyboard shortcuts now available on whole throttle window</li>
+            <li>Keyboard shortcuts can be customized in JMRI throttle preferences screen (second pane, warning, no consistency check is made)</li>            
+            <li>Mousewheel speed control now available on whole throttle window</li>
+            <li>One mousewheel scroll unit will increment or decrement throttle speed by one speed setting increment (depends on the throttle speed step setting)</li>
+            <li>Use Ctrl key to apply a multiply factor on speed increment/decrement (customizable in JMRI throttle preferences screen)</li>
+            <li>Function and Control panels property panes reworked</li>
+            <li>Function button with images can be resized in button property panel</li>
+            <li>Function button customizations correctly serialized</li>
+            <li>Ticks on graphical speed slider</li>
+            <li>Pressing Enter in AddressPanel when entering an address will actually request it</li>
+            <li>Jythons scripts with direct access to the JMRI UI are now deprecated (AAR105.py, RailDriver.py, USBThrottle.py, xboxThrottle.py). Use USBThrottleAsJynstrument.py script instead, or direct Jynstrument in <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn</a> , specific drivers are proposed for AAR105 and Raildriver, they may have to be adjusted.</li>
+        </ul>
+
+
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
+        <ul>
+            <li>Reduced audio buffer consumption for Diesel sounds.</li>
+            <li>Minimum time for a sub-buffer increased from 100 to 150 milliseconds.</li>
+            <li>Fixed bug with last accel-limit values less than 100 in config.xml.</li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>Sound files that are larger than 100,000 bytes and therefore are streamed can now be looped.</li>
+        </ul>
+   
+   <!--#include virtual="/help/en/releasenotes/current-draft-note.shtml" --> <!-- #include once this is current -->
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

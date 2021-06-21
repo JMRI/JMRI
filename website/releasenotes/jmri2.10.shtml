@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.10
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.10 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent" style=" width : 692px;">
+      <h2>
+      Release Notes for JMRI 2.10 release
+      </h2>
+
+	<p>Date: July 13, 2010</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production release 2.10 of JMRI/DecoderPro is available for download.
+
+We are very pleased to announce that the 2.9 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production version 2.10" available for download today.
+
+<p>
+Among the enhancements since the last production release, JMRI 2.10, are:
+<ul>
+<li>Many improvements to throttles, particularly wireless ones
+<li>Many new and improved DecoderPro decoder definitions
+<li>New support for "aspect signaling", which drives an entire mast at once
+<li>More flexible preferences, accessed through a much better window.
+<li>Improvements to layout and panel editor
+</ul>
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>Warnings for this version:</h3>
+
+Panel files written with JMRI 2.10 
+may not be readable by earlier versions of JMRI.
+
+<p>
+JMRI system names start with two capital letters, e.g. LT10 or NS23 or PLA5.
+Past versions have tried to cope when people enter lower cases letters,
+e.g. lt10 or Ns23 or pLA5, with various degrees of success. 
+Unfortunately, this code isn't compatible with some new systems that are
+being working on, and we have to remove it.  This version of 
+JMRI requires that you enter consistent system names, including using the right case.
+If you use system names, and haven't been using consistent names, you'll
+probably have to practice a little to get in the habit. If you have any problems
+reading old files, etc, please post a note on the JMRI users group</li>
+and somebody will help you.
+
+<p>
+The LocoTools application is no longer supported, and is being removed.
+Some parts of it are still present, but you should use e.g. PanelPro or
+DecoderPro instead.  They can do everything that LocoTools can.
+
+<p>
+The preferences have been significantly reworked. In some cases,
+preferences to add a button or do an action at startup may have to be 
+deleted and re-entered before they will work.
+
+<p>
+If you're using a Lenz XPressNet connection, please
+uncheck the "Check Buffer Status" box in the preference
+pane where you selected the Lenz protocol.
+
+<p>
+This version of JMRI uses the new communications libraries introduced in 
+<a href="jmri2.9.3.shtml">JMRI 2.9.3</a>.
+On Windows, the installer should take care of all installation and deinstallation 
+required.  On Linux, you may have to install and/or uninstall 
+various communications library parts, see the
+<a href="../install/Linux.html">JMRI Linux pages</a> for more info.
+On Mac, depending on which version you were previously using you
+may have to remove a communications library, see the
+<a href="../install/MacOSX.html">JMRI Mac OS X page</a>.
+The communications libraries for Mac OS X have been updated.  
+We've tested these extensively, but there may be combinations of 
+hardware and software versions that still aren't right.  If the program
+can't see your layout connection, please post to the JMRI Users group</li>
+with what type of Mac you're using (PowerBook, PowerMac, MacBook, etc), 
+processor type (PPC G3, G4, G5 or Intel) and Mac OS X version (10.4, 10.5, 
+etc; names like Leopard are OK) too.  We've got several library versions 
+and most likely have one that will work, we just have to figure out which.
+Finally, if you have scripts that directly access the serial or parallel
+port, you'll have to change references to "javax.comm" to "gnu.io".
+
+<p>
+You may get some messages like:
+<code><pre>
+WARNING:  RXTX Version mismatch
+        Jar version = RXTX-2.2pre1
+        native lib Version = RXTX-2.2pre2
+</pre></code>
+For now, this should be considered normal.  We'll try to get it
+removed before the next production release. 
+
+<p>
+The JInput USB library was updated in  
+<a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, and again in
+<a href="jmri2.9.5.shtml">JMRI 2.9.5</a>, which (should) 
+have fixed problems on
+Windows Vista, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+input devices, so please check to make sure that your USB-attached devices still work.
+
+<p>
+When loading an older panel file containing signal head icons, you may
+get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
+To make these stop, just store the file again so that it's rewritten in the most recent format.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.10.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.10.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.10.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.10.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.10.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.10.tgz/download</a>
+
+<h3>Changes since production version 2.8</h3>
+
+Many decoder definition improvements:
+<ul>
+<li>Mark Waters added a new "Zimo MX680 v1-2" decoder type.
+<li>Peter Ulvestad added a decoder definition for the MRC Sound Brilliance 1800, 1802, 1810 and 1811 decoders.
+<li>Marc Fournier updated the version numbers in the MRC Athearn MP15 decoder definition.
+<li>Jack Shall updated the Tsunami Diesel definition to include the Kato KT100 models.
+<li>Andrew Berridge and Peter Ulvestad updated the Hornby 8249 definition.
+<li>William C Gage provided a decoder definition for the MRC Sound Brilliance 1808.
+<li>Marc Fournier provided a decoder definition for the Trix 66838 decoder.
+<li>Jack Shall updated the Tsunami Diesel definition.
+<li>Team Digital updated the definition for their SRC16 board.
+<li>Michael Mosher provided a definition for the ESU LokSound Select decoder.
+<li>Peter Ulvestad provided a decoder definition for the MRC Sound Brilliance 1812 decoder.
+<li>Michael Mosher and Jim Betz combined to update the TCS BEMF decoder definition.
+<li>Michael Mosher provided an MTH decoder definition.
+<li>Matt Harris fixed a problem with CV124 in the ESU LokSound Select decoder definition.
+<li>Peter Ulvestad updated the MRC 1665decoder definition
+    and added a MRC 1825 definition.
+<li>Mike Mosher updated the QSI Version 7 definitions
+    with a number of improvements, including hiding certain
+    non-present variables and CVs so DecoderPro won't try to read them
+    when they are not present. This is meant to reduce the problem
+    with QSI decoders stalling while being read.
+<li>Peter Ulvestad updated the ESU Bachman 3 function decoder definition.
+<li>Tom Stack updated the Tsunami Diesel definition with more models.
+<li>Mike Mosher added decoder definitions for the TCS V51+ decoders.
+<li>Jack Shall updated the Tsunami Diesel decoder definition to add the BW1000 series decoders.
+<li>John Stewart provided a decoder definition for the Lenz Plus 2010 decoder.
+<li>Mike Mosher added decoder definitions for the Soundtraxx Tsunami OEM decoders for Genesis locomotives.
+<li>Michael Mosher provided a new definition for Soundtraxx Bowser locomotive decoders
+<li>Nigel Cliffe provided a new definition for the TT300 accessory decoder, a UK product by Traintronics.
+<li>Nigel Cliffe made minor changes to CT decoder, primarily extending the volume control from four-steps to sixty-four steps 
+    (yet more undocumented changes by CT(!), found when experimenting with new decoder)
+<li>Mike Mosher updated the common parts of the QSI definitions for easier translation.
+<li>Michael Mosher provided a decoder definition for the QSI Stock Car.
+<li>Michael Povel provided definitions for the TAMS LD-G-21 and LD-G-32 decoders.
+<li>The function mapping pane for Digitrax DH163 decoders was missing two rows (functions F7 and F8).
+This has been fixed.
+
+</ul>
+
+<p>
+Many improvements to throttle support:
+<ul>
+<li>Brett Hoffman added support for sending roster information to the withrottle protocol.
+<li>Brett Hoffman updated the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle help</a>.
+<li>Lionel Jeanson made some throttle updates:
+    <ul>
+    <li>reviewed conditions to enable Program button in AddressPanel
+    <li>now using default programmer (from JMRI preferences) when that button is clicked
+    <li>removed the "Reset function button" from edit menu, merged functionality to the one in View menu
+    <li>in function button properties, changed default selected entry to the one of button text
+    <li>reviewed the way image are resized for better performances
+    <li>now allow to enable "resize window to image size" in all case (disabled by default)
+    </ul>
+<li>Jason M'Sadoques provided an update to 
+    use an Android phone as a throttle.
+<li>Lionel Jeanson updated the USBThrottle so it now supports browsing through 
+rosters and selecting one.
+<li>Lionel Jeanson provided a bug fix in wiimote throttle.
+<li>Andrew Berridge improves the XBox remote throttle.
+<li>A small correction was made to the BLI Blueline decoder definition.
+<li>Matjaz Krajnc provided better code and icons for the web throttle.
+<li>Jason M'Sadoques improved the WiThrottle support to pick the best
+    IP address for display when several are present, and to not 
+    display internal-only addresses that won't work for external access.
+<li>Andrew Berridge added an "estop" to the XBox throttle on the
+    left stick button.
+<li>Lionel Jeanson improved how throttle images are displayed to take less time and memory.
+<li>Several problems with allocation of addresses in the JMRI throttle were fixed.
+<li>The Throttle menu and preferences have been reorganized, hopefully to
+make their easier to understand and use.
+<li>Stephen Williams and Dan Boudreau made changes to the NCE throttle.
+    Previously throttle commands bypassed the NCE command station software
+    and were sent directly to the track (NMRA format). Now if you have the
+    "2006 or later" eprom installed, throttle commands will behave like the
+    a NCE throttle. For example, you can now address a locomotive in a
+    consist by its address rather than its consist number. 
+<li>Andrew Crosland improved how the speed-step setting is saved with a Throttle
+<li>Andrew Berridge provided a first version of an XBox throttle
+<li>Brett Hoffman updated the WiThrottle support:
+Added heartbeat for loss of connection, UDID for device ID, track power control.
+Added basic preferences support including using a fixed port #.
+Improved JmDNS shutdown.
+<li>Dan Boudreau and Steve Williams improved how consists are handled
+when using a JMRI throttle with an NCE PowerHouse Pro.
+<li>Pete Cressman made some internal improvements to the throttle implementation classes.
+<li>Dan Boudreau fixed some problems with function buttons on throttles.
+<li>Lionel Jeanson made improvements to the jyninstrument throttle support for images, 
+    added a driver for "USB Game Pad 2"-type devices,
+    and added 
+    <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/VideoView.jyn/VideoView.py">support for a video input view</a>
+    in a frame inside a Throttle Window.
+<li>Kevin Dickerson fixed a problem with SPROG throttles.
+<li>Brett Hoffman added consist selection to the WiThrottle support.
+<li>Brett Hoffman updated the WiThrottle protocol to separate functions for lead loco in consist.
+<li>Paul Bender made technical changes to the internals of the XPressNet throttle support.
+<li>Paul Bender and Lionel Jeanson improved the internal structure of the throttle support.
+    You may see changes in the way that real (handheld) throttles and the program interact.
+    There's a new throttle preference to control whether the speed should be set to 0
+    and functions turned off when a throttle is released.
+<li>Brett Hoffman changed how the WiThrottle protocol creates a throttle.
+    The throttle no longer shows in the "Windows" menu or
+    in the "Throttles List" window.
+<li>Paul Bender did more work on Lenz turnout control.
+<li>Steve Todd updated the wireless throttle support to avoid confusion with IPv6 connections.
+<li>Paul Bender improved how the Throttle handles functions when opening a throttle to a locomotive that's already in use.
+<li>Steve Todd updated the Android Engine Driver throttle program to have dual throttles.
+<li>Lionel Jeanson added a new throttle icon.
+<li>Lionel Jeanson updated the internal edit/play code for throttles to better handle backgrounds.
+<li>Brett Hoffman updated some of the remote throttle communications.
+<li>Lionel Jeanson provided a new "RosterImage" Jynstrument displaying the defined roster locomotive image in a throttle frame.
+<li>Several problems in the throttle were fixed.  
+    The most significant caused the function buttons to not work in certain circumstances.
+    There were also problems with the default address 3, and when using an address that
+    doesn't match a roster address.
+<li>Steve Todd updated the Engine Driver throttle for Android to version 0.6
+<li>Brett Hoffman fixed a timing issue with WiThrottle and consists.
+<li>Paul Bender updated internals of the throttle support in general and for XPressNet.
+<li>Brett Hoffman improved the WiThrottle communications.
+
+</ul>
+
+<p>
+Dan Boudreau many many improvements to operations support:
+<ul>
+<li>Two new operations features:  
+    <ul>
+    <li>The user can now enter engine weight.  
+    <li>The train frame table column widths can now be changed and saved.
+    </ul>
+<li>Improved the operations code to allow multi-line comments, and to better control the build order for trains.
+<li>Added two new build options for trains: by owner, and by built date.
+<li>The user can now exclude a road for cars, but still allow an engine to be assigned to the train with the excluded car road.
+<li>Allow users to move or terminate a train from the Trains window.
+<li>Added a new build option for operations: aggressive.  
+    Setting aggressive true will cause the build process to immediately make available tracks that are vacated by cars being picked up.
+    He also added a new feature, under tools in the train edit window, so users can print the train's manifest, even after terminating the train.
+<li>Changed the check of operations train names to be case-independent,
+    because Windows file names are case-independent: "First" and "first" conflict.
+<li>Operations popup menu now always displays the "Throttle" option.   "Throttle" is disabled if roster entry doesn't exist for the loco.
+<li>When setting a car's location or destination, 
+    the "auto" checkbox will only show valid tracks for that car.
+<li>User can optionally run scripts when a train is moved and or terminated.
+<li>Allow the user to specify a logo for the manifests and switch lists.
+<li>Build option should not be changed once trains have been built;  
+    Added error message and prevent user from making the change if there are built trains.
+<li>Force the placing of cars during the load process when the user has modified the location type or road attributes.
+<li>Updated the operations print feature so you can now control which car attributes are printed.
+<li>Users can now specify the destination and track for a car. Also, the schedule now
+    shows the current car count in schedule table when the car count is greater
+    than 1.
+<li>GUI improvement in the edit track: Adjust frame so car type scroll bars don't always show up.
+<li>Users can now control which car loads a train will service.
+<li>Updated the operations feature 
+    to allow users to use the format month-year for a car's built date.
+<li>A button has been added to automatically adjust the car types 
+    that a location services.  
+    Only car types that are serviced by the location's tracks will be selected.
+<li>New operations car edit attribute tool feature:
+    The "Delete Unused Attributes" will prompt the user to delete an attribute that hasn't been assigned to a car.
+<li>Added some operations tool tips
+<li>Improved error reporting in the operations feature.
+<li>Improved the names of operations menu items
+</ul>
+
+<p>
+JMRI now contains support for more-prototypical signaling basic on "signal masts" and "aspects".
+The basic functions are in place, along with the start of some
+<a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">help pages</a>.
+This is still being actively developed. There's a first set of 
+signal definitions available for the
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR 1946</a> signaling system.
+We intend to have this fully available by the 
+next JMRI production release in summer 2010.
+<ul>
+<li>Dick Bronson provided a great set of
+    icons for 
+    <a href="http://jmri.org/resources/icons/smallschematics/aspects/AAR-1946/">AAR</a>
+    and
+    <a href="http://jmri.org/resources/icons/smallschematics/aspects/NYCS-1937/">NYCS</a>
+    signal masts as part of the 
+    <a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>.
+    The best way to see the icons is the
+    <a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR</a> and
+    <a href="http://jmri.org/xml/signals/NYCS-1937/aspects.xml">NYCS</a>
+    aspect pages.
+<li>You can now add Signal Mast icons in the panel editor.
+    The images used are taken from the definition of the signal system in use.
+<li>Joan Carranc� added a set of 
+    <a href="http://jmri.org/xml/signals/DB-HV-1969/index.shtml">signal definitions for the DB 1969 system </a>.
+<li>Kevin Dickerson added a set of 
+    <a href="http://jmri.org/xml/signals/BR-2003/aspects.xml">British Rail signal definitions</a>
+    and 
+    <a href="http://jmri.org/resources/icons/BritishRailSignals/">associated images</a>.
+<li>Fixed a problem with SignalMast system names when using signal heads with ":" characters in their
+names, e.g. SE8c signal heads.
+<li>Improved window for adding Signal Masts so that it's clearer how many SignalHeads are needed,
+and to give more space for entering them.
+<li>Pete Cressman fixed a problem with rotating Signal Mast icons.
+<li>Pete Cressman improved the Signal Mast icon for the editors.
+</ul>
+
+<p>
+Other changes:
+<p>
+
+Kevin Dickerson added a way for systems to perform specific actions when the program is shutting down.
+
+<p>
+Kevin Dickerson made various changes in the eCos support to handle turnout events better
+and potentially reduce CPU overhead.
+Also handles double slip and three way points better.
+
+<p>
+Kevin Dickerson updated the storage code so that Signalheads in panel files are saved using the new namedBeanHandle.
+This means that they will be remembered by their system name or user name, whichever you specified.
+
+<p>
+Paul Bender added a new <a href="http://jmri.org/jython/XNetListenerExample.py">XNetListenerExample.py</a> sample script.
+
+<p>
+Dan Boudreau provided double-crossover and slip-switch track icons.
+
+<p>
+You can now display the log messages in a window by selecting "Display Message Log" in the "Debug" menu.
+
+<p>
+Added more information to the context window and the emailed problem report.
+
+<p>
+Andrew Crosland updated the CBUS support:
+Added bootloader, including support for extended frames.
+You can now set the adapter ID when using MERG CAN adapters.
+
+<p>
+Pete Cressman improved the route-finding logic in the Warrant support.
+
+<p>
+Kevin Dickerson made a number of improvements:
+<ul>
+<li>Resolves an issue where phantom panel load error message appears, when no error is registered in the console window.
+This was caused when the getBySystemName failed when loading a turnout (which it would on initial load), the result to return was set to false, even if the newTurnout successfully created the turnout.
+<li>Only loads an output turnout or sensor once per route, even if it is listed multiple times.
+An issue occurs whereby if a user loads the same panel file multiple times then the output sensors &amp; turnouts for a route get appended to the existing route even though they already exist.  When the panel file is saved it will save the outputs a multiple of times.
+<li>MemoryIcon, MemoryInputIcon, and PanelEditor were updated so that the Memory &amp;  MemoryInput Icons are now referenced using the namedBeanHandle.
+<li>Message added when closing the layout window, asking the user if they are simply hiding the window, or wishing to delete it.  Done in the same way that the panel editor does.
+Updated so that the Memory is now referenced using the namedBeanHandle.
+<li>The memory icon load/store code was updated so that the Memory and MemoryIconInput are now referenced using the namedBeanHandle.
+Also improved some of the save code.
+</ul>
+
+<p>
+Kevin Dickerson fixed a problem with displaying existing sensor groups.
+
+<p>
+A number of internal methods that were deprecated in JMRI 2.5.1 have now been removed.
+
+<p>
+The included jmdns.jar (Zeroconf/Bonjour networking) library has been updated to version 3.0 to
+solve a problem with the program hanging at shutdown.  This required no code changes.
+
+<P>
+Pete Cressman fixed a problem with integer comparisons in Conditionals.
+
+<p>
+Dan Boudreau and Pete Cressman fixed a problem with the order of saved PanelEditor items.
+
+<p>
+Pete Cressman made it so Conditional action items can be specified from a memory value 
+using the syntax "@IMemory" for the device name - i.e. the name of the internal memory 
+variable preceded by the "@" character.
+Note the particular value being referenced is not verified by Logix.  
+It is the user's responsibility to have the correct value in the memory location
+when the Conditional's actions are executed.  
+Errors encountered at Conditional execution time are reported on the console screen. 
+
+<p>
+Simple Signal Logic treats a flashing-red signal head (e.g. if set that way by a Logix) as if it was red
+when computing the proper color for a protecting signal.
+
+<p>
+Nelson Allison improved the scripts for running the Roco  46800 and 46902 cranes.
+
+<p>
+Pete Cressman fixed a problem that was preventing Reporter icons from loading in Layout Editor windows.
+
+
+<p>
+Andrew Crosland updated the CBUS support for power-on events, improved handling of the handling
+of throttle errors, and added a warning dialog if a throttle user tries to select an address that's
+already in use.
+
+<p>
+Robert Coleman got initial support working for the Smart Home 2412s Insteon interface. It 
+can be used to turn both Insteon and X10 adapters on and off.
+
+<p>
+Matt Harris updated the Windows installer to NSIS 2.46 to ensure complete compatibility 
+with Windows 7 (addition of compatibility manifest entries)
+
+<p>
+Bob Bucklew provided an icon for the knock-out that fills unused positions in a 
+USS CTC panel, now at 
+<a href="http://jmri.org/resources/icons/USSpanels/Panels/knockout.gif">resources/icons/USSpanels/Panels/knockout.gif</a>.
+
+<p>
+Dan Boudreau fixed a subtle and nasty bug that was preventing the Turnout Operations configuration
+window from displaying properly under certain circumstances.
+
+<p>
+Paul Bender made a technical change to the XPressnet code
+to pass the message listener for the sending thread to the handleTimeout method in AbstractMRTrafficController.
+This allows subclasses to notify listeners if a message that they sent received a timeout message.  
+The XPressNetTrafficController passes this information on to an XPressNetListener.   
+This is currently used to fix a minor bug which caused the throttle to lock up 
+if a message it sent did not receive a reply message (this happens occasionally with the Hornby Elite).
+Updated XNetMessage to allow setting the default values for the number of retries and the length of time before a timeout.
+Updated the XNetListenerExample.py sample script to include the notifyTimeout message routine.
+
+<p>
+David Duchamp added colors to the Layout Editor track.
+
+<p>
+David Duchamp added <a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher<a> options.
+
+<p>
+Pete Cressman added Learn-Mode recording from read throttles to the Warrant auto-run system.
+
+<p>
+The JInput USB library was updated to the current version, which (should) fix problems on
+Intel Macs and some Linux machines.
+
+<p>
+The error handling when reading files has been improved.  Now, you'll get notified
+by a dialog box popping up with some details 
+if e.g. something can't be created due to an error.
+Much more work is needed on explanations, etc, to make this complete.
+
+<p>
+Dan Boudreau made some improvements to the tooltips in the NCE Macro editor.
+
+<p>
+Paul Bender fixed a timeout issue in the XPressNet support that mostly effected the Elite.
+
+<p>
+Dan Boudreau made some improvements to programmer error messages, and to operations build messages.
+
+<p>
+Alfredo Sola updated the Spanish translation.
+
+<p>
+Removed the warning message when the program starts up if no roster entries have been stored yet.
+
+<p>
+A history of the panel files loaded and stored by JMRI is now kept.
+You can look at the current history from the Panel menu.  The display
+is still in a very preliminary stage, we'll improve that later, but 
+we put the feature in now to start accumulating the history in the file.
+
+<p>
+The DecoderPro manual in the help pages has been extensively updated.
+
+<p>
+Paul Bender added a set of 
+<a href="http://jmri.org/xml/signals/SLSF-1973/index.shtml">signal definitions for the SLSF (Frisco) system </a>.
+
+<p>
+David Duchamp fixed two bugs in the Maple interface
+
+<p>
+Kevin Dickerson added a page title to the roster print out that will either be
+"DecoderPro Roster All Entries" or "DecoderPro Roster Group 'GroupName' Entries",
+so you can see if you're printing the entire roster or just one of the 
+<a href="http://jmri.org/manual/JMRI_2-12_Manual/Main_Roster.shtml#rostergroups">roster groups</a>.
+
+<p>
+Kevin Dickerson fixes the order in which the MERG SD2 signal head sequences.
+
+<p>
+Matt Harris added protection against trying to use a Digitrax MS100
+on Windows Vista and Windows 7.
+
+<p>
+Kevin Dickerson added a new "single output" signal type.  
+This allows you to have a signal that only has two states controlled by one turnout,
+e.g. one that only shows a single color and dark, or
+two specific colors.
+
+<p>
+Andrew Berridge improved the SPROG serial communications
+
+<p>
+Kevin Dickerson added check-boxes for disabling various reminder prompts, along with a way
+to remember those during the next time the program runs, and a tool for resetting them if you
+change your mind.
+
+<p>
+Matt Harris fixed a spurious warning about "Insets" when running under Gnome-based Linux.
+
+<p>
+Several updates to the Lionel TMCC support to fix multiple bugs. 
+The TMCC support was badly broken in JMRI 2.4, and only with this version should be considered working.
+
+<p>
+David Duchamp updated Simple Signal Logic to use up to five sensors, which allows more complicated trackwork
+to be handled by Layout Editor.
+
+<p>
+David Duchamp made Dispatcher enhancements for both manual running and future automatic running of trains.
+
+<p>
+Kevin Dickerson fixed how Signal Mast icons rotate in the Panel and Layout Editors.
+
+<p>
+Kevin Dickerson added a custom power on/off control to the SPROG menu.
+
+<p>
+Fixed a problem with the DecoderPro function map when using more than 12 function definitions.
+
+<p>
+Andrew Crosland updated the configuration files for building and running JMRI under NetBeans.
+
+<p>
+Harald Barth improved the SRCP implementation.
+
+<p>
+Dick Bronson provided a set of 
+<a href="http://jmri.org/xml/signals/SPTCO-1960/aspects.xml">SP 1960 signal definitions</a>
+
+<p>
+Dan Boudreau added a "Copy Route" to operations
+
+<p>
+Kevin Dickerson added a new feature added to a turnout on the layout panel, 
+that prevents the turnout from being changed on the panel 
+if the blocks on the connecting path through the turnout are occupied, 
+thus helping to prevent accidental changing of turnouts when they are occupied.  
+Feature is disabled by default.
+
+<p>
+Kevin Dickerson added a "signal group" feature, still in development.
+
+<p>
+Many decoder definitions where changed over to use "XML Schema" instead of "DTDs" for their
+syntax checking.  This is a technical, internal change that will allow some other
+updates later.
+Many decoder files got small fixes so that they were entirely in the proper
+format.
+<p>
+Paul Bender add support for the Power manager to the Lenz XPressNet simulator.
+
+<p>
+Kevin Dickerson updated the preferences manager to show icons in warning/info dialogs,
+and to give more options to suppressing messages permanently or just this session.
+
+<p>
+Dan Boudreau fixed a problem in the "Apps" infrastructure that caused it to 
+initialize twice.
+
+<p>
+Update of the SRCP server.
+
+<p>
+By suggestion of Jim Betz, the roster now includes the date and time 
+that the entry was last saved, as reported
+by the computer on which it was saved. No checking of this value is done.
+
+<p>
+Kevin Dickerson made a number of changes to the way that JMRI works with the eCos, 
+mainly in the handling of roster entries and the ecos database.
+
+<p>
+The panel editor and layout editor code has been extensively reworked. It's not
+intended that this cause any changes in how it appears to look to the user, but
+please let us know if you see any.
+
+<p>
+Bob Coleman updated the Powerline Insteon 2412s support to 
+catch reply message 50 (echo from a repeater) and clean up console output a bit.
+Via an Insteon 2412s an X10 device or a registered Insteon device should turn on or off,
+but dim and sensors are not yet available. 
+Sometimes first commands to an Insteon device fail -- once they have been retried they work.
+Note that Insteon devices must be registered with the adapter to work.
+
+<p>
+A problem that would occasionally cause a LocoNet-connected Double Output or Triple
+Output signal head to not show the most recent appearance has been fixed.  
+The fix doesn't effect SE8c or non-LocoNet signal heads, 
+so any problems with those should still be reported.
+
+<p>
+David Zuhn updated the Linux start-up scripts.
+
+<p>
+Fixed a bug in the way the roster populates the various selected combo boxes.
+
+<p>
+Kevin Dickerson added "invert" to SPROG-driven turnouts.
+
+<p>
+Matt Harris updated the Windows launch script to properly handle mixed systems
+with 32-bit Java on 64-bit Windows.
+
+<p>
+Many improvements to the built-in
+<a href="http://jmri.org/help/en/html/web/index.shtml">mini web server</a>,
+including improvements to iPhone support and allowing more browser types to
+display JMRI panel files.
+The server now advertises itself via 
+<a href="http://jmri.org/help/en/html/doc/Technical/Networking.shtml">Bonjour/Zeroconf</a>, 
+so you can easily find it in a suitable web browser
+without having to know the IP address or name.
+The server is now multithreaded to improve performance.
+The server can now display more types of information, including directory listings, 
+and better show the contents of JMRI XML files.
+Fixed a problem that prevented clicking on panels in the mini web server.
+
+<p>
+Bill Robinson provided two examples of setting turnouts from a web page using the mini-webserver.
+One, "web/turnoutPanel.html" shows a schematic control panel with turnouts you can click to control
+LT1 through LT4. The other, "web/turnoutMonitor.html", provides a table of all defined turnouts
+with buttons you can click to close or throw them.
+
+<p>
+The 
+<a href="http://jmri.org/help/en/html/web/XMLIO.shtml">XML IO</a> 
+package has been updated. To see a demonstration, start the 
+JMRI mini web server, and try these two URLs:
+<a href="http://localhost:12080/web/request.html">http://localhost:12080/web/request.html</a> and
+<a href="http://localhost:12080/web/monitor.html">http://localhost:12080/web/monitor.html</a>.
+Web browsers can now access layout power via XMLIO.
+
+<p>
+The help system can now directly print help pages. See the new icons
+at the top of any help screen. Also, you can know mark a page as
+a "favorite" and easily come back to it later.
+
+<p>
+David Duchamp updated the instructions for building with XCode.
+
+<p>
+Improved how Conditionals convert Memory contents so they can be compared, etc.
+
+<p>
+Added default exception handlers so that uncaught exceptions will 
+now put information into the log file.
+
+<p>
+Kevin Dickerson improved how you set the protocol in the preferences.
+Now, you first pick a system manufacturer from a list, and then pick
+which connection type to use from another list.  This makes it easier
+to find the right one.  For example, if you pick "NCE" as the manufacturer,
+you can then pick from "Serial Interface", "Network Interface" and "NCE USB".
+
+<p>
+Kevin Dickerson improved the synchronization of turnouts between JMRI and 
+an eCos command station.
+
+<p>
+A new "virtual" connection has been added, so you can try the programs
+without selecting any particular type of layout hardware.
+
+<p>
+Printing of tables has been reworked.  This fixes the ordering problems, etc,
+but also changes the appearance of the printout.  That will probably require
+some additional tweaking.
+
+<p>
+The buttons inside tables have been made smaller so that tables will fit
+better on smaller screens.
+
+<p>
+Dan Boudreau added a simulated connection to the NCE protocols, so 
+you can work on an NCE-based panel without the actual layout connected.
+
+<p>
+Andrew Crosland added support for the 
+<a href="http://www.bachrus.com/speedometer.php">Bachrus electronic speedometer</a>.
+
+<p>
+Dan Boudreau improved the appearance of the Turnout Control.
+
+<p>
+Fixed a bug preventing playing sounds in Logix Conditional Actions.
+
+<p>
+Harald Barth improved the CV programming in the SRCP support.
+
+<p>
+The way the program version number is stored in the program and 
+output files has been made easier to parse.
+
+<p>
+Andrew Berridge added an optional "speed limit", which can be set by locomotive in the roster,
+when using JMRI throttles. Great for running with grand kids!
+
+<p>
+Pete Cressman fixed a small problem with the pop-up menu on locomotive icons.
+
+<p>
+Lionel Jeanson updated and added several Jynstruments:
+<ul>
+<li>light
+<li>bell
+<li>horn
+<li>eStop
+<li>direction
+<li>sound on F8 or on 2xF0 
+</ul>
+
+<p>
+Dan Boudreau fixed a problem that prevented icons with blinking .gif images from blinking.
+
+<p>
+While adding Sensors, Turnouts, etc, from their tables, the program used to just fail silently
+if you entered an address or system name that couldn't be used.  Now, it will pop a dialog
+box to tell you that it's not creating the object and suggesting what's wrong.  
+Technical note which most people can ignore: To do this,
+the various managers have been modified to throw a IllegalArgumentException if they
+can't process the input properly.  If you encounter this in your own code, 
+you can catch it and display an error, or just get a new name and try again.
+
+<p>
+As a technical improvement, Pete Cressman improved several of the JUnit tests so they don't leave
+windows lying around after then complete.
+
+<p>
+You "click" on things in the editor windows to have sensors change state, turnouts move, etc.
+This code has been improved to use the proper definition of "click" for each kind of computer that
+JMRI runs on.
+
+<p>
+Dan Boudreau improved how polling works when system connections get very busy.
+
+<p>
+Paul Bender fixed a crash when configuring connections over TCP/IP.
+
+<p>
+Matt Harris added a "(No Panels Available)" message to the Windows menu when there are no selections otherwise visible.
+
+<p>
+Pete Cressman added an edit menu to Memory icons in the editors.
+
+<p>
+Rodolphe Braud updated the French translation with help from Dan Boudreau and Marc Fournier.
+
+<p>
+Some HP touch-panel displays don't properly general "mouse clicked" events, but only
+"more pressed" and "mouse released".  To let them be used, a configuration option
+has been added on the GUI preferences pane to "use non-standard mouse events".
+
+<p>
+Matt Harris set the default backup option in the Windows installer.
+
+<p>
+Paul Bender fixed an error when starting with the LIUSBServer option configured.  
+The LIUSBServer option works again after several releases where it did not.
+
+<p>
+Many improvements to the preferences window to make it more usable. The "tabbed" form
+is now the default.
+
+<p>
+If you have multiple connections defined, the Power Control tool now lets you
+select which one you want to operate under a "Connection" menu.
+
+<p>
+Nigel Cliffe provided
+<a href="http://jmri.org/jython/Zimo_function_programmer.py">Zimo_function_programmer.py</a>,
+a script for setting Zimo function options.
+
+<p>
+JMRI now has initial support for home automation devices that use the
+<a href="http://jmri.org/help/en/html/hardware/xap/index.shtml">xAP protocol</a>. 
+Input sensors are available as JMRI sensors, 
+and output devices as JMRI turnouts. We're very interested in finding
+more people to test this with their xAP home automation systems.
+
+<p>
+JMRI can now provide two LocoNet connections at the same time. You can configure two
+in the preferences, and the second one will have system names that start with
+"L2" instead of "L", e.g. "L2T1", "L2S1", etc.  Note that you'll still get a warning
+about "duplicate connections" when saving the preferences, but you can ignore this. We'll
+make this part of the code smarter eventually.
+
+<p>
+Walter Thompson improved many help pages.
+Walt Thompson updated the help pages for adding Blocks, the speedometer, 
+and the main DecoderPro in-program pages.
+
+<p>
+Kevin Dickerson did a huge amount of work on the preferences to improve their 
+usability and completeness.  The throttle and notification preferences are now
+available via the common preferences dialog under the "Edit" menu.  
+
+<p>
+A problem when inverting LocoNet turnouts that are used for signal drivers was fixed.
+
+<p>
+First support for internationalization of decoder definitions is in place.
+In future releases, we expect to be able to provide DecoderPro in 
+multiple languages, but we'll need a lot of help doing the needed translations.
+
+<p>
+David Duchamp updated Sections, Transits and related classes for automated running.
+
+<p>
+LocoNet/Intellibox connections can now also work at 115200 baud, though
+we continue to recommend lower speeds due to issues in the Intellibox flow control.
+
+<p>
+You can now invert EasyDCC turnouts.
+
+
+<p>
+Kevin Dickerson improved the way you add Turnouts and Sensors
+from their tables.
+When adding turnouts and sensors simply select the system that the 
+turnout or sensor is connected to from the drop down list 
+and then enter in the hardware address.  
+There is no longer the requirement to enter in the system name prefix.  
+There is also the ability to add a number of sensors/turnouts in one go 
+(only some systems support this as of now).
+The format for entering in Sensor hardware addresses has been extended so 
+that the user can now simply enter in the board address followed by 
+input on that board, separated by a ":".  
+This saves having to calculate the sensor id for some systems, 
+however this method is still supported.  
+Users should reference the help file in the add sensor window, 
+for the correct format for their specific system. 
+For more information, see the
+<a href="http://www.jmri.org/help/en/package/jmri/jmrit/beantable/SensorAddEdit.shtml">sensor add/edit help page</a>.
+
+<p>
+Giorgio Terdina's AutoDispatcher script is now distributed with JMRI.
+
+<p>
+Joan Carranc� updated the JInput library for better access to RailDriver units
+on Windows.
+
+<p>
+Bob Milhaupt fixed a bug in transponder messages in the LocoNet monitor.
+
+<p>
+Matt Harris updated the Windows launch tool to allow more customization.
+
+<p>
+Pete Cressman fixed a threading problem in warrants.
+
+<p>
+Fixed a threading problem when invoking sensor listeners from a waiting script.
+
+<p>
+Pete Cressman implemented following signal mast and head indications.
+
+<p>
+Pete Cressman updated the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">warrant support</a>.
+
+<p>
+Kevin Dickerson fixed an occasional problem when deleting a signal head icon.
+
+<p>
+Fixed a problem where buttons created at startup don't have the right labels.
+
+<p>
+Pete Cressman added a "Warrant Throttle Adjustment Factor" to Logix
+and added delayed reaction to inputs to Warrants
+
+
+<p>
+Paul Bender reduced the timeout before the first turnout off message in the XPressNet protocol.
+
+<p>
+Giorgio Terdina updated 
+<a href="http://jmri.org/community/connections/XtrkCadReader/index.shtml">XtrkCadReader</a>
+to version 2.0. (Not really part of JMRI 2.9.6, but we'll record it here anyway)
+The main changes are:
+<ul>
+<li>Correction of a bug affecting curved turnouts, which caused the "XtrkCadReader breaks track apart" problem reported on December by Terry Hill;
+<li>Introduction of curved tracks, available since JMRI 2.7.7. Users of earlier JMRI versions can still convert curved tracks to polylines by specifying an option (-a).
+</ul>
+
+<p>
+Kevin Dickerson updated the port interface structure to improve its structure and error handling.
+
+<p>
+Paul Bender improved the way that turnout control timing is done for the Lenz protocol.
+
+
+<p>
+The Ant javadoc-uml target now generates Javadoc pages with UML class diagrams.
+To show the diagram, click the "Show UML class diagram" link at the top of each page.
+Note that the process of generating these is quite resource-intensive, and requires a 
+Java 1.6 runtime be present.  
+We make the Javadocs for the most recent release
+<a href="http://jmri.org/JavaDoc/doc/">available</a>
+in the 
+<a href="http://jmri.org/help/en/html/doc/Technical/index.shtml">developer section</a>
+of the 
+<a href="http://jmri.org">JMRI web site</a>.
+
+<p>
+David Duchamp updated the
+<a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher documentation</a>.
+
+
+<p>
+David Duchamp made a minor update to the Section table.
+
+<p>
+Kevin Dickerson fixed a bug that would sometimes prevent the complete preferences from being stored.
+
+<p>
+David Duchamp added automated running to the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
+
+<p>
+David Duchamp added Lights for connections with NCE systems.
+
+<p>
+Much more work on the infrastructure for internationalizing (translating) 
+decoder definitions into other languages, in the process reducing the size and redundancy.
+The ESU LocSound V3.5 decoder has been (mostly) translated into French as a proof of concept.
+If you've got your JMRI locale set to French, you should see the results.
+
+<p>
+New and improved operations features from Dan Boudreau: 
+export cars and engines to a file using comma separated values (*.csv).  
+Improved csv file import, now accepts import strings with commas as long as they are in quotes.
+Improved save operations.
+Now locations and trains are also saved if a car or engine type is modified by the user.
+Fix minor bug when replacing an engine type: The location and tracks didn't properly accept the new engine type.
+
+<p>
+Giorgio Terdina updated the AutoDispatcher script.
+
+<p>
+David Duchamp make a major revision of Lights, 
+including multiple controls and a new user interface for 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml">adding and editing</a>.
+
+<p>
+Key/value properties added to the various NamedBean types are now persisted in panel files.
+
+<p>
+Brett Hoffman added the ability to control Turnouts and Routes remotely.
+
+<p>
+Pete Cressman added an option to use local or global flag for positioning &amp; control of items in the panel editor(s).
+
+<p>
+Dan Boudreau added a "reset operations databases to default" feature to the operations support.
+
+<p>
+The LocoNet ID tool now displays multiple received IDs, so you can tell if all your UR90/UR91 receivers are set properly.
+
+<p>
+Lionel Jeanson added a work-around so that jynstrument customizations would work even if
+the file was dropped instead of properly dropping the folder, and fixed a bug in finding the proper folders.
+
+<p>
+When using multiple LocoNet connections, there's now a preference that lets you pick which one
+will be used for CV programming.
+
+<p>
+Lionel Jeanson added a table in the DecoderPro "Roster Media" pane for updating roster attributes.
+
+<p>
+Pete Cressman improved the Warrant Table and OBlock Table
+
+<p>
+Pete Cressman fixed an occasional error message from Logix when using the clock.
+
+<p>
+Pete Cressman updated the panel editors to keep background locked when using global positionable flag.
+
+<p>
+Improved how LocoNet Slot Monitor uses screen space.
+
+<p>
+Paul Bender made some changes to make the XPressNet support compatible with OpenDCC command stations.
+
+<p>
+Allow the user to specify the default preferences and jython script directory locations.  
+This helps to get around an issue reported with windows 7 directory/file permissions.
+It also allows the user to set where they wish to save panel/throttle/etc files without having to modify the launcher. 
+Feature is handy where multiple Windows user profiles have to access a common set of panel and roster files.
+
+<p>
+Paul Bender made improvements to the XPressNet communications internals.
+
+<p>
+Lionel Jeanson added support for lockable/non lockable functions from roster entry into USB Throttle Jynstrument.
+
+<p>
+Kevin Dickerson updated the editors to handle the setting of borders and margins better, by using a compounded border, 
+the inner covering the margin, the outer covering the outline border.  
+Fixes an issue seen by a user on the JMRI Users group.
+
+<p>
+Kevin Dickerson updated the editor icons so that they always save the justification position. 
+He removed some inconsistencies from the hidden option.
+He also removed the "clear" colour from borders, as that didn't do anything.
+
+<p>
+Paul Bender improved the handling of unexpected XPressNet messages.
+
+<p>
+Kevin Dickerson fixed a bug that was causing preference settings to be saved even if the Save button hasn't been pressed.
+
+<p>
+Pete Cressman made a change to how backgrounds are handled in the editor.
+
+<p>
+Pete Cressman removed the "special mouse click" support from the control panel editor.
+
+<p>
+Dan Boudreau added two new devices to NCE show cabs: Cab06 and Mini-Panel.
+
+<p>
+Kevin Dickerson fixed an occasional bug while adding sensors.
+
+<p>
+Matt Harris fixed the "config-portable" tool for standalone running.
+
+<p>
+Matt Harris changes the Windows installer build
+
+<p>
+Dan Boudreau fixed an error when configuring the RPS system
+
+<p>
+Pete Cressman prevented false clicks on signal mast icons.
+
+<p>
+Fixed a problem that would cause changed preferences to be saved
+even though the save button wasn't pressed.
+
+<p>
+Kevin Dickerson fixed a problem when switching between Signal Mast signal system definitions.
+He also changed how icons are resized, which should help with resizing problems on rotation.
+
+<p>
+Fixed a problem in sample scripts that access serial or parallel ports.
+
+<p>
+Fixed problems with signal mast icons.
+
+<p>
+Fixed a problem with French translation of roster.
+
+<p>
+Kevin Dickerson fixed a problem with selecting certain layout editor icons.
+
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: UK Signalling, Signal Heads and Signal Masts</title>
+    <meta content="Nigel Cliffe" name="author">
+    <meta name="keywords"
+       content="clinics java model railroad JMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra signalling UK British">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+    <div id="mainContent">
+<h1>Signal Heads and Signal Masts</h1>
+
+<p>To get to our goal of full signal rules on our layout, we need to describe 
+  the signals to JMRI. </p>
+<p>Signals exist as &quot;Signal Masts&quot;. A Signal Mast follows the rules 
+  of the chosen prototype, thus for the UK it might be a four-aspect colour light, 
+  or a semaphore home signal. Each Signal Mast is made from one or more Signal 
+  Heads. </p>
+<p>The simplest case has one Head on one Mast, for example a three-aspect Colour 
+  Light Mast consists of a three-aspect Head. Other cases may have several Heads 
+  on one Mast, for example, the three aspect Head and the call-on Head for the 
+  Mast controlling access to the bay platform. Or, a Mast with a Semaphore Home 
+  and a Semaphore Distant heads. </p>
+<p>There is work on-going within JMRI to make it possible to directly define a 
+  signal Mast from the signal Mast table, without needing to define its underlying 
+  Heads. However, that is still in a very early stage, and we anticipate that 
+  most users will need to define the Heads for their signals. </p>
+
+<h3>Creating Heads</h3>
+<p>Signal Heads are created in the &quot;Signal Head&quot; table. In this table, 
+  a new Head can be added, and the decoder address(es) associated with the Head 
+  defined in the process. Each head has a System name which is prefixed &quot;ih&quot;, 
+  though as with other elements, you should add a &quot;User Name&quot; to the 
+  definition for use later in JMRI. The decoder addresses created when adding 
+  a new Head will appear in the Turnout Table (where all accessory decoders appear). 
+  Once defined in the Signal Head table, the signal can have its aspects changed 
+  by clicking through the possible states. Some of the states may be illegal in 
+  UK signalling (eg. flashing red), but this is dealt with in the &quot;Mast&quot;. 
+</p>
+<p><img src="images/screenshot.3.jpeg" width="990" height="342"></p>
+<h3>Creating Masts</h3>
+<p>Once signal heads have been defined, they can be combined onto Signal Masts. 
+  With the &quot;Add&quot; command, the signalling system is selected, in our 
+  case BR (2003): </p>
+<p><img src="images/mast1.png" width="409" height="250"></p>
+<p>And then the Mast type is selected (3 Aspect), together with a User Name. The 
+  Heads used to make the Mast are entered in the lower field; if the Mast is made 
+  of multiple Heads then multiple Head fields will be presented:</p>
+<p><img src="images/mast2.png" width="405" height="173"></p>
+<p>Once the Mast has been defined, it appears in the Signal Mast table, and the 
+  legal states can be changed from the table: </p>
+<p><img src="images/screenshot.4.jpeg" width="990" height="342"></p>
+
+<p>The creation of Signal Heads and Signal Masts is shown in the video below:</p>
+<iframe width="640" height="480" src="http://www.youtube.com/embed/22dp2e24u6k" frameborder="0" allowfullscreen></iframe>
+<p>And the JMRI file with the Signal Heads and Masts created can be downloaded 
+  from the link below</p>
+<p>[ <a href="jmri_files/Demo%20Signal%203.xml">Link to download file</a> ]</p>
+
+<p><a href="placing_signals_on_layout.shtml">Move on to Part 7</a> </p>
+<p><a href="index.shtml">Back to Introduction</a></p>
+
+<h3>Diversion - Using Fewer Decoder Outputs for 2 or 3 Aspect Signals. </h3>
+<p>With this little trick one can save considerably on the number of accessory 
+  decoders required to work UK style colour light signals. The simplest form works 
+  for two aspect (requires one decoder output) or three aspect (requires two decoder 
+  outputs). Similar tricks are possible for three aspect with flashing light, 
+  or four-aspect, but needs a few transistors or other components in the circuits. 
+</p>
+<p><img src="images/twoLeds.png" width="205" height="303"></p>
+<p>Two LED circuit. If the Decoder Output is &quot;high&quot; (5v) then the upper 
+  LED will be out, and the lower illuminate, and if the Decoder Output is &quot;low&quot; 
+  (0v) the upper LED will light and the lower will be dark. The voltage show (5v) 
+  depends on the type of accessory decoder, some may be 12v. The resistor values 
+  need to be adjusted to produce the required brightness from the LED.</p>
+<p>A similar three LED circuit is shown below. </p>
+<p><img src="images/threeLeds.png" width="232" height="414"></p>
+<p>In JMRI, to make the three LED circuit work correctly, it may be necessary 
+  to select &quot;invert&quot; in the turnout table for one of the two decoder 
+  addresses.</p>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

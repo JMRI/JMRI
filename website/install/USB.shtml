@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <title>JMRI Install Guide: USB Components</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+
+<div id="mainContent">
+
+<h1> 
+JMRI Install Guide: USB Components
+</h1>
+
+Starting in version 2.1.5, JMRI contains some 
+tools for direct access to USB devices.  We built in this support
+initially so that we could directly access the 
+<a href="../help/en/html/hardware/qsi/index.shtml">QSI Programmer</a>
+and certain Insteon
+<a href="../help/en/html/hardware/powerline/index.shtml">Powerline</a>
+adapters, but hope that it will eventually be generally useful.
+
+<h2>JInput</h2>
+<a href="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.jpg">
+<img src="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.jpg" align="right" height="112" width="277"/></a>
+
+Certain types of USB devices can be attached as a "HID device".
+(That stands for "Human Interface Device device", but let's not get distracted)
+The 
+<a href="https://jinput.github.io/jinput/">JInput project</a>
+has provided tools for accessing these devices which we can use
+to connect HID devices to events within the JMRI programs.
+
+<p>
+As a first approach to this, you can find a "USB Input Control"
+under the Debug menu in JMRI 2.1.5 and later.
+A screen-shot of it is shown
+<a href="images/JInputFrame.gif">to the right</a>.
+When you open the tool, you'll get a window that lets
+you browse the HID devices on your computer, and attach 
+them to specific JMRI sensors and memories.  You can
+then have Routes, Logix and scripts access that information to
+do whatever you'd like with the device inputs.
+
+<p>
+For more information, including some info on limitations, 
+please see the 
+<a href="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">help page</a>
+for the tool.
+
+<h2>LibUSB</h2>
+
+LibUSB (also known as libusb and libUSB) is a powerful, but tough to
+use, library for general access to all USB devices, not just HID devices.
+We intend to use it in JMRI to access Insteon adapters and other 
+devices that have complicated (i.e. powerful) interfaces.
+<p>
+In JMRI 2.1.5, there's only a "USB Device Viewer" 
+browsing tool that we'll be using to
+check connections to various USB devices on various types of computers.
+By putting this out in the general test release, even if 
+it doesn't do anything model-railroad related, it makes it much
+easier to test how well this works in various situations.
+<p>
+Eventually, we'll have more in this section.
+
+<h3>Limitations</h3>
+The browsing tool comes directly from libusb, and is coded
+to end the application when the window is closed.  The libusb authors
+consider this a feature.  Since we don't want to distribute our
+own version of the library with that behavior changed, we'll just 
+live with it for now.
+
+<h3>Installing LibUSB</h3>
+
+Before you can use LibUSB on your computer, you have to download
+and install a library.  The following sections talk about how to
+do that.
+
+<h4>Windows XP and later</h4>
+Download and install
+the 
+<a href="http://downloads.sourceforge.net/libusb-win32/libusb-win32-filter-bin-0.1.12.1.exe?modtime=1174387137&big_mirror=0">libusb-win32 installer</a>.
+This is called the "filter mode driver", and it's the one you want.
+
+<p>
+There is currently no version of LibUSB for versions of Windows before XP, 
+due to limitations in their USB support.
+
+<h4>Ubuntu Linux</h4>
+Start by opening
+<p>
+System &gt; Administration &gt; Synaptic Package Manager
+<p>
+and search for "libusb". There are four packages that start with that name;
+install them all.
+
+<h4>Mac OS X</h4>
+
+You need to install a library package to use libUSB on Mac OS X.
+Click <a href="http://www.ellert.se/twain-sane/">here</a>
+for an installer
+(you don't need the TWAIN or others, just LibUSB),
+or you can download an installer using one of the following direct links.
+	<table border="1">
+	<tr class="even">
+	<th></th>
+	<td>Version</td>
+	<td>Package Type</td>
+	<td>Panther (10.3.x)</td>
+	<td>Tiger (10.4.x)</td>
+	<td>Leopard (10.5.x)</td>
+	<td>Sources</td>
+	<td>Project Homepage</td>
+	</tr>
+	
+	<th rowspan="2">libusb</th>
+	<td rowspan="2">0.1.13 beta 2008-02-02</td>
+	<td>binary</td>
+	<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.3/libusb.pkg.tar.gz">Installer</a></td>
+	<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.4/libusb.pkg.tar.gz">Installer</a></td>
+	<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.5/libusb.pkg.tar.gz">Installer</a></td>
+	<td rowspan="2"><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/src/libusb-2008-02-02-svn-macosx.tar.gz"><img src="http://www.ellert.se/gz.png"></a></td>
+	<td rowspan="2"><a href="http://libusb.sourceforge.net/">http://libusb.sourceforge.net/</a></td>
+	</tr>
+	</table>
+
+    <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mbody-->
+<script src="/js/main.js"></script>
+ </body>
+</html>

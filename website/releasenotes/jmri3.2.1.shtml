@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.2.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.2.1 release (3.2-r21862)
+      </h2>
+
+	<p>Date: December 16, 2012</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Production version 3.2-r21862 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+This is a new production release which contains a few small updates to JMRI 3.2.
+
+<h3>Notes:</h3>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+This release requires Java 1.6.
+
+<p>
+To allow use of UTF-8 characters (special characters with accents, Japanese text, etc) in XML
+files, particularly decoder definitions, the default file encoding has been changed to UTF-8.
+This requires a change to the startup scripts distributed with JMRI.
+If you're just using the JMRI-provided startup tools, you should be all set.
+This was done in JMRI 3.1.7, so if you installed that or any later release, you're OK now.
+If you're using your own custom startup scripts, 
+you need to add a "-Dfile.encoding=UTF-8" option to them. 
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.2-r21862.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.2-r21862.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.2-r21862.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.2-r21862.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.2-r21862.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.3.2-r21862.tgz/download</a></p>
+
+<h3>Changes since production release 3.2</h3>
+
+Fixed a problem with MS100 mode. Note that MS100 is only available on
+certain older Windows machines; this fix doesn't change that, just
+restores some function lost in JMRI 3.2. In the long run, you need
+to replace your MS100 with something from this century.
+
+Fixed an issue that correctly registers the command station in the instance manager for the
+Hornby Elite, which caused a problem when trying to add Signal Heads.
+
+LocoNetOverTCP - Fix an issue with the connection details that prevented it from being loaded.
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

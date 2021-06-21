@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.11.7
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.11.7 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.11.7 release
+      </h2>
+
+	<p>Date: May 30, 2015</p>
+	<p>From: Matthew Harris</p>
+	<p>Subject: Test version 3.11.7 of JMRI/DecoderPro is available for download.</p>
+
+<!--<p><b>This is a draft release note only; the download links do not yet work</b></p>-->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in the next JMRI production release around the middle of 2015.</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+None at release time.
+
+<!--
+If any of those effect you, please either wait for
+<a href="jmri3.11.8.shtml">JMRI 3.11.8</a>, due out shortly after this one,
+or pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<h3>New warnings for this version:</h3>
+
+<p>The old DecoderPro has been removed from the distribution package and DecoderPro 3 has been promoted to be the only available DecoderPro version. Existing custom launchers that launched the old DecoderPro should continue to function without change or issue. If you absolutely cannot use the new DecoderPro user interface, we suggest using PanelPro instead, as with the exception of a different icon and different fixed buttons on the main window, PanelPro has an identical user interface to the old DecoderPro.</p>
+
+<h3>Older warnings</h3>
+
+<p>This release, and all later releases in this cycle, require Java 1.8 or higher.
+To use this or any later JMRI releases, you'll have to
+<a href="https://java.com/en/download/">update the Java on your computer</a> to Java 1.8 or higher.
+</p>
+
+<p>JMRI 3.11.3, and therefore this version, removes some files that were present in earlier versions.
+Failure to remove these can result in some portions of
+JMRI (notably the web server) failing to function correctly.
+If you are updating an existing JMRI installation to this version on
+<a href="../install/Linux.html#update">Linux</a>,
+you must remove any older version of JMRI or unpack this
+version of JMRI in an alternate location.
+The recommended update procedures for JMRI on
+<a href="../install/WindowsNew.shtml#update">Microsoft Windows (run the installer)</a>
+and
+<a href="../install/MacOSX.html#update">Mac OS X (open disk image and drag to final location, e.g. Applications folder)</a>
+remove/replace the older version of JMRI, ensuring that these obsolete files are not
+present.
+</p>
+
+<p>This release uses JDOM 2.0.5, which requires some code changes if you are directly
+calling the parts of JMRI that interchange XML objects.</P>
+
+<p>There are now separate settings for the default Service Mode Programmer and
+for the default Ops Mode Programmer.  If you're using two or more system connections,
+this lets you use one connection for ops mode (on track) programming and another connection
+for your programming track. If you're using two separate connections, you
+should go to the Defaults pane on the Preferences window and check that those
+defaults were set properly.</p>
+
+<p> If you are making a direct connection to a Intellibox unit via
+    serial or USB, you will have to reselect your preferences.
+    See the
+    <a href="http://jmri.org/help/en/html/hardware/loconet/Uhlenbrock.shtml">Uhlenbrock support page</a>
+    for instructions.</p>
+
+<p> If you are using an NCE USB adapter, you will have to reselect your preferences
+     the first time you use a JMRI 3.11 version (if you set them using JMRI 3.10 or earlier).
+    See the
+    <a href="http://jmri.org/help/en/html/hardware/nce/NCE.shtml">page on configuring JMRI for NCE</a>
+    for instructions.</p>
+
+<p>The Save button in the Preferences window now only prompts for restarts if required.
+There may be instances when pressing save incorrectly fails to prompt to restart JMRI or
+prompts to restart JMRI when it should not.</p>
+
+<p>Because of internal code changes, this version of JMRI may not be compatible with
+<a href="http://cats4ctc.org"><!-- was http://home.comcast.net/~kb0oys/ --> CATS 2.34</a> or earlier.  Keep using
+<a href="jmri3.10.shtml">JMRI 3.10</a> with CATS until there's a CATS update that
+says it will work with JMRI 3.11.</p>
+
+<p>The XmlIO web service has been removed. All users who were relying on the
+XmlIO API are recommended to begin using the JSON API. inControl web throttle
+users are recommended to begin using webThrottle instead, or invest in devices
+that can support webThrottle, the iOS WiThrottle, or the Android Engine
+Driver.</p>
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.7-r29385.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.7-r29385.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.7-r29385.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.7-r29385.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.7-r29385.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.11.7-r29385.tgz/download</a></p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.7/ws/jmri/dist/release/">CI project page</a>.
+
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+-->
+
+<h3>Changes since test release 3.11.6:</h3>
+
+
+    <h4>Hardware Support</h4>
+<!--        <h5>Uhlenbrock Intellibox</h5>
+            <ul>
+            </ul>
+        <h5>ESU - ECOS</h5>
+
+        <h5>SPROG</h5>
+            <ul>
+            </ul>
+-->
+        <h5>MERG CBUS</h5>
+            <ul>
+                <li>Added basic support for non-variable lights (Matthew Harris)</li>
+            </ul>
+
+        <h5>Zimo MXULF</h5>
+            <ul>
+                <li>Now supports version 0.61.13 for programming (KD)</li>
+            </ul>
+<!--
+    <h4>Signals</h4>
+        <p></p>
+        <ul>
+            <li></li>
+        </ul>
+-->
+    <h4>New / Updated decoder definitions</h4>
+	<p>Dave Heap made the following changes:</p>
+	<ul>
+		<li>Improved the reliability of "Read type from decoder" by retrying several times in the event of a (possibly transient) read failure.</li>
+		<li>A single decoder model can now match multiple Product IDs, specified as a comma-separated list in the "productID" attribute.</li>
+	</ul>
+
+<!--
+        <h5>Fleischmann</h5>
+            <p></p>
+-->
+        <h5>SoundTraxx</h5>
+            <p>Bachmann Sound Value definitions updated following publication of data sheets on SoundTraxx website (Alain Le Marchand)</p>
+            <ul>
+                <li>On30 Whitcomb 50-ton: horns and default values</li>
+                <li>2-8-4 Berkshire (HO and N scale) - 3 variants each - full update</li>
+                <li>EMD GP-7 (HO scale): horns and default values</li>
+                <li>CV113 only supported by SD70ACe, GEVO ES44AC and GG1.</li>
+            </ul>
+
+        <h5>TCS</h5>
+            <p>Old decoders where no replacement exists in the present range are now shown permanently.</p>
+            <p>Old versions of present decoders will only show is there is a hit on version range through automatic identification.</p>
+
+	<h5>ESU</h5>
+	<p>Dave Heap made the following changes:</p>
+	<ul>
+		<li>Most modern ESU decoders will now be identified with "Read type from decoder".</li>
+		<li>Renamed and consolidated models to conform to ESU practice. Old model names are still recognized but not shown. They can be updated via "<a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#update" target="_blank">Update Decoder Definitions</a>".</li>
+		<li>Preliminary support for ESU LokSound L V4.0.</li>
+		<li>Other improvements and corrections to the ESU decoder definitions.</li>
+	</ul>
+
+<!--
+        <h5>MRC</h5>
+            <p></p>
+
+        <h5>Miscellaneous</h5>
+            <p></p>
+-->
+
+   <h4>Operations</h4>
+   <ul>
+    <li>Fixed a major bug introduced in version 3.11.6 where during startup the program won't
+     load all of the cars saved in the xml file.</li>
+    <li>New feature, car summary by track for Switch Lists. The summary shows by track all of
+     the car pulls and set outs. It also shows the hold cars for each track. Now your operators will
+     know by track all of the pulls needed for all trains and which cars need to stay put. Should be
+     useful for the larger switch jobs. The summary is only available if you're running the switch
+     list in real time.</li>
+    <li>The train's description now has the option to include the lead engine's road name.</li>
+    <li>New feature, you can now block the tracks at a location for your manifests and switch lists. See 
+    <a href="http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml#TrackBlockingOrder">
+    http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml#TrackBlockingOrder</a>
+    for more info.</li>
+    <li>New feature for road names, the "hyphen feature" now works for road names. Anything after the hyphen isn't
+    printed on manifests and switch lists.</li>
+   </ul>
+<!--
+   <h4>Blocks</h4>
+        <p></p>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h4>Preferences</h4>
+        <p></p>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h4>Warrants</h4>
+        <p></p>
+        <ul>
+            <li></li>
+        </ul>
+-->
+    <h4>Miscellaneous</h4>
+        <p></p>
+        <ul>
+            <li>Added ability to set timeout for automatically starting with a profile. (Randall Wood)</li>
+            <li>Audio support has been updated to now use the <a href="http://jogamp.org/joal/www/">Jogamp</a>
+                version of the JOAL libraries. This now means that 64-bit operating systems are
+                supported as well as some ARM-based systems. Additionally,
+                <a href="http://kcat.strangesoft.net/openal.html">OpenAL-Soft</a> is now bundled
+                with JMRI and no longer requires separate installation. (Matthew Harris)</li>
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

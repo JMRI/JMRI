@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.5.2
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.5.2 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.5.2 release
+      </h2>
+
+	<p>Date: August 23, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.5.2 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.6 production release around the end of the year.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>This release and all future releases will not support the NCE serial interface running at 19,200 baud.</p>
+
+<p>This release, and all other releases in this cycle, require Java 1.6 or newer.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.2-r23995.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.2-r23995.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.2-r23995.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.2-r23995.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.2-r23995.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.2-r23995.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.6/ws/jmri/dist/release/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+
+ -->
+
+<h3>Changes since test release 3.5.1:</h3>
+
+   <p>Matthew Harris:</p>
+   <ul>
+   <li>Updated the InstallTest batch file to pause before exiting
+      in certain situations on 64-bit versions of Windows.</li>
+   <li>Update logging behavior to create individual per-session 
+       log files (session.log) and to collate several session log
+       files into messages.log</li>
+   </ul>
+   
+   <ul>
+    <li>Add the ability to delay the re-allocation of sections for a train set with continuous running.  The delay can be set as either a duration in minutes or triggered by a sensor. - KD</li>
+   </ul>
+   
+   <p>The CV table in DecoderPro is now sortable and by default appears in order by number.
+   
+      <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>The Yardmaster window now has a "Next" button which allows the window to be used with
+     the JMRI web server. The drop down menus unfortunately don't work when using a browser to
+     access the windows remotely.</li>
+    <li>Improved the Conductor and Yardmaster window layouts.</li>
+    <li>Fixed the "Exclude" option in the Destination window for classification/interchange
+     tracks.</li>
+    <li>Fixed the "All Trains" feature when using consolidation mode in switch lists.</li>
+    <li>Fixed the "Return when Empty" when a car entered staging with a custom load, and the
+     remove custom loads option was enabled.</li>
+    <li>Fixed a problem with the train manifest showing the wrong number of utility cars for
+     pick ups and set outs. Thanks to Joe Mattick and Clay Smith for bring this to our attention.
+   </ul>
+
+   <p>Ken Cameron made the following changes:</p>
+   <ul>
+   	<li>Added code to prevent bad programming track writing to CV's greater than 255 which are not supported
+   		by the PowerHouse command station. Using the ops mode works as well as the PowerCab with the whole 1024 range.
+	</li>
+	<li>Fixed wrong properties name in USB Interface panel.</li>
+   </ul>
+   
+   <p>David Heap improved the NCE Monitor.
+   <p>John Lang provided a <a href="http://jmri.org/xml/signals/NYC-1956/index.shtml">signal definition for the New York Central on October 28, 1956</a>.
+
+    <p>Suzie Tall updated the <a href="http://jmri.org/xml/signals/ProRail-1954/index.shtml">ProRail 1954</a>
+    and <a href="http://jmri.org/xml/signals/InfraBel-2013/">InfraBel-2013</a> signal definitions.
+    
+    <p>Martin Jahner fixed the behavior of constant checkboxes in DecoderPro
+    
+    <p>Pierre Billon translated some decoder definition elements into German, French and Spanish
+    
+    <p>Mike Mosher provided Tsunami updates
+    
+    <p>Robin Becker provided another Tam Valley decoder definition
+    
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

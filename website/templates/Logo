@@ -1,0 +1,4 @@
+<!-- Logo -->
+    <a href="${docroot}" title="Return to home page" accesskey="1">
+	<img src="${docroot}${logo}" width="160" height="135" alt=${logoalt}> </a>
+<!-- /Logo -->

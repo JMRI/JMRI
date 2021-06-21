@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Main_Speedometer.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>
+DecoderPro&reg; Main Window
+</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<h1>DecoderPro Roster Menu</h1>
+<h1>DecoderPro3&reg; Roster Window</h1>
+
+<div align=right>
+  <p><a href="Main_Roster.shtml">Back </a></p>
+</div>
+
+<hr>
+<p>See DecoderPro&reg; User's Guide for details.</p>
+<p><img src="images/DP3Roster.png" width="899" height="446" alt="DP3"></p>
+<hr>
+
+<div align=right>
+<p><a href="Main_Roster.shtml">Back </a></p>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+</div> <!-- closes #container, started in sidebar -->
+<script src="/js/main.js"></script>
+</body>
+</html>

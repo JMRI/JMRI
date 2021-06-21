@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.5.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.3.8 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.5.1 release
+      </h2>
+
+	<p>Date: January 15, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.5.1 of JMRI/DecoderPro is available for download.
+
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the first in a new series of test versions.
+
+It contains 
+many new features, including:
+
+
+<ul>
+	<li>New DecoderPro speed table controls that allow you to quickly
+	setup your loco.
+	<li>Updates to the CTI Acela connection.
+	<li>This release has many improvements to the operations program.
+	There's now a demo program to introduce you to some of the capabilities
+	of the operations program. You can now quickly make a copy of a route.
+	New controls allow you to decide whether cars are picked up and/or
+	dropped off at the various locations in a route. A new feature allows
+	you to schedule the delivery order of cars to a siding. And you can now
+	optionally add the operations menu to the main menu bar.
+</ul>
+along with lots of other changes.  See the complete list below.
+
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.6" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+<p>JMRI now requires Java 1.5 or later.
+If you are using an older version of Java, please
+<a href="https://java.com/en/download/">upgrade your Java installation</a>.  
+To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<p>
+The way you drag things in the Layout Editor has changed if you
+are using a Linux computer. 
+
+<h3>Windows specific issues with this version:</h3>
+
+<p>Problems have been experienced when running on 64 bit versions of Windows when more than 2GB of RAM is installed. An updated version of the LaunchJMRI.exe file can be <a href="http://jmri.cvs.sourceforge.net/viewvc/*checkout*/jmri/scripts/WinInstallFiles/LaunchJMRI.exe?revision=1.5">downloaded from the JMRI Source Code repository</a>. This should then replace the version installed in "C:\Program Files (x86)\JMRI".</p>
+
+<p>Problems have been experienced when running on Windows 98 and Windows ME, causing problems when trying to shutdown the computer. An updated version of the LaunchJMRI.exe file can be <a href="http://jmri.cvs.sourceforge.net/viewvc/*checkout*/jmri/scripts/WinInstallFiles/LaunchJMRI.exe?revision=1.5">downloaded from the JMRI Source Code repository</a>. This should then replace the version installed in "C:\Program Files\JMRI".</p>
+
+<h3>Warnings from older versions:</h3>
+
+Windows desktop shortcuts have been restructured to make them more reliable.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be affected by this change.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>Mac OS X:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.5.1.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.1.dmg?download</a>
+
+<p>Windows:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.5.1.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.1.exe?download</a>
+
+<p>Linux:
+     <a href="http://downloads.sourceforge.net/jmri/JMRI.2.5.1.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.1.tgz?download</a>
+
+<h3>Changes since production version 2.4:</h3>
+
+Fixed an error with the Digitrax SoundLoader if you cancelled before opening a file.
+
+<p>
+Reformatted the DecoderPro speed table to fit better on narrow screens.
+
+<p>
+Update Throttle 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">Edit Throttle Frame</a>" so user is less likely
+to enter a new frame title and not have it appear.
+
+<p>
+Several technical updates were made. These shouldn't affect users, but
+things don't always go perfectly...
+<ul>
+<li>Standard build for debugging now uses Java 1.5, builds Java 1.5 classes.
+    This required some minor code edits to remove warnings.s
+<li>Removed obsolete methods from Routes, deprecated since JMRI 1.7.6
+<li>Removed varoius Ugly Hacks associated with the JSpinner class not being
+    available in pre-1.5 JVMs.  This changed Thottle, Turnout Operations, LocoNet Over Tcp.
+</ul>
+
+<p>
+Dan Boudreau added several new features to the operations code: 
+<ul>
+<li><a href="http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml#demo">operations demo</a>.
+<li>Optionally add operations menu to main menu bar
+<li>The ability to copy a route.  
+<li>The ability to control whether there are car drops and pickups at a location in a route.
+<li>A new schedule feature for sidings.
+</ul>
+
+<p>
+A duplicate definition for the Hornby 8215 was removed.
+
+<p>
+Much internal work on handling multiple types of programmers.
+The first indication of this at the user level is in the "Single CV programmer",
+which now will let you pick a programmer if more than one is present.
+
+<P>
+Ken Cameron updated his DebounceSensor.py sample scripts to make it more reliable.
+
+<p>
+Simon Ginsburg updated some of the German translation.
+
+<p>
+Fixed a problem when importing a decoder definition for the first time.
+
+<p>
+Updated the port-selection in the preferences to only show serial ports.
+This will mostly affect Windows machines, where the "LPT1:" choice would
+occasionally be shown whether or not it would work.
+
+<p>
+The RXTX communication libraries are now packaged with the 
+Mac OS X version so a separate installer is no longer needed.
+
+<p>
+Paul Bender arranged for the Lenz support to 
+automatically retransmit turnout messages when certain errors are received.
+
+<p>
+Fixed a crash when loading panel files that contained certain types of
+SignalHeads with comments.
+
+<p>
+Matt Harris updated the Windows application launcher so that 
+the "DOS" log window is minimized (not shown full size).
+
+<p>
+David Duchamp changed the Layout Editor drag gesture on Linux.
+
+<p>
+Michael Mosher updated the ESU LokSound 3.5 definitions.
+
+<p>
+Robert Coleman updated the CTI Acela connection to have
+blink and pulse support, activate the "invert" option in the Turnout table, adjusted the timeout settings to shorter waits, and
+updated format of the configuration file.
+
+<p>
+Fixed a problem in the TCS BEMF decoder definition that prevented showing the "BEMF Enable" option.
+
+<p>
+Fixed a bug that was preventing the tooltips on DecoderPro radiobuttons from showing on some platforms.
+
+<p>
+Nigel Cliffe 
+added more details to the "uncoupling" features within CT DCX series
+decoders, mostly to the panel which displays the options for uncoupling
+movement controls. 
+He also extended the version number range to 66 (he recently bought a DCX74 with v66
+software). CT's use of version numbering remains a problem with JMRI, the
+version numbers in different types of DCC chips will overlap.
+
+<p>
+Michael Mosher updated the SoundTraxx Tsunami definition for the EMD 645 decoder.
+
+<p>
+Bill Chown and others added a decoder definition for the MRC Brilliance 1819 G scale decoder
+and updated the Sound Brilliance definition.  
+He also updated the TCS BEMF decoders definition to complete BEMF and Decoder Lock support.
+
+<p>
+Bob Coleman fixed a bug in the CTI Acela support that sometimes resulted in reversed turnout operation.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

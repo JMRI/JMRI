@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>JMRI: UK Signalling, Layout Editor</title>
+    <meta name="author" content="Nigel Cliffe">
+    <meta name="keywords"
+       content="clinics java model railroad JMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra signalling UK British">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<hr class="hide">
+
+<div class="no-sidebar" id="mBody">
+  <div id="mainContent">
+<h2>Describe the Layout with the Layout Editor</h2>
+<p>Within JMRI there are a number of editors which can produce graphical representations 
+  for controlling a layout. In this tutorial, we are using the Layout Editor. 
+  The Layout Editor has the ability to construct a logical representation of your 
+  layout from the track diagram, so it will &quot;know&quot; which turnouts, track 
+  segments, blocks, etc.. are connected in which order. From this logical representation 
+  it can construct further rules for running your signals (and other aspects of 
+  your layout).</p>
+<p>The other common editor is the &quot;Panel Editor&quot;. This is excellent 
+  for constructing a graphical control panel, you are able to use any graphical 
+  arrangement. One typical use of the Panel Editor might be to construct a representation 
+  of a prototype signal/turnout control desk or lever frame. In practise, both 
+  the Layout Editor and the Panel Editor are used, the Layout Editor gives the 
+  logical representation and the Panel Editor produces graphically pleasing control 
+  panels for operating the layout.</p>
+<p>With the Layout Editor, begin by positioning the Turnouts and some Anchor Points 
+  for plain track. The Name of the Turnout (the User-Name defined in the Turnout 
+  Table) to be positioned is entered into the &quot;Name&quot; field before placing 
+  the Turnout on the Layout. The Bay Turnout is a &quot;LH&quot;. Once placed, 
+  clicking on the element will change the turnout on the real layout. The cross 
+  over can be done with a single element, the &quot;LH Xover&quot;. (The video 
+  shows how to attach the second turnout to the Cross-Over). </p>
+<p>Note that Turnouts cannot directly connect to each other, but a small section 
+  of plain line has to be drawn from the anchor point squares on the two turnouts. 
+  Additional Anchor Points are placed for where the track needs to be joined, 
+  or where a block boundary might be required. </p>
+<p>There is a special case of Anchor Point, called a Buffer Stop. This expects 
+  track from only one direction. </p>
+<p>When Anchor Points have been fully connected to each other with Track Segments, 
+  they change colour from Red to Green. </p>
+<p>There are Zoom Tools, an alignment grid and &quot;snap to grid&quot; options 
+  which will help to produce a tidy diagram. In the illustration below, some of 
+  the track segments have been declared as &quot;MainLine&quot; and thus are bold, 
+  with other segments being ordinary weight. </p>
+<p><img src="images/screenshot.2.jpeg" width="922" height="424"></p>
+<p>Having drawn the track diagram, the next step is to give track segments block 
+  names, and attach sensors to those blocks. </p>
+<p>Select a track segment, and with the context menu (right click) bring up the 
+  option to &quot;Edit&quot; the piece of track. </p>
+<p><img src="images/track_seg1.jpg" width="533" height="355"></p>
+<p>In the &quot;Edit Track Segment&quot; window, it is possible to change the 
+  track style to &quot;Mainline&quot;, and give the track a Block Name. This name 
+  can be either a new one (and the Block will be created) or one produced earlier. 
+  Type in a new name, then use the &quot;Create/Edit Block&quot; button to bring 
+  up further editing options.</p>
+<p><img src="images/track_seg2.jpg" width="597" height="520"></p>
+<p>In the &quot;Create/Edit Block&quot; window, the sensor used for this block 
+  can be defined (from items in the Sensor Table), and also the colour of the 
+  track when occupied set. When this window, and its parent &quot;Edit Track Segment&quot; 
+  are closed with &quot;Done&quot; the results are saved. </p>
+<p>Now, when a piece of stock triggers the occupancy sensor, the track segment 
+  should change colour to indicate that it is occupied. </p>
+<p>If an adjacent track segment shares the same block sensor (a common occurance), 
+  then give it the same &quot;Block: Name&quot; value, and the &quot;Create/Edit 
+  Block&quot; window need not be opened. </p>
+<p>The video below will show the Layout Editor, adding track segments and defining 
+  the block names and their associated sensors. </p>
+<iframe width="640" height="480" src="http://www.youtube.com/embed/U9otAzlz1K8" frameborder="0" allowfullscreen></iframe>
+<p>The download below contains the JMRI file for the work so far, it can be saved 
+  locally and opened with &quot;Open Panels..&quot; on the &quot;Panels&quot; 
+  menu of JMRI. </p>
+<p>[<a href="jmri_files/Demo%20Signal%202.xml"> Link to download file</a> ] </p>
+
+<p><a href="signalheads_and_masts.shtml">Move on to Part 6</a> </p>
+<p><a href="index.shtml">Back to Introduction</a></p>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>

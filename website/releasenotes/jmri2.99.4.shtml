@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.99.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.99.4 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.99.4 release
+      </h2>
+
+	<p>Date: April 4, 2012</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.99.4 of JMRI/DecoderPro is available for download.</p>
+
+<!--
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.0 production release, probably in Summer 2012.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+None
+
+<h3>Older warnings</h3>
+
+This release, and all other releases in this cycle, require Java 1.6.
+
+<h3>Known problems with this release</h3>
+
+The operations part of the program can lose its routes.  The problem was introduced by
+the auto save feature.  To prevent this problem, always open the Trains or Routes
+window first and confirm that the train routes have been loaded before making any
+changes to the program.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.4-r20286.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.4-r20286.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.4-r20286.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.4-r20286.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.4-r20286.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.99.4-r20286.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Release%202.99.4/lastSuccessfulBuild/artifact/jmri/dist/release/">CI project page</a>.
+ -->
+
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Packager/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+ 
+
+<h3>Changes since test release 2.99.3</h3>
+
+   <p>Kevin Dickerson made the following changes.</p>
+   <ul>
+   <li>(Bug Id 3105034) Fixed an issue with the function labels that would result in default label values that were once removed re-appearing.</li>
+   <li>Added in a full Entry/Exit interlocking system for use with the layout editor.</li>
+   <li>Suppressed the "Serial Port" selection box from the preferences of the CAN and SMRI Simulator</li>
+   <li>Added an automatic connection recovery for the ECoS</li>
+   <li>Add the ability for the command monitor, jython input and output windows to be displayed on top of any other window.</li>
+   <li>Added the ability to clear the jython output window via a button</li>
+   <li>Jython is now initialized in the background rather than when required to improve user performance.</li>
+   <li>Add SignalMasts - Filtered the list of available DCC systems available when the LNCP mast is selected to those with only a LocoNet Command Station</li>
+   <p>Layout Editor</p>
+   <ul>
+   <li>Add a Single/Double Slip to the layout editor, along with the associated signal logic.</li>
+   <li>fix bug (3175940) with scroll bars in the layout editor.  If the panel is loaded in edit mode the saved setting of the scrollbar is overwritten when you go into view mode.</li>
+   <li>Fixed a bug iin the layout editor that results in the loading of a memory icon, getting placed twice on the panel.</li>
+   <li>Added the ability to delete multiple selected items using either a popup menu or via the keyboard</li>
+   <li>Fixed a fault in the layout editor, that could allow for the same object to be selected twice, resulting in that item beiing moved double the distance</li>
+   </ul>
+   </ul>
+
+   <p>Herve Blorec provided a set of 
+   <a href="http://jmri.org/help/fr/index.html">French-language help pages</a>.
+   <p>Dan Boudreau made the following changes.</p>
+   <ul>
+    <li>Fixed throttle when launched from Edit NCE Consist and the operations train icon.</li>
+    <li>Enhanced the JMRI consist tool to now use the NCE command station when setting up a
+     consist.</li>
+   </ul>
+
+   <p>Dan Boudreau made the following changes to operations.</p>
+   <ul>
+    <li>In the "Edit Schedule" window, increased the maximum sequential car count in a schedule
+     line item from 10 to 100.</li>
+    <li>The schedule hit count in the "Edit Schedule" window now includes hits to a line item
+     in sequential mode. Before the count would only increment if the schedule was in match mode.</li>
+    <li>Some GUI improvements, now the program asks if you really want to delete a route,
+     schedule or a train. You can now adjust and save the table column widths in the Edit Schedule
+     and Edit Route windows.</li>
+    <li>Fixed a GUI bug when deleting a loco using the "Edit Locomotive" window, before you
+     couldn't just press the add or save button if you changed your mind about deleting the loco.</li>
+    <li>Enhanced the switch list printouts. You can now run the switch lists in two modes, real
+     time which was the way it previously ran, and consolidation mode. Consolidation mode is great
+     for folks with small railroads. Basically the program allows you to build and terminate your
+     trains while capturing the switch list data for a location. See operations help for more info.
+     Should save paper!</li>
+    <li>New operations feature, train manifests are now truncated when there's a switch list
+     for the location visited. A "truncated" manifest doesn't show where the cars are pulled from or
+     where they are to be spotted. Local moves are also not shown. All of the removed info is
+     however shown on the switch list for the location. This simplifies the train manifest showing
+     only what is needed for the train's conductor. See Print Options and select the "Truncate"
+     checkbox if you want to use this feature.</li>
+    <li>New staging option, you can now have cars return to staging on a turn, rather than
+     having a build failure. See help for more info, see Settings-&gt;Tools-&gt;Options "Allow cars
+     to return to staging if needed"."
+    <li>New operations feature, "Auto Save". When selected the program will automatically save
+     your operation files. The program checks very minute to see if the operation files have been
+     modified, and if so will save them when the next minute passes. See the "Setting" page for the
+     "Auto Save" checkbox.
+    <li>Switch lists now order the trains by their arrival time rather than their departure
+     time from the start of their route.</li>
+    <li>You can now manually add or delete cars from a built train using the "Set Cars" window.
+     The train manifest will also show the changes you manually made to the train.</li>
+    <li>In the "Trains" window, the program now shows the date and time a train was terminated.</li>
+    <li>New operations feature, "Planned Pick Ups" found under "Tools" in "Edit Track" for
+     spurs and interchanges. For each track you can tell the program that cars are expected to be
+     picked up from the track and that cars currently sitting there should be ignored. See the
+     operations help for more information.</li>
+    <li>Fixed "Location Unknown" checkbox problem introduced in version 2.99.3.</li>
+   </ul>
+
+   <p>Matthew Harris made the following changes.</p>
+   <ul>
+    <li>Added support for the ARM architecture on Linux</li>
+    <li>Updated Windows launcher with option to force use of 32-bit JRE on 64-bit
+     versions of Windows</li>
+    <li>Fixed an issue with auto scrolling in the System Console</li>
+    <li>Added persisting options to the System Console for auto scrolling and
+     for keeping the console on top of the window stack</li>
+    <li>Incorporated an option to print a Java Stack Trace to the System Console</li>
+    <li>Added persisting options to the various communications monitors for auto scrolling</li>
+   </ul>
+
+	<p>Ken Cameron made the following changes.</p>
+	<ul>
+		<li>Updated NCE Show Cabs feature to display all 28 Function settings and cab display line values</li>
+	</ul>
+    <p>Dick Bronson updated the RR-Cirkits Decoder definition file for the LNCP board.</p>
+    
+    <p>Steve Todd made the following change:</p>
+	<ul>
+		<li>Added some details to WiThrottle debug messaging.</li>
+		<li>Updated JMRIMobile to support direct linking to generated pages, also improved header and footer scrolling.</li>
+	</ul>
+
+    
+   <!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

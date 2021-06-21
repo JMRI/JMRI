@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.11.7
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.11.7 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.11.7 release
+      </h2>
+
+	<p>Date: June 15, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.11.7 of JMRI/DecoderPro is available for download.
+ 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the seventh in a series of test versions. We expect this series
+to end in a JMRI 2.12 or 3.0 production release in 2011. 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(None yet)
+
+<h3>Older warnings</h3>
+
+Development Version 2.11.4 contains significant improvements to the Powerline Interfaces. 
+Some of these improvements involved a complete restructuring of the underlying code. 
+As a result, previously working Preferences may now show no connections for some of the Powerline Interfaces. 
+If this occurs, go to Preferences and setup the Powerline Layout Connections again. 
+Then save the Preferences and restart JMRI.
+
+<p>
+In Development Version 2.11.3 JMRI instituted a more robust and transparent system for handling missing panel icon files. 
+If missing icon files are discovered during the panel loading process 
+this system presents a dialog box that allows the user to either delete the offending reference 
+or use the file browser to find the proper location. 
+Older versions of JMRI didn't always fully remove the references to deleted panel icons. 
+Panels which contain these stray references will present the dialog box during the first panel load. 
+If the panel worked fine before, simply choose the delete option for each "missing" icon presented 
+to remove the stray references. Once the panel has finished loading, save/store the panel file, quit JMRI and then reload. As a precaution, we recommend either making a backup copy of your panel file before diving in or saving the modified file under a different name
+
+<p>
+There have been extensive changes to the throttle code.
+If you have written scripts that use throttles, particularly
+multiple throttles, please check to make sure they still work.
+
+<p>
+The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
+along with some of the other constants in the class.  
+This will have no impact on people just using the program.  
+If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.7.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.7.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.7.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.7.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.7.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.7.tgz/download</a>
+
+<h3>Changes since test release version 2.11.6</h3>
+
+Paul Bender added a Consist Manager for LocoNet with the following notes on it's current capabilities and known issues:
+
+Basic functionality of adding and removing locomotives from consists is working, however there are several known issues with this release:
+1) The check boxes for changing the direction of a locomotive within a 
+consist are not working 
+2) The delete button at the bottom of the throttle does not work correctly.
+3) You cannot currently add an existing lead address (created with the tool)
+to another consist.  
+4) The consist manager does not currently examine the slots for consists
+
+<p>Dan Boudreau</p>
+
+<p>New operations features and bug fixes:</p>
+<UL>
+	<li>Fixed a bug where a schedule's alternate track wasn't restored
+	after restarting the program.</li>
+	<li>Fixed a bug, the program didn't check the car's road and the
+	schedule item's road when generating a custom load from staging.</li>
+	<li>Improved how custom car loads are generated from staging when
+	using match mode, and "Generate custom loads for train sidings serviced
+	by this train".</li>
+</UL>
+
+<p>Pete Cressman</p>
+<ul>
+<li>Fixed bug in LRoute Initializer where extra trigger items were included</li>
+<li>Warrant route loops with repeating blocks or the same starting and ending blocks can record and playback.</li>
+<li>Indicator tracks move train Id markers automatically under both manual and auto playback warrants.</li>
+<li>Gray menus when CircuitBuilder is in an editing mode</li>
+<li>Portal editing in CircuitBuilder interface simplified.</li>
+<li>Name changing in CircuitBuilder for Blocks, Portals and Paths implemented.</li>
+<li>Conversion of track icons to Indicator icons in CircuitBuilder improved.</li>
+<li>Other fixes and improvements - CircuitBuilder is ready for use.</li>
+</ul>
+
+<p>Fixed the NCE consist editor, broken since 2.11.4.</p>
+
+<p>Bob Jacobsen fixed a problem with checkboxes and indexed variables in
+DecoderPro. No decoders were using it yet, but several are about to, so this
+will be needed for new decoder types. At the same time, an "issue"
+with sizing of indexed enum variables was fixed. Some decoder definitions
+may have been counting on the buggy behavior for their layouts, so 
+if you see any decoder definitions that look messy now, please mention 
+it in the JMRI Users group.
+
+<p>Kevin Dickerson</p>
+<ul>
+<li>Fixed an issue with the Digitrax Simulator Throttle</li>
+<li>Fixed an issue where when you edited a route configured with an auto system name. It would duplicate the route</li>
+<li>Added the Signal Mast specific appearances and mapping to the basic set of Signal Masts</li>
+<li>Added the Signal Mast Logic facility for controlling Signal Masts, more info can be found <a href="/help/en/html/tools/signaling/SignalMastLogic.shtml">here<a></li>
+</ul>
+<!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

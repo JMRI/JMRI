@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 4.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.4 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 4.4 release
+      </h2>
+
+    <p>Date: June 30, 2016</p>
+    <p>From: Matthew Harris</p>
+    <p>Subject: Production version 4.4 of JMRI/DecoderPro is available for download.</p>
+
+<!--<p><b>This is a draft release note only; the download links do not yet work</b></p>-->
+
+We are very pleased to announce that the 4.3 series of JMRI test releases has resulted in a
+version that's good enough to be recommended for general use, including by new users.
+We're therefore making that version, "Production version 4.4" available for download today.
+
+<h3>Notes:</h3>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+<ul>
+    <li>None at release time</li>
+</ul>
+
+<!--
+If any of those effect you, please either wait for
+<a href="jmri4.5.1.shtml">JMRI 4.5.1</a>, due out shortly after this one,
+or pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this version:</h3>
+
+<ul>
+    <li>None at release time</li>
+</ul>
+
+<h3>Older warnings</h3>
+
+<a id="warnings" name="warnings"></a>
+<h3>Warnings:</h3>
+
+See the <a href="jmri4.2.1.shtml#warnings">JMRI 4.2.1 release note</a>
+for older warnings that may be relevant to you if you're updating from an earlier version.
+
+<!-- 4.3.9 -->
+<p>LocoTools, no longer supported since JMRI 2.10, has been removed from the Linux and OS X distributions.</p>
+
+<!-- 4.3.5 -->
+
+<p>When sharing a configuration between this version and JMRI 4.3.4 or older, the older version of JMRI will not
+    reflect changes in preferences, window position, table sorting, column order, or other user interface state. This is due to
+    changes in how user preferences and interface state are stored.</p>
+    
+<!-- 4.3.3 -->
+<p>You can now set the order of your startup items: If you're opening panel files, running scripts, etc as
+    the program starts up, there's a preferences pane that lets you easily set the order in which those happen.
+    If you've set the order manually (e.g. by editing configuration files) in the past, please check this
+    preference to make sure it's set the way you want.</p>
+
+<p>The DispatcherPro, JMRI Demo, and SignalPro applications are no longer shipped in distributions. Use PanelPro
+    in lieu of these applications.</p>
+
+<!-- 4.3.1 -->
+<p>The internals of the Layout Editor have been reworked a bit.  Please keep an
+    eye out for any changed behaviors.</p>
+
+
+<h3>Download links:</h3>
+
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+    href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.4.4-R1ccf76b.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.4.4-R1ccf76b.dmg/download</a><br/>
+    sha256: 95a40bfbeae405432ac4953407c59005cbb0c9d6b665f95d08a6bda74e7a1ad8</p>
+
+<p>Windows: <a
+    href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.4.4-R1ccf76b.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.4.4-R1ccf76b.exe/download</a><br/>
+    sha256: 8447bdb26bdb6be4240201f8a097dbc472cb18cd9d0600fbb2a01fe10eed5aa1</p>
+
+<p>Linux: <a
+    href="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.4.4-R1ccf76b.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.4.4-R1ccf76b.tgz/download</a><br/>
+    sha256: cab13ee35918cd64b482b13509cac7b33f4092e8bb6437970ec1383fbdd2ea82</p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.4/">CI project page</a>.
+-->
+
+<!--
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+-->
+
+<h3>Changes since <a href="jmri4.2.1.shtml">production release 4.2.1</a>:</h3>
+
+    <h4>Hardware Support</h4>
+
+        <p>Help for setting up JMRI with your OS and Java version as well as setting general preferences is available as <a href="/help/en/html/setup/index.shtml"
+        target="_blank">Setup Help</a>, including a short FAQ section, so application help pages can focus on the functions in each part.</p>
+
+        <p>Support for ARM processors running in 64-bit mode (aarch64) has been added</p>
+        
+        <h5>DCC++</h5>
+            <ul>
+                <li>This release includes fixes for release 4.2 and earlier</li>
+                <li>DCC++ crash when starting with the Base Station not attached has been fixed.</li>
+           </ul>
+
+        <h5>LocoNet</h5>
+            <ul>
+                <li>A problem that prevented use with the Digitrax PR2 has been fixed.</li>
+                <li>Fixed filtering in the LocoNet monitor</li>
+                <li>Steve Rawlinson fixed a <a href="https://github.com/JMRI/JMRI/issues/159">problem with multiple throttles</a>.</li>
+                <li>The Digitrax DB150 Empire Builder command station uses a single output for powering
+                    both the main track and the programming track. JMRI is supposed to turn track power back
+                    on after doing a programming track (Service Mode) CV write, but it was also 
+                    erroneously turning track power on after going an Ops Mode CV write.  This is now
+                    fixed: Power on (GPON message sent) only happens after a service mode CV write.  Note
+                    that JMRI does not turn track power on after a CV write that ends it in an error;
+                    this is the same behavior as before.</li>
+                <li>Steve Todd and Steve G. fixed an error in the Loconet Monitor that would cause exceptions to
+                    appear if Sensor/Turnout/Reporter usernames were empty</li>
+                <li>Fix error preventing emergency stop in 14/28 speed step modes (Steve Rawlinson / <a href="https://github.com/JMRI/JMRI/pull/1185">1185</a>)</li>
+                <li>Fixed a problem with PM42 addresses greater than 9.</li>
+           </ul>
+
+        <h5>NCE</h5>
+            <ul>
+                <li>Fixed a problem preventing the combination of an NCE-USB adapter with the PowerPro, SB3 or SB5 Smartbooster 
+                    from doing ops-mode (on main) programming.</li>
+            </ul>
+
+        <h5>RFID</h5>
+            <ul>
+                <li>Fixed a problem preventing MERG Concentrator serial connections from being used.</li>
+            </ul>
+
+        <h5>Roco z21/Z21</h5>
+            <ul>
+                <li>Throttle support now uses Z21/z21 specific XPressNet messages and replies.</li>
+                <li>Turnout support now uses Z21/z21 specific XPressNet messages and replies.</li>
+                <li>Set Broadcast Flags for XPressNet messages.  This causes the command station to generate the expected replies.</li>
+                <li>Add Configuration tool to the Z21 Menu.  This allows checking and setting the Z21's Broadcast flags, and displaying the serial number, hardware version, and software version.</li>
+           </ul>
+
+        <h5>SPROG</h5>
+            <ul>
+                <li>Andrew Crosland fixed a problem with ops mode programming packet bursts through the SPROG command station.
+                    Added a delay between ops mode packets and also handle the case where there is no free slot available for the packet, by reporting a timeout back to the programmer.</li>
+               <li>Andrew Crosland modified SPROG command station support for a higher packet transmission rate. Added new connection methods for Pi-SPROG Raspberry-Pi hardware.</li>
+             </ul>
+
+        <h5>SRCP</h5>
+            <ul>
+                <li>JMRI's SRCP server implementation now supports throttles</li>
+            </ul>
+
+        <h5>TCS</h5>
+            <ul>
+                <li>Paged access to TCS decoders could sometimes overrun the power-on/power-off cycle. Fixed.</li>
+            </ul>
+
+    <h4>Signals</h4>
+        <h5>Signal Systems</h5>
+            <ul>
+                <li>Greg McCartney provided a definition for the Norfolk and Western 1981 rulebook</li>
+                <li>John Lang updated the NYC signal definitions</li>
+                <li>(jkilsby) Background made transparent for icons for Danish Signals.</li>
+                <li>Added low mast appearances to Basic signal system (mstevetodd / <a href="https://github.com/JMRI/JMRI/pull/1080">#1080</a>)</li>
+                <li>Steve Todd improves the contents of and icons for the Basic signal system</li>
+                <li>Egbert Broerse provided updates to the ProRail 1954 system</li>
+                <li>Updated B&amp;O 2009 signal definitions to fix restricted aspect in some cases
+                    (<a href="https://github.com/JMRI/JMRI/pull/1575">#1575</a>)</li>
+            </ul>
+
+
+    <h4>New / Updated decoder definitions</h4>
+        <ul>
+            <li>The default Programming mode for any particular DCC system is now based
+                on the order listed in the Java code.
+                NCE and SPROG systems have been updated to default to Direct modes.
+                Other systems can have the default priority order changed on request.
+            </li>
+            <li>The handling of decoder custom, replacement and empty panes has been improved. (Dave Heap)
+                <ul>
+                    <li>Documentation has been updated at
+                        <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#pane_considerations"
+                        target="_blank">Advanced Decoder Definitions</a>.
+                    </li>
+                    <li>There is now a
+                        <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#pane_best_practice"
+                        target="_blank">Best Practice</a> recommendation, with examples.
+                    </li>
+                </ul>
+            </li>
+            <li>Identify & Read Type fall back to Paged Mode if the selected mode fails. (Dave Heap)</li>
+            <li>HTML can now be used in variable labels. It can already be used in pane text and tool tips.
+                See <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml" target="_blank">Advanced Decoder Definitions</a>. (Dave Heap)</li>
+            <li>Added the ability to specify non-key states used by some decoders to control outputs,
+                such as Stopped, Moving, Forward, Reverse and Sensors.
+                For details see the <a href="/help/en/html/apps/DecoderPro/FnMapping.shtml" target="_blank">Function Map</a> page. (Dave Heap)
+            </li>
+            <li>Fixed a problem that caused decoder definitions that have constants in Function Maps to fail to open in V4.3.5. (Dave Heap)</li>
+            <li>Improvements to the "validation" checks for decoder definitions.  A couple
+                false positives fixed; check that some numerical fields really do contain numbers.</li>
+            <li>Previously, when loading an existing roster entry, DecoderPro just loaded the CV values. 
+                This in turn loads the Variable values as the CVs change.
+                Because of DP's qualified-variable support, some Variables are not connected to specific CV contents at load time; 
+                they get the wrong values, and hilarity ensues. (First pointed out by Dick Bronson)
+                Updated so that JMRI loads the Variable values from the file (they've been stored all along), then loads CV values as before.
+            </li>
+            <li>The identification process for Hornby decoder models now includes the value of CV 159.</li>
+     </ul>
+
+        <h5>Bachmann</h5>
+            <ul>
+                <li>Alain Le Marchand added three steam and one diesel decoder definitions</li>
+            </ul>
+
+        <h5>BLI</h5>
+            <ul>
+                <li>Michael Mosher updated the BLI Diesel P3 definition</li>
+                <li>Fixed missing pane issues with BLI Paragon 2 Diesel definition. (Dave Heap)</li>
+            </ul>
+
+        <h5>Digitrax</h5>
+            <ul>
+                <li>Alain Le Marchand improved 
+                    <a href="https://github.com/JMRI/JMRI/pull/701">how Digitrax Series 5 and Series 6 decoders are identified</a>
+                </li>
+                <li>Alain Le Marchand added the DH126MT definition (<a href="https://github.com/JMRI/JMRI/pull/1582">#1582</a>)</li>
+            </ul>
+            
+        <h5>Doehler &amp; Haas</h5>
+            <ul>
+                <li>Pierre Billon updated the SH10A decoder definition, improved SUSI support, and made other updates</li>
+            </ul>
+
+        <h5>ESU</h5>
+        <p>Dave Heap made the following changes:</p>
+            <ul>
+                <li>Re-factored the LokSound V3.x definitions to remove three custom panes
+                    and moved those items to the Function Map pane.
+                </li>
+                <li>The ESU decoder file panes have been reorganised in line with better practice.</li>
+                <li>Additions to LokSound Select L, including  the ESU Smoke Unit and SUSI.</li>
+                <li>Fixed the incorrect CV number for ESU Estop on speed step 0.</li>
+                <li>Added the LokPilot Nano Standard V1.0.</li>
+                <li>Added new Product IDs for some new LokSound Select hardware versions.</li>
+                <li>Fixed Vstart, Vmid &amp; Vhigh value ranges for various ESU decoders.</li>
+            </ul>
+
+        <h5>Hornby</h5>
+            <ul>
+                <li>Added ability to use CV59 for decoder product identification</li>
+            </ul>
+
+        <h5>Lenz</h5>
+            <ul>
+                <li>Standard+ V2 NEM652 10231-02 added (Alain Carasso / <a href="https://github.com/JMRI/JMRI/pull/1169">#1169</a>)</li>
+                <li>Alain Carasso added version checks to the Lenz Plus decoder definitions <a href="https://github.com/JMRI/JMRI/pull/1267">(PR #1267)</a></li>
+            </ul>
+
+        <h5>MRC</h5>
+            <ul>
+                <li>MRC 1961 - Sound Decoder for Model Power N-scale Pacific/Mikado added (Alain Le Marchand / <a href="https://github.com/JMRI/JMRI/pull/1105">#1105</a>)</li>
+                <li>MRC 1750 - Walthers GP15-1 HO added (Alain Le Marchand / <a href="https://github.com/JMRI/JMRI/pull/1140">#1140</a>)</li>
+                <li>MRC 1825 - Athearn SD45/60 HO improved (Alain Le Marchand / <a href="https://github.com/JMRI/JMRI/pull/1140">#1140</a>)</li>
+                <li>Alain Le Marchand improved the handling of CV29 in the MRC 1825 definition</li>
+            </ul>
+
+        <h5>NCE</h5>
+            <ul>
+                <li>Change acceleration and deceleration range (CVs 3 &amp; 4) to 0-254 for non-silent drive decoder families. (Dave Heap)</li>
+            </ul>
+
+        <h5>Norsk Modelljernbane (NMJ)</h5>
+            <ul>
+                <li>Norsk Modelljernbane (NMJ) Topline Skd 224 decoder added (Lolke H Bijlsma / <a href="https://github.com/JMRI/JMRI/pull/1085">#1085</a>)</li>
+                <li>New NMJ B3 and B7 series DCC light board decoders added (Lolke H Bijlsma / <a href="https://github.com/JMRI/JMRI/pull/1291">#1291</a>)</li>
+            </ul>
+
+        <h5>RR-CirKits</h5>
+            <ul>
+                <li>Dick Bronson updated the Watchman and Towerman definitions</li>
+            </ul>
+
+        <h5>SoundTraxx</h5>
+            <ul>
+                <li>Alain Le Marchand fixed the enum order for CV123 Exhaust Select on the Econami</li>
+                <li>Michael Mosher updated the Econami definitions from the 1.3 manuals</li>
+                <li>Soundtraxx was added as an OEM for the Athearn RTR SD40</li>
+                <li>Michael Mosher added definitions for the Econami 200 and PNP decoders</li>
+                <li>Marc Fournier added new EMD GP38-2 and EMD GP40 models</li>
+                <li>Michael Mosher contributed Tsuanmi2 Steam, Diesel and Electric locomotive decoder definitions</li>
+                <li>Alain Le Marchand corrected the Econami Steam definitions (<a href="https://github.com/JMRI/JMRI/pull/1496">#1496</a>)</li>
+                <li>Michael Mosher has updated the Tsunami 2 definitions with new models TSU-2200 and TSU-PNP (<a href="https://github.com/JMRI/JMRI/pull/1563">#1563</a>)</li>
+            </ul>
+
+        <h5>TCS</h5>
+            <ul>
+                <li>Michael Mosher updated the TCS WOW Diesel decoder definition</li>
+                <li>Michael Mosher updated the WOW Diesel and Steam definitions for V4 decoders (<a href="https://github.com/JMRI/JMRI/pull/1510">#1510</a>)</li>
+            </ul>
+
+        <h5>Tehnologistic (train-O-matic)</h5>
+            <ul>
+                <li>New NMJ B3 and B7 series DCC light board decoders added (Lolke H Bijlsma / <a href="https://github.com/JMRI/JMRI/pull/1291">#1291</a>)</li>
+                <li>Updated Shine Plus Light board decoders to include the new NMJ B3 and B7 DCC light board decoders (Lolke H Bijlsma / <a href="https://github.com/JMRI/JMRI/pull/1291">#1291</a>)</li>
+            </ul>
+
+        <h5>Train-O-Matic (tOm)</h5>
+            <ul>
+                <li>tOm Lokommander Micro - added (Lolke H Bijlsma / <a href="https://github.com/JMRI/JMRI/pull/1109">#1109</a>)</li>
+                <li>tOm Lokommander Mini - added (Lolke H Bijlsma / <a href="https://github.com/JMRI/JMRI/pull/1109">#1109</a>)</li>
+            </ul>
+
+        <h5>Viessmann</h5>
+            <ul>
+                <li>Alain Le Marchand added the Viessmann 5240, 5241, 5244, 5245 decoder definitions</li>
+            </ul>
+
+        <h5>ZIMO</h5>
+            <ul>
+                <li>Mark Waters fixed errors in Lighting output Behavior in CVs 127 to 132 for Zimo decoders</li>
+                <li>Mark Waters updated the Zimo MX633 and MX634 decoder definitions</li>
+                <li>Mark Waters updated files to hide the Version 34 decoders as the v34 updates are included in the v33 files with qualifiers.</li>
+                <li>Mark Waters updated files to fix dimming mask meanings inverted, as reported on user group.</li>
+                <li>Mark Waters provided new decoder definitions for the Zimo MX618 and MX622 decoders</li>
+                <li>Mark Waters added new and updated files adding new ZIMO decoders and additional productIDs for existing decoders</li>
+                <li>Mark Waters provided updated definitions and a Sound Sample selection pane for
+                    the MX640, MX644, MX645, MX646, MX648, MX648+, MX658, MX695, MX696 and MX697V decoders.</li>
+                <li>Nigel Cliffe provided a definition for the new MX600 decoder <a href="https://github.com/JMRI/JMRI/pull/1302">(PR #1302)</a></li>
+            </ul>
+
+        <h5>Miscellaneous</h5>
+            <ul>
+                <li>Knut Schwichtenberg provided a definition for the FREDi SV programming</li>
+            </ul>
+
+    <h4>Operations</h4>
+        <ul>
+            <li>New feature to save all train manifest created by the program. See "Options" under
+                tools in the "Settings" window. Useful when you need to review an old train manifest.</li>
+            <li>New feature for classification / interchange tracks, you can now specify that only cars
+                with final destinations are accepted by the C/I track. See "Track Destinations" in the
+                operations help for more information.</li>
+            <li>Improved manifests and switch lists with regards to cabooses and cars with FRED that
+                are swapped during a train's route. Previously the caboose wasn't listed at the end of the
+                train, but where in the route it needed to be blocked for a proper set out, now correctly
+                listed at the end of the train.</li>
+            <li>Export cars and locomotives now includes an "Out of Service" remark under the column
+                "Miscellaneous".</li>
+            <li>The "Show Schedules by Car Types and Load" window has been enhanced by allowing all car
+                types and loads to be selected. Selecting both will give you a summary of all schedules that
+                are available.</li>
+            <li>New feature, you can now label a locomotive as a "B" or booster unit. B units are never
+                assigned to a train requiring a single loco. B units should never appear as the lead loco in a
+                manifest or switch list.  "B" units are configured by model name.</li>
+            <li>The locomotive model name has the "hyphen" feature where the program won't print after
+                a hyphen followed by a left parenthesis.</li>
+            <li>More build report enhancements. Including a check to see if any cars or locos in
+                staging have been assigned to a train that isn't the one being built.</li>
+            <li>The "Routes" window now shows the maximum train length in each route.</li>
+            <li>You can now sort and print your trains by their description.</li>
+            <li>If "Auto Save" is enabled, the program will automatically save your files when you
+                close the program or the Trains window. You will not longer get a prompt to save the operation
+                files.</li>
+            <li>Json manifest files are now saved in their own directory called "jsonManifests". These files
+                are used to create the operation web manifests.</li>
+            <li>Fixed a problem where the program didn't use the road or model specified in the build
+                options for locomotive changes in a train's route, and the option "Build loco consist from
+                single locos" was selected.</li>
+            <li>Fixed a minor problem with train icons animation when there was a locomotive change in
+                a route, and two or more locomotives were individually assigned to the train.</li>
+            <li>You can now manually add or delete rolling stock from a built train no matter where in
+                the route the train is. Previously, you could only add cars to a train that hadn't departed its
+                terminal. Now as long as the car or loco's location hasn't been serviced by the train, you can
+                manually modify the train's manifest. Nice feature for operators that run in real time.</li>
+            <li>New feature, you can now add a comment for each of the radio buttons in the Timetable
+                window.</li>
+            <li>You can now enter a two digit build date for your rolling stock. A two digit date will
+                convert to something built in the 1900s.</li>
+            <li>You can now force a track length to be shorter than the track space consumed by your
+                rolling stock. This allows you to make length adjustments without having to remove the cars or
+                locos sitting on the track.</li>
+            <li>Fixed a problem where operations would lockup during a train build if "Auto HPT" was
+                selected for loco assignment, and no cars were assigned to the train during the build, and the
+                assigned loco weight was set to zero.</li>
+            <li>New feature for operations, a tool called "Automation" found under the "Trains" tools
+                menu. This tool can help you automate the building of trains, and the printing of manifests and
+                switch lists. See the <a
+                href="http://jmri.org/help/en/package/jmri/jmrit/operations/Operations.shtml#Automation">Help
+                for Automation</a> for more information.
+            </li>
+            <li>New feature for car and loco logging. Now the program creates a separate log for each
+                car or loco when logging is enabled. These new files are stored in a directory called
+                "rollingStock", and this directory can be found in the "logger" directory under "operations".</li>
+            <li>The program will now adjust a schedule's ship destination track if you copy and delete
+                a track that is referenced by the schedule. This allows you to move a track (using the copy
+                track tool) to a different location and not break your schedules.</li>
+            <li>Fixed a bug caused by using the "Set Cars" tool and the "Cars" table sorter (clicking
+                on a column heading to sort cars rather then one of the "Sort by" radio buttons). Thanks to Sam
+                Simons for finding and reporting this problem.</li>
+            <li>New feature for the Train row color, you can now by train
+                define a train reset row color. See "Train Row Color" under "Tools"
+                in the "Trains" window.</li>
+            <li>Hold cars are no longer listed for staging tracks in the
+                CSV files.</li>
+            <li>Improvements to the import and export cars feature. You can
+                now import a car's load, move count, and if the car is a caboose,
+                passenger, has FRED, or utility car. You can now export only the
+                cars shown in the "Cars" window. Note that you can access the
+                "Cars" window from a location or track and only cars at that
+                location or track are shown. Useful when exchanging cars between
+                layouts.</li>
+            <li>Improvements to the "Switch Lists by Location" window. Now
+                changes to locations with "similar names" appear correctly in the
+                table.</li>
+            <li>The "Trains" window now scrolls automatically when building
+                trains.</li>
+            <li>Fixed a bug where a train manifest didn't show all of the
+                work at a location with several "similar names" and the sort by
+                track option was selected.</li>
+            <li>The program now disallows special control characters when
+                entering location names, road and road numbers. These names are
+                used to create file names and file names can't have embedded
+                control characters.</li>
+            <li>Manifests and switch list now show locomotive set outs at the end of the work for
+                switchers.</li>
+            <li>Fixed a problem where locomotives wouldn't reset properly when running automations.</li>
+            <li>Made some build report improvements with regards to train turns.</li>
+            <li>Improved how the program when building a train, finds locations for cars out of
+                staging. Should help reduce the number of build failures.</li>
+            <li>There's now a "HIAF" (Halt If Action Fails) checkbox for each action in the automation
+                table.</li>
+            <li>A "Run" button has been added to the Timetable window. The button appears when CSV
+                manifests are enabled.</li>
+            <li>New automation action "Is train en-route?". See help for details.</li>
+            <li>Saved train Manifests are now stored in separate directories based on train names.</li>
+            <li>The location window now shows if there are track restrictions when only certain trains
+                or routes can access a track.</li>
+            <li>The program will attempt to place buffer cars between the locomotive and hazardous
+                cars. If a hazardous car and a non-hazardous car are going to the same track, the program will
+                place the non-hazardous car in front of the hazardous car.</li>
+            <li>All table row heights are now adjusted based on font size selected.</li>
+            <li>The "Move" button for a train is now labeled "Terminate" when the train has arrived at
+                the last location in the train's route.</li>
+            <li>Fixed a bug where a random schedule was being ignored.</li>
+   </ul>
+
+    <h4>Preferences</h4>
+        <ul>
+            <li>Preference (in Display-&gt;GUI) to let you set how long a tooltip will be shown. (Dave Heap)</li>
+            <li>Individual Startup Preferences panels have been replaced with a single tabular
+                panel that allows the explicit setting of startup execution order.
+                (<a href="https://github.com/JMRI/JMRI/pull/687">PR 687</a>)</li>
+            <li>It is possible to specify one or more routes to be set when JMRI starts.
+                (<a href="https://github.com/JMRI/JMRI/pull/730">PR 730</a>)</li>
+            <li>Additional preferences labels are available for translation. 
+                (<a href="https://github.com/JMRI/JMRI/pull/781">PR 781</a>)</li>  
+            <li>You can now set the order of your startup items: If you're opening panel files, running scripts, etc as
+                the program starts up, there's a preferences pane that lets you easily set the order in which those happen.
+                If you've set the order manually (e.g. by editing configuration files) in the past, please check this
+                preference to make sure it's set the way you want.</li>
+            <li>Easy access to control the automatic launch of the WiThrottle server has been incorporated
+                in the WiThrottle preferences page.</li>
+            <li>It is possible for a single profile stored on a shared location to maintain individual per-computer
+                settings for each connection. This feature is experimental and may not work for all connection types. Please
+                report issues with this at <a href="https://github.com/JMRI/JMRI/issues/new">our GitHub issue list</a>. (Randall Wood)</li>
+            <li>Added ability to create a button to launch a specific script to the startup preferences (<a href="https://github.com/JMRI/JMRI/pull/1165">PR 1165</a>).</li>
+            <li>Displaying open windows or frames in the web server can be disabled or redirected to display panels.
+                When disabled or redirected, the web server home page will list open panels under the <em>Open Windows</em>
+                heading.</li>
+            <li>Randall Wood fixed a problem when attempting to read profiles created after version 4.3.2 (<a href="https://github.com/JMRI/JMRI/pull/1523">#1523</a>)</li>
+        </ul>
+
+
+    <h4>Logix</h4>
+        <ul>
+            <li>The file chooser you used to pick the script file that is run by Conditional Action 
+                now starts at the script default directory.</li>
+            <li>Fixed a problem reloading some Logix that reference the same input (Sensor, Turnout) multiple times in a single Conditional</li>
+            <li>Steve Rawlinson added keyboard shortcuts to the Layout Editor</li>
+            <li>Fixed a problem where some complex Layout Editor panels don't load fully, resulting in the signals not updating properly.</li>
+            <li>Improvements to the "validation" checks for panel files.  A couple
+                false positives fixed; check that some numerical fields really do contain numbers.</li>
+        </ul>
+
+
+    <h4>Panel Editors</h4>
+        <ul>
+            <li>Pete Cressman continues to improve the code to rotate icons to different orientations.
+                The most recent change was an update to icons what have their content set and are then rotated.
+                There are lots of special cases, and we're not sure we've found them all yet.
+                If you have any issues around rotating various kinds of icons, please don't
+                hesitate to get in touch.
+            </li>
+            <li>Layout Editor panel files are validated against XML Schema.  These schema
+                were improved to catch several kinds of internal inconsistencies.</li>
+            <li>Steve Rawlinson, fixed a bug that caused errors when saving from 
+                Layout Editor if a Memory was deleted that had been linked to a Layout Block.</li>
+            <li>Improvements to the "validation" checks for panel files:  A false positive fixed.</li>
+        </ul>
+
+    <h4>WiThrottle</h4>
+        <ul>
+            <li>The default port is now 12090 instead of a random port in the Dynamic
+                and/or Private Ports range. Automatic selection of a random port has
+                been removed. (Randall Wood)
+            </li>
+        </ul>
+
+    <h4>Scripting</h4>
+        <ul>
+            <li>Several improvements to the scripting windows</li>
+            <li>ECMAScript is now consistently referred to as that, instead of sometimes being called JavaScript</li>
+            <li>Scripting with AbstractAutomaton can now wait <u>either</u> for 
+                something (Sensor, Turnout, Signal...) to change <u>or</u> for 
+                a maximum time to go by. 
+                (<a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#several">more info</a>)
+                </li>
+            <li>Fixed a rare, but really annoying, problem when multiple script threads
+                wait for the same sensor.</li>
+            <li>Steve Rawlinson added an <a href="http://jmri.org/jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py example script</a> 
+                which automatically powers off a layout
+                when no activity has been detected for a period of time.</li>
+            <li>Steve Todd added a <a href="http://jmri.org/jython/SetAllUnknownSensorsToInactive.py ">SetAllUnknownSensorsToInactive.py  example script</a> 
+                which does what its name says:  Any JMRI Sensor that's showing "UNKNOWN" state will be set to "INACTIVE" state.
+                This is particularly useful when using a simulated connection, as it makes it look like there's a layout connected.</li>
+            <li>The 'RosterCsvExport' script was updated with examples of extracting information from
+                specific bits of CV values, such as the DC-enabled bit of CV 29. (<a href="https://github.com/JMRI/JMRI/pull/1197">#1197</a>)</li>
+            <li>ON and OFF are now defined by default for Jython scripts</li>
+            <li>Oscar Moutinho provided a set of scripts to use Internet of Things (IoT) devices
+                within JMRI (<a href="https://github.com/JMRI/JMRI/pull/1463">1463</a>)</li>
+        </ul>
+
+    <h4>Warrants</h4>
+        <ul>
+            <li>Karl Lisby contributed new 
+                <a href="https://github.com/JMRI/JMRI/pull/761">Signal Controlled Warrant</a>
+                support, which is better matched to layouts with short blocks between signals. </li>
+        </ul>
+
+    <h4>Dispatcher</h4>
+        <p>Steve Todd enhanced Dispatcher's AutoActiveTrain feature with the following changes <a href="https://github.com/JMRI/JMRI/pull/1364">(PR #1364)</a></li>:
+        <ul>
+            <li>for target speed, use minimum of block speed and signal speed - for signalmasts</li>
+            <li>added user options to specify ramping interval and duration</li>
+            <li>manual slider sets speed directly, bypassing ramping</li>
+            <li>turned off AlwaysSet Turnouts, added "Trust Known State" option</li>
+            <li>added a fixed delay between turnout commands</li>
+            <li>prevent runaway by halting if train has no occupied sections - partial - only works with another moving train</li>
+            <li>enhanced debugging and squashed a few bugs</li>
+        </ul>
+        </p>
+
+    <h4>Layout Editor</h4>
+        <ul>
+            <li>Steve Rawlinson improved the Layout Editors handing of layout blocks:
+                Selecting the blank entry at the top of the drop down list when editing 
+                a layout block does not remove the existing sensor if there is one set. 
+                Next time you edit it the old sensor is back. 
+                Modified the behaviour so that selecting the blank entry removes the sensor, 
+                allowing the sensor to be assigned to a different block.
+                A sensor attached to a layout block which is not in use can now be assigned
+                to a different layout block.
+                </li>
+            <li>Steve Rawlinson made a change to allow the user to set the grid size in Layout Editor
+        </ul>
+
+    <h4>Roster</h4>
+        <ul>
+            <li>The "Roster" frame, which is also the main DecoderPro window, now 
+                disables (grays out) the "Identify" button if there's no service mode (programming track)
+                available.  Identify reads the programming track to pick the current locomotive decoder out of
+                the Roster, so it can't function when there's no connection to the programming track available.
+                You can still select the locomotive manually, e.g. for local editing of the information or for 
+                ops mode (on main) programming.</li>
+        </ul>
+
+
+    <h4>Routes</h4>
+        <ul>
+            <li>Routes in transition (started, not yet done) now show INCONSISTENT on their status sensor, and
+                ACTIVE only when complete</li>
+            <li>Traditionally, both CV and variable values were stored in roster entries, but only the
+                specific CV values were loaded when the roster entry was opened later.  This worked when 
+                all of the information was in the CVs (the variables were redundant), but now we have some
+                complex decoders that use "qualifiers" to separate variables from CVs.  To handle this case, 
+                we now reload the variable values from the file, then the CV values.</li>
+        </ul>
+
+    <h4>Web Access</h4>
+        <ul>
+            <li>The "frame server" can be optionally disabled.
+                (<a href="https://github.com/JMRI/JMRI/pull/1334">1334</a> and <a href="https://github.com/JMRI/JMRI/pull/1438">1438</a>)</li>
+            <li>A placeholder has been created for embedding extra JavaScript in JMRI web pages.
+                See <a href="https://github.com/JMRI/JMRI/blob/master/web/js/user.js">user.js</a> for details.
+                (<a href="https://github.com/JMRI/JMRI/pull/1458">1458</a>)</li> 
+            <li>Excessive logging when a client fails have been silenced.
+                (<a href="https://github.com/JMRI/JMRI/pull/1469">1469</a>)</li>
+            <li>Address vulnerability CVE-2016-4800 in Jetty. (a href="https://github.com/JMRI/JMRI/pull/1471">1471</a>)</li>
+        </ul>
+
+    <h4>Miscellaneous</h4>
+        <ul>
+            <li>Update of JMRI website navigation up to current tools and system support, Table of Contents grouped by activity, styling of older Help pages and broken links &amp; icons fixed, Hardware help pages share a common scheme (some items were moved up/down), Manuals page focused on supported versions, OS X install page updated (Egbert Broerse)</li>
+            <li>Sonny Hansen improved the Danish translation with help from Matt Harris.</li>
+            <li>A script to disable or enable IPv4 and IPv6 support in zero configuration networking, named <code>zeroconf-preferences.js</code>, can be run from the <code>jython</code> directory in the JMRI distribution. This may help some users having issues with the iPhone WiThrottle app. (Randall Wood)</li>
+            <li>Fixed problem preventing "Validate XML File" from working as a Start Up Action or Button (Dave Heap).</li>
+            <li>Added a default explanation to empty programmer tabs and enabled viewing of same if "Show empty tabs" is enabled. (Dave Heap)</li>
+            <li>Updated the libUSB (for misc USB device support), and enabled use on 64-bit MacOS X systems</li>
+            <li>Updated the Joal library to now correctly load WAV files that contain metadata at the end of the file</li>
+            <li>Herve Blorec improved the French translations</li>
+            <li>The stop aspect for Danish signals was improved</li>
+            <li>The "Monitor" panes in several systems weren't obeying the "always on top" check box, fixed.</li>
+            <li>The PanelPro splash screen displays a localized F8 hint (Egbert Broerse).</li>
+            <li>Herv&eacute; Blorec improved the French translations</li>
+            <li>The French Index and Table of Contents pages properly display accentuated characters (<a href="https://github.com/JMRI/JMRI/pull/738">PR 738</a>).
+            <li>Egbert Broerse improved the German translation of menu items, including special character spelling</li>
+            <li>Sonny Hansen improved the Danish translation</li>
+            <li>John Socha-Leialoha improved the WiThrottle protocol documentation</li>
+            <li>Egbert Broerse added help on using IntelliJ as an IDE for JMRI, including instructions to set the correct character formats (<a href="https://github.com/JMRI/JMRI/pull/675">PR 675</a>).
+            <li>The DispatcherPro, JMRI Demo, and SignalPro applications are not shipped in distributions. The code
+                for these applications has not been removed from JMRI, only the launchers are no longer created. If the
+                use of PanelPro in lieu of these applications is not possible, please request assistance creating your
+                own launchers for these applications in the JMRI Users group. (Randall Wood)</li>
+            <li>Steve Todd fixed issue with WiThrottle ip address not showing correctly on Linux systems.  Change included 
+                updating JmDNS from 3.4.1 to 3.4.2.</li>
+            <li>Sonny Hansen further improved the Danish translation</li>
+            <li>Egbert Broerse expanded the <a href="http://jmri.sourceforge.net/help/en/glossary/index.shtml">JMRI Glossary</a>, made it sortable and added columns with keywords from some of our Help translations. Suggestions for additional definitions are welcome.</li>
+            <li>Egbert Broerse further improved the German translation and fixed some issues with the French translation</li>
+            <li>Egbert Broerse further improved the WiThrottle documentation and translations</li>
+            <li>Kai Vehmersalo wrote an illustrated Ubuntu install instruction</li>
+            <li>Deprecated Findbugs annotations used in source code maintenance were updated to use replacement versions</li>
+            <li>All power buttons now include text labels indicating current power state.</li>
+            <li>Much work on internal cleanup of the code. Some small decoding and error handling improvements.</li>
+            <li>The NamedBean class better adheres to the JavaBeans specification. Critically, these changes mean
+                that only Strings can be used to name a property, and that the getPropertyChangeListeners(String) method
+                has been renamed. (If you don't know what this means, don't worry about it; it's an internal structure thing.)</li>
+            <li>The Table sorting and filtering mechanism has been changed to use mechanisms introduced for that purpose
+                in Java 1.6 or newer. When sharing a configuration between this version and JMRI 4.3.4 or older, the older version
+                of JMRI may start with a warning and forget table sort order.</li>
+            <li>When sharing a configuration between this version and JMRI 4.3.4 or older, the older version of JMRI
+                will not reflect changes in window position, table sorting, column order, or other user interface state.
+                This is due to changes in how user interface state is stored.</li>
+            <li>Application exit time has been reduced and applications exit more cleanly. (Randall Wood)</li>
+            <li>Sonny Hansen did a lot more work on the Danish translation</li>
+            <li>Alain Le Marchand updated the French translation</li>
+            <li>The handling of locomotive identification was improved in DecoderPro; 
+                the selection should no longer be lost if you press "ident" after rearranging the columns.</li>
+            <li>The DecoderPro File menu now has a selection to verify XML files.</li>
+            <li>The web server now handles HTTP redirects slightly differently. See the
+                <a href="http://jmri.org/help/en/html/web/">Web server help</a> for more details.</li>
+            <li>Walt Thompson highlighted a problem in the LightTable documentation
+                <a href="https://github.com/JMRI/JMRI/pull/1301">(PR #1301)</a></li>
+            <li>Egbert Broerse added more internationalization to the Add Routes and Add Signal Group panels
+                (translators may check new keys) and reduced duplicate resource bundle keys for common elements
+                to ease new translation (use Bundle.getMessage() in code)</li>
+            <li>Sonnys Hansen updated the Danish translation</li>
+            <li>Steve Todd updated Dispatcher's AutoActiveTrain feature.</li>
+            <li>Much infrastructure work, improvements to the Javadoc, etc.</li>
+            <li>Javadoc can now include UML</li>
+            <li>There's just the beginnings of a <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/JUnit.shtml#testScriptCode">test setup</a> for the Jython sample scripts</li>
+            <li>Randall Wood fixed issues when reordering startup items (<a href="https://github.com/JMRI/JMRI/pull/1494">#1494</a>)</li>
+            <li>Randall Wood cleaned up some excessive console logging during startup (<a href="https://github.com/JMRI/JMRI/pull/1508">#1508</a>)</li>
+            <li>LocoTools has been removed from Linux and OS X distributions of JMRI (<a href="https://github.com/JMRI/JMRI/pull/1546">#1546</a>)</li>
+        </ul>
+
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

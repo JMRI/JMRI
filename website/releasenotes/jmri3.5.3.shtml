@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.5.3
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.5.3 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.5.3 release
+      </h2>
+
+	<p>Date: September 15, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.5.3 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.6 production release around the end of the year.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>This release and all future releases will not support the NCE serial interface running at 19,200 baud.</p>
+
+<P>This release, and all other releases in this cycle, require Java 1.6 or newer.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.3-r24139.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.3-r24139.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.3-r24139.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.3-r24139.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.3-r24139.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.5.3-r24139.tgz/download</a></p>
+
+<!-- 
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.5.3/ws/jmri/dist/release/">CI project page</a>.
+ -->
+
+<!-- 
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+ -->
+
+<h3>Changes since test release 3.5.2:</h3>
+
+   <p>Robin Becker updated the Tam Valley Quad Ln11 decoder
+    definition
+   
+   <p>Dave Heap updated help files
+   
+   <p>Walter Thompson fixed links in the help files
+   
+   <p>Dan Boudreau made the following changes to operations:</p>
+   <ul>
+    <li>Improved the page layout (line wrap) for manifests and switch lists when using variable
+     width fonts like sansSerif.</li>
+    <li>New feature, you can now control the order passenger cars are shown on your manifests
+     and switch lists. In the edit car window, a new field called "Passenger Car Blocking Order"
+     will appear when you select the "Passenger" check box in the "Type" field. The text box allows
+     you to enter numbers between 0 and 100. Lower numbers will place the car near the front of the
+     train, and higher numbers towards the rear. Recommend that you start off using numbers divisible by 10.
+     For example, you might what to place an observation car at the end of the train, a value of
+     "90" would be appropriate. If you wanted a baggage car to be the first car in the passenger
+     train, a value of "10" would be a good value, cars in the middle of the train could use "50".
+   </ul>
+
+    <p>Dave Heap improved DecoderPro slider support:
+    <ul>
+    <li>The "hslider" format displayed a plain slider for decVal and indexedPairVal variable types 
+        but a percentage slider for indexedVal type. The percentage display was currently only used in QSI definitions.
+    <li>Restored consistency so "hslider" displays a plain slider for all three variable types.
+    <li>Created a new "hslider-percent" format (using existing code) for all three variable types.
+    <li>Updated QSI pane definitions where necessary to restore pre-patch behavior.
+    <li>Note that the existing code for "hslider-percent" is a bit kludgy and customized specifically to accommodate some QSI features. 
+        Future development would be to replace with a new "hslider-custom" format giving better control of labels, 
+        if a way could be devised of specifying a hashtable-type custom label list in programmer pane definitions.
+    </ul>
+    
+    <p>Michael Mosher updated the TCS WOW decoder support.
+    
+    <p>Dave Heap added ESU V4/Select fixes, additions, new panes.
+    
+    <p>Jeff Schmaltz added a decoder definition for the Massoth pulsed smoke unit.
+    
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

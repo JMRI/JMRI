@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Mac OS X Install: Remove Old Libraries
+ </title>
+	<meta name="Author" content="Bob Jacobsen">
+	<meta name="keywords" content="java model railroad JMRI install MacOSX Mac OS X">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+      <h1> 
+       JMRI: Mac OS X Install: Remove Old Libraries
+      </h1>
+
+      <p>These directions are for installing the latest 
+      releases (3.1 and later) of JMRI.</p>
+
+	<p class = "important">If you are installing JMRI for the first time, please ignore
+	this page and follow the instructions on the 
+	<a href="MacOSX.shtml">main JMRI MacOS X page</a>.</p>  
+	      
+  <h2>Removing old serial communications libraries</h2>
+
+	<p>Versions of JMRI before 2.9.2 required that you install
+     communications libraries on your computer.  
+     If you had JMRI 2.9.2 or earlier installed and are now
+     updating to a more recent version for the first time, 
+	 you need to remove the communications library files that were 
+     installed earlier.  
+     You only need to do this once.
+     To do this, locate and delete these files:<br><br>
+
+	 <tt>/Library/Java/Extensions/RXTXcomm.jar</tt><br>
+         <tt>/Library/Java/Extensions/comm.jar</tt><br>
+         <tt>/Library/Java/Extensions/librxtxSerial.jnilib</tt><br>
+         <tt>/System/Library/Frameworks/JavaVM.framework/Versions/1.4/Home/lib/javax.comm.properties</tt><br>
+         <tt>/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/lib/javax.comm.properties</tt><br>
+	
+	<p>Using the Finder, the sequence is:
+	    <ul>
+	       <li>Click on the icon for your computer's hard disk
+	       <li>Click on the "Library" icon
+	       <li>Click on the "Java" icon
+	       <li>Click on the "Extensions" icon
+	       <li>If there's an <tt>RXTXcomm.jar</tt>, <tt>comm.jar</tt>, or <tt>librxtxSerial.jnilib</tt>
+		  file, drag it to the Trash.
+	    </ul>
+
+	    <br>and<br>
+
+	    <ul>
+		<li>Click on the icon for your computer's hard disk
+		<li>Click on the "System" icon
+		<li>Click on the "Library" icon
+		<li>Click on the "Frameworks" icon
+		<li>Click on the "JavaVM.framework" icon
+		<li>Click on the "Versions" icon
+		<li>Click on the "1.4" icon
+		<li>Click on the "Home" icon
+		<li>Click on the "lib" icon
+		<li>If there's a <tt>javax.comm.properties</tt> file, drag it to the Trash.
+	    </ul>
+
+	    <br>and then just repeat that last sequence with "CurrentJDK" in place of "1.4".</p>
+
+	    <p>If one of those files or directories isn't present, just skip the step.</p>
+    
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
+</body>
+</html>
+

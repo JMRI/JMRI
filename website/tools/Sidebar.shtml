@@ -1,0 +1,70 @@
+<!-- this is the 'responsive' common Sidebar.shtml for website/tools-->
+<hr class="hide">
+<div id="mBody">
+
+    <div class="card-1" id="side" >
+        <!-- Block of text on left side of page -->
+        <div id="close-side" class="floatRight button fa fa-close" style="display:none;" onclick="side_close()"></div>
+
+    <div style="text-align: center">JMRI is...</div>
+
+<dl>
+
+<dt><a href="index.html">General Tools</a></dt>
+    <dd>JMRI provides powerful tools for working with your
+    layout.
+        <ul>
+        <li><dfn><a href="Turnouts.shtml">Turnouts</a></dfn>
+        <li><dfn><a href="Lights.html">Lights</a></dfn>
+        <li><dfn><a href="Sensors.shtml">Sensors</a></dfn>
+        <li><dfn><a href="throttle/ThrottleMain.html">Throttles</a></dfn>
+        <li><dfn><a href="ConsistTool/ConsistTool.html">Consisting</a></dfn>
+        <li><dfn><a href="Signals.shtml">Signals</a></dfn>
+        <li><dfn><a href="Routes.html">Routes</a></dfn>
+        <li><dfn><a href="Logix.html">Logix</a></dfn>
+        <li><dfn><a href="fastclock">Fast Clocks</a></dfn>
+        <li><dfn><a href="../apps/Speedometer/index.html">Speedometer</a></dfn>
+        <li><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
+        </ul>
+    </dd>
+
+<dt><a href="../apps/LocoTools">LocoNet Tools</a></dt>
+    <dd> A set of Digitrax LocoNet specific tools
+        <ul>
+        <li><dfn>LocoNet monitor</dfn>
+        <li><dfn>Slot monitor</dfn>
+        <li><dfn>Packet source</dfn>
+        <li><dfn>PM4 programmer</dfn>
+        <li><dfn>BDL16 programmer</dfn>
+        <li><dfn>LocoIO programmer</dfn>
+        </ul>
+    </dd>
+
+<dt><a href="../apps/Automation">Layout Automation</a></dt>
+    <dd>JMRI can be used to automate parts
+    of your layout, from simply controlling a crossing gate
+    to running trains in the background.
+    <ul>
+    <li><dfn><a href="../tools/Signalling">Signaling</a></dfn>
+    <li><dfn><a href="Routes.html">Routes</a></dfn>
+    <li><dfn><a href="fastclock">Fast Clocks</a></dfn>
+    <li><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
+    </ul>
+    </dd>
+
+	</dl>
+
+    <a href="/donations.shtml">
+     <img src="https://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+    </a>
+
+	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script src="/web/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
+
+    <!-- button is in /Header -->
+    <script src="/js/side.js"></script>
+<!-- Sidebar.shtml -->

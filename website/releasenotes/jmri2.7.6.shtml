@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.7.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.7.6 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.7.6 release
+      </h2>
+
+	<p>Date: October 4, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.7.6 of JMRI/DecoderPro is available for download.
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the sixth in a series of test versions. We expect this series
+to end in a JMRI 2.8 production release in December 2009. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Many improvements to icons in the panel and layout editors,
+    including many new formatting options.
+<li>New audio support, including a new 
+    <a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a> application.
+<li>Roster entries can now contain pictures of your locomotives,
+    which can also be used in the throttles.
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<!-- <p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a  -->
+<!-- version that's good enough to be recommended for general use, including by new users.  -->
+<!-- We're therefore making that version, "Production version 2.6" available for download today. -->
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+The Windows installer now puts the Java libraries (jar files) in a lib subdirectory.
+This is the same layout used on Linux and Mac OS X, and makes the JMRI program directory
+much more organized and easier to understand.  If you have your own custom startup scripts,
+you may have to adjust them to the new library location.  If you're just using the JMRI 
+installer and its startup tools, you shouldn't have to change anything you do.
+
+<p>
+The orientation of the coordinate system has changed in the new audio support.  Starting with this
+release, when you are looking at the model railroad, X is positive toward the right, Y is positive into the layout
+(away from you), and Z is positive upward.  If you wrote scripts using the new audio support with
+JMRI 2.7.5, you'll have to swap axes.
+
+<h3>Warnings from older versions:</h3>
+
+The new audio support in JMRI 2.7.5 requires some new libraries.
+Those libraries are included in the JMRI downloads.  They, in turn, require that the
+startup scripts include the new libraries, so these have also been modified.
+The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
+created your own copies of startup scripts, you'll have to update those:
+
+<p>
+If your roster contains locomotives with Soundtraxx Steam Tsunami decoders,
+you should migrate those roster entries to the new decoder definition names.
+We've created a tool to make that easier.
+For information on how to use that tool, please see the 
+<a href="decoder2.7.5.shtml">separate note</a>.
+
+<p>
+JMRI 2.7.4 changes the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 or later and then written out again, 
+as the program will update them to the new format upon storing them.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.6.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.6.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.6.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.6.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.6.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.6.tgz/download</a>
+
+<h3>Changes since test version 2.7.5</h3>
+
+Matt Harris improved how the new audio support handles some errors.
+
+<p>
+Dan Boudreau made some improvements to the operations tools: Added some tool tips, 
+improved performance with large rolling stock collections, 
+fixed an occasional timing problem,
+created a more random set of cars and engines for building trains,
+limit the number of cars printed in the build report to 500 cars to avoid out-of-memory conditions when previewing a printout.
+
+<p>
+Pete Cressman fixed a problem with italic text in the panel editor.
+
+<p>
+Kevin Dickerson fixed a problem controlling Turnouts and Signals through an SPROG, 
+and greatly improved the internal structure of that code.
+
+<p>
+Kevin Dickerson added support for the <a href="http://merg.co.uk">MERG</a> Signal Driver 2 board.
+
+<p>
+Pete Cressman fixed a bug in Logix support for Memories
+
+<p>
+Dan Boudreau fixed the panel editor to allow the user to use the + and - functions to nudge labels.  
+
+<p>
+Kevin Dickerson reduced to one the number of times a function is sent to a decoder by an SPROG system, 
+thus for sound functions it prevents the sound being repeated three times or a turnout being set three times.  
+
+<p>
+Dan Boudreau improved the operations "engine import" feature to check if the model exists.  
+
+<p>
+Kevin Dickerson added support for groups in the DecoderPro roster.
+
+<p>
+Ken Cameron updated the RobotThrottle2 script to solve the 'waiting for throttle' problem,
+and to provide smoother stops.
+
+<p>
+Matt Harris updated the audio GUI to be compatible with smaller screens.
+
+<p>
+Kevin Dickerson added formatting features into the Text and Memory 
+Label on the Layout Editor:
+<ul>
+<li>Set Fixed Size,
+<li>Set Margin Size (Not available if the size is fixed)
+<li>Text Label Background Colour
+<li>Border Size &amp; Border Colour
+<p>
+For the Memory Label he also added:
+<li>Justification - If the Size is fixed, it deals with the justification 
+within the box, if the size is dynamic, then it is the justification 
+around the x axis.
+<li>Double Click to present an Edit Memory value.
+</ul>
+
+<p>
+Dan Boudreau added options to allow operations users to control the display of error messages.
+
+<p>
+Matt Harris updated the build.xml file so that JMRI can be built with Java 1.7 (1.5 is still the default)
+
+<p>
+Ken Cameron added Jython command support to Logix.
+
+<p>
+Kevin Dickerson updated the layout sensor, 
+so that it can be converted and displayed as a text label instead of an icon.  
+Formatting options are similar to that added with the positional label, 
+default text will either be from the sensor username or that it blank then it will use active, inactive.
+
+<p>
+There is now a IMCURRENTTIME memory variable that contains the current fast time.
+
+<p>
+Matt Harris provided a new "<a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a>" application.
+
+<p>
+Lionel Jeanson added support for icons to the roster, so you can associate images with your
+locomotives.  He also updated the Throttle to display them, and provided a 
+<a href="../help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml#prefs">throttle preferences panel</a> for controlling that.
+
+<p>
+Peter Ulvestad updated the Comprehensive programmer format to display built-in speed table information better.
+
+<p>
+Peter Ulvestad updated the MRC Sound Brilliance 1820 definition to better display CV 6. 
+He also provided new MRC 1637 and 1665 definitions, 
+and updated the MRC Diesel 1829.
+
+<p>
+Paul Fraker updated the MRC Athearn Genesis SD45-2 definition and updated the MRC Diesel 1829 definition.
+
+<p>
+Elmer McKay provided a nice help file describing how to start putting signals on your layout.
+
+<p>
+Dan Boudreau add two new operations tools for trains and locations.  
+The "Modify Trains" and "Modify Locations" tools allows the user to quickly edit which car types a train or location will service.
+
+<p>
+Kevin Dickerson added a function to allow the system throttle manager to notify software throttles that they have
+lost control over the selected loco.
+
+<p>
+Jack Shall updated the SoundTraxx Diesel Tsunami definition to include the new ALCO 539 models.
+
+<p>
+Micheal Dunn and Peter Ulvestad provided a new definition for the MRC 1658 Sound Brilliance decoder.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

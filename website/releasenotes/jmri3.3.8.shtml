@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 3.3.8
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.3.8 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.3.8 release
+      </h2>
+
+	<p>Date: June 25, 2013</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.3.8 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 3.4 production release at mid-year.</p> 
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>For users of JMRI on Microsoft Windows, the installer will now request
+Administrator permissions if the user running the installation is not a member
+of the administrators group. Users of Windows Vista or later may receive a
+UAC (User Account Control) pop-up message when installing.</p>
+
+<p>The TCS decoder definitions have been extensively reworked.  
+You'll notice that they list different families and the models are 
+organized differently.  This is to make the automatic identification 
+work much better.  Please let us know if you encounter any problems with this.
+
+<p>This release and all future releases will not support the NCE serial interface running at 19,200 baud.</p>
+
+<p>The decoder definition files have been extensively reworked for this release series
+to reduce their size and allow  them to be translated to other languages.
+Please keep an eye out for any inadvertent changes to the definitions 
+that might have been introduced.</p>
+
+<P>This release, and all other releases in this cycle, require Java 1.6 or later.
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.8-r23686.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.8-r23686.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.8-r23686.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.8-r23686.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.8-r23686.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.3.8-r23686.tgz/download</a></p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.8/ws/jmri/dist/release/">CI project page</a>.
+-->
+
+<!--
+During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.
+-->
+
+<h3>Changes since test release 3.3.7:</h3>
+
+  <ul>
+
+  <li>Fix issue with the editing of the forward blocking sensor
+  <li>Fix an issue where a simple circular track circuit doesn't get the signal mast pairs detected correctly.
+  <li>Fix an additional issue when a signal mast logic is deleted it may generate an NPE.
+  <li>Prevent potential NPE during JSON operations
+  <li>Fix a out of range exception in dispatcher.
+  <li>Correct the way that the auto active train stops using a speed profile
+  <li>Adjustments to the way that final speed step is in a calculation is handled.
+  <li>Set JSON protocol version for 3.4
+  
+  </ul> <!--#include virtual="/Footer.shtml" --></div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

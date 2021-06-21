@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI: TrainCrew connection</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+
+     <h1>JMRI: TrainCrew connection</h1>
+
+     The JMRI web server can host the 
+     <a href="http://traincrew.conrail1285.com">TrainCrew application</a>
+     locally.  This gives you a convenient 
+     way to run your own copy for use with your
+     handheld devices.
+     
+     <p>
+     To install it, select "Install TrainCrew Application" 
+     from the JMRI Debug menu.  
+     Note that you'll need an active internet connection
+     when you do this.  But you won't need one to run
+     TrainCrew after that.</p>
+     
+     <p>Windows users will probably need to run JMRI with 
+     Administrative permissions
+     (eg. right click on PanelPro desktop link,
+     Run as Administrator) to install.
+     <br>it is not recommended to run JMRI as Administrator
+     all of the time, just to install TrainCrew.</p>
+     
+     <p>TrainCrew code is available on <a href="https://github.com/ekapus/TrainCrew">GitHub here.</a>
+     </p>
+     
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- close #mainContent -->
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 3.7.9
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 3.7.9 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 3.7.9 release
+      </h2>
+
+	<p>Date: June 27, 2014</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 3.7.9 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<p><b>This is a draft release note only; the download links do not yet work</b></p>
+ -->
+
+<p><b>Note that this release is intended to be final patches before the release
+of production JMRI 3.8.  We'd very much appreciate your feedback on it.</b></p>
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next (hopefully last) in a series of test versions. We expect this series
+to end in a JMRI 3.8 production release around the middle of 2014.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+<h3>Older warnings</h3>
+
+<p>The decoder definition files have been reformatted to make them easier to maintain.
+If you want to make a change in a decoder definition file, please start with a 
+file from JMRI 3.7.6 or later.</p>
+
+<p>The XmlIO web service has been deprecated and is scheduled to be removed in JMRI 3.11 (July 2015).
+All users who are relying on direct access to the XmlIO API are
+recommended to begin using the JSON API. inControl web throttle users are recommended to
+begin using webThrottle instead, or to plan on investing in devices that can support
+webThrottle, the iOS WiThrottle, or the Android Engine Driver.</p>
+
+<p>This release series has some changes to the application-initialization structure, particularly in the 
+<a href="http://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a> class.  If you have written code of your own
+that runs applications based on JMRI, please check for use of deprecated methods.</p>
+
+<p>The internals for handling CV read and write addressing have been extensively 
+reworked.  The change should be transparent (invisible) to users. If you do notice anything 
+problems involving CV reading, writing, storage or anything else, please let us know.</p>
+
+<p>The configuration structure for JMRI is changing to use <em>Configuration
+Profiles</em>. Configuration Profiles allow a single JMRI application to have
+multiple, user selectable, configurations that can be changed as application
+startup. For some users, this change will have no impact; other users will be
+visibly impacted by this change. See <a
+href="http://jmri.org/help/en/html/profiles.shtml">http://jmri.org/help/en/html/profiles.shtml</a>
+for more information.</p>
+
+<p>The JMRI SRCP implementation is undergoing extensive revision, in part
+due to testing with 3rd party SRCP clients and servers.  
+If you are using the SRCP support, 
+you will need to upgrade both the client(s) and the server to the same JMRI version.</p>
+
+<p>The JMRI Web Server is being extensively rewritten. If you notice any problems using it, please let us know.</p>
+
+<P>This release, and all other releases in this cycle, require Java 1.6 or newer.</p>
+
+<h3>Known problems with this release</h3>
+
+<p>None at the time of this release.</p>
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.9-r26488.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.9-r26488.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.9-r26488.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.9-r26488.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.9-r26488.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.3.7.9-r26488.tgz/download</a></p>
+ 
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.9/ws/jmri/dist/release/">CI project page</a>.
+-->
+ 
+ <!--
+<p>During development leading to the actual release, you can find test download files on the 
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+ -->
+
+
+   <h3>Changes since test release 3.7.8:</h3>
+
+<p>Fix for issue with speedtable crashing with ESU decoders
+
+<p>Fixed a web server issue.
+
+
+   <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

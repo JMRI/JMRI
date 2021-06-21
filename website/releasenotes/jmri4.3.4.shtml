@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 4.3.4
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 4.3.4 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 4.3.4 release
+      </h2>
+
+    <p>Date: March 13, 2016</p>
+    <p>From: Matthew Harris</p>
+    <p>Subject: Test version 4.3.4 of JMRI/DecoderPro is available for download.</p>
+
+<!--<p><b>This is a draft release note only; the download links do not yet work</b></p>-->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!
+And please back up your JMRI files before installing this, in case you want to go
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in the next JMRI production release around the middle of 2016.
+(See the <a href="https://github.com/JMRI/JMRI/milestones?state=open"><em>tentative</em> release schedule</a>)</p>
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>Known problems with this release</h3>
+
+<p>If a DCC++ system connection is configured, but not connected to the computer where expected by JMRI, the JMRI application
+can hang at application startup. This is fixed in JMRI 4.3.5.</p>
+
+<!--
+If any of those effect you, please either wait for
+<a href="jmri4.3.5.shtml">JMRI 4.3.5</a>, due out shortly after this one,
+or pick up a
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">development build installer</a>
+from
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins</a>.</p>
+ -->
+
+<a id="warnings" name="warnings"></a>
+<h3>New warnings for this version:</h3>
+
+<ul>
+    <li>None at time of release</li>
+</ul>
+
+<h3>Older warnings</h3>
+
+See the <a href="jmri4.2.shtml#warnings">JMRI 4.2 release note</a> for warnings predating the 4.3 development series.
+These may be relevant to you if you're updating from an earlier version.
+
+<!-- 4.3.3 -->
+<p>You can now set the order of your startup items: If you're opening panel files, running scripts, etc as
+    the program starts up, there's a preferences pane that lets you easily set the order in which those happen.
+    If you've set the order manually (e.g. by editing configuration files) in the past, please check this
+    preference to make sure it's set the way you want.</p>
+
+<p>The DispatcherPro, JMRI Demo, and SignalPro applications are no longer shipped in distributions. Use PanelPro
+    in lieu of these applications.</p>
+
+<!-- 4.3.1 -->
+<p>The internals of the Layout Editor have been reworked a bit.  Please keep an
+    eye out for any changed behaviors.</p>
+
+<p><!-- 4.1.5 -->The code for handling Panel Editor / Control Panel Editor icons has changed
+    to better deal with rotating icons.  This has changed how opaque vs transparent
+    icon backgrounds are handled. Please check your panels to make sure we 
+    haven't inadvertently caused a problem, particularly if you've got rotated 
+    icons and/or use have custom icons with transparent backgrounds.  If there
+    are any problems, please send in a copy of your panel file so we can 
+    recreate the problem and fix it.</p>
+
+<p><!-- 4.1.4 -->The configuration is now stored in multiple files within a directory named <code>profile</code> 
+    inside a Configuration Profile instead of within the file <code>ProfileConfig.xml</code>. 
+    PanelPro and DecoderPro both should migrate from the old configuration to the new configuration seamlessly. 
+    See JMRI <a href="https://github.com/JMRI/JMRI/issues/69#issuecomment-155385101">Issue #69</a> for more details. 
+    Please report any issues at <a href="https://github.com/JMRI/JMRI/issues/new">our GitHub project</a>.</p>
+
+<a id="decoderSchema" name="decoderSchema"></a>
+<p><!-- 4.1.4 -->The <a href="http://jmri.org/xml/schema/decoder.xsd">XML schema</a>
+    for decoder files has been made more precise. 
+    This shouldn't effect people who just use the JMRI decoder definitions as distributed,
+    because they all work with this more precise version.  But if you have decoder
+    definitions of your own, you may have to update them.
+    Specifically, the decoder file verification will now reject a few things that it didn't catch before, even though they didn't really work:
+    <ul>
+        <li>There can be only one label element for a given language on a given variable.
+        <li>A variable element has to contain just one type element such as decVal, enumVal, etc.
+    </ul>
+    As a side effect of checking this, the qualifier elements inside a variable now have to
+    be at the front of the contents, and the label, comment and tooltip elements have to be 
+    at the back. You can't just sprinkle them around and hope the code finds them
+    (because sometimes in the past the program would miss one; now we require an order we're
+    sure the code will understand).
+
+<p><!-- 4.1.2 -->Mac OS X 10.11 El Capitan requires signed drivers for USB adapters. If you've upgraded
+    from an earlier version, your drivers may not work.  That will cause JMRI to throw errors
+    when it doesn't find communications links.  To fix this, go to the web site for your
+    adapter manufacturer, find the drivers that are listed to work with Mac OS X 10.9 or later,
+    download, and install, then retry JMRI again.
+
+<p><!-- 4.1.2 -->Jython has been upgraded to version 2.7.0 with the following potentially breaking changes:</p>
+    <ul>
+      <li>The decodeJmriFilename() function is no longer available by default. Use the  FileUtil.getExternalFilename() method instead.</li>
+      <li>The simple propertyListener object is no longer available by default. Create your own, following the examples provided in the jython folder in the JMRI distribution.</li>
+      <li>jmri_defaults.py included in the JMRI distribution is no longer executed by default, but will be executed before any other Jython scripts if included in your User Files location.</li>
+      <li>The default behavior of python.cachedir.skip is now true. If using a custom python.properties file, include "python.cachedir.skip=false" in that file.</li>
+      <li>Certain Python scripts are too large to be evaluated in Jython. If a script fails with the <code>java.io.IOException: Mark invalid</code> error, set "jython.exec=true" in a custom python.properties file or rewrite the script to be less than 100,000 characters per file. Note that when using "jython.exec=true" it may be desirable to run the included script jmri_bindings.py as a startup action to emulate the evaluation environment used when jython.exec=false.</li>
+    </ul>
+
+<p><!-- 4.1.1 -->Decoder definitions that use the "ivariable" form are now deprecated.  Definitions
+    included with this release have been converted to the new form.
+    If you have decoder definitions with the older "ivariable" form, they will no longer
+    validate, but can still be used for the first couple of test releases in this series.
+    Please ask on the JMRI Users group
+    for help converting them, or just drop them and use the current definitions.</p>
+
+<p><!-- 4.1.1 -->The OpenLCB 0.6.4 library in this version has a bug in its alias
+    calculations which prevents JMRI from communicating occasionally.
+    A patch has been submitted to the OpenLCB group, but as they seem no longer interested in maintaining that code, it's not known when this will be fixed.
+    In the meantime, the workaround is to restart JMRI and/or the hardware node(s)
+    and try again; that might allocate different alias values.</p>
+
+
+<h3>Download links:</h3>
+
+
+<p>Please use these links for downloading:</p>
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.3.4-Reb510be.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.3.4-Reb510be.dmg/download</a><br/>
+    sha256: d1fce0c9e48859145fad6be27104512ca7af74839164168b5bada1feef68b94c</p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.3.4-Reb510be.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.3.4-Reb510be.exe/download</a><br/>
+    sha256: 915b2539198fa9e5d69fa41f9c0eb92666ab7ef50a7a2807784283cf2b511b4e</p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.3.4-Reb510be.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.4.3.4-Reb510be.tgz/download</a><br/>
+    sha256: 9415e7e49272b900ebe2771e27002c6649bedb342c0bb3a95c918aaa3c6874fd</p>
+
+<!--
+Preliminary build files (not the final released files) can be found
+on the
+<a href="http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.4/ws/dist/release/">CI project page</a>.
+
+
+
+<p>During development leading to the actual release, you can find test download files on the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">continuous integration build page</a>.
+These are development files, and might not be working at any particular time.</p>
+-->
+
+<h3>Changes since <a href="jmri4.3.3.shtml">test release 4.3.3</a>:</h3>
+
+The <a href="https://github.com/JMRI/JMRI/issues?utf8=✓&q=is%3Aclosed&q=milestone%3A4.3.4+">list of included commits</a> is available from our
+<a href="https://github.com/JMRI/JMRI">GitHub code repository</a>.
+
+    <h4>Hardware Support</h4>
+<!--
+        <p></p>
+
+        <h5>C/MRI</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>JMRI Simple Server/JMRI Client</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+        <h5>LocoNet</h5>
+            <ul>
+                <li>The Digitrax DB150 Empire Builder command station uses a single output for powering
+                both the main track and the programming track. JMRI is supposed to turn track power back
+                on after doing a programming track (Service Mode) CV write, but it was also 
+                erroneously turning track power on after going an Ops Mode CV write.  This is now
+                fixed: Power on (GPON message sent) only happens after a service mode CV write.  Note
+                that JMRI does not turn track power on after a CV write that ends it in an error;
+                this is the same behavior as before.</li>
+            </ul>
+
+        <h5>NCE</h5>
+            <ul>
+                <li>Fixed a problem preventing the combination of an NCE-USB adapter with the PowerPro, SB3 or SB5 Smartbooster 
+                    from doing ops-mode (on main) programming.</li>
+            </ul>
+
+        <h5>RFID</h5>
+            <ul>
+                <li>Fixed a problem preventing MERG Concentrator serial connections from being used.</li>
+            </ul>
+
+        <h5>Roco z21/Z21</h5>
+            <ul>
+                <li>Throttle support now uses Z21/z21 specific XPressNet messages and replies.</li>
+                <li>Turnout support now uses Z21/z21 specific XPressNet messages and replies.</li>
+            </ul>
+
+        <h5>SRCP</h5>
+            <ul>
+                <li>JMRI's SRCP server implementation now supports throttles</li>
+            </ul>
+<!--
+        <h5>SPROG</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+        <h5>TCS</h5>
+            <ul>
+                <li>Paged access to TCS decoders could sometimes overrun the power-on/power-off cycle. Fixed.</li>
+            </ul>
+<!--
+        <h5>Uhlenbrock Intellibox</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>Zimo MXULF</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h4>Signals</h4>
+        <h5>Signal Systems</h5>
+            <ul>
+                <li><li>
+            </ul>
+
+        <h5>Signal Mast Editor</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+    <h4>New / Updated decoder definitions</h4>
+<!--
+        <ul>
+            <li></li>
+        </ul>
+
+        <h5>BLI</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h5>Digitrax</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>Doehler &amp; Haas</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>ESU</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>MGP</h5>
+             <ul>
+                <li></li>
+             </ul>
+
+        <h5>MTH</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>NCE</h5>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h5>QSI</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+
+        <h5>RR-CirKits</h5>
+            <ul>
+                <li>Dick Bronson updated the Watchman and Towerman definitions</li>
+            </ul>
+
+<!--
+        <h5>SoundTraxx</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+        <h5>TCS</h5>
+            <ul>
+                <li>Michael Mosher updated the TCS WOW Diesel decoder definition</li>
+            </ul>
+
+        <h5>Viessmann</h5>
+            <ul>
+                <li>Alain Le Marchand added the Viessmann 5240, 5241, 5244, 5245 decoder definitions</li>
+            </ul>
+<!--
+        <h5>Wangrow</h5>
+            <ul>
+                <li></li>
+            </ul>
+-->
+        <h5>ZIMO</h5>
+            <ul>
+                <li>Mark Waters provided updated definitions and a Sound Sample selection pane for
+                    the MX640, MX644, MX645, MX646, MX648, MX648+, MX658, MX695, MX696 and MX697V decoders.</li>
+            </ul>
+
+        <h5>Miscellaneous</h5>
+            <ul>
+                <li>Knut Schwichtenberg provided a definition for the FREDi SV programming</li>
+            </ul>
+
+
+    <h4>Operations</h4>
+        <ul>
+            <li>New feature for the Train row color, you can now by train
+                define a train reset row color. See "Train Row Color" under "Tools"
+                in the "Trains" window.</li>
+            <li>Hold cars are no longer listed for staging tracks in the
+                CSV files.</li>
+            <li>Improvements to the import and export cars feature. You can
+                now import a car's load, move count, and if the car is a caboose,
+                passenger, has FRED, or utility car. You can now export only the
+                cars shown in the "Cars" window. Note that you can access the
+                "Cars" window from a location or track and only cars at that
+                location or track are shown. Useful when exchanging cars between
+                layouts.</li>
+            <li>Improvements to the "Switch Lists by Location" window. Now
+                changes to locations with "similar names" appear correctly in the
+                table.</li>
+            <li>The "Trains" window now scrolls automatically when building
+                trains.</li>
+            <li>Fixed a bug where a train manifest didn't show all of the
+                work at a location with several "similar names" and the sort by
+                track option was selected.</li>
+            <li>The program now disallows special control characters when
+                entering location names, road and road numbers. These names are
+                used to create file names and file names can't have embedded
+                control characters.</li>
+        </ul>
+
+    <h4>Roster</h4>
+        <ul>
+            <li>The "Roster" frame, which is also the main DecoderPro window, now 
+            disables (grays out) the "Identify" button if there's no service mode (programming track)
+            available.  Identify reads the programming track to pick the current locomotive decoder out of
+            the Roster, so it can't function when there's no connection to the programming track available.
+            You can still select the locomotive manually, e.g. for local editing of the information or for 
+            ops mode (on main) programming.</li>
+        </ul>
+<!--
+   <h4>Warrants</h4>
+        <ul>
+            <li></li>
+        </ul>
+-->
+    <h4>Preferences</h4>
+        <ul>
+            <li>Easy access to control the automatic launch of the WiThrottle server has been incorporated
+                in the WiThrottle preferences page.</li>
+            <li>It is possible for a single profile stored on a shared location to maintain individual per-computer
+            settings for each connection. This feature is expermintal and may not work for all connection types. Please
+            report issues with this at <a href="https://github.com/JMRI/JMRI/issues/new">our GitHub issue list</a>. (Randall Wood)</li>
+        </ul>
+
+    <h4>Logix</h4>
+        <ul>
+            <li>Fixed a problem reloading some Logix that reference the same input (Sensor, Turnout) multiple times in a single Conditional</li>
+        </ul>
+<!--
+    <h4>Panel Editors</h4>
+        <ul>
+            <li></li>
+        </ul>
+-->
+    <h4>Layout Editor</h4>
+        <ul>
+            <li>Steve Rawlinson added keyboard shortcuts to the Layout Editor</li>
+            <li>Fixed a problem where some complex Layout Editor panels don't load fully, resulting in the signals not updating properly.</li>
+         </ul>
+
+    <h4>Scripting</h4>
+        <ul>
+            <li>Steve Rawlinson added an <a href="http://jmri.org/jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py example script</a> 
+                which automatically powers off a layout
+                when no activity has been detected for a period of time.</li>
+            <li>Steve Toddy added an <a href="http://jmri.org/jython/SetAllUnknownSensorsToInactive.py ">SetAllUnknownSensorsToInactive.py  example script</a> 
+                which does what it's name says:  Any JMRI Sensor that's showing "UNKNOWN" state will be set to "INACTIVE" state.
+                This is particularly use when using a simulated connection, as it makes it look like there's a layout connected.</li>
+        </ul>
+
+    <h4>Miscellaneous</h4>
+        <ul>
+            <li>Sonny Hansen further improved the Danish translation</li>
+            <li>Egbert Broerse expanded the <a href="http://jmri.sourceforge.net/help/en/glossary/index.shtml">JMRI Glossary</a>, made it sortable and added columns with keywords from some of our Help translations. Suggestions for additional definitions are welcome.</li>
+            <li>Egbert Broerse further improved the German translation and fixed some issues with the French translation</li>
+            <li>Egbert Broerse further improved the WiThrottle documentation and translations</li>
+            <li>Kai Vehmersalo wrote an illustrated Ubuntu install instruction</li>
+            <li>Deprecated Findbugs annotations used in source code maintenance were updated to use replacement versions</li>
+        </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>JMRI CodeFlower</title>
+    <meta name="author" content="Egbert Broerse">
+    <meta name="Date.Modified" content="20190518">
+    <meta name="keywords" content="codeflower code d3 java model railroad JMRI decoderpro panelpro dcc">
+    <!--#include virtual="/Style.shtml" -->
+    <!--styles for codeflower-->
+    <style type="text/css">
+        circle.node {
+          cursor: pointer;
+          stroke: #000;
+          stroke-width: .5px;
+        }
+        circle.node.directory {
+          stroke: #9ecae1;
+          stroke-width: 2px;
+        }
+        circle.node.collapsed {
+          stroke: #555;
+        }
+        .nodetext {
+          fill: #252929;
+          font-weight: bold;
+          text-shadow: 0 0 0.2em white;
+        }
+        line.link {
+          fill: none;
+          stroke: #9ecae1;
+          stroke-width: 1.5px;
+        }
+    </style>
+ <!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div class="no-sidebar" id="mBody">
+    <div id="mainContent" width="1000" height="1000">
+    <!-- To update this page, start by copying this page to codeflowerYYYY.shtml and add a link -->
+    <h1>JMRI CodeFlower 2019</h1>
+    
+    <h3>Introduction</h3>
+    <p>The JMRI CodeFlower animation gives a lively perspective on the JMRI structure and how incredibly diverse the current state of work is.<br>
+    Choose from a subset or let your browser crunch on the full JMRI repo using the drop down over the image.<br>
+    Enjoy!</p>
+    
+      <label>Extent of items in flower:</label>
+      <select id="part">
+        <option value="codeflower_js/java2019.json">Java code</option>
+        <option value="codeflower_js/xml2019.json">XML files</option>
+        <option value="codeflower_js/help2019.json">Help files</option>
+        <option value="codeflower_js/jmri2019.json">Full repo</option>
+      </select>
+    <p> </p>
+    <div id="visualization"><noscript>Drop down is disabled and a static image shown because JavaScript is not running in this window.<br>
+    <img src="codeflower_js/javaflower2019.png" alt="Javascript not enabled" width="750" height="744" /></noscript>
+    </div>
+    <!--javascript code for this div is below-->
+        
+    <h3>Source code visualization</h3>
+    <p><a href="http://www.redotheweb.com/CodeFlower/">CodeFlower</a> visualizes source repositories using an interactive tree.
+    Each disc represents a file, with a radius proportional to the number of lines of code (loc).<br>
+    All rendering is done client-side, in JavaScript. Try hovering on nodes to see the loc number, clicking on directory
+    nodes to fold them and dragging nodes to rearrange the layout.</p>
+    <p>Compare with the <a href="codeflower2017.shtml">2017 JMRI CodeFlower</a>.</p>
+    <p>CodeFlower was built with <a href="https://github.com/mbostock/d3">d3.js</a>, inspired by
+    <a href="https://code.google.com/p/codeswarm/">Code Swarm</a> and <a href="https://code.google.com/p/gource/">Gource</a>.
+    It was published as open-source by <a href="https://twitter.com/francoisz">Fran&ccedil;ois Zaninotto</a> under the
+    MIT license.</p>
+    <p>Also view our <a href="codeswarm.shtml">2009 JMRI CodeSwarm</a>.</p>
+    
+    <h3>Technical Details</h3>
+    <p>This CodeFlower was created using:
+        <ul>
+        <li>a local GitHub repository (4.9.2ish)</li>
+        <li>a modified <code>cloc</code> Python script</li>
+        <li>functions embedded in the <a href="http://www.redotheweb.com/CodeFlower/">CodeFlower</a> page to convert the
+        information into a json format</li>
+        </ul>
+        
+    <h4>How To</h4>
+    <p>Download the <code>cloc</code> script (Count Lines Of Code, cloc) from <a
+            href="https://github.com/AlDanial/cloc">
+        github.com/AlDanial/cloc</a> and save it somewhere close to your local GitHub folder.<br>
+    Make the following adjustment to the script, using a suitable editor:
+        <ul>
+        <li>After line 5290 insert <code>'shtml' => 'HTML' ,</code> to include our flavor of html in the analysis.</li>
+        </ul>    
+    <p>Next, in Terminal, <code>cd</code> to the folder containing cloc and your JMRI repo and type for example:<br>
+    <code>perl cloc.pl JMRI/java --csv --by-file --report-file=java.cloc</code><br>
+    to get the "cloc" for the JMRI/java folder.
+    (JMRI/java is the path to start analysing; java.cloc is the file name)<br>
+    See progress, resulting in:<br>
+    <code>[counting]</code><br>
+    <code>   12546 text files.</code><br>
+    <code>   11295 unique files.</code><br>                          
+    <code>    3803 files ignored.</code><br>
+    <code>Wrote java.java</code>
+
+    <p>Repeat for the following paths: JMRI (all, too large for the script?), JMRI/java, JMRI/xml and JMRI/help</p>
+
+    <p>In a browser open <a href="http://www.redotheweb.com/CodeFlower/">http://www.redotheweb.com/CodeFlower/</a></p>
+
+    <p>Next, open the output file <code>java.cloc</code> and copy its contents into the field below [Origins: clog] on
+    <a href="http://www.redotheweb.com/CodeFlower/">http://www.redotheweb.com/CodeFlower/</a>.<br>
+    Click the [Convert] button (and optionally, click [Update] to see the new data displayed on the page).<br>
+    Copy the generated JSON data from the Input Data Format field into a separate file and save it to the codeflower_js folder,
+    together with the d3 JavaScript files.
+    Further instructions are on the CodeFlower web page.</p>
+    
+    <p>I had to trick a bit on the relative size of each element, as 3 files overshadowed the others: decoderIndex.xml,
+    RR-CirKits-TC-64-basic.xml and functionGenerator.xml all containing over 25k lines of code (loc) while other files contain just 200 loc.<br>
+    Open <code>CodeFlower.js</code> and make the following changes to show the full current code set of JMRI inside a reasonable square:
+        <ul>
+        <li>on line 19:  <code>.charge(function(d) { return d._children ? -d.size / 100 : -40; })</code> // change 100:-40 to 500:-15 // -15 slows down the action but keeps the elements away from the edge</li>
+        <li>on line 20:  <code>.linkDistance(function(d) { return d.target._children ? 70 : 25; })</code> // change 80:25 to 70:25 // 70 keeps the items closer in the final state</li>
+        <li>on line 40:  <code>.gravity(Math.atan(total / 60) / Math.PI * 0.4)</code> // change total/50 to /60 makes it more compact in equilibrium</li>
+        <li>on line 72:  <code>.attr("r", function(d) { return d.children ? 3.5 : Math.pow(d.size, 2/5) || 1; })</code> // change 2/5 to 1/5 (or use log for pow?) NB: keep it about the same as line 66</li>
+        </ul>
+
+    <h4>Source Data</h4>
+   Take a look at the data inside <a href="codeflower_js/jmri2017.json" target="_blank">jmri.json</a>.
+    
+    <!--#include virtual="/Footer.shtml" -->
+    </div> <!-- closes mainContent -->
+  </div> <!-- closes mBody -->
+  
+    <script type="text/javascript" src="codeflower_js/d3/d3.js"></script>
+    <script type="text/javascript" src="codeflower_js/d3/d3.geom.js"></script>
+    <script type="text/javascript" src="codeflower_js/d3/d3.layout.js"></script>
+    <script type="text/javascript" src="codeflower_js/CodeFlower.js"></script>
+    <script type="text/javascript">
+      var currentCodeFlower;
+      var createCodeFlower = function(json) {
+        // remove previous flower to save memory
+        if (currentCodeFlower) currentCodeFlower.cleanup();
+        // adapt layout size to the total number of elements
+        //var total = countElements(json);
+        w = 1500; //parseInt(Math.sqrt(total) * 5, 10);
+        h = 1500; //parseInt(Math.sqrt(total) * 5, 10);
+        // create a new CodeFlower
+        currentCodeFlower = new CodeFlower("#visualization", w, h).update(json);
+      };
+      d3.json('codeflower_js/java.json', createCodeFlower);
+      
+      document.getElementById('part').addEventListener('change', function() {
+        d3.json(this.value, createCodeFlower);
+      });
+    </script>
+<script src="/js/main.js"></script>
+</body>
+</html>

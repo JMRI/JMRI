@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Linux FAQ
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI install Linux">
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
+
+<h1>
+JMRI: Linux FAQ
+</h1>
+
+<dl class="faq">
+
+<dt class="on" id="help">Has anybody described making all this work?</dt>
+<dd>
+The main
+<a href="Linux.shtml">JMRI Linux page</a>
+has a general list of things you have to do.
+<p>
+<a href="http://trainguy.dyn.dhs.org/~jminer/dcc/Installing_JMRI_on_RedHat_Fedora_Core_3.html">Jon Miner's web site</a>
+provides a nice summary
+of installing on Fedora.
+<p>
+Robert Plevier has provided a note on his
+<a href="OpenSUSE.shtml">experiences with OpenSUSE</a>.
+<p>
+</dd>
+
+<dt id="path">The "java" command doesn't work. Now what?</dt>
+<dd>
+<p>Make sure the java bin directory is on the path.  For example,
+the default location for the "SDK" 1.4.2_05 version of java is
+<code>
+/usr/java/j2sdk1.4.2_05/bin
+</code>.
+</p>
+</dd>
+
+<dt id="sdk">What's the difference between the "SDK" and "JRE" java versions?</dt>
+<dd>
+"SDK" means Software Development Kit.  It's larger, because it contains the compiler
+and various development tools.  It also contains everything you need to run
+Java programs like JMRI.
+<p>
+"JRE" means Java Runtime Environment.  It's just the things you need to run
+Java programs, not develop them, so it's smaller.
+</dd>
+
+<dt id="commlibs">Do I need to install the Java comm libraries?</dt>
+<dd>
+If you want to use JMRI 2.10 or later, you don't need to
+install the Java comm libraries.  With that version, JMRI
+changed to use the RXTX library instead, and JMRI carries
+the needed files with it.  If you have the Java comm libraries
+installed, you will need to remove them.
+<p>
+If you want to use JMRI 2.9.1 or earlier, including JMRI 2.8,
+you <b>do</b> need to install the Java comm libraries.
+</dd>
+
+<dt id="comm">Where do I install the Java comm libraries?</dt>
+<dd>
+<i>This answer is still correct, but no longer needed for JMRI 2.10 or
+  later.</i>
+<p>
+Those libraries need to be installed where they will be found at the java startup.
+That means they need to be in the directory associated with the "java" command
+you'll be running.
+<p>
+To find the right version:
+<code>
+   java -version
+</code>
+<p>
+Then locate the directories associated with that version.  If you have
+both the "SDK" and "JRE" forms of java installed, it will <i>usually</i>
+use the SDK directories, but you might want to install to both.
+</dd>
+
+<dt id="usb">What do I do if my (USB) serial port isn't
+listed in the Preferences?</dt>
+<dd>
+<p>There are several options for solving this problem depending on your JMRI version:</p>
+<ol>
+    <li><p><i>For JMRI 4.7.4 and newer:</i> You can identify your desired device's name in the
+            <code>purejavacomm.portnamepattern</code> system property as a
+            parameter to a JMRI launcher script:</p>
+<pre>
+-J-Dpurejavacomm.portnamepattern=ttyUSB0
+</pre>
+        <p>This can be set in an environment variable <code>JMRI_OPTIONS</code>
+            which can be set in your <tt>.bashrc</tt> file:</p>
+<pre>
+export JMRI_OPTIONS="${JMRI_OPTIONS} -Dpurejavacomm.portnamepattern=ttyUSB0"
+</pre>
+    <p>You can also put this into <tt>/etc/profile.d/jmri.sh</tt> if you
+    don't want to change your personal <tt>.bashrc</tt> file.</p>
+    <p>Note that the "/dev/" prefix is not included in the specification.
+    <p>Multiple ports can be specified using a
+        <a href="http://docs.oracle.com/javase/tutorial/essential/regex/">regular expression</a>.
+        The simplest regular expression for this is
+        <code>(ttyUSB0|ttyUSB1)</code> (an <em>or</em> pattern).</p>
+    </li>
+<li>
+  <p><i>For JMRI 2.10 through 4.7.3 only:</i> You can set the environment variable
+  <code>JMRI_SERIAL_PORTS</code> to a colon-separated list of the additional
+  serial port devices you have available.  You can set this in your
+  <tt>.bashrc</tt> file (or equivalent for whatever shell you
+  use):</p>
+
+<code class="block">
+  export JMRI_SERIAL_PORTS=/dev/nce:/dev/locobuffer
+</code>
+
+  <p>You can also put this into <tt>/etc/profile.d/jmri.sh</tt> if you
+  don't want to change your personal <tt>.bashrc</tt> file.</p>
+
+  <p> Finally, if you want RxTx to scan the available ports for you, you can
+  modify the source code to do this.  The instructions for doing this are
+  included in the INSTALLATION file contained within the RxTx package or
+  at the <a href="http://rxtx.org/">RXTX home site</a>.</p>
+</li>
+<li>
+    <p> <i>For JMRI 2.8 and earlier only:</i> If the RxTx and Java Communications Libraries are installed correctly,
+    and  the serial port to which your device is attached isn't listed,
+    you can force RxTx to recognize a specific serial port.
+    <p>If you want to force the use of "/dev/ttyUSB0", you can do this by
+    adding the following to the "javax.comm.properties":
+<code class="block">
+javax.comm.rxtx.SerialPorts=/dev/ttyUSB0
+</code>
+    <p> Multiple ports can be added to the list by using a colon separated
+    list.</p>
+</li>
+</ol>
+</dd>
+
+<dt id="pi">Can JMRI run on a Raspberry Pi?</dt>
+<dd>
+<p>
+Certainly, check out the JMRI  <a href="Raspbian.shtml">Install Help on Raspberry Pi</a>.
+</dd>
+
+</dl>
+
+<!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+
+<!-- FAQ-Tail -->
+<script type="text/javascript" src="/js/faq.js"></script>
+<!-- /FAQ-Tail -->
+<script src="/js/main.js"></script>
+ </body>
+</html>

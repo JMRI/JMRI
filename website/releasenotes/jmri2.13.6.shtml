@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.13.6
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.13.6 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.13.6 release
+      </h2>
+
+	<p>Date: December 10, 2011</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.13.6 of JMRI/DecoderPro is available for download.</p>
+ 
+<!-- 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.</p>
+
+<p>This is the next in a series of test versions. We expect this series
+to end in a JMRI 2.14 production release.</p> 
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.</p>
+
+<p><b>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</b></p>
+
+<h3>New warnings for this version:</h3>
+
+None yet
+
+<h3>Older warnings</h3>
+
+The way in which UserNames are edited in the tables changed in JMRI 2.13.1, renames are now performed via a mouse pop-up menu and can not be directly edited.
+
+<p>
+The method we use for building release files was extensively changed with JMRI 2.13.1. Please let us know of any problems
+with installation or unpacking.
+
+<p>This release of "DecoderPro 3" is a test.  There are a few more features we'd
+like to add, but before doing that we need feedback from users; does it work for
+you, what do you want to see changed, etc. We'll look at all the information
+which comes back and incorporate it in future developments.
+We have tested "DecoderPro 3" and are not expecting major file-damaging faults.
+But with any test-release of software there is always a small risk that
+something has been overlooked.  So, please check that you have a backup of your
+Roster files just in case something unexpected happens.  If you install with the
+Windows installer, a backup copy of your old files (including the roster) is
+created by default.</p>
+
+<p>
+JMRI 2.12 is the last release which is completely supported by Java 1.5.
+Starting with this release, there will be minor interface features, such as 
+drag-and-drop of some items, that require your computer to have Java 1.6 installed.
+Computers with only Java 1.5 will still be able to use JMRI, including PanelPro and DecoderPro,
+through the end of this 2.13.* release cycle.  Releases in the next cycle
+will require Java 1.6.
+
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:</p>
+
+<p>Mac OS X: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.6-r19357.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.6-r19357.dmg/download</a></p>
+
+<p>Windows: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.6-r19357.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.6-r19357.exe/download</a></p>
+
+<p>Linux: <a
+	href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.6-r19357.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.6-r19357.tgz/download</a></p>
+
+<h3>Changes since test release 2.13.5</h3>
+
+<p> Oscar Moutinho made the following updates to the inControl web throttle app:
+   <ul>
+      <li>Scroll enabled for Settings.</li>
+      <li>Scroll fixed for iOS4 and Android &lt; 3.0.</li>
+      <li>Other bugs fixed and some enhancements.</li>
+   </ul>
+
+<p> Steve Todd made the following update:
+   <ul>
+      <li>Get app logos using toolkit to prevent startup crash(es) when building (if copyfile step not performed).</li>
+      <li>add "protect" flag to frameserver to provide read-only page that auto-refreshes.</li>
+      <li>"promote" Start Mini Web Server to Tools menu.</li>
+   </ul>
+
+<p> Matthew Harris made the following updates:
+    <ul>
+        <li>Fixed a problem with System Console font choice</li>
+        <li>Incorporated the current logging level into the debug log level report</li>
+        <li>Fixed a problem in the Context Report which often failed if a 
+            network cable was not plugged in</li>
+        <li>Changed the Audio table views to use a tabbed pane</li>
+        <li>Added an option to incorporate a 'Restart JMRI' button to the main JMRI window</li>
+    </ul>
+
+<p>Nigel Cliffe provided Zimo decoder updates
+
+<p>Peter Ulvestad provided ZTC decoder updates
+
+<p> B. Milhaupt made the following updates:
+    <ul>
+        <li>Added a tool to configure the Digitrax Duplex Network</li>
+        <li>Updated LocoNet Monitor:
+            <ul>
+                <li>Corrected display of Command Station Configuration messages</li>
+                <li>Corrected display of BDL16x detection section number in some messages </li>
+                <li>Corrected some typographical and consistency errors</li>
+            </ul>
+        </li> 
+        <li>Updated several Digitrax- and LocoNet-related help pages</li>
+    </ul>
+
+   <!--#include virtual="/Footer.shtml" -->
+</div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009, 2010 -->
+<!-- $Id: Comp_Advanced.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>Comprehensive Programmer - Advanced Features Pane</title>
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+
+<!--#include virtual="Sidebar.shtml" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h2>Advanced Features Pane</h2>
+
+<div align=right>
+<p><a href="Comp_Consist.shtml">Previous | </a>
+  <a href="Comp_SoundFX.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<hr>
+<p>
+The <b>Advanced Features</b> pane covers CVs that don't fall readily into
+one of the other categories, and more importantly are not generally part
+of the NMRA DCC standard. This is a bit like the Netscape/Microsoft Browser
+Wars, areas where the manufacturer is pushing the envelope. In this case,
+the CV here controls the Transponding feature of newer Digitrax decoders,
+which allows them to report their location and engine number back to the
+Loconet.
+<p>There  may be one or several of these panes, depending on how complex the decoder  programming is and the style of the person who wrote the definition file for  your particular decoder.
+
+<p>Note that the Tsunami decoder has advanced, Tsunami Lighting, Equalizer, Reverb, and ASC TAB that are unique to this decoder and will not be discussed in this manual.
+<p><img src="images/Comp_08_Advanced.png" width="932" height="792" alt="advanced">
+
+<hr>
+
+<div align="right">
+<p><a href="Comp_SoundFX.shtml"></a>
+  <a href="Comp_Consist.shtml">Previous | </a> <a href="Comp_SoundFX.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<!--#include virtual="/Footer.shtml" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

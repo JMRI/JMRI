@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>
+ JMRI: Release Notes for 2.9.1
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="java model railroad JMRI 2.9.1 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../download/Sidebar.shtml" -->
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.9.1 release
+      </h2>
+
+	<p>Date: January 7, 2010</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.9.1 of JMRI/DecoderPro is available for download.
+
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the first in a series of test versions. We expect this series
+to end in a JMRI 2.10 (or perhaps JMRI 3.0) production release in Summer 2010. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>Improved CBUS support
+<li>New 
+    <a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>
+    support
+<li>Initial support for the Insteon 2412S adapter
+<li>Multiple throttle improvements
+</ul>
+along with lots of other changes and bug fixes.  
+See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<b><p>
+JMRI is now only available under the 
+<a href="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/copyright.shtml">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+Due to a problem with the release build for this version, you may have to select
+"Rebuild Decoder Index" from the "Debug" menu to make all the new decoder types visible.
+
+<p>
+The JInput USB library was updated to the current version, which (should) fix problems on
+Windows Visata, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+input devices, so please check to make sure that your USB-attached devices still work.
+
+<p>
+When loading an older panel file containing signal head icons, you may
+get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
+To make these stop, just store the file again so that it's rewritten in the most recent format.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>Mac OS X:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.dmg/download</a>
+
+<p>Windows:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.exe/download</a>
+
+<p>Linux:
+     <a href="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.tgz/download</a>
+
+<h3>Changes since production version 2.8</h3>
+
+Kevin Dickerson added a way for systems to perform specific actions when the program is shutting down.
+
+<p>
+Kevin Dickerson made various changes in the eCons support to handle turnout events better
+and potentially reduce CPU overhead.
+Also handles double slip and three way points better.
+
+<p>
+Kevin Dickerson updated the storage code so that Signal Heads in panel files are saved using the new namedBeanHandle.
+This means that they will be remembered by their system name or user name, whichever you specified.
+
+<p>
+Paul Bender added a new <a href="http://jmri.org/jython/XNetListenerExample.py">XNetListenerExample.py</a> sample script.
+
+<p>
+Dan Boudreau provided double-crossover and slip-switch track icons.
+
+<p>
+You can now display the log messages in a window by selecting "Display Message Log" in the "Debug" menu.
+
+<p>
+Added more information to the context window and the emailed problem report.
+
+<p>
+Dan Boudreau added two new operations features:  
+The user can now enter engine weight.  
+The train frame table column widths can now be changed and saved.
+
+<p>
+Andrew Crosland updated the CBUS support:
+Added bootloader, including support for extended frames.
+You can now set the adapter ID when using MERG CAN adapters.
+
+<p>
+Pete Cressman improved the route-finding logic in the Warrant support.
+
+<p>
+Kevin Dickerson made a number of improvements:
+<ul>
+<li>Resolves an issue where phantom panel load error message appears, when no error is registered in the console window.
+This was caused when the getBySystemName failed when loading a turnout (which it would on initial load), the result to return was set to false, even if the newTurnout successfully created the turnout.
+<li>Only loads an output turnout or sensor once per route, even if it is listed multiple times.
+An issue occurs whereby if a user loads the same panel file multiple times then the output sensors &amp; turnouts for a route get appended to the existing route even though they already exist.  When the panel file is saved it will save the outputs a multiple of times.
+<li>MemoryIcon, MemoryInputIcon, and PanelEditor were updated so that the Memory &amp;  MemoryInput Icons are now referenced using the namedBeanHandle.
+<li>Message added when closing the layout window, asking the user if they are simply hiding the window, or wishing to delete it.  Done in the same way that the panel editor does.
+Updated so that the Memory is now referenced using the namedBeanHandle.
+<li>The memory icon load/store code was updated so that the Memory and MemoryIconInput are now referenced using the namedBeanHandle.
+Also improved some of the save code.
+</ul>
+
+<p>
+Kevin Dickerson fixed a problem with displaying existing sensor groups.
+
+<p>
+A number of internal methods that were deprecated in JMRI 2.5.1 have now been removed.
+
+<p>
+The 
+<a href="http://jmri.org/help/en/html/web/index.shtml#Start">JMRI web server</a> 
+now advertises itself via 
+<a href="http://jmri.org/help/en/html/doc/Technical/Networking.shtml">Bonjour/Zeroconf</a>, 
+so you can easily find it in a suitable web browser
+without having to know the IP address or name.
+
+<p>
+The included jmdns.jar (Zeroconf/Bonjour networking) library has been updated to version 3.0 to
+solve a problem with the program hanging at shutdown.  This required no code changes.
+
+<p>
+Pete Cressman fixed a problem with integer comparisons in Conditionals.
+
+<p>
+Dan Boudreau and Pete Cressman fixed a problem with the order of saved PanelEditor items.
+
+<p>
+Pete Cressman made it so Conditional action items can be specified from a memory value 
+using the syntax "@IMemory" for the device name - i.e. the name of the internal memory 
+variable preceded by the "@" character.
+Note the particular value being referenced is not verified by Logix.  
+It is the user's responsibility to have the correct value in the memory location
+when the Conditional's actions are executed.  
+Errors encountered at Conditional execution time are reported on the console screen. 
+
+<p>
+JMRI now contains support for more-prototypical signaling basic on "signal masts" and "aspects".
+The basic functions are in place, along with the start of some
+<a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">help pages</a>.
+This is still being actively developed. There's a first set of 
+signal definitions available for the
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR 1946</a> signaling system.
+We intend to have this fully available by the 
+next JMRI production release in summer 2010.
+
+<p>
+Simple Signal Logic treats a flashing-red signal head (e.g. if set that way by a Logix) as if it was red
+when computing the proper color for a protecting signal.
+
+<p>
+Nelson Allison improved the scripts for running the Roco  46800 and 46902 cranes.
+
+<p>
+Pete Cressman fixed a problem that was preventing Reporter icons from loading in Layout Editor windows.
+
+<p>
+Dick Bronson provided a great set of
+icons for 
+<a href="http://jmri.org/resources/icons/smallschematics/aspects/AAR-1946/">AAR</a>
+and
+<a href="http://jmri.org/resources/icons/smallschematics/aspects/NYCS-1937/">NYCS</a>
+signal masts as part of the 
+<a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>.
+The best way to see the icons is the
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR</a> and
+<a href="http://jmri.org/xml/signals/NYCS-1937/aspects.xml">NYCS</a>
+aspect pages.
+
+<p>
+Brett Hoffman added support for sending roster information to the withrottle protocol.
+
+<p>
+Dan Boudreau improved the operations code to allow multi-line comments, and to better control the 
+build order for trains.
+
+<p>
+Andrew Crosland updated the CBUS support for power-on events, improved handling of the handling
+of throttle errors, and added a warning dialog if a throttle user tries to select an address that's
+already in use.
+
+<p>
+Robert Coleman got initial support working for the Smart Home 2412s Insteon interface. It 
+can be used to turn both Insteon and X10 adapters on and off.
+
+<p>
+Matt Harris updated the Windows installer to NSIS 2.46 to ensure complete compatibility 
+with Windows 7 (addition of compatibility manifest entries)
+
+<p>
+Bob Bucklew provided an icon for the knock-out that fills unused positions in a 
+USS CTC panel, now at 
+<a href="http://jmri.org/resources/icons/USSpanels/Panels/knockout.gif">resources/icons/USSpanels/Panels/knockout.gif</a>.
+
+<p>
+Dan Boudreau fixed a subtle and nasty bug that was preventing the Turnout Operations configuration
+window from displaying properly under certain circumstances.
+
+<p>
+Paul Bender made a technical change to the XPressnet code
+to pass the message listener for the sending thread to the handleTimeout method in AbstractMRTrafficController.
+This allows subclasses to notify listeners if a message that they sent received a timeout message.  
+The XPressNetTrafficController passes this information on to an XPressNetListener.   
+This is currently used to fix a minor bug which caused the throttle to lock up 
+if a message it sent did not receive a reply message (this happens occasionally with the Hornby Elite).
+Updated XNetMessage to allow setting the default values for the number of retries and the length of time before a timeout.
+Updated the XNetListenerExample.py sample script to include the notifyTimeout message routine.
+
+<p>
+Brett Hoffman updated the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle help</a>.
+
+<p>
+Lionel Jeanson made some throttle updates:
+<ul>
+<li>reviewed conditions to enable Program button in AddressPanel
+<li>now using default programmer (from JMRI preferences) when that button is clicked
+<li>removed the "Reset function button" from edit menu, merged functionality to the one in View menu
+<li>in function button properties, changed default selected entry to the one of button text
+<li>reviewed the way image are resized for better performances
+<li>now allow to enable "resize window to image size" in all case (disabled by default)
+</ul>
+
+<p>
+David Duchamp added colors to the Layout Editor track.
+
+<p>
+David Duchamp added <a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher<a> options.
+
+<p>
+Mark Waters added a new "Zimo MX680 v1-2" decoder type.
+
+<p>
+Pete Cressman added Learn-Mode recording from read throttles to the Warrant auto-run system.
+
+<p>
+The JInput USB library was updated to the current version, which (should) fix problems on
+Intel Macs and some Linux machines.
+
+<p>
+The error handling when reading files has been improved.  Now, you'll get notified
+by a dialog box popping up with some details 
+if e.g. something can't be created due to an error.
+Much more work is needed on explanations, etc, to make this complete.
+
+<p>
+Peter Ulvestad added a decoder definition for the MRC Sound Brilliance 1800, 1802, 1810 and 1811 decoders.
+
+<p>
+Dan Boudreau made some improvements to the tooltips in the NCE Macro editor.
+
+<p>
+Paul Bender fixed a timeout issue in the XPressNet support that mostly effected the Elite.
+
+<!--#include virtual="/Footer.shtml" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ <script src="/js/main.js"></script>
+</body>
+</html>
