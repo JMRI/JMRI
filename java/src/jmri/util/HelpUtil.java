@@ -1,24 +1,24 @@
 package jmri.util;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.net.URL;
+import java.io.IOException;
+import java.net.*;
 import java.util.*;
 
 import javax.annotation.Nonnull;
-import javax.help.*;
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.JmriException;
 
 /**
- * Common utility methods for working with Java Help.
+ * Common utility methods for displaying JMRI help pages.
  * <p>
- * This class was created to contain common Java Help information.
- * <p>
- * It assumes that Java Help 1.1.8 is in use
+ * This class was created to contain common Java Help information but is now
+ * changed to use a web browser instead.
  *
- * @author Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen      Copyright 2007
+ * @author Daniel Bergqvist  Copyright 2021
  */
 public class HelpUtil {
 
@@ -45,10 +45,6 @@ public class HelpUtil {
     }
 
     public static JMenu makeHelpMenu(String ref, boolean direct) {
-        if (!initOK()) {
-            log.warn("help initialization not completed");
-            return null;  // initialization failed
-        }
         JMenu helpMenu = new JMenu(Bundle.getMessage("ButtonHelp"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
@@ -71,115 +67,86 @@ public class HelpUtil {
     }
 
     public static JMenuItem makeHelpMenuItem(String ref) {
-        if (!initOK()) {
-            return null;  // initialization failed
-        }
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
-        globalHelpBroker.enableHelpOnButton(menuItem, ref, null);
-
-        // start help to see what happend
-        log.debug("help: {}:{}:{}", globalHelpSet.getHomeID(), globalHelpSet.getTitle(), globalHelpSet.getHelpSetURL());
+        
+        menuItem.addActionListener((ignore) -> {
+            displayHelpRef(ref);
+        });
 
         return menuItem;
     }
 
     public static void addHelpToComponent(java.awt.Component component, String ref) {
-        if (globalHelpBroker != null) {
-            globalHelpBroker.enableHelpOnButton(component, ref, null);
-            log.debug("Help added for {}", ref);
+        enableHelpOnButton(component, ref);
+    }
+
+    // https://coderanch.com/how-to/javadoc/javahelp-2.0_05/javax/help/HelpBroker.html#enableHelpOnButton(java.awt.Component,%20java.lang.String,%20javax.help.HelpSet)
+    public static void enableHelpOnButton(java.awt.Component comp, String id) {
+        if (comp instanceof javax.swing.AbstractButton) {
+            ((javax.swing.AbstractButton)comp).addActionListener((ignore) -> {
+                displayHelpRef(id);
+            });
+        } else if (comp instanceof java.awt.Button) {
+            ((java.awt.Button)comp).addActionListener((ignore) -> {
+                displayHelpRef(id);
+            });
         } else {
-            log.debug("globalHelpBroker is null");
+            throw new IllegalArgumentException("comp is not a javax.swing.AbstractButton or a java.awt.Button");
         }
     }
 
     public static void displayHelpRef(String ref) {
-        if (globalHelpBroker == null) {
-            log.debug("can't display {} help page because help system reference is null", ref);
-            return;
-        }
+        String url =
+                "file://"
+                + FileUtil.getProgramPath().replace("\\", "/")
+                + "help/en/"
+                + ref.replace(".", "/")
+                + ".shtml";
         try {
-            globalHelpBroker.setCurrentID(ref);
-            globalHelpBroker.setDisplayed(true);
-        } catch (javax.help.BadIDException e) {
+            jmri.util.HelpUtil.openWebPage(url);
+        } catch (JmriException e) {
             log.error("unable to show help page {} due to:", ref, e);
         }
     }
 
-    static boolean init = false;
-    static boolean failed = true;
-
-    public static boolean initOK() {
-        if (!init) {
-            init = true;
-            try {
-                Locale locale = Locale.getDefault();
-                String language = locale.getLanguage();
-                String helpsetName = "help/" + language + "/JmriHelp_" + language + ".hs";
-                URL hsURL = FileUtil.findURL(helpsetName);
-                if (hsURL != null) {
-                    log.debug("JavaHelp using {}", helpsetName);
-                } else {
-                    log.info("JavaHelp: File {} not found, dropping to default", helpsetName);
-                    language = "en";
-                    helpsetName = "help/" + language + "/JmriHelp_" + language + ".hs";
-                    hsURL = FileUtil.findURL(helpsetName);
+    public static void openWebPage(String url) throws JmriException {
+        try {
+            URI uri = new URI(url);
+            if (!url.toLowerCase().startsWith("file://")) {
+                HttpURLConnection request = (HttpURLConnection) uri.toURL().openConnection();
+                request.setRequestMethod("GET");
+                request.connect();
+                if (request.getResponseCode() != 200) {
+                    throw new JmriException(String.format(
+                            "Failed to connect to web page: %d, %s",
+                            request.getResponseCode(), request.getResponseMessage()));
                 }
-                try {
-                    globalHelpSet = new HelpSet(null, hsURL);
-                } catch (NoClassDefFoundError ee) {
-                    log.debug("classpath={}", System.getProperty("java.class.path", "<unknown>"));
-                    log.debug("classversion={}", System.getProperty("java.class.version", "<unknown>"));
-                    log.error("Help classes not found, help system omitted");
-                    return false;
-                } catch (HelpSetException e2) {
-                    log.error("HelpSet {} not found, help system omitted", helpsetName);
-                    return false;
-                }
-                globalHelpBroker = globalHelpSet.createHelpBroker();
-
-            } catch (NoSuchMethodError e2) {
-                log.error("Is jh.jar available? Error starting help system", e2);
             }
-            failed = false;
+            if ( Desktop.getDesktop().isSupported( Desktop.Action.BROWSE) ) {
+                // Open browser to URL with draft report
+                Desktop.getDesktop().browse(uri);
+            } else {
+                throw new JmriException(String.format(
+                        "Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE"));
+            }
+        } catch (IOException | URISyntaxException e) {
+            throw new JmriException(String.format(
+                    "Failed to connect to web page. Exception thrown: %s",
+                    e.getMessage()), e);
         }
-        return !failed;
-    }
-
-    public static HelpBroker getGlobalHelpBroker() {
-        if (globalHelpBroker == null) {
-            HelpUtil.initOK();
-        }
-        return globalHelpBroker;
     }
 
     public static Action getHelpAction(final String name, final Icon icon, final String id) {
         return new AbstractAction(name, icon) {
-
-            String helpID = id;
-
             @Override
             public void actionPerformed(ActionEvent event) {
-                globalHelpBroker.setCurrentID(helpID);
-                globalHelpBroker.setDisplayed(true);
+                displayHelpRef(id);
             }
         };
     }
 
-    /**
-     * Set the default content viewer UI.
-     *
-     * @param ui full class name of the content viewer UI
-     * @see SwingHelpUtilities#setContentViewerUI(java.lang.String)
-     */
-    public static void setContentViewerUI(String ui) {
-        SwingHelpUtilities.setContentViewerUI(ui);
-    }
-
-    static HelpSet globalHelpSet;
-    static HelpBroker globalHelpBroker;
-
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(HelpUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelpUtil.class);
 
     public interface MenuProvider {
 

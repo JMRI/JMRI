@@ -172,7 +172,7 @@ public class CircuitBuilder {
         circuitItem.addActionListener((ActionEvent event) -> newCircuit());
         _circuitMenu.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
         JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
-        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+        HelpUtil.enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder");
         _circuitMenu.add(helpItem);
 
     }
@@ -220,7 +220,7 @@ public class CircuitBuilder {
         _circuitMenu.add(editItem);
 
         JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
-        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+        HelpUtil.enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder");
         _circuitMenu.add(helpItem);
         makeToDoMenu();
     }

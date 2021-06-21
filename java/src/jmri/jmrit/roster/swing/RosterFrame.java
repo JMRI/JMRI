@@ -764,8 +764,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         // create menu and standard items
         JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
-        // tell help to use default browser for external types
-        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
         // use as main help menu
         menuBar.add(helpMenu);
     }
