@@ -114,6 +114,8 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
 
         Engine e = InstanceManager.getDefault(EngineManager.class).getByRoadAndNumber("SP", "123");
         Assert.assertNotNull(e);
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Roster Id: Bob hasn't been assigned a model name");
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportRosterEngineActionTest.class);
