@@ -131,6 +131,7 @@
      <ul>
       <li><a href="#AddLocation">Add or Edit Location</a></li>
       <li><a href="#LocationDivision">Railroad Divisions</a></li>
+      <li><a href="#Yardmaster">Yardmaster</a></li>
 
       <li><a href="#LocationTools">Location Tools</a>
 
@@ -342,7 +343,10 @@
       <li><a href="#EditTrainTools">Edit Train Tools</a>
 
        <ul>
-        <li><a href="#TrainBuildOptions">Train Build Options</a></li>
+        <li><a href="#TrainBuildOptions">Train Build Options</a>
+        <ul>
+        <li><a href="#OptionalTrainRequirements">Locomotive or Caboose Changes en Route</a></li>
+        </ul></li>
 
         <li><a href="#TrainLoadOptions">Train Load Options</a></li>
 
@@ -722,9 +726,11 @@
     Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which is
     part of the Groups.io. Another good source for help is a series of articles written by David
     Haynes <a href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
-     http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
-    "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
-    contents of the window.
+     http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. There's also an
+    excellent YouTube video by <a href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert J
+     Thomas Introduction to JMRI OPs For A Small Layout.</a> And finally under the "Tools" item on the
+    menu bar, you will find many useful functions, like the ability to print the contents of the
+    window.
    </p>
 
    <a name="BritishRailways" id="BritishRailways"></a>
@@ -2028,9 +2034,9 @@
     window shows the type of tracks at that location, the total length of all tracks at that
     location, the amount of track used by your rolling stock, the quantity of rolling stock, and the
     number of pick ups and set outs of your rolling stock that are scheduled for that location. The
-    "Yardmaster" button produces a window <a href="#SwitchList">(Switch List)</a> that allows you to
-    see the scheduled pick ups and set outs by train. Only trains that have work for the location
-    are available.
+    <a href="#Yardmaster">Yardmaster</a> button produces a window <a href="#SwitchList">(Switch
+     List)</a> that allows you to see the scheduled pick ups and set outs by train. Only trains that
+    have work for the location are available.
    </p>
 
    <a name="AddLocation" id="AddLocation"></a>
@@ -2131,6 +2137,16 @@
    <p>
     You can enter an optional comment for your location. If you want the comment to print on your
     Manifests you must select the print location comments <a href="#ManifestComments">option</a>.
+   </p>
+   
+   <a name="Yardmaster" id="Yardmaster"></a>
+   <h3>Yardmaster</h3>
+
+   <p>
+    The Yardmaster window provides the real time version of a <a href="#SwitchList">switch list</a>.
+    To see the work for all trains visiting a location, press the "Yardmaster" button in the <a
+     href="#Locations">locations</a> window. The Yardmaster window also allows you to modify a <a
+     href="#ModifyingBuiltTrain">built</a> train.
    </p>
 
    <a name="LocationTools" id="LocationTools"></a>
@@ -3373,7 +3389,7 @@
    </p>
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
-    Tools-&gt;Operations-&gt;Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
+    Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
     Note that the program will only add cars that don't exist in the program's car roster. If the
     car already exists, the import will be skipped by the program.</p>
 
@@ -3843,13 +3859,17 @@
    <a name="ImportLocomotives" id="ImportLocomotives"></a>
    <h3>Import Locomotives</h3>
    If you already have a list of locomotives in your JMRI roster or in a database, you can import
-   the locomotives into the program. The program will only import locomotives from your JMRI roster
-   that have a road and number. To get your locomotives from your JMRI roster, select "Import from
-   JMRI roster" from the Tools-&gt;Operations-&gt;Locomotives-&gt;Tools menu. Only locomotives that
-   don't exist will be added to the programs locomotive roster. This way you can use this tool any
-   time you add locomotives to your JMRI locomotive roster. The JMRI locomotive roster doesn't have
-   the length field, so a default length is entered for you. You should correct the locomotive
-   length if you want the program to correctly calculate your train lengths.
+   the locomotives into the program.
+
+   <h3>Import Locomotives from the JMRI Roster</h3>
+   The program will only import locomotives from your JMRI roster that have a road and number. To
+   get your locomotives from your JMRI roster, select "Import from JMRI roster" from the
+   Tools-&gt;Operations-&gt;Locomotives-&gt;Tools-&gt;Locomotive Roster menu. Only locomotives that don't exist will be
+   added to the programs locomotive roster. This way you can use this tool any time you add
+   locomotives to your JMRI locomotive roster. The JMRI locomotive roster doesn't have the length
+   field, so a default length is entered for you. You should correct the locomotive length if you
+   want the program to correctly calculate your train lengths. If your JMRI roster doesn't provide
+   the locomotive's model, you will have to enter one before saving your files.
 
    <h3>Import Locomotives from a File</h3>
    The import from file function requires an ACSII text file, with one line for each locomotive. The
@@ -3881,7 +3901,7 @@
     program will include leading and trailing spaces if they exist between the commas.</p>
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
-    Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Locomotive Roster-&gt;Import from
+    Locomotives window. Select "Tools-&gt;Locomotive Roster-&gt;Import from
     file. Note that the program will only add locomotives that don't exist in the program's
     locomotive roster. If the locomotive already exists, it will be skipped by the program.</p>
 
@@ -4532,7 +4552,7 @@
    the train to service.
 
    <a name="OptionalTrainRequirements" id="OptionalTrainRequirements"></a>
-   <h3>Optional Train Requirements</h3>
+   <h3>Optional Train Requirements (Locomotive or Caboose Changes en Route)</h3>
    You can have up to two locomotive changes while the train is en route. Select "Locomotive change"
    where you want the change to happen in your route, and how many new locomotives should be
    assigned to the train. You can optionally select the new locomotives model and road. At the
@@ -4857,28 +4877,23 @@
    the work is completed by selected all of the work checkboxes, allows you to move the train to the
    next location in the train's route.
 
+   <a name="ModifyingBuiltTrain" id="ModifyingBuiltTrain"></a>
    <h4>Modifying a built train</h4>
 
-   <p>You can also modify the train's manifest by pressing the "Modify" button in the Conductor window. The modify
-    button once pressed will ask you if you want to add cars to the train. If you answer yes a "Cars" window will appear
-    for the location being serviced. Press the "Set" button for the car you want to add, and in the "Set Car" window
-    under the section "Optional -- Normally Set by Program" enter a destination, destination track, and train for that
-    car. Note that by default, a car's destination and track is disabled, but you can enable it under the "Tools" menu
-    in the set car window. Pressing "Save" should cause the program to ask you if you want to add the car to the train.</p>
+   <p>
+    You can also modify the train's manifest by pressing the "Modify" button in the Conductor or <a
+     href="#Yardmaster">Yardmaster</a> window. The modify button once pressed will ask you if you
+    want to add cars to the train. If you answer yes a "Cars" window will appear for the location
+    being serviced. Press the "Set" button for the car you want to add, and in the "Set Car" window
+    under the section "Optional -- Normally Set by Program" enter a destination, destination track,
+    and train for that car. Note that by default, a car's destination and track is disabled, but you
+    can enable it under the "Tools" menu in the set car window. Pressing "Save" should cause the
+    program to ask you if you want to add the car to the train.
+   </p>
 
    <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
     appear. Pressing the set car "Save" button will ask you if you really want to remove the car
     from the train.</p>
-
-   <h3>Yardmaster</h3>
-
-   <p>
-    The Yardmaster window provides the real time version of a <a href="#SwitchList">switch list</a>. To
-    see the work for all trains visiting a location, press the "Yardmaster" button in the <a
-     href="#Locations">locations</a> window. The Yardmaster window also allows you to modify a built
-    train.
-   </p>
-
 
    <a name="TrainsTools" id="TrainsTools"></a>
    
@@ -5037,6 +5052,12 @@
     your automation to the OperationsTrainRoster.xml file. The next section provides the details for
     some of the available actions.</p>
 
+   <h5>Do Nothing</h5>
+   This action can display a message when executed. Use the "Add" button under the "Messages" column
+   to add a message. This can be helpful when debugging an automation by displaying messages when
+   appropriate. Also useful if you need to communicate a manual step in your automation. Otherwise
+   the action does nothing, or for programmers a NOP or no operation.
+
    <h5>Build Train</h5>
    This action will build the train selected in the "Train" menu adjacent to the "Build Train"
    column. This action will report "Failed" if the train fails to build or if you haven't selected a
@@ -5119,6 +5140,9 @@
    One use is to control which trains are displayed in the "Trains" window. See the "Show All"
    checkbox in the <a href="#Trains">Trains</a> window. You must choose a train using the "Train"
    menu.
+   
+   <h5>Deselect Train (Build)</h5>
+   Deselect the "Build" checkbox for the specified train in the <a href="#Trains">Trains</a> window.
 
    <h5>Preview Switch List or Print Switch List</h5>
    This action can preview or print switch lists for your locations depending on the "Preview"
@@ -5196,8 +5220,8 @@
    column of the main automation window. Note that for the program to detect that an automation was
    running when the files were saved, the current action pointer must not be at the first action in
    the automation, therefore it is recommended that you not use any of the "Wait for" actions as the
-   very first line item of an automation, instead use "Do Nothing" action followed by the needed "Wait for"
-   action.
+   very first line item of an automation, instead use "Do Nothing" action followed by the needed
+   "Wait for" action.
 
    <p>This is the end of the automation section.</p>
 
@@ -5639,8 +5663,8 @@
     printing out Manifests will also use the printer associated with the train's departure location.</p>
 
    <p>
-    You can also get a paperless version of a switch list by activating the appropriate Yardmaster
-    window for a <a href="#Locations">location.</a>
+    You can also get a paperless version of a switch list by activating the appropriate <a
+     href="#Yardmaster">Yardmaster</a> window for a <a href="#Locations">location.</a>
    </p>
 
    <a name="SwitchListOptions" id="SwitchListOptions"></a>
@@ -5818,7 +5842,7 @@
    </p>
    By enabling frames found in <a href="../../../apps/TabbedPreferences.shtml">Preferences</a> Web Server, you can
    access OperationPro&trade; windows like the <a
-    href="#SwitchList">Yardmaster</a> which shows the work for a location.
+    href="#Yardmaster">Yardmaster</a> which shows the work for a location.
    <p>
     <img src="images/YardmasterWeb.png">
    </p>
