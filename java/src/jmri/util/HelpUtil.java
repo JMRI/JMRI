@@ -46,12 +46,7 @@ public class HelpUtil {
 
     public static JMenu makeHelpMenu(String ref, boolean direct) {
         JMenu helpMenu = new JMenu(Bundle.getMessage("ButtonHelp"));
-        JMenuItem item = makeHelpMenuItem(ref);
-        if (item == null) {
-            log.error("Can't make help menu item for {}", ref);
-            return null;
-        }
-        helpMenu.add(item);
+        helpMenu.add(makeHelpMenuItem(ref));
 
         if (direct) {
             ServiceLoader<MenuProvider> providers = ServiceLoader.load(MenuProvider.class);
