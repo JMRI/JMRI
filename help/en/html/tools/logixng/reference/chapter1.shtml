@@ -304,89 +304,36 @@
           </div>
 
 
-      <h2>Basics</h2>
 
-        <p>LogixNG has four basic building blocks: Actions, Expressions, Male sockets and
-        Female sockets.</p>
+      <h2>Additional Example</h2>
 
-        <p>Actions do something, for example throw a turnout or sets a signal mast.
-        Expressions ask something, for example if a sensor is active or if a signal head
-        has a particular appearance. The actions and expressions form a tree and  complex
-        logic can be built with them.</p>
+        <ul>
+          <li>To create a compound <strong>if</strong> expression, add an operator such as
+          <strong>And</strong> or <strong>Or</strong> before adding the expressions.
+          These are located in the Common category.</li>
 
-        <p>Each action/expression is embedded in one or several male sockets. Male sockets
-        allow actions/expressions to be connected to a female socket of the correct type.</p>
+          <li>To create multiple actions, add the <strong>Many</strong> operator before
+          adding the actions.  This and others are in the Common category.</li>
 
-        <p>A ConditionalNG has a female socket that is the root of the ConditionalNG tree.
-        And some actions/expressions have one or several female sockets as children. There
-        are several different female sockets:</p>
+          <li>To create a delayed action, use the <strong>Execute delay</strong> action
+          in Common and then add the action to the delay.</li>
 
-        <a id="chapter1_socket_types"></a>
+          <li>When adding or editing an expression or action, a comment can be edited using
+          the <strong>Edit comment</strong> button on the detail dialog.</li>
+        </ul>
+
         <div style="margin-left: 2em">
-          <table>
-            <tr><th>Symbol</th><th>Type</th></tr>
-            <tr><td style="text-align:center">!</td><td>Digital action</td></tr>
-            <tr><td style="text-align:center">?</td><td>Digital expression</td></tr>
-            <tr><td style="text-align:center">!b</td><td>Digital boolean action</td></tr>
-            <tr><td style="text-align:center">!~</td><td>Analog action</td></tr>
-            <tr><td style="text-align:center">?~</td><td>Analog expression</td></tr>
-            <tr><td style="text-align:center">!s</td><td>String action</td></tr>
-            <tr><td style="text-align:center">?s</td><td>String expression</td></tr>
-            <tr><td style="text-align:center">?*</td><td>Generic expression</td></tr>
-          </table>
+        <a href="images/chapter1/conditionalng_example_1.png">
+        <img src="images/chapter1/conditionalng_example_1.png"
+        alt="Chapter 1 Example 1" width="781" height="462">
+        </a>
         </div>
 
-        <h3>Categories</h3>
+      <h2>Another example: Stop the power during lunch</h2>
 
-          <p>To get some kind of structure of the types of actions and expressions,
-          LogixNG has a number of categories. Then you create a new action or expression,
-          you first select the category and then the action/expression. Currently, the
-          categories are:</p>
-
-          <ul>
-            <li>Item - Actions and expressions related to items on the layout, for example
-            turnouts and signal masts</li>
-            <li>Common - The most important actions and expressions that are not in the
-            Item category</li>
-            <li>Display - Actions and expressions related to Panels</li>
-            <li>LocoNet - Actions and expressions related to LocoNet</li>
-            <li>Other - Other actions and expressions</li>
-          </ul>
-
-          <p>These categories may not be optimal and it would probably be good to have a
-          discussion on the jmri developers mailing list about these. It's easy to change
-          them, it's easy to add more categories and it's to move an action or expression
-          from one category to another.</p>
-
-        <h3>Additional Example</h3>
-
-          <ul>
-            <li>To create a compound <strong>if</strong> expression, add an operator such as
-            <strong>And</strong> or <strong>Or</strong> before adding the expressions.
-            These are located in the Common category.</li>
-
-            <li>To create multiple actions, add the <strong>Many</strong> operator before
-            adding the actions.  This and others are in the Common category.</li>
-
-            <li>To create a delayed action, use the <strong>Execute delay</strong> action
-            in Common and then add the action to the delay.</li>
-
-            <li>When adding or editing an expression or action, a comment can be edited using
-            the <strong>Edit comment</strong> button on the detail dialog.</li>
-          </ul>
-
-          <div style="margin-left: 2em">
-          <a href="images/chapter1/conditionalng_example_1.png">
-          <img src="images/chapter1/conditionalng_example_1.png"
-          alt="Chapter 1 Example 1" width="781" height="462">
-          </a>
-          </div>
-
-        <h3>Another example: Stop the power during lunch</h3>
-
-          <p>Logix support reading the fast clock. LogixNG also supports reading the
-          system clock. Lets assume you want to cut power to the layout during the lunch.
-          This can easily be done by the following ConditionalNG:</p>
+        <p>Logix support reading the fast clock. LogixNG also supports reading the
+        system clock. Lets assume you want to cut power to the layout during the lunch.
+        This can easily be done by the following ConditionalNG:</p>
 
 <pre>
 * IfThenElse
