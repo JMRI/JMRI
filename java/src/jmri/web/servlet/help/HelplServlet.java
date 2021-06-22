@@ -48,7 +48,7 @@ public class HelplServlet extends HttpServlet {
         content = matcher.replaceAll((MatchResult t) -> {
             System.out.format("Group: %s%n", t.group(1));
             try {
-                return readAndParseFile("web" + t.group(1));
+                return readAndParseFile("web/" + t.group(1));
             } catch (IOException ex) {
                 log.warn("Cannot include SSI: {}", t.group(1), ex);
                 return "";
@@ -61,12 +61,12 @@ public class HelplServlet extends HttpServlet {
         System.out.format("HelpServlet: %s%n", request.getRequestURI());
         
         if (!request.getRequestURI().endsWith(".shtml")) {
-            String newUrl = request.getRequestURI().replaceFirst("/help2/", "help/");
+            String newUrl = request.getRequestURI().replaceFirst("/help2/", "/help/");
             response.sendRedirect(newUrl);
         }
         
         String fileName =
-                request.getRequestURI().replaceFirst("/help2/", "help/");
+                request.getRequestURI().replaceFirst("/help2/", "/help/");
         System.out.format("HelpServlet: %s%n", fileName);
         
         String content = readAndParseFile(fileName);
