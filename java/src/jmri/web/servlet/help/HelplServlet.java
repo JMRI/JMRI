@@ -62,6 +62,7 @@ public class HelplServlet extends HttpServlet {
         
         if (!request.getRequestURI().endsWith(".shtml")) {
             String newUrl = request.getRequestURI().replaceFirst("/help2/", "/help/");
+            System.out.format("newUrl: %s%n", newUrl);
             response.sendRedirect(newUrl);
         }
         
