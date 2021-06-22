@@ -1303,7 +1303,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             } else {
                 aspectList = _includedMastAspectsList;
             }
-            if (_mastAspectsList == null || r >= aspectList.size()) {
+            if (aspectList == null || r >= aspectList.size()) {
                 // prevent NPE when closing window after NPE in getValueAdd() happened
                 log.debug("row value {} is greater than aspectList size {}", r, aspectList);
                 return;
