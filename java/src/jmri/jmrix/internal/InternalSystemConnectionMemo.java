@@ -133,17 +133,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         return meterManager;
     }
 
-    public InternalAnalogIOManager getAnalogIOManager() {
-        InternalAnalogIOManager analogIOManager = (InternalAnalogIOManager) classObjectMap.get(AnalogIOManager.class);
-        if (analogIOManager == null) {
-            log.debug("Create InternalAnalogIOManager by request", getSystemPrefix());
-            analogIOManager = new InternalAnalogIOManager(this);
-            // special due to ProxyManager support
-            InstanceManager.setAnalogIOManager(analogIOManager);
-        }
-        return analogIOManager;
-    }
-
     public InternalStringIOManager getStringIOManager() {
         InternalStringIOManager stringIOManager = (InternalStringIOManager) classObjectMap.get(StringIOManager.class);
         if (stringIOManager == null) {
