@@ -1,5 +1,0 @@
-# /robots.txt file for http://jmri.org/
-# mail jmri.@jmri.net with constructive criticism
-#
-# The intent is that this file will allow everybody all access
-#

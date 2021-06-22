@@ -1,3 +1,0 @@
-# Provide redirects for removed pages
-RewriteEngine on
-RewriteRule "^index\.html"    "/contact/index.shtml" [R=301,L]
