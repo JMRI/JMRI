@@ -158,13 +158,7 @@ public class ActionLightIntensity extends AbstractDigitalAction
             if (evt.getOldValue() instanceof VariableLight) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("LightIntensity_LightInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof VariableLight) {
-                if (evt.getOldValue().equals(getLight().getBean())) {
-                    removeLight();
+                    throw new PropertyVetoException(Bundle.getMessage("ActionLightIntensity_LightInUseLightActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
