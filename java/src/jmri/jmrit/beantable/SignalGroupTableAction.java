@@ -1275,7 +1275,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 aspectList = _includedMastAspectsList;
             }
             // some error checking
-            if (_mastAspectsList == null || r >= aspectList.size()) {
+            if (aspectList == null || r >= aspectList.size()) {
                 // prevent NPE when clicking Add... in table to add new group (with 1 group existing using a different mast type)
                 if (aspectList == null) {
                     log.debug("SGTA getValueAt #1270: row value {} aspectList is null", r);
@@ -1303,7 +1303,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             } else {
                 aspectList = _includedMastAspectsList;
             }
-            if (aspectList == null || r >= aspectList.size()) {
+            if (_mastAspectsList == null || r >= aspectList.size()) {
                 // prevent NPE when closing window after NPE in getValueAdd() happened
                 log.debug("row value {} is greater than aspectList size {}", r, aspectList);
                 return;
