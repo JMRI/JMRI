@@ -11,13 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jmri.InstanceManager;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import jmri.util.FileUtil;
-import jmri.web.server.*;
-import jmri.web.servlet.home.*;
 
-import org.openide.util.Exceptions;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -33,15 +29,16 @@ public class HelplServlet extends HttpServlet {
 
     private String readAndParseFile(String fileName) throws IOException {
         
-        System.out.format("File: %s, %s%n", fileName, FileUtil.getProgramPath() + fileName);
+//        System.out.format("File: %s, %s%n", fileName, FileUtil.getProgramPath() + fileName);
         
         fileName = FileUtil.getProgramPath() + fileName;
         
-        String content = "";
+        String content;
         try {
             content = new String(Files.readAllBytes(Paths.get(fileName)));
         } catch (IOException ex) {
-            content = ex.getMessage();
+            content = "Exception thrown: " + ex.getMessage();
+            log.warn("Cannot read file: {}", fileName, ex);
         }
         
         String serverSideIncludePattern = "<!--#include\\s*virtual=\"(.+?)\"\\s*-->";
@@ -51,9 +48,9 @@ public class HelplServlet extends HttpServlet {
         content = matcher.replaceAll((MatchResult t) -> {
             System.out.format("Group: %s%n", t.group(1));
             try {
-                return readAndParseFile("website" + t.group(1));
+                return readAndParseFile("web" + t.group(1));
             } catch (IOException ex) {
-                log.warn("Cannot include SSI: %s", t.group(1), ex);
+                log.warn("Cannot include SSI: {}", t.group(1), ex);
                 return "";
             }
         });
@@ -63,9 +60,11 @@ public class HelplServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.format("HelpServlet: %s%n", request.getRequestURI());
         
-//        String fileName =
-//                FileUtil.getProgramPath()
-//                + request.getRequestURI().replaceFirst("/help2/", "help/");
+        if (!request.getRequestURI().endsWith(".shtml")) {
+            String newUrl = request.getRequestURI().replaceFirst("/help2/", "help/");
+            response.sendRedirect(newUrl);
+        }
+        
         String fileName =
                 request.getRequestURI().replaceFirst("/help2/", "help/");
         System.out.format("HelpServlet: %s%n", fileName);
