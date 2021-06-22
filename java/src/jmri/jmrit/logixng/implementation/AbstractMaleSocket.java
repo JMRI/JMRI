@@ -553,7 +553,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         if (maleSocket.getDebugConfig() != null) {
             maleSocket.setDebugConfig(maleSocket.getDebugConfig().getCopy());
         }
-        maleSocket.setEnabled(isEnabled());
+        maleSocket.setEnabledFlag(isEnabled());
         maleSocket.setListen(getListen());
         maleSocket.setErrorHandlingType(getErrorHandlingType());
         maleSocket.setLocked(isLocked());
