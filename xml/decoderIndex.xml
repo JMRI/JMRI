@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.7ish+jake+20210527T1332Z+Rdd510f7712 on Thu May 27 09:32:08 EDT 2021-->
-  <decoderIndex version="1056">
+  <!--Written by JMRI version 4.23.8ish+jake+20210619T0807Z+R029a0ffff6 on Sat Jun 19 04:07:23 EDT 2021-->
+  <decoderIndex version="1060">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -13951,13 +13951,22 @@
         <model model="BTLocobridge" lowVersionID="1" />
       </family>
       <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
-        <model model="Panel" lowVersionID="1" />
+        <model model="Panel" lowVersionID="1" productID="4" />
       </family>
       <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
-        <model model="Servo5" lowVersionID="1" />
+        <model model="Servo5" lowVersionID="1" productID="9" />
       </family>
-      <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
-        <model model="Signal10" lowVersionID="1" />
+      <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal, a LocoNet decoder control panels" file="MGP_Signal10.xml">
+        <model model="Signal10 SE" lowVersionID="1" productID="6" />
+        <model model="Signal10 DE" lowVersionID="1" productID="7" />
+        <model model="Signal10 DK" lowVersionID="1" productID="8" />
+        <model model="Signal10 CZ" lowVersionID="1" productID="11" />
+        <model model="Signal10 US" lowVersionID="1" productID="12" />
+        <model model="Signal10 NO" lowVersionID="1" productID="13" />
+        <model model="Signal10 NL" lowVersionID="1" productID="14" />
+      </family>
+      <family name="Switch5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Switch5, a LocoNet decoder for railway switches" file="MGP_Switch5.xml">
+        <model model="Switch5" lowVersionID="1" productID="9" />
       </family>
       <family name="MRC 14/28/128 step decoders" mfg="MRC" file="MRC_128step.xml">
         <model model="AD322" lowVersionID="32" formFactor="N" numOuts="4" numFns="6">
@@ -21373,7 +21382,42 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Steam OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the - OEM - version Tsunami2 Steam decoders" file="SoundTraxx_Tsu2_Steam_OEM_Genesis.xml">
-        <model model="TSU-21PNEM Big Boy" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
+        <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Whistle| ">
+          <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Whistle">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brakes| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="983" comment="Model ATH04014">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
@@ -28026,7 +28070,7 @@
           <size length="30" width="15.5" height="5" units="mm" />
         </model>
       </family>
-      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" file="TAMS_LD_42.xml">
+      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" highVersionID="62" file="TAMS_LD_42.xml">
         <model model="LD-G-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" productID="41-04420">
           <!--without wires-->
           <output name="1" label="F0f|(White)" maxcurrent="300 mA">
@@ -28071,7 +28115,7 @@
           </output>
           <size length="21.8" width="17.2" height="4" units="mm" />
         </model>
-        <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="NEM652" productID="41-04422">
+        <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="NEM652" productID="41-04422" lowVersionID="14">
           <!-- NEM 652 -->
           <output name="1" label="F0f|(White)" maxcurrent="300 mA">
             <label xml:lang="de">F0f|(Weiss)</label>

@@ -204,7 +204,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get string constant", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "String constant", _base.getShortDescription(Locale.ENGLISH));
     }
     
     @Test

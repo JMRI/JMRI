@@ -38,7 +38,8 @@ public final class ImportLogixFrame extends JmriJFrame {
     private JButton _cancelDone;
 
     private static final String SYSLOGIX = InstanceManager.getDefault(LogixManager.class).getSystemNamePrefix() + ":SYS";
-    private static final String INITLOGIX = jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer();
+    private static final String RTXLOGIX = "RTX";
+    private static final String USSLOGIX = "USS CTC:OsIndicator";
 
     /**
      * Construct a LogixNGEditor.
@@ -120,7 +121,7 @@ public final class ImportLogixFrame extends JmriJFrame {
         warningPanel.add(warning);
         contentPanel.add(warningPanel);
 
-        contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 10)));    // vertical space.
 
 
         // set up import and cancel buttons
@@ -178,7 +179,10 @@ public final class ImportLogixFrame extends JmriJFrame {
         List<Logix> logixs = new ArrayList<>();
         if (_whichLogix_All.isSelected()) {
             for (Logix logix : InstanceManager.getDefault(LogixManager.class).getNamedBeanSet()) {
-                boolean isSystemLogix = logix.getSystemName().equals(SYSLOGIX) || logix.getSystemName().equals(INITLOGIX);
+                boolean isSystemLogix =
+                        logix.getSystemName().equals(SYSLOGIX) ||
+                        logix.getSystemName().contains(RTXLOGIX) ||
+                        logix.getSystemName().contains(USSLOGIX);
                 if (!isSystemLogix || _includeSystemLogixs.isSelected()) {
                     logixs.add(logix);
                 }

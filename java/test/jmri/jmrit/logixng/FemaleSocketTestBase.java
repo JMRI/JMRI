@@ -335,38 +335,6 @@ public abstract class FemaleSocketTestBase {
     }
 
     @Test
-    public void testLock() throws SocketAlreadyConnectedException {
-        _femaleSocket.connect(maleSocket);
-        Assert.assertTrue("socket is connected", _femaleSocket.isConnected());
-
-        _femaleSocket.setLock(Base.Lock.NONE);
-        Assert.assertEquals("lock matches", Base.Lock.NONE, _femaleSocket.getLock());
-        _femaleSocket.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("lock matches", Base.Lock.USER_LOCK, _femaleSocket.getLock());
-        _femaleSocket.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("lock matches", Base.Lock.HARD_LOCK, _femaleSocket.getLock());
-
-        _femaleSocket.disconnect();
-        boolean hasThrown = false;
-        try {
-            _femaleSocket.setLock(Base.Lock.NONE);
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-//        JUnitAppender.assertErrorMessage("the name is not valid: ----");
-
-        hasThrown = false;
-        try {
-            _femaleSocket.getLock();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-//        JUnitAppender.assertErrorMessage("the name is not valid: ----");
-    }
-
-    @Test
     public void testDisposeWithoutChild() {
         _femaleSocket.dispose();
         Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
@@ -611,16 +579,6 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public Lock getLock() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setLock(Lock lock) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public void dispose() {
             throw new UnsupportedOperationException("Not supported.");
         }
@@ -797,6 +755,36 @@ public abstract class FemaleSocketTestBase {
 
         @Override
         public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean isLocked() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setLocked(boolean locked) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean isSystem() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setSystem(boolean system) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean getCatchAbortExecution() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setCatchAbortExecution(boolean catchAbortExecution) {
             throw new UnsupportedOperationException("Not supported");
         }
     }

@@ -27,6 +27,8 @@ import org.slf4j.Logger;
 public abstract class AbstractMaleSocket implements MaleSocket {
 
     private final Base _object;
+    private boolean _locked = false;
+    private boolean _system = false;
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
@@ -53,14 +55,38 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public final Lock getLock() {
-        return _object.getLock();
+    public boolean isLocked() {
+        if (_object instanceof MaleSocket) {
+            return ((MaleSocket)_object).isLocked();
+        }
+        return _locked;
     }
 
     /** {@inheritDoc} */
     @Override
-    public final void setLock(Lock lock) {
-        _object.setLock(lock);
+    public void setLocked(boolean locked) {
+        if (_object instanceof MaleSocket) {
+            ((MaleSocket)_object).setLocked(locked);
+        }
+        _locked = locked;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSystem() {
+        if (_object instanceof MaleSocket) {
+            return ((MaleSocket)_object).isSystem();
+        }
+        return _system;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setSystem(boolean system) {
+        if (_object instanceof MaleSocket) {
+            ((MaleSocket)_object).setSystem(system);
+        }
+        _system = system;
     }
 
     /** {@inheritDoc} */
@@ -207,10 +233,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         _listen = listen;
     }
 
+    @Override
     public boolean getCatchAbortExecution() {
         return _catchAbortExecution;
     }
 
+    @Override
     public void setCatchAbortExecution(boolean catchAbortExecution)
     {
         _catchAbortExecution = catchAbortExecution;
@@ -403,7 +431,15 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             }
             if (!isEnabled()) {
                 writer.append(" ::: ");
-                writer.append(Bundle.getMessage("Disabled"));
+                writer.append(Bundle.getMessage("AbstractMaleSocket_Disabled"));
+            }
+            if (isLocked()) {
+                writer.append(" ::: ");
+                writer.append(Bundle.getMessage("AbstractMaleSocket_Locked"));
+            }
+            if (isSystem()) {
+                writer.append(" ::: ");
+                writer.append(Bundle.getMessage("AbstractMaleSocket_System"));
             }
             writer.println();
         }
@@ -461,7 +497,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (settings._printLocalVariables) {
@@ -510,7 +546,25 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     @Override
     public final Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
             throws JmriException {
-        return getObject().getDeepCopy(systemNames, userNames);
+        
+        MaleSocket maleSocket = (MaleSocket)getObject().getDeepCopy(systemNames, userNames);
+        
+        maleSocket.setComment(this.getComment());
+        if (maleSocket.getDebugConfig() != null) {
+            maleSocket.setDebugConfig(maleSocket.getDebugConfig().getCopy());
+        }
+        maleSocket.setEnabledFlag(isEnabled());
+        maleSocket.setListen(getListen());
+        maleSocket.setErrorHandlingType(getErrorHandlingType());
+        maleSocket.setLocked(isLocked());
+        maleSocket.setSystem(false);    // If a system item is copied, the new item is not treated as system
+        maleSocket.setCatchAbortExecution(getCatchAbortExecution());
+        
+        for (VariableData data : _localVariables) {
+            maleSocket.addLocalVariable(data._name, data._initalValueType, data._initialValueData);
+        }
+        
+        return maleSocket;
     }
 
     @Override

@@ -119,7 +119,7 @@ public class MathFunctions implements FunctionFactory {
                     }
                 } else if (param1 instanceof Number) {
                     double p1 = TypeConversionUtil.convertToDouble(param1, false);
-                    double angle = param0 * p1 / 2 / Math.PI;
+                    double angle = param0 / p1 * 2.0 * Math.PI;
                     result = Math.sin(angle);
                 } else {
                     throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
@@ -133,7 +133,7 @@ public class MathFunctions implements FunctionFactory {
                                 parameterList.get(2).calculate(symbolTable), false);
                         double max = TypeConversionUtil.convertToDouble(
                                 parameterList.get(3).calculate(symbolTable), false);
-                        return result * (max-min) + min;
+                        return (result+1.0)/2.0 * (max-min) + min;
                     default:
                         throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
                 }

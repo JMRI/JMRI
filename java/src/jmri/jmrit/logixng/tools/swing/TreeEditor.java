@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -1450,16 +1451,24 @@ public class TreeEditor extends TreeViewer {
             boolean disableForRoot = _disableRootRemoveCutCopy
                     && (_currentFemaleSocket == _treePane._femaleRootSocket);
             
-            menuItemAdd.setEnabled(!isConnected);
-            menuItemRemove.setEnabled(isConnected && !disableForRoot);
-            menuItemEdit.setEnabled(isConnected);
-            menuItemCut.setEnabled(isConnected && !disableForRoot);
+            boolean isLocked = isConnected && femaleSocket.getConnectedSocket().isLocked();
+            
+            Base parent = femaleSocket.getParent();
+            while ((parent != null) && !(parent instanceof MaleSocket)) {
+                parent = parent.getParent();
+            }
+            boolean parentIsLocked = (parent != null) && ((MaleSocket)parent).isLocked();
+            
+            menuItemAdd.setEnabled(!isConnected && !parentIsLocked);
+            menuItemRemove.setEnabled(isConnected && !isLocked && !parentIsLocked && !disableForRoot);
+            menuItemEdit.setEnabled(isConnected && !isLocked);
+            menuItemCut.setEnabled(isConnected && !isLocked && !parentIsLocked && !disableForRoot);
             menuItemCopy.setEnabled(isConnected && !disableForRoot);
-            menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
+            menuItemPaste.setEnabled(!isConnected && !parentIsLocked && canConnectFromClipboard);
             
             if (isConnected && !disableForRoot) {
-                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled());
-                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled());
+                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled() && !isLocked);
+                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled() && !isLocked);
             } else {
                 menuItemEnable.setEnabled(false);
                 menuItemDisable.setEnabled(false);
@@ -1467,23 +1476,24 @@ public class TreeEditor extends TreeViewer {
             
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 JMenuItem menuItem = menuItemFemaleSocketOperation.get(oper);
-                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper));
+                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper) && !parentIsLocked);
             }
             
-            if (femaleSocket.isConnected()) {
-                MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
-                menuItemLock.setEnabled(connectedSocket.getLock() == Base.Lock.NONE);
-                menuItemUnlock.setEnabled(connectedSocket.getLock() == Base.Lock.USER_LOCK);
-            } else {
-                menuItemLock.setEnabled(false);
-                menuItemUnlock.setEnabled(false);
-            }
-            menuItemLock.setEnabled(false);     // Not implemented yet
-            menuItemUnlock.setEnabled(false);   // Not implemented yet
+            AtomicBoolean isAnyLocked = new AtomicBoolean(false);
+            AtomicBoolean isAnyUnlocked = new AtomicBoolean(false);
             
-            menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
+            _currentFemaleSocket.forEntireTree((item) -> {
+                if (item instanceof MaleSocket) {
+                    isAnyLocked.set(isAnyLocked.get() || ((MaleSocket)item).isLocked());
+                    isAnyUnlocked.set(isAnyUnlocked.get() || !((MaleSocket)item).isLocked());
+                }
+            });
+            menuItemLock.setEnabled(isAnyUnlocked.get());
+            menuItemUnlock.setEnabled(isAnyLocked.get());
             
-            menuItemChangeUsername.setEnabled(femaleSocket.isConnected());
+            menuItemLocalVariables.setEnabled(femaleSocket.isConnected() && !isLocked);
+            
+            menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !isLocked);
             
             if (_enableExecuteEvaluate) {
                 menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
@@ -1503,27 +1513,55 @@ public class TreeEditor extends TreeViewer {
             show(_tree, x, y);
         }
 
+        /**
+         * Asks the user if edit a system node.
+         * @return true if not edit system node, else return false
+         */
+        private boolean abortEditAboutSystem(Base b) {
+            int result = JOptionPane.showConfirmDialog(
+                    this,
+                    Bundle.getMessage("TreeEditor_ChangeSystemNode"),
+                    b.getLongDescription(),
+                    JOptionPane.YES_NO_OPTION);
+            
+            return result == JOptionPane.NO_OPTION;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            Base parent = _currentFemaleSocket.getParent();
+            while ((parent != null) && !(_currentFemaleSocket.getParent() instanceof MaleSocket)) {
+                parent = parent.getParent();
+            }
+            boolean parentIsSystem = (parent != null) && ((MaleSocket)parent).isSystem();
+            boolean itemIsSystem = (_currentFemaleSocket.isConnected())
+                    && _currentFemaleSocket.getConnectedSocket().isSystem();
+            
             switch (e.getActionCommand()) {
                 case ACTION_COMMAND_RENAME_SOCKET:
+                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
                     renameSocketPressed(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_ADD:
+                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
                     addPressed(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_EDIT:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     editPressed(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_REMOVE:
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     DeleteBeanWorker worker = new DeleteBeanWorker(_currentFemaleSocket, _currentPath);
                     worker.execute();
                     break;
                     
                 case ACTION_COMMAND_CUT:
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     if (_currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
@@ -1533,13 +1571,14 @@ public class TreeEditor extends TreeViewer {
                             Clipboard clipboard =
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             List<String> errors = new ArrayList<>();
-                            if (!clipboard.add(_currentFemaleSocket.getConnectedSocket(), errors)) {
+                            MaleSocket maleSocket = _currentFemaleSocket.getConnectedSocket();
+                            _currentFemaleSocket.disconnect();
+                            if (!clipboard.add(maleSocket, errors)) {
                                 JOptionPane.showMessageDialog(this,
                                         String.join("<br>", errors),
                                         Bundle.getMessage("TitleError"),
                                         JOptionPane.ERROR_MESSAGE);
                             }
-                            _currentFemaleSocket.disconnect();
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
@@ -1551,6 +1590,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_COPY:
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     if (_currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
@@ -1589,6 +1630,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_PASTE:
+                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
+                    
                     if (! _currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
@@ -1620,6 +1663,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_ENABLE:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     _currentFemaleSocket.getConnectedSocket().setEnabled(true);
                     runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
@@ -1633,6 +1678,8 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_DISABLE:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
                     _currentFemaleSocket.getConnectedSocket().setEnabled(false);
                     runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
@@ -1646,16 +1693,34 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_LOCK:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
+                    _currentFemaleSocket.forEntireTree((item) -> {
+                        if (item instanceof MaleSocket) {
+                            ((MaleSocket)item).setLocked(true);
+                        }
+                    });
+                    _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                     break;
                     
                 case ACTION_COMMAND_UNLOCK:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
+                    
+                    _currentFemaleSocket.forEntireTree((item) -> {
+                        if (item instanceof MaleSocket) {
+                            ((MaleSocket)item).setLocked(false);
+                        }
+                    });
+                    _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                     break;
                     
                 case ACTION_COMMAND_LOCAL_VARIABLES:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     editLocalVariables(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_CHANGE_USERNAME:
+                    if (itemIsSystem && abortEditAboutSystem(_currentFemaleSocket.getConnectedSocket())) break;
                     changeUsername(_currentFemaleSocket, _currentPath);
                     break;
                     
@@ -1686,15 +1751,21 @@ public class TreeEditor extends TreeViewer {
 */                    
                 default:
                     // Check if the action is a female socket operation
-                    if (! checkFemaleSocketOperation(_currentFemaleSocket, e.getActionCommand())) {
+                    if (! checkFemaleSocketOperation(_currentFemaleSocket, parentIsSystem, itemIsSystem, e.getActionCommand())) {
                         log.error("e.getActionCommand() returns unknown value {}", e.getActionCommand());
                     }
             }
         }
         
-        private boolean checkFemaleSocketOperation(FemaleSocket femaleSocket, String command) {
+        private boolean checkFemaleSocketOperation(
+                FemaleSocket femaleSocket,
+                boolean parentIsSystem,
+                boolean itemIsSystem,
+                String command) {
+            
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 if (oper.name().equals(command)) {
+                    if ((parentIsSystem || itemIsSystem) && abortEditAboutSystem(femaleSocket.getParent())) return true;
                     femaleSocket.doSocketOperation(oper);
                     return true;
                 }

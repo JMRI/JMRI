@@ -18,11 +18,11 @@
 
       <h1>JMRI: LogixNG Initialization Table</h1>
 
-      <p>LogixNG is started after loading the xml data file.  The Initialization table
-      provides a list of LogixNGs that should be run before the rest of them are enabled.
-      This is the same concept used by the LRoute/Logix RTXINITIALIZER.</p>
+      <p>LogixNG is normally started after loading the xml data file.  The Initialization
+      table provides a list of LogixNGs that should be run before the rest of them are
+      enabled.  This is the same concept used by the LRoute/Logix RTXINITIALIZER.</p>
 
-      <p>The initialization table is at
+      <p>The initialization table is at PanelPro
       <strong>Tools &rArr; LogixNG &rArr; LogixNG Initialization table</strong>.</p>
 
       <div style="margin-left: 2em">

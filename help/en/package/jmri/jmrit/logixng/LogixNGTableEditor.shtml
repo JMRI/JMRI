@@ -97,12 +97,13 @@
         </a>
         </div>
 
-        <p>The system name is required. The system name for a ConditionalNG always begins with
-        the letters IQC.  If the entered name does not start with IQC, it will be automatically
-        added.  The typical suffix is a number.  If <strong>Automatically generate System Name</strong>
-        is checked, the system name format will be <strong>IQC:AUTO:nnnn</strong>.  Any other
-        format requires adding a <strong>$</strong> (dollar) character between
-        <strong>IQC</strong> and the suffix.
+        <p>The system name is required. The system name for a ConditionalNG always begins
+        with the letters <strong>IQC</strong>.  If the entered name does not start with
+        <strong>IQC</strong>, it will be automatically added.  The typical suffix is a
+        number.  If <strong>Automatically generate System Name</strong> is checked, the
+        system name format will be <strong>IQC:AUTO:nnnn</strong>.  Any other format
+        requires adding a <strong>$</strong> (dollar) character between <strong>IQC</strong>
+        and the suffix.</p>
 
         <p class="noted">The ConditionalNG system name is <strong>not</strong> derived
         from the the parent LogixNG system name. This is different than the Logix procedure.</p>

@@ -15908,6 +15908,15 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location boston = lmanager.getLocationByName("Boston");
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordStaging = chelmsford.addTrack("Staging", Track.STAGING);
+        chelmsfordStaging.setLength(400);
+        // delete spurs at Chelmsford
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        chelmsford.deleteTrack(chelmsfordSpur1);
+        Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
+        chelmsford.deleteTrack(chelmsfordSpur2);
 
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 16);
 
@@ -15926,7 +15935,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train.isBuilt());
 
         // confirm car's destination (no home division)
-        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination null", null, c1.getDestinationTrack());
 
         // car with empty load should return to yard at car's home division
         acton.setDivision(divEast);
@@ -15938,7 +15947,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("Local moves allowed", train.isAllowLocalMovesEnabled());
 
         // confirm car's destination is home division spur
-        Assert.assertEquals("Confirm c1 destination", actonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination 1", actonSpur1, c1.getDestinationTrack());
 
         // disable local moves for train
         train.setAllowLocalMovesEnabled(false);
@@ -15947,21 +15956,26 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train.isBuilt());
 
         // confirm car's destination (no local moves for train)
-        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination 2", null, c1.getDestinationTrack());
 
         // provide a home division spur at a new location
         boston.setDivision(divEast);
+        chelmsford.setDivision(divEast);
 
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
 
         // confirm car's destination spur at Boston
-        Assert.assertEquals("Confirm c1 destination", bostonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination 3", bostonSpur1, c1.getDestinationTrack());
 
+        boston.setDivision(null);
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
+        
+        // confirm car's destination staging
+        Assert.assertEquals("Confirm c1 destination 4", chelmsfordStaging, c1.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

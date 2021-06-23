@@ -198,16 +198,6 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    @Override
-    public Lock getLock() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setLock(Lock lock) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-    
     
     private class MaleRootSocket extends AbstractMaleSocket {
 

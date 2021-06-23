@@ -180,9 +180,9 @@
 
       <p>This document is an introduction and overview of LogixNG.  The sidebar contains
       links to the task specific help files used by JMRI.  The detailed documentation is
-      in the <a href="Tutorial/index.shtml">Tutorial</a>.</p>
+      in the <a href="reference/index.shtml">reference</a>.</p>
 
-      <p>The tutorial has two sections.  The <strong>Standard Features</strong> section
+      <p>The reference has two sections.  The <strong>Standard Features</strong> section
       covers the LogixNG components that are similar to Logix.  The <strong>Advance Features</strong>
       section covers new features that did not exist in Logix or were incomplete.</p>
 

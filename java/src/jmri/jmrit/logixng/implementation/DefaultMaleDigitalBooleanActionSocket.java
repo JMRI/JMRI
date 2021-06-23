@@ -188,6 +188,13 @@ public class DefaultMaleDigitalBooleanActionSocket
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
         
+        @Override
+        public DebugConfig getCopy() {
+            DigitalBooleanActionDebugConfig config = new DigitalBooleanActionDebugConfig();
+            config._dontExecute = _dontExecute;
+            return config;
+        }
+        
     }
     
     
