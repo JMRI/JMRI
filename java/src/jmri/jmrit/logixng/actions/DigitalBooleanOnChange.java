@@ -19,9 +19,20 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
      * The trigger of Action.
      */
     public enum Trigger {
-        CHANGE_TO_TRUE,
-        CHANGE_TO_FALSE,
-        CHANGE,
+        CHANGE_TO_TRUE(Bundle.getMessage("DigitalBooleanOnChange_Trigger_ChangeToTrue")),
+        CHANGE_TO_FALSE(Bundle.getMessage("DigitalBooleanOnChange_Trigger_ChangeToFalse")),
+        CHANGE(Bundle.getMessage("DigitalBooleanOnChange_Trigger_Change"));
+
+        private final String _text;
+
+        private Trigger(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
     }
 
     private String _socketSystemName;
@@ -143,19 +154,7 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        switch (_trigger) {
-            case CHANGE_TO_TRUE:
-                return Bundle.getMessage(locale, "DigitalBooleanOnChange_Long_ChangeToTrue");
-                
-            case CHANGE_TO_FALSE:
-                return Bundle.getMessage(locale, "DigitalBooleanOnChange_Long_ChangeToFalse");
-                
-            case CHANGE:
-                return Bundle.getMessage(locale, "DigitalBooleanOnChange_Long_Change");
-                
-            default:
-                throw new UnsupportedOperationException("_whichChange has unknown value: "+_trigger);
-        }
+        return Bundle.getMessage(locale, "DigitalBooleanOnChange_Long", _trigger.toString());
     }
 
     public FemaleDigitalActionSocket getSocket() {
