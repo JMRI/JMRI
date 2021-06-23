@@ -121,13 +121,13 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         for (int i=0; i < MAX_NUM_TIMERS; i++) {
             JPanel delayPanel = new JPanel();
             delayPanel.setLayout(new BoxLayout(delayPanel, BoxLayout.Y_AXIS));
-            _timerSocketNames[i] = new JTextField();
-            _timerSocketNames[i].setEnabled(false);
-            delayPanel.add(_timerSocketNames[i]);
             _timerDelays[i] = new JTextField("0");
             _timerDelays[i].setColumns(7);
             _timerDelays[i].setEnabled(false);
             delayPanel.add(_timerDelays[i]);
+            _timerSocketNames[i] = new JTextField();
+            _timerSocketNames[i].setEnabled(false);
+            delayPanel.add(_timerSocketNames[i]);
             timerDelaysSubPanel.add(delayPanel);
             if (i < action.getNumActions()) {
                 String socketName = action.getActionSocket(i).getName();

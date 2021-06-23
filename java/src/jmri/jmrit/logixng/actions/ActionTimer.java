@@ -521,6 +521,7 @@ public class ActionTimer extends AbstractDigitalAction
             // is cancelled and stopped.
             if (_timerTask != null) _timerTask.stopTimer();
             _timerTask = null;
+            _timerState = TimerState.Off;
         }
         _listenersAreRegistered = false;
     }
