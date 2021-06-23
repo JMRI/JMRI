@@ -6,16 +6,7 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ProtectedTimerTask;
 import jmri.util.TimerUtil;
 
@@ -44,6 +35,8 @@ public class ActionTimer extends AbstractDigitalAction
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private long _currentTimerDelay = 0;
     private long _currentTimerStart = 0;
+    private boolean _startIsActive = false;
+    
     
     public ActionTimer(String sys, String user) {
         super(sys, user);
@@ -135,14 +128,62 @@ public class ActionTimer extends AbstractDigitalAction
     }
     
     private void scheduleTimer(long delay) {
-        if (_timerTask != null) _timerTask.stopTimer();
+        synchronized(this) {
+            if (_timerTask != null) {
+                _timerTask.stopTimer();
+                _timerTask = null;
+            }
+        }
         _timerTask = getNewTimerTask();
         TimerUtil.schedule(_timerTask, delay);
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public void execute() throws JmriException {
+    private void schedule() {
+        synchronized(this) {
+            ActionEntry ae = _actionEntries.get(_currentTimer);
+            _currentTimerDelay = ae._delay * _unit.getMultiply();
+            _currentTimerStart = System.currentTimeMillis();
+            _timerState = TimerState.WaitToRun;
+            scheduleTimer(ae._delay * _unit.getMultiply());
+        }
+    }
+    
+    private boolean start() throws JmriException {
+        boolean lastStartIsActive = _startIsActive;
+        _startIsActive = _startExpressionSocket.isConnected() && _startExpressionSocket.evaluate();
+        return _startIsActive && !lastStartIsActive;
+    }
+    
+    private boolean checkStart() throws JmriException {
+        if (start()) _timerState = TimerState.RunNow;
+        
+        if (_timerState == TimerState.RunNow) {
+            synchronized(this) {
+                if (_timerTask != null) {
+                    _timerTask.stopTimer();
+                    _timerTask = null;
+                }
+            }
+            _currentTimer = 0;
+            while (_currentTimer < _actionEntries.size()) {
+                ActionEntry ae = _actionEntries.get(_currentTimer);
+                if (ae._delay > 0) {
+                    schedule();
+                    return true;
+                }
+                else {
+                    _currentTimer++;
+                }
+            }
+            // If we get here, all timers has a delay of 0 ms
+            _timerState = TimerState.Off;
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private boolean stop() throws JmriException {
         if (_stopExpressionSocket.isConnected()
                 && _stopExpressionSocket.evaluate()) {
             synchronized(this) {
@@ -150,27 +191,23 @@ public class ActionTimer extends AbstractDigitalAction
                 _timerTask = null;
             }
             _timerState = TimerState.Off;
-            return;
+            return true;
         }
+        return false;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void execute() throws JmriException {
+        if (stop()) return;
         
-        if ((_startExpressionSocket.isConnected() && _startExpressionSocket.evaluate())
-                || (_timerState == TimerState.RunNow)) {
-            synchronized(this) {
-                if (_timerTask != null) {
-                    _timerTask.stopTimer();
-                    _timerTask = null;
-                }
-            }
-            _actionEntries.get(0)._socket.execute();
-            _currentTimer = -1;
-            _timerState = TimerState.WaitToRun;
-        }
+        if (checkStart()) return;
         
         if (_timerState == TimerState.Off) return;
         if (_timerState == TimerState.Running) return;
         
         int startTimer = _currentTimer;
-        while ((_timerState == TimerState.WaitToRun) || (_timerState == TimerState.Completed)) {
+        while (_timerState == TimerState.Completed) {
             // If the timer has passed full time, execute the action
             if ((_timerState == TimerState.Completed) && _actionEntries.get(_currentTimer)._socket.isConnected()) {
                 _actionEntries.get(_currentTimer)._socket.execute();
@@ -188,18 +225,13 @@ public class ActionTimer extends AbstractDigitalAction
             
             ActionEntry ae = _actionEntries.get(_currentTimer);
             if (ae._delay > 0) {
-                synchronized(this) {
-                    _currentTimerDelay = ae._delay * _unit.getMultiply();
-                    _currentTimerStart = System.currentTimeMillis();
-                    scheduleTimer(ae._delay * _unit.getMultiply());
-                }
+                schedule();
                 return;
             }
             
             if (startTimer == _currentTimer) {
                 // If we get here, all timers has a delay of 0 ms
                 _timerState = TimerState.Off;
-                return;
             }
         }
     }
