@@ -153,14 +153,15 @@ public class ActionTimer extends AbstractDigitalAction
             return;
         }
         
-        if (_startExpressionSocket.isConnected()
-                && _startExpressionSocket.evaluate()) {
+        if ((_startExpressionSocket.isConnected() && _startExpressionSocket.evaluate())
+                || (_timerState == TimerState.RunNow)) {
             synchronized(this) {
                 if (_timerTask != null) {
                     _timerTask.stopTimer();
                     _timerTask = null;
                 }
             }
+            _actionEntries.get(0)._socket.execute();
             _currentTimer = -1;
             _timerState = TimerState.WaitToRun;
         }
@@ -473,7 +474,7 @@ public class ActionTimer extends AbstractDigitalAction
         if (!_listenersAreRegistered) {
             // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
             if ((_startImmediately) || (_timerState != TimerState.Off)) {
-                if (_timerState == TimerState.Off) _timerState = TimerState.WaitToRun;
+                if (_timerState == TimerState.Off) _timerState = TimerState.RunNow;
                 getConditionalNG().execute();
             }
             _listenersAreRegistered = true;
@@ -535,6 +536,7 @@ public class ActionTimer extends AbstractDigitalAction
     
     private enum TimerState {
         Off,
+        RunNow,
         WaitToRun,
         Running,
         Completed,
