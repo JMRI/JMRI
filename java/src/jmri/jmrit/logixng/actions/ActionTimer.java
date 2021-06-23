@@ -176,7 +176,7 @@ public class ActionTimer extends AbstractDigitalAction
                 _actionEntries.get(_currentTimer)._socket.execute();
             }
             
-            // Start new timer
+            // Move to them next timer
             _currentTimer++;
             if (_currentTimer >= _actionEntries.size()) {
                 _currentTimer = 0;
