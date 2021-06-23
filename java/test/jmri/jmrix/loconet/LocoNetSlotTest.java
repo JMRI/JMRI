@@ -655,13 +655,13 @@ public class LocoNetSlotTest {
 
     @Test
     public void testExpWriteSlot() throws LocoNetException {
-        int ia[] = {0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
-            0x00, 0x2B, 0x00, 0x00, 0x00, 0x60};
+        int ia[] = {0xE6, 0x15, 0x01, 0x00, 0x03, 0x00, 0x02, 0x47,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         LocoNetMessage lm2 = t.writeSlot();
         Assert.assertEquals("Opcode", LnConstants.OPC_EXP_WR_SL_DATA, lm2.getOpCode());
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 19; i++) {
             Assert.assertEquals("Element " + i, lm.getElement(i), lm2.getElement(i));
         }
     }
@@ -1150,7 +1150,7 @@ public class LocoNetSlotTest {
         jmri.util.JUnitAppender.assertErrorMessage("getFcRate invalid for slot 15");
 
         s = new LocoNetSlot(123);
-        Assert.assertEquals("FcFracMins initial value", 0x3FFF, s.getFcFracMins());
+        Assert.assertEquals("FcFracMins initial value", 0x0, s.getFcFracMins());
         Assert.assertEquals("FcMinutes initial value", 53, s.getFcMinutes());
         Assert.assertEquals("FcHours initial value", 0, s.getFcHours());
         Assert.assertEquals("FcDays initial value", 0, s.getFcDays());
