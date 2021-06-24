@@ -32,13 +32,15 @@ public class GenerateSearchIndexTest {
                 wordMap = new HashMap<>();
                 _searchIndex.put(i, wordMap);
             }
-            String part = word.substring(0, i);
-            Set<Integer> fileIdList = wordMap.get(part);
-            if (fileIdList == null) {
-                fileIdList = new HashSet<>();
-                wordMap.put(part, fileIdList);
+            for (int j=0; j < word.length()-i; j++) {
+                String part = word.substring(j, i+j);
+                Set<Integer> fileIdList = wordMap.get(part);
+                if (fileIdList == null) {
+                    fileIdList = new HashSet<>();
+                    wordMap.put(part, fileIdList);
+                }
+                fileIdList.add(fileId);
             }
-            fileIdList.add(fileId);
         }
     }
     
