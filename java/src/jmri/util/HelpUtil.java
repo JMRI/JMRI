@@ -102,7 +102,7 @@ public class HelpUtil {
             WebServerPreferences webServerPreferences =
                     InstanceManager.getDefault(WebServerPreferences.class);
             String port = Integer.toString(webServerPreferences.getPort());
-            url = "https://localhost:"+port+"/" + file;
+            url = "http://localhost:"+port+"/" + file;
         } else {    // Assume open help on file if no other option is selected
             url = "file://" + FileUtil.getProgramPath().replace("\\", "/") + file;
         }
