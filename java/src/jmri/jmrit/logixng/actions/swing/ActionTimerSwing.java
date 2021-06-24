@@ -67,7 +67,10 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         
         panel.add(_startImmediately);
         panel.add(_runContinuously);
-        panel.add(_unitComboBox);
+        
+        JPanel unitPanel = new JPanel();
+        unitPanel.add(_unitComboBox);
+        panel.add(unitPanel);
         
         JPanel numActionsPanel = new JPanel();
         _numTimers = new JTextField(Integer.toString(numActions));
