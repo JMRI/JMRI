@@ -72,12 +72,14 @@ public class BuildHelpIndexTest {
 "      document.getElementById(\"page\").src = link;" + newLine +
 "    }" + newLine +
 "    function onLoad() {" + newLine +
-"	  var urlParts = window.location.href.split(\"?\");" + newLine +
-"	  if (urlParts[1] != \"\")" + newLine +
-"	  {" + newLine +
+"      var url = window.location.href;" + newLine +
+"      var i = url.indexOf('?');" + newLine +
+"      var urlParts = [url.slice(0,i), url.slice(i+1)];" + newLine +
+"      if (urlParts[1] != \"\")" + newLine +
+"      {" + newLine +
 "        var subUrlParts = urlParts[1].split(\"=\");" + newLine +
-"	    openLink(subUrlParts[1]);" + newLine +
-"	  }" + newLine +
+"        openLink(subUrlParts[1]);" + newLine +
+"      }" + newLine +
 "    }" + newLine +
 "  </script>" + newLine +
 "  <style>" + newLine +

@@ -9,7 +9,9 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.web.server.WebServerPreferences;
 
 /**
  * Common utility methods for displaying JMRI help pages.
@@ -91,12 +93,19 @@ public class HelpUtil {
     }
 
     public static void displayHelpRef(String ref) {
-        String url =
-                "file://"
-                + FileUtil.getProgramPath().replace("\\", "/")
-                + "help/en/"
-                + ref.replace(".", "/")
-                + ".shtml";
+        HelpUtilPreferences preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
+        String file = "help/en/" + ref.replace(".", "/") + ".shtml";
+        String url;
+        if (preferences.getOpenHelpOnline()) {
+            url = "https://www.jmri.org/" + file;
+        } else if (preferences.getOpenHelpOnJMRIWebServer()) {
+            WebServerPreferences webServerPreferences =
+                    InstanceManager.getDefault(WebServerPreferences.class);
+            String port = Integer.toString(webServerPreferences.getPort());
+            url = "https://localhost:"+port+"/" + file;
+        } else {    // Assume open help on file if no other option is selected
+            url = "file://" + FileUtil.getProgramPath().replace("\\", "/") + file;
+        }
         try {
             jmri.util.HelpUtil.openWebPage(url);
         } catch (JmriException e) {

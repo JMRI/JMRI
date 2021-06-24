@@ -8,12 +8,14 @@
       document.getElementById("page").src = link;
     }
     function onLoad() {
-	  var urlParts = window.location.href.split("?");
-	  if (urlParts[1] != "")
-	  {
+      var url = window.location.href;
+      var i = url.indexOf('?');
+      var urlParts = [url.slice(0,i), url.slice(i+1)];
+      if (urlParts[1] != "")
+      {
         var subUrlParts = urlParts[1].split("=");
-	    openLink(subUrlParts[1]);
-	  }
+        openLink(subUrlParts[1]);
+      }
     }
   </script>
   <style>
