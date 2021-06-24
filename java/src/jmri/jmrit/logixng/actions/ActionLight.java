@@ -270,7 +270,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     }
 
 
-    public void setLightValue(@Nonnull int value) {
+    public void setLightValue(int value) {
         _lightValue = value;
     }
 

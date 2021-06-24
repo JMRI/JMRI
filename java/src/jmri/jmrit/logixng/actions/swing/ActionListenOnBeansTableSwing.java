@@ -133,7 +133,6 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
         
-        // Create a temporary action in case we don't have one.
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
         NamedTable table = tableBeanPanel.getNamedBean();
         if (table != null) {
