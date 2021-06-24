@@ -17,15 +17,16 @@ import jmri.util.FileUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- *
- * @author Randall Wood (C) 2014, 2016
+ * Parse server side include tags on web pages
+ * @author Randall Wood     (C) 2014, 2016
+ * @author Daniel Bergqvist (C) 2021
  */
 @WebServlet(name = "HomeServlet",
         urlPatterns = {
-            "/help2"
+            "/help_ssi"
         })
 @ServiceProvider(service = HttpServlet.class)
-public class HelplServlet extends HttpServlet {
+public class HelpSSIServlet extends HttpServlet {
 
     private String readAndParseFile(String fileName) throws IOException {
         
@@ -117,5 +118,5 @@ public class HelplServlet extends HttpServlet {
     }// </editor-fold>
 
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelplServlet.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelpSSIServlet.class);
 }
