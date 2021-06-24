@@ -2,7 +2,9 @@ package jmri.jmrit.symbolicprog;
 
 
 import java.io.UnsupportedEncodingException;
+
 import javax.swing.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -22,6 +25,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -178,6 +182,8 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         //log.debug("termByteStr=\"{}\",padByteStr=\"{}\"", termByteStr, padByteStr);
         //log.debug("termByteVal={},padByteVal={}", termByteVal, padByteVal);
         _columns = cvCount + 2; //update column width now we have a better idea
+        _value = new JComboBox<String>();
+        _defaultColor = _value.getBackground();
     }
 
 
@@ -238,29 +244,33 @@ public class SplitEnumVariableValue extends SplitVariableValue {
             }
         }
     }
-    
+
+    // not currently being invoked!!
+    /**
+     * Saves contents of _textField to oldContents.
+     */
+    void enterField() {
+        oldContents = getTextValue();
+        log.debug("enterField sets oldContents to {}", oldContents);
+    }
+
     @Override
     void exitField(){
         int selVal = getIntValue();
         // there may be a lost focus event left in the queue when disposed so protect
-        long newFieldVal = 0;
-        try {
-            newFieldVal = selVal;
-        } catch (NumberFormatException e) {
-            _textField.setText(oldContents);
-        }
-        log.info("_minVal={};_maxVal={};newFieldVal={}",
+        long newFieldVal = selVal;
+        log.debug("_minVal={};_maxVal={};newFieldVal={}",
                 Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
         
         long newVal = (newFieldVal - mOffset) / mFactor;
         long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
-        log.info("Enter updatedTextField from exitField");
+        log.debug("Enter updatedDropDown from exitField oldVal={}; newVal={}", oldVal, newVal);
         updatedDropDown();
         prop.firePropertyChange("Value", oldVal, newVal);
     }
     
     void updatedDropDown() {
-        log.info("Variable='{}'; enter updatedDropDown in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _value);
+        log.debug("Variable='{}'; enter updatedDropDown in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _value);
         // called for new values in text field - set the CVs as needed
 
         int[] retVals = getCvValsFromSingleInt(getIntValue());
@@ -408,6 +418,19 @@ public class SplitEnumVariableValue extends SplitVariableValue {
         }
     }
     
+    // implement an abstract member to set colors
+    @Override
+    void setColor(Color c) {
+        if (c != null) {
+            _value.setBackground(c);
+            log.debug("Variable={}; Set Color to {}", _name, c.toString());
+        } else {
+            log.debug("Variable={}; Set Color to defaultColor {}", _name, _defaultColor.toString());
+            _value.setBackground(_defaultColor);
+        }
+        // prop.firePropertyChange("Value", null, null);
+    }
+
        @Override
     public Component getNewRep(String format) {
         // sort on format type
@@ -483,9 +506,7 @@ public class SplitEnumVariableValue extends SplitVariableValue {
             _l = new java.beans.PropertyChangeListener() {
                 @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (log.isDebugEnabled()) {
                         log.debug("VarComboBox saw property change: {}", e);
-                    }
                     originalPropertyChanged(e);
                 }
             };
