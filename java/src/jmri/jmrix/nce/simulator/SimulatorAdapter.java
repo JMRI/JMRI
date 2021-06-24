@@ -376,13 +376,13 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
                 reply.setElement(1, NCE_OKAY);  // forces succeed
                 // Sample code to modify simulator response for testing purposes.
                 // Uncomment and modify as desired.
-//                int cvnum = (m.getElement(1) << 8) | (m.getElement(2));
-//                if (cvnum == 7) {
-//                    reply.setElement(0, 88);  // forces fail
-//                }
-//                if (cvnum == 8) {
-//                    reply.setElement(0, 48);  // forces Hornby
-//                }
+                int cvnum = (m.getElement(1) << 8) | (m.getElement(2));
+                if (cvnum == 257) {
+                    reply.setElement(0, 6);  // forces fail
+                }
+                if (cvnum == 258) {
+                    reply.setElement(0, 14);  // forces Hornby
+                }
 //                if (cvnum == 159) {
 //                    reply.setElement(0, 145);
 //                    reply.setElement(1, NCE_DATA_OUT_OF_RANGE);  // forces fail
