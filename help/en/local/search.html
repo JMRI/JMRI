@@ -9,9 +9,9 @@
       document.getElementById("page").src = link;
     }
     function onLoad() {
-      const obj = JSON.parse(searchIndex);
+      window.searchIndexData = JSON.parse(searchIndex);
 
-      alert("Hej");
+//      alert("Hej111");
 //      var url = window.location.href;
 //      var i = url.indexOf('?');
 //      var urlParts = [url.slice(0,i), url.slice(i+1)];
@@ -21,6 +21,28 @@
 //        openLink(subUrlParts[1]);
 //      }
     }
+	function searchHelp() {
+		var searchTerm = document.getElementById("searchField").value.toLowerCase();
+//		alert(searchTerm);
+		var numChars = searchTerm.length;
+//		alert(searchTerm + ", " + numChars);
+//		let lengthMap = window.searchIndexData.words;
+		let wordMap = window.searchIndexData.words[numChars];
+		let fileIDs = wordMap[searchTerm];
+		if (typeof fileIDs === 'undefined') {
+			alert("The search term \""+searchTerm+"\" is not found");
+		} else {
+			console.log(fileIDs);
+			for (i=0; i < fileIDs.length; i++) {
+				if (fileIDs[i] != -1) {
+					let fileName = window.searchIndexData.files[fileIDs[i]];
+					console.log(fileName);
+//					console.log(fileIDs[i]);
+				}
+			}
+		}
+//		console.log(lengthMap[9]);
+	}
   </script>
   <style>
 .float-container {
@@ -45,6 +67,16 @@
 <body onload="onLoad()">
 <div class="float-container">
 <div class="float-child-index">
+<div>
+<form>
+Enter search term: <input id="searchField" type="text"> <input type="button" value="Search" onclick="searchHelp()">
+</form>
+</div>
+<div>
+<p>Search result</p>
+<ul id="searchResult">
+</ul>
+</div>
 </div>
 <iframe class="float-child-page" id="page" height="800px" src="file:///F:/Projekt/Java/GitHub/JMRI/help/en/index.shtml" title="JMRI Help"></iframe>
 </body>
