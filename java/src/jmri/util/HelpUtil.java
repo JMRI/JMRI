@@ -104,7 +104,7 @@ public class HelpUtil {
             String port = Integer.toString(webServerPreferences.getPort());
             url = "http://localhost:"+port+"/" + file;
         } else {    // Assume open help on file if no other option is selected
-            url = "file://" + FileUtil.getProgramPath().replace("\\", "/") + file;
+            url = "file://" + FileUtil.getProgramPath().replace("\\", "/") + "help/en/local/stub/" + ref + ".html";
         }
         try {
             jmri.util.HelpUtil.openWebPage(url);
