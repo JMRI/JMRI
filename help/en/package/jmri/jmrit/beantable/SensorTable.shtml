@@ -12,11 +12,9 @@
   <meta name="author" content="Jerry Grochow">
   <meta name="keywords" content="JMRI help Sensor Table">
   <!--#include virtual="/Style.shtml" -->
-
-  <script src="./onload.js"></script> 
 </head>
 
-<body onload="onLoad()">
+<body>
   <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
