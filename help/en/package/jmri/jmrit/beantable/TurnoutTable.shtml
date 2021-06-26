@@ -11,10 +11,9 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Turnout Table">
   <!--#include virtual="/Style.shtml" -->
-  <script src="onload.js"></script> 
 </head>
 
-<body onload="onLoad()">
+<body>
   <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
