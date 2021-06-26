@@ -10,13 +10,7 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="Author" content="Egbert Broerse">
   <meta name="Date.Modified" content="20151002">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

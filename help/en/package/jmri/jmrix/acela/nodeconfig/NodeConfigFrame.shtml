@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
  <title>
@@ -6,14 +7,7 @@
  </title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help configure grapevine node">
-
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -29,14 +23,13 @@ Thank you for reading this, hopefully the few minutes you spend reading this wil
 <p>
 If you have not already, please be sure to read more about JMRI <a href="../../../../../html/hardware/acela/index.shtml">Acela</a> hardware support and the <a href="../../../../../html/hardware/acela/Names.shtml">CTI Acela System Names</a>.</p>
 
-<h2>Configuration Files
-</h2>
+<h2>Configuration Files</h2>
 Just to be perfectly clear, DecoderPro and PanelPro are different skins or user interfaces to the same JMRI program.
 <p>
 You can do anything from any of these three programs, the user interface has just been tailored in an attempt to make it easier for you to do what you want to do:
 <ul>
-<li>Program Decoders using DecoderPro
-<li>Control your Layout using PanelPro
+  <li>Program Decoders using DecoderPro
+  <li>Control your Layout using PanelPro
 </ul>
 <p>
 The one difference is that each skin stores its own version of your configuration.
@@ -404,10 +397,12 @@ Remember to save your new configuration by using the Save button in the Preferen
 	</ul>
 </ul>
 
-    <p>Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.</p>
+    <p>Remember to save your new configuration by using the Save button in the Preferences window.<br>
+    Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.</p>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
