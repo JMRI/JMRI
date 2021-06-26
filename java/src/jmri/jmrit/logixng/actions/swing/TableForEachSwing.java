@@ -156,7 +156,6 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TableForEach but is a: "+object.getClass().getName());
         }
         
-        // Create a temporary action in case we don't have one.
         TableForEach action = (TableForEach)object;
         NamedTable table = tableBeanPanel.getNamedBean();
         if (table != null) {

@@ -489,8 +489,10 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
           parts of the definition from the Internet, which requires an online connection - and is slow. The prefix <b>http://jmri.org/xml</b> is guaranteed to resolve
           to the <b>xml</b> directory of your local JMRI installation. For more mapping, please see other JMRI documentation.
       </p>
+
       <!--#include virtual="/Footer.shtml" -->
-      </div><!-- close #mainContent -->
-    </div><!-- close #mBody -->
+    </div><!-- close #mainContent -->
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

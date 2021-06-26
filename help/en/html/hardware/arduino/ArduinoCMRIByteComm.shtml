@@ -1,18 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-
     <title>
  	Hardware support: Multi-bit and Byte Communication Using CMRI
     </title>
-    
     <!-- Copyright 2020 Jerry Grochow -->
-    
     <meta name="author" content="Jerry Grochow">
     <meta name="keywords" content="Arduino CMRI JMRI Byte Communication">
-    
     <!--#include virtual="/Style.shtml" -->
-    
 </head>
 
 <body>
@@ -148,14 +144,12 @@
 		    </dd>
 
 		</dl>
-        
-        
+
 		</div> <!-- closes #list -->
     
-    <!--#include virtual="/Footer.shtml" -->
-
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody, from before Sidebar -->
+    <script src="/js/main.js"></script>
 </body>
 </html>
-

@@ -279,11 +279,12 @@
           Heads associated. All that this Virtual Signal Mast has to
           do is display a "Danger" aspect.</p>
 
+      </div><!-- closes para-->
         <p>Back to the <a href="index.shtml#tools">Signaling main
         help page</a>.</p>
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
-  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

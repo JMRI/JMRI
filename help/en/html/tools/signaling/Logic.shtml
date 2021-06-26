@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -7,16 +7,7 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Simple Signal Logic</title>
-    <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -307,10 +298,11 @@
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
 </pre>
-        </div>
-      </div>
+        </div><!--closes para-->
+      </div><!--closes section-->
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

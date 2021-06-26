@@ -488,11 +488,45 @@
           details on table actions.</p>
 
           <h5>Timer</h5>
+          <p><strong>Timer</strong> has a number of actions, each executed after a period
+          of time.  The time to wait can be 0, which means the related action is executed
+          immediately.  The Timer can be configured to only execute the actions once or
+          continuously. The Timer can also be configured to start when the xml data file
+          is loaded or only start when the "Start" expression returns True. The Timer stops
+          when the "Stop" expression returns True. The time unit is selected from the
+          combo box.</p>
 
-          <p>Timer has a number of actions, each executed after some time. The action
-          Timer waits some time, then executes the first action. It then waits some more
-          time, and then executes the second action. And so on. The time to wait can be 0
-          seconds, which means the action is executed immediately.</p>
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/timer_dialog.png">
+          <img src="images/chapter5/timer_dialog.png"
+          alt="Chapter 5 timer dialog" width="995" height="377">
+          </a>
+          </div>
+
+          <p>If all times to wait are zero, the timer will automatically stop after executing all
+          the actions once, even if it is set to run continuously. This is a safety
+          feature to avoid locking up JMRI.</p>
+
+          <p>To add a socket for the Timer action, edit the Timer and click the <strong>Add
+          timer</strong>  button and a new socket will be added to the end. To remove
+          a socket for the Timer action, edit the Timer and click the
+          <strong>Remove timer</strong> button and the last socket will be removed. The
+          socket can only be removed if there is no action connected to it.</p>
+
+          <p>This example shows using the Timer to implement a traffic light.  Note:  This
+          example shows renaming the A1, A2, etc. sockets to meaningful names.
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/timer_example.png">
+          <img src="images/chapter5/timer_example.png"
+          alt="Chapter 5 timer example" width="356" height="333">
+          </a>
+          </div>
+
+          <p>Another example is using a Timer to blink a light. Create a Timer with a single socket and a
+          Light action that toggles the light on/off. If you want different times for on
+          and off, create a Timer with two sockets where the first socket turns the light
+          on and the second socket turns the light off.</p>
 
         <a id="digital_action_display"></a>
         <h3>Digital action :: Display</h3>

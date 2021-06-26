@@ -206,7 +206,6 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
 ```
-        open ../website/releasenotes/jmri4.23.7.shtml
         ${EDITOR} help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.23.7.shtml
 ```
 
@@ -215,7 +214,7 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
         ${EDITOR} help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.23.7.shtml
 ```
 
- - add any new warnings to the old warnings section of the next (4.23.8) release note:
+ - Add any new warnings to the old warnings section of the next (4.23.8) release note:
 ```
         ${EDITOR} ../website/releasenotes/jmri4.23.8.shtml ../website/releasenotes/jmri4.23.7.shtml
 ```
@@ -317,7 +316,7 @@ If you're developing any additional (post-4.23.7) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.23.7 release name at the top. Enter the 4.23.3 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.23.7 release name at the top. Enter the 4.23.6 most recent release at the bottom.  Click "OK"
 
 - Update
 
