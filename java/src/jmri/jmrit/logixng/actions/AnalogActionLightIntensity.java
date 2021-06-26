@@ -12,15 +12,12 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 /**
- * Runs an engine.
- * This action reads an analog expression with the loco address and sets its
- * speed according to an alaog expression and the direction according to a
- * digital expression.
+ * Sets the light intensity.
  * 
- * @author Daniel Bergqvist Copyright 2019
+ * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionLightIntensity extends AbstractDigitalAction
-        implements FemaleSocketListener, VetoableChangeListener {
+public class AnalogActionLightIntensity extends AbstractAnalogAction
+        implements VetoableChangeListener {
 
     public static final int INTENSITY_SOCKET = 0;
     
@@ -31,23 +28,18 @@ public class ActionLightIntensity extends AbstractDigitalAction
     private String _formula = "";
     private ExpressionNode _expressionNode;
     
-    private String _intensitySocketSystemName;
-    private final FemaleAnalogExpressionSocket _intensitySocket;
     
-    
-    public ActionLightIntensity(String sys, String user) {
+    public AnalogActionLightIntensity(String sys, String user) {
         super(sys, user);
-        _intensitySocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, Bundle.getMessage("ActionLightIntensity_SocketName"));
     }
     
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
-        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        AnalogActionManager manager = InstanceManager.getDefault(AnalogActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionLightIntensity copy = new ActionLightIntensity(sysName, userName);
+        AnalogActionLightIntensity copy = new AnalogActionLightIntensity(sysName, userName);
         copy.setComment(getComment());
         if (_lightHandle != null) copy.setLight(_lightHandle);
         copy.setAddressing(_addressing);
@@ -158,7 +150,7 @@ public class ActionLightIntensity extends AbstractDigitalAction
             if (evt.getOldValue() instanceof VariableLight) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionLightIntensity_LightInUseLightActionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("AnalogActionLightIntensity_LightInUseLightActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -166,7 +158,7 @@ public class ActionLightIntensity extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void execute() throws JmriException {
+    public void setValue(double value) throws JmriException {
         VariableLight light;
         
         switch (_addressing) {
@@ -206,13 +198,7 @@ public class ActionLightIntensity extends AbstractDigitalAction
             return;
         }
         
-        double intensity = 0.0;
-        
-        if (_intensitySocket.isConnected()) {
-            intensity =
-                    ((MaleAnalogExpressionSocket)_intensitySocket.getConnectedSocket())
-                            .evaluate();
-        }
+        double intensity = value;
         
         if (intensity < 0.0) intensity = 0.0;
         if (intensity > 100.0) intensity = 100.0;
@@ -222,42 +208,17 @@ public class ActionLightIntensity extends AbstractDigitalAction
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        switch (index) {
-            case INTENSITY_SOCKET:
-                return _intensitySocket;
-                
-            default:
-                throw new IllegalArgumentException(
-                        String.format("index has invalid value: %d", index));
-        }
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
     public int getChildCount() {
-        return 1;
+        return 0;
     }
 
-    @Override
-    public void connected(FemaleSocket socket) {
-        if (socket == _intensitySocket) {
-            _intensitySocketSystemName = socket.getConnectedSocket().getSystemName();
-        } else {
-            throw new IllegalArgumentException("unkown socket");
-        }
-    }
-
-    @Override
-    public void disconnected(FemaleSocket socket) {
-        if (socket == _intensitySocket) {
-            _intensitySocketSystemName = null;
-        } else {
-            throw new IllegalArgumentException("unkown socket");
-        }
-    }
-    
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionLightIntensity_Short");
+        return Bundle.getMessage(locale, "AnalogActionLightIntensity_Short");
     }
 
     @Override
@@ -291,50 +252,13 @@ public class ActionLightIntensity extends AbstractDigitalAction
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-        return Bundle.getMessage(locale, "ActionLightIntensity_Long", namedBean);
-    }
-
-    public FemaleAnalogExpressionSocket getIntensitySocket() {
-        return _intensitySocket;
-    }
-
-    public String getIntensitySocketSystemName() {
-        return _intensitySocketSystemName;
-    }
-
-    public void setIntensitySystemName(String systemName) {
-        _intensitySocketSystemName = systemName;
+        return Bundle.getMessage(locale, "AnalogActionLightIntensity_Long", namedBean);
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        try {
-            if ( !_intensitySocket.isConnected()
-                    || !_intensitySocket.getConnectedSocket().getSystemName()
-                            .equals(_intensitySocketSystemName)) {
-                
-                String socketSystemName = _intensitySocketSystemName;
-                _intensitySocket.disconnect();
-                if (socketSystemName != null) {
-                    MaleSocket maleSocket =
-                            InstanceManager.getDefault(AnalogExpressionManager.class)
-                                    .getBySystemName(socketSystemName);
-                    _intensitySocket.disconnect();
-                    if (maleSocket != null) {
-                        _intensitySocket.connect(maleSocket);
-                        maleSocket.setup();
-                    } else {
-                        log.error("cannot load analog expression " + socketSystemName);
-                    }
-                }
-            } else {
-                _intensitySocket.getConnectedSocket().setup();
-            }
-        } catch (SocketAlreadyConnectedException ex) {
-            // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
-        }
+        // Do nothing
     }
     
     /** {@inheritDoc} */
@@ -354,6 +278,6 @@ public class ActionLightIntensity extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightIntensity.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionLightIntensity.class);
 
 }

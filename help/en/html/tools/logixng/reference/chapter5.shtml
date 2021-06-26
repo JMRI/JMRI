@@ -19,11 +19,52 @@
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 5</h1>
 
-      <h2>Action Items</h2>
+      <h2>Action Descriptions</h2>
 
-        <p>The dialog for adding and editing actions consists of an upper part that
-        contains the item and the actions for that item.  The lower part is common
+      <p>The action descriptions are grouped by the socket type and category.</p>
+
+      <ul>
+        <li>Digital action
+          <ul>
+            <li><a href="#digital_action_item">Item</a></li>
+            <li><a href="#digital_action_common">Common</a></li>
+            <li><a href="#digital_action_display">Display</a></li>
+            <li><a href="#digital_action_loconet">LocoNet</a></li>
+            <li><a href="#digital_action_other">Other</a></li>
+          </ul>
+        </li>
+        <li>Digital boolean action
+          <ul>
+            <li><a href="#digital_boolean_action_common">Common</a></li>
+          </ul>
+        </li>
+        <li>Analog action
+          <ul>
+            <li><a href="#analog_action_item">Item</a></li>
+            <li><a href="#analog_action_common">Common</a></li>
+          </ul>
+        </li>
+        <li>String action
+          <ul>
+            <li><a href="#string_action_item">Item</a></li>
+            <li><a href="#string_action_common">Common</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Action dialogs</h3>
+        <p>When the category and type has been selected, the detail action dialog will be
+        displayed.  The content of the dialog will vary depending on the category and type.
+        The typical digital action item dialog is described below.</p>
+
+        <p>The dialog for adding and editing digital action items consists of an upper part
+        that contains the item and the actions for that item.  The lower part is common
         to all actions.</p>
+
+        <p>For some actions, for example Signal head, you need to first select the item and
+        then you can select the action to do on that item. For example, for Signal head,
+        you first select the signal head to act on and then you can select the appearence
+        to set for that signal head.</p>
 
         <div style="margin-left: 2em;">
         <a href="images/chapter5/typical_action.png">
@@ -69,12 +110,15 @@
           <dd>Save the new action or the changes to an existing action.<dd>
         </dl>
 
-        <h3>Action Items List</h3>
+
+
+        <a id="digital_action_item"></a>
+        <h3>Digital action :: Item</h3>
 
           <div style="margin-left: 2em;">
-          <a href="images/chapter5/action_list.png">
-          <img src="images/chapter5/action_list.png"
-          alt="Chapter 5 action item list" width="263" height="454">
+          <a href="images/chapter5/digital_action_item.png">
+          <img src="images/chapter5/digital_action_item.png"
+          alt="Chapter 5 digital action item list" width="184" height="386">
           </a>
           </div>
 
@@ -181,8 +225,10 @@
 
           <h5>Local variable</h5>
             <p>Local variables are described in <a href="chapter8.shtml">Chapter 8 - Local Variables</a>.</p>
-            <p>Instead of specific actions, local varaibles use <strong>tabs</strong> to
+
+            <p>Instead of specific actions, local variables use <strong>tabs</strong> to
             select the action.</p>
+
             <ul>
               <li><strong>Null:</strong> Select the <strong>Null</strong> tab to set the
               selected local variable to the null value.</li>
@@ -236,7 +282,7 @@
             </ul>
 
           <h5>Sensor</h5>
-            <p>The delayed options are handled by <a href="chapter3.shtml#ExecuteDelayed">
+            <p>The delayed options are handled by <a href="#ExecuteDelayed">
             Execute Delayed</a>.</p>
             <ul>
               <li><strong>Inactive:</strong> Set the selected sensor to inactive.</li>
@@ -294,7 +340,7 @@
           loco address and/or loco speed.</p>
 
           <h5>Turnout</h5>
-            <p>The delayed options are handled by <a href="chapter3.shtml#ExecuteDelayed">
+            <p>The delayed options are handled by <a href="#ExecuteDelayed">
             Execute Delayed</a>.</p>
             <ul>
               <li><strong>Closed:</strong> Set the selected turnout closed.</li>
@@ -342,8 +388,372 @@
               <li><strong>Set Train Name:</strong> Set the train Name for the selected Warrant.</li>
             </ul>
 
+        <a id="digital_action_common"></a>
+        <h3>Digital action :: Common</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/digital_action_common.png">
+          <img src="images/chapter5/digital_action_common.png"
+          alt="Chapter 5 digital action common list" width="204" height="170">
+          </a>
+          </div>
+
+          <a id="ExecuteDelayed"></a>
+          <h5>Execute delayed</h5>
+
+          <p>Delay the execution of the following action for a specified amount of time.
+          This is the same as the Logix <strong>Delayed Set ...</strong>.  The main
+          difference is that this can be used with any action, such as signals.  The
+          time delay units are milliseconds, seconds, minutes and hours.
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter5/execute_delay.png">
+          <img src="images/chapter5/execute_delay.png"
+          alt="Chapter 5 execute_delay" width="535" height="329">
+          </a>
+          </div>
+          <p>
+
+          <h5>For</h5>
+          <p>
+            For is a for-loop. It has four children.
+            <ul>
+              <li><strong>Init</strong> - this action is executed only one time. It's
+              used to initialize the loop, for example setting a Memory to a particular
+              value.</li>
+
+              <li><strong>While</strong> - this expression decides if the loop
+              should run one lap more. The loop will continue to run until this
+              condition will be <strong>false</strong>.</li>
+
+              <li><strong>AfterEach</strong> - this action is executed at the end of the
+              loop. It can for example be used to increment a counter in a Memory.</li>
+
+              <li><strong>Do</strong> - this action is executed in each loop. It
+              does the main work.</li>
+            </ul>
+
+            <p>When For is executed, the Init action is run once. After that, the
+            While expression is evaluated. If the While returns <strong>true</strong>,
+            the Do action is executed and at last the AfterEach action is executed. Then
+            the process is repeated, except that the Init action is only executed once.</p>
+
+          <h5>If Then Else</h5>
+          <p>Reads a digital child expression and if the answer is <strong>true</strong>
+          it executes the <strong>then</strong> child action, else it executes the
+          <strong>else</strong> child action.</p>
+
+          <p>There are two options:</p>
+
+          <ul>
+            <li><strong>Execute on change:</strong> Executes the Then or the Else action
+            only when the If expression has changed from True to False, or from False to True.</li>
+            <li><strong>Always execute:</strong> Executes the Then or the Else action every
+            time the <strong>If Then Else</strong> action is executed..</li>
+          </ul>
+
+          <h5>Many</h5>
+          <p>The Many action executes many child actions.</p>
+
+          <h5>Read analog and set analog</h5>
+          <p>Read an analog child expression and execute an analog child action.</p>
+
+          <h5>Read string and set string</h5>
+          <p>Read a string child expression and execute a string child action.</p>
+
+          <h5>Sequence</h5>
+          <p>The Sequence action executes a series of action/expression pairs.  For each
+          pair, the action will be performed and then the expression will wait until it
+          becomes true.  When it is true, the next action/expression pair will be
+          started.  The sequence will repeat forever or until stopped.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter5/action_sequence.png">
+          <img src="images/chapter5/action_sequence.png"
+          alt="Chapter 5 display action" width="614" height="447">
+          </a>
+          </div>
+
+          <ul>
+            <li><strong>Start:</strong> When the start expression is true, the sequence
+            will start with the first action/expression pair.</li>
+            <li><strong>Stop:</strong> When the stop expression is true, the sequence will
+            stop running.</li>
+            <li><strong>Reset:</strong> When the reset expression is true, the sequence
+            will be interrupted and return to the first action/expresson pair.</li>
+          </ul>
+
+          <h5>Table: For each</h5>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for
+          details on table actions.</p>
+
+          <h5>Timer</h5>
+          <p><strong>Timer</strong> has a number of actions, each executed after a period
+          of time.  The time to wait can be 0, which means the related action is executed
+          immediately.  The Timer can be configured to only execute the actions once or
+          continuously. The Timer can also be configured to start when the xml data file
+          is loaded or only start when the "Start" expression returns True. The Timer stops
+          when the "Stop" expression returns True. The time unit is selected from the
+          combo box.</p>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/timer_dialog.png">
+          <img src="images/chapter5/timer_dialog.png"
+          alt="Chapter 5 timer dialog" width="995" height="377">
+          </a>
+          </div>
+
+          <p>If all times to wait are zero, the timer will automatically stop after executing all
+          the actions once, even if it is set to run continuously. This is a safety
+          feature to avoid locking up JMRI.</p>
+
+          <p>To add a socket for the Timer action, edit the Timer and click the <strong>Add
+          timer</strong>  button and a new socket will be added to the end. To remove
+          a socket for the Timer action, edit the Timer and click the
+          <strong>Remove timer</strong> button and the last socket will be removed. The
+          socket can only be removed if there is no action connected to it.</p>
+
+          <p>This example shows using the Timer to implement a traffic light.  Note:  This
+          example shows renaming the A1, A2, etc. sockets to meaningful names.
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/timer_example.png">
+          <img src="images/chapter5/timer_example.png"
+          alt="Chapter 5 timer example" width="356" height="333">
+          </a>
+          </div>
+
+          <p>Another example is using a Timer to blink a light. Create a Timer with a single socket and a
+          Light action that toggles the light on/off. If you want different times for on
+          and off, create a Timer with two sockets where the first socket turns the light
+          on and the second socket turns the light off.</p>
+
+        <a id="digital_action_display"></a>
+        <h3>Digital action :: Display</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/digital_action_display.png">
+          <img src="images/chapter5/digital_action_display.png"
+          alt="Chapter 5 digital action display list" width="184" height="26">
+          </a>
+          </div>
+
+          <h5>Icon/Label on panel</h5>
+          <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+        <a id="digital_action_loconet"></a>
+        <h3>Digital action :: LocoNet</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/digital_action_loconet.png">
+          <img src="images/chapter5/digital_action_loconet.png"
+          alt="Chapter 5 digital action loconet list" width="184" height="44">
+          </a>
+          </div>
+
+          <h5>Clear loconet slots</h5>
+          <p>This action clears the slot status in the command station if you are using LocoNet.</p>
+
+          <h5>Update loconet slots</h5>
+          <p>This action forces an update of the LocoNet slot status in JMRI.</p>
+
+        <a id="digital_action_other"></a>
+        <h3>Digital action :: Other</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/digital_action_other.png">
+          <img src="images/chapter5/digital_action_other.png"
+          alt="Chapter 5 digital action other list" width="184" height="152">
+          </a>
+          </div>
+
+          <h5>Call module</h5>
+          <p>See <a href="chapter10.shtml#DigitalActionModule">Chapter 10 - Modules</a> for details.</p>
+
+          <h5>Listen on beans</h5>
+          <p>See <a href="chapter7.shtml#ListenOnBeans">Chapter 7 - Listen on beans</a> for details.</p>
+
+          <h5>Listen on beans - Table</h5>
+          <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
+
+          <a id="ActionLogData"></a>
+          <h5>Log data</h5>
+
+          <p>While developing a ConditionalNG, it can be helpful to see field content, make
+          note of the location within the tree, etc.  Adding the <strong>Log data</strong>
+          type in the <strong>Other</strong> category will display a dialog to configure
+          the <strong>Log data</strong> options.</p>
+
+          <p>Select either or both Log options</p>
+
+          <ul>
+            <li><strong>Log to the log:</strong> Help &rArr; System Console.</li>
+            <li><strong>Log to the Script Output:</strong> Scripting &rArr; Script Output.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter5/action_log_data.png">
+          <img src="images/chapter5/action_log_data.png"
+          alt="Chapter 5 action log data" width="565" height="506">
+          </a>
+          </div>
+
+          <p>There are three format types.</p>
+
+          <ul>
+            <li><strong>Only text: </strong> The text typed into the Format box will be
+            displayed on the log.  The data in the table is ignored.</li>
+            <li><strong>Comma separated list: </strong> The values for the items in the
+            table will be displayed separated by commas.  The content in the format field
+            is ignored.</li>
+            <li><strong>String.format: </strong> Use the format string to format the data
+            in the table.  See the java method
+            <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">
+            String.format()</a> for the syntax of the
+            format string.  Note:  The format is similar <code>sprintf</code>.</li>
+          </ul>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter5/log_data_format.png">
+          <img src="images/chapter5/log_data_format.png"
+          alt="Chapter 5 log data format" width="187" height="62">
+          </a>
+          </div>
+
+          <p>The table lists the data sources for the comma separated and and string
+          format options.<p>
+
+          <p>Click on the <strong>Add</strong> button to add an entry to the table.
+          Select the source type and add the name or a reference in the Data field.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter5/log_data_sources.png">
+          <img src="images/chapter5/log_data_sources.png"
+          alt="Chapter 5 log data sources" width="421" height="116">
+          </a>
+          </div>
+
+          <p>This example uses the string.format option to combine text with the contents
+          of two memory variables.</p>
+
+          <div style="margin-left: 2em">
+          <a href="images/chapter5/log_data_sample.png">
+          <img src="images/chapter5/log_data_sample.png"
+          alt="Chapter 5 log data sample" width="556" height="506">
+          </a>
+          </div>
+
+          <h5>Log local variables</h5>
+          <p>See <a href="chapter8.shtml#LogLocalVariables">Chapter 8 - Debugging local variables</a> for details.</p>
+
+          <h5>Logix</h5>
+          <p>LogixNG has an action called Logix that emulates how JMRI Logix works.
+          The action Logix has one expression and a number of boolean actions. A
+          boolean action is an action that takes a boolean value (true/false) and then
+          decides what to do. The action Logix was added mainly to support import of
+          JMRI Logix to LogixNG.</p>
+
+          <h5>Shutdown</h5>
+
+          <p>The ShutdownComputer action can either shutdown or restart the computer,
+          or shutdown or restart JMRI.</p>
+
+          <h5>Web browser</h5>
+          <p>The web browser action opens a web page in the web browser.</p>
+
+        <a id="digital_boolean_action_common"></a>
+        <h3>Digital boolean action :: Common</h3>
+
+          <p>To make import from Logix to LogixNG easier, LogixNG has a special
+          action, Logix, that works similar to a Conditional in Logix. The LogixNG
+          Logix action has a digital expression socket and a digital boolean
+          action socket. The usual setup in LogixNG is a Logix action with a Many
+          child with a number of OnChange children.</p>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/digital_boolean_action_common.png">
+          <img src="images/chapter5/digital_boolean_action_common.png"
+          alt="Chapter 5 digital boolean action common list" width="184" height="152">
+          </a>
+          </div>
+
+          <h5>Many</h5>
+          <p>The Many action is used together with the Logix action to let the Logix
+          action have more than one action child.</p>
+
+          <h5>On change</h5>
+          <p>This action is used together with the LogixNG Logix action and gives you
+          the option to decide if the child action should be executed.  The options are:</p>
+
+          <ul>
+            <li>On change to true</li>
+            <li>On change to false</li>
+            <li>On change</li>
+          </ul>
+
+        <a id="analog_action_item"></a>
+        <h3>Analog action :: Item</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/analog_action_item.png">
+          <img src="images/chapter5/analog_action_item.png"
+          alt="Chapter 5 analog action item list" width="141" height="44">
+          </a>
+          </div>
+
+          <h5>Light intensity</h5>
+          <p>Sets the intensity of the selected variable light to an analog value.</p>
+
+          <h5>Memory</h5>
+          <p>Sets a memory to an analog value.</p>
+
+        <a id="analog_action_common"></a>
+        <h3>Analog action :: Common</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/analog_action_common.png">
+          <img src="images/chapter5/analog_action_common.png"
+          alt="Chapter 5 analog action common list" width="119" height="26">
+          </a>
+          </div>
+
+          <h5>Many</h5>
+          <p>Sets the value of many analog actions.</p>
+
+        <a id="string_action_item"></a>
+        <h3>String action :: Item</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/string_action_item.png">
+          <img src="images/chapter5/string_action_item.png"
+          alt="Chapter 5 string action item list" width="119" height="44">
+          </a>
+          </div>
+
+          <h5>Memory</h5>
+          <p>Sets a memory to a string value.</p>
+
+          <h5>StringIO</h5>
+
+          <p>The StringIO sets the string of a StringIO. There is currently one StringIO
+          that can be used with this action: The LocoNet "LCThrottles" StringIO that sends
+          a message to the LocoNet throttles.</p>
+
+        <a id="string_action_common"></a>
+        <h3>String action :: Common</h3>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/string_action_common.png">
+          <img src="images/chapter5/string_action_common.png"
+          alt="Chapter 5 string action common list" width="119" height="26">
+          </a>
+          </div>
+
+          <h5>Many</h5>
+          <p>Sets the value of many string actions.</p>
+
       <hr>
-      <p><a href="chapter6.shtml">Chapter 6 - Expression Items</a></p>
+      <p><a href="chapter6.shtml">Chapter 6 - Expression Descriptions</a></p>
       <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
