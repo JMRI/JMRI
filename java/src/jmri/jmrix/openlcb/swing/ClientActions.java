@@ -79,7 +79,7 @@ public class ClientActions {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
-                                    .provideSensor("MS" + mevt1.getText() + ";" + mevt2.getText());
+                                    .provideSensor(/*"MS" + */mevt1.getText() + ";" + mevt2.getText());
                             if (mdesc.getText().length() > 0) {
                                 sensor.setUserName(mdesc.getText());
                             }
@@ -97,7 +97,7 @@ public class ClientActions {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
-                                    .provideTurnout("MT" + mevt1.getText() + ";" + mevt2.getText());
+                                    .provideTurnout(/*"MT" + */mevt1.getText() + ";" + mevt2.getText());
                             if (mdesc.getText().length() > 0) {
                                 turnout.setUserName(mdesc.getText());
                             }
