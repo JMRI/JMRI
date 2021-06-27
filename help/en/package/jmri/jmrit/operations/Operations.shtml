@@ -717,20 +717,22 @@
    <p>
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
-    this document that covers that window's capabilities. Detailed step by step <a
-     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
-    also available on the JMRI.org site.
+    this document that covers that window's capabilities. Many of the OperationsPro&trade; buttons
+    and controls have popup tool tips, just hover your mouse pointer over the button to see the tool
+    tip. Detailed step by step <a href="https://www.jmri.org/manual/howtooperations/">JMRI
+     Operations How-To Instructions</a> are also available on the JMRI.org site.
    </p>
 
    <p>
     Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which is
     part of the Groups.io. Another good source for help is a series of articles written by David
     Haynes <a href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
-     http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. There's also an
-    excellent YouTube video by <a href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert J
-     Thomas Introduction to JMRI OPs For A Small Layout.</a> And finally under the "Tools" item on the
-    menu bar, you will find many useful functions, like the ability to print the contents of the
-    window.
+     http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. You can also view two
+    excellent NMRA YouTube videos by <a href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert
+     J Thomas Introduction to JMRI OPs For A Small Layout</a> and <a
+     href="https://www.youtube.com/watch?v=krhyvrhrxv4">Steve Todd - JMRI Operations with No
+     Paper.</a> And finally under the "Tools" item on the menu bar, you will find many useful functions,
+    like the ability to print the contents of the window.
    </p>
 
    <a name="BritishRailways" id="BritishRailways"></a>
@@ -1285,12 +1287,17 @@
    <h3>Custom Manifests and Switch Lists</h3>
 
    <h4>Generate CSV Manifests</h4>
-   If you want to create your own <a href="#SetupExcelProgram">Custom Manifest</a> using a comma
-   separated values (.csv) file, select this option. You can use a program like Excel to create a
-   Manifest to your liking. You can find the Manifest files in the operations directory in a
-   directory called "csvManifests". Each line of the file starts with a two to five letter code,
-   followed by the code's description, and then any parameters associated with the code. Here's a
-   list of the current codes and descriptions:
+   If you want to create your own <a href="#SetupExcelProgram">Custom
+    Manifest</a> using a comma separated values (.csv) file, select this option. You can use a
+   program like Excel to create a Manifest to your liking. There's also a Java based program written
+   by Tim Mann called
+   <a href="https://mrslamf.com/">Model Railroad Switch List and Manifest Formatter</a> that will
+   create custom Manifests and switch lists for you using the CSV files. 
+   
+   <p>You can find the CSV Manifest files created by OperationsPro&trade; in the
+   operations directory in a directory called "csvManifests". Each line of the file starts with a
+   two to five letter code, followed by the code's description, and then any parameters associated
+   with the code. Here's a list of the current codes and descriptions:</p>
 
    <table>
     <tr>

@@ -95,6 +95,7 @@ public class Xml {
     static final String USE12HR_FORMAT = "use12hrFormat"; // NOI18N
     static final String PRINT_VALID = "printValid"; // NOI18N
     static final String SORT_BY_TRACK = "sortByTrack"; // NOI18N
+    static final String PRINT_PAGE_HEADER = "printPageHeader"; // NOI18N
     static final String PRINT_HEADERS = "printHeaders"; // NOI18N
     static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
     static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
