@@ -302,7 +302,7 @@ Maintainers, please set the (next series) milestone on pulls from now on, as tha
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/4.23.8/)
 
-If you're developing any additional (post-4.23.8) changes that you want in the JMRI 4.22 production release, please start from this branch, i.e. do `git checkout -b release-4.23.8` to start your work.
+If you're developing any additional (post-4.23.8) changes that you want in the JMRI 4.24 production release, please start from this branch, i.e. do `git checkout -b release-4.23.8` to start your work.
 ```
 
 - Pull back to make sure your repository is fully up to date
