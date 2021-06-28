@@ -5118,6 +5118,8 @@
 
 <mapID target="html.tools.signaling.ldt.output1_html_m55495bcc" url="html/tools/signaling/ldt/output1_html_m55495bcc.png"/>
 
+<mapID target="html.tools.logixng.reference.images.chapter6.string_expression_common" url="html/tools/logixng/reference/images/chapter6/string_expression_common.png"/>
+
 <mapID target="manual.DecoderPro3.images.arrow" url="manual/DecoderPro3/images/arrow.gif"/>
 
 <mapID target="images.popup" url="images/popup.gif"/>
@@ -5132,11 +5134,17 @@
 
 <mapID target="html.tools.signaling.ldt.output4_html_71c5a86b" url="html/tools/signaling/ldt/output4_html_71c5a86b.png"/>
 
+<mapID target="html.tools.logixng.reference.images.chapter5.digital_action_display" url="html/tools/logixng/reference/images/chapter5/digital_action_display.png"/>
+
 <mapID target="html.tools.signaling.ldt.output1_html_m5bfb00d" url="html/tools/signaling/ldt/output1_html_m5bfb00d.png"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter5.analog_action_common" url="html/tools/logixng/reference/images/chapter5/analog_action_common.png"/>
 
 <mapID target="html.tools.signaling.ldt.output1_html_4a835f8c" url="html/tools/signaling/ldt/output1_html_4a835f8c.png"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.images.arrow" url="manual/JMRI_OPS_UsersGuide/images/arrow.gif"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter6.analog_expression_common" url="html/tools/logixng/reference/images/chapter6/analog_expression_common.png"/>
 
 <mapID target="manual.DecoderPro3.images.btn_lanch_throttle" url="manual/DecoderPro3/images/btn_lanch_throttle.png"/>
 
@@ -5163,6 +5171,8 @@
 <mapID target="html.tools.throttle.images.spacer" url="html/tools/throttle/images/spacer.gif"/>
 
 <mapID target="images.tracksegments.WhiteTO" url="images/tracksegments/WhiteTO.gif"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter6.digital_expression_loconet" url="html/tools/logixng/reference/images/chapter6/digital_expression_loconet.png"/>
 
 <mapID target="images.tracksegments.TranTOc" url="images/tracksegments/TranTOc.gif"/>
 
@@ -5215,5 +5225,7 @@
 <mapID target="html.tools.signaling.ldt.output6_html_6f691e17" url="html/tools/signaling/ldt/output6_html_6f691e17.png"/>
 
 <mapID target="manual.DecoderPro3.images.btn_throttle_labels" url="manual/DecoderPro3/images/btn_throttle_labels.png"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter5.string_action_common" url="html/tools/logixng/reference/images/chapter5/string_action_common.png"/>
 
 </map>
