@@ -12,11 +12,11 @@ import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -72,7 +72,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -84,7 +84,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
