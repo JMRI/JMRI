@@ -29,6 +29,7 @@ public class ConditionalNGDebuggerTest {
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
         ConditionalNGDebugger t = new ConditionalNGDebugger(conditionalNG);
         Assert.assertNotNull("not null", t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
