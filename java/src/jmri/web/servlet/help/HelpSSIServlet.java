@@ -47,7 +47,7 @@ public class HelpSSIServlet extends HttpServlet {
         Pattern pattern = Pattern.compile(serverSideIncludePattern);
         Matcher matcher = pattern.matcher(content);
         content = matcher.replaceAll((MatchResult t) -> {
-            System.out.format("Group: %s%n", t.group(1));
+//            System.out.format("Group: %s%n", t.group(1));
             try {
                 return readAndParseFile("web/" + t.group(1));
             } catch (IOException ex) {
@@ -59,17 +59,17 @@ public class HelpSSIServlet extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.format("HelpServlet: %s%n", request.getRequestURI());
+//        System.out.format("HelpServlet: %s%n", request.getRequestURI());
         
         if (!request.getRequestURI().endsWith(".shtml")) {
             String newUrl = request.getRequestURI().replaceFirst("/help2/", "/help/");
-            System.out.format("newUrl: %s%n", newUrl);
+//            System.out.format("newUrl: %s%n", newUrl);
             response.sendRedirect(newUrl);
         }
         
         String fileName =
                 request.getRequestURI().replaceFirst("/help2/", "/help/");
-        System.out.format("HelpServlet: %s%n", fileName);
+//        System.out.format("HelpServlet: %s%n", fileName);
         
         String content = readAndParseFile(fileName);
         

@@ -103,17 +103,17 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
                 // Load all path handlers
                 ServiceLoader.load(WebServerConfiguration.class).forEach(configuration -> {
-                    System.out.format("%n%nWebServerConfiguration:%n");
-                    for (java.util.Map.Entry<String, String> entry : configuration.getFilePaths().entrySet()) {
-                        System.out.format("    getFilePaths: %s, %s%n", entry.getKey(), entry.getValue());
-                    }
-                    for (java.util.Map.Entry<String, String> entry : configuration.getRedirectedPaths().entrySet()) {
-                        System.out.format("    getRedirectedPaths: %s, %s%n", entry.getKey(), entry.getValue());
-                    }
-                    for (String path : configuration.getForbiddenPaths()) {
-                        System.out.format("    getForbiddenPaths: %s%n", path);
-                    }
-                    System.out.format("%n%n%n");
+//                    System.out.format("%n%nWebServerConfiguration:%n");
+//                    for (java.util.Map.Entry<String, String> entry : configuration.getFilePaths().entrySet()) {
+//                        System.out.format("    getFilePaths: %s, %s%n", entry.getKey(), entry.getValue());
+//                    }
+//                    for (java.util.Map.Entry<String, String> entry : configuration.getRedirectedPaths().entrySet()) {
+//                        System.out.format("    getRedirectedPaths: %s, %s%n", entry.getKey(), entry.getValue());
+//                    }
+//                    for (String path : configuration.getForbiddenPaths()) {
+//                        System.out.format("    getForbiddenPaths: %s%n", path);
+//                    }
+//                    System.out.format("%n%n%n");
                     configuration.getFilePaths().entrySet()
                             .forEach(resource -> this.registerResource(resource.getKey(), resource.getValue()));
                     configuration.getRedirectedPaths().entrySet()
