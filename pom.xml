@@ -653,6 +653,19 @@
                     <quiet>true</quiet>
                     <splitindex>true</splitindex>
                     <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin-${project.name}</additionalJOption>
+
+                    <!-- Javadoc for Java 11 _requires_ JMRI to be in its own module.                                             -->
+                    <!-- https://stackoverflow.com/questions/58836862/jdk-11-and-javadoc/58914302#58914302                        -->
+                    <!--                                                                                                          -->
+                    <!-- javadoc produces links to packages you use, e.g. to classes documented in .../javase/11/docs/api.        -->
+                    <!-- While your comments are in an unnamed module, the targets are not, and javadoc can't combine those two.  -->
+                    <!-- It produces either a package-list or an element-list file, so you can't mix unnamed modules (packages)   -->
+                    <!-- with named modules.                                                                                      -->
+                    <!-- I didn't find a way to limit the links that javadoc tries to produce; so you may have to use modules     -->
+                    <!-- for your own project. This seems ridiculous to me, just to make javadoc happy. I guess this is just      -->
+                    <!-- one of the reasons that so many people stick to Java 8.                                                  -->
+                    <detectJavaApiLink>false</detectJavaApiLink>
+
                     <tags>
                         <tag>
                             <!-- disable output of custom @navassoc tag - used for UML image generation -->
