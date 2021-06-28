@@ -73,7 +73,7 @@ public class BuildHelpStubFilesTest {
     }
     
     private void buildIndex() throws JDOMException, IOException {
-        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/Map.jhm");
+        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/jmri_map.xml");
         mapJhmWriter = new PrintWriter(fileWriter);
         
         mapJhmWriter.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
