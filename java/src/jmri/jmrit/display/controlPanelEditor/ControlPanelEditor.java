@@ -207,6 +207,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setMenuAcceleratorKey(mi, KeyEvent.VK_T);
     }
 
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private void setMenuAcceleratorKey (JMenuItem mi,  int key) {
         if (SystemType.isMacOSX()) {
             mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.META_MASK));

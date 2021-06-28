@@ -37,10 +37,12 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         {0,KeyEvent.VK_HOME}
     };
     // moving through running throttle frames
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private int[][] nextRunThrottleFrameKeys = {
         {KeyEvent.CTRL_MASK,KeyEvent.VK_END}
     };
     private int[][] prevRunThrottleFrameKeys = {
+    @SuppressWarnings("deprecation")    // Java 11 migration
         {KeyEvent.CTRL_MASK,KeyEvent.VK_HOME}
     };      
     
@@ -91,16 +93,19 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         {0,KeyEvent.VK_SUBTRACT}, // numpad -;
         {0,KeyEvent.VK_RIGHT}
     };
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private int[][] accelerateMoreKeys = {
         {0,KeyEvent.VK_PAGE_UP},
         {KeyEvent.CTRL_MASK,KeyEvent.VK_LEFT}
     };
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private int[][] decelerateMoreKeys = {
         {0,KeyEvent.VK_PAGE_DOWN},
         {KeyEvent.CTRL_MASK,KeyEvent.VK_RIGHT}
     };    
     
     // function buttons
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private int[][][] functionsKeys = { 
         {{0,KeyEvent.VK_NUMPAD0}}, // F0
         {{0,KeyEvent.VK_F1},{0,KeyEvent.VK_NUMPAD1}}, // F1
