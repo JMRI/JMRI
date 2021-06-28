@@ -95,7 +95,14 @@ public class HelpUtil {
 
     public static void displayHelpRef(String ref) {
         HelpUtilPreferences preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
-        String file = "help/en/" + ref.replace(".", "/") + ".shtml";
+
+        String tempFile = "help/en/" + ref.replace(".", "/");
+        String[] fileParts = tempFile.split("_", 2);
+        String file = fileParts[0] + ".shtml";
+        if (fileParts.length > 1) {
+            file = file + "#" + fileParts[1];
+        }
+
         String url;
         if (preferences.getOpenHelpOnline()) {
             url = "https://www.jmri.org/" + file;
