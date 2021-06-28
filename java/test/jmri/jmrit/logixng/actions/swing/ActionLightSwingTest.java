@@ -74,7 +74,8 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
 
     // The minimal setup for log4J
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InterruptedException {
+        Thread.sleep(5000);
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();

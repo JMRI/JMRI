@@ -23,7 +23,6 @@ public class ConditionalNGDebuggerTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
                 .createLogixNG("A logixNG with an empty conditionlNG");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
@@ -34,7 +33,8 @@ public class ConditionalNGDebuggerTest {
 
     // The minimal setup for log4J
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InterruptedException {
+        Thread.sleep(5000);
         JUnitUtil.setUp();
     }
 
