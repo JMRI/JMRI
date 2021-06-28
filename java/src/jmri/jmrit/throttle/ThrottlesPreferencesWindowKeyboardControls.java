@@ -41,8 +41,8 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
     private int[][] nextRunThrottleFrameKeys = {
         {KeyEvent.CTRL_MASK,KeyEvent.VK_END}
     };
-    private int[][] prevRunThrottleFrameKeys = {
     @SuppressWarnings("deprecation")    // Java 11 migration
+    private int[][] prevRunThrottleFrameKeys = {
         {KeyEvent.CTRL_MASK,KeyEvent.VK_HOME}
     };      
     
