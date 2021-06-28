@@ -19,10 +19,13 @@ public class SwingConfiguratorInterfaceTestBase {
             ConditionalNG conditionalNG,
             String title1, String title2, int row) {
         
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         ConditionalNGEditor treeEdit = new ConditionalNGEditor(conditionalNG);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         treeEdit.initComponents();
-        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         treeEdit.setVisible(true);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         
         JFrameOperator treeFrame = new JFrameOperator(title1);
         JTreeOperator jto = new JTreeOperator(treeFrame);
