@@ -2,6 +2,7 @@ package jmri.util;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.*;
@@ -104,7 +105,17 @@ public class HelpUtil {
             String port = Integer.toString(webServerPreferences.getPort());
             url = "http://localhost:"+port+"/" + file;
         } else {    // Assume open help on file if no other option is selected
-            url = "file://" + FileUtil.getProgramPath().replace("\\", "/") + "help/en/local/stub/" + ref + ".html";
+            String fileName = FileUtil.getProgramPath().replace("\\", "/") + "help/en/local/stub/" + ref + ".html";
+            File f = new File(fileName);
+            if (!f.exists()) {
+                log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
+                JOptionPane.showMessageDialog(null,
+                        String.format("The help reference \"%s\" is not found", ref),
+                        "Help file not found",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            url = "file://" + fileName;
         }
         try {
             jmri.util.HelpUtil.openWebPage(url);
