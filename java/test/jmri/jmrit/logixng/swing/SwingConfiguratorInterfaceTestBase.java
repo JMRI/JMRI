@@ -20,6 +20,7 @@ public class SwingConfiguratorInterfaceTestBase {
             String title1, String title2, int row) {
         
         ConditionalNGEditor treeEdit = new ConditionalNGEditor(conditionalNG);
+        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         treeEdit.initComponents();
         treeEdit.setVisible(true);
         

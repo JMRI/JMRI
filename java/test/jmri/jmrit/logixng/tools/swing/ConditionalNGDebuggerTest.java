@@ -34,7 +34,6 @@ public class ConditionalNGDebuggerTest {
     // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws InterruptedException {
-        Thread.sleep(5000);
         JUnitUtil.setUp();
     }
 
