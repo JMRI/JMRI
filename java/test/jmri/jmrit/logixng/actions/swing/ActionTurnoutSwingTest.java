@@ -17,6 +17,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.*;
 
@@ -45,6 +46,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
             null != new ActionTurnoutSwing().getConfigPanel(new ActionTurnout("IQDA1", null), new JPanel()));
     }
 
+    @Disabled("Doesn't work on Windows CI on Java 11")
     @Test
     public void testDialogUseExistingTurnout() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
