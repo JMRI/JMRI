@@ -186,8 +186,8 @@
                         <version>3.8.1</version>
                         <configuration>
                             <compilerId>eclipse</compilerId>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <source>11</source>
+                            <target>11</target>
                             <compilerArgs>
                                 <properties>${basedir}/java/ecj.warning.options-ci</properties>
                                 <arg>-sourcepath</arg>
@@ -706,7 +706,7 @@
                 ]]>
                     </bottom>
                     <links>
-                        <link>http://docs.oracle.com/javase/8/docs/api/</link>
+                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
