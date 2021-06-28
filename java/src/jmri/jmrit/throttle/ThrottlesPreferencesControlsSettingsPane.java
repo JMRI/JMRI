@@ -447,6 +447,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         }
     }
     
+    @SuppressWarnings("deprecation")    // Java 11 migration
     final private class ShortCutTextField extends JTextField {
         ShortCutsField shortCutsField;
         
@@ -469,6 +470,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
             shortCutsField = scf;
             addKeyListener(new KeyAdapter() {
                     @Override
+                    @SuppressWarnings("deprecation")    // Java 11 migration
                     public void keyReleased(KeyEvent e){
                         int[] values = new int[2];
                         values[0] = e.getModifiers();

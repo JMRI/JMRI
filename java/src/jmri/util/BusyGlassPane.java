@@ -103,6 +103,7 @@ public class BusyGlassPane extends JComponent {
             inDrag = false;
         }
 
+        @SuppressWarnings("deprecation")    // Java 11 migration
         private void redispatchMouseEvent(MouseEvent e) {
             boolean inButton = false;
             Point glassPanePoint = e.getPoint();

@@ -43,6 +43,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
 
           
     @Override
+    @SuppressWarnings("deprecation")    // Java 11 migration
     public void keyPressed(KeyEvent e) {
         log.debug("Key pressed: "+e.getKeyCode()+" / modifier: "+e.getModifiers()+" / ext. key code: "+e.getExtendedKeyCode()+" / location: "+e.getKeyLocation());               
         // Throttle commands
@@ -78,6 +79,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     }
 
     @Override
+    @SuppressWarnings("deprecation")    // Java 11 migration
     public void keyReleased(KeyEvent e) {
         log.debug("Key pressed: "+e.getKeyCode()+" / modifier: "+e.getModifiers()+" / ext. key code: "+e.getExtendedKeyCode()+" / location: "+e.getKeyLocation());
         // Throttle commands
@@ -163,6 +165,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
         }                
     }
     
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private boolean match(KeyEvent e, int[][] keys) {
         for (int[] key : keys) {
             if ((e.getModifiers() == key[0]) && (e.getExtendedKeyCode() == key[1])) {
