@@ -792,6 +792,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpStubFilesTest" value="false"/><!-- skip BuildHelpStubFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
@@ -828,6 +829,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpStubFilesTest" value="false"/><!-- skip BuildHelpStubFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
@@ -1440,6 +1442,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpStubFilesTest" value="true"/><!-- skip BuildHelpStubFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1530,6 +1533,7 @@
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
+                    <sysproperty key="jmri.skipBuildHelpStubFilesTest" value="true"/><!-- skip BuildHelpStubFilesTest test -->
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
                     <jvmarg value="-Xmx1536m"/>
@@ -1583,6 +1587,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpStubFilesTest" value="true"/><!-- skip BuildHelpStubFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
