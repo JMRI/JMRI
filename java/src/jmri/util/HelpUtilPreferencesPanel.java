@@ -21,10 +21,10 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
     
     private final HelpUtilPreferences _preferences;
     
-    JRadioButton _openHelpOnlineRadioButton;
     JRadioButton _openHelpOnFileRadioButton;
+    JRadioButton _openHelpOnlineRadioButton;
     JRadioButton _openHelpOnJMRIWebServerRadioButton;
-    ButtonGroup _openHelpBbuttonGroup;
+    ButtonGroup _openHelpButtonGroup;
     
     public HelpUtilPreferencesPanel() {
         _preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
@@ -33,18 +33,7 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
 
     private void initGUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//        add(new JTitledSeparator(Bundle.getMessage("TitleStartupSettingsPanel")));
         add(getHelpPanel());
-//        add(new JTitledSeparator(Bundle.getMessage("TitleTimeDiagramColorsPanel")));
-//        add(getTimeDiagramColorsPanel());
-//        add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
-//        add(networkPanel());
-//        add(new JTitledSeparator(Bundle.getMessage("TitleControllersPanel")));
-//        add(allowedControllers());
-        
-//        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//        add(new JTitledSeparator(Bundle.getMessage("TitleRailroadNamePreferences")));
-//        add(getLogixNGPanel());
     }
 
     /**
@@ -55,8 +44,8 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
      */
     private boolean setValues() {
         boolean didSet = true;
-        _preferences.setOpenHelpOnline(_openHelpOnlineRadioButton.isSelected());
         _preferences.setOpenHelpOnFile(_openHelpOnFileRadioButton.isSelected());
+        _preferences.setOpenHelpOnline(_openHelpOnlineRadioButton.isSelected());
         _preferences.setOpenHelpOnJMRIWebServer(_openHelpOnJMRIWebServerRadioButton.isSelected());
         return didSet;
     }
@@ -64,28 +53,28 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
     private JPanel getHelpPanel() {
         JPanel panel = new JPanel();
 
-        _openHelpBbuttonGroup = new ButtonGroup();
-
-        _openHelpOnlineRadioButton = new JRadioButton(Bundle.getMessage("Help_LabelOpenHelpOnline"));
-        _openHelpOnlineRadioButton.setToolTipText(Bundle.getMessage("Help_ToolTipLabelOpenHelpOnline"));
-        _openHelpBbuttonGroup.add(_openHelpOnlineRadioButton);
+        _openHelpButtonGroup = new ButtonGroup();
 
         _openHelpOnFileRadioButton = new JRadioButton(Bundle.getMessage("Help_LabelOpenHelpOnFile"));
         _openHelpOnFileRadioButton.setToolTipText(Bundle.getMessage("Help_ToolTipLabelOpenHelpOnFile"));
-        _openHelpBbuttonGroup.add(_openHelpOnFileRadioButton);
+        _openHelpButtonGroup.add(_openHelpOnFileRadioButton);
+
+        _openHelpOnlineRadioButton = new JRadioButton(Bundle.getMessage("Help_LabelOpenHelpOnline"));
+        _openHelpOnlineRadioButton.setToolTipText(Bundle.getMessage("Help_ToolTipLabelOpenHelpOnline"));
+        _openHelpButtonGroup.add(_openHelpOnlineRadioButton);
 
         _openHelpOnJMRIWebServerRadioButton = new JRadioButton(Bundle.getMessage("Help_LabelOpenHelpOnJMRIWebServer"));
         _openHelpOnJMRIWebServerRadioButton.setToolTipText(Bundle.getMessage("Help_ToolTipLabelOpenHelpOnJMRIWebServer"));
-        _openHelpBbuttonGroup.add(_openHelpOnJMRIWebServerRadioButton);
+        _openHelpButtonGroup.add(_openHelpOnJMRIWebServerRadioButton);
 
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
         
-        gridPanel.add(_openHelpOnlineRadioButton);
         gridPanel.add(_openHelpOnFileRadioButton);
+        gridPanel.add(_openHelpOnlineRadioButton);
         gridPanel.add(_openHelpOnJMRIWebServerRadioButton);
         
-        _openHelpOnlineRadioButton.setSelected(_preferences.getOpenHelpOnline());
         _openHelpOnFileRadioButton.setSelected(_preferences.getOpenHelpOnFile());
+        _openHelpOnlineRadioButton.setSelected(_preferences.getOpenHelpOnline());
         _openHelpOnJMRIWebServerRadioButton.setSelected(_preferences.getOpenHelpOnJMRIWebServer());
         
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
