@@ -31,8 +31,11 @@ public class BuildHelpStubFilesTest {
     
     // The main() method is used when this class is run directly from ant
     static public void main(String[] args) throws IOException, JDOMException {
-        new BuildHelpStubFilesTest().buildIndex();
-        System.exit(0);
+        if (new BuildHelpStubFilesTest().buildIndex()) {
+            System.exit(0);
+        } else {
+            System.exit(1);
+        }
     }
     
     
@@ -58,11 +61,6 @@ public class BuildHelpStubFilesTest {
     
     private void parseElement(Element e, boolean generateStubFiles) throws IOException {
         String helpKey = e.getAttributeValue("target");
-        if ("tocitem".equals(e.getName())) {
-            if (generateStubFiles && (helpKey != null)) {
-                generateStubFile(helpKey);
-            }
-        }
         if (helpKey != null) _helpKeys.add(helpKey);
         
         for (Element child : e.getChildren()) {
@@ -82,7 +80,9 @@ public class BuildHelpStubFilesTest {
         }
     }
     
-    private void buildIndex() throws JDOMException, IOException {
+    private boolean buildIndex() throws JDOMException, IOException {
+        boolean result = true;
+        
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/jmri_map.xml");
         _mapJhmWriter = new PrintWriter(fileWriter);
         
@@ -105,6 +105,12 @@ public class BuildHelpStubFilesTest {
         parseElement(e, false);
         
         for (String helpKey : _helpKeys) {
+            try {
+                generateStubFile(helpKey);
+            } catch (IOException ex) {
+                System.out.format("Failed to create stub file for key \"%s\"", helpKey);
+                result = false;
+            }
             String expandedHelpKey = helpKey.replace(".", "/");
             int pos = expandedHelpKey.lastIndexOf('_');
             if (pos == -1) {
@@ -118,6 +124,8 @@ public class BuildHelpStubFilesTest {
         
         _mapJhmWriter.println("</map>");
         _mapJhmWriter.close();
+        
+        return result;
     }
 
 

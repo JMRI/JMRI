@@ -1377,6 +1377,7 @@
    <target name="buildhelpfiles" depends="tests, runtime-library-selection" description="build help files">
         <java classname="jmri.util.BuildHelpStubFilesTest"
           dir="."
+          failonerror="yes"
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
