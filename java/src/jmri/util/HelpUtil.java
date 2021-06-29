@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.web.server.WebServerPreferences;
 
 /**
@@ -94,9 +95,15 @@ public class HelpUtil {
     }
 
     public static void displayHelpRef(String ref) {
+        // We only have English (en) and French (fr) help files.
+        Boolean isFrench = "fr".equals(
+                InstanceManager.getDefault(
+                        GuiLafPreferencesManager.class).getLocale().getLanguage());
+        String localeStr = isFrench ? "fr" : "en";
+
         HelpUtilPreferences preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
 
-        String tempFile = "help/en/" + ref.replace(".", "/");
+        String tempFile = "help/" + localeStr + "/" + ref.replace(".", "/");
         String[] fileParts = tempFile.split("_", 2);
         String file = fileParts[0] + ".shtml";
         if (fileParts.length > 1) {
@@ -112,7 +119,7 @@ public class HelpUtil {
             String port = Integer.toString(webServerPreferences.getPort());
             url = "http://localhost:"+port+"/" + file;
         } else {    // Assume open help on file if no other option is selected
-            String fileName = FileUtil.getProgramPath().replace("\\", "/") + "help/" + Locale.getDefault().getLanguage() + "/local/stub/" + ref + ".html";
+            String fileName = FileUtil.getProgramPath().replace("\\", "/") + "help/" + localeStr + "/local/stub/" + ref + ".html";
             File f = new File(fileName);
             if (!f.exists()) {
                 log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
