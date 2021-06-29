@@ -112,7 +112,7 @@ public class HelpUtil {
             String port = Integer.toString(webServerPreferences.getPort());
             url = "http://localhost:"+port+"/" + file;
         } else {    // Assume open help on file if no other option is selected
-            String fileName = FileUtil.getProgramPath().replace("\\", "/") + "help/en/local/stub/" + ref + ".html";
+            String fileName = FileUtil.getProgramPath().replace("\\", "/") + "help/" + Locale.getDefault().getLanguage() + "/local/stub/" + ref + ".html";
             File f = new File(fileName);
             if (!f.exists()) {
                 log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
