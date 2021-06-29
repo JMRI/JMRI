@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -24,9 +25,10 @@ public class BuildHelpStubFilesTest {
     private PrintWriter mapJhmWriter;
     private final TreeSet<String> _helpKeys = new TreeSet<>();
     
+    
     // The main() method is used when this class is run directly from ant
     static public void main(String[] args) throws IOException, JDOMException {
-        new BuildHelpStubFilesTest().build();
+        new BuildHelpStubFilesTest().buildIndex();
         System.exit(0);
     }
     
@@ -101,14 +103,11 @@ public class BuildHelpStubFilesTest {
         mapJhmWriter.close();
     }
 
-    private void build() throws JDOMException, IOException {
-        buildIndex();
-    }
-
 
     @Test
     public void testBuildIndex() throws JDOMException, IOException {
-        build();
+        Assume.assumeFalse("Ignoring BuildHelpStubFilesTest", Boolean.getBoolean("jmri.skipBuildHelpStubFilesTest"));
+        buildIndex();
     }
 
     @BeforeEach
