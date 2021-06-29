@@ -13,11 +13,12 @@ import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -44,6 +45,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         Assert.assertNotNull("exists",panel);
     }
 
+    @Disabled("Doesn't work on Windows CI on Java 11")
     @Test
     public void testDialogUseExistingLight() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -88,7 +90,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -99,7 +101,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();

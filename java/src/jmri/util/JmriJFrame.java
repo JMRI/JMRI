@@ -494,6 +494,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /**
      * Adds a "Close Window" key shortcut to close window on op-W.
      */
+    @SuppressWarnings("deprecation")    // Java 11 migration
     void addWindowCloseShortCut() {
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
