@@ -1398,7 +1398,11 @@
             <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
-    </target>
+   </target>
+
+   <target name="buildhelp" depends="buildhelpfiles" description="build help files">
+       <ant dir="help/en/" />
+   </target>
 
    <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
         <java classname="apps.tests.AllTest"
