@@ -31,8 +31,9 @@ public class BuildHelpStubFilesTest {
     
     // The main() method is used when this class is run directly from ant
     static public void main(String[] args) throws IOException, JDOMException {
-        if (new BuildHelpStubFilesTest().buildIndex("en")
-                && new BuildHelpStubFilesTest().buildIndex("fr")) {
+        boolean enResult = new BuildHelpStubFilesTest().buildIndex("en");
+        boolean frResult = new BuildHelpStubFilesTest().buildIndex("fr");
+        if (enResult && frResult) {
             System.exit(0);
         } else {
             System.exit(1);
