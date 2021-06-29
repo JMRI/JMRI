@@ -3,6 +3,7 @@ package jmri.util;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.TreeSet;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -21,6 +22,7 @@ public class BuildHelpStubFilesTest {
     
     
     private PrintWriter mapJhmWriter;
+    private final TreeSet<String> _helpKeys = new TreeSet<>();
     
     // The main() method is used when this class is run directly from ant
     static public void main(String[] args) throws IOException, JDOMException {
@@ -56,17 +58,8 @@ public class BuildHelpStubFilesTest {
                 generateStubFile(helpKey);
             }
         }
-        if (helpKey != null) {
-            String expandedHelpKey = helpKey.replace(".", "/");
-            int pos = expandedHelpKey.lastIndexOf('_');
-            if (pos == -1) {
-                expandedHelpKey = expandedHelpKey + ".shtml";
-            } else {
-                expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
-                        + "#" + expandedHelpKey.substring(pos+1);
-            }
-            mapJhmWriter.format("<mapID target=\"%s\" url=\"%s\"/>%n", helpKey, expandedHelpKey);
-        }
+        if (helpKey != null) _helpKeys.add(helpKey);
+        
         for (Element child : e.getChildren()) {
             parseElement(child, generateStubFiles);
         }
@@ -91,6 +84,18 @@ public class BuildHelpStubFilesTest {
         e = xmlFile.rootFromName(FileUtil.getProgramPath() + "help/en/JmriHelp_enIndex.xml");
         Assert.assertNotNull(e);
         parseElement(e, false);
+        
+        for (String helpKey : _helpKeys) {
+            String expandedHelpKey = helpKey.replace(".", "/");
+            int pos = expandedHelpKey.lastIndexOf('_');
+            if (pos == -1) {
+                expandedHelpKey = expandedHelpKey + ".shtml";
+            } else {
+                expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
+                        + "#" + expandedHelpKey.substring(pos+1);
+            }
+            mapJhmWriter.format("<mapID target=\"%s\" url=\"%s\"/>%n", helpKey, expandedHelpKey);
+        }
         
         mapJhmWriter.println("</map>");
         mapJhmWriter.close();
