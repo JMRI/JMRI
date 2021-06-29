@@ -1402,6 +1402,7 @@
 
    <target name="buildhelp" depends="buildhelpfiles" description="build help files">
        <ant dir="help/en/" />
+       <ant dir="help/fr/" />
    </target>
 
    <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
