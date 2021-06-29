@@ -22,27 +22,23 @@ import org.junit.jupiter.api.*;
  */
 public class BuildHelpStubFilesTest {
 
-    private final String _stubFolder = FileUtil.getProgramPath() + "help/en/local/stub/";
-    private final String _template;
-    
+    private String _lang;
+    private String _stubFolder;
+    private String _template;
     private PrintWriter _mapJhmWriter;
-    private final TreeSet<String> _helpKeys = new TreeSet<>();
+    private TreeSet<String> _helpKeys;
     
     
     // The main() method is used when this class is run directly from ant
     static public void main(String[] args) throws IOException, JDOMException {
-        if (new BuildHelpStubFilesTest().buildIndex()) {
+        if (new BuildHelpStubFilesTest().buildIndex("en")
+                && new BuildHelpStubFilesTest().buildIndex("fr")) {
             System.exit(0);
         } else {
             System.exit(1);
         }
     }
     
-    
-    public BuildHelpStubFilesTest() throws IOException {
-        Path path = Path.of(FileUtil.getProgramPath() + "help/en/local/stub_template.html");
-        _template = Files.readString(path);
-    }
     
     private class XmlFile extends jmri.jmrit.XmlFile {
     }
@@ -52,19 +48,20 @@ public class BuildHelpStubFilesTest {
         if (Files.exists(path)) {
             System.out.format("The file for tag %s already exists%n", helpKey);
         }
-        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/stub/"+helpKey+".html");
+        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
+                + "help/" + _lang + "/local/stub/"+helpKey+".html");
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
             String contents = _template.replaceFirst("<!--HELP_KEY-->", helpKey);
             printWriter.print(contents);
         }
     }
     
-    private void parseElement(Element e, boolean generateStubFiles) throws IOException {
+    private void parseElement(Element e) throws IOException {
         String helpKey = e.getAttributeValue("target");
         if (helpKey != null) _helpKeys.add(helpKey);
         
         for (Element child : e.getChildren()) {
-            parseElement(child, generateStubFiles);
+            parseElement(child);
         }
     }
     
@@ -80,10 +77,18 @@ public class BuildHelpStubFilesTest {
         }
     }
     
-    private boolean buildIndex() throws JDOMException, IOException {
+    private boolean buildIndex(String lang) throws JDOMException, IOException {
         boolean result = true;
         
-        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/jmri_map.xml");
+        _lang = lang;
+        _stubFolder = FileUtil.getProgramPath() + "help/" + _lang + "/local/stub/";
+        
+        Path path = Path.of(FileUtil.getProgramPath() + "help/" + _lang + "/local/stub_template.html");
+        _template = Files.readString(path);
+        
+        _helpKeys = new TreeSet<>();
+        
+        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/" + _lang + "/local/jmri_map.xml");
         _mapJhmWriter = new PrintWriter(fileWriter);
         
         _mapJhmWriter.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
@@ -94,15 +99,17 @@ public class BuildHelpStubFilesTest {
         
         XmlFile xmlFile = new XmlFile();
         Assert.assertNotNull(xmlFile);
-        Element e = xmlFile.rootFromName(FileUtil.getProgramPath() + "help/en/JmriHelp_enTOC.xml");
+        Element e = xmlFile.rootFromName(FileUtil.getProgramPath()
+                + "help/" + _lang + "/JmriHelp_" + _lang + "TOC.xml");
         Assert.assertNotNull(e);
-        parseElement(e, true);
+        parseElement(e);
         
         xmlFile = new XmlFile();
         Assert.assertNotNull(xmlFile);
-        e = xmlFile.rootFromName(FileUtil.getProgramPath() + "help/en/JmriHelp_enIndex.xml");
+        e = xmlFile.rootFromName(FileUtil.getProgramPath()
+                + "help/" + _lang + "/JmriHelp_" + _lang + "Index.xml");
         Assert.assertNotNull(e);
-        parseElement(e, false);
+        parseElement(e);
         
         for (String helpKey : _helpKeys) {
             try {
@@ -132,7 +139,8 @@ public class BuildHelpStubFilesTest {
     @Test
     public void testBuildIndex() throws JDOMException, IOException {
         Assume.assumeFalse("Ignoring BuildHelpStubFilesTest", Boolean.getBoolean("jmri.skipBuildHelpStubFilesTest"));
-        buildIndex();
+        buildIndex("en");
+        buildIndex("fr");
     }
 
     @BeforeEach
