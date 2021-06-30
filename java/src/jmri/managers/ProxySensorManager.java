@@ -61,9 +61,12 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         return newNamedBean(systemName, userName);
     }
 
-    // null implementation to satisfy the SensorManager interface
+    /**
+     * Triggers #updateAll on all SensorManagers.
+     */
     @Override
     public void updateAll() {
+        getManagerList().forEach(m -> ((SensorManager) m).updateAll());
     }
 
     @Override
