@@ -66,23 +66,10 @@ public class BuildHelpStubFilesTest {
 //            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
             if ("a".equals(child.nodeName().toLowerCase())) {
                 String name = child.attributes().get("name");
-                if ((name != null) && name.isEmpty()) name = null;
-                String id = name;
-                
-//                String id = child.attributes().get("id");
-//                if ((id != null) && id.isEmpty()) id = null;
-                
-                if ((id != null) && (name != null) && !id.equals(name)) {
-//                    log.error(String.format("id \"%s\" and name \"%s\" differs in file: %s", id, name, helpKey));
-                    System.out.format("Error: id \"%s\" and name \"%s\" differs in file: %s%n", id, name, helpKey);
-//                    throw new RuntimeException(String.format("id \"%s\" and name \"%s\" differs in file: %s", id, name, helpKey));
-                }
-                if ((id == null) && (name != null)) id = name;
-                if (id != null) {
-                    String subHelpKey = helpKey+"_"+id;
+                if ((name != null) && !name.isEmpty()) {
+                    String subHelpKey = helpKey+"_"+name;
                     _htmlPagesHelpKeys.add(subHelpKey);
                     System.out.format("HelpKey: %s%n", subHelpKey);
-//                    System.out.format("File: %s, id: %s, tag: %s%n", helpKey, id, subHelpKey);
                 }
             }
             parseNode(helpKey, child, pad+"    ");
