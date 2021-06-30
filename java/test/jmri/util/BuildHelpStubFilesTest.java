@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.io.*;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
@@ -10,6 +11,8 @@ import java.util.stream.Stream;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jsoup.*;
+import org.jsoup.nodes.*;
 import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -27,6 +30,7 @@ public class BuildHelpStubFilesTest {
     private String _template;
     private PrintWriter _mapJhmWriter;
     private TreeSet<String> _helpKeys;
+    private TreeSet<String> _htmlPagesHelpKeys;
     
     
     // The main() method is used when this class is run directly from ant
@@ -55,6 +59,64 @@ public class BuildHelpStubFilesTest {
             String contents = _template.replaceFirst("<!--HELP_KEY-->", helpKey);
             printWriter.print(contents);
         }
+    }
+    
+    private void parseNode(String helpKey, Node node, String pad) {
+        for (Node child : node.childNodes()) {
+//            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
+//            if ("a".equals(child.nodeName().toLowerCase())) {
+                String name = child.attributes().get("name");
+                if ((name != null) && name.isEmpty()) name = null;
+                
+                String id = child.attributes().get("id");
+                if ((id != null) && id.isEmpty()) id = null;
+                
+                if ((id != null) && (name != null) && !id.equals(name)) {
+//                    log.error(String.format("id \"%s\" and name \"%s\" differs in file: %s", id, name, helpKey));
+                    System.out.format("Error: id \"%s\" and name \"%s\" differs in file: %s%n", id, name, helpKey);
+//                    throw new RuntimeException(String.format("id \"%s\" and name \"%s\" differs in file: %s", id, name, helpKey));
+                }
+                if ((id == null) && (name != null)) id = name;
+                if (id != null) {
+                    String subHelpKey = helpKey+"_"+id;
+                    _htmlPagesHelpKeys.add(subHelpKey);
+                    System.out.format("HelpKey: %s%n", subHelpKey);
+//                    System.out.format("File: %s, id: %s, tag: %s%n", helpKey, id, subHelpKey);
+                }
+//            }
+            parseNode(helpKey, child, pad+"    ");
+        }
+    }
+
+    private void searchHelpFolder(String rootFolder, String folder) throws IOException {
+        Path path = FileSystems.getDefault().getPath(folder);
+        Set<File> files = Stream.of(path.toFile().listFiles())
+                  .filter(file -> !file.isDirectory())
+                  .collect(Collectors.toSet());
+
+        for (File file : files) {
+            if (file.getName().endsWith(".shtml")) {
+                String fileName = file.getAbsolutePath().substring(rootFolder.length());
+                String helpKey = fileName.substring(0, fileName.indexOf(".shtml")).replace('\\', '.').replace('/', '.');
+                _htmlPagesHelpKeys.add(helpKey);
+                System.out.format("HelpKey: %s%n", helpKey);
+//                System.out.format("File: %s, tag: %s%n", fileName, helpKey);
+                Document doc = Jsoup.parse(file, "UTF-8");
+                
+                org.jsoup.nodes.Element body = doc.body();
+                parseNode(helpKey, body, "");
+            }
+        }
+
+        Set<String> folders = Stream.of(path.toFile().listFiles())
+                  .filter(file -> file.isDirectory())
+                  .map(File::getName)
+                  .collect(Collectors.toSet());
+
+        for (String aFolder : folders) {
+            searchHelpFolder(rootFolder, folder + aFolder + "/");
+        }
+
     }
     
     private void parseElement(Element e) throws IOException {
@@ -88,14 +150,12 @@ public class BuildHelpStubFilesTest {
         _template = Files.readString(path);
         
         _helpKeys = new TreeSet<>();
-        
-        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/" + _lang + "/local/jmri_map.xml");
-        _mapJhmWriter = new PrintWriter(fileWriter);
-        
-        _mapJhmWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        _mapJhmWriter.println("<map xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/help-map.xsd\">");
+        _htmlPagesHelpKeys = new TreeSet<>();
         
         removeStubFiles();
+        
+        String folder = FileUtil.getProgramPath() + "help/" + _lang + "/";
+        searchHelpFolder(folder, folder);
         
         XmlFile xmlFile = new XmlFile();
         Assert.assertNotNull(xmlFile);
@@ -111,13 +171,28 @@ public class BuildHelpStubFilesTest {
         Assert.assertNotNull(e);
         parseElement(e);
         
-        for (String helpKey : _helpKeys) {
+        TreeSet<String> _stubHelpKeys = new TreeSet<>();
+        _stubHelpKeys.addAll(_helpKeys);
+        _stubHelpKeys.addAll(_htmlPagesHelpKeys);
+        
+        // Generate the stub files
+        for (String helpKey : _stubHelpKeys) {
             try {
                 generateStubFile(helpKey);
             } catch (IOException ex) {
                 System.out.format("Failed to create stub file for key \"%s\"", helpKey);
                 result = false;
             }
+        }
+        
+        // Generate jmri_map.xml
+        FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/" + _lang + "/local/jmri_map.xml");
+        _mapJhmWriter = new PrintWriter(fileWriter);
+        
+        _mapJhmWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        _mapJhmWriter.println("<map xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/help-map.xsd\">");
+        
+        for (String helpKey : _helpKeys) {
             String expandedHelpKey = helpKey.replace(".", "/");
             int pos = expandedHelpKey.lastIndexOf('_');
             if (pos == -1) {
