@@ -124,8 +124,8 @@ public class HelpUtil {
             if (!f.exists()) {
                 log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
                 JOptionPane.showMessageDialog(null,
-                        String.format("The help reference \"%s\" is not found", ref),
-                        "Help file not found",
+                        Bundle.getMessage("HelpError_ReferenceNotFound", ref),
+                        Bundle.getMessage("HelpError_Title"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
