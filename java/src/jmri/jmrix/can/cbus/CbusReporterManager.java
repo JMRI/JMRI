@@ -42,7 +42,8 @@ public class CbusReporterManager extends AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("ReporterManager create new CbusReporter: {}", systemName);
         String addr = systemName.substring(getSystemNamePrefix().length());
         Reporter t = new CbusReporter(addr, getMemo());
