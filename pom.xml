@@ -1404,6 +1404,12 @@
             <version>1.2.1</version>
         </dependency>
         <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2</version>
