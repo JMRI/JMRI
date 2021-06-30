@@ -1311,7 +1311,9 @@
     <tr>
      <td>AH</td>
 
-     <td>Add Helpers</td>
+     <td><a href="#OptionalTrainRequirements">Add Helpers</a></td>
+     
+     <td></td>
     </tr>
 
     <tr>
@@ -1325,13 +1327,17 @@
     <tr>
      <td>CC</td>
 
-     <td>Change Caboose</td>
+     <td><a href="#OptionalTrainRequirements">Change Caboose</a></td>
+          
+     <td></td>
     </tr>
 
     <tr>
      <td>CL</td>
 
-     <td>Change Locos</td>
+     <td><a href="#OptionalTrainRequirements">Change Locos</a></td>
+          
+     <td></td>
     </tr>
 
     <tr>
@@ -1386,6 +1392,8 @@
      <td>NW</td>
 
      <td>No Work</td>
+          
+     <td></td>
     </tr>
 
     <tr>
@@ -1431,7 +1439,9 @@
     <tr>
      <td>RH</td>
 
-     <td>Remove Helpers</td>
+     <td><a href="#OptionalTrainRequirements">Remove Helpers</a></td>
+          
+     <td></td>
     </tr>
 
     <tr>
@@ -1477,7 +1487,7 @@
     <tr>
      <td>TKCB</td>
 
-     <td>Track Comment</td>
+     <td><a href="#TrackWorkComments">Track Comment</a> </td>
 
      <td>Comment</td>
     </tr>
@@ -1485,7 +1495,7 @@
     <tr>
      <td>TKCP</td>
 
-     <td>Track Comment Pick up</td>
+     <td><a href="#TrackWorkComments">Track Comment Pick Up</a></td>
 
      <td>Comment</td>
     </tr>
@@ -1493,7 +1503,7 @@
     <tr>
      <td>TKCS</td>
 
-     <td>Track Comment Set out</td>
+     <td><a href="#TrackWorkComments">Track Comment Set Out</a></td>
 
      <td>Comment</td>
     </tr>
@@ -1612,6 +1622,8 @@
      <td>SWL</td>
 
      <td>Switch List</td>
+          
+     <td></td>
     </tr>
 
     <tr>
@@ -1650,12 +1662,16 @@
      <td>NCPU</td>
 
      <td>No Car Pick Up</td>
+          
+     <td></td>
     </tr>
 
     <tr>
      <td>NCSO</td>
 
      <td>No Car Set Out</td>
+          
+     <td></td>
     </tr>
 
     <tr>
@@ -1678,12 +1694,16 @@
      <td>TIR</td>
 
      <td>Train En Route</td>
+          
+     <td></td>
     </tr>
 
     <tr>
      <td>TDONE</td>
 
      <td>Train has already serviced this location</td>
+          
+     <td></td>
     </tr>
 
     <tr>
@@ -1698,6 +1718,8 @@
      <td>END</td>
 
      <td>End Switch List</td>
+          
+     <td></td>
     </tr>
    </table>
 
@@ -4868,6 +4890,13 @@
 
      <td>The spur's <a href="#Schedules">schedule</a> does not allow the combination of the
       car's type, load, and road.
+     </td>
+    </tr>
+    
+        <tr>
+     <td>X (Division)</td>
+
+     <td>The car's <a href="#LocationDivision">division</a> and load will not allow set outs.
      </td>
     </tr>
    </table>

@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -107,6 +109,11 @@ public class XmlTest extends OperationsTestCase {
         t2.setReservationFactor(33);
         t2.setScheduleMode(Track.MATCH);
         t2.setScheduleCount(2);
+        
+        // test divisions
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division division = dm.newDivision("testDivisionName");
+        division.setComment("divisionComment");
 
         locationList = manager.getLocationsByIdList();
         Assert.assertEquals("New Location by Id 1", "Test Location 2", locationList.get(0).getName());
@@ -205,6 +212,8 @@ public class XmlTest extends OperationsTestCase {
         manager.dispose();
         // delete all schedules
         InstanceManager.getDefault(ScheduleManager.class).dispose();
+        // delete divisions
+        dm.dispose();
 
         ct.addName("Boxcar");
         ct.addName("boxCar");
@@ -216,6 +225,7 @@ public class XmlTest extends OperationsTestCase {
         manager = InstanceManager.getDefault(LocationManager.class);
         locationListByName = manager.getLocationsByNameList();
         Assert.assertEquals("Starting Number of Locations", 0, locationListByName.size());
+        Assert.assertEquals("Starting Number of Divisions", 0, dm.getNumberOfdivisions());
 
         // Need to force a re-read of the xml file.
         InstanceManager.getDefault(LocationManagerXml.class).readFile(
@@ -225,6 +235,7 @@ public class XmlTest extends OperationsTestCase {
         // check locations
         locationListByName = manager.getLocationsByNameList();
         Assert.assertEquals("Starting Number of Locations", 3, locationListByName.size());
+        Assert.assertEquals("Starting Number of Divisions", 1, dm.getNumberOfdivisions());
 
         for (int i = 0; i < locationListByName.size(); i++) {
             Location loc = locationListByName.get(i);
@@ -360,6 +371,10 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Item 3 count", 123, si3.getCount());
         Assert.assertEquals("Item 3 destination", "", si3.getDestinationName());
         Assert.assertEquals("Item 3 track", "", si3.getDestinationTrackName());
+        
+        // confirm division
+        Assert.assertEquals("Divsion Name", "testDivisionName", dm.getDivisionsByIdList().get(0).getName());
+        Assert.assertEquals("Divsion Comment", "divisionComment", dm.getDivisionsByIdList().get(0).getComment());
 
         // delete all locations
         manager.dispose();
