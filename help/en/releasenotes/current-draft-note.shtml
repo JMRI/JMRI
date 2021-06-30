@@ -86,7 +86,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>Fixed - Response Events are sometimes shown as normal Events in MERG CBUS Console ( from 4.13.4 ).</li>
             </ul>
 
         <h4>MQTT</h4>
