@@ -16,6 +16,8 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -34,6 +36,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;
+    public static final int MAX_BLOCKING_ORDER = 100;
     public static final boolean FORCE = true; // ignore length, type, etc. when setting car's track
     protected static final String DEFAULT_WEIGHT = "0";
 
@@ -63,6 +66,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected Train _train = null;
     protected RouteLocation _routeLocation = null;
     protected RouteLocation _routeDestination = null;
+    protected Division _division = null;
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
@@ -669,6 +673,32 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public String getDestinationTrackId() {
         if (_trackDestination != null) {
             return _trackDestination.getId();
+        }
+        return NONE;
+    }
+
+    public void setDivision(Division division) {
+        Division old = _division;
+        _division = division;
+        if (old != _division) {
+            setDirtyAndFirePropertyChange("homeDivisionChange", old, division);
+        }
+    }
+
+    public Division getDivision() {
+        return _division;
+    }
+
+    public String getDivisionName() {
+        if (getDivision() != null) {
+            return getDivision().getName();
+        }
+        return NONE;
+    }
+
+    public String getDivisionId() {
+        if (getDivision() != null) {
+            return getDivision().getId();
         }
         return NONE;
     }
@@ -1294,6 +1324,13 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         setDestination(destination, track, true); // force destination
 
+        if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+        }
+        // TODO remove the following 3 lines in 2022
+        if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+        }
         if ((a = e.getAttribute(Xml.MOVES)) != null) {
             try {
                 _moves = Integer.parseInt(a.getValue());
@@ -1398,6 +1435,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if (!getDestinationTrackId().equals(NONE)) {
             e.setAttribute(Xml.SEC_DESTINATION_ID, getDestinationTrackId());
+        }
+        if (!getDivisionId().equals(NONE)) {
+            e.setAttribute(Xml.DIVISION_ID, getDivisionId());
         }
         if (!getLastRouteId().equals(NONE)) {
             e.setAttribute(Xml.LAST_ROUTE_ID, getLastRouteId());

@@ -15,7 +15,7 @@ Scenario Outline: Web Panel requests
    | firefox | java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-4.xml | http://localhost:12080/panel/Layout/Layout%20Editor%20Test | Layout Editor Test \| My JMRI Railroad |
    | firefox | java/test/jmri/jmrit/display/layoutEditor/load/Decorations-4-19-6.xml | http://localhost:12080/panel/Layout/Decorations%20Testing | Decorations Testing \| My JMRI Railroad |
 
-	 @chrome
+   @chrome
    Examples: Chrome Panel Tests
    | browser | panel | panelURL | PageTitle |
    | chrome | java/test/jmri/jmrit/cabsignals/SimpleCabSignalTestPanel.xml | http://localhost:12080/panel/Layout/Cab%20Signal%20Test | Cab Signal Test \| My JMRI Railroad |

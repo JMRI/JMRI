@@ -1,6 +1,5 @@
 <!-- Local part of sidebar for tools/throttle -->
-    <dt><h3><a href="ThrottleTOC.shtml" title="Click to see Throttle Tool TOC">Throttles</a></h3>
-    </dt>
+    <dt><a href="ThrottleTOC.shtml" title="Click to see Throttle Tool TOC">Throttles</a></dt>
     <dd>
 		<ul>
 		  <li><a href="ThrottleMain.shtml" title="The Throttle tool">The Throttle Tool</a></li>
@@ -13,12 +12,12 @@
 		  <li><a href="ThrottlesPreferencesPane.shtml">Preferences</a><br>
 		  </li>
 		</ul>
-	
+
 		<ul>
 		  <li><a href="RostersMediaPane.shtml">Media and Function Labels</a></li>
 		  <li><a href="../scripting/Jynstruments.shtml">Jynstruments</a></li>
 		  <li><a href="HowToJMRIOrientedThrottle.shtml">Building a Throttle oriented JMRI</a></li>
 		</ul>
 	  </dd>
-    
+
     <!-- End of SidebarLocaPart.shtml -->

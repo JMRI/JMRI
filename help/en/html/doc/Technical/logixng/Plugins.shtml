@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>JMRI: LogixNG Documentation</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="keywords" content=
+  "logixng model railroad JMRI LogixNG PanelPro">
+
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <div id="container">
+    <!--#include virtual="/Header" -->
+
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+
+      <div id="mainContent">
+        <!-- Page Body -->
+
+        <h1>LogixNG - Plugins for LogixNG</h1>
+
+		<p style="color:yellow;background-color:red">LogixNG has gone thru big changes and the code for plugins is not up to date.</p>
+
+        <h2>Plugins for LogixNG</h2>
+
+		<p>JMRI supports extending JMRI in several ways by adding a jar file with classes to the
+		JMRI class path. But LogixNG is stored in the panel xml files and these are validated when
+		they are loaded, so when adding native expressions and actions, the logixng xml schema
+		must be updated.</p>
+
+		<p><a href="https://github.com/danielb987/JMRI_LogixNG_Plugins">JMRI_LogixNG_Plugins</a>
+		is an example project with some expression plugins and action plugins.
+		The project has <a href="https://danielb987.github.io/JMRI_LogixNG_Plugins.Documentation/javadoc/">Javadoc</a>.
+		The file
+		<a href="https://github.com/danielb987/JMRI_LogixNG_Plugins.Documentation/raw/master/docs/distribution/JMRI_LogixNG_Plugins.jar">JMRI_LogixNG_Plugins.jar</a>
+		is the current version of the plugin. The classes in JMRI_LogixNG_Plugins
+		are not considered useful but intended to demonstrate the possibilities
+		with LogixNG. For example, ExpressionBlink and ActionHideAndShowPanel
+		can be used to repeatedly hide and show a selected panel. It has no
+		prototypical usage but can be used to play a joke with a fellow model
+		railroader...
+
+		<h3>Implementing an expression or action plugin</h3>
+
+		<p>In order to be able to save the configuration of the plugin in the panel XML files,
+		the plugin saves and restores the configuration in a <strong>Map&lt;String, String&gt;</strong>.
+		The developer of the plugin decides on how to store its configuration in this map.</p>
+
+		<p>An expression or action that is a plugin must implement the
+		<strong>ExpressionPlugin</strong> or the <strong>ActionPlugin</strong>.
+		These interfaces has three additional methods.</p>
+
+		<p><strong>init()</strong></p>
+
+		<p>Initializes the plugin. This method is called after an instance of the plugin is
+		created if there exists a configuration. Note that this method is not called the
+		first time an instance has been created, before it has been configured by the
+		configurator.</p>
+
+		<p><strong>getConfig()</strong></p>
+
+		<p>Returns the configuration for this plugin to be stored in for example a panel file.</p>
+
+		<p><strong>getConfiguratorClassName()</strong></p>
+
+		<p>Returns the class name of the configurator class. In order to be able to use the
+		plugin in a headless environment, the plugin itself is recommended to not use any
+		swing code. This method is called then this plugin needs to be configurated and
+		a class is needed that can configure this plugin. That class needs to be in the same
+		jar file as this plugin and it needs to implement the <strong>PluginConfiguratorInterface</strong>.
+		One configurator class may be the configurator for many plugins.</p>
+
+		<h3>The PluginConfiguratorInterface interface</h3>
+
+		<p>A class that is able to configure one or many plugins is called a configurator.
+		It generates a <strong>JPanel</strong> with the controls that are needed to configure
+		the plugin.</p>
+
+		<p>The PluginConfiguratorInterface interface has these methods.</p>
+
+		<p><strong>getConfigPanel()</strong></p>
+
+		<p>Returns a <strong>JPanel</strong> that can configure this plugin.</p>
+
+		<p><strong>getConfigFromPanel()</strong></p>
+
+		<p>Returns the configuration for this plugin to be stored in for example a panel file.</p>
+
+		<h3>Plugin in the JMRI classpath</h3>
+
+		<p>JMRI can automaticly load plugins in the JMRI classpath. That is done by implementing
+		a <strong>LogixNGPluginFactory</strong> that can tell JMRI about the expressions or
+		actions and then mark it with the <a href="../plugins.shtml">@ServiceProvider</a> annotation.
+		A single factory can register many classes. The
+		<a href="https://github.com/danielb987/JMRI_LogixNG_Plugins">JMRI_LogixNG_Plugins</a>
+		has an example.
+
+        <!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div><!-- closes #container -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

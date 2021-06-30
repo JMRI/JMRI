@@ -232,7 +232,7 @@ public class LnPredefinedMetersTest {
     public void setUp() {
         JUnitUtil.setUp();
 
-        // This test requires a registred connection config since ProxyMeterManager
+        // This test requires a registered connection config since ProxyMeterManager
         // auto creates system meter managers using the connection configs.
         InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
         jmri.jmrix.NetworkPortAdapter pa = new jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter();

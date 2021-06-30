@@ -53,6 +53,10 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         control = new SprogTrafficController(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setSprogTrafficController(control);
 
+        options.put("NumSlots", // NOI18N
+                new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("NumSlotOptions")), // NOI18N
+                        new String[]{"16", "8", "32", "48", "64"}, true));
+
         options.put("OperatingMode", // NOI18N
                 new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("SprogSimOption")), // NOI18N
                         new String[]{Bundle.getMessage("SprogProgrammerTitle"),
@@ -122,9 +126,19 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         } else { // default, also used after Locale change
             operatingMode = SprogMode.OPS;
         }
-        this.getSystemConnectionMemo().setSprogMode(operatingMode); // first update mode in memo
-        this.getSystemConnectionMemo().configureCommandStation();   // CS only if in OPS mode, memo will take care of that
-        this.getSystemConnectionMemo().configureManagers();         // wait for mode to be correct
+        
+        String slots = getOptionState("NumSlots");
+        int numSlots;
+        try {
+            numSlots = Integer.parseInt(slots);
+        }
+        catch (NumberFormatException e) {
+            numSlots = 16;
+        }
+        
+        this.getSystemConnectionMemo().setSprogMode(operatingMode);         // first update mode in memo
+        this.getSystemConnectionMemo().configureCommandStation(numSlots);   // CS only if in OPS mode, memo will take care of that
+        this.getSystemConnectionMemo().configureManagers();                 // wait for mode to be correct
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
@@ -244,9 +258,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
-                if (log.isDebugEnabled() && r != null) {
-                    log.debug("Simulator Thread sent Reply: \"{}\"", r);
-                }
+                log.debug("Simulator Thread sent Reply: \"{}\"", r);
             }
         }
     }
@@ -293,7 +305,13 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             case 'C':
             case 'V':
                 log.debug("Read/Write CV detected");
-                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
+                reply = new SprogReply("= h" + msg.toString().substring(2) + "\n"); // echo CV value (hex)
+                break;
+
+            case 'D':
+            case 'U':
+                log.debug("Read/Write CV with hint detected");
+                reply = new SprogReply("= h" + msg.toString().substring(2) + "\n"); // echo CV hint value (hex)
                 break;
 
             case 'O':
@@ -323,7 +341,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case '?':
                 log.debug("Read_Sprog_Version detected");
-                String replyString = "\nSPROG II Ver 4.3\n";
+                String replyString = "\nSPROG II Ver 4.5\n";
                 reply = new SprogReply(replyString);
                 break;
 
@@ -335,6 +353,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             case 'S':
                 log.debug("getStatus detected");
                 reply = new SprogReply("OK\n");
+                break;
+
+            case ' ':
+                log.debug("null command detected");
+                reply = new SprogReply("\n");
                 break;
 
             default:
@@ -365,7 +388,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         for (int i = 0; i < len; i++) {
             try {
                 outpipe.writeByte((byte) r.getElement(i));
-                log.debug("{} of {} bytes written to outpipe", i + 1, len);
+                //log.debug("{} of {} bytes written to outpipe", i + 1, len);
                 if (pin.available() > 0) {
                     control.handleOneIncomingReply();
                 }

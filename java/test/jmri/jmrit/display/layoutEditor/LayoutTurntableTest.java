@@ -45,7 +45,7 @@ public class LayoutTurntableTest extends LayoutTrackTest {
             layoutEditor = new LayoutEditor();
             Assert.assertNotNull("LayoutEditor not null", layoutEditor);
 
-            lt = new LayoutTurntable("My Turntable", layoutEditor); // new Point2D.Double(50.0, 100.0), 
+            lt = new LayoutTurntable("My Turntable", layoutEditor); // new Point2D.Double(50.0, 100.0),
         }
     }
 
@@ -57,6 +57,7 @@ public class LayoutTurntableTest extends LayoutTrackTest {
         lt = null;
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

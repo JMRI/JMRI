@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LogixNG Reference - Chapter 4</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference basic actions expressions">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 4</h1>
+
+      <h2>Actions and Expressions</h2>
+
+      <p>LogixNG has four basic building blocks: Actions, Expressions, Male sockets and
+      Female sockets.</p>
+
+      <p>Actions do something, for example throw a turnout or sets a signal mast.
+      Expressions ask something, for example if a sensor is active or if a signal head
+      has a particular appearance. The actions and expressions form a tree and  complex
+      logic can be built with them.</p>
+
+      <p>Each action/expression is embedded in one or several male sockets. Male sockets
+      allow actions/expressions to be connected to a female socket of the correct type.</p>
+
+      <p>A ConditionalNG has a female socket that is the root of the ConditionalNG tree.
+      And some actions/expressions have one or several female sockets as children.  There
+      are several different types of female sockets and the female socket type decides
+      which types of actions or expressions can be connected.</p>
+
+
+        <h3>Categories</h3>
+
+        <p>Since there is a large number of actions and expressions, they are assigned a
+        category.  The main categories are <strong>Item</strong> and <strong>Common</strong>.</p>
+
+        <ul>
+          <li>Item - Actions and expressions related to items on the layout, for example
+          turnouts and signal masts</li>
+          <li>Common - The most important actions and expressions that are not in the
+          Item category</li>
+          <li>Display - Actions and expressions related to Panels</li>
+          <li>LocoNet - Actions and expressions related to LocoNet</li>
+          <li>Other - Other actions and expressions</li>
+        </ul>
+
+        <h3>Action and Expression types</h3>
+
+        <p>Each action and expression is built for a specific socket type.
+
+        <a id="socket_types"></a>
+        <div style="margin-left: 2em">
+          <table>
+            <tr><th>Symbol</th><th>Type</th><th>Description</th><th>Categories</th></tr>
+            <tr>
+              <td style="text-align:center">!</td>
+              <td>Digital action</td>
+              <td>Execute, no parameter</td>
+              <td>Item, Common, Other, Display, LocoNet</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">!b</td>
+              <td>Digital boolean action</td>
+              <td>Execute using a boolean parameter</td>
+              <td>Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">!~</td>
+              <td>Analog action</td>
+              <td>Execute using a double parameter</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">!s</td>
+              <td>String action</td>
+              <td>Execute using a string parameter</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+            <tr>
+              <td style="text-align:center">?</td>
+              <td>Digital expression</td>
+              <td>Return boolean</td>
+              <td>Item, Common, Other, LocoNet</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">?~</td>
+              <td>Analog expression</td>
+              <td>Return a double</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">?s</td>
+              <td>String expression</td>
+              <td>Return a string</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">?*</td>
+              <td>Generic expression</td>
+              <td>Return an Object</td>
+              <td>(Digital, Analog, and String merged)</td>
+            </tr>
+          </table>
+        </div>
+
+        <p>Notes:</p>
+        <ul>
+          <li><strong>string</strong> is text, such as "hello world"</li>
+          <li><strong>boolean</strong> is true or false</li>
+          <li><strong>double</strong> is a number, such as 42 or 3.14</li>
+          <li><strong>Generic expression</strong> can handle any expression type</li>
+        </ul>
+
+        <h3>Adding an action or expression</h3>
+
+        <p>When <strong>Add</strong> is selected from the context menu for an empty socket,
+        the selection dialog is displayed.</p>
+
+        <div style="margin-left: 2em">
+        <a href="images/chapter4/selection_dialog.png">
+        <img src="images/chapter4/selection_dialog.png"
+        alt="Chapter 4 selection dialog" width="250" height="121">
+        </a>
+        </div>
+
+        <p>The <strong>Category</strong> selection automatically adjusts the <strong>Type</strong>
+        list based on the socket type.  For example, Digital Action socket using the
+        Item category is quite long while Analog Action socket using the Common category is
+        short.  The Type list always displays the valid selections for the socket type
+        and category.</p>
+
+        <p>There are 20 combinations of socket types and categories.  These are
+        described in <a href="chaper5.shtml">Chapter 5 - Actions</a> and
+        <a href="chapter6.shtml">Chapter 6 - Expressions</a>.</p>
+
+      <hr>
+      <p><a href="chapter5.shtml">Chapter 5 - Action Descriptions</a></p>
+      <p><a href="index.shtml">Return to the Reference TOC</a></p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
+
+
+</body>
+</html>

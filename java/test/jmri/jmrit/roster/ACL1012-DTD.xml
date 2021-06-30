@@ -13,9 +13,9 @@
       <protocol>dcc_long</protocol>
     </locoaddress>
     <functionlabels>
-      <functionlabel num="0" lockable="true" functionImage="preference:resources/Light.png" functionImageSelected="preference:resources/LightOn.png">Light</functionlabel>
-      <functionlabel num="1" lockable="true" functionImage="preference:resources/Bell.png" functionImageSelected="preference:resources/BellOn.png">Bell</functionlabel>
-      <functionlabel num="2" lockable="false" functionImage="preference:resources/Horn.png" functionImageSelected="preference:resources/HornOn.png">Horn</functionlabel>
+      <functionlabel num="0" lockable="true" functionImage="preference:resources/icons/functionicons/transparent_background/lights_off.png" functionImageSelected="preference:resources/icons/functionicons/transparent_background/lights_on.png">Light</functionlabel>
+      <functionlabel num="1" lockable="true" functionImage="preference:resources/icons/functionicons/transparent_background/bell_off.png" functionImageSelected="preference:resources/icons/functionicons/transparent_background/bell_on">Bell</functionlabel>
+      <functionlabel num="2" lockable="false" functionImage="preference:resources/icons/functionicons/transparent_background/horn_off.png" functionImageSelected="preference:resources/icons/functionicons/transparent_background/horn_on">Horn</functionlabel>
       <functionlabel num="12" lockable="false" functionImage="" functionImageSelected="">SelEng</functionlabel>
       <functionlabel num="18" lockable="false" functionImage="" functionImageSelected="">SelBell</functionlabel>
       <functionlabel num="19" lockable="false" functionImage="" functionImageSelected="">SelHorn</functionlabel>

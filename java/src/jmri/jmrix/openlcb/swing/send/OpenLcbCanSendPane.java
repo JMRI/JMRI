@@ -26,7 +26,7 @@ import org.openlcb.DatagramAcknowledgedMessage;
 import org.openlcb.DatagramMessage;
 import org.openlcb.EventID;
 import org.openlcb.IdentifyConsumersMessage;
-import org.openlcb.IdentifyEventsMessage;
+import org.openlcb.IdentifyEventsAddressedMessage;
 import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.Message;
 import org.openlcb.MimicNodeStore;
@@ -276,8 +276,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
-    } // NOI18N
+        return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame";  // NOI18N
+    }
 
     @Override
     public String getTitle() {
@@ -341,7 +341,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
-        Message m = new IdentifyEventsMessage(srcNodeID, destNodeID());
+        Message m = new IdentifyEventsAddressedMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
 

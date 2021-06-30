@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -9,16 +8,7 @@
   <title>JMRI: Panel Editor Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -28,7 +18,7 @@
 
       <h1>The Panel Editor</h1>
 
-      <p><img src="images/PanelEditor.png" align="right"><br>
+      <p><img src="images/PanelEditor.png" align="right" alt="Panel editor"><br>
       A Panel is a set of Icons representing various components of
       a layout. Some of the Icons available in JMRI include
       Turnouts, Signals Masts and Sensors. You can include a
@@ -69,7 +59,7 @@
           text by context clicking and choosing "Edit Text...".</li>
 
         <li style="list-style: none"><img src="images/PanelEditor2.png"
-        align="right"></li>
+        align="right" alt="Panel editor 2"></li>
 
         <li>A dropdown menu where you may choose the type of icon
         or data you may put into the panel.
@@ -177,9 +167,13 @@
 
       <h2>After Creating A Panel</h2>
 
-      <p>After getting the panel the way you want, you need to use
-      the <a href="PanelMenuHelp.shtml">"Store panels..."</a>
-      entry in the "Panels" menu to write it to an XML file.</p>
+      <p>After getting the panel the way you want, you need to store your changes. <span class="since">since 4.23.3</span>
+        You can use <strong>File &rArr; Store ALL table content and panels...</strong>
+        {<em>Old: <strong>Store Pamels...</strong></em>} from the PanelEditor menu or you
+        can use <strong>File &rArr; Store ALL table content and panels...</strong>
+        from the main PanelPro menu.  See <a href="../../../../html/apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a> for details.
+      </p>
 
       <h3>Available Icons</h3>
       <p>The JMRI library contains lots of contributed icons for
@@ -354,5 +348,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

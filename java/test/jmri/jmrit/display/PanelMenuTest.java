@@ -26,6 +26,7 @@ public class PanelMenuTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

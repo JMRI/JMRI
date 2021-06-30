@@ -3,10 +3,22 @@
 #
 # Create a Jynstrument with video view from connected webcam
 #
-# Build using https://github.com/sarxos/webcam-capture
-# You'll need webcam-capture-XXX.jar and bridj-XXX.jar copied from webcam-capture release to your JMRI lib folder
-# And webcam-capture-driver-ipcam-XXX.jar from there https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-drivers/driver-ipcam
+# Build using https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-drivers/driver-ipcam
 #
+#
+depErr="""Required dependency must be installed!
+
+ You need to install libraries from sarxos webcam ipcam library. Direct download link:
+       http://repo.sarxos.pl/maven2/com/github/sarxos/webcam-capture-driver-ipcam/0.3.12/webcam-capture-driver-ipcam-0.3.12-dist.zip
+
+ Copy to your JMRI lib folder :
+     webcam-capture-driver-ipcam-0.3.12.jar
+     bridj-0.7.0.jar (from zip file libs subfolder)
+     httpclient-4.5.3.jar (from zip file libs subfolder)
+     httpcore-4.4.6.jar (from zip file libs subfolder)
+     webcam-capture-0.3.12.jar (from zip file libs subfolder)
+    """
+
 
 import java
 import java.awt
@@ -16,11 +28,17 @@ import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.BorderLayout as BorderLayout
 import java.awt.event.ItemListener as ItemListener
 import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
-import com.github.sarxos.webcam.Webcam as Webcam
-import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
-import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry as IpCamDeviceRegistry
-import com.github.sarxos.webcam.ds.ipcam.IpCamDriver as IpCamDriver
-import com.github.sarxos.webcam.ds.ipcam.IpCamMode as IpCamMode
+import javax.swing.JOptionPane as JOptionPane
+import javax.swing.JTextArea as JTextArea
+import javax.swing.JFrame as JFrame
+try:
+    import com.github.sarxos.webcam.Webcam as Webcam
+    import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
+    import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry as IpCamDeviceRegistry
+    import com.github.sarxos.webcam.ds.ipcam.IpCamDriver as IpCamDriver
+    import com.github.sarxos.webcam.ds.ipcam.IpCamMode as IpCamMode
+except:
+    JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
 
 class VideoViewIP(Jynstrument, ItemListener):
 

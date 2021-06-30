@@ -67,7 +67,7 @@ public class TrackerTableActionTest {
         assertThat(tta).withFailMessage("Tracker Tkr1 found").isNotNull();
         List<OBlock> occupied = Tkr1.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("Tkr1 Blocks Occupied").isEqualTo(1);
-        
+
         OBlock FarEast = _OBlockMgr.getByUserName("FarEast");
         assert FarEast != null;
         Sensor sFarEast = FarEast.getSensor();
@@ -82,12 +82,12 @@ public class TrackerTableActionTest {
         NXFrameTest.setAndConfirmSensorAction(sEast, Sensor.ACTIVE, East);
         occupied = Tkr1.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("Tkr1 3 Blocks Occupied").isEqualTo(3);
-        
+
         NXFrameTest.setAndConfirmSensorAction(sMiddle, Sensor.INACTIVE, Middle);
         occupied = Tkr1.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("Tkr1 2 Blocks Occupied").isEqualTo(2);
 
-        
+
         NXFrameTest.setAndConfirmSensorAction(sFarEast, Sensor.INACTIVE, FarEast);
         occupied = Tkr1.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("Tkr1 1 Blocks Occupied").isEqualTo(1);
@@ -133,7 +133,7 @@ public class TrackerTableActionTest {
         NXFrameTest.setAndConfirmSensorAction(sFarWest, Sensor.ACTIVE, FarWest);
         occupied = TkrD.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("TkrD 3 Blocks Occupied").isEqualTo(3);
-        
+
         NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.INACTIVE, Main);
         occupied = TkrD.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("TkrD 1 Blocks Occupied").isEqualTo(1);
@@ -169,7 +169,7 @@ public class TrackerTableActionTest {
         tta.markNewTracker(West, "TkrW", null);
         Tracker TkrW = tta.findTrackerIn(West);
         assertThat(TkrW).withFailMessage("Tracker TkrW found").isNotNull();
-        
+
         OBlock East = _OBlockMgr.getByUserName("East");
         assert East != null;
         Sensor sEast = East.getSensor();
@@ -184,12 +184,12 @@ public class TrackerTableActionTest {
         Sensor sMain = Main.getSensor();
         assertThat(sMain).withFailMessage("Senor sMain found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.ACTIVE, Main);
-        
+
         JFrameOperator nfo = new JFrameOperator(tta._frame);
         JDialogOperator jdo = new JDialogOperator(nfo, Bundle.getMessage("TrackerTitle"));
         assertThat(jdo).withFailMessage("Dialog operator found").isNotNull();
 //      JComponentOperator jco = new JComponentOperator(jdo);
-        
+
         TrackerTableAction.ChooseTracker dialog = (TrackerTableAction.ChooseTracker)jdo.getSource();
         assertThat(dialog).withFailMessage("JDialog found").isNotNull();
         // first entry ought to be tracker "West"
@@ -197,7 +197,7 @@ public class TrackerTableActionTest {
 
         List<OBlock> occupied = TkrE.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("TkrE Blocks Occupied").isEqualTo(1);
-        
+
         occupied = TkrW.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("TkrW Blocks Occupied").isEqualTo(2);
 
@@ -219,6 +219,7 @@ public class TrackerTableActionTest {
         _OBlockMgr.dispose();
         _OBlockMgr = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

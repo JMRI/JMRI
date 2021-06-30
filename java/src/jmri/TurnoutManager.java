@@ -66,6 +66,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     default public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
     
     /**
@@ -102,7 +103,9 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getByUserName(@Nonnull String userName);
 
     /**
-     * Return a Turnout with the specified system and user names. 
+     * Return a Turnout with the specified system and user names.
+     * Lookup by UserName then provide by System Name.
+     * <p>
      * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Turnout object representing a given physical turnout and

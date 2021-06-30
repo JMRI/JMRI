@@ -42,7 +42,7 @@ public class JythonSigletTest {
         assertEquals(Turnout.CLOSED, output.getState());
         assertFalse(js.isRunning());
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -51,6 +51,7 @@ public class JythonSigletTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

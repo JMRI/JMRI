@@ -321,6 +321,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return 0;
     }
 
+    protected enum TrainsFrom {
+        TRAINSFROMROSTER,
+        TRAINSFROMOPS,
+        TRAINSFROMUSER;
+    }
+
     // Dispatcher options (saved to disk if user requests, and restored if present)
     private LayoutEditor _LE = null;
     public static final int SIGNALHEAD = 0x00;
@@ -331,9 +337,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _UseConnectivity = false;
     private boolean _HasOccupancyDetection = false; // "true" if blocks have occupancy detection
     private boolean _SetSSLDirectionalSensors = true;
-    private boolean _TrainsFromRoster = true;
-    private boolean _TrainsFromTrains = false;
-    private boolean _TrainsFromUser = false;
+    private TrainsFrom _TrainsFrom = TrainsFrom.TRAINSFROMROSTER;
     private boolean _AutoAllocate = false;
     private boolean _AutoRelease = false;
     private boolean _AutoTurnouts = false;
@@ -478,10 +482,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!newTrainActive) {
-                        atFrame.initiateTrain(e);
+                        getActiveTrainFrame().initiateTrain(e);
                         newTrainActive = true;
                     } else {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                     }
                 }
             });
@@ -504,11 +508,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (!newTrainActive) {
                         cancelRestart(e);
                     } else if (restartingTrainsList.size() > 0) {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                         JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage("Message2"),
                                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                     }
                 }
             });
@@ -521,11 +525,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (!newTrainActive) {
                         terminateTrain(e);
                     } else if (activeTrainsList.size() > 0) {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                         JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage("Message1"),
                                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        atFrame.showActivateFrame();
+                        getActiveTrainFrame().showActivateFrame();
                     }
                 }
             });
@@ -1604,6 +1608,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 queueAllocate(ar);
             } else {
                 // manual
+                allocationRequests.add(ar);
             }
         }
         activeTrainsTableModel.fireTableDataChanged();
@@ -2185,7 +2190,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     }
                                 }
                             } else {
-                                for (int i = blas.size(); i >= 0; i--) {
+                                for (int i = blas.size() - 1; i >= 0; i--) {
                                     //The block we get to is occupied therefore the subsequent blocks have not been entered
                                     if (blas.get(i).getState() == Block.OCCUPIED) {
                                         if (ar != null) {
@@ -2495,28 +2500,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected float getMaximumLineSpeed() {
         return maximumLineSpeed;
     }
-    protected boolean getTrainsFromRoster() {
-        return _TrainsFromRoster;
+
+    protected void setTrainsFrom(TrainsFrom value ) {
+        _TrainsFrom = value;
     }
 
-    protected void setTrainsFromRoster(boolean set) {
-        _TrainsFromRoster = set;
-    }
-
-    protected boolean getTrainsFromTrains() {
-        return _TrainsFromTrains;
-    }
-
-    protected void setTrainsFromTrains(boolean set) {
-        _TrainsFromTrains = set;
-    }
-
-    protected boolean getTrainsFromUser() {
-        return _TrainsFromUser;
-    }
-
-    protected void setTrainsFromUser(boolean set) {
-        _TrainsFromUser = set;
+    protected TrainsFrom getTrainsFrom() {
+        return _TrainsFrom;
     }
 
     protected boolean getAutoAllocate() {
@@ -2692,7 +2682,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     public ActiveTrain getActiveTrainForRoster(RosterEntry re) {
-        if (!_TrainsFromRoster) {
+        if ( _TrainsFrom != TrainsFrom.TRAINSFROMROSTER) {
             return null;
         }
         for (ActiveTrain at : activeTrainsList) {
@@ -2726,6 +2716,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             else if (at.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
                 fastClockWarn(false);
             }
+        }
+        if (atFrame != null) {
+            atFrame.setVisible(false);
+            atFrame.dispose();
+            atFrame = null;
         }
         newTrainActive = false;
     }

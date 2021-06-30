@@ -28,6 +28,8 @@
 
 <mapID target="html.hardware.powerline.Compatibility" url="html/hardware/powerline/Compatibility.shtml"/>
 
+<mapID target="html.tools.logixng.reference.chapter99_enable" url="html/tools/logixng/reference/chapter99.shtml#enable"/>
+
 <mapID target="manual.DecoderPro3.Basic_BasicPane_ReadData" url="manual/DecoderPro3/Basic_BasicPane.shtml#ReadData"/>
 
 <mapID target="package.apps.TabbedPreferences_FileLocations" url="package/apps/TabbedPreferences.shtml#FileLocations"/>
@@ -45,8 +47,6 @@
 <mapID target="releasenotes.current-draft-note" url="releasenotes/current-draft-note.shtml"/>
 
 <mapID target="package.jmri.jmrit.ctc.CTC_editor" url="package/jmri/jmrit/ctc/CTC.shtml#editor"/>
-
-<mapID target="html.apps.StoringYourWork_nosave" url="html/apps/StoringYourWork.shtml#nosave"/>
 
 <mapID target="manual.DecoderPro.Main_LocoNet_Packet" url="manual/DecoderPro/Main_LocoNet.shtml#Packet"/>
 
@@ -102,6 +102,8 @@
 
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_modules" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#modules"/>
+
 <mapID target="html.doc.Technical.gitdeveloper" url="html/doc/Technical/gitdeveloper.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.SignalMastRepeater" url="package/jmri/jmrit/beantable/SignalMastRepeater.shtml"/>
@@ -122,7 +124,11 @@
 
 <mapID target="html.hardware.cmri.CMRI_top" url="html/hardware/cmri/CMRI.shtml#top"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_LocoNet" url="manual/DecoderPro/Main_LocoNet.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.LogixNGTableTable" url="package/jmri/jmrit/beantable/LogixNGTableTable.shtml"/>
 
 <mapID target="package.jmri.jmrix.can.swing.send.CanSendFrame" url="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml"/>
 
@@ -192,9 +198,9 @@
 
 <mapID target="parts.SidebarInstallNew" url="parts/SidebarInstallNew.shtml"/>
 
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_running" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#running"/>
-
 <mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame_highlighter" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#highlighter"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter99" url="html/doc/Technical/logixng/Tutorial/chapter99.html"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_datatermech" url="html/hardware/loconet/StandaloneLocoNet.shtml#datatermech"/>
 
@@ -229,6 +235,8 @@
 <mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml"/>
 
 <mapID target="html.setup.git" url="html/setup/git.shtml"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_Setupadispatch" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#Setupadispatch"/>
 
 <mapID target="html.doc.Technical.JUnit_threads" url="html/doc/Technical/JUnit.shtml#threads"/>
 
@@ -300,6 +308,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_CopyTrack" url="package/jmri/jmrit/operations/Operations.shtml#CopyTrack"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter9" url="html/doc/Technical/logixng/Tutorial/chapter9.html"/>
+
 <mapID target="manual.DecoderPro.Main_Help" url="manual/DecoderPro/Main_Help.shtml"/>
 
 <mapID target="html.hardware.mrc.index_documentation" url="html/hardware/mrc/index.shtml#documentation"/>
@@ -316,15 +326,35 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrackDestinations" url="package/jmri/jmrit/operations/Operations.shtml#TrackDestinations"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter0" url="html/doc/Technical/logixng/Tutorial/chapter0.html"/>
+
 <mapID target="manual.DecoderPro.Comp_LightFX_Top" url="manual/DecoderPro/Comp_LightFX.shtml#Top"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_PasswordField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#PasswordField"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter5" url="html/doc/Technical/logixng/Tutorial/chapter5.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter6" url="html/doc/Technical/logixng/Tutorial/chapter6.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter7" url="html/doc/Technical/logixng/Tutorial/chapter7.html"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings" url="manual/JMRI_OPS_UsersGuide/Ops_Settings.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter8" url="html/doc/Technical/logixng/Tutorial/chapter8.html"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Settings.shtml#Top"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter1" url="html/doc/Technical/logixng/Tutorial/chapter1.html"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_OptionalTrainRequirements" url="package/jmri/jmrit/operations/Operations.shtml#OptionalTrainRequirements"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter2" url="html/doc/Technical/logixng/Tutorial/chapter2.html"/>
+
 <mapID target="package.jmri.jmrit.beantable.BlockEdit_basic" url="package/jmri/jmrit/beantable/BlockEdit.shtml#basic"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter3" url="html/doc/Technical/logixng/Tutorial/chapter3.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter4" url="html/doc/Technical/logixng/Tutorial/chapter4.html"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_Acquiring" url="html/tools/throttle/ThrottleChapter2.shtml#Acquiring"/>
 
@@ -390,6 +420,8 @@
 
 <mapID target="html.doc.Technical.ContinuousIntegration_optional" url="html/doc/Technical/ContinuousIntegration.shtml#optional"/>
 
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_ScheduleRoute" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#ScheduleRoute"/>
+
 <mapID target="manual.DecoderPro3.Main_XpressNet_Database" url="manual/DecoderPro3/Main_XpressNet.shtml#Database"/>
 
 <mapID target="manual.DecoderPro.Main_NCE_EditMacroWin" url="manual/DecoderPro/Main_NCE.shtml#EditMacroWin"/>
@@ -397,6 +429,8 @@
 <mapID target="package.jmri.jmrix.ecos.swing.statusframe.StatusFrame" url="package/jmri/jmrix/ecos/swing/statusframe/StatusFrame.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportEngines_FromFiles" url="manual/JMRI_OPS_UsersGuide/Ops_ImportEngines_FromFiles.shtml"/>
+
+<mapID target="html.tools.logixng.LogixNG" url="html/tools/logixng/LogixNG.shtml"/>
 
 <mapID target="html.hardware.MacintoshSerialPorts" url="html/hardware/MacintoshSerialPorts.shtml"/>
 
@@ -422,11 +456,15 @@
 
 <mapID target="manual.DecoderPro3.Comp_SoundFX_Top" url="manual/DecoderPro3/Comp_SoundFX.shtml#Top"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_digital_actions" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#digital_actions"/>
+
 <mapID target="manual.DecoderPro.Main_Throttle_FrameProperties_Top" url="manual/DecoderPro/Main_Throttle_FrameProperties.shtml#Top"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml"/>
 
 <mapID target="manual.DecoderPro.Comp_SoundFX" url="manual/DecoderPro/Comp_SoundFX.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_intro" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#intro"/>
 
 <mapID target="package.jmri.jmrix.loconet.pm4.PM4Frame" url="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml"/>
 
@@ -540,9 +578,15 @@
 
 <mapID target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame" url="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter14" url="html/doc/Technical/logixng/Tutorial/chapter14.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter15" url="html/doc/Technical/logixng/Tutorial/chapter15.html"/>
+
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_ChannelField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#ChannelField"/>
 
 <mapID target="html.hardware.cmri.CMRI_L001" url="html/hardware/cmri/CMRI.shtml#L001"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter16" url="html/doc/Technical/logixng/Tutorial/chapter16.html"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_editing" url="package/jmri/jmrit/display/LayoutEditor.shtml#editing"/>
 
@@ -550,7 +594,15 @@
 
 <mapID target="html.doc.Technical.Names_types" url="html/doc/Technical/Names.shtml#types"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter10" url="html/doc/Technical/logixng/Tutorial/chapter10.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter11" url="html/doc/Technical/logixng/Tutorial/chapter11.html"/>
+
 <mapID target="html.hardware.openlcb.Connections_documentation" url="html/hardware/openlcb/Connections.shtml#documentation"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter12" url="html/doc/Technical/logixng/Tutorial/chapter12.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter13" url="html/doc/Technical/logixng/Tutorial/chapter13.html"/>
 
 <mapID target="Acknowledgements_D" url="Acknowledgements.shtml#D"/>
 
@@ -563,6 +615,8 @@
 <mapID target="manual.DecoderPro3.Main_XpressNet_LZV100" url="manual/DecoderPro3/Main_XpressNet.shtml#LZV100"/>
 
 <mapID target="Acknowledgements_A" url="Acknowledgements.shtml#A"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter19" url="html/doc/Technical/logixng/Tutorial/chapter19.html"/>
 
 <mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
 
@@ -586,7 +640,13 @@
 
 <mapID target="manual.DecoderPro.Comp_Analog_Top" url="manual/DecoderPro/Comp_Analog.shtml#Top"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter21" url="html/doc/Technical/logixng/Tutorial/chapter21.html"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter22" url="html/doc/Technical/logixng/Tutorial/chapter22.html"/>
+
 <mapID target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs240/swing/Dcs240UsbModeSelect.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.chapter23" url="html/doc/Technical/logixng/Tutorial/chapter23.html"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_WiThrottle" url="manual/DecoderPro/Start_Preferences.shtml#WiThrottle"/>
 
@@ -603,6 +663,8 @@
 <mapID target="html.hardware.tams.index_tools" url="html/hardware/tams/index.shtml#tools"/>
 
 <mapID target="html.hardware.powerline.index_documentation" url="html/hardware/powerline/index.shtml#documentation"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_runningprogram" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#runningprogram"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Routes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Routes.shtml#Top"/>
 
@@ -684,9 +746,13 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainsTools" url="package/jmri/jmrit/operations/Operations.shtml#TrainsTools"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_theactions" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#theactions"/>
+
 <mapID target="package.jmri.jmrit.logix.OBlockEdit" url="package/jmri/jmrit/logix/OBlockEdit.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.SignalGroupAddEdit" url="package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_digital_boolean_actions" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#digital_boolean_actions"/>
 
 <mapID target="manual.DecoderPro3.Comp_ManfSpecific_Top" url="manual/DecoderPro3/Comp_ManfSpecific.shtml#Top"/>
 
@@ -744,6 +810,8 @@
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_atrains" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains"/>
 
+<mapID target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane" url="package/jmri/jmrix/powerline/packetgen/PowerlinePacketGenPane.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation_menu" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation_menu.shtml"/>
 
 <mapID target="html.doc.Technical.MultiConnectionUpdate" url="html/doc/Technical/MultiConnectionUpdate.shtml"/>
@@ -756,9 +824,13 @@
 
 <mapID target="html.tools.automation.viaJava" url="html/tools/automation/viaJava.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_indirect_accessing" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#indirect_accessing"/>
+
 <mapID target="manual.DecoderPro3.Main_LocoNet_Packet" url="manual/DecoderPro3/Main_LocoNet.shtml#Packet"/>
 
 <mapID target="manual.DecoderPro.Programmer_Start_ServiceMode" url="manual/DecoderPro/Programmer_Start.shtml#ServiceMode"/>
+
+<mapID target="jmri4.23-master" url="jmri4.23-master.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.SensorTable_Debounce" url="package/jmri/jmrit/beantable/SensorTable.shtml#Debounce"/>
 
@@ -802,6 +874,8 @@
 
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_contents" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#contents"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_thepolicy" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#thepolicy"/>
+
 <mapID target="html.tools.signaling.SignalGroups_speed" url="html/tools/signaling/SignalGroups.shtml#speed"/>
 
 <mapID target="html.hardware.XBee.XBeeNodeConfigurationTool" url="html/hardware/XBee/XBeeNodeConfigurationTool.shtml"/>
@@ -827,6 +901,8 @@
 <mapID target="html.hardware.arduino.index_serial" url="html/hardware/arduino/index.shtml#serial"/>
 
 <mapID target="html.hardware.loconet.Digitrax_ErraticReadback" url="html/hardware/loconet/Digitrax.shtml#ErraticReadback"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.index" url="html/doc/Technical/logixng/Tutorial/index.html"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_LoadOptions" url="package/jmri/jmrit/operations/Operations.shtml#LoadOptions"/>
 
@@ -880,6 +956,8 @@
 
 <mapID target="html.hardware.loconet.Digitrax_Limitation" url="html/hardware/loconet/Digitrax.shtml#Limitation"/>
 
+<mapID target="package.jmri.jmrit.logixng.LogixNGBrowser" url="package/jmri/jmrit/logixng/LogixNGBrowser.shtml"/>
+
 <mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_PrintSavedTrainManifests" url="package/jmri/jmrit/operations/Operations.shtml#PrintSavedTrainManifests"/>
@@ -919,6 +997,8 @@
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_FrameProperties_Top" url="manual/DecoderPro3/dp3_Main_Throttle_FrameProperties.shtml#Top"/>
 
 <mapID target="html.hardware.easydcc.EasyDCC_hardware" url="html/hardware/easydcc/EasyDCC.shtml#hardware"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_logicalexpression" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#logicalexpression"/>
 
 <mapID target="html.doc.Technical.JUnit_J4rules" url="html/doc/Technical/JUnit.shtml#J4rules"/>
 
@@ -966,8 +1046,6 @@
 
 <mapID target="package.jmri.jmrit.beantable.LightAddEdit_lightcontrolonesensor" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolonesensor"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_TrainsScripts" url="package/jmri/jmrit/operations/Operations.shtml#TrainsScripts"/>
-
 <mapID target="html.tools.Sidebar" url="html/tools/Sidebar.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_byCar_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_byCar.shtml#Top"/>
@@ -987,6 +1065,8 @@
 <mapID target="package.jmri.jmrit.withrottle.Protocol_RouteList" url="package/jmri/jmrit/withrottle/Protocol.shtml#RouteList"/>
 
 <mapID target="html.hardware.loconet.Addressing_turnouts" url="html/hardware/loconet/Addressing.shtml#turnouts"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_preferences" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#preferences"/>
 
 <mapID target="html.hardware.openlcb.Connections_connecting" url="html/hardware/openlcb/Connections.shtml#connecting"/>
 
@@ -1108,6 +1188,8 @@
 
 <mapID target="html.hardware.loconet.EnhancedSlots_whyImportant" url="html/hardware/loconet/EnhancedSlots.shtml#whyImportant"/>
 
+<mapID target="package.jmri.jmrit.beantable.LogixNGTable" url="package/jmri/jmrit/beantable/LogixNGTable.shtml"/>
+
 <mapID target="html.hardware.loconet.StandaloneLocoNet_diyhwdataterm" url="html/hardware/loconet/StandaloneLocoNet.shtml#diyhwdataterm"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_SeeAlso" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#SeeAlso"/>
@@ -1137,6 +1219,10 @@
 <mapID target="html.doc.Technical.StartUpScripts_old_DecoderPro" url="html/doc/Technical/StartUpScripts.shtml#old_DecoderPro"/>
 
 <mapID target="releasenotes.warnings-master" url="releasenotes/warnings-master.shtml"/>
+
+<mapID target="html.tools.logixng.SidebarToolLocalPart" url="html/tools/logixng/SidebarToolLocalPart.shtml"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_requirements" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#requirements"/>
 
 <mapID target="html.hardware.bachrus.index_hardware" url="html/hardware/bachrus/index.shtml#hardware"/>
 
@@ -1234,11 +1320,15 @@
 
 <mapID target="html.hardware.XBee.index_tools" url="html/hardware/XBee/index.shtml#tools"/>
 
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_introduction" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#introduction"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportCarsFile" url="manual/JMRI_OPS_UsersGuide/Ops_ImportCarsFile.shtml"/>
 
 <mapID target="html.hardware.loconet.LocoIO_second" url="html/hardware/loconet/LocoIO.shtml#second"/>
 
 <mapID target="html.tools.EntryExit" url="html/tools/EntryExit.shtml"/>
+
+<mapID target="html.tools.logixng.reference.index" url="html/tools/logixng/reference/index.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_PrintData_a" url="manual/DecoderPro3/Comp_PrintData_a.shtml"/>
 
@@ -1276,6 +1366,8 @@
 
 <mapID target="manual.DecoderPro.Adv_RosterMedia_Top" url="manual/DecoderPro/Adv_RosterMedia.shtml#Top"/>
 
+<mapID target="html.doc.Technical.githubdesktopintro" url="html/doc/Technical/githubdesktopintro.shtml"/>
+
 <mapID target="package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel" url="package/jmri/jmrix/zimo/swing/monitor/Mx1MonPanel.shtml"/>
 
 <mapID target="html.hardware.loconet.CommandStationConfig_ConfigViaRoster" url="html/hardware/loconet/CommandStationConfig.shtml#ConfigViaRoster"/>
@@ -1300,6 +1392,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_LocomotiveIDTAG" url="package/jmri/jmrit/operations/Operations.shtml#LocomotiveIDTAG"/>
 
+<mapID target="manual.DecoderPro.VSD_File_and_Config_dynamic-gain" url="manual/DecoderPro/VSD_File_and_Config.shtml#dynamic-gain"/>
+
 <mapID target="manual.DecoderPro.Main_Tool_Speedometer" url="manual/DecoderPro/Main_Tool.shtml#Speedometer"/>
 
 <mapID target="html.tools.uss.index" url="html/tools/uss/index.shtml"/>
@@ -1323,6 +1417,10 @@
 <mapID target="manual.DecoderPro3.Start_DCC_Top" url="manual/DecoderPro3/Start_DCC.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.inControl.inControl" url="package/jmri/jmrit/inControl/inControl.shtml"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter99_digital_boolean_actions" url="html/tools/logixng/reference/chapter99.shtml#digital_boolean_actions"/>
 
 <mapID target="html.doc.Technical.Names_systeminfo" url="html/doc/Technical/Names.shtml#systeminfo"/>
 
@@ -1383,6 +1481,8 @@
 <mapID target="html.hardware.can.cbus.index_cbusevents" url="html/hardware/can/cbus/index.shtml#cbusevents"/>
 
 <mapID target="package.apps.AppConfigPanel_actions" url="package/apps/AppConfigPanel.shtml#actions"/>
+
+<mapID target="html.tools.logixng.reference.chapter99_system_names" url="html/tools/logixng/reference/chapter99.shtml#system_names"/>
 
 <mapID target="package.jmri.jmrit.logix.SpeedChanges_autoSpeedProfile" url="package/jmri/jmrit/logix/SpeedChanges.shtml#autoSpeedProfile"/>
 
@@ -1466,6 +1566,10 @@
 
 <mapID target="html.apps.DecoderPro.FAQ" url="html/apps/DecoderPro/FAQ.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_updateconditionalng" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#updateconditionalng"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_digital_expressions" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#digital_expressions"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_Settings" url="package/jmri/jmrit/operations/Operations.shtml#Settings"/>
 
 <mapID target="package.jmri.jmrix.lenz.stackmon.StackMonFrame" url="package/jmri/jmrix/lenz/stackmon/StackMonFrame.shtml"/>
@@ -1485,8 +1589,6 @@
 <mapID target="package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame" url="package/jmri/jmrit/vsdecoder/swing/ManageLocationsFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame" url="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSimpleModeSwitcherFrame.shtml"/>
-
-<mapID target="html.doc.Technical.githubdesktopinto" url="html/doc/Technical/githubdesktopinto.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Routes" url="manual/JMRI_OPS_UsersGuide/Ops_Routes.shtml"/>
 
@@ -1511,6 +1613,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_CARIDTAG" url="package/jmri/jmrit/operations/Operations.shtml#CARIDTAG"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ChangeTrainDepartureTimes" url="package/jmri/jmrit/operations/Operations.shtml#ChangeTrainDepartureTimes"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_RouteBlockingOrder" url="package/jmri/jmrit/operations/Operations.shtml#RouteBlockingOrder"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_Interfere" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#Interfere"/>
 
@@ -1560,13 +1664,7 @@
 
 <mapID target="html.hardware.loconet.Digitrax_Debugging" url="html/hardware/loconet/Digitrax.shtml#Debugging"/>
 
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_stage1" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#stage1"/>
-
 <mapID target="manual.DecoderPro3.dp3_rosterTable" url="manual/DecoderPro3/dp3_rosterTable.shtml"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_stage3" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#stage3"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_stage2" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#stage2"/>
 
 <mapID target="html.hardware.USBtoSerial_hardware" url="html/hardware/USBtoSerial.shtml#hardware"/>
 
@@ -1593,6 +1691,8 @@
 <mapID target="package.jmri.jmrit.consisttool.ConsistToolFrame" url="package/jmri/jmrit/consisttool/ConsistToolFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.powerline.serialmon.SerialMonFrame" url="package/jmri/jmrix/powerline/serialmon/SerialMonFrame.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_enable" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#enable"/>
 
 <mapID target="html.hardware.loconet.EnhancedSlots_generalideas" url="html/hardware/loconet/EnhancedSlots.shtml#generalideas"/>
 
@@ -1704,6 +1804,8 @@
 
 <mapID target="html.doc.Technical.XmlDtdUsage" url="html/doc/Technical/XmlDtdUsage.shtml"/>
 
+<mapID target="html.tools.logixng.ErrorHandling" url="html/tools/logixng/ErrorHandling.shtml"/>
+
 <mapID target="html.hardware.cmri.CMRI_L590" url="html/hardware/cmri/CMRI.shtml#L590"/>
 
 <mapID target="html.hardware.cmri.CMRI_L597" url="html/hardware/cmri/CMRI.shtml#L597"/>
@@ -1713,6 +1815,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_Automation" url="package/jmri/jmrit/operations/Operations.shtml#Automation"/>
 
 <mapID target="html.apps.DecoderPro.Tour" url="html/apps/DecoderPro/Tour.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Sidebar" url="html/doc/Technical/logixng/Sidebar.shtml"/>
 
 <mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_zimocapability" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#zimocapability"/>
 
@@ -1800,6 +1904,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.IdTagAddEdit" url="package/jmri/jmrit/beantable/IdTagAddEdit.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_conditionalng" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#conditionalng"/>
+
 <mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"/>
 
 <mapID target="html.doc.Technical.IntelliJ" url="html/doc/Technical/IntelliJ.shtml"/>
@@ -1842,6 +1948,8 @@
 
 <mapID target="package.apps.TabbedPreferences_WiThrottle" url="package/apps/TabbedPreferences.shtml#WiThrottle"/>
 
+<mapID target="html.apps.index_jythonapp" url="html/apps/index.shtml#jythonapp"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_Staging" url="package/jmri/jmrit/operations/Operations.shtml#Staging"/>
 
 <mapID target="html.tools.scripting.HowTo" url="html/tools/scripting/HowTo.shtml"/>
@@ -1880,11 +1988,17 @@
 
 <mapID target="html.doc.Technical.Poll2007" url="html/doc/Technical/Poll2007.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_LocationDivision" url="package/jmri/jmrit/operations/Operations.shtml#LocationDivision"/>
+
+<mapID target="template-sidebar" url="template-sidebar.shtml"/>
+
 <mapID target="html.hardware.cmri.CMRI_L164" url="html/hardware/cmri/CMRI.shtml#L164"/>
 
 <mapID target="html.hardware.cmri.CMRI_L46" url="html/hardware/cmri/CMRI.shtml#L46"/>
 
 <mapID target="package.jmri.jmrit.beantable.OBlockAddEdit" url="package/jmri/jmrit/beantable/OBlockAddEdit.shtml"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_FeaturesSystem" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#FeaturesSystem"/>
 
 <mapID target="manual.DecoderPro3.Programmer_OpsMode" url="manual/DecoderPro3/Programmer_OpsMode.shtml"/>
 
@@ -1905,8 +2019,6 @@
 <mapID target="html.tools.speedometer.Serialsensor" url="html/tools/speedometer/Serialsensor.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Cars_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Cars_Menu.shtml"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_register" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#register"/>
 
 <mapID target="html.doc.Technical.JUnit" url="html/doc/Technical/JUnit.shtml"/>
 
@@ -1955,6 +2067,8 @@
 <mapID target="html.tools.Logix_logix" url="html/tools/Logix.shtml#logix"/>
 
 <mapID target="html.hardware.loconet.Addressing_tables" url="html/hardware/loconet/Addressing.shtml#tables"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_steps" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#steps"/>
 
 <mapID target="html.tools.TimeTable_type" url="html/tools/TimeTable.shtml#type"/>
 
@@ -2074,8 +2188,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_AlternateTrack" url="package/jmri/jmrit/operations/Operations.shtml#AlternateTrack"/>
 
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_dispatch" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#dispatch"/>
-
 <mapID target="html.hardware.merg.Details_c1" url="html/hardware/merg/Details.shtml#c1"/>
 
 <mapID target="html.hardware.merg.Details_c2" url="html/hardware/merg/Details.shtml#c2"/>
@@ -2093,6 +2205,8 @@
 <mapID target="html.tools.Sensors_add" url="html/tools/Sensors.shtml#add"/>
 
 <mapID target="html.hardware.sprog.SPROG_connecting" url="html/hardware/sprog/SPROG.shtml#connecting"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_variable" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#variable"/>
 
 <mapID target="package.jmri.jmrit.withrottle.Protocol_Commands" url="package/jmri/jmrit/withrottle/Protocol.shtml#Commands"/>
 
@@ -2112,7 +2226,7 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings_menubar_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Settings_menubar.shtml#Top"/>
 
-<mapID target="html.apps.StoringYourWork_autosave" url="html/apps/StoringYourWork.shtml#autosave"/>
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_logixngs" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#logixngs"/>
 
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 
@@ -2130,9 +2244,13 @@
 
 <mapID target="html.apps.DecoderPro.IntroXML" url="html/apps/DecoderPro/IntroXML.shtml"/>
 
+<mapID target="package.jmri.jmrit.logixng.LogixNGInitializationTable" url="package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_Throttle_functionPanel_Top" url="manual/DecoderPro/Main_Throttle_functionPanel.shtml#Top"/>
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame_examinemultipleevents" url="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml#examinemultipleevents"/>
+
+<mapID target="package.jmri.jmrit.logixng.ConditionalNGEditor" url="package/jmri/jmrit/logixng/ConditionalNGEditor.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ShowCarTypesServiced" url="package/jmri/jmrit/operations/Operations.shtml#ShowCarTypesServiced"/>
 
@@ -2220,6 +2338,8 @@
 
 <mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_contents" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#contents"/>
+
 <mapID target="html.apps.PanelPro.GettingStarted_SML" url="html/apps/PanelPro/GettingStarted.shtml#SML"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Engines" url="manual/JMRI_OPS_UsersGuide/Ops_Engines.shtml"/>
@@ -2229,6 +2349,8 @@
 <mapID target="html.hardware.tams.index_documentation" url="html/hardware/tams/index.shtml#documentation"/>
 
 <mapID target="manual.DecoderPro3.Main_TMCC" url="manual/DecoderPro3/Main_TMCC.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.CategoriesEnum" url="html/doc/Technical/logixng/CategoriesEnum.shtml"/>
 
 <mapID target="html.hardware.rps.index_tools" url="html/hardware/rps/index.shtml#tools"/>
 
@@ -2265,6 +2387,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditRoutes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditRoutes.shtml#Top"/>
 
 <mapID target="html.hardware.arduino.Sidebar" url="html/hardware/arduino/Sidebar.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Sockets" url="html/doc/Technical/logixng/Sockets.shtml"/>
 
 <mapID target="html.doc.Technical.I8N_testing" url="html/doc/Technical/I8N.shtml#testing"/>
 
@@ -2309,6 +2433,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_DCC_Top" url="manual/JMRI_OPS_UsersGuide/Start_DCC.shtml#Top"/>
 
 <mapID target="html.tools.signaling.index_logix" url="html/tools/signaling/index.shtml#logix"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_tables" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#tables"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_PickUpCarOrder" url="package/jmri/jmrit/operations/Operations.shtml#PickUpCarOrder"/>
 
@@ -2384,6 +2510,8 @@
 
 <mapID target="manual.DecoderPro3.Comp_Basic" url="manual/DecoderPro3/Comp_Basic.shtml"/>
 
+<mapID target="template-no-sidebar" url="template-no-sidebar.shtml"/>
+
 <mapID target="html.hardware.digirails.index_limitations" url="html/hardware/digirails/index.shtml#limitations"/>
 
 <mapID target="html.doc.Technical.getgitcode_view" url="html/doc/Technical/getgitcode.shtml#view"/>
@@ -2401,6 +2529,8 @@
 <mapID target="html.hardware.dcc4pc.index_hardware" url="html/hardware/dcc4pc/index.shtml#hardware"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SpurOption" url="package/jmri/jmrit/operations/Operations.shtml#SpurOption"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_SetupaRoute" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#SetupaRoute"/>
 
 <mapID target="parts.SidebarTools" url="parts/SidebarTools.shtml"/>
 
@@ -2504,6 +2634,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportCarsFile_Top" url="manual/JMRI_OPS_UsersGuide/Ops_ImportCarsFile.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.logixng.ModuleEditor" url="package/jmri/jmrit/logixng/ModuleEditor.shtml"/>
+
 <mapID target="html.apps.DecoderPro.Programmer_display" url="html/apps/DecoderPro/Programmer.shtml#display"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTToTTurnout" url="package/jmri/jmrit/display/SetSignalsAtTToTTurnout.shtml"/>
@@ -2514,7 +2646,11 @@
 
 <mapID target="html.hardware.qsi.index_connecting" url="html/hardware/qsi/index.shtml#connecting"/>
 
+<mapID target="package.jmri.jmrix.openlcb.swing.hub.HubPane" url="package/jmri/jmrix/openlcb/swing/hub/HubPane.shtml"/>
+
 <mapID target="html.hardware.mqtt.index_top" url="html/hardware/mqtt/index.shtml#top"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_editconditionalng" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#editconditionalng"/>
 
 <mapID target="package.jmri.jmrix.nce.consist.NceConsistEditFrame" url="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml"/>
 
@@ -2526,6 +2662,8 @@
 
 <mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml"/>
 
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_RegisteraTrain" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#RegisteraTrain"/>
+
 <mapID target="manual.DecoderPro.Main_XpressNet_Database" url="manual/DecoderPro/Main_XpressNet.shtml#Database"/>
 
 <mapID target="manual.DecoderPro.Main_XpressNet_LZ100" url="manual/DecoderPro/Main_XpressNet.shtml#LZ100"/>
@@ -2534,6 +2672,8 @@
 
 <mapID target="parts.SidebarApplications" url="parts/SidebarApplications.shtml"/>
 
+<mapID target="package.jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerFrame" url="package/jmri/jmrix/cmri/serial/nodeconfigmanager/NodeConfigManagerFrame.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_setCars_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_setCars.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Dcode_Format" url="manual/DecoderPro/Dcode_Format.shtml"/>
@@ -2541,6 +2681,8 @@
 <mapID target="manual.DecoderPro.Start_DecoderPro_Top" url="manual/DecoderPro/Start_DecoderPro.shtml#Top"/>
 
 <mapID target="html.hardware.cmri.CMRI_L609" url="html/hardware/cmri/CMRI.shtml#L609"/>
+
+<mapID target="html.doc.Technical.logixng.UnitTesting" url="html/doc/Technical/logixng/UnitTesting.shtml"/>
 
 <mapID target="html.doc.Technical.JUnit_HandlingLogOutput" url="html/doc/Technical/JUnit.shtml#HandlingLogOutput"/>
 
@@ -2564,6 +2706,8 @@
 
 <mapID target="html.doc.Technical.gitdeveloper_repo" url="html/doc/Technical/gitdeveloper.shtml#repo"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_system_names" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#system_names"/>
+
 <mapID target="manual.DecoderPro3.Main_SPROG_ConsoleMenu" url="manual/DecoderPro3/Main_SPROG.shtml#ConsoleMenu"/>
 
 <mapID target="html.hardware.dccpp.Sidebar" url="html/hardware/dccpp/Sidebar.shtml"/>
@@ -2573,6 +2717,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditTrain" url="manual/JMRI_OPS_UsersGuide/Ops_EditTrain.shtml"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_sneakpaths" url="html/hardware/loconet/StandaloneLocoNet.shtml#sneakpaths"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_scripts" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#scripts"/>
 
 <mapID target="package.jmri.jmrix.maple.assignment.ListFrame" url="package/jmri/jmrix/maple/assignment/ListFrame.shtml"/>
 
@@ -2613,6 +2759,8 @@
 <mapID target="html.hardware.cmri.CMRI_L624" url="html/hardware/cmri/CMRI.shtml#L624"/>
 
 <mapID target="html.hardware.loconet.EnhancedSlots_whatCmdStnsTrad" url="html/hardware/loconet/EnhancedSlots.shtml#whatCmdStnsTrad"/>
+
+<mapID target="html.doc.Technical.logixng.LogixNG" url="html/doc/Technical/logixng/LogixNG.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_RPS_DebuggerWin" url="manual/DecoderPro/Main_RPS.shtml#DebuggerWin"/>
 
@@ -2720,6 +2868,8 @@
 
 <mapID target="manual.DecoderPro.Main_wangrow" url="manual/DecoderPro/Main_wangrow.shtml"/>
 
+<mapID target="html.tools.LogixNG-old" url="html/tools/LogixNG-old.shtml"/>
+
 <mapID target="html.hardware.loconet.StandaloneLocoNet_multconsingle" url="html/hardware/loconet/StandaloneLocoNet.shtml#multconsingle"/>
 
 <mapID target="html.hardware.sproggen5.hardware" url="html/hardware/sproggen5/hardware.shtml"/>
@@ -2760,8 +2910,6 @@
 
 <mapID target="html.hardware.loconet.EnhancedSlots_PrimaryDiff" url="html/hardware/loconet/EnhancedSlots.shtml#PrimaryDiff"/>
 
-<mapID target="package.jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigFrame" url="package/jmri/jmrix/cmri/serial/nodeconfigmanager/NodeConfigFrame.shtml"/>
-
 <mapID target="manual.DecoderPro.Main_Throttle_toolbar" url="manual/DecoderPro/Main_Throttle_toolbar.shtml"/>
 
 <mapID target="html.tools.Audio_objects" url="html/tools/Audio.shtml#objects"/>
@@ -2794,11 +2942,15 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainShowCarTypesServiced" url="package/jmri/jmrit/operations/Operations.shtml#TrainShowCarTypesServiced"/>
 
+<mapID target="package.jmri.jmrit.logixng.LogixNGTableTableEditor" url="package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml"/>
+
 <mapID target="html.hardware.raildriver.index_documentation" url="html/hardware/raildriver/index.shtml#documentation"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_schedule_Schedules" url="manual/JMRI_OPS_UsersGuide/Ops_schedule.shtml#Schedules"/>
 
 <mapID target="package.jmri.jmrit.conditional.ConditionalTreeEditor" url="package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_notes" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#notes"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_LocationServiceDirection" url="package/jmri/jmrit/operations/Operations.shtml#LocationServiceDirection"/>
 
@@ -2809,6 +2961,8 @@
 <mapID target="manual.DecoderPro.Comp_ManfSpecific" url="manual/DecoderPro/Comp_ManfSpecific.shtml"/>
 
 <mapID target="package.jmri.jmrit.conditional.ConditionalListEditor" url="package/jmri/jmrit/conditional/ConditionalListEditor.shtml"/>
+
+<mapID target="html.apps.LoadStoreWork_startAction" url="html/apps/LoadStoreWork.shtml#startAction"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_markermenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#markermenu"/>
 
@@ -2821,8 +2975,6 @@
 <mapID target="manual.DecoderPro3.Main_LocoNet_PM4Programmer" url="manual/DecoderPro3/Main_LocoNet.shtml#PM4Programmer"/>
 
 <mapID target="html.hardware.loconet.Addressing_CommandStationOpSw" url="html/hardware/loconet/Addressing.shtml#CommandStationOpSw"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_logic" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#logic"/>
 
 <mapID target="html.tools.TimeTable_station" url="html/tools/TimeTable.shtml#station"/>
 
@@ -2890,6 +3042,8 @@
 
 <mapID target="html.tools.WarrantsIntro_creating" url="html/tools/WarrantsIntro.shtml#creating"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_logixng" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#logixng"/>
+
 <mapID target="html.hardware.bachrus.index_documentation" url="html/hardware/bachrus/index.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrackBlockingOrder" url="package/jmri/jmrit/operations/Operations.shtml#TrackBlockingOrder"/>
@@ -2905,8 +3059,6 @@
 <mapID target="html.tools.index_routingtools" url="html/tools/index.shtml#routingtools"/>
 
 <mapID target="html.tools.fastclock.Sidebar" url="html/tools/fastclock/Sidebar.shtml"/>
-
-<mapID target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenFrame" url="package/jmri/jmrix/powerline/packetgen/PowerlinePacketGenFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.LRouteTable" url="package/jmri/jmrit/beantable/LRouteTable.shtml"/>
 
@@ -2938,6 +3090,8 @@
 
 <mapID target="manual.DecoderPro.Main_NCE" url="manual/DecoderPro/Main_NCE.shtml"/>
 
+<mapID target="html.apps.OperationsPro.index" url="html/apps/OperationsPro/index.shtml"/>
+
 <mapID target="html.hardware.openlcb.index_tools" url="html/hardware/openlcb/index.shtml#tools"/>
 
 <mapID target="html.doc.Technical.ContinuousIntegration_wip" url="html/doc/Technical/ContinuousIntegration.shtml#wip"/>
@@ -2951,6 +3105,8 @@
 <mapID target="html.tools.Logix_thepolicy" url="html/tools/Logix.shtml#thepolicy"/>
 
 <mapID target="html.hardware.loconet.DCS52_Dcs52Standalone" url="html/hardware/loconet/DCS52.shtml#Dcs52Standalone"/>
+
+<mapID target="html.doc.Technical.logixng.Plugins" url="html/doc/Technical/logixng/Plugins.shtml"/>
 
 <mapID target="html.tools.speedometer.index" url="html/tools/speedometer/index.shtml"/>
 
@@ -2975,8 +3131,6 @@
 <mapID target="package.jmri.jmrit.signalling.AddEditSignalingLogic" url="package/jmri/jmrit/signalling/AddEditSignalingLogic.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainLoadOptions" url="package/jmri/jmrit/operations/Operations.shtml#TrainLoadOptions"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_requirements" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#requirements"/>
 
 <mapID target="html.hardware.tams.index_connecting" url="html/hardware/tams/index.shtml#connecting"/>
 
@@ -3057,8 +3211,6 @@
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_more" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#more"/>
 
 <mapID target="html.tools.uss.Conventions" url="html/tools/uss/Conventions.shtml"/>
-
-<mapID target="TemplateBar" url="TemplateBar.shtml"/>
 
 <mapID target="html.hardware.pi.index_hardware" url="html/hardware/pi/index.shtml#hardware"/>
 
@@ -3146,6 +3298,8 @@
 
 <mapID target="html.doc.Technical.CVSFAQ_ds_store" url="html/doc/Technical/CVSFAQ.shtml#ds_store"/>
 
+<mapID target="html.tools.logixng.reference.chapter99_indirect_accessing" url="html/tools/logixng/reference/chapter99.shtml#indirect_accessing"/>
+
 <mapID target="package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/oaktree/nodeconfig/NodeConfigFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainStatus" url="package/jmri/jmrit/operations/Operations.shtml#TrainStatus"/>
@@ -3202,6 +3356,8 @@
 
 <mapID target="html.tools.index" url="html/tools/index.shtml"/>
 
+<mapID target="releasenotes.jmri4.23-master" url="releasenotes/jmri4.23-master.shtml"/>
+
 <mapID target="package.jmri.jmrit.ctc.CTC_frmCO" url="package/jmri/jmrit/ctc/CTC.shtml#frmCO"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings_menubar" url="manual/JMRI_OPS_UsersGuide/Ops_Settings_menubar.shtml"/>
@@ -3209,6 +3365,8 @@
 <mapID target="manual.DecoderPro.Main_RPS_Receiver" url="manual/DecoderPro/Main_RPS.shtml#Receiver"/>
 
 <mapID target="html.doc.Technical.JUnit_J5extensions" url="html/doc/Technical/JUnit.shtml#J5extensions"/>
+
+<mapID target="html.tools.logixng.Sidebar" url="html/tools/logixng/Sidebar.shtml"/>
 
 <mapID target="html.hardware.mrc.index_tools" url="html/hardware/mrc/index.shtml#tools"/>
 
@@ -3354,6 +3512,8 @@
 
 <mapID target="html.tools.throttle.ThrottleWindowMenus_EditMenu" url="html/tools/throttle/ThrottleWindowMenus.shtml#EditMenu"/>
 
+<mapID target="html.tools.logixng.reference.chapter1" url="html/tools/logixng/reference/chapter1.shtml"/>
+
 <mapID target="html.hardware.hardware-template_tools" url="html/hardware/hardware-template.shtml#tools"/>
 
 <mapID target="manual.DecoderPro.Main_XpressNet_LV102" url="manual/DecoderPro/Main_XpressNet.shtml#LV102"/>
@@ -3364,13 +3524,29 @@
 
 <mapID target="html.hardware.loconet.SidebarHardwareLocalPart" url="html/hardware/loconet/SidebarHardwareLocalPart.shtml"/>
 
+<mapID target="html.tools.logixng.reference.chapter2" url="html/tools/logixng/reference/chapter2.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter3" url="html/tools/logixng/reference/chapter3.shtml"/>
+
 <mapID target="html.hardware.TerminalServer" url="html/hardware/TerminalServer.shtml"/>
 
 <mapID target="package.jmri.jmrix.grapevine.serialmon.SerialMonFrame" url="package/jmri/jmrix/grapevine/serialmon/SerialMonFrame.shtml"/>
 
+<mapID target="html.tools.logixng.reference.chapter4" url="html/tools/logixng/reference/chapter4.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter5" url="html/tools/logixng/reference/chapter5.shtml"/>
+
 <mapID target="html.hardware.nce.NCE_documentation" url="html/hardware/nce/NCE.shtml#documentation"/>
 
+<mapID target="html.tools.logixng.reference.chapter6" url="html/tools/logixng/reference/chapter6.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter7" url="html/tools/logixng/reference/chapter7.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter8" url="html/tools/logixng/reference/chapter8.shtml"/>
+
 <mapID target="html.hardware.pi.index_documentation" url="html/hardware/pi/index.shtml#documentation"/>
+
+<mapID target="html.tools.logixng.reference.chapter9" url="html/tools/logixng/reference/chapter9.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Options" url="package/jmri/jmrit/dispatcher/Options.shtml"/>
 
@@ -3391,6 +3567,8 @@
 <mapID target="package.jmri.jmrit.ctc.CTC_ctcDefinitions" url="package/jmri/jmrit/ctc/CTC.shtml#ctcDefinitions"/>
 
 <mapID target="package.jmri.jmrix.rps.reversealign.AlignmentPanel" url="package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_RunRoute" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#RunRoute"/>
 
 <mapID target="package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel" url="package/jmri/jmrix/zimo/swing/packetgen/Mx1PacketGenPanel.shtml"/>
 
@@ -3540,6 +3718,8 @@
 
 <mapID target="html.hardware.can.cbus.CbusFastClock_outbound" url="html/hardware/can/cbus/CbusFastClock.shtml#outbound"/>
 
+<mapID target="html.apps.LoadStoreWork_usave" url="html/apps/LoadStoreWork.shtml#usave"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddTrain_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddTrain.shtml#Top"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation.shtml"/>
@@ -3646,6 +3826,8 @@
 
 <mapID target="html.hardware.merg.index_connecting" url="html/hardware/merg/index.shtml#connecting"/>
 
+<mapID target="html.apps.LoadStoreWork_autosave" url="html/apps/LoadStoreWork.shtml#autosave"/>
+
 <mapID target="package.jmri.jmrit.dispatcher.NewTrain_loadsave" url="package/jmri/jmrit/dispatcher/NewTrain.shtml#loadsave"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_FrameProperties" url="manual/DecoderPro3/dp3_Main_Throttle_FrameProperties.shtml"/>
@@ -3692,6 +3874,8 @@
 
 <mapID target="html.hardware.arduino.SidebarHardwareLocalPart" url="html/hardware/arduino/SidebarHardwareLocalPart.shtml"/>
 
+<mapID target="html.doc.Technical.logixng.PackageStructure" url="html/doc/Technical/logixng/PackageStructure.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_Menu" url="manual/DecoderPro/Main_Menu.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CabooseFredHazardous" url="package/jmri/jmrit/operations/Operations.shtml#CabooseFredHazardous"/>
@@ -3718,6 +3902,8 @@
 
 <mapID target="html.tools.index_lights" url="html/tools/index.shtml#lights"/>
 
+<mapID target="html.apps.LoadStoreWork_uload" url="html/apps/LoadStoreWork.shtml#uload"/>
+
 <mapID target="html.hardware.dccpp.Turnouts" url="html/hardware/dccpp/Turnouts.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.SlipTurnoutIcon" url="package/jmri/jmrit/display/SlipTurnoutIcon.shtml"/>
@@ -3725,6 +3911,10 @@
 <mapID target="package.jmri.jmrit.beantable.TransitTable" url="package/jmri/jmrit/beantable/TransitTable.shtml"/>
 
 <mapID target="html.hardware.nce.NCE_troubleShoot" url="html/hardware/nce/NCE.shtml#troubleShoot"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_HomeDivision" url="package/jmri/jmrit/operations/Operations.shtml#HomeDivision"/>
+
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_components" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#components"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_RouteComment" url="package/jmri/jmrit/operations/Operations.shtml#RouteComment"/>
 
@@ -3769,6 +3959,8 @@
 <mapID target="manual.DecoderPro.Main_CMRI_ConfigureNodes" url="manual/DecoderPro/Main_CMRI.shtml#ConfigureNodes"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddStaging" url="manual/JMRI_OPS_UsersGuide/Ops_AddStaging.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.RailComTable" url="package/jmri/jmrit/beantable/RailComTable.shtml"/>
 
 <mapID target="html.doc.Technical.Eclipse_getwgit" url="html/doc/Technical/Eclipse.shtml#getwgit"/>
 
@@ -3823,6 +4015,8 @@
 <mapID target="html.tools.Lights_ref" url="html/tools/Lights.shtml#ref"/>
 
 <mapID target="html.hardware.can.cbus.CbusFastClock" url="html/hardware/can/cbus/CbusFastClock.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_EditTrainScripts" url="package/jmri/jmrit/operations/Operations.shtml#EditTrainScripts"/>
 
 <mapID target="html.hardware.USBtoSerial_LI101" url="html/hardware/USBtoSerial.shtml#LI101"/>
 
@@ -3962,6 +4156,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_CarTypes" url="package/jmri/jmrit/operations/Operations.shtml#CarTypes"/>
 
+<mapID target="html.apps.LoadStoreWork_nosave" url="html/apps/LoadStoreWork.shtml#nosave"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_LocomotiveModels" url="package/jmri/jmrit/operations/Operations.shtml#LocomotiveModels"/>
 
 <mapID target="html.apps.DecoderPro.Sidebar" url="html/apps/DecoderPro/Sidebar.shtml"/>
@@ -4005,6 +4201,8 @@
 <mapID target="html.hardware.openlcb.OlcbSignalMast" url="html/hardware/openlcb/OlcbSignalMast.shtml"/>
 
 <mapID target="html.hardware.pi.index_connecting" url="html/hardware/pi/index.shtml#connecting"/>
+
+<mapID target="html.doc.Technical.logixng.CreateExpressionsAndActions" url="html/doc/Technical/logixng/CreateExpressionsAndActions.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.ViewSpecialActions" url="package/jmri/jmrit/beantable/ViewSpecialActions.shtml"/>
 
@@ -4076,8 +4274,6 @@
 
 <mapID target="html.doc.Technical.JUnit_Reporting" url="html/doc/Technical/JUnit.shtml#Reporting"/>
 
-<mapID target="TemplatePlain" url="TemplatePlain.shtml"/>
-
 <mapID target="manual.DecoderPro.Main_SPROG_Console" url="manual/DecoderPro/Main_SPROG.shtml#Console"/>
 
 <mapID target="package.jmri.jmrix.AbstractMonFrame" url="package/jmri/jmrix/AbstractMonFrame.shtml"/>
@@ -4085,6 +4281,8 @@
 <mapID target="package.jmri.jmrit.ctc.CTC_frmTUL" url="package/jmri/jmrit/ctc/CTC.shtml#frmTUL"/>
 
 <mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml"/>
+
+<mapID target="package.jmri.jmrix.tams.swing.statusframe.StatusPanel" url="package/jmri/jmrix/tams/swing/statusframe/StatusPanel.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Main_Main_Top" url="manual/JMRI_OPS_UsersGuide/Main_Main.shtml#Top"/>
 
@@ -4132,6 +4330,8 @@
 
 <mapID target="manual.DecoderPro3.Comp_GlobalCVs" url="manual/DecoderPro3/Comp_GlobalCVs.shtml"/>
 
+<mapID target="html.tools.logixng.reference.chapter99_scripts" url="html/tools/logixng/reference/chapter99.shtml#scripts"/>
+
 <mapID target="manual.DecoderPro.Main_Debug_Top" url="manual/DecoderPro/Main_Debug.shtml#Top"/>
 
 <mapID target="html.tools.throttle.AdvancedThrottleControl_wii" url="html/tools/throttle/AdvancedThrottleControl.shtml#wii"/>
@@ -4149,8 +4349,6 @@
 <mapID target="html.doc.Technical.gitdeveloper_note" url="html/doc/Technical/gitdeveloper.shtml#note"/>
 
 <mapID target="manual.DecoderPro3.Start_DecoderPro_Top" url="manual/DecoderPro3/Start_DecoderPro.shtml#Top"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_steps" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#steps"/>
 
 <mapID target="html.hardware.loconet.PR4" url="html/hardware/loconet/PR4.shtml"/>
 
@@ -4286,6 +4484,8 @@
 
 <mapID target="manual.DecoderPro.Main_GrapeVine" url="manual/DecoderPro/Main_GrapeVine.shtml"/>
 
+<mapID target="html.apps.LoadStoreWork" url="html/apps/LoadStoreWork.shtml"/>
+
 <mapID target="html.hardware.modbus.index" url="html/hardware/modbus/index.shtml"/>
 
 <mapID target="html.hardware.cmri.CMRI_L391" url="html/hardware/cmri/CMRI.shtml#L391"/>
@@ -4303,8 +4503,6 @@
 <mapID target="html.hardware.grapevine.Names_connecting" url="html/hardware/grapevine/Names.shtml#connecting"/>
 
 <mapID target="html.doc.Technical.index_buildyourcopy" url="html/doc/Technical/index.shtml#buildyourcopy"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_introduction" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#introduction"/>
 
 <mapID target="manual.DecoderPro3.Comp_LightFX_Top" url="manual/DecoderPro3/Comp_LightFX.shtml#Top"/>
 
@@ -4341,6 +4539,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation_menu_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation_menu.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_RollingStockServiced" url="package/jmri/jmrit/operations/Operations.shtml#RollingStockServiced"/>
+
+<mapID target="html.tools.logixng.reference.chapter99" url="html/tools/logixng/reference/chapter99.shtml"/>
 
 <mapID target="html.hardware.can.cbus.index_dcc" url="html/hardware/can/cbus/index.shtml#dcc"/>
 
@@ -4434,15 +4634,25 @@
 
 <mapID target="manual.DecoderPro.VSD_File_and_Config" url="manual/DecoderPro/VSD_File_and_Config.shtml"/>
 
+<mapID target="html.tools.scripting.JythonApps" url="html/tools/scripting/JythonApps.shtml"/>
+
 <mapID target="html.doc.Technical.XmlPersistance" url="html/doc/Technical/XmlPersistance.shtml"/>
 
 <mapID target="html.hardware.easydcc.EasyDCC_limitations" url="html/hardware/easydcc/EasyDCC.shtml#limitations"/>
 
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_running" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#running"/>
+
 <mapID target="package.apps.TabbedPreferences_RailroadName" url="package/apps/TabbedPreferences.shtml#RailroadName"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_stage2" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#stage2"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_stage3" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#stage3"/>
 
 <mapID target="html.doc.Technical.IntelliJ_debug" url="html/doc/Technical/IntelliJ.shtml#debug"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Menu.shtml"/>
+
+<mapID target="html.scripthelp.DispatcherSystem.DispatcherSystem_stage1" url="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml#stage1"/>
 
 <mapID target="package.jmri.jmrit.logix.SCWarrant" url="package/jmri/jmrit/logix/SCWarrant.shtml"/>
 
@@ -4480,6 +4690,8 @@
 
 <mapID target="package.apps.AppConfigPanel_advanced" url="package/apps/AppConfigPanel.shtml#advanced"/>
 
+<mapID target="html.tools.logixng.reference.chapter99_notes" url="html/tools/logixng/reference/chapter99.shtml#notes"/>
+
 <mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml"/>
 
 <mapID target="html.hardware.can.Sidebar" url="html/hardware/can/Sidebar.shtml"/>
@@ -4498,9 +4710,9 @@
 
 <mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml"/>
 
-<mapID target="package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel" url="package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenPanel.shtml"/>
+<mapID target="package.jmri.jmrit.beantable.LogixNGModuleTable" url="package/jmri/jmrit/beantable/LogixNGModuleTable.shtml"/>
 
-<mapID target="html.apps.StoringYourWork_usave" url="html/apps/StoringYourWork.shtml#usave"/>
+<mapID target="package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel" url="package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenPanel.shtml"/>
 
 <mapID target="html.apps.DecoderPro.index_guide" url="html/apps/DecoderPro/index.shtml#guide"/>
 
@@ -4644,9 +4856,15 @@
 
 <mapID target="parts.SidebarTail" url="parts/SidebarTail.shtml"/>
 
+<mapID target="package.jmri.jmrit.logixng.LogixImport" url="package/jmri/jmrit/logixng/LogixImport.shtml"/>
+
 <mapID target="package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame" url="package/jmri/jmrix/cmri/serial/cmrinetmanager/CMRInetManagerFrame.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditRoutes" url="manual/JMRI_OPS_UsersGuide/Ops_EditRoutes.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter11" url="html/tools/logixng/reference/chapter11.shtml"/>
+
+<mapID target="html.tools.logixng.reference.chapter10" url="html/tools/logixng/reference/chapter10.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_PrintData_c_Top" url="manual/DecoderPro3/Comp_PrintData_c.shtml#Top"/>
 
@@ -4657,6 +4875,8 @@
 <mapID target="html.hardware.dccpp.index_connecting" url="html/hardware/dccpp/index.shtml#connecting"/>
 
 <mapID target="html.hardware.loconet.LocoNetSim" url="html/hardware/loconet/LocoNetSim.shtml"/>
+
+<mapID target="package.jmri.jmrit.logixng.LogixNGTableEditor" url="package/jmri/jmrit/logixng/LogixNGTableEditor.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_SendPacket" url="manual/DecoderPro3/Main_LocoNet.shtml#SendPacket"/>
 
@@ -4880,6 +5100,8 @@
 
 <mapID target="html.web.JsonServlet_jmri_json_server" url="html/web/JsonServlet.shtml#jmri_json_server"/>
 
+<mapID target="html.doc.Technical.logixng.Tutorial.LogixNG_start" url="html/doc/Technical/logixng/Tutorial/LogixNG.shtml#start"/>
+
 <mapID target="html.hardware.XBee.XBeeNodeConfigurationTool_documentation" url="html/hardware/XBee/XBeeNodeConfigurationTool.shtml#documentation"/>
 
 <mapID target="html.apps.ManifestCreator.index" url="html/apps/ManifestCreator/index.shtml"/>
@@ -4896,6 +5118,8 @@
 
 <mapID target="html.tools.signaling.ldt.output1_html_m55495bcc" url="html/tools/signaling/ldt/output1_html_m55495bcc.png"/>
 
+<mapID target="html.tools.logixng.reference.images.chapter6.string_expression_common" url="html/tools/logixng/reference/images/chapter6/string_expression_common.png"/>
+
 <mapID target="manual.DecoderPro3.images.arrow" url="manual/DecoderPro3/images/arrow.gif"/>
 
 <mapID target="images.popup" url="images/popup.gif"/>
@@ -4910,11 +5134,17 @@
 
 <mapID target="html.tools.signaling.ldt.output4_html_71c5a86b" url="html/tools/signaling/ldt/output4_html_71c5a86b.png"/>
 
+<mapID target="html.tools.logixng.reference.images.chapter5.digital_action_display" url="html/tools/logixng/reference/images/chapter5/digital_action_display.png"/>
+
 <mapID target="html.tools.signaling.ldt.output1_html_m5bfb00d" url="html/tools/signaling/ldt/output1_html_m5bfb00d.png"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter5.analog_action_common" url="html/tools/logixng/reference/images/chapter5/analog_action_common.png"/>
 
 <mapID target="html.tools.signaling.ldt.output1_html_4a835f8c" url="html/tools/signaling/ldt/output1_html_4a835f8c.png"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.images.arrow" url="manual/JMRI_OPS_UsersGuide/images/arrow.gif"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter6.analog_expression_common" url="html/tools/logixng/reference/images/chapter6/analog_expression_common.png"/>
 
 <mapID target="manual.DecoderPro3.images.btn_lanch_throttle" url="manual/DecoderPro3/images/btn_lanch_throttle.png"/>
 
@@ -4923,6 +5153,8 @@
 <mapID target="html.tools.signaling.ldt.output3_html_11be9e7b" url="html/tools/signaling/ldt/output3_html_11be9e7b.png"/>
 
 <mapID target="manual.DecoderPro3.images.btn_basic_programmer" url="manual/DecoderPro3/images/btn_basic_programmer.png"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter11.for_each_listen_action" url="html/tools/logixng/reference/images/chapter11/for_each_listen_action.png"/>
 
 <mapID target="html.tools.signaling.ldt.output1_html_7f201b69" url="html/tools/signaling/ldt/output1_html_7f201b69.png"/>
 
@@ -4939,6 +5171,8 @@
 <mapID target="html.tools.throttle.images.spacer" url="html/tools/throttle/images/spacer.gif"/>
 
 <mapID target="images.tracksegments.WhiteTO" url="images/tracksegments/WhiteTO.gif"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter6.digital_expression_loconet" url="html/tools/logixng/reference/images/chapter6/digital_expression_loconet.png"/>
 
 <mapID target="images.tracksegments.TranTOc" url="images/tracksegments/TranTOc.gif"/>
 
@@ -4991,5 +5225,7 @@
 <mapID target="html.tools.signaling.ldt.output6_html_6f691e17" url="html/tools/signaling/ldt/output6_html_6f691e17.png"/>
 
 <mapID target="manual.DecoderPro3.images.btn_throttle_labels" url="manual/DecoderPro3/images/btn_throttle_labels.png"/>
+
+<mapID target="html.tools.logixng.reference.images.chapter5.string_action_common" url="html/tools/logixng/reference/images/chapter5/string_action_common.png"/>
 
 </map>

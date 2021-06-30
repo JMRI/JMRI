@@ -70,7 +70,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
         // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}", systemName, userName);
@@ -86,14 +86,18 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         // return existing if there is one
         Turnout t;
-        if ((userName != null) && ((t = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != t) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+        if (userName != null) {
+            t = getByUserName(userName);
+            if (t != null) {
+                if (getBySystemName(systemName) != t) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
                         userName, systemName, t.getSystemName());
-            }
+                }
             return t;
+            }
         }
-        if ((t = getBySystemName(systemName)) != null) {
+        t = getBySystemName(systemName);
+        if (t != null) {
             if ((t.getUserName() == null) && (userName != null)) {
                 t.setUserName(userName);
             } else if (userName != null) {
@@ -105,10 +109,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         // doesn't exist, make a new one
         t = createNewTurnout(systemName, userName);
-        // if that failed, blame it on the input arguments
-        if (t == null) {
-            throw new IllegalArgumentException("Unable to create turnout from " + systemName);
-        }
+        // if that failed, will throw an IllegalArgumentException
 
         // Some implementations of createNewTurnout() register the new bean,
         // some don't. 
@@ -209,8 +210,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      *
      * @param systemName the system name to use for the new Turnout
      * @param userName   the user name to use for the new Turnout
-     * @return the new Turnout or null if unsuccessful
+     * @return the new Turnout or
+     * @throws IllegalArgumentException if unsuccessful
      */
+    @Nonnull
     abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
@@ -269,7 +272,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             } catch (NumberFormatException nx) {
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     throw new JmriException("Value of requested turnout default closed speed is not valid");
                 }
             }
@@ -299,7 +302,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             } catch (NumberFormatException nx) {
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     throw new JmriException("Value of requested turnout default thrown speed is not valid");
                 }
             }

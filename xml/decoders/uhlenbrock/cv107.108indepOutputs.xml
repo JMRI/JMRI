@@ -29,6 +29,12 @@
 		  <surname>Broerse</surname>
 		</personname>
 	</author>
+	<author>
+		<personname>
+		  <firstname>Konrad</firstname>
+		  <surname>Malkowski</surname>
+		</personname>
+	</author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -43,11 +49,17 @@
 		  <authorinitials>EBR</authorinitials>
 		  <revremark>Added A2-A7</revremark>
 	  </revision>
+	  <revision>
+		  <revnumber>3</revnumber>
+		  <date>2020-12-23</date>
+		  <authorinitials>KM</authorinitials>
+		  <revremark>Added Support for PIKO40501</revremark>
+	  </revision>
   <!-- Uhlenbrock Decoder Configuration CV 107/108 - independent control of A1/A2 outputs -->
   <!-- valid for 73100, 73140, 75330, 76425, 76560 (IntelliSound4); 73105, 73235, 73405, PIKO41RH2400 (IntelliDrive2)
                            (to be declared explicitly with include)                       -->  
   </revhistory>
- <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400">
+ <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,PIKO40501">
 	<!--repeat include= below-->
 	<enumVal>
 		<enumChoice choice="Deactivated">
@@ -91,7 +103,7 @@
 	  <tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
     <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
   </variable>
-  <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400">
+  <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,PIKO40501">
 	<enumVal>
 	  <enumChoice choice="None">
             <choice>None</choice>
@@ -143,7 +155,7 @@
 	<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
     <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
   </variable>
-  <variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400">
+  <variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400,PIKO40501">
 	<enumVal>
 	    <enumChoice choice="Deactivated">
             <choice>Deactivated</choice>
@@ -186,7 +198,7 @@
 	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
     <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
   </variable>
-  <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400">
+  <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400,PIKO40501">
 	<enumVal>
 	  <enumChoice choice="None">
             <choice>None</choice>

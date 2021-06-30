@@ -1,11 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+<head>
   <title>JMRI: Building with IntelliJ IDEA</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content=
@@ -670,7 +666,7 @@
           To add the path to SpotBugs for Ant in your <code>local.properties</code> file to match the place where the
           SpotBugs application is located on your computer add these lines:<br>
           <code># configure SpotBugs<br>
-            spotbugs.home=/Users/you/Apps/spotbugs-3.1.12</code><br>
+            spotbugs.home=/Users/you/Apps/spotbugs-4.2.3</code><br>
           See the <a href="SpotBugs.shtml">JMRI SpotBugs help</a>.
         </li>
         <li>Next, from the <b>Ant Build</b> tab select the <b>spotbugs</b> ant task, wait for
@@ -849,5 +845,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -22,8 +22,9 @@ public class SprogGen5ConnectionTypeList implements jmri.jmrix.ConnectionTypeLis
         return new String[]{
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanisbConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.Sprog3PlusConnectionConfig",
+            "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3PlusConnectionConfig",
+            "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3v2ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3ConnectionConfig",
-            "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanSprogConnectionConfig",
         };
     }
 

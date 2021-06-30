@@ -29,7 +29,7 @@ public class SignalSystemTest {
     @Test
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/valid/SimplePanel_OBlocks-DB1969.xml"));
@@ -191,7 +191,8 @@ public class SignalSystemTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

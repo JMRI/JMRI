@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -180,12 +179,12 @@
           </li>
           <li>
           The second section lets you select a user name selection
-          method.  See the 
+          method.  See the
           <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#logixOptions">
           Logix Options</a> menu for details.<span class="since">since 4.7.3</span>
           </li>
           <li>
-          The third section lets you select a Conditional Editor.  See the 
+          The third section lets you select a Conditional Editor.  See the
           <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#logixOptions">
           Logix Options</a> menu for details.<span class="since">since 4.9.2</span>
           </li>
@@ -312,7 +311,7 @@
       alt="Conditional Browser Window" height="296" width="562">
       </a>
       </div>
-      
+
       <p>Selecting the <strong>Copy</strong> item from the drop down
       <strong>select</strong> menu on the Logix Table will show a series of
       dialog windows that provide a way to copy the Logix and any
@@ -359,7 +358,7 @@
       Variables</a></p>
 
       <p>Logic operators currently available are NOT, AND, AND
-      NOT, OR and OR NOT. The AND operator is set up automatically 
+      NOT, OR and OR NOT. The AND operator is set up automatically
       by the program.
       For each state variable, the user selects whether the NOT
       operator is to precede the state variable. If the NOT
@@ -700,13 +699,12 @@
 
         <p>Logix are kept in your <i>layout configuration</i>, along
         with Turnouts, Sensors, Signal Heads, control panel setup etc.
-        To store this information on disk, allowing to
+        To store this information on disk, allowing you to
         <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-            it</a> next time you run JMRI, use <b>Store Configuration...</b>
-        in the <b>File</b> menu at the top of the Logix Table (or other
-        tables from the Tools menu), or select <b>Store Panel...</b>
-        in the <b>Panel</b> menu. Note that the enabled/disabled
-        state of each Logix is saved in the configuration file.</p>
+        it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.</p>
+
+        <p>Note that the enabled/disabled state of each Logix is saved in the configuration file.</p>
 
       <a name="notes" id="notes"></a>
       <h2>FAQ/Additional Notes</h2>
@@ -997,5 +995,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

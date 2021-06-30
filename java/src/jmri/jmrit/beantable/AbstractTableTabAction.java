@@ -34,11 +34,12 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
-        if (getManager() instanceof jmri.managers.AbstractProxyManager) {
+        Manager<E> mgr = getManager();
+        if (mgr instanceof jmri.managers.AbstractProxyManager) {
             // build the list, with default at start and internal at end (if present)
-            jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) getManager();
+            jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) mgr;
 
-            tabbedTableArray.add(new TabbedTableItem<>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
+            tabbedTableArray.add(new TabbedTableItem<>(Bundle.getMessage("All"), true, mgr, getNewTableAction("All"))); // NOI18N
 
             proxy.getDisplayOrderManagerList().stream().map(manager -> {
                 String manuName = manager.getMemo().getUserName();
@@ -49,7 +50,8 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             });
             
         } else {
-            String manuName = getManager().getMemo().getUserName();
+            Manager<E> man = getManager();
+            String manuName = ( man!=null ? man.getMemo().getUserName() : "Unknown Manager");
             tabbedTableArray.add(new TabbedTableItem<>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {
@@ -64,6 +66,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         init = true;
     }
 
+    @Override
     abstract protected Manager<E> getManager();
 
     abstract protected AbstractTableAction<E> getNewTableAction(String choice);
@@ -193,6 +196,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
 
             dataModel.configureTable(dataTable);
+            tableAction.configureTable(dataTable);
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
             // width is right, but if table is empty, it's not high
@@ -243,6 +247,13 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             if (model instanceof XTableColumnModel) {
                 Enumeration<TableColumn> e = ((XTableColumnModel) model).getColumns(false);
                 int numCols = ((XTableColumnModel) model).getColumnCount(false);
+                // XTableColumnModel has been spotted to return a fleeting different
+                // column count to actual model, generally if manager is changed at startup
+                // so we do a sanity check to make sure the models are in synch.
+                if (numCols != dataModel.getColumnCount()){
+                    log.debug("Difference with Xtable cols: {} Model cols: {}",numCols,dataModel.getColumnCount());
+                    return;
+                }
                 boolean[] colsVisible = new boolean[numCols];
                 while (e.hasMoreElements()) {
                     TableColumn column = e.nextElement();

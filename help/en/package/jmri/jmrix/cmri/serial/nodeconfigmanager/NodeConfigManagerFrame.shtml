@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+
+  <title>JMRI: C/MRI Node Configuration Manager</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h2>JMRI: C/MRI Node Configuration Manager</h2>
+      This is the cmri/serial/nodeconfigmanager/NodeConfigManagerFrame.shtml page.
+      Help is on the way.
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

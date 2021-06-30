@@ -16,7 +16,7 @@ public class VSDecoderManagerTest {
     public void testCTor() {
         VSDecoderManager t = new VSDecoderManager();
         Assert.assertNotNull("exists",t);
-    
+
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
@@ -29,6 +29,7 @@ public class VSDecoderManagerTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

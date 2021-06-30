@@ -28,8 +28,8 @@ public class TrackerTest {
     @Test
     public void testCTor() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
-        Tracker t = new Tracker(new OBlock("OB1", "Test"), "Test", 
-                new LocoIcon(new EditorScaffold()), 
+        Tracker t = new Tracker(new OBlock("OB1", "Test"), "Test",
+                new LocoIcon(new EditorScaffold()),
                 InstanceManager.getDefault(TrackerTableAction.class));
         assertThat(t).withFailMessage("exists").isNotNull();
     }
@@ -40,8 +40,8 @@ public class TrackerTest {
         TrackerTableAction trackTable = InstanceManager.getDefault(TrackerTableAction.class);
         OBlock blk1 = new OBlock("OB1", "blk1");
         blk1.setState(OBlock.OCCUPIED);
-        Tracker t = new Tracker(blk1, "Test", 
-                new LocoIcon(new EditorScaffold()), 
+        Tracker t = new Tracker(blk1, "Test",
+                new LocoIcon(new EditorScaffold()),
                 trackTable);
         assertThat(t).withFailMessage("exists").isNotNull();
         List<OBlock> occupied = t.getBlocksOccupied();
@@ -110,7 +110,7 @@ public class TrackerTest {
             panel.dispose();
         }
         _OBlockMgr.dispose();
-    }        
+    }
 
     @BeforeEach
     public void setUp() {
@@ -124,6 +124,7 @@ public class TrackerTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

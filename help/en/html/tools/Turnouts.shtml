@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -10,16 +9,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "turnout model railroad JMRI Turnouts PanelPro">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -72,12 +62,10 @@
         <p>The Turnout definitions are kept in your <i>layout
         configuration</i>, along with Sensors, Signal Heads,
         control panel setup etc.
-        To store this information on disk, allowing to
+        To store this information on disk, allowing you to
         <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> next time you run JMRI, use <b>Store Configuration...</b> in the
-        <b>File</b> menu at the top of the Turnout Table (or other
-        tables from the Tools menu), or select <b>Store Panel...</b>
-        in the <b>Panel</b> menu.</p>
+        it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.</p>
 
         <a name="add" id="add"></a>
         <h3>Adding a new Turnout</h3>
@@ -87,7 +75,7 @@
 
         <ol>
           <li>
-            <p>Click <b>Tables</b> -&gt; <b>Turnouts</b> in the
+            <p>Click <b>Tables</b> &rArr; <b>Turnouts</b> in the
             <b>Tools</b> menu to bring up the <a href=
             "../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
             Turnout Table</a>, and click the <b>Add...</b> button
@@ -144,5 +132,6 @@
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

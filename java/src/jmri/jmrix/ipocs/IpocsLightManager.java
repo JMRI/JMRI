@@ -27,7 +27,8 @@ public class IpocsLightManager extends AbstractLightManager {
   }
 
   @Override
-  protected Light createNewLight(@Nonnull String systemName, String userName) {
+  @Nonnull
+  protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
     return new IpocsLight(getPortController(), systemName, userName);
   }
   

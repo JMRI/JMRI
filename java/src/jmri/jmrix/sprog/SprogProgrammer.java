@@ -1,23 +1,27 @@
 package jmri.jmrix.sprog;
 
 import java.util.*;
+
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
+import jmri.jmrix.sprog.update.*;
 
 /**
  * Implement the jmri.Programmer interface via commands for the Sprog
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2021
  */
-public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
+public class SprogProgrammer extends AbstractProgrammer implements SprogListener, SprogVersionListener {
 
     private SprogSystemConnectionMemo _memo = null;
+    private SprogVersion _sv = null;
 
     public SprogProgrammer(SprogSystemConnectionMemo memo) {
-         _memo = memo;
+        _memo = memo;
     }
 
     /** 
@@ -52,6 +56,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     static final int NOTPROGRAMMING = 0;    // is notProgramming
     static final int COMMANDSENT = 2;       // read/write command sent, waiting reply
     int _val; // remember the value being read/written for confirmative reply
+    String _cv;
+    int _startVal;
+    jmri.ProgListener _progListener;
 
     /** 
      * {@inheritDoc}
@@ -59,12 +66,10 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     @Override
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        if (log.isDebugEnabled()) {
-            log.debug("writeCV {} mode {} listens {}", CV, getMode(), p);
-        }
+        log.debug("writeCV {} mode {} listens {}", CV, getMode(), p);
         useProgrammer(p);
         _val = val;
-        startProgramming(_val, CV);
+        startProgramming(_val, CV, 0);
     }
 
     /** 
@@ -80,13 +85,45 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      */
     @Override
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
-        if (log.isDebugEnabled()) {
-            log.debug("readCV {} mode {} listens {}", CV, getMode(), p);
+        readCVWithDefault(CVname, p, 0);
+    }
+    
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void readCV(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+        _startVal = startVal;
+        if (_sv != null) {
+            if (!_sv.supportsCVHints()) {
+                log.debug("Hardware does not support hints");
+                _startVal = 0;
+            }
+            readCVWithDefault(CVname, p, _startVal);
+        } else {
+            // The SPROG version is not known yet so request the version 
+            log.debug("SPROG version is unknown - trying to get it");
+            // save for later
+            _cv = CVname;
+            _progListener = p;
+            _memo.getSprogVersionQuery().requestVersion(this);
         }
+    }
+
+    /**
+     * Internal method to read a CV with a possible default value
+     * 
+     * @param CVname    Index of CV to read
+     * @param p         Programming listener
+     * @param startVal  CV default value, Use 0 if no default available
+     * @throws jmri.ProgrammerException if programming operation fails
+     */
+    synchronized public void readCVWithDefault(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
+        log.debug("readCV {} mode {} hint {} listens {}", CV, getMode(), startVal, p);
         useProgrammer(p);
         _val = -1;
-        startProgramming(_val, CV);
+        startProgramming(_val, CV, startVal);
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -94,16 +131,17 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     /**
      * Send the command to start programming operation.
      * 
-     * @param val   Value to be written, or -1 for read
-     * @param CV    CV to read/write
+     * @param val       Value to be written, or -1 for read
+     * @param CV        CV to read/write
+     * @param startVal  Hint of what current CV value may be
      */
-    private void startProgramming(int val, int CV) {
+    private void startProgramming(int val, int CV, int startVal) {
         // here ready to send the read/write command
         progState = COMMANDSENT;
         // see why waiting
         try {
             startLongTimer();
-            controller().sendSprogMessage(progTaskStart(getMode(), val, CV), this);
+            controller().sendSprogMessage(progTaskStart(getMode(), val, CV, startVal), this);
         } catch (Exception e) {
             // program op failed, go straight to end
             log.error("program operation failed, exception {}",e);
@@ -134,12 +172,18 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @param mode Mode to be used
      * @param val value to be written
      * @param cvnum CV address to write to 
+     * @param startVal Hint of what the CV may contain, or 0
      * @return formatted message to do programming operation
      */
-    protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
+    protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum, int startVal) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
-            return SprogMessage.getReadCV(cvnum, mode);
+            if (startVal == 0) {
+                // No hint value, or normal starting value
+                return SprogMessage.getReadCV(cvnum, mode);
+            } else {
+                return SprogMessage.getReadCV(cvnum, mode, startVal);
+            }
         } else {
             return SprogMessage.getWriteCV(cvnum, val, mode);
         }
@@ -196,6 +240,28 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         } else {
             log.debug("reply in un-decoded state");
         }
+    }
+
+    /**
+     * Handle a SprogVersion notification.
+     * <p>
+     * Decode the SPROG version and decode the programming capabilities.
+     *
+     * @param v The SprogVersion being handled
+     */
+    @Override
+    synchronized public void notifyVersion(SprogVersion v) throws jmri.ProgrammerException {
+        // Save it for subsequent operations
+        _sv = v;
+        // Save it for others
+        _memo.setSprogVersion(v);
+        log.debug("Found: {}", v.toString());
+
+        if (!_sv.supportsCVHints()) {
+            log.debug("Hardware does not support hints");
+           _startVal = 0;
+        }
+        readCVWithDefault(_cv, _progListener, _startVal);
     }
 
     /** 

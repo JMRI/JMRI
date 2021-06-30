@@ -45,7 +45,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        Setup.setPromptFromStagingEnabled(true);
+        Setup.setStagingPromptFromEnabled(true);
 
         // two sets of cars in staging
         JUnitOperationsUtil.initOperationsData();
@@ -110,7 +110,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        Setup.setPromptToStagingEnabled(true);
+        Setup.setStagingPromptToEnabled(true);
         
         Train train2 = tmanager.getTrainById("2");
 

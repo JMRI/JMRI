@@ -23,7 +23,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
 
         new LayoutLHTurnoutEditor(null);
     }
-    
+
     @Test
     public void testEditLHTurnoutDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -55,17 +55,17 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
 
             // LH Turnout
             point = MathUtil.add(point, delta);
-            leftHandLayoutTurnout = new LayoutLHTurnout("LH Turnout", layoutEditor); // point, 33.0, 1.1, 1.2, 
-            leftHandLayoutTurnoutView = new LayoutLHTurnoutView(leftHandLayoutTurnout, 
+            leftHandLayoutTurnout = new LayoutLHTurnout("LH Turnout", layoutEditor); // point, 33.0, 1.1, 1.2,
+            leftHandLayoutTurnoutView = new LayoutLHTurnoutView(leftHandLayoutTurnout,
                                                 point, 33.0, 1.1, 1.2,
-                                                layoutEditor); 
+                                                layoutEditor);
             layoutEditor.addLayoutTrack(leftHandLayoutTurnout, leftHandLayoutTurnoutView);
         }
     }
 
     @AfterEach
     public void tearDown() {
-    
+
         if (leftHandLayoutTurnout != null) {
             leftHandLayoutTurnout.remove();
         }
@@ -81,6 +81,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

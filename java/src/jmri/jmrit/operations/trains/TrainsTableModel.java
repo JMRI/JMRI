@@ -355,7 +355,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("Build");
             }
             case ACTION_COLUMN: {
-                if (train.getBuildFailed()) {
+                if (train.isBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
                 if (train.getCurrentRouteLocation() == train.getTrainTerminatesRouteLocation() &&
@@ -489,7 +489,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    // one of four buttons: Report, Move, Conductor or Terminate
+    // one of five buttons: Report, Move, Reset, Conductor or Terminate
     private void actionTrain(int row) {
         // no actions while a train is being built
         if (build != null && build.isAlive()) {
@@ -497,7 +497,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         Train train = getTrainByRow(row);
         // move button becomes report if failure
-        if (train.getBuildFailed()) {
+        if (train.isBuildFailed()) {
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());

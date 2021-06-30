@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,8 +6,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Section Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Section Table">
   <!--#include virtual="/Style.shtml" -->
@@ -197,21 +194,14 @@
 
       <h2>Saving Sections to Disk</h2>
 
-      <p>Use the <strong>Store</strong> item in the <strong>File</strong> menu of the
-      Section Table (or the <strong>Store Panels...</strong> item in the
-      <strong>Panels</strong> menu of the main JMRI window) to save Section
-      information to disk. This information (and any modified
-      Signal Mast Logic information) is saved with the configuration and
-      Panels in an XML file, along with Control Panel setup and
-      similar stuff. To store your panels in the same file
-      (recommended), select <strong>File&gt;Store&gt;Store Configuration
-      and Panels To File...</strong> or select <strong>Panels&gt;Store
-      Panels...</strong> in the main JMRI window.</p>
+      <p>See <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <p>Back to <a href=
       "../../../../html/tools/Sections.shtml">Sections Documentation</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

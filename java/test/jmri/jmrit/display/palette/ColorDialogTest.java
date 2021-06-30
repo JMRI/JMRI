@@ -2,8 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 
-import jmri.jmrit.display.EditorFrameOperator;
-import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
@@ -17,7 +16,7 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
 /**
  *
- * @author Pete Cressman Copyright (C) 2018 
+ * @author Pete Cressman Copyright (C) 2018
  */
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class ColorDialogTest {
@@ -112,7 +111,7 @@ public class ColorDialogTest {
         assertThat(_pos.getPopupUtility().getForeground()).withFailMessage("font color is red").isEqualTo(Color.BLUE);
     }
 
-    void startEditor() {
+    void startEditor() throws Positionable.DuplicateIdException {
         _cpe = new ControlPanelEditor("Fred");
         _pos = new PositionableLabel("Some Text", _cpe);
         _cpe.putItem(_pos);
@@ -143,7 +142,7 @@ public class ColorDialogTest {
 
             Color c;
             switch (_type) {
-                case ColorDialog.ONLY: 
+                case ColorDialog.ONLY:
                     c = _cpe.getTargetPanel().getBackground();
                     break;
                 case ColorDialog.BORDER:
@@ -166,7 +165,7 @@ public class ColorDialogTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Positionable.DuplicateIdException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -178,6 +177,7 @@ public class ColorDialogTest {
         EditorFrameOperator efo = new EditorFrameOperator(_cpe.getTargetFrame());
         efo.closeFrameWithConfirmations();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

@@ -997,6 +997,13 @@ public class TrainManager extends PropertyChangeSupport
         return status;
     }
 
+    public void resetBuildFailedTrains() {
+        for (Train train : getList()) {
+            if (train.isBuildFailed())
+                train.reset();
+        }
+    }
+
     public void load(Element root) {
         if (root.getChild(Xml.OPTIONS) != null) {
             Element options = root.getChild(Xml.OPTIONS);

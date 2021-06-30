@@ -40,7 +40,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         // disable ourself if there is no primary sensor manager available
         if (sensorManager == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 
@@ -140,6 +140,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
+            
+            addFrame.setEscapeKeyClosesWindow(true);
+            addFrame.getRootPane().setDefaultButton(addButton);
+            
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N
@@ -194,7 +198,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
-        String errorMessage;
         for (int x = 0; x < numberOfSensors; x++) {
             log.debug("b4 next valid addr for prefix {} conn choice mgr {}",sensorPrefix,connectionChoice);
             try {
@@ -214,11 +217,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 s = InstanceManager.getDefault(SensorManager.class).provideSensor(sName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(sName);
-                // Show error message in statusBarLabel
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.gray);
+                handleCreateException(ex, sName);
                 return;   // return without creating
             }
 
@@ -287,11 +286,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String hwAddress) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorSensorAddFailed", hwAddress) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String hwAddress) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(SensorManager.class).getBeanTypeHandled(),hwAddress);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {
@@ -425,17 +425,13 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             menuBar.add(optionsMenu, pos + offset);
         }
     }
-
-    private void showDebounceChanged(ActionEvent e) {
-        ((SensorTableDataModel) m).showDebounce(showDebounceBox.isSelected());
-    }
-
-    private void showPullUpChanged(ActionEvent e) {
-        ((SensorTableDataModel) m).showPullUp(showPullUpBox.isSelected());
-    }
-
-    private void showStateForgetAndQueryChanged(ActionEvent e) {
-        ((SensorTableDataModel) m).showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected());
+    
+    @Override
+    protected void configureTable(JTable table){
+        super.configureTable(table);
+        showDebounceBox.addActionListener((ActionEvent e) -> { ((SensorTableDataModel)m).showDebounce(showDebounceBox.isSelected(), table); });
+        showPullUpBox.addActionListener((ActionEvent e) -> { ((SensorTableDataModel)m).showPullUp(showPullUpBox.isSelected(), table); });
+        showStateForgetAndQueryBox.addActionListener((ActionEvent e) -> { ((SensorTableDataModel)m).showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected(), table); });
     }
 
     private final TriStateJCheckBox showDebounceBox = new TriStateJCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
@@ -449,14 +445,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     public void addToFrame(BeanTableFrame<Sensor> f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
         showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
-        showDebounceBox.addActionListener(this::showDebounceChanged);
         f.addToBottomBox(showPullUpBox, this.getClass().getName());
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
-        showPullUpBox.addActionListener(this::showPullUpChanged);
-        showPullUpBox.setVisible(true);
         f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
-        showStateForgetAndQueryBox.addActionListener(this::showStateForgetAndQueryChanged);
     }
     
     /**
@@ -489,13 +481,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         f.addToBottomBox(showDebounceBox, connectionName);
         showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
-        showDebounceBox.addActionListener(this::showDebounceChanged);
         f.addToBottomBox(showPullUpBox, connectionName);
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
-        showPullUpBox.addActionListener(this::showPullUpChanged);
         f.addToBottomBox(showStateForgetAndQueryBox, connectionName);
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
-        showStateForgetAndQueryBox.addActionListener(this::showStateForgetAndQueryChanged);
     }
 
     /**

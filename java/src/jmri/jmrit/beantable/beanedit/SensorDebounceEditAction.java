@@ -1,14 +1,15 @@
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 
 /**
  * Provides an edit panel for a sensor debounce object.
@@ -27,18 +28,13 @@ public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
     } // NOI18N
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameSensor");
-    }
-
-    @Override
     public Sensor getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }
 
-    JCheckBox sensorDebounceGlobalCheck = new JCheckBox();
-    JSpinner sensorDebounceInactiveSpinner = new JSpinner();
-    JSpinner sensorDebounceActiveSpinner = new JSpinner();
+    private final JCheckBox sensorDebounceGlobalCheck = new JCheckBox();
+    private final JSpinner sensorDebounceInactiveSpinner = new JSpinner();
+    private final JSpinner sensorDebounceActiveSpinner = new JSpinner();
 
     @Override
     protected void initPanels() {
@@ -61,31 +57,24 @@ public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
             basic.setName(Bundle.getMessage("SensorDebounce"));
         }
 
-        sensorDebounceGlobalCheck.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (sensorDebounceGlobalCheck.isSelected()) {
-                    sensorDebounceInactiveSpinner.setEnabled(false);
-                    sensorDebounceActiveSpinner.setEnabled(false);
-                } else {
-                    sensorDebounceInactiveSpinner.setEnabled(true);
-                    sensorDebounceActiveSpinner.setEnabled(true);
-                }
-            }
+        sensorDebounceGlobalCheck.addActionListener((ActionEvent e) -> {
+            sensorDebounceInactiveSpinner.setEnabled(!sensorDebounceGlobalCheck.isSelected());
+            sensorDebounceActiveSpinner.setEnabled(!sensorDebounceGlobalCheck.isSelected());
         });
 
-        basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("SensorDebounceText")));
-        basic.addItem(new BeanEditItem(sensorDebounceGlobalCheck, Bundle.getMessage("SensorDebounceUseGlobalText"), null));
         sensorDebounceInactiveSpinner.setModel(
                 new SpinnerNumberModel((Long)0L, (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L));  // MAX_DEBOUNCE is a Long; casts are to force needed signature
-//        sensorDebounceInactiveSpinner.setValue(0); // reset from possible previous use
         sensorDebounceInactiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
-        basic.addItem(new BeanEditItem(sensorDebounceInactiveSpinner, Bundle.getMessage("SensorInActiveDebounce"), Bundle.getMessage("SensorInActiveDebounceText")));
         sensorDebounceActiveSpinner.setModel(
                 new SpinnerNumberModel((Long)0L, (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L));  // MAX_DEBOUNCE is a Long; casts are to force needed signature
-//        sensorDebounceActiveSpinner.setValue(0); // reset from possible previous use
         sensorDebounceActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
+
+        basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("SensorDebounceText")));
+        basic.addItem(new BeanEditItem(sensorDebounceGlobalCheck, Bundle.getMessage("SensorDebounceUseGlobalText"), Bundle.getMessage("SensorGlobalActiveInactiveDelays",
+            InstanceManager.getDefault(SensorManager.class).getDefaultSensorDebounceGoingActive(),
+            InstanceManager.getDefault(SensorManager.class).getDefaultSensorDebounceGoingInActive())));
         basic.addItem(new BeanEditItem(sensorDebounceActiveSpinner, Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
+        basic.addItem(new BeanEditItem(sensorDebounceInactiveSpinner, Bundle.getMessage("SensorInActiveDebounce"), Bundle.getMessage("SensorInActiveDebounceText")));
 
         basic.setSaveItem(new AbstractAction() {
             @Override
@@ -123,15 +112,12 @@ public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
         }
         enabled(true);
         sensorDebounceGlobalCheck.setSelected(bean.getUseDefaultTimerSettings());
-        if (bean.getUseDefaultTimerSettings()) {
-            sensorDebounceActiveSpinner.setEnabled(false);
-            sensorDebounceInactiveSpinner.setEnabled(false);
-        } else {
-            sensorDebounceActiveSpinner.setEnabled(true);
-            sensorDebounceInactiveSpinner.setEnabled(true);
-        }
-        sensorDebounceActiveSpinner.setValue(Long.valueOf(bean.getSensorDebounceGoingActiveTimer())); // as long
-        sensorDebounceInactiveSpinner.setValue(Long.valueOf(bean.getSensorDebounceGoingInActiveTimer()));
+        
+        sensorDebounceActiveSpinner.setEnabled(!bean.getUseDefaultTimerSettings());
+        sensorDebounceInactiveSpinner.setEnabled(!bean.getUseDefaultTimerSettings());
+        
+        sensorDebounceActiveSpinner.setValue(bean.getSensorDebounceGoingActiveTimer()); // as long
+        sensorDebounceInactiveSpinner.setValue(bean.getSensorDebounceGoingInActiveTimer());
     }
 
     public void enabled(Boolean boo) {

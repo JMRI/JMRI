@@ -144,6 +144,13 @@ public interface PortAdapter {
     public boolean isOptionTypeText(String option);
     
     /**
+     * Should this option be represented by a password field
+     * @param option Name of the option to check
+     * @return true for text representation preferred
+     */
+    public boolean isOptionTypePassword(String option);
+    
+    /**
      * Get the system manufacturer's name.
      *
      * @return manufacturer's name

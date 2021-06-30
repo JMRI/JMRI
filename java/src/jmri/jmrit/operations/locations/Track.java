@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -304,6 +305,14 @@ public class Track extends PropertyChangeSupport {
     public String getName() {
         return _name;
     }
+    
+    public Division getDivision() {
+        return getLocation().getDivision();
+    }
+    
+    public String getDivisionName() {
+        return getLocation().getDivisionName();
+    }
 
     public boolean isSpur() {
         return getTrackType().equals(Track.SPUR);
@@ -479,6 +488,13 @@ public class Track extends PropertyChangeSupport {
     public int getScheduleMode() {
         return _mode;
     }
+    
+    public String getScheduleModeName() {
+        if (getScheduleMode() == Track.MATCH) {
+            return Bundle.getMessage("Match");
+        }
+        return Bundle.getMessage("Sequential");
+    }
 
     public void setAlternateTrack(Track track) {
         Track oldTrack = _location.getTrackById(_alternateTrackId);
@@ -517,8 +533,7 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Used to determine if there's space available at this track for the car.
-     * Considers cars en route to this track. Used to prevent overloading the track
-     * with cars from staging or cars with custom loads.
+     * Considers cars en-route to this track. Used to prevent overloading the track.
      *
      * @param car The car to be set out.
      * @return true if space available.
@@ -1912,7 +1927,7 @@ public class Track extends PropertyChangeSupport {
             return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
         }
         log.debug("Track ({}) has schedule ({}) mode {} ({})", getName(), getScheduleName(), getScheduleMode(),
-                getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
+                getScheduleModeName()); // NOI18N
 
         ScheduleItem si = getCurrentScheduleItem();
         if (si == null) {
@@ -2108,7 +2123,7 @@ public class Track extends PropertyChangeSupport {
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
-                getScheduleItemId(), getScheduleMode(), getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
+                getScheduleItemId(), getScheduleMode(), getScheduleModeName()); // NOI18N
         if (currentSi != null &&
                 (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
                         InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
@@ -2142,13 +2157,9 @@ public class Track extends PropertyChangeSupport {
             if (sch != null) {
                 currentTrainScheduleName = sch.getName();
             }
-            String mode = Bundle.getMessage("sequential");
-            if (getScheduleMode() == 1) {
-                mode = Bundle.getMessage("match");
-            }
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("sequentialMessage"),
-                            new Object[] { getScheduleName(), mode, car.toString(), car.getTypeName(), scheduleName,
+                            new Object[] { getScheduleName(), getScheduleModeName(), car.toString(), car.getTypeName(), scheduleName,
                                     car.getRoadName(), car.getLoadName(), currentSi.getTypeName(),
                                     currentTrainScheduleName, currentSi.getRoadName(),
                                     currentSi.getReceiveLoadName() });

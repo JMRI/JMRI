@@ -40,7 +40,7 @@ public class EditSignalFrameTest {
 
         EditSignalFrame pFrame = new EditSignalFrame("Edit Signal Frame", cb, ob1);
         Assert.assertNotNull("exists", pFrame);
-        
+
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(pFrame);
     }
@@ -56,6 +56,7 @@ public class EditSignalFrameTest {
     public void tearDown() {
         blkMgr.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

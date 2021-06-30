@@ -280,7 +280,7 @@ public class XmlTest extends OperationsTestCase {
 
         // perform data check before dispose
         Assert.assertEquals("t1 build", true, t1.isBuildEnabled());
-        Assert.assertEquals("t1 build failed", true, t1.getBuildFailed());
+        Assert.assertEquals("t1 build failed", true, t1.isBuildFailed());
         Assert.assertEquals("t1 build normal", true, t1.isBuildTrainNormalEnabled());
         Assert.assertEquals("t1 built", false, t1.isBuilt());
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
@@ -330,7 +330,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
-        Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());
+        Assert.assertEquals("t3 build failed", true, t3.isBuildFailed());
         Assert.assertEquals("t3 build normal", false, t3.isBuildTrainNormalEnabled());
         Assert.assertEquals("t3 built", false, t3.isBuilt());
         Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
@@ -372,7 +372,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartRouteLocation());
 
         Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
-        Assert.assertEquals("t5 build failed", false, t5.getBuildFailed());
+        Assert.assertEquals("t5 build failed", false, t5.isBuildFailed());
         Assert.assertEquals("t5 built", true, t5.isBuilt());
         Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
         Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
@@ -442,7 +442,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNotNull("train 6", t6);
 
         Assert.assertEquals("t1 build", true, t1.isBuildEnabled());
-        Assert.assertEquals("t1 build failed", true, t1.getBuildFailed());
+        Assert.assertEquals("t1 build failed", true, t1.isBuildFailed());
         Assert.assertEquals("t1 build normal", true, t1.isBuildTrainNormalEnabled());
         Assert.assertEquals("t1 built", false, t1.isBuilt());
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
@@ -492,7 +492,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
-        Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());
+        Assert.assertEquals("t3 build failed", true, t3.isBuildFailed());
         Assert.assertEquals("t3 build normal", false, t3.isBuildTrainNormalEnabled());
         Assert.assertEquals("t3 built", false, t3.isBuilt());
         Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
@@ -534,7 +534,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartRouteLocation());
 
         Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
-        Assert.assertEquals("t5 build failed", false, t5.getBuildFailed());
+        Assert.assertEquals("t5 build failed", false, t5.isBuildFailed());
         Assert.assertEquals("t5 built", true, t5.isBuilt());
         Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
         Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
@@ -590,7 +590,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNull("train 6", t6);
 
         Assert.assertEquals("t3 build", true, t3.isBuildEnabled());
-        Assert.assertEquals("t3 build failed", false, t3.getBuildFailed());
+        Assert.assertEquals("t3 build failed", false, t3.isBuildFailed());
         Assert.assertEquals("t3 built", true, t3.isBuilt());
         Assert.assertEquals("t3 built end year", "1950", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1925", t3.getBuiltStartYear());
@@ -616,7 +616,7 @@ public class XmlTest extends OperationsTestCase {
         super.setUp();
 
         Setup.setBuildAggressive(false);
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
     }

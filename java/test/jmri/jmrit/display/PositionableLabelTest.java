@@ -53,7 +53,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     PositionableLabel to = null;
 
     @Test
-    public void testSmallPanel() {
+    public void testSmallPanel() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         editor = new EditorScaffold("PositionableLabel Test Panel");

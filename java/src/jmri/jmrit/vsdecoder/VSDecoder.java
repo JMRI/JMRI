@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import jmri.Audio;
-import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.operations.locations.Location;
@@ -41,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2020
+ * @author Klaus Killinger Copyright (C) 2018-2021
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -51,9 +50,6 @@ public class VSDecoder implements PropertyChangeListener {
     private boolean create_xy_series = false; // Create xy coordinates in console
 
     private VSDConfig config;
-
-    private float master_volume;
-    private float decoder_volume;
 
     // For use in VSDecoderManager
     int dirfn = 1;
@@ -78,8 +74,8 @@ public class VSDecoder implements PropertyChangeListener {
     public VSDecoder(VSDConfig cfg) {
         config = cfg;
 
-        sound_list = new HashMap<String, VSDSound>();
-        event_list = new HashMap<String, SoundEvent>();
+        sound_list = new HashMap<>();
+        event_list = new HashMap<>();
 
         // Force re-initialization
         initialized = _init();
@@ -136,8 +132,8 @@ public class VSDecoder implements PropertyChangeListener {
         config.setProfileName(name);
         config.setId(id);
 
-        sound_list = new HashMap<String, VSDSound>();
-        event_list = new HashMap<String, SoundEvent>();
+        sound_list = new HashMap<>();
+        event_list = new HashMap<>();
 
         // Force re-initialization
         initialized = _init();
@@ -238,7 +234,7 @@ public class VSDecoder implements PropertyChangeListener {
         if (eventName.equals("throttleAssigned")) {
             Float s = (Float) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), Throttle.SPEEDSETTING);
             if (s != null) {
-                ((EngineSound) this.getSound("ENGINE")).setFirstSpeed(true); // Auto-start needs this
+                this.getEngineSound().setFirstSpeed(true); // Auto-start needs this
                 // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
                 log.debug("Existing DCC Throttle found. Speed: {}", s);
                 this.throttlePropertyChange(new PropertyChangeEvent(this, Throttle.SPEEDSETTING, null, s));
@@ -280,24 +276,12 @@ public class VSDecoder implements PropertyChangeListener {
         }
 
         if (eventName.equals(Throttle.SPEEDSETTING)) {
-            currentspeed = (float) this.getSound("ENGINE").speedCurve((float) event.getNewValue());
+            currentspeed = (float) this.getEngineSound().speedCurve((float) event.getNewValue());
         }
 
         if (eventName.equals(Throttle.ISFORWARD)) {
             dirfn = (Boolean) event.getNewValue() ? 1 : -1;
         }
-    }
-
-    // DCC-specific and unused. Deprecate this.
-    @Deprecated
-    public void releaseAddress(int number, boolean isLong) {
-        // remove the listener, if we can...
-    }
-
-    // DCC-specific. Deprecate this.
-    @Deprecated
-    public void setAddress(int number, boolean isLong) {
-        this.setAddress(new DccLocoAddress(number, isLong));
     }
 
     /**
@@ -309,7 +293,6 @@ public class VSDecoder implements PropertyChangeListener {
     public void setAddress(LocoAddress l) {
         // Hack for ThrottleManager Dcc dependency
         config.setLocoAddress(l);
-        // DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
         jmri.InstanceManager.throttleManagerInstance().attachListener(config.getDccAddress(),
                 new PropertyChangeListener() {
             @Override
@@ -343,31 +326,34 @@ public class VSDecoder implements PropertyChangeListener {
         return config.getVolume();
     }
 
-    /**
-     * Set the current master volume setting for this VSDecoder
-     *
-     * @param vol (float) volume level (0.0 - 1.0)
-     */
-    public void setMasterVolume(float vol) {
-        master_volume = vol;
-        decoder_volume = config.getVolume();
-        log.debug("VSD config id: {}, Master volume: {}, Decoder volume: {}", config.getId(), master_volume, decoder_volume);
+    private void forwardMasterVolume(float volume) {
+        log.debug("VSD config id: {}, Master volume: {}, Decoder volume: {}", config.getId(), volume, config.getVolume());
         for (VSDSound vs : sound_list.values()) {
-            vs.setVolume(master_volume * decoder_volume);
+            vs.setVolume(volume * config.getVolume());
         }
     }
 
     /**
-     * Set the current decoder volume setting for this VSDecoder
+     * Set the decoder volume for this VSDecoder
      *
-     * @param dv (float) volume level (0.0 - 1.0)
+     * @param decoder_volume (float) volume level (0.0 - 1.0)
      */
-    public void setDecoderVolume(float dv) {
-        config.setVolume(dv);
-        log.debug("config set decoder volume to {}", dv);
+    public void setDecoderVolume(float decoder_volume) {
+        config.setVolume(decoder_volume);
+        float master_vol = 0.01f * VSDecoderManager.instance().getMasterVolume();
+        log.debug("config set decoder volume to {}, master volume adjusted: {}", decoder_volume, master_vol);
         for (VSDSound vs : sound_list.values()) {
-            vs.setVolume(master_volume * dv);
+            vs.setVolume(master_vol * decoder_volume);
         }
+    }
+
+    /**
+     * Is this VSDecoder muted?
+     *
+     * @return true if muted
+     */
+    public boolean isMuted() {
+        return getMuteState();
     }
 
     /**
@@ -422,8 +408,8 @@ public class VSDecoder implements PropertyChangeListener {
         }
 
         // Set (relative) volume for this location (in case we're in a tunnel)
-        float tv = master_volume * config.getVolume();
-        log.debug("current master volume: {}, decoder volume: {}", master_volume, config.getVolume());
+        float tv = 0.01f * VSDecoderManager.instance().getMasterVolume() * getDecoderVolume();
+        log.debug("current master volume: {}, decoder volume: {}", VSDecoderManager.instance().getMasterVolume(), getDecoderVolume());
         if (savedSound.getTunnel()) {
             tv *= VSDSound.tunnel_volume;
             log.debug("VSD: In tunnel, volume: {}", tv);
@@ -495,7 +481,7 @@ public class VSDecoder implements PropertyChangeListener {
             // GUI Volume slider (Master Volume)
             log.debug("VSD: Volume change. value: {}", evt.getOldValue());
             // Slider gives integer 0-100. Need to change that to a float 0.0-1.0
-            this.setMasterVolume((1.0f * (Integer) evt.getOldValue()) / 100.0f);
+            this.forwardMasterVolume((0.01f * (Integer) evt.getOldValue()));
         } else if (property.equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             // Train Location Move
             PhysicalLocation p = getTrainPosition((Train) evt.getSource());
@@ -593,6 +579,15 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
+     * Get a reference to the EngineSound associated with this VSDecoder
+     *
+     * @return EngineSound The EngineSound reference for this VSDecoder or null
+     */
+    public EngineSound getEngineSound() {
+        return (EngineSound) sound_list.get("ENGINE");
+    }
+
+    /**
      * Get a Collection of SoundEvents associated with this VSDecoder
      *
      * @return {@literal Collection<SoundEvent>} collection of SoundEvents
@@ -605,7 +600,10 @@ public class VSDecoder implements PropertyChangeListener {
      * True if this is the default VSDecoder
      *
      * @return boolean true if this is the default VSDecoder
+     *
+     * @deprecated As of 4.23.3, without a replacement
      */
+    @Deprecated // 4.23.3 
     public boolean isDefault() {
         return is_default;
     }
@@ -614,7 +612,10 @@ public class VSDecoder implements PropertyChangeListener {
      * Set whether this is the default VSDecoder or not
      *
      * @param d (boolean) True to set this as the default, False if not.
+     *
+     * @deprecated As of 4.23.3, without a replacement
      */
+    @Deprecated // 4.23.3
     public void setDefault(boolean d) {
         is_default = d;
     }
@@ -650,13 +651,6 @@ public class VSDecoder implements PropertyChangeListener {
         return me;
     }
 
-    /*
-     * @Deprecated public void setXml(Element e) { this.setXml(e, null); }
-     *
-     * @Deprecated public void setXml(Element e, VSDFile vf) { this.setXml(vf); }
-     *
-     * @Deprecated public void setXml(VSDFile vf) { }
-     */
     /**
      * Build this VSDecoder from an XML representation
      *

@@ -63,7 +63,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
         JFrameOperator jf = new JFrameOperator(f1);
         //Enter 1 in the text field labeled "System Name:"
         JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
-        (new JTextFieldOperator((JTextField) jlo.getLabelFor())).enterText("1");
+        (new JTextFieldOperator((JTextField) jlo.getLabelFor())).typeText("1");
         //and press OK 
         jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonOK"));
         JUnitUtil.dispose(f1);

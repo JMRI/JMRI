@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,8 +6,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Transits Documentation</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Sections">
   <!--#include virtual="/Style.shtml" -->
@@ -166,17 +163,16 @@
 
       <h3>Saving Transits to disk</h3>
 
-      <p>Use the <strong>Store</strong> item in the <strong>File</strong> menu of the
-      Transit Table (or the <strong>Store Panels...</strong> item in the
-      <strong>Panels</strong> menu of the main JMRI window) to save Transit
-      information to disk. This information is saved with the configuration and
-      panels in an XML file, along with control panel setup and
-      similar stuff. To store your panels in the same file
-      (recommended), select <strong>File&gt;Store&gt;Store Configuration
-      and Panels To File...</strong> or select <strong>Panels&gt;Store
-      Panels...</strong> in the main JMRI window.</p>
+      <p>Transits are kept in your <i>layout configuration</i>, along
+      with Turnouts, Sensors, Signal Heads, Lights, control panel
+      setup etc. To store this information on disk, allowing you to
+      <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

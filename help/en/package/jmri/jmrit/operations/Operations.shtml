@@ -1,27 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta name="generator"
- content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<title>JMRI: Operations</title>
-<meta name="author" content="Dan Boudreau">
-<meta name="keywords"
- content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<head>
+  <title>JMRI: Operations</title>
+  <meta name="author" content="Dan Boudreau">
+  <meta name="keywords"
+   content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+ <div class="no-sidebar" id="mBody">
    <div id="mainContent">
 
    <h1>JMRI: OperationsPro&trade;</h1>
@@ -50,6 +40,13 @@
     shows the work for all of the trains that will visit that location. The program can also place <a
      href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be
     taught to move in the panel along with the train from location to location.
+   </p>
+
+   <p>
+    OperationsPro&trade; lets you create realistic prototypical car movements through the optional
+    use of <a href="#LocationDivision">railroad divisions</a>. Cars are returned to their home
+    division when their loads are removed, or when a new load is provided by an industry in a
+    foreign division.
    </p>
 
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
@@ -133,6 +130,7 @@
 
      <ul>
       <li><a href="#AddLocation">Add or Edit Location</a></li>
+      <li><a href="#LocationDivision">Railroad Divisions</a></li>
 
       <li><a href="#LocationTools">Location Tools</a>
 
@@ -276,6 +274,7 @@
        <ul>
         <li><a href="#ReturnWhenEmpty">Return When Empty</a></li>
         <li><a href="#ReturnWhenLoaded">Return When Loaded</a></li>
+        <li><a href="#HomeDivision">Home Division</a></li>
        </ul></li>
 
       <li><a href="#CarsTools">Cars Tools</a>
@@ -325,6 +324,8 @@
       <li><a href="#RouteTools">Route Tools</a>
 
        <ul>
+       <li><a href="#RouteBlockingOrder">Blocking Order</a></li>
+       
         <li><a href="#CopyRoute">Copy Route</a></li>
 
         <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
@@ -432,8 +433,11 @@
 
    <h3>New User Advice</h3>
    OperationsPro&trade; has been designed to create car movements that make sense to you and your
-   crew. If you've never used a computer program to generate a train Manifest or switch list, we
-   recommend that you load and use the <a href="#demo">demo files</a> provided. Please read the <a
+   crew. There are many options and features that the program provides and it can be a bit
+   overwhelming, but you can get started by simply following the steps in the
+   <a href="#QuickStartHelp">Quick Start Help</a>. If you've never used a computer program to
+   generate a train Manifest or switch list, we recommend that you load and use the
+   <a href="#demo">demo files</a> provided. Please read the <a
     href="#BuildReportDetails">build reports</a> for the demo trains in very detailed mode, even if
    they build which they should since they are demo files. You should make changes to the demo
    database and see what the results are. This is your chance to experiment with the program before
@@ -483,9 +487,14 @@
     href="../../../apps/TabbedPreferences.shtml#RailroadName">Railroad Name</a>. You can also
    configure JMRI to automatically open any of the operation windows on <a
     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a> by adding a "Perform action".
-   Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
-   information about the window you're using. 
-   
+
+   <p>
+    Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
+    information about the window you're using. Detailed step by step <a
+     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
+    available on the JMRI.org site.
+   </p>
+
    <a name="MultipleLayouts" id="MultipleLayouts"></a>
 
    <h3>Multiple Layout Support</h3>
@@ -704,10 +713,15 @@
    <p>
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
-    this document that covers that window's capabilities. Help is also available at the <a
-     href="https://groups.io/g/jmriusers">JMRI users</a> which is part of the Groups.io. 
-     Another good source for help is a series of articles written by David Haynes <a
-     href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
+    this document that covers that window's capabilities. Detailed step by step <a
+     href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To Instructions</a> are
+    also available on the JMRI.org site.
+   </p>
+
+   <p>
+    Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which is
+    part of the Groups.io. Another good source for help is a series of articles written by David
+    Haynes <a href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
      http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
     "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
     contents of the window.
@@ -1747,8 +1761,7 @@
     information, so you might have to limit the number of car attributes (see <a
      href="#MessageFormats">Message Formats</a> below) in order get the data to fit. The next format
     available is "Two Column (Track)". This format prints the track name in both columns in a header
-    format. The text color options for set outs, pick ups, and local move are not available for the
-    "Two Column" formats.
+    format.
    </p>
 
    <p>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
@@ -1869,10 +1882,11 @@
    <a name="SortByTrack" id="SortByTrack"></a>
    <p>
     The next option is "Sort by Track". The program when creating a train Manifest normally lists
-    the cars in the order they need to be placed into the train for proper blocking. The normal
-    format is to list the cars in the order they will be set out as determined by the train's route,
-    and then alphabetically by the track names for each location. You can modify the blocking order
-    for a location by using the tool <a href="#TrackBlockingOrder">Track Blocking Order</a>. If you
+    the cars in the order they need to be placed into the train for proper <a
+     href="#RouteBlockingOrder">blocking</a>. The normal format is to list the cars in the order
+    they will be set out as determined by the train's <a href="#RouteBlockingOrder">route</a>, and
+    then alphabetically by the track names for each location. You can modify the blocking order for
+    a location by using the tool <a href="#TrackBlockingOrder">Track Blocking Order</a>. If you
     would rather have the cars listed by the track name rather than blocking order, select the
     option "Sort by Track".
    </p>
@@ -2070,20 +2084,48 @@
 
    <a name="LocationServiceDirection" id="LocationServiceDirection"></a>
    <h4>Location Service Direction</h4>
-   <p>You can decide which train direction the location can service. For example, if only east
-    bound trains can access the location select "East" and deselect the other directions. This can
-    be useful if you want to only support trailing point switching for a given location. If a
-    location can support multiple directions then select the ones that are appropriate.</p>
+   <p>You can decide which train direction the location can service. For example, if only east bound
+   trains can access the location select "East" and deselect the other directions. This can be
+   useful if you want to only support trailing point switching for a given location. If a location
+   can support multiple directions then select the ones that are appropriate.</p>
+   
+   <a name="LocationDivision" id="LocationDivision"></a>
+   <h4>Railroad Division</h4>
+   <p>
+    The railroad divisions feature allows you to create prototypical car movements for your
+    railroad. To use this feature first create and then select at least one division for your
+    railroad by using the "Add" button in the "Division" section of the "Edit Location" window. You
+    can assign multiple locations to the same division, and you can create several divisions for
+    your railroad. Cars that are assigned a <a href="#HomeDivision">home division</a> will return to
+    the <a href="#Yards">yard</a> or <a href="#Staging">staging</a> at their home division when
+    their load state becomes empty. If the program can't find a home division yard or staging for
+    the empty car, it will try to send the car directly to an industry (<a href="#Sidings">spur</a>)
+    at the car's home division. Cars with a home division will also return to an industry (<a
+     href="#Sidings">spur</a>) or <a href="#Staging">staging</a> at their home division when loaded
+    from an industry or staging outside of their home division. Cars loaded at their home division can travel
+    to any industry or staging on the railroad. The program will use <a href="#Interchange">interchange</a>
+    tracks to route the cars to yards, industries or staging that require multiple trains.
+   </p>
+
+   <p>When setting up railroad divisions, it is best if there's at least one division yard for
+    empty cars to migrate to, and at least one industry (spur) to service cars loaded outside of the
+    division. Staging can be used as a substitute for industries.</p>
+
+   <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
+    but it can also reduce car movement since the rules for car movement have to be enforced by the
+    program. It is recommended that you start off by only providing a home division to a limited
+    number of cars and then determine if the restricted car movements meet your expectations.
+    Prototypical car movement doesn't necessarily mean better for model railroads.</p>
 
    <a name="LocationRollingStock" id="LocationRollingStock"></a>
    <h4>Location Rolling Stock</h4>
-   You can control the rolling stock a location can service. Press the "Clear All" button to
+   <p>You can control the rolling stock a location can service. Press the "Clear All" button to
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
    stock you wish the location to accept. After configuring the tracks for a location, you can use
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
    tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car type names that
    a location can service. You can also access the "Edit Car Attributes" window from the edit
-   location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
+   location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.</p>
 
    <h4>Location Comment</h4>
    <p>
@@ -2149,13 +2191,15 @@
 
    <a name="TrackBlockingOrder" id="TrackBlockingOrder"></a>
    <h4>Track Blocking Order</h4>
-   The program when creating Manifests and switch lists will block the cars in the train by
-   destination and then alphabetically by the track names at the destination. If you want to change
-   the order tracks are serviced at a location, use the location tool "Track Blocking Order" to
-   adjust the order tracks are presented on Manifests and switch lists. The "Order" number controls
-   how tracks are presented, lower numbered tracks are printed first for Westbound and Northbound
-   trains, and higher numbered tracks are printed first for Eastbound and Southbound trains. Use any
-   blocking order number greater than zero when using this feature.
+   The program when creating <a href="#PrintingManifests">Manifest</a> and switch lists
+   will block the cars in the train by destination (<a
+    href="#RouteBlockingOrder">route blocking order</a>) and then alphabetically by the track names
+   at the destination. If you want to change the order tracks are serviced at a location, use the
+   location tool "Track Blocking Order" to adjust the order tracks are presented on Manifests and
+   switch lists. The "Order" number controls how tracks are presented, lower numbered tracks are
+   printed first for Westbound and Northbound trains, and higher numbered tracks are printed first
+   for Eastbound and Southbound trains. Use any blocking order number greater than zero when using
+   this feature.
 
    <p>Note that this feature controls the set outs for a location. Car pick ups at a location
     are blocked by their next destination and then alphabetically by track name or by the track blocking
@@ -3417,14 +3461,15 @@
     off using numbers cleanly divisible by 10. For example, you might what to place an observation
     car at the end of the train, a value of "90" would be appropriate. If you wanted a baggage car
     to be the first car in the passenger train, a value of "10" would be a good value, cars in the
-    middle of the train could use "50". Later you can fine turn your passenger trains by using the
+    middle of the train could use "50". Later you can fine tune your passenger trains by using the
     other numbers that are available.</p>
 
    <p>When the utility checkbox is selected, it instructions the program when printing Manifests
     and switch lists to not show the individual car's road and number, but rather the quantity of
     cars needed of that type. For example, prototype unit trains when shipping coal don't normally list
     the cars in the train by the car's road number but instead it shows the number of cars, the type of
-    car, and the car's load on the train's Manifest.</p>
+    car, and the car's load on the train's Manifest. The color of utility cars isn't shown on Manifests
+    and switch lists.</p>
 
    <p>If you use the utility feature, it is strongly recommended that you select the utility
     feature for all cars of a given type. Since the car's road and number isn't displayed on the
@@ -3640,6 +3685,15 @@
     destination to become active, only when the car is set out by the program will the RWL
     destination and RWL load name become active.</p>
 
+   <a name="HomeDivision" id="HomeDivision"></a>
+   <h4>Home Division</h4>
+   You can optionally select the car's home division for more prototypical car movements. See
+   <a href="#LocationDivision">railroad divisions</a> in the <a href="#AddLocation">Edit
+    Location</a> help for more information. You can use the
+   <a href="#SetCars">Set Cars</a> feature to quickly assign a home division to multiple cars.
+   <p>Use the "Edit" button to modify an existing division or if a division isn't selected to
+    create a new one.</p>
+
    <h4>Kernel</h4>
 
    <p>
@@ -3753,19 +3807,21 @@
 
    <a name="SetCars" id="SetCars"></a>
    <h4>Set Cars</h4>
-   If you want to change the status, location, return when empty, load, kernel, destinations or
-   train assignment for a group of cars use the "Set Cars" tool found under "Tools" in the <a
-    href="#Cars">Cars</a> window. The tool works the same way as the <a href="#CarsSet">Set Car</a>
-   as described above, except that multiple cars are modified. Select the cars you want to change in
-   the table by highlighting them, and then select "Set Cars". Note that you can use the "Control"
-   or "Ctrl" key on your keyboard to select individual cars in the table, and the "Shift" key allows
-   you to select a range of cars. The first car selected becomes the default, and if you press the
-   "Change" button, all of the other selected cars will have the same settings as the default car.
+   If you want to change the status, location, return when empty, return when loaded, home division,
+   load, kernel, destinations or train assignment for a group of cars use the "Set Cars" tool found
+   under "Tools" in the
+   <a href="#Cars">Cars</a> window. The tool works the same way as the
+   <a href="#CarsSet">Set Car</a> as described above, except that multiple cars are modified. Select
+   the cars you want to change in the table by highlighting them, and then select "Set Cars". Note
+   that you can use the "Control" or "Ctrl" key on your keyboard to select individual cars in the
+   table, and the "Shift" key allows you to select a range of cars. Use "Ctrl A" to select all of
+   the cars in the table. The first car in the table becomes the default, and if you press the
+   "Apply" button, all of the other selected cars will have the same settings as the default car.
 
    <p>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
-    values once you press the "Change" button. However, if you want to change only one or two of the
+    values once you press the "Apply" button. However, if you want to change only one or two of the
     fields shown in the Set Cars window, select the ignore checkbox for the fields you don't want
-    changed by the "Change" button. Only the fields that don't have the "ignore" selected will
+    changed by the "Apply" button. Only the fields that don't have the "ignore" selected will
     change.</p>
 
    <p>After making your changes, be sure to press "Save" in the Cars window if you want to keep
@@ -3842,12 +3898,15 @@
    you to add a new road or delete any that you don't need. Now enter the locomotive's number,
    model, type, length and horsepower. The locomotive's horsepower, the train's weight, and track
    grade is used by the program to calculate how many locomotives are required when using the "Auto"
-   feature when building trains.
+   feature when building trains. Stream engines use tractive effort rather than horsepower to
+   describe their potential for pulling trains. Enter the tractive effort in lbf (pounds force)
+   and the program will convert it to the approximate horsepower at 25 MPH when you press the Save
+   button.
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). You can also enter the built date, owner and a comment for
     this locomotive. The built date can be in the format of a two or four digit year, or month-year
-    (mm-yy), were a two digit year will be converted to a loco built in the 1900s.</p>
+    (mm-yy), where a two digit year will be converted to a loco built in the 1900s.</p>
 
    <a name="LocomotiveModels" id="LocomotiveModels"></a>
    <h4>Locomotive Models</h4>
@@ -4129,6 +4188,23 @@
    <a name="RouteTools" id="RouteTools"></a>
    <h3>Route Tools</h3>
 
+   <a name="RouteBlockingOrder" id="RouteBlockingOrder"></a>
+   <h4>Blocking Order</h4>
+   <p>
+    The program when creating a <a href="#PrintingManifests">Manifest</a> normally blocks cars in
+    the train by their destination. Cars for the first destination in a train's route are placed
+    immediately after the locomotives, followed by the next location's set of cars, continuing until
+    the last set of cars which can be found at the end of the Manifest's for the train's departure
+    location. But with this tool, you can have a different blocking order. For example, you might
+    want to have the cars for a location placed at the end of the train to facilitate a facing point
+    set out. If you want to change the blocking order for a train, you can use this tool to modify
+    how the program blocks the cars for a location. Use the "Up" or "Down" buttons to change the
+    blocking order, and press the "Save" button to complete the change. Use the reset button to
+    restore the blocking order.
+   </p>
+
+   <p>You can also modify the order cars are set out for a location, see <a href="#TrackBlockingOrder">Track Blocking Order</a>.</p>
+
    <a name="CopyRoute" id="CopyRoute"></a>
    <h4>Copy Route</h4>
    <p>You can copy an existing route using this tool that can be found under "Tools" in both the
@@ -4279,9 +4355,12 @@
 
    <p>
     You can also require a <a href="#CabooseFredHazardous">caboose or car with FRED (Flashing
-     Rear End Device)</a> as the last car in the train, and you can optionally specify the road for the
-    caboose or car with FRED. If you leave the road blank, the program will try and find a caboose
-    with the same road as the locomotive.
+     Rear End Device)</a> as the last car in the train when it departs. You can also optionally specify
+    the road for the caboose or car with FRED. If you leave the road blank, the program will try and
+    find a caboose with the same road as the locomotive. Normally the caboose or car with FRED stays
+    with the train until the last location in the train's route. You can add or remove a caboose
+    anywhere in the train's route, see <a href="#OptionalTrainRequirements">Optional Train
+     Requirements</a> under <a href="#TrainBuildOptions">Train Build Options</a> for more info.
    </p>
 
    <a name="TrainReset" id="TrainReset"></a>
@@ -4397,7 +4476,7 @@
     routes servicing the spurs with schedules have interim yard or C/I tracks that are also full.
     This option tends to increase car movement to staging by ignoring the <a href="#SpurOption">Hold
      cars with custom loads when spurs are full</a> feature for a spur where the program would normally
-    hold a car at its current location when all spurs with schedules were full.
+    hold a car at its current location when all spurs with schedules are full.
    </p>
 
    <a name="BuildlocoConsist" id="BuildlocoConsist"></a>
@@ -4452,6 +4531,7 @@
    specify a period, select the "Range" radio button and enter the after and before years you want
    the train to service.
 
+   <a name="OptionalTrainRequirements" id="OptionalTrainRequirements"></a>
    <h3>Optional Train Requirements</h3>
    You can have up to two locomotive changes while the train is en route. Select "Locomotive change"
    where you want the change to happen in your route, and how many new locomotives should be
@@ -4519,7 +4599,7 @@
 
    <p>
     Included in the <a href="https://jmri.org/jython/operations">jython directory</a> are several
-    examples of operation oriented scripts. These scripts were included in the JMRI download and can
+    examples of operation oriented scripts. These scripts are included in the JMRI download and can
     be found in the jmri-&gt;jython-&gt;operations directory.
    </p>
 
@@ -5745,9 +5825,9 @@
 
    <p>End of OperationsPro&trade; help.</p>
 
-  </div>
-  <!-- closes #mainContent-->
- </div>
- <!-- closes #mBody-->
+     <!--#include virtual="/Footer.shtml" -->
+   </div><!-- closes #mainContent-->
+ </div><!-- closes #mBody-->
+ <script src="/js/main.js"></script>
 </body>
 </html>

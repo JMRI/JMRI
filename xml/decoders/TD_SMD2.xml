@@ -28,7 +28,7 @@
         <splitVal highCV="9" max="2040" default="0" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Base Address</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Version ID</label>
       </variable>

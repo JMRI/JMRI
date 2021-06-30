@@ -1,14 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
-
   <title>JMRI Hardware Support - RFID Readers</title>
-  <!-- Style -->
   <meta name="keywords" content="JMRI hardware rfid readers">
   <!--#include virtual="/Style.shtml" -->
-  <!-- /Style -->
-
 </head>
 
 <body>
@@ -176,5 +172,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

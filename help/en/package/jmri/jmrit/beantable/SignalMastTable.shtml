@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,8 +6,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Mast Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20160602">
   <meta name="keywords" content="JMRI help Signal Mast Table">
@@ -24,7 +21,7 @@
       <a href=
       "images/SignalMasts-num.png"><img src=
       "images/SignalMasts-num.png" width="619" height="166" align=
-      "right"></a>
+      "right" alt="Signal mast table"></a>
 
       <p>JMRI Signals Masts are managed in the Signal Mast Table.
       You access this tool from the <b>Tools &gt; Tables &gt;
@@ -59,7 +56,7 @@
         driver cannot be changed once a Signal Mast has been
         created. <a href="images/VirtMastPanelApply.png"><img src=
         "images/VirtMastPanelApply.png" width="239" height="159"
-        align="right"></a></li>
+        align="right" alt="Add signal mast"></a></li>
 
         <li>Edit Logic, this button opens the Signaling Pairs panel
         showing the lines for this Signal Mast, from which you can
@@ -90,12 +87,8 @@
       to open the Edit window.</p>
 
       <p>Use the <b>Store</b> item in the File menu to save signal
-      information to disk. This information is saved with the
-      configuration in an XML file, along with control panel setup
-      and similar stuff. To store your panels in the same file
-      (recommended), select <b>File &gt; Store &gt; Store
-      Configuration and Panels To File...</b> or select <b>Panels
-      &gt; Store panels...</b> in the main JMRI window.</p>
+      information to disk. See <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <p>For more information on creating and displaying panels,
       including how to show signals on your panels, please see the
@@ -111,5 +104,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

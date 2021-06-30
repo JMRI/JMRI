@@ -50,7 +50,7 @@ public class JUnitOperationsUtil {
 
     /**
      * Setup the operations test file names and test locations.
-     * 
+     *
      */
     public static void setupOperationsTests() {
 
@@ -366,7 +366,7 @@ public class JUnitOperationsUtil {
     /**
      * Creates a three location route that is also a turn. Train departs North
      * bound and returns South bound.
-     * 
+     *
      * @return Route
      */
     public static Route createThreeLocationTurnRoute() {
@@ -401,24 +401,31 @@ public class JUnitOperationsUtil {
 
     public static Route createFiveLocationRoute() {
 
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
-        Route route = createThreeLocationRoute();
+        createSevenNormalLocations();
+        
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Davers-Essex");
 
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
         Location danvers = lmanager.getLocationByName("Danvers");
         Location essex = lmanager.getLocationByName("Essex");
 
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
         route.addLocation(danvers);
         route.addLocation(essex);
-
-        route.setName("Route Acton-Boston-Chelmsford-Davers-Essex");
 
         return route;
     }
 
     /**
      * Creates a location with 2 spurs, 2 interchanges, and 2 yards
-     * 
+     *
      * @param name the name of the location and the tracks there.
      * @return the location created
      */
@@ -556,8 +563,11 @@ public class JUnitOperationsUtil {
         Location l3 = lManager.newLocation("Test Loc C");
         l3.setLength(1003);
         Location l4 = lManager.newLocation("Test Loc B");
+        l4.addTrack("Yard Track", Track.YARD);
+        l4.addTrack("Interchange Track", Track.INTERCHANGE);
         l4.setLength(1004);
         Location l5 = lManager.newLocation("Test Loc A");
+        l5.addTrack("Staging Track", Track.STAGING);
         l5.setLength(1005);
     }
 
@@ -603,7 +613,7 @@ public class JUnitOperationsUtil {
         spur1.setScheduleMode(Track.MATCH); // set schedule into match mode
         spur1.setAlternateTrack(alternate);
         spur1.setReservationFactor(60);
-        
+
         spur2.setSchedule(schedule);
         spur2.setScheduleMode(Track.SEQUENTIAL);
         return schedule;
@@ -661,14 +671,14 @@ public class JUnitOperationsUtil {
         Assert.assertNotNull(in);
         return in;
     }
-    
+
     public static void checkOperationsShutDownTask() {
         // remove the operations shut down tasks
         Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        // only one operations shut down task, the other can be NCE shutdown
-        Assert.assertTrue("Two shut down tasks max", list.size() < 3);
+        // only one operations shut down task, the others can be NCE shutdown and EditorManager shutdown.
+        Assert.assertTrue("Two shut down tasks max", list.size() < 4);
         ShutDownTask operationShutdownTask = null;
         for (ShutDownTask task : list) {
             if (task.getName().equals("Operations Train Window Check")
@@ -678,6 +688,7 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
+        jmri.util.JUnitUtil.deregisterEditorManagerShutdownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);

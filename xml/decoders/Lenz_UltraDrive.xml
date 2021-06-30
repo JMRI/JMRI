@@ -60,7 +60,7 @@
         <comment>Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
         <comment xml:lang="de">Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="1">
         <decVal/>
         <label>Decoder Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

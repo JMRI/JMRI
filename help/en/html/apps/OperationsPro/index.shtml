@@ -1,13 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
   <title>JMRI: OperationsPro, an application for creating train manifests for operating sessions</title>
   <meta name="keywords" content="operations, Operations, OperationsPro">
 
  <!--#include virtual="/Style.shtml" -->
-
 </head>
 
 <body>
@@ -30,20 +28,21 @@
         <li><a href="https://www.jmri.org/manual/howtooperations/">"How To's"</a>(step-by-step instructions for common tasks)</li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#TroubleShooting">Troubleshooting</a></li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#PrintingManifests">Printing manifests</a></li>
+        <li><a href="../../web/Operations.shtml">Viewing from mobile devices</a></li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">Detailed information</a> (see the Table of Contents for this page)</li>
         
     </ul>
     
     <p>
     OperationsPro functions can be accessed from the PanelPro main menu by clicking the "<strong>Operations</strong>" pulldown 
-    {<i>prior to JMRI 4.22:</i> Tools&rArr;Operations}.<br>
-    <img src="images/OpsProPulldownRel422.jpg" align="left" height="276" width="646" alt="OperationsPro pulldown">
+    {<i>prior to JMRI 4.24, also at:</i> Tools&rArr;Operations}.<br>
+    <img src="images/OpsProPulldownRel422.jpg" align="left" height="276" width="648" alt="OperationsPro pulldown">
     </p>
 
      <!--#include virtual="/Footer.shtml" -->
 
-
         </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
+    <script src="/js/main.js"></script>
 </body>
 </html>

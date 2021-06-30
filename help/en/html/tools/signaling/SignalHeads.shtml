@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -11,16 +10,7 @@
   <meta name="Date.Modified" content="20161218">
   <meta name="keywords" content=
   "turnout model railroad JMRI decoderpro panelpro">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -52,9 +42,9 @@
       <h3>The Signal Head Table</h3><a href=
       "../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"
       align="right" width="447" height="177" hspace="0" vspace="0"
-      alt="Signal Head Table figure"></a> 
+      alt="Signal Head Table figure"></a>
       <!-- The following section is taken from, and should be kept consistent with -->
-       
+
       <!-- help/en/package/jmri/jmrit/beantable/SignalHeadTable.html -->
        All the Signal Heads that JMRI knows about can be referenced
       using the "Signal Head Table" tool in the Tools menu of most
@@ -130,20 +120,21 @@
       <p>The Signal Head information is kept in your <i>layout
       configuration</i>, along with Turnouts, Lights, Sensors,
       control panel setup etc.<br>
-      To save this information on disk, allowing to <a href=
+      To save this information on disk, allowing you to <a href=
       "../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI, use <b>Store Configuration...</b>
-      in the <b>File</b> menu at the top of the Signal Head Table (or
-      other tables from the Tools menu), or select <b>Store
-      Panel...</b> in the <b>Panel</b> menu.</p>
+      it</a> next time you run JMRI, see <a href="../../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+
       <p>For more information on creating and displaying panels,
-      including how to show signals on your panels, please see the
-      <a href="../../apps/PanelPro/Panels.shtml">Panels pages</a>.</p>
+      including how to show Signals on your Panels, please see the
+      <a href="../../apps/PanelPro/Panels.shtml">Panels help
+      pages</a>.</p>
 
       <p>Back to the <a href="index.shtml#tools">Signaling main
       help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

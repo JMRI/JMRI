@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>JMRI: LogixNG Documentation</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="keywords" content=
+  "logixng model railroad JMRI LogixNG PanelPro">
+
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <div id="container">
+    <!--#include virtual="/Header" -->
+
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+
+      <div id="mainContent">
+        <!-- Page Body -->
+
+        <h1>JMRI Code: LogixNG</h1>
+
+        <p>This page describes the technical aspects of LogixNG and
+		how to add new features to LogixNG. It's recommended to read
+		the <a href="../../../tools/LogixNG.shtml">User manual</a>
+		first which describes the concept of LogixNG.</p>
+
+
+
+        <h2>LogixNG technical pages</h2>
+
+        <ul>
+          <li><a href="PackageStructure.shtml">The structure of
+		  LogixNG packages</a></li>
+
+          <li><a href="CategoriesEnum.shtml">The Categories enum</a></li>
+
+          <li><a href="CreateExpressionsAndActions.shtml">Create
+		  Expressions, Actions, and so on</a></li>
+
+          <li><a href="Sockets.shtml">Sockets</a></li>
+
+          <li><a href="Plugins.shtml">Plugins for LogixNG</a></li>
+
+          <li><a href="UnitTesting.shtml">Unit testing of LogixNG</a></li>
+        </ul>
+
+
+
+        <h2>Aaaa</h2>
+
+		<p>Bbbb.</p>
+
+
+        <!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div><!-- closes #container -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

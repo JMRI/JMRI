@@ -105,7 +105,7 @@
         <label xml:lang="nl">Gemiddelde snelheid</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <defaultItem default="31" include="31"/>
         <defaultItem default="22" include="22"/>
         <defaultItem default="5" include="05"/>

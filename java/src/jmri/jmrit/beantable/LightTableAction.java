@@ -1,43 +1,27 @@
 package jmri.jmrit.beantable;
 
+import com.alexandriasoftware.swing.Validation;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+
+import jmri.*;
+import jmri.jmrit.beantable.light.LightControlPane;
+import jmri.jmrit.beantable.light.LightIntensityPane;
+import jmri.jmrit.beantable.light.LightTableDataModel;
+import jmri.NamedBean.DisplayOptions;
+import jmri.swing.ManagerComboBox;
+import jmri.swing.SystemNameValidator;
+import jmri.util.JmriJFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.util.gui.GuiLafPreferencesManager;
-
-import com.alexandriasoftware.swing.Validation;
-
-import jmri.*;
-import jmri.NamedBean.DisplayOptions;
-import jmri.implementation.DefaultLightControl;
-import jmri.swing.ManagerComboBox;
-import jmri.swing.NamedBeanComboBox;
-import jmri.swing.SystemNameValidator;
-import jmri.util.JmriJFrame;
-import jmri.util.swing.ComboBoxToolTipRenderer;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 /**
  * Swing action to create and register a LightTable GUI.
@@ -61,7 +45,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         super(s);
         // disable ourself if there is no primary Light manager available
         if (lightManager == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 
@@ -70,8 +54,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     protected LightManager lightManager = InstanceManager.getNullableDefault(jmri.LightManager.class);
-    // for icon state col
-    protected boolean _graphicState = false; // updated from prefs
 
     /**
      * {@inheritDoc}
@@ -89,395 +71,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
      */
     @Override
     protected void createModel() {
-        // load graphic state column display preference
-        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
-
-        m = new BeanTableDataModel<Light>() {
-            static public final int ENABLECOL = BeanTableDataModel.NUMCOLUMN;
-            static public final int INTENSITYCOL = ENABLECOL + 1;
-            static public final int EDITCOL = INTENSITYCOL + 1;
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public int getColumnCount() {
-                return EDITCOL + 1 + getPropertyColumnCount();
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public String getColumnName(int col) {
-                switch (col) {
-                    case EDITCOL:
-                        return ""; // no heading on "Edit"
-                    case INTENSITYCOL:
-                        return Bundle.getMessage("ColumnHeadIntensity");
-                    case ENABLECOL:
-                        return Bundle.getMessage("ColumnHeadEnabled");
-                    default:
-                        return super.getColumnName(col);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Class<?> getColumnClass(int col) {
-                switch (col) {
-                    case EDITCOL:
-                        return JButton.class;
-                    case INTENSITYCOL:
-                        return Double.class;
-                    case ENABLECOL:
-                        return Boolean.class;
-                    case VALUECOL:  // may use an image to show light state
-                        return ( _graphicState ? JLabel.class : JButton.class );
-                    default:
-                        return super.getColumnClass(col);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public int getPreferredWidth(int col) {
-                switch (col) {
-                    case USERNAMECOL: // override default value for UserName column
-                        return new JTextField(16).getPreferredSize().width;
-                    case EDITCOL:
-                        return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
-                    case INTENSITYCOL:
-                    case ENABLECOL:
-                        return new JTextField(6).getPreferredSize().width;
-                    default:
-                        return super.getPreferredWidth(col);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case INTENSITYCOL:
-                        return getValueAt(row, SYSNAMECOL) instanceof VariableLight;
-                    case EDITCOL:
-                    case ENABLECOL:
-                        return true;
-                    default:
-                        return super.isCellEditable(row, col);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public String getValue(String name) {
-                Light l = lightManager.getBySystemName(name);
-                return (l==null ? ("Failed to find " + name) : l.describeState(l.getState()));
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Object getValueAt(int row, int col) {
-                switch (col) {
-                    case EDITCOL:
-                        return Bundle.getMessage("ButtonEdit");
-                    case INTENSITYCOL:
-                        Object o = getValueAt(row, SYSNAMECOL);
-                        if (o instanceof VariableLight) {
-                            return ((VariableLight)o).getTargetIntensity();
-                        } else {
-                            return 0.0;
-                        }
-                    case ENABLECOL:
-                        return ((Light) getValueAt(row, SYSNAMECOL)).getEnabled();
-                    default:
-                        return super.getValueAt(row, col);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void setValueAt(Object value, int row, int col) {
-                switch (col) {
-                    case EDITCOL:
-                        // Use separate Runnable so window is created on top
-                        class WindowMaker implements Runnable {
-
-                            final int row;
-
-                            WindowMaker(int r) {
-                                row = r;
-                            }
-
-                            @Override
-                            public void run() {
-                                // set up to edit
-                                addPressed(null);
-                                fixedSystemName.setText(((Light) getValueAt(row, SYSNAMECOL)).getSystemName());
-                                editPressed(); // don't really want to stop Light w/o user action
-                            }
-                        }
-                        WindowMaker t = new WindowMaker(row);
-                        javax.swing.SwingUtilities.invokeLater(t);
-                        break;
-                    case INTENSITYCOL:
-                        // alternate
-                        try {
-                            if (getValueAt(row, SYSNAMECOL) instanceof VariableLight) {
-                                VariableLight l = (VariableLight) getValueAt(row, SYSNAMECOL);
-                                double intensity = Math.max(0, Math.min(1.0, (Double) value));
-                                l.setTargetIntensity(intensity);
-                            } else {
-                                Light l = (Light) getValueAt(row, SYSNAMECOL);
-                                double intensity = ((Double) value);
-                                l.setCommandedState( intensity > 0.5 ? Light.ON : Light.OFF);
-                            }
-                        } catch (IllegalArgumentException e1) {
-                            status1.setText(Bundle.getMessage("LightError16"));
-                            status1.setForeground(Color.red);
-                        }
-                        break;
-                    case ENABLECOL:
-                        // alternate
-                        Light l = (Light) getValueAt(row, SYSNAMECOL);
-                        l.setEnabled(!l.getEnabled());
-                        break;
-                    case VALUECOL:
-                        Light ll = (Light) getValueAt(row, SYSNAMECOL);
-                        clickOn(ll);
-                        fireTableRowsUpdated(row, row);
-                        break;
-                    default:
-                        super.setValueAt(value, row, col);
-                        break;
-                }
-            }
-
-            /**
-             * Delete the bean after all the checking has been done.
-             * <p>
-             * Deactivate the light, then use the superclass to delete it.
-             */
-            @Override
-            void doDelete(Light bean) {
-                bean.deactivateLight();
-                super.doDelete(bean);
-            }
-
-            // all properties update for now
-            @Override
-            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                return true;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public LightManager getManager() {
-                return lightManager;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Light getBySystemName(@Nonnull String name) {
-                return lightManager.getBySystemName(name);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Light getByUserName(@Nonnull String name) {
-                return InstanceManager.getDefault(LightManager.class).getByUserName(name);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected String getMasterClassName() {
-                return getClassName();
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void clickOn(Light t) {
-                t.setState( t.getState()==Light.OFF ? Light.ON : Light.OFF );
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public JButton configureButton() {
-                return new JButton(" " + Bundle.getMessage("StateOff") + " ");
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected String getBeanType() {
-                return Bundle.getMessage("BeanNameLight");
-            }
-
-            /**
-             * Customize the light table Value (State) column to show an
-             * appropriate graphic for the light state if _graphicState = true,
-             * or (default) just show the localized state text when the
-             * TableDataModel is being called from ListedTableAction.
-             *
-             * @param table a JTable of Lights
-             */
-            @Override
-            protected void configValueColumn(JTable table) {
-                // have the value column hold a JPanel (icon)
-                //setColumnToHoldButton(table, VALUECOL, new JLabel("123456")); // for small round icon, but cannot be converted to JButton
-                // add extras, override BeanTableDataModel
-                log.debug("Light configValueColumn (I am {})", this);
-                if (_graphicState) { // load icons, only once
-                    table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // editor
-                    table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
-                } else {
-                    super.configValueColumn(table); // classic text style state indication
-                }
-            }
-
-            /**
-             * Visualize state in table as a graphic, customized for Lights (2
-             * states + ... for transitioning). Renderer and Editor are
-             * identical, as the cell contents are not actually edited, only
-             * used to toggle state using {@link #clickOn(Light)}.
-             *
-             * @see jmri.jmrit.beantable.BlockTableAction#createModel()
-             * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
-             */
-            class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
-
-                protected JLabel label;
-                protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
-                protected char beanTypeChar = 'L'; // for Light
-                protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
-                protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
-                protected BufferedImage onImage;
-                protected BufferedImage offImage;
-                protected ImageIcon onIcon;
-                protected ImageIcon offIcon;
-                protected int iconHeight = -1;
-
-                @Override
-                public Component getTableCellRendererComponent(
-                        JTable table, Object value, boolean isSelected,
-                        boolean hasFocus, int row, int column) {
-                    log.debug("Renderer Item = {}, State = {}", row, value);
-                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
-                        loadIcons();
-                        log.debug("icons loaded");
-                    }
-                    return updateLabel((String) value, row);
-                }
-
-                @Override
-                public Component getTableCellEditorComponent(
-                        JTable table, Object value, boolean isSelected,
-                        int row, int column) {
-                    log.debug("Renderer Item = {}, State = {}", row, value);
-                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
-                        loadIcons();
-                        log.debug("icons loaded");
-                    }
-                    return updateLabel((String) value, row);
-                }
-
-                public JLabel updateLabel(String value, int row) {
-                    if (iconHeight > 0) { // if necessary, increase row height;
-                        log.debug("TODO adjust table row height for Lights?");
-                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
-                    }
-                    if (value.equals(Bundle.getMessage("StateOff")) && offIcon != null) {
-                        label = new JLabel(offIcon);
-                        label.setVerticalAlignment(JLabel.BOTTOM);
-                        log.debug("offIcon set");
-                    } else if (value.equals(Bundle.getMessage("StateOn")) && onIcon != null) {
-                        label = new JLabel(onIcon);
-                        label.setVerticalAlignment(JLabel.BOTTOM);
-                        log.debug("onIcon set");
-                    } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
-                        label = new JLabel("X", JLabel.CENTER); // centered text alignment
-                        label.setForeground(Color.red);
-                        log.debug("Light state inconsistent");
-                        iconHeight = 0;
-                    } else if (value.equals(Bundle.getMessage("LightStateIntermediate"))) {
-                        label = new JLabel("...", JLabel.CENTER); // centered text alignment
-                        log.debug("Light state in transition");
-                        iconHeight = 0;
-                    } else { // failed to load icon
-                        label = new JLabel(value, JLabel.CENTER); // centered text alignment
-                        log.warn("Error reading icons for LightTable");
-                        iconHeight = 0;
-                    }
-                    label.setToolTipText(value);
-                    label.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public final void mousePressed(MouseEvent evt) {
-                            log.debug("Clicked on icon in row {}", row);
-                            stopCellEditing();
-                        }
-                    });
-                    return label;
-                }
-
-                @Override
-                public Object getCellEditorValue() {
-                    log.debug("getCellEditorValue, me = {})", this);
-                    return this.toString();
-                }
-
-                /**
-                 * Read and buffer graphics. Only called once for this table.
-                 *
-                 * @see #getTableCellEditorComponent(JTable, Object, boolean,
-                 * int, int)
-                 */
-                protected void loadIcons() {
-                    try {
-                        onImage = ImageIO.read(new File(onIconPath));
-                        offImage = ImageIO.read(new File(offIconPath));
-                    } catch (IOException ex) {
-                        log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
-                    }
-                    log.debug("Success reading images");
-                    int imageWidth = onImage.getWidth();
-                    int imageHeight = onImage.getHeight();
-                    // scale icons 50% to fit in table rows
-                    Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
-                    Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
-                    onIcon = new ImageIcon(smallOnImage);
-                    offIcon = new ImageIcon(smallOffImage);
-                    iconHeight = onIcon.getIconHeight();
-                }
-
-            } // end of ImageIconRenderer class
-
-        }; // end of custom data model
+        m = new LightTableDataModel(lightManager);
     }
 
     /**
@@ -500,8 +94,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
     Light curLight = null;
     boolean lightCreatedOrUpdated = false;
     boolean noWarn = false;
-    boolean inEditMode = false;
-    private boolean lightControlChanged = false;
 
     // items for Add/Edit Light frame
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
@@ -513,51 +105,27 @@ public class LightTableAction extends AbstractTableAction<Light> {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JPanel panel1a = null;
-    JPanel varPanel = null;
+
     JLabel systemNameLabel = new JLabel(Bundle.getMessage("LabelSystemName") + " ");
-    JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
     JTextField userName = new JTextField(20);
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName") + " ");
-    LightControlTableModel lightControlTableModel = null;
     JButton create;
-    JButton update;
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton addControl;
     PropertyChangeListener colorChangeListener;
-
-    ArrayList<LightControl> controlList = new ArrayList<>();
-    static String sensorControl = Bundle.getMessage("LightSensorControl");
-    static String fastClockControl = Bundle.getMessage("LightFastClockControl");
-    static String turnoutStatusControl = Bundle.getMessage("LightTurnoutStatusControl");
-    static String timedOnControl = Bundle.getMessage("LightTimedOnControl");
-    static String twoSensorControl = Bundle.getMessage("LightTwoSensorControl");
-    static String noControl = Bundle.getMessage("LightNoControl");
-    public static String lightControlTitle = Bundle.getMessage("LightControlBorder");
 
     JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
     Manager<Light> connectionChoice = null;
-
-    // parts for supporting variable intensity, transition
-    JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity"));
-    JSpinner minIntensity = new JSpinner();
-    JLabel labelMinIntensityTail = new JLabel("   "); // just a spacer
-    JLabel labelMaxIntensity = new JLabel(Bundle.getMessage("LightMaxIntensity"));
-    JSpinner maxIntensity = new JSpinner();
-    JLabel labelMaxIntensityTail = new JLabel("   "); // another spaces
-    JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime"));
-    JSpinner transitionTime = new JSpinner(); // 2 digit decimal format field, initialized later as instance
+    private LightIntensityPane lightIntensityPanel;
+    private LightControlPane lightControlPanel;
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void addPressed(ActionEvent e) {
-        if (inEditMode) {
-            // cancel Edit and reactivate the edited light
-            cancelPressed(null);
-        }
+        cancelPressed(null);
+
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddLight"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
@@ -576,15 +144,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
             addRangeBox.addActionListener((ActionEvent e1) -> addRangeChanged());
             panel1.add(systemNameLabel);
             systemNameLabel.setVisible(false);
-            panel1.add(fixedSystemName);
-            fixedSystemName.setVisible(false);
             prefixBox.setToolTipText(Bundle.getMessage("LightSystemHint"));
             prefixBox.addActionListener((ActionEvent e1) -> prefixChanged());
             contentPane.add(panel1);
-            panel1a = new JPanel();
-            panel1a.setLayout(new FlowLayout());
-            panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
-            panel1a.add(hardwareAddressTextField);
+            JPanel hardwareAddressPanel = new JPanel();
+            hardwareAddressPanel.setLayout(new FlowLayout());
+            hardwareAddressPanel.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
+            hardwareAddressPanel.add(hardwareAddressTextField);
             hardwareAddressTextField.setText(""); // reset from possible previous use
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
@@ -594,7 +160,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             } else {
                 hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
             }
-            
             
             hardwareAddressTextField.setInputVerifier(hardwareAddressValidator);
             prefixBox.addActionListener((evt) -> hardwareAddressValidator.setManager(prefixBox.getSelectedItem()));
@@ -617,10 +182,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             });
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
-            panel1a.add(labelNumToAdd);
-            panel1a.add(numberToAdd);
+            hardwareAddressPanel.add(labelNumToAdd);
+            hardwareAddressPanel.add(numberToAdd);
             numberToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
-            contentPane.add(panel1a);
+            contentPane.add(hardwareAddressPanel);
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             panel2.add(userNameLabel);
@@ -630,82 +195,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
             userName.setName("userName"); // for GUI test NOI18N
             prefixBox.setName("prefixBox"); // for GUI test NOI18N
             contentPane.add(panel2);
-            // items for variable intensity lights
-            varPanel = new JPanel();
-            varPanel.setLayout(new BoxLayout(varPanel, BoxLayout.X_AXIS));
-            varPanel.add(new JLabel(" "));
-            varPanel.add(labelMinIntensity);
-            minIntensity.setModel(
-                    new SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), Double.valueOf(0.99d), Double.valueOf(0.01d))); // 0 - 99%
-            minIntensity.setEditor(new JSpinner.NumberEditor(minIntensity, "##0 %"));
-            minIntensity.setToolTipText(Bundle.getMessage("LightMinIntensityHint"));
-            minIntensity.setValue(0.0d); // reset JSpinner1
-            varPanel.add(minIntensity);
-            varPanel.add(labelMinIntensityTail);
-            varPanel.add(labelMaxIntensity);
-            maxIntensity.setModel(
-                    new SpinnerNumberModel(Double.valueOf(1.0d), Double.valueOf(0.01d), Double.valueOf(1.0d), Double.valueOf(0.01d))); // 100 - 1%
-            maxIntensity.setEditor(new JSpinner.NumberEditor(maxIntensity, "##0 %"));
-            maxIntensity.setToolTipText(Bundle.getMessage("LightMaxIntensityHint"));
-            maxIntensity.setValue(1.0d); // reset JSpinner2
-            varPanel.add(maxIntensity);
-            varPanel.add(labelMaxIntensityTail);
-            varPanel.add(labelTransitionTime);
-            transitionTime.setModel(
-                    new SpinnerNumberModel(Double.valueOf(0d), Double.valueOf(0d), Double.valueOf(1000000d), Double.valueOf(0.01d)));
-            transitionTime.setEditor(new JSpinner.NumberEditor(transitionTime, "###0.00"));
-            transitionTime.setPreferredSize(new JTextField(8).getPreferredSize());
-            transitionTime.setToolTipText(Bundle.getMessage("LightTransitionTimeHint"));
-            transitionTime.setValue(0.0); // reset from possible previous use
-            varPanel.add(transitionTime);
-            varPanel.add(new JLabel(" "));
-            Border varPanelBorder = BorderFactory.createEtchedBorder();
-            Border varPanelTitled = BorderFactory.createTitledBorder(varPanelBorder,
-                    Bundle.getMessage("LightVariableBorder"));
-            varPanel.setBorder(varPanelTitled);
-            contentPane.add(varPanel);
+            lightIntensityPanel = new LightIntensityPane(false);
+            Border varPanelTitled = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+                Bundle.getMessage("LightVariableBorder"));
+            lightIntensityPanel.setBorder(varPanelTitled);
+            contentPane.add(lightIntensityPanel);
             // light control table
-            JPanel panel3 = new JPanel();
-            panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-            lightControlTableModel = new LightControlTableModel();
-            JTable lightControlTable = new JTable(lightControlTableModel);
-            lightControlTable.setRowSelectionAllowed(false);
-            lightControlTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 100));
-            TableColumnModel lightControlColumnModel = lightControlTable.getColumnModel();
-            TableColumn typeColumn = lightControlColumnModel.getColumn(LightControlTableModel.TYPE_COLUMN);
-            typeColumn.setResizable(true);
-            typeColumn.setMinWidth(130);
-            typeColumn.setMaxWidth(170);
-            TableColumn descriptionColumn = lightControlColumnModel.getColumn(
-                    LightControlTableModel.DESCRIPTION_COLUMN);
-            descriptionColumn.setResizable(true);
-            descriptionColumn.setMinWidth(270);
-            descriptionColumn.setMaxWidth(380);
-            ButtonRenderer buttonRenderer = new ButtonRenderer();
-            lightControlTable.setDefaultRenderer(JButton.class, buttonRenderer);
-            TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-            lightControlTable.setDefaultEditor(JButton.class, buttonEditor);
-            JButton testButton = new JButton(Bundle.getMessage("ButtonDelete"));
-            lightControlTable.setRowHeight(testButton.getPreferredSize().height);
-            TableColumn editColumn = lightControlColumnModel.getColumn(LightControlTableModel.EDIT_COLUMN);
-            editColumn.setResizable(false);
-            editColumn.setMinWidth(testButton.getPreferredSize().width);
-            TableColumn removeColumn = lightControlColumnModel.getColumn(LightControlTableModel.REMOVE_COLUMN);
-            removeColumn.setResizable(false);
-            removeColumn.setMinWidth(testButton.getPreferredSize().width);
-            JScrollPane lightControlTableScrollPane = new JScrollPane(lightControlTable);
-            panel3.add(lightControlTableScrollPane);
-            JPanel panel35 = new JPanel();
-            panel35.setLayout(new FlowLayout());
-            panel35.add(addControl = new JButton(Bundle.getMessage("LightAddControlButton")));
-            addControl.addActionListener(this::addControlPressed);
-            addControl.setToolTipText(Bundle.getMessage("LightAddControlButtonHint"));
-            panel3.add(panel35);
-            Border panel3Border = BorderFactory.createEtchedBorder();
-            Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                    Bundle.getMessage("LightControlBorder"));
-            panel3.setBorder(panel3Titled);
-            contentPane.add(panel3);
+            lightControlPanel = new LightControlPane();
+            Border panel3Titled = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+                Bundle.getMessage("LightControllerTitlePlural"));
+            lightControlPanel.setBorder(panel3Titled);
+            contentPane.add(lightControlPanel);
             // message items
             JPanel panel4 = new JPanel();
             panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
@@ -738,11 +238,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             create.addActionListener(this::createPressed);
             create.setToolTipText(Bundle.getMessage("LightCreateButtonHint"));
             create.setName("createButton"); // for GUI test NOI18N
-            panel5.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
-            update.addActionListener(this::updatePressed);
-            update.setToolTipText(Bundle.getMessage("LightUpdateButtonHint"));
             create.setVisible(true);
-            update.setVisible(false);
             contentPane.add(panel5);
             hardwareAddressValidator.verify(hardwareAddressTextField);
         }
@@ -757,6 +253,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
         status1.setForeground(Color.gray);
+        
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(create);
 
         addFrame.pack();
         addFrame.setVisible(true);
@@ -766,11 +265,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
     protected void prefixChanged() {
         if (prefixBox.getSelectedItem() != null) {
-            if (supportsVariableLights()) {
-                setupVariableDisplay(true, true);
-            } else {
-                varPanel.setVisible(false);
-            }
+            lightIntensityPanel.setVisible(supportsVariableLights());
             // behaves like the AddNewHardwareDevice pane (dim if not available, do not hide)
             addRangeBox.setEnabled(canAddRange());
             addRangeBox.setSelected(false);
@@ -803,17 +298,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     protected void addRangeChanged() {
-        if (addRangeBox.isSelected()) {
-            numberToAdd.setEnabled(true);
-            labelNumToAdd.setEnabled(true);
-        } else {
-            numberToAdd.setEnabled(false);
-            labelNumToAdd.setEnabled(false);
-        }
+        numberToAdd.setEnabled(addRangeBox.isSelected());
+        labelNumToAdd.setEnabled(addRangeBox.isSelected());
     }
 
     /**
      * Activate Add a range option if manager accepts adding more than 1 Light.
+     * TODO: Will only verify against formats which accept "11" as a Hardware address.
      */
     private boolean canAddRange() {
         String testSysName = Objects.requireNonNull(prefixBox.getSelectedItem()).getSystemPrefix() + "L11";
@@ -821,27 +312,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     /**
-     * Set up panel for Variable Options.
-     *
-     * @param showIntensity  true to show light intensity; false otherwise
-     * @param showTransition true to show time light takes to transition between
-     *                       states; false otherwise
-     */
-    void setupVariableDisplay(boolean showIntensity, boolean showTransition) {
-
-        labelMinIntensity.setVisible(showIntensity);
-        minIntensity.setVisible(showIntensity);
-        labelMinIntensityTail.setVisible(showIntensity);
-        labelMaxIntensity.setVisible(showIntensity);
-        maxIntensity.setVisible(showIntensity);
-        labelMaxIntensityTail.setVisible(showIntensity);
-        labelTransitionTime.setVisible(showTransition);
-        transitionTime.setVisible(showTransition);
-        varPanel.setVisible(showIntensity || showTransition);
-    }
-
-    /**
-     * @return true if system can support variable lights
+     * Check if LightManager supports variable Lights.
+     * TODO: Will only verify against formats which accept "11" as a Hardware address.
+     * 
+     * @return true if system can support variable lights.
      */
     boolean supportsVariableLights() {
         String testSysName = Objects.requireNonNull(prefixBox.getSelectedItem()).getSystemPrefix() + "L11";
@@ -1027,28 +501,16 @@ public class LightTableAction extends AbstractTableAction<Light> {
             handleCreateException(ex, suName);
             return; // without creating
         }
-        // set control information if any
-        setLightControlInformation(g);
-        clearLightControlsTable(); // remove all controls from local list
+        lightControlPanel.setLightFromControlTable(g);
+        if (g instanceof VariableLight) {
+            lightIntensityPanel.setLightFromPane((VariableLight)g);
+        }
         g.activateLight();
         lightCreatedOrUpdated = true;
 
         status2.setText("");
         status2.setVisible(false);
-        if (g instanceof VariableLight) {
-            if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
-                log.debug("minInt value entered: {}", minIntensity.getValue());
-                // do not set intensity
-                status2.setText(Bundle.getMessage("LightWarn9"));
-                status2.setVisible(true);
-            } else {
-                ((VariableLight)g).setMinIntensity((Double) minIntensity.getValue());
-                ((VariableLight)g).setMaxIntensity((Double) maxIntensity.getValue());
-            }
-            if (((VariableLight)g).isTransitionAvailable()) {
-                ((VariableLight)g).setTransitionTime((Double) transitionTime.getValue());
-            }
-        }
+        
         // provide feedback to user
         String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // create additional lights if requested
@@ -1063,7 +525,12 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
                 try {
                     g = lightManager.newLight(sxName, uxName);
-                    // TODO: set up this light the same as the first light?
+                    log.debug("Light {} created",g);
+                    // set up this light the same as the first light
+                    lightControlPanel.setLightFromControlTable(g);
+                    if (g instanceof VariableLight) {
+                        lightIntensityPanel.setLightFromPane((VariableLight)g);
+                    }
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, suName);
@@ -1072,6 +539,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
             feedback = feedback + " - " + sxName + ", " + uxName;
         }
+        create.setEnabled(false);
         status1.setText(feedback);
         status1.setForeground(Color.gray);
         cancel.setText(Bundle.getMessage("ButtonClose")); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
@@ -1079,153 +547,12 @@ public class LightTableAction extends AbstractTableAction<Light> {
         addFrame.setVisible(true);
     }
 
-    /**
-     * Respond to the Edit button in the Light table. Panel has already been
-     * created.
-     */
-    void editPressed() {
-        // check if a Light with this name already exists
-        String sName = fixedSystemName.getText();
-        if (sName.isEmpty()) {
-            // Entered system name has invalid format
-            status1.setText(Bundle.getMessage("LightError3"));
-            status1.setForeground(Color.red);
-            status2.setText(Bundle.getMessage("LightError6"));
-            status2.setVisible(true);
-            addFrame.pack();
-            addFrame.setVisible(true);
-            return;
-        }
-        Light g = InstanceManager.getDefault(LightManager.class).getBySystemName(sName);
-        if (g == null) {
-            // check if Light exists under an alternate name if an alternate name exists
-            String altName = InstanceManager.getDefault(LightManager.class).convertSystemNameToAlternate(sName);
-            if (!altName.isEmpty()) {
-                g = InstanceManager.getDefault(LightManager.class).getBySystemName(altName);
-                if (g != null) {
-                    sName = altName;
-                }
-            }
-            if (g == null) {
-                // Light does not exist, so cannot be edited
-                status1.setText(Bundle.getMessage("LightError7"));
-                status1.setForeground(Color.red);
-                status2.setText(Bundle.getMessage("LightError6"));
-                status2.setVisible(true);
-                addFrame.pack();
-                addFrame.setVisible(true);
-                return;
-            }
-        }
-        // Light was found, make its system name not changeable
-        curLight = g;
-        fixedSystemName.setText(sName);
-        fixedSystemName.setVisible(true);
-        prefixBox.setVisible(false);
-        systemNameLabel.setVisible(true);
-        systemLabel.setVisible(false);
-        panel1a.setVisible(false);
-        addRangeBox.setVisible(false);
-        // deactivate this Light
-        curLight.deactivateLight();
-        inEditMode = true;
-        // get information for this Light
-        userName.setText(g.getUserName());
-        clearLightControlsTable(); // remove all controls from local list
-
-        // Get a copy of the LightControl list
-        controlList = new ArrayList<>();
-        curLight.getLightControlList().forEach((lightControlList1) -> controlList.add(new DefaultLightControl(lightControlList1)));
-
-        // variable intensity
-        if (g instanceof VariableLight) {
-            minIntensity.setValue(((VariableLight)g).getMinIntensity()); // displayed as percentage
-            maxIntensity.setValue(((VariableLight)g).getMaxIntensity());
-            if (((VariableLight)g).isTransitionAvailable()) {
-                transitionTime.setValue(((VariableLight)g).getTransitionTime()); // displays i18n decimal separator eg. 0,00 in _nl
-            }
-            setupVariableDisplay(true, ((VariableLight)g).isTransitionAvailable());
-        } else {
-            setupVariableDisplay(false, false);
-        }
-
-        update.setVisible(true);
-        create.setVisible(false);
-        status1.setText(Bundle.getMessage("LightUpdateInst"));
-        status1.setForeground(Color.gray); // reset color
-        status2.setText("");
-        status2.setVisible(false);
-        addFrame.setTitle(Bundle.getMessage("TitleEditLight")); // for edit
-        cancel.setText(Bundle.getMessage("ButtonCancel")); // when Create/Apply has been clicked at least once, this will read Close
-        addFrame.pack();
-        addFrame.setVisible(true);
-        lightControlTableModel.fireTableDataChanged();
-    }
-
     void handleCreateException(Exception ex, String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * Respond to the Update button on the Add/Update Light pane. Set Light
-     * configuration from entries in pane.
-     *
-     * @param e the button press action
-     */
-    void updatePressed(ActionEvent e) {
-        Light g = curLight;
-        // Check if the User Name has been changed
-        String uName = userName.getText();
-        if (uName.isEmpty()) {
-            uName = null; // a blank field means no user name
-        }
-        String prevUName = g.getUserName();
-        if ((uName != null) && !(uName.equals(prevUName))) {
-            // user name has changed - check if already in use
-            Light p = InstanceManager.getDefault(LightManager.class).getByUserName(uName);
-            if (p != null) {
-                // Light with this user name already exists
-                status1.setText(Bundle.getMessage("LightError8"));
-                status1.setForeground(Color.red);
-                status2.setText(Bundle.getMessage("LightError9"));
-                status2.setVisible(true);
-                return;
-            }
-            // user name is unique, change it
-            g.setUserName(uName);
-        } else if ((uName == null) && (prevUName != null)) {
-            // user name has been cleared
-            g.setUserName(null);
-        }
-        setLightControlInformation(g);
-        // Variable intensity, transitions
-        if (g instanceof VariableLight) {
-            ((VariableLight)g).setMinIntensity((Double) minIntensity.getValue());
-            ((VariableLight)g).setMaxIntensity((Double) maxIntensity.getValue());
-            if (((VariableLight)g).isTransitionAvailable()) {
-                ((VariableLight)g).setTransitionTime((Double) transitionTime.getValue());
-            }
-        }
-        g.activateLight();
-        lightCreatedOrUpdated = true;
-        cancelPressed(null);
-        status1.setText(Bundle.getMessage("LightUpdateFeedback") + " " + g.getUserName()); //provide some feedback
-        status1.setForeground(Color.gray);
-        cancel.setText("ButtonClose"); // after first Create, the no button cannot cancel 1st addition
-    }
-
-    private void setLightControlInformation(Light g) {
-        if (inEditMode && !lightControlChanged) {
-            return;
-        }
-        g.clearLightControls(); // clear list on Light
-        for (LightControl control : controlList) {
-            control.setParentLight(g);
-            g.addLightControl(control);
-        }
+        status1.setText(ex.getLocalizedMessage());
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(LightManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1234,26 +561,11 @@ public class LightTableAction extends AbstractTableAction<Light> {
      * @param e the button press action
      */
     void cancelPressed(ActionEvent e) {
-        if (inEditMode) {
-            // if in Edit mode, cancel the Edit and reactivate the Light
-            status1.setText(Bundle.getMessage("LightCreateInst"));
-            status1.setForeground(Color.gray);
-            update.setVisible(false);
-            create.setVisible(true);
-            fixedSystemName.setVisible(false);
-            prefixBox.setVisible(true);
-            systemNameLabel.setVisible(false);
-            systemLabel.setVisible(true);
-            panel1a.setVisible(true);
-            // reactivate the light, never null here
-            curLight.activateLight();
-            inEditMode = false;
-        }
+
         if (addFrame != null) {
             addFrame.setVisible(false); // hide first for cleaner display
         }
-        clearLightControlsTable(); // remove all controls from local list
-        status2.setText("");
+        
         // remind to save, if Light was created or edited
         if (lightCreatedOrUpdated) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
@@ -1265,691 +577,23 @@ public class LightTableAction extends AbstractTableAction<Light> {
         lightCreatedOrUpdated = false;
         // finally, get rid of the add/edit Frame
         if (addFrame != null) {
+            
+            lightControlPanel.dispose(); // closes any popup windows
+            
             removePrefixBoxListener(prefixBox);
             addFrame.dispose();
             addFrame = null;
             create.removePropertyChangeListener(colorChangeListener);
+            
         }
     }
 
-    private void clearLightControlsTable() {
-        log.debug("Clear LightControls");
-        for (int i = controlList.size(); i > 0; i--) {
-            controlList.remove(i - 1);
-        }
-        lightControlTableModel.fireTableDataChanged();
-    }
 
-    // items for Add/Edit Light Control pane
-    private JmriJFrame addControlFrame = null;
-    private JComboBox<String> typeBox;
-    private final JLabel typeBoxLabel = new JLabel(Bundle.getMessage("LightControlType"));
-    private int defaultControlIndex = Light.NO_CONTROL;
-    private boolean inEditControlMode = false;
-    private LightControl lc = null;
-    private final NamedBeanComboBox<Sensor> sensor1Box = new NamedBeanComboBox<>( // Sensor (1 or only)
-            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<Sensor> sensor2Box = new NamedBeanComboBox<>( // Sensor 2
-            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
-
-    private final SpinnerNumberModel fastHourSpinnerModel1 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
-    private final JSpinner fastHourSpinner1 = new JSpinner(fastHourSpinnerModel1); // Fast Clock1 hours
-    private final SpinnerNumberModel fastMinuteSpinnerModel1 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
-    private final JSpinner fastMinuteSpinner1 = new JSpinner(fastMinuteSpinnerModel1); // Fast Clock1 minutes
-    private final JLabel clockSep1 = new JLabel(" : ");
-
-    private final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>( // Turnout
-            InstanceManager.turnoutManagerInstance(), null, DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<Sensor> sensorOnBox = new NamedBeanComboBox<>( // Timed ON
-            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
-    private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // for 1 sensor
-    private final JLabel f1aLabel = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", " 2"))); // for 2nd sensor
-
-    private final SpinnerNumberModel fastHourSpinnerModel2 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
-    private final JSpinner fastHourSpinner2 = new JSpinner(fastHourSpinnerModel2); // Fast Clock2 hours
-    private final SpinnerNumberModel fastMinuteSpinnerModel2 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
-    private final JSpinner fastMinuteSpinner2 = new JSpinner(fastMinuteSpinnerModel2); // Fast Clock2 minutes
-    private final JLabel clockSep2 = new JLabel(" : ");
-
-    private final SpinnerNumberModel timedOnSpinnerModel = new SpinnerNumberModel(0, 0, 1000000, 1); // 0 - 1,000,000 msec
-    private final JSpinner timedOnSpinner = new JSpinner(timedOnSpinnerModel); // Timed ON
-    private final JLabel f2Label = new JLabel(Bundle.getMessage("LightSensorSense"));
-    private JComboBox<String> stateBox;
-    private ComboBoxToolTipRenderer stateBoxToolTipRenderer;
-    private final int sensorActiveIndex = 0;
-    private final int sensorInactiveIndex = 1;
-    private final int turnoutClosedIndex = 0;
-    private final int turnoutThrownIndex = 1;
-    private JButton createControl;
-    private JButton updateControl;
-    private JButton cancelControl;
-
-    private JPanel panel34;
-
-    /**
-     * Respond to pressing the Add Control button.
-     *
-     * @param e the event containing the press action
-     */
-    protected void addControlPressed(ActionEvent e) {
-        if (inEditControlMode) {
-            // cancel Edit and reactivate the edited light
-            cancelControlPressed(null);
-        }
-        // set up to edit. Use separate Runnable so window is created on top
-        class WindowMaker implements Runnable {
-
-            WindowMaker() {
-            }
-
-            @Override
-            public void run() {
-                addEditControlWindow();
-            }
-        }
-        WindowMaker t = new WindowMaker();
-        javax.swing.SwingUtilities.invokeLater(t);
-    }
-
-    /**
-     * Create the Add/Edit Light Control pane.
-     */
-    private void addEditControlWindow() {
-        if (addControlFrame == null) {
-            addControlFrame = new JmriJFrame(Bundle.getMessage("TitleAddLightControl"), false, true);
-            addControlFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
-            addControlFrame.setLocation(120, 40);
-            Container contentPane = addControlFrame.getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-            JPanel panel3 = new JPanel();
-            panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-            JPanel panel31 = new JPanel();
-            panel31.setLayout(new FlowLayout());
-            panel31.add(typeBoxLabel);
-            panel31.add(typeBox = new JComboBox<>(new String[]{
-                noControl,
-                sensorControl,
-                fastClockControl,
-                turnoutStatusControl,
-                timedOnControl,
-                twoSensorControl
-            }));
-
-            ComboBoxToolTipRenderer typeBoxToolTipRenderer = new ComboBoxToolTipRenderer();
-            typeBox.setRenderer(typeBoxToolTipRenderer);
-
-            List<String> typeTooltips = new ArrayList<>();
-            typeTooltips.add(null); // no Control Type selected
-            typeTooltips.add(Bundle.getMessage("LightSensorControlTip"));
-            typeTooltips.add(Bundle.getMessage("LightFastClockControlTip"));
-            typeTooltips.add(Bundle.getMessage("LightTurnoutStatusControlTip",
-                    InstanceManager.turnoutManagerInstance().getClosedText(),
-                    InstanceManager.turnoutManagerInstance().getThrownText()));
-            typeTooltips.add(Bundle.getMessage("LightTimedOnControlTip"));
-            typeTooltips.add(Bundle.getMessage("LightTwoSensorControlTip"));
-            typeBoxToolTipRenderer.setTooltips(typeTooltips);
-
-            typeBox.addActionListener((ActionEvent e) -> controlTypeChanged());
-            typeBox.setToolTipText(Bundle.getMessage("LightControlTypeHint"));
-            JPanel panel32 = new JPanel();
-            panel32.setLayout(new FlowLayout());
-            panel32.add(f1Label);
-            panel32.add(sensor1Box);
-
-            // set up number formatting
-            JSpinner.NumberEditor ne1b = new JSpinner.NumberEditor(fastHourSpinner1, "00"); // 2 digits "01" format
-            fastHourSpinner1.setEditor(ne1b);
-            panel32.add(fastHourSpinner1);  // hours ON
-            panel32.add(clockSep1);
-            JSpinner.NumberEditor ne1b1 = new JSpinner.NumberEditor(fastMinuteSpinner1, "00"); // 2 digits "01" format
-            fastMinuteSpinner1.setEditor(ne1b1);
-            panel32.add(fastMinuteSpinner1); // minutes ON
-            panel32.add(turnoutBox);
-            panel32.add(sensorOnBox);
-
-            sensor1Box.setAllowNull(true);
-            sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
-
-            sensor2Box.setAllowNull(true);
-            sensor2Box.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
-
-            fastHourSpinner1.setValue(0);  // reset needed
-            fastHourSpinner1.setVisible(false);
-            fastMinuteSpinner1.setValue(0); // reset needed
-            fastMinuteSpinner1.setVisible(false);
-
-            sensorOnBox.setAllowNull(true);
-            sensorOnBox.setVisible(false);
-            clockSep1.setVisible(false);
-
-            turnoutBox.setAllowNull(true);
-            turnoutBox.setVisible(false);
-
-            panel34 = new JPanel();
-            panel34.setLayout(new FlowLayout());
-            panel34.add(f1aLabel);
-            panel34.add(sensor2Box);
-
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-
-            panel33.add(f2Label);
-            panel33.add(stateBox = new JComboBox<>(new String[]{
-                Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive"),}));
-            stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
-            stateBoxToolTipRenderer = new ComboBoxToolTipRenderer();
-            stateBox.setRenderer(stateBoxToolTipRenderer);
-
-            JSpinner.NumberEditor ne2a = new JSpinner.NumberEditor(fastHourSpinner2, "00"); // 2 digits "01" format
-            fastHourSpinner2.setEditor(ne2a);
-            panel33.add(fastHourSpinner2);  // hours OFF
-            panel33.add(clockSep2);
-            JSpinner.NumberEditor ne2a1 = new JSpinner.NumberEditor(fastMinuteSpinner2, "00"); // 2 digits "01" format
-            fastMinuteSpinner2.setEditor(ne2a1);
-            panel33.add(fastMinuteSpinner2); // minutes OFF
-            panel33.add(timedOnSpinner);
-
-            fastHourSpinner2.setValue(0);  // reset needed
-            fastHourSpinner2.setVisible(false);
-            fastMinuteSpinner2.setValue(0); // reset needed
-            fastMinuteSpinner2.setVisible(false);
-
-            timedOnSpinner.setValue(5000);  // reset needed, default to 5,000 ms
-            timedOnSpinner.setVisible(false);
-            clockSep2.setVisible(false);
-
-            panel3.add(panel31);
-            panel3.add(panel32);
-            panel3.add(panel34);
-            panel3.add(panel33);
-            Border panel3Border = BorderFactory.createEtchedBorder();
-            panel3.setBorder(panel3Border);
-            contentPane.add(panel3);
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancelControl.addActionListener(this::cancelControlPressed);
-            cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
-            panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
-            createControl.addActionListener(this::createControlPressed);
-            createControl.setToolTipText(Bundle.getMessage("LightCreateControlButtonHint"));
-            panel5.add(updateControl = new JButton(Bundle.getMessage("ButtonUpdate")));
-            updateControl.addActionListener(this::updateControlPressed);
-            updateControl.setToolTipText(Bundle.getMessage("LightUpdateControlButtonHint"));
-            cancelControl.setVisible(true);
-            updateControl.setVisible(false);
-            createControl.setVisible(true);
-            contentPane.add(panel5);
-            addControlFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    cancelControlPressed(null);
-                }
-            });
-        }
-        typeBox.setSelectedIndex(defaultControlIndex); // force GUI status consistent
-        addControlFrame.pack();
-        addControlFrame.setVisible(true);
-    }
-
-    /**
-     * Reacts to a control type change.
-     */
-    private void controlTypeChanged() {
-        setUpControlType(typeBox.getSelectedIndex());
-
-    }
-
-    /**
-     * Set the Control Information according to control type.
-     *
-     * @param ctype the control type
-     */
-    private void setUpControlType(int ctype) {
-        // set everything non-visible by default
-        clockSep1.setVisible(false);
-        clockSep2.setVisible(false);
-        fastHourSpinner1.setVisible(false);
-        fastHourSpinner2.setVisible(false);
-        fastMinuteSpinner1.setVisible(false);
-        fastMinuteSpinner2.setVisible(false);
-        f1aLabel.setVisible(false);
-        sensorOnBox.setVisible(false);
-        sensor1Box.setVisible(false);
-        sensor2Box.setVisible(false);
-        stateBox.setVisible(false);
-        timedOnSpinner.setVisible(false);
-        turnoutBox.setVisible(false);
-        panel34.setVisible(false);
-        typeBox.setSelectedIndex(ctype);
-        createControl.setEnabled(true);
-        updateControl.setEnabled(true);
-
-        if (ctype == Light.SENSOR_CONTROL) {
-            // set up panel for sensor control
-            f1Label.setText(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // insert nothing before colon
-            sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
-            f2Label.setText(Bundle.getMessage("LightSensorSense"));
-            stateBox.removeAllItems();
-            stateBox.addItem(Bundle.getMessage("SensorStateActive"));
-            stateBox.addItem(Bundle.getMessage("SensorStateInactive"));
-            List<String> stateTooltips = new ArrayList<>();
-            stateTooltips.add(Bundle.getMessage("LightSensorSenseActivTip"));
-            stateTooltips.add(Bundle.getMessage("LightSensorSenseInactivTip"));
-            stateBoxToolTipRenderer.setTooltips(stateTooltips);
-            stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
-            f2Label.setVisible(true);
-            sensor1Box.setVisible(true);
-            stateBox.setVisible(true);
-            defaultControlIndex = Light.SENSOR_CONTROL;
-        } else if (ctype == Light.FAST_CLOCK_CONTROL) {
-            // set up panel for fast clock control
-            f1Label.setText(Bundle.getMessage("LightScheduleOn"));
-            fastHourSpinner1.setToolTipText(Bundle.getMessage("LightScheduleHint"));
-            fastMinuteSpinner1.setToolTipText(Bundle.getMessage("LightScheduleHintMinutes"));
-            f2Label.setText(Bundle.getMessage("LightScheduleOff"));
-            fastHourSpinner2.setToolTipText(Bundle.getMessage("LightScheduleHint"));
-            fastMinuteSpinner2.setToolTipText(Bundle.getMessage("LightScheduleHintMinutes"));
-            clockSep1.setVisible(true);
-            clockSep2.setVisible(true);
-            fastHourSpinner1.setVisible(true);
-            fastHourSpinner2.setVisible(true);
-            fastMinuteSpinner1.setVisible(true);
-            fastMinuteSpinner2.setVisible(true);
-            f2Label.setVisible(true);
-            defaultControlIndex = Light.FAST_CLOCK_CONTROL;
-        } else if (ctype == Light.TURNOUT_STATUS_CONTROL) {
-            // set up panel for turnout status control
-            f1Label.setText(Bundle.getMessage("LightTurnout"));
-            turnoutBox.setToolTipText(Bundle.getMessage("LightTurnoutHint"));
-            f2Label.setText(Bundle.getMessage("LightTurnoutSense"));
-            stateBox.removeAllItems();
-            stateBox.addItem(InstanceManager.turnoutManagerInstance().getClosedText());
-            stateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
-            stateBox.setToolTipText(Bundle.getMessage("LightTurnoutSenseHint"));
-            List<String> stateTooltips = new ArrayList<>();
-            stateTooltips.add(Bundle.getMessage("LightConToClosedOrThrownTip",
-                    InstanceManager.turnoutManagerInstance().getClosedText(),
-                    InstanceManager.turnoutManagerInstance().getThrownText()));
-            stateTooltips.add(Bundle.getMessage("LightConToClosedOrThrownTip",
-                    InstanceManager.turnoutManagerInstance().getThrownText(),
-                    InstanceManager.turnoutManagerInstance().getClosedText()));
-            stateBoxToolTipRenderer.setTooltips(stateTooltips);
-            f2Label.setVisible(true);
-            turnoutBox.setVisible(true);
-            stateBox.setVisible(true);
-            defaultControlIndex = Light.TURNOUT_STATUS_CONTROL;
-        } else if (ctype == Light.TIMED_ON_CONTROL) {
-            // set up panel for sensor control
-            f1Label.setText(Bundle.getMessage("LightTimedSensor"));
-            sensorOnBox.setToolTipText(Bundle.getMessage("LightTimedSensorHint"));
-            f2Label.setText(Bundle.getMessage("LightTimedDurationOn"));
-            timedOnSpinner.setToolTipText(Bundle.getMessage("LightTimedDurationOnHint"));
-            f2Label.setVisible(true);
-            sensorOnBox.setVisible(true);
-            timedOnSpinner.setVisible(true);
-            defaultControlIndex = Light.TIMED_ON_CONTROL;
-        } else if (ctype == Light.TWO_SENSOR_CONTROL) {
-            // set up panel for two sensor control
-            panel34.setVisible(true);
-            f1Label.setText(Bundle.getMessage("LightSensor", " " + Bundle.getMessage("MakeLabel", "1"))); // for 2-sensor use, insert number "1" before colon
-            f1aLabel.setVisible(true);
-            sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
-            f2Label.setText(Bundle.getMessage("LightSensorSense"));
-            stateBox.removeAllItems();
-            stateBox.addItem(Bundle.getMessage("SensorStateActive"));
-            stateBox.addItem(Bundle.getMessage("SensorStateInactive"));
-            stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
-
-            List<String> stateTooltips = new ArrayList<>();
-            stateTooltips.add(Bundle.getMessage("Light2SensorSenseActivTip"));
-            stateTooltips.add(Bundle.getMessage("Light2SensorSenseInactivTip"));
-            stateBoxToolTipRenderer.setTooltips(stateTooltips);
-
-            f2Label.setVisible(true);
-            sensor1Box.setVisible(true);
-            sensor2Box.setVisible(true);
-            sensor1Box.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
-            stateBox.setVisible(true);
-            defaultControlIndex = Light.TWO_SENSOR_CONTROL;
-        } else if (ctype == Light.NO_CONTROL) {
-            // set up panel for no control
-            f1Label.setText(Bundle.getMessage("LightNoneSelected"));
-            defaultControlIndex = Light.NO_CONTROL;
-            f2Label.setVisible(false);
-            createControl.setEnabled(false);
-            updateControl.setEnabled(false);
-        } else {
-            log.error("Unexpected control type in controlTypeChanged: {}", ctype);
-        }
-        addControlFrame.pack();
-        addControlFrame.setVisible(true);
-    }
-
-    protected void createControlPressed(ActionEvent e) {
-        if (Objects.equals(typeBox.getSelectedItem(), noControl)) {
-            return;
-        }
-        try {
-
-            fastHourSpinner1.commitEdit();
-            fastHourSpinner2.commitEdit();
-            fastMinuteSpinner1.commitEdit();
-            fastMinuteSpinner2.commitEdit();
-            timedOnSpinner.commitEdit();
-        } catch (java.text.ParseException pe) {
-            // unlikely to be thrown as values set to original if incorrect on commitEdit()
-            log.error("Incorrect value found in a Time: ", pe);
-            return;
-        }
-        lc = new DefaultLightControl();
-        if (setControlInformation(lc,controlList)) {
-            controlList.add(lc);
-            lightControlChanged = true;
-            lightControlTableModel.fireTableDataChanged();
-            cancelControlPressed(e);
-        } else {
-            try { // prevent NPE when addFrame has been closed before AddControlPane is closed
-                addFrame.pack();
-            } catch (NullPointerException npe) {
-                log.error("addFrame not found");
-            }
-            addControlFrame.setVisible(true);
-        }
-    }
-
-    protected void updateControlPressed(ActionEvent e) {
-        try {
-            fastHourSpinner1.commitEdit();
-            fastHourSpinner2.commitEdit();
-            fastMinuteSpinner1.commitEdit();
-            fastMinuteSpinner2.commitEdit();
-            timedOnSpinner.commitEdit();
-        } catch (java.text.ParseException pe) {
-            // unlikely to be thrown as values set to original if incorrect on commitEdit()
-            log.error("Incorrect value found in a FastClock Time: ", pe);
-            return;
-        }
-        if (setControlInformation(lc,controlList)) {
-            lightControlChanged = true;
-            lightControlTableModel.fireTableDataChanged();
-            cancelControlPressed(e);
-        } else {
-            try { // prevent NPE when addFrame has been closed before AddControlPane is closed
-                addFrame.pack();
-            } catch (NullPointerException npe) {
-                log.error("addFrame not found");
-            }
-            addControlFrame.setVisible(true);
-        }
-    }
-
-    protected void cancelControlPressed(ActionEvent e) {
-        if (inEditControlMode) {
-            inEditControlMode = false;
-        }
-        if (inEditMode) {
-            status1.setText(Bundle.getMessage("LightUpdateInst"));
-        } else {
-            status1.setText(Bundle.getMessage("LightCreateInst"));
-        }
-        status1.setForeground(Color.gray);
-        status2.setText("");
-        status2.setVisible(false);
-        try { // prevent NPE when addFrame has been closed before AddControlPane is closed
-            addFrame.pack();
-            addFrame.setVisible(true);
-        } catch (NullPointerException npe) {
-            log.error("frame not found");
-        }
-        addControlFrame.setVisible(false);
-        addControlFrame.dispose();
-        addControlFrame = null;
-    }
-
-    /**
-     * Retrieve control information from pane and update Light Control.
-     *
-     * @return 'true' if no errors or warnings
-     */
-    private boolean setControlInformation(LightControl g, ArrayList<LightControl> currentList) {
-        // Get control information
-        if (sensorControl.equals(typeBox.getSelectedItem())) {
-            // Set type of control
-            g.setControlType(Light.SENSOR_CONTROL);
-            // Get sensor control information
-            Sensor s = null;
-            String sensorName = sensor1Box.getSelectedItemDisplayName();
-            if (sensorName == null) {
-                // no sensor selected
-                g.setControlType(Light.NO_CONTROL);
-                status1.setText(Bundle.getMessage("LightWarn8"));
-                status1.setForeground(Color.gray);
-            } else {
-                // name was selected, check for user name first
-                s = InstanceManager.sensorManagerInstance().
-                        getByUserName(sensorName);
-                if (s == null) {
-                    // not user name, try system name
-                    s = InstanceManager.sensorManagerInstance().
-                            getBySystemName(sensorName);
-                    if (s != null) {
-                        // update sensor system name in case it changed
-                        sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(s);
-                    }
-                }
-            }
-            int sState = Sensor.ACTIVE;
-            if (Objects.equals(stateBox.getSelectedItem(), Bundle.getMessage("SensorStateInactive"))) {
-                sState = Sensor.INACTIVE;
-            }
-            g.setControlSensorName(sensorName);
-            g.setControlSensorSense(sState);
-            if (s == null) {
-                status1.setText(Bundle.getMessage("LightWarn1"));
-                status1.setForeground(Color.red);
-                return (false);
-            }
-        } else if (fastClockControl.equals(typeBox.getSelectedItem())) {
-            // Set type of control
-            g.setControlType(Light.FAST_CLOCK_CONTROL);
-            // read and parse the hours and minutes in the 2 x 2 spinners
-            int onHour = (Integer) fastHourSpinner1.getValue();  // hours
-            int onMin = (Integer) fastMinuteSpinner1.getValue();  // minutes
-            int offHour = (Integer) fastHourSpinner2.getValue(); // hours
-            int offMin = (Integer) fastMinuteSpinner2.getValue(); // minutes
-
-            g.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
-
-            if (g.onOffTimesFaulty()) {
-                status1.setText(Bundle.getMessage("LightWarn11"));
-                status1.setForeground(Color.red);
-                return false;
-            }
-
-            if (g.areFollowerTimesFaulty(currentList)) {
-                status1.setText(Bundle.getMessage("LightWarn12"));
-                status1.setForeground(Color.red);
-                return false;
-            }
-
-        } else if (turnoutStatusControl.equals(typeBox.getSelectedItem())) {
-            boolean error = false;
-            Turnout t = null;
-            // Set type of control
-            g.setControlType(Light.TURNOUT_STATUS_CONTROL);
-            // Get turnout control information
-            String turnoutName = turnoutBox.getSelectedItemSystemName();
-            if (turnoutName == null) {
-                // no turnout selected
-                g.setControlType(Light.NO_CONTROL);
-                status1.setText(Bundle.getMessage("LightWarn10"));
-                status1.setForeground(Color.gray);
-            } else {
-                // Ensure that this Turnout is not already a Light
-                String prefix = Objects.requireNonNull(prefixBox.getSelectedItem()).getSystemPrefix();
-                if (turnoutName.charAt(prefix.length()) == 'T') {
-                    // must be a standard format name (not just a number)
-                    String testSN = prefix + "L"
-                            + turnoutName.substring(prefix.length() + 1);
-                    Light testLight = InstanceManager.getDefault(LightManager.class).
-                            getBySystemName(testSN);
-                    if (testLight != null) {
-                        // Requested turnout bit is already assigned to a Light
-                        status2.setText(Bundle.getMessage("LightWarn3") + " " + testSN + ".");
-                        status2.setVisible(true);
-                        error = true;
-                    }
-                }
-                if (!error) {
-                    // Requested turnout bit is not assigned to a Light
-                    t = InstanceManager.turnoutManagerInstance().
-                            getByUserName(turnoutName);
-                    if (t == null) {
-                        // not user name, try system name
-                        t = InstanceManager.turnoutManagerInstance().
-                                getBySystemName(turnoutName);
-                        if (t != null) {
-                            // update turnout system name in case it changed
-                            turnoutName = t.getSystemName();
-                            turnoutBox.setSelectedItem(t);
-                        }
-                    }
-                }
-            }
-            // Initialize the requested Turnout State
-            int tState = Turnout.CLOSED;
-            if (Objects.equals(stateBox.getSelectedItem(), InstanceManager.
-                    turnoutManagerInstance().getThrownText())) {
-                tState = Turnout.THROWN;
-            }
-            g.setControlTurnout(turnoutName);
-            g.setControlTurnoutState(tState);
-            if (t == null) {
-                status1.setText(Bundle.getMessage("LightWarn2"));
-                status1.setForeground(Color.red);
-                return (false);
-            }
-        } else if (timedOnControl.equals(typeBox.getSelectedItem())) {
-            Sensor s = null;
-            // Set type of control
-            g.setControlType(Light.TIMED_ON_CONTROL);
-            // Get trigger sensor control information
-            String triggerSensorName = sensorOnBox.getSelectedItemDisplayName();
-            if (triggerSensorName == null) {
-                // Trigger sensor not selected
-                g.setControlType(Light.NO_CONTROL);
-                status1.setText(Bundle.getMessage("LightWarn8"));
-                status1.setForeground(Color.gray);
-            } else {
-                // sensor was selected, try user name first
-                s = InstanceManager.sensorManagerInstance().getByUserName(triggerSensorName);
-                if (s == null) {
-                    // not user name, try system name
-                    s = InstanceManager.sensorManagerInstance().
-                            getBySystemName(triggerSensorName);
-                    if (s != null) {
-                        // update sensor system name in case it changed
-                        triggerSensorName = s.getSystemName();
-                        sensorOnBox.setSelectedItem(s);
-                    }
-                }
-            }
-            g.setControlTimedOnSensorName(triggerSensorName);
-            int dur = (Integer) timedOnSpinner.getValue();
-            g.setTimedOnDuration(dur);
-            if (s == null) {
-                status1.setText(Bundle.getMessage("LightWarn8"));
-                status1.setForeground(Color.red);
-                return (false);
-            }
-        } else if (twoSensorControl.equals(typeBox.getSelectedItem())) {
-            Sensor s = null;
-            Sensor s2;
-            // Set type of control
-            g.setControlType(Light.TWO_SENSOR_CONTROL);
-            // Get sensor control information
-            String sensorName = sensor1Box.getSelectedItemDisplayName();
-            String sensor2Name = sensor2Box.getSelectedItemDisplayName();
-            if (sensorName == null || sensor2Name == null) {
-                // no sensor(s) selected
-                g.setControlType(Light.NO_CONTROL);
-                status1.setText(Bundle.getMessage("LightWarn8"));
-                status1.setForeground(Color.gray);
-            } else {
-                // name was selected, check for user name first
-                s = InstanceManager.sensorManagerInstance().
-                        getByUserName(sensorName);
-                if (s == null) {
-                    // not user name, try system name
-                    s = InstanceManager.sensorManagerInstance().
-                            getBySystemName(sensorName);
-                    if (s != null) {
-                        // update sensor system name in case it changed
-                        sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(s);
-                    }
-                }
-                s2 = InstanceManager.sensorManagerInstance().
-                        getByUserName(sensor2Name);
-                if (s2 == null) {
-                    // not user name, try system name
-                    s2 = InstanceManager.sensorManagerInstance().
-                            getBySystemName(sensor2Name);
-                    if (s2 != null) {
-                        // update sensor system name in case it changed
-                        sensor2Name = s2.getSystemName();
-                        sensor2Box.setSelectedItem(s2);
-                    }
-                }
-            }
-            int sState = Sensor.ACTIVE;
-            if (Objects.equals(stateBox.getSelectedItem(), Bundle.getMessage("SensorStateInactive"))) {
-                sState = Sensor.INACTIVE;
-            }
-            g.setControlSensorName(sensorName);
-            g.setControlSensor2Name(sensor2Name);
-            g.setControlSensorSense(sState);
-            if (s == null) {
-                status1.setText(Bundle.getMessage("LightWarn1"));
-                status1.setForeground(Color.red);
-                return (false);
-            }
-        } else if (noControl.equals(typeBox.getSelectedItem())) {
-            // Set type of control
-            g.setControlType(Light.NO_CONTROL);
-        } else {
-            log.error("Unexpected control type: {}", typeBox.getSelectedItem());
-        }
-        return (true);
-    }
-
-    /**
-     * Get text showing the type of Light Control.
-     *
-     * @param type the type of Light Control
-     * @return name of type or the description for {@link jmri.Light#NO_CONTROL}
-     *         if type is not recognized
-     */
-    public static String getControlTypeText(int type) {
-        switch (type) {
-            case Light.SENSOR_CONTROL:
-                return sensorControl;
-            case Light.FAST_CLOCK_CONTROL:
-                return fastClockControl;
-            case Light.TURNOUT_STATUS_CONTROL:
-                return turnoutStatusControl;
-            case Light.TIMED_ON_CONTROL:
-                return timedOnControl;
-            case Light.TWO_SENSOR_CONTROL:
-                return twoSensorControl;
-            case Light.NO_CONTROL:
-            default:
-                return noControl;
-        }
-    }
-
+    // TODO: Move the next few static String methods to more appropriate place.
+    // LightControl.java ?  Multiple Bundle property files will need changing.
+    
+    public static String lightControlTitle = Bundle.getMessage("LightControlBorder");
+    
     /**
      * Get the description of the type of Light Control.
      *
@@ -1989,242 +633,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return InstanceManager.turnoutManagerInstance().getClosedText();
         }
         return InstanceManager.turnoutManagerInstance().getThrownText();
-    }
-
-    /**
-     * Respond to Edit button on row in the Light Control Table.
-     *
-     * @param row the row containing the pressed button
-     */
-    protected void editControlAction(int row) {
-        lc = controlList.get(row);
-        if (lc == null) {
-            log.error("Invalid light control edit specified");
-            return;
-        }
-        inEditControlMode = true;
-        addEditControlWindow();
-        int ctType = lc.getControlType();
-        switch (ctType) {
-            case Light.SENSOR_CONTROL:
-                setUpControlType(Light.SENSOR_CONTROL);
-                sensor1Box.setSelectedItemByName(lc.getControlSensorName());
-                stateBox.setSelectedIndex(sensorActiveIndex);
-                if (lc.getControlSensorSense() == Sensor.INACTIVE) {
-                    stateBox.setSelectedIndex(sensorInactiveIndex);
-                }
-                break;
-            case Light.FAST_CLOCK_CONTROL:
-                setUpControlType(Light.FAST_CLOCK_CONTROL);
-                int onHour = lc.getFastClockOnHour();
-                int onMin = lc.getFastClockOnMin();
-                int offHour = lc.getFastClockOffHour();
-                int offMin = lc.getFastClockOffMin();
-                fastHourSpinner1.setValue(onHour);
-                fastMinuteSpinner1.setValue(onMin);
-                fastHourSpinner2.setValue(offHour);
-                fastMinuteSpinner2.setValue(offMin);
-                break;
-            case Light.TURNOUT_STATUS_CONTROL:
-                setUpControlType(Light.TURNOUT_STATUS_CONTROL);
-                turnoutBox.setSelectedItemByName(lc.getControlTurnoutName());
-                stateBox.setSelectedIndex(turnoutClosedIndex);
-                if (lc.getControlTurnoutState() == Turnout.THROWN) {
-                    stateBox.setSelectedIndex(turnoutThrownIndex);
-                }
-                break;
-            case Light.TIMED_ON_CONTROL:
-                setUpControlType(Light.TIMED_ON_CONTROL);
-                int duration = lc.getTimedOnDuration();
-                sensorOnBox.setSelectedItemByName(lc.getControlTimedOnSensorName());
-                timedOnSpinner.setValue(duration);
-                break;
-            case Light.TWO_SENSOR_CONTROL:
-                setUpControlType(Light.TWO_SENSOR_CONTROL);
-                sensor1Box.setSelectedItemByName(lc.getControlSensorName());
-                sensor2Box.setSelectedItemByName(lc.getControlSensor2Name());
-                stateBox.setSelectedIndex(sensorActiveIndex);
-                if (lc.getControlSensorSense() == Sensor.INACTIVE) {
-                    stateBox.setSelectedIndex(sensorInactiveIndex);
-                }
-                break;
-            case Light.NO_CONTROL:
-                // Set up as "None"
-                setUpControlType(Light.NO_CONTROL);
-                break;
-            default:
-                log.error("Unhandled light control type: {}", ctType);
-                break;
-        }
-        updateControl.setVisible(true);
-        createControl.setVisible(false);
-        addControlFrame.setTitle(Bundle.getMessage("TitleEditLightControl"));
-        addControlFrame.pack();
-        addControlFrame.setVisible(true);
-    }
-
-    /**
-     * Respond to Delete button on row in the Light Control Table.
-     *
-     * @param row the row containing the pressed button
-     */
-    protected void deleteControlAction(int row) {
-        controlList.remove(row);
-        lightControlTableModel.fireTableDataChanged();
-        lightControlChanged = true;
-    }
-
-    /**
-     * Table model for Light Controls in the Add/Edit Light window.
-     */
-    public class LightControlTableModel extends javax.swing.table.AbstractTableModel implements
-            java.beans.PropertyChangeListener {
-
-        public static final int TYPE_COLUMN = 0;
-        public static final int DESCRIPTION_COLUMN = 1;
-        public static final int EDIT_COLUMN = 2;
-        public static final int REMOVE_COLUMN = 3;
-
-        public LightControlTableModel() {
-            super();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
-                // a new LightControl item is available in the manager
-                fireTableDataChanged();
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Class<?> getColumnClass(int c) {
-            switch (c) {
-                case EDIT_COLUMN:
-                case REMOVE_COLUMN:
-                    return JButton.class;
-                case TYPE_COLUMN:
-                case DESCRIPTION_COLUMN:
-                default:
-                    return String.class;
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public int getColumnCount() {
-            return REMOVE_COLUMN + 1;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public int getRowCount() {
-            return (controlList.size());
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isCellEditable(int r, int c) {
-            switch (c) {
-                case EDIT_COLUMN:
-                case REMOVE_COLUMN:
-                    return true;
-                case TYPE_COLUMN:
-                case DESCRIPTION_COLUMN:
-                default:
-                    return false;
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getColumnName(int col) {
-            if (col == TYPE_COLUMN) {
-                return Bundle.getMessage("LightControlType");
-            } else if (col == DESCRIPTION_COLUMN) {
-                return Bundle.getMessage("LightControlDescription");
-            }
-            return "";
-        }
-
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case TYPE_COLUMN:
-                    return new JTextField(20).getPreferredSize().width;
-                case DESCRIPTION_COLUMN:
-                    return new JTextField(70).getPreferredSize().width;
-                case EDIT_COLUMN:
-                    return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
-                case REMOVE_COLUMN:
-                    default:
-                    return new JTextField(8).getPreferredSize().width;
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Object getValueAt(int r, int c) {
-            if (r > controlList.size()) {
-                return null;
-            }
-            LightControl lc = controlList.get(r);
-            switch (c) {
-                case TYPE_COLUMN:
-                    return (getControlTypeText(lc.getControlType()));
-                case DESCRIPTION_COLUMN:
-                    return (getDescriptionText(lc, lc.getControlType()));
-                case EDIT_COLUMN:
-                    return Bundle.getMessage("ButtonEdit");
-                case REMOVE_COLUMN:
-                    return Bundle.getMessage("ButtonDelete");
-                default:
-                    return "";
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void setValueAt(Object value, int row, int col) {
-            if (col == EDIT_COLUMN) {
-                // set up to edit. Use separate Runnable so window is created on top
-                class WindowMaker implements Runnable {
-
-                    WindowMaker(int _row) {
-                        row = _row;
-                    }
-                    final int row;
-
-
-                    @Override
-                    public void run() {
-                        editControlAction(row);
-                    }
-                }
-                WindowMaker t = new WindowMaker(row);
-                javax.swing.SwingUtilities.invokeLater(t);
-            }
-            else if (col == REMOVE_COLUMN) {
-                deleteControlAction(row);
-            }
-        }
     }
 
     /**

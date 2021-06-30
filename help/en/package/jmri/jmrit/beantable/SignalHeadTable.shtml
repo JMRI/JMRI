@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,8 +6,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Head Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content=
   "Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help Signal Head Table">
@@ -45,7 +42,7 @@
 
         <li>As the Signal Head changes, for whatever reason, the
         current Appearance will show in the table in the "Appearance"
-        column. Change the Appearance of a head by choosing one of the 
+        column. Change the Appearance of a head by choosing one of the
         available states from the combo box: Red, Yellow, Green,
         Flashing red, Flashing Yellow, Flashing Green, or Dark.
         Some Signal Heads may also have Lunar and Flashing Lunar
@@ -85,12 +82,8 @@
       connection type and whatever information is needed.</p>
 
       <p>Use the Store item in the File menu to save signal
-      information to disk. This information is saved with the
-      configuration in an XML file, along with control panel setup
-      and similar stuff. To store your panels in the same file
-      (recommended), select <b>File &gt; Store &gt; Store
-      Configuration and Panels To File...</b> or select <b>Panels
-      &gt; Store Panels...</b> in the main JMRI window.</p>
+      information to disk. For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <p>For more information on creating and displaying panels,
       including how to show signals on your panels, please see the
@@ -103,5 +96,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

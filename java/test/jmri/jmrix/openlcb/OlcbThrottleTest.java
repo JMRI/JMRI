@@ -14,7 +14,7 @@ import org.openlcb.*;
  * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
-        
+
     private static OlcbSystemConnectionMemo memo;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
@@ -30,13 +30,13 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean result = instance.getIsForward();
         Assert.assertEquals(expResult, result);
     }
-    
+
     @Test
     @Override
     public void testOutOfRangeSetFunction(){
         instance.setFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
-        
+
         instance.setFunction(29, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
     }
@@ -407,7 +407,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         });
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
-    
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
@@ -421,6 +421,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         connection = null;
         nodeID = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

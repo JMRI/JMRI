@@ -535,7 +535,8 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 				}
 			} else {	// Panels
 				var panels = $jmri.getObjectList('panels');
-				panels.forEach(function(item) {
+				panels.forEach(function(itemdata) {
+					var item = itemdata.data;
 					var panelCell = $('<div>');
 					panelCell.on('click', function(event) {openPanel(event, decodeURIComponent(item.name), item.URL);});	// 'decode' because it arrives encoded
 					panelCell.addClass('panelCell');
@@ -550,7 +551,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 						o.attr('originalWidth', o.width());
 						resizeImage(o);
 					};
-					img.attr('src', '/frame/' + decodeURIComponent(item.name) + '.png');
+					img.attr('src', '/panel/' + decodeURIComponent(item.name) + '?format=png');
 				});
 			}
 			break;
@@ -697,7 +698,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
 			var iframeAux = $('<div>').attr('id', 'iframeAux');
-			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
+			var panel = $('<iframe>').attr('src', '/panel/' + $paramPanelName).addClass('panel');
 			panel.load(function() {
 				var bodyFrameOuter = $('#bodyFrameOuter');
 				var bodyFrameInner = $('#bodyFrameInner');
@@ -734,7 +735,7 @@ var defineTurnoutsRoutes = function(listTurnoutsRoutes) {
 		bodyFrameInner.append(trCell);
 		trCell.append($('<div>').text(item.data.name + ((item.data.userName) ? ' - ' + item.data.userName : '')).addClass('trName'));
 		trCell.append($('<div>').text('').addClass('trStatus').attr('id',encodeId(item.data.name)).attr('state', -1).on('click', function(event) {trChangeStatus(event, item.type, item.data.name);}));
-		$jmri.getJMRI(item.type == 'turnout' ? 'turnout' : 'route', item.data.name);
+		$jmri.getJMRI( item.type.startsWith ('turnout') ? 'turnout' : 'route', item.data.name);
 	});
 };
 
@@ -1715,20 +1716,20 @@ var trChangeStatus = function(e, type, name) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	var lastState = Number($('#' + encodeId(name)).attr('state'));
-	if (type == 'turnout') {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
+	if (type.startsWith ('turnout')) {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
 		switch (lastState) {
 			case $jmri.turnoutTHROWN:
-				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED});
+				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED}, "post");
 				break;
 			case $jmri.turnoutCLOSED:
-				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutTHROWN});
+				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutTHROWN}, "post");
 				break;
 			default:
-				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED});
+				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED}, "post");
 				break;
 		}
 	} else {	// 0(unknown) 2(Active) 4(Inactive) 8(inconsistent) - Can only activate
-		$jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE});
+		$jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE}, "post");
 	}
 };
 

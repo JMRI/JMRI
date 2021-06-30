@@ -1,12 +1,11 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,15 +16,14 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Objects;
+
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
@@ -62,33 +60,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Create a new Bean Table Data Model.
-     * The default Manager for the bean type will be a Proxy Manager.
+     * The default Manager for the bean type may well be a Proxy Manager.
      */
     public BeanTableDataModel() {
         super();
-        initModel(null);
-    }
-    
-    /**
-     * Create a new Bean Table Data Model.
-     * The Manager for the bean type will be the one provided.
-     * @param beanManager the Bean Manager for the Table Model, 
-     *                  null will default to a Proxy Manager.
-     */
-    public BeanTableDataModel(Manager<T> beanManager) {
-        super();
-        initModel(beanManager);
+        initModel();
     }
     
     /**
      * Internal routine to avoid over ride method call in constructor.
-     * @param beanManager Bean Manager, can be null.
      */
-    private void initModel(Manager<T> beanManager){
+    private void initModel(){
         nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
-        if (beanManager!=null){
-            setManager(beanManager);
-        }
         // log.error("get mgr is: {}",this.getManager());
         getManager().addPropertyChangeListener(this);
         updateNameList();
@@ -110,12 +93,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @param column table column number.
      * @return the descriptor if available, else null.
      */
+    @CheckForNull
     protected NamedBeanPropertyDescriptor<?> getPropertyColumnDescriptor(int column) {
         List<NamedBeanPropertyDescriptor<?>> propertyColumns = getManager().getKnownBeanProperties();
         int totalCount = getColumnCount();
         int propertyCount = propertyColumns.size();
         int tgt = column - (totalCount - propertyCount);
-        if (tgt < 0) {
+        if (tgt < 0 || tgt >= propertyCount ) {
             return null;
         }
         return propertyColumns.get(tgt);
@@ -221,7 +205,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
-                    return "unknown";
+                    return "btm unknown"; // NOI18N 
                 }
                 return desc.getColumnHeaderText();
         }
@@ -300,15 +284,17 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
-                    log.error("internal state inconsistent with table requst for {} {}", row, col);
+                    log.error("internal state inconsistent with table requst for getValueAt {} {}", row, col);
                     return null;
+                }
+                if ( !isCellEditable(row, col) ) {
+                    return null; // do not display if not applicable to hardware type
                 }
                 b = getBySystemName(sysNameList.get(row));
                 Object value = b.getProperty(desc.propertyKey);
                 if (desc instanceof SelectionPropertyDescriptor){
                     JComboBox<String> c = new JComboBox<>(((SelectionPropertyDescriptor) desc).getOptions());
                     c.setSelectedItem(( value!=null ? value.toString() : desc.defaultValue.toString() ));
-                    c.addActionListener(this::comboBoxAction);
                     ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
                     c.setRenderer(renderer);
                     renderer.setTooltips(((SelectionPropertyDescriptor) desc).getOptionToolTips());
@@ -318,18 +304,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     return desc.defaultValue;
                 }
                 return value;
-        }
-    }
-
-    /**
-     * Action for Combo Boxes.
-     * When a selection is made, triggers the setValueAt().
-     * @param e the event from the Combo box.
-     */
-    public void comboBoxAction(ActionEvent e) {
-        log.debug("Combobox change");
-        if (thistable != null && thistable.getCellEditor() != null) {
-            thistable.getCellEditor().stopCellEditing();
         }
     }
 
@@ -346,7 +320,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null || desc.getColumnHeaderText() == null) {
-                    log.warn("Unexpected column in getPreferredWidth: {} table {}", col,this);
+                    log.error("Unexpected column in getPreferredWidth: {} table {}", col,this);
                     return new JTextField(8).getPreferredSize().width;
                 }
                 return new JTextField(desc.getColumnHeaderText()).getPreferredSize().width;
@@ -455,6 +429,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
+                    log.error("btdm setvalueat {} {}",row,col);
                     break;
                 }
                 if (value instanceof JComboBox) {
@@ -479,7 +454,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      *
      * @param bean NamedBean to delete
      */
-    void doDelete(T bean) {
+    protected void doDelete(T bean) {
         try {
             getManager().deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
@@ -500,8 +475,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         // Property columns will be invisible at start.
         setPropertyColumnsVisible(table, false);
 
-        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        table.setDefaultRenderer(JComboBox.class, new BtValueRenderer());
+        table.setDefaultEditor(JComboBox.class, new BtComboboxEditor());
+        table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
@@ -509,10 +485,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        // resize columns as requested
-        for (int i = 0; i < table.getColumnCount(); i++) {
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        for (int i = 0; i < columnModel.getColumnCount(false); i++) {
+            
+            // resize columns as requested
             int width = getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            columnModel.getColumnByModelIndex(i).setPreferredWidth(width);
+            
         }
         table.sizeColumnsToFit(-1);
 
@@ -522,11 +501,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
         this.persistTable(table);
-
-        thistable = table;
     }
-
-    private JTable thistable;
 
     protected void configValueColumn(JTable table) {
         // have the value column hold a button
@@ -704,6 +679,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         Objects.requireNonNull(model, "the table model must be nonnull");
         JTable table = new JTable(model) {
 
+            // TODO: Create base BeanTableJTable.java,
+            // extend TurnoutTableJTable from it as next 2 classes duplicate.
+            
             @Override
             public String getToolTipText(MouseEvent e) {
                 java.awt.Point p = e.getPoint();
@@ -712,6 +690,23 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 int realRowIndex = convertRowIndexToModel(rowIndex);
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
                 return getCellToolTip(this, realRowIndex, realColumnIndex);
+            }
+            
+            /**
+             * Disable Windows Key or Mac Meta Keys being pressed acting
+             * as a trigger for editing the focused cell.
+             * Causes unexpected behaviour, i.e. button presses.
+             * {@inheritDoc}
+             */
+            @Override
+            public boolean editCellAt(int row, int column, EventObject e) {
+                if (e instanceof KeyEvent) {
+                    if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS
+                        || ( (KeyEvent) e).getKeyCode() == KeyEvent.VK_META ) {
+                        return false;
+                    }
+                }
+                return super.editCellAt(row, column, e);
             }
         };
         return this.configureJTable(name, table, sorter);
@@ -1017,7 +1012,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @param col The current column.
      * @return a formatted tool tip or null if there is none.
      */
-    String getCellToolTip(JTable table, int row, int col) {
+    public String getCellToolTip(JTable table, int row, int col) {
         String tip = null;
         if (!table.getName().contains("SignalMastLogic")) {
             int column = COMMENTCOL;
@@ -1278,6 +1273,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
+                
+                dialog.getRootPane().setDefaultButton(noButton);
+                noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
+                dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
+                        dialog.setVisible(false);
+                        dialog.dispose(); }, 
+                    KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
                 dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
                 dialog.setModal(true);
                 dialog.setVisible(true);
@@ -1381,6 +1384,60 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         public void mouseClicked(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e, table);
+            }
+        }
+    }
+
+    private class BtComboboxEditor extends jmri.jmrit.symbolicprog.ValueEditor {
+    
+        public BtComboboxEditor(){
+            super();
+        }
+        
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+            boolean isSelected,
+            int row, int column) {
+            if (value instanceof JComboBox) {
+                ((JComboBox) value).addActionListener((ActionEvent e1) -> table.getCellEditor().stopCellEditing());
+            }
+            
+            if (value instanceof JComponent ) {
+            
+                int modelcol =  table.convertColumnIndexToModel(column);
+                int modelrow = table.convertRowIndexToModel(row);
+
+                // if cell is not editable, jcombobox not applicable for hardware type
+                boolean editable = table.getModel().isCellEditable(modelrow, modelcol);
+
+                ((JComponent) value).setEnabled(editable);
+            
+            }
+            
+            return super.getTableCellEditorComponent(table, value, isSelected, row, column);
+        }
+    
+    
+    }
+    
+    private class BtValueRenderer implements TableCellRenderer {
+
+        public BtValueRenderer() {
+            super();
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+
+            if (value instanceof Component) {
+                return (Component) value;
+            } else if (value instanceof String) {
+                return new JLabel((String) value);
+            } else {
+                JPanel f = new JPanel();
+                f.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground() );
+                return f;
             }
         }
     }

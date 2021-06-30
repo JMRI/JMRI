@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
@@ -361,6 +362,28 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
+    /**
+     * Test of getSpeedStepMode method
+     */
+    @Test
+    @Override
+    public void testGetSpeedStepMode() {
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
+        Assert.assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getSpeedIncrement method
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = 1.0F/126.0F;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
+    }
+    
     @BeforeEach
     @Override
     public void setUp() {

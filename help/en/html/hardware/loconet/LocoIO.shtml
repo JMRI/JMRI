@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <title>JMRI LocoIO Programmer Tools</title>
@@ -415,5 +416,6 @@
     <!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -757,15 +757,26 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         if (speed < 0) {
             return 1; // emergency stop
         }
-        // since Emergency Stop (estop) is speed 1, and a negative speed
-        // is used for estop, subtract 1 from steps to avoid the estop
-        // Use ceil() to prevent smaller positive values from being 0
-        int value = (int) Math.ceil((steps - 1) * speed);
+
+        // Stretch speed input to full output range
+        // Since Emergency Stop (estop) is speed 1, subtract 1 from steps
+        speed *= (steps - 1);
+        // convert to integer by rounding
+        int value = Math.round(speed);
+
+        // Only return stop if value is actually 0, jump to first speed
+        // step for small positive inputs.
+        // speeds (at this point) larger than 0.5f are already handled 
+        // by the rounding above.
+        if (speed > 0.0f && speed <= 0.5f) {
+            value = 1;
+        }
+
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
             Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
             log.error(ex.getMessage(), ex);
-            return 1;
+            return 1;  // return estop anyway
         } else if (value >= steps) {
             return steps; // maximum possible speed
         } else if (value > 0) {

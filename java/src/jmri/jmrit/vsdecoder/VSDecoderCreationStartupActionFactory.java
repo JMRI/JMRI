@@ -7,7 +7,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * {@link jmri.util.startup.StartupActionFactory} for the
- * {@link jmri.jmrit.roster.swing.RosterFrameAction}.
+ * {@link jmri.jmrit.vsdecoder.VSDecoderCreationAction}.
  *
  * @author Randall Wood Copyright (C) 2016
  */

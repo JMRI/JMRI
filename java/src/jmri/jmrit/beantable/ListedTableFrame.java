@@ -25,7 +25,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
-import javax.swing.Timer;
 import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.swing.RowSorterUtil;
@@ -59,19 +58,34 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     JScrollPane listScroller;
     JPanel listPanel;
     JPanel detailPanel;
-    TabbedTableItem<E> itemBeingAdded = null;
     static boolean init = false;
 
+    /**
+     * Create a new Listed Table Frame.
+     * Call initTables() before initComponents()
+     */
     public ListedTableFrame() {
         this(Bundle.getMessage("TitleListedTable"));
     }
 
+    /**
+     * Create a new Listed Table Frame.
+     * Call initTables() before initComponents()
+     * @param s Initial Frame Title
+     */
     public ListedTableFrame(String s) {
         super(s);
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             // We add this to the InstanceManager so that other components can add to the table
-            jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
+            InstanceManager.store(ListedTableFrame.this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
+    }
+    
+    /**
+     * Initialise all tables to be added to Frame.
+     * Should be called after ListedTableFrame construction and before initComponents()
+     */
+    public void initTables() {
         if (!init) {
             // Add the default tables to the static list array,
             // this should only be done once on first loading
@@ -87,6 +101,9 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.RouteTableAction", Bundle.getMessage("MenuItemRouteTable"), true);
             addTable("jmri.jmrit.beantable.LRouteTableAction", Bundle.getMessage("MenuItemLRouteTable"), true);
             addTable("jmri.jmrit.beantable.LogixTableAction", Bundle.getMessage("MenuItemLogixTable"), true);
+            addTable("jmri.jmrit.beantable.LogixNGTableAction", Bundle.getMessage("MenuItemLogixNGTable"), true);
+            addTable("jmri.jmrit.beantable.LogixNGModuleTableAction", Bundle.getMessage("MenuItemLogixNGModuleTable"), true);
+            addTable("jmri.jmrit.beantable.LogixNGTableTableAction", Bundle.getMessage("MenuItemLogixNGTableTable"), true);
             addTable("jmri.jmrit.beantable.BlockTableAction", Bundle.getMessage("MenuItemBlockTable"), true);
             if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed()) { // select _tabbed in prefs
                 addTable("jmri.jmrit.beantable.OBlockTableAction", Bundle.getMessage("MenuItemOBlockTable"), false);
@@ -100,8 +117,17 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         }
     }
 
+    /**
+     * Initialise Frame Components.
+     * Should be called after initTables()
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents() {
+        if (tabbedTableItemListArrayArray.isEmpty()) {
+            log.error("No tables loaded: {}",this);
+            return;
+        }
         actionList = new ActionJList(this);
 
         detailPanel = new JPanel();
@@ -112,10 +138,9 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             // Here we add all the tables into the panel
             try {
                 TabbedTableItem<E> itemModel = new TabbedTableItem<>(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
-                itemBeingAdded = itemModel;
                 detailPanel.add(itemModel.getPanel(), itemModel.getClassAsString());
                 tabbedTableArray.add(itemModel);
-                itemBeingAdded.getAAClass().addToFrame(this);
+                itemModel.getAAClass().addToFrame(this);
             } catch (Exception ex) {
                 detailPanel.add(errorPanel(item.getItemString()), item.getClassAsString());
                 log.error("Error when adding {} to display", item.getClassAsString(), ex);
@@ -180,7 +205,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                     return;
                 }
             } catch (Exception ex) {
-                log.error("An error occurred in the goto list for {}", selection);
+                log.error("An error occurred in the goto list for {}, {}", selection,ex.getMessage());
             }
         }
     }
@@ -304,6 +329,10 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         }
     }
 
+    /**
+     * Flag Table initialisation started
+     * @param newVal true when started
+     */
     private synchronized static void setInit(boolean newVal) {
         init = newVal;
     }
@@ -511,19 +540,10 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
             menuItem.addActionListener((ActionEvent e) -> openNewTableWindow(mouseItem));
-            try {
-                Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
-                if (p2 != null) {
-                    clickDelay = ((Integer) p2);
-                }
-            } catch (Exception e1) {
-                log.debug("Cannot parse DesktopProperty awt.multiClickInterval to set double click interval {}", e1.getMessage());
-            }
             currentItemSelected = 0;
         }
 
-        int clickDelay = 500;
-        int currentItemSelected;
+        private int currentItemSelected;
 
         @Override
         public void mousePressed(MouseEvent e) {
@@ -539,10 +559,11 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             }
         }
 
-        javax.swing.Timer clickTimer = null;
-
+        // records the original pre-click index
+        private int beforeClickIndex;
+        
         //Records the item index that the mouse is currently over
-        int mouseItem;
+        private int mouseItem;        
 
         void showPopup(MouseEvent e) {
             popUp.show(e.getComponent(), e.getX(), e.getY());
@@ -564,16 +585,13 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                 showPopup(e);
                 return;
             }
-            if (clickTimer == null) {
-                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> selectListItem(mouseItem));
-                clickTimer.setRepeats(false);
-            }
             if (e.getClickCount() == 1) {
-                clickTimer.start();
+                beforeClickIndex = currentItemSelected;
+                selectListItem(mouseItem);
             } else if (e.getClickCount() == 2) {
-                clickTimer.stop();
+                list.setSelectedIndex(beforeClickIndex);
+                selectListItem(beforeClickIndex);
                 openNewTableWindow(mouseItem);
-                list.setSelectedIndex(currentItemSelected);
             }
         }
 

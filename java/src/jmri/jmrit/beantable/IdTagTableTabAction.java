@@ -2,6 +2,8 @@ package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     protected Manager<IdTag> getManager() {
         return InstanceManager.getDefault(IdTagManager.class);
     }

@@ -5,7 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.Random;
+
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -54,8 +55,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     private static final long keepAliveTimeoutValue = 30000; // Interval 
-    
-    private Random rgen = null;
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -74,8 +73,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         for (int i = 0; i < DCCppConstants.MAX_DIRECT_CV + 1; i++) {
             CVs[i] = 0;
         }
-
-        rgen = new Random(); // used to generate randomized output for current meter
     }
 
     @Override
@@ -223,8 +220,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         // of the command station simulation.
         log.debug("Simulator Thread Started");
 
-        rgen = new Random();
-
         keepAliveTimer();
 
         ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
@@ -238,7 +233,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             }
 
             // Once every SENSOR_MSG_RATE loops, generate a random Sensor message.
-            int rand = rgen.nextInt(SENSOR_MSG_RATE);
+            int rand = ThreadLocalRandom.current().nextInt(SENSOR_MSG_RATE);
             if (rand == 1) {
                 generateRandomSensorReply();
             }
@@ -456,6 +451,41 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 }
                 break;
 
+            case DCCppConstants.PROG_VERIFY_CV:
+                log.debug("PROG_VERIFY_CV detected");
+                s = msg.toString();
+                try {
+                    p = Pattern.compile(DCCppConstants.PROG_VERIFY_REGEX);
+                    m = p.matcher(s);
+                    if (!m.matches()) {
+                        log.error("Malformed PROG_VERIFY_CV Command: {}", s);
+                        return (null);
+                    }
+                    // TODO: Work Magic Here to retrieve stored value.
+                    // Make sure that CV exists
+                    int cv = Integer.parseInt(m.group(1));
+                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                    if (cv < CVs.length) {
+                        cvVal = CVs[cv];
+                    }
+                    // CMD: <V CV STARTVAL>
+                    // Response: <v CV Value>
+                    r = "v " + cv + " " + cvVal;
+
+                    reply = DCCppReply.parseDCCppReply(r);
+                    log.debug("Reply generated = {}", reply.toString());
+                } catch (PatternSyntaxException e) {
+                    log.error("Malformed pattern syntax!");
+                    return (null);
+                } catch (IllegalStateException e) {
+                    log.error("Group called before match operation executed string= {}", s);
+                    return (null);
+                } catch (IndexOutOfBoundsException e) {
+                    log.error("Index out of bounds string= {}", s);
+                    return (null);
+                }
+                break;
+
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
@@ -466,6 +496,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
                 reply = DCCppReply.parseDCCppReply("p 0");
+                break;
+
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                log.debug("READ_MAXNUMSLOTS detected");
+                reply = DCCppReply.parseDCCppReply("# 12");
                 break;
 
             case DCCppConstants.READ_TRACK_CURRENT:
@@ -479,6 +514,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 break;
 
             case DCCppConstants.FUNCTION_CMD:
+            case DCCppConstants.FUNCTION_V2_CMD:
+            case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
             case DCCppConstants.OPS_WRITE_CV_BYTE:
             case DCCppConstants.OPS_WRITE_CV_BIT:
@@ -509,8 +546,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /* 'c' current request message gets multiple reply messages */
     private void generateMeterReplies() {
-        int currentmA = 1100 + rgen.nextInt(64);
-        double voltageV = 14.5 + rgen.nextInt(10)/10.0; 
+        int currentmA = 1100 + ThreadLocalRandom.current().nextInt(64);
+        double voltageV = 14.5 + ThreadLocalRandom.current().nextInt(10)/10.0; 
         String rs = "c CurrentMAIN " + (trackPowerState ? Double.toString(currentmA) : "0") + " C Milli 0 1997 1 1997";
         DCCppReply r = new DCCppReply(rs);
         writeReply(r);       
@@ -523,10 +560,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private void generateRandomSensorReply() {
         // Pick a random sensor number between 0 and 10;
-        Random sNumGenerator = new Random();
-        int sensorNum = sNumGenerator.nextInt(10)+1; // Generate a random sensor number between 1 and 10
-        Random valueGenerator = new Random();
-        int value = valueGenerator.nextInt(2); // Generate state value between 0 and 1
+        int sensorNum = ThreadLocalRandom.current().nextInt(10)+1; // Generate a random sensor number between 1 and 10
+        int value = ThreadLocalRandom.current().nextInt(2); // Generate state value between 0 and 1
 
         String reply = (value == 1 ? "Q " : "q ") + sensorNum;
 

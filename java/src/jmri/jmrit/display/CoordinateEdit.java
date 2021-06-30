@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -183,6 +184,24 @@ public class CoordinateEdit extends JmriJFrame {
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
                 f.init(Bundle.getMessage("Rescale", ""), pos, true);
                 f.initScale();
+                f.setVisible(true);
+                f.setLocationRelativeTo((Component) pos);
+            }
+        };
+    }
+    //////////////////////////////////////////////////////////////
+
+    public static AbstractAction getIdEditAction(
+            final Positionable pos, final String title, final Editor editor) {
+
+        return new AbstractAction(Bundle.getMessage(title) + "...") {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CoordinateEdit f = new CoordinateEdit();
+                f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+                f.init(Bundle.getMessage(title), pos, false);
+                f.initId(editor);
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
             }
@@ -578,6 +597,56 @@ public class CoordinateEdit extends JmriJFrame {
         });
         okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(e -> dispose());
+        pack();
+    }
+
+    public void initId(final Editor editor) {
+        PositionableLabel pLabel = (PositionableLabel) pl;
+        oldStr = pLabel.getId();
+        textX = new JLabel();
+        textX.setText(Bundle.getMessage("EnterId") + ":");
+        textX.setVisible(true);
+
+        xTextField = new JTextField(15);
+        xTextField.setText(pLabel.getId());
+        xTextField.setToolTipText(Bundle.getMessage("TooltipEnterId"));
+
+        getContentPane().setLayout(new GridBagLayout());
+        addTextItems();
+
+        okButton.addActionListener(e -> {
+            PositionableLabel pp = (PositionableLabel) pl;
+            String t = xTextField.getText();
+            boolean hasText = (t != null && t.length() > 0);
+            if (hasText) {
+                try {
+                    pp.setId(t);
+                    pp.updateSize();
+                    dispose();
+                } catch (Positionable.DuplicateIdException ignore) {
+                    JOptionPane.showMessageDialog(editor,
+                            Bundle.getMessage("ErrorIdNotUnique"),
+                            Bundle.getMessage("ErrorDialog"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                try {
+                    pp.setId(null);
+                    pp.updateSize();
+                    dispose();
+                } catch (Positionable.DuplicateIdException ex) {
+                    // This should never happen
+                    log.error("Positionable.setId(null) has thrown DuplicateIdException", ex);
+                }
+            }
+        });
+        okButton.getRootPane().setDefaultButton(okButton);
+        cancelButton.addActionListener(e -> {
+            PositionableLabel pp = (PositionableLabel) pl;
+//            pp.setId(oldStr);
+            pp.updateSize();
+            dispose();
+        });
         pack();
     }
 

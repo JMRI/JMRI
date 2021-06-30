@@ -39,11 +39,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public static final int LENGTH_COLUMN = 4;
     public static final int USED_LENGTH_COLUMN = 5;
     public static final int ROLLINGSTOCK_COLUMN = 6;
-    public static final int PICKUPS_COLUMN = 7;
-    public static final int DROPS_COLUMN = 8;
-    public static final int REPORTER_COLUMN = 9;
-    public static final int ACTION_COLUMN = 10;
-    public static final int EDIT_COLUMN = 11;
+    protected static final int CARS_COLUMN = 7;
+    protected static final int LOCOS_COLUMN = 8;
+    public static final int PICKUPS_COLUMN = 9;
+    public static final int DROPS_COLUMN = 10;
+    public static final int DIVISION_COLUMN = 11;
+    public static final int REPORTER_COLUMN = 12;
+    public static final int ACTION_COLUMN = 13;
+    public static final int EDIT_COLUMN = 14;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -99,32 +102,36 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
-        table.getColumnModel().getColumn(TRACK_COLUMN).setPreferredWidth(
-                Math.max(60,
-                        new JLabel(Bundle.getMessage("Class/Interchange") +
-                                Bundle.getMessage("Spurs") +
-                                Bundle.getMessage("Yards")).getPreferredSize().width + 20));
+        table.getColumnModel().getColumn(TRACK_COLUMN).setPreferredWidth(Math.max(60, new JLabel(
+                Bundle.getMessage("Class/Interchange") + Bundle.getMessage("Spurs") + Bundle.getMessage("Yards"))
+                        .getPreferredSize().width +
+                20));
         table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(LENGTH_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(LENGTH_COLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(USED_LENGTH_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(ROLLINGSTOCK_COLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(getColumnName(ROLLINGSTOCK_COLUMN)).getPreferredSize().width + 10));
+        table.getColumnModel().getColumn(CARS_COLUMN).setPreferredWidth(60);
+        table.getColumnModel().getColumn(LOCOS_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(PICKUPS_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(PICKUPS_COLUMN)).getPreferredSize().width + 10));
-        table.getColumnModel().getColumn(DROPS_COLUMN).setPreferredWidth(
-                Math.max(60, new JLabel(getColumnName(DROPS_COLUMN)).getPreferredSize().width + 10));
+        table.getColumnModel().getColumn(DROPS_COLUMN)
+                .setPreferredWidth(Math.max(60, new JLabel(getColumnName(DROPS_COLUMN)).getPreferredSize().width + 10));
+        table.getColumnModel().getColumn(DIVISION_COLUMN).setPreferredWidth(160);
         table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
-        
+
         frame.loadTableDetails(table);
         setColumnsVisible();
     }
-    
+
     protected void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN), Setup.isRfidEnabled() && locationManager.hasReporters());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), locationManager.hasDivisions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
+                Setup.isRfidEnabled() && locationManager.hasReporters());
     }
 
     @Override
@@ -154,10 +161,16 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Used");
             case ROLLINGSTOCK_COLUMN:
                 return Bundle.getMessage("RollingStock");
+            case LOCOS_COLUMN:
+                return Bundle.getMessage("Engines");
+            case CARS_COLUMN:
+                return Bundle.getMessage("Cars");
             case PICKUPS_COLUMN:
                 return Bundle.getMessage("Pickups");
             case DROPS_COLUMN:
                 return Bundle.getMessage("Drop");
+            case DIVISION_COLUMN:
+                return Bundle.getMessage("Division");
             case REPORTER_COLUMN:
                 return Bundle.getMessage("Reporters");
             case ACTION_COLUMN:
@@ -174,6 +187,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
             case NAME_COLUMN:
             case TRACK_COLUMN:
+            case DIVISION_COLUMN:
             case REPORTER_COLUMN:
                 return String.class;
             case ID_COLUMN:
@@ -181,6 +195,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case LENGTH_COLUMN:
             case USED_LENGTH_COLUMN:
             case ROLLINGSTOCK_COLUMN:
+            case LOCOS_COLUMN:
+            case CARS_COLUMN:
             case PICKUPS_COLUMN:
             case DROPS_COLUMN:
                 return Integer.class;
@@ -227,10 +243,16 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return location.getUsedLength();
             case ROLLINGSTOCK_COLUMN:
                 return location.getNumberRS();
+            case LOCOS_COLUMN:
+                return location.getNumberEngines();
+            case CARS_COLUMN:
+                return location.getNumberCars();
             case PICKUPS_COLUMN:
                 return location.getPickupRS();
             case DROPS_COLUMN:
                 return location.getDropRS();
+            case DIVISION_COLUMN:
+                return location.getDivisionName();
             case REPORTER_COLUMN:
                 return location.getReporterName();
             case ACTION_COLUMN:
@@ -305,8 +327,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
@@ -320,7 +342,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
             }
-            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_PROPERTY)) {
+            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_PROPERTY) ||
+                    e.getPropertyName().equals(Location.LOCATION_DIVISION_PROPERTY)) {
                 setColumnsVisible();
             }
         }

@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,8 +6,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Logix Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Table">
   <!--#include virtual="/Style.shtml" -->
@@ -26,7 +23,7 @@
 
       <div style="margin-left: 2em;"><p><code>if (logical expression) then
       (action).</code></p></div>
-      
+
       The "logical expression" part of a Conditional tests the state of a group
       of user-specified conditions on the layout, for example, whether certain
       turnouts are closed or thrown, or whether a block is occupied. The
@@ -108,13 +105,9 @@
       <p>The <strong>File</strong> menu at the top of the Logix Table
       provides for printing this table and for storing the Logixs
       and their Conditionals in a layout configuration file.
-      Selecting either store option will bring up a dialog for
-      naming a configuration file for writing Logix information and
-      all other configuration information (e.g., sensors, lights,
-      turnouts, signal heads, routes etc.). If you are updating an
-      existing file, simply click its name, and it will be copied
-      into the name entry.</p>
-      
+      For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+
       <a name="logixOptions" id="logixOptions"></a>
       <p>The <strong>Options</strong> menu has 3 sections.<br>
       <div style="margin-left: 2em">
@@ -215,5 +208,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

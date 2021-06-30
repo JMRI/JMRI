@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,16 +6,7 @@
 
   <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders
   File</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -499,8 +489,10 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
           parts of the definition from the Internet, which requires an online connection - and is slow. The prefix <b>http://jmri.org/xml</b> is guaranteed to resolve
           to the <b>xml</b> directory of your local JMRI installation. For more mapping, please see other JMRI documentation.
       </p>
+
       <!--#include virtual="/Footer.shtml" -->
-      </div><!-- close #mainContent -->
-    </div><!-- close #mBody -->
+    </div><!-- close #mainContent -->
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

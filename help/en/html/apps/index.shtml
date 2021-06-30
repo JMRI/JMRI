@@ -1,14 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+<head>
   <title>JMRI: Applications</title>
  <!--#include virtual="/Style.shtml" -->
-
- </head>
+</head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -54,7 +50,7 @@
         Throttles.</dd>
 
         <dt>
-          <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>
+          <a href="./OperationsPro/index.shtml">OperationsPro&trade;</a>
         </dt>
 
         <dd>Create Train Manifests that detail the work your train
@@ -128,5 +124,6 @@
 
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

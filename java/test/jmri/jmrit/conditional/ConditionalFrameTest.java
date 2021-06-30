@@ -20,14 +20,14 @@ public class ConditionalFrameTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Conditional cond = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName("IX102C1");  // NOI18N
         Assert.assertNotNull(cond);
 
         ConditionalFrame f = new ConditionalFrame("Test ConditionalCopyFrameTest", cond, null);  // NOI18N
         Assert.assertNotNull(f);
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -41,6 +41,7 @@ public class ConditionalFrameTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

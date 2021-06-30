@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JMRI: LogixNG Table</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng table">
+
+  <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+  <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml" -->
+
+    <div id="mainContent">
+
+      <h1>JMRI: LogixNG Table</h1>
+        <p>The LogixNG table contains a list of the defined LogixNGs.</p>
+
+        <ul>
+          <li><a href="#tableContent">Table Content</a>
+          <li><a href="#selectActions">Select Actions</a>
+          <li><a href="#menuItems">Menu Items</a>
+          <li><a href="#addLogixNG">Add a LogixNG</a>
+        </ul>
+
+      <a id="tableContent" name="tableContent"></a>
+      <h2>Table Content</h2>
+        <p>
+        The LogixNG table lists all of the currently defined LogixNGs.
+        Each row has a standard set of columns.
+        </p>
+
+        <dl>
+          <dt>System Name</dt>
+          <dd>The system name for the LogixNG.  LogixNG system names have an <strong>IQ</strong> prefix
+          normally followed by numbers.  For details about the LogixNG system name, see
+          <a href="#addLogixNG">Add a LogixNG</a>.  The system name cannot be changed.</dd>
+
+          <dt>User Name</dt>
+          <dd>The user name for the LogixNG.  This is a free form field that contains a meaningful name.</dd>
+
+          <dt>Enabled</dt>
+          <dd>A LogixNG can be enabled or disabled.  When it is disabled, the related
+          ConditionalNGs will not be active.</dd>
+
+          <dt>Comment</dt>
+          <dd>A free form comment field for the LogixNG</dd>
+
+          <dt>Menu</dt>
+          <dd>The <strong>Select</strong> combo box is used to select actions for the
+          selected LogixNG.  See <a href="#selectActions">Select Actions</a></dd>
+        </dl>
+
+      <a id="selectActions" name="selectActions"></a>
+      <h2>Select Actions</h2>
+        <p>The dropdown combo box has 4 actions that can be applied to the current LogixNG row.</p>
+
+        <div style="margin-left: 2em">
+        <a href="../logixng/images/SelectActions.png">
+        <img src="../logixng/images/SelectActions.png"
+        alt="Select Actions" width="167" height="123" >
+        </a>
+        </div>
+
+        <dl>
+          <dt>Edit</dt>
+          <dd>When <strong>Edit</strong> is selected, the LogixNG editor will open.
+          This window will contain the ConditionalNGs that have been defined for this
+          LogixNG.  See <a href="../logixng/LogixNGTableEditor.shtml">LogixNG Editor</a>
+          for details.</dd>
+
+          <dt>Browse</dt>
+          <dd>The <strong>Browse</strong> option opens a text window with a representation
+          of the definitions within the LogixNG.  See <a href="../logixng/LogixNGBrowser.shtml">LogixNG
+          Browser</a> for details about the browser.</dd>
+
+          <dt>Copy</dt>
+          <dd>The <strong>Copy</strong> action is used to create a duplicate of the current LogixNG.
+          <strong><em>Note: This feature is not available yet.</em></strong></dd>
+
+          <dt>Delete</dt>
+          <dd>The <strong>Delete</strong> action deletes the current LogixNG, all of its ConditionalNGs and
+          the ConditionalNG content.  A confirmation dialog will be displayed.
+
+          <div style="margin-left: 2em">
+          <a href="../logixng/images/DeleteLogixNG.png">
+          <img src="../logixng/images/DeleteLogixNG.png"
+          alt="Delete LogixNG Confirmation" width="367" height="126" >
+          </a>
+          </div>
+
+          </dd>
+        </dl>
+
+      <a id="menuItems" name="menuItems"></a>
+      <h2>Menu Items</h2>
+        <dl>
+          <dt>Options</dt>
+          <dd>The options menu has two items:  <strong>Enable All LogixNGs</strong> and
+          <strong>Disable All LogixNGs</strong>.  Selecting one of these will perform
+          the action on all the LogixNGs in the table.</dd>
+
+          <dt>Tools</dt>
+          <dd>The tools menu has one item:  <strong>Open PickList Tables</strong>.  The
+          PickList was designed for dragging names, such as sensor names, to a text field.
+          Due to the implementation of ConditionalNG edit dialogs, the drag and drop
+          capability does not function.  It can still be used as a reference.</dd>
+        </dl>
+
+      <a id="addLogixNG" name="addLogixNG"></a>
+      <h2>Add a LogixNG</h2>
+
+        <p>To create a new LogixNG, click on the <strong>Add...</strong> button. The
+        <strong>Add LogixNG</strong> window will be displayed.</p>
+
+        <div style="margin-left: 2em">
+        <a href="../logixng/images/AddLogixNG.png">
+        <img src="../logixng/images/AddLogixNG.png"
+        alt="Add LogixNG" width="663" height="263" >
+        </a>
+        </div>
+
+        <p>The system name is required. The system name for a LogixNG always begins with
+        the letters <strong>IQ</strong>.  If the entered name does not start with <strong>
+        IQ</strong>, it will be automatically added.  The typical suffix is a number.  If
+        <strong>Automatically generate System Name</strong> is checked, the system name
+        format will be <strong>IQ:AUTO:nnnn</strong>.  Any other format requires adding a
+        <strong>$</strong> (dollar) character between <strong>IQ</strong> and the suffix.</p>
+
+        <p>The user name is optional but recommended. A user name may be any useful text,
+        provided the new user name was not previously assigned to another LogixNG. Once a
+        LogixNG is created, its system name cannot be changed.  Its user name may be changed
+        in either the LogixNG Table or the Edit LogixNG window. The user name is usually
+        used to provide a more descriptive name, for example, "Signal 5 Control".</p>
+
+        <p>After clicking <strong>Create</strong>, the LogixNG will be created and the
+        <a href="../logixng/LogixNGTableEditor.shtml">Edit LogixNG</a> window will appear.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

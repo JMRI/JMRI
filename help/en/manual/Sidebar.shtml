@@ -6,7 +6,7 @@
 
 <dl>
 
-<dt><h3>PDF</h3></dt>
+<dt class="dtheader">PDF</dt>
       <dd>
       <ul>
         <li><a href="https://jmri.org/manual/pdf/DP3_Man_3-4.pdf">DP3 Guide v3.4</a></li>
@@ -20,9 +20,9 @@
       </ul>
       </dd>
 
-<h3>Online</h3>
+<dt class="dtheader" style="padding-left: 2em; padding-bottom: .5em">Online</dt>
 
-<dt>JMRI&reg; v4.x</dt>
+<dt class="dtheader">JMRI&reg; v4.x</dt>
   <dd>
     <ul>
         <li style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg; v4</a></li>
@@ -30,12 +30,12 @@
     </ul>
   </dd>
 
-<dt>JMRI&reg; v3.10</dt>
+<dt class="dtheader">JMRI&reg; v3.10</dt>
   <dd>
     <ul>
         <li style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
         <li style="font-weight: bold;"><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-        <li style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro</li>
+        <li style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro</a></li>
     </ul>
   </dd>
 
@@ -68,7 +68,7 @@
     </dd>
  end of hidden list -->
 
-<dt>JMRI&reg; v2.14</dt>
+<dt class="dtheader">JMRI&reg; v2.14</dt>
     <dd style="font-weight: bold;">
     <ul>
         <li><a href="https://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; Guide</a></li>
@@ -84,12 +84,13 @@
     </dd> -->
 
 <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
-  
+
 </dl>
 
 <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
 
 </div> <!-- close #manual -->
-</div> <!-- close #side -->
 
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar -->

@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -10,16 +9,7 @@
   <title>JMRI: Simple Signal Logic Example</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20151107">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -123,8 +113,8 @@
           it means "LocoNet Turnout with address 1". "Turnout 1" is
           the "User Name", which can be anything you want it to be
           as long as it is unique on your Panel. You can edit these
-          from the "Turnout Table" accessed from the Tools &gt;
-          Tables &gt; Turnouts menu.<br>
+          from the "Turnout Table" accessed from the Tools &rArr;
+          Tables &rArr; Turnouts menu.<br>
           Signal Heads and Sensors are identified using similar
           names (see the <a href=
           "../../doc/Technical/Names.shtml">JMRI help page on
@@ -233,7 +223,7 @@ Red, Red and Yellow respectively.
         <li>Tell the program about your Sensors:
 
           <ul>
-            <li>From the Tools menu, open the "Tables" &gt;
+            <li>From the Tools menu, open the "Tables" &rArr;
             "Sensors" tool.</li>
 
             <li>If you have a Digitrax DCC system with your
@@ -249,14 +239,13 @@ Red, Red and Yellow respectively.
           </ul>
         </li>
 
-        <li>Save your work by selecting "Store Panels..." from the
-        "Panels" menu, typing a filename, and hitting "Save
-        Panels". (You might want to do this often!)</li>
+        <li>Save your work. See <a href="../../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>. (You might want to do this often!)</li>
 
         <li>Tell the program about your computer-driven Turnouts:
 
           <ul>
-            <li>From the Tools menu, open the "Tables" &gt;
+            <li>From the Tools menu, open the "Tables" &rArr;
             "Turnouts" tool.</li>
 
             <li>If you have a Digitrax DCC system, just throw or
@@ -287,7 +276,7 @@ Red, Red and Yellow respectively.
 
           <ul>
             <li>From the PanelPro <b>Tools</b> menu, open the <b>Tables
-            &gt; Signals &gt; Signal Heads</b> tool.</li>
+            &rArr; Signals &rArr; Signal Heads</b> tool.</li>
 
             <li>Click the "<a href=
             "../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a>"
@@ -426,9 +415,8 @@ Red, Red and Yellow respectively.
           </ul>
         </li>
 
-        <li>Once you save your work by selecting "Store
-        Configuration and Panels To File..." from the File menu,
-        you're done!</li>
+        <li>Once you save your work you're done! See <a href="../../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.</li>
       </ol>
 
       <p>Now try out your Simple Signal Logic by operating your
@@ -454,6 +442,7 @@ Red, Red and Yellow respectively.
       <p>Located at en\html\tools\signaling\ </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

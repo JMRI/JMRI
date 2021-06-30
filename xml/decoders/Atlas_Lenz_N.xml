@@ -50,7 +50,7 @@
       <!-- CV 3-4 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <!-- deleted max and mid voltage-->
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>

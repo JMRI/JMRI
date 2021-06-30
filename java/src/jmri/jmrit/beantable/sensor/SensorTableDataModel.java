@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -48,14 +49,24 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     private Manager<Sensor> senManager = null;
     protected boolean _graphicState = false; // icon state col updated from prefs
 
+    /**
+     * Create a new Sensor Table Data Model.
+     * The default Manager for the bean type will be a Proxy Manager.
+     */
     public SensorTableDataModel() {
         super();
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
 
+    /**
+     * Create a new Sensor Table Data Model.
+     * The default Manager for the bean type will be a Proxy Manager unless
+     * one is specified here.
+     * @param manager Bean Manager.
+     */
     public SensorTableDataModel(Manager<Sensor> manager) {
-        super(manager);
-        this.setManager(manager);
-        updateNameList();
+        super();
+        setManager(manager); // updates name list
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
@@ -136,12 +147,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     @Override
     protected void clickOn(Sensor t) {
         try {
-            int state = t.getKnownState();
-            if (state == Sensor.INACTIVE) {
-                t.setKnownState(Sensor.ACTIVE);
-            } else {
-                t.setKnownState(Sensor.INACTIVE);
-            }
+            t.setKnownState(t.getKnownState() == Sensor.INACTIVE ? Sensor.ACTIVE : Sensor.INACTIVE );
         } catch (JmriException e) {
             log.warn("Error setting state", e);
         }
@@ -193,7 +199,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 return Boolean.class;
             case ACTIVEDELAY:
             case INACTIVEDELAY:
-                return String.class;
+                return Long.class; // if long.class (lowercase) is returned here, cell is NOT editable.
             case PULLUPCOL:
                 return JComboBox.class;
             case EDITCOL:
@@ -294,7 +300,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case PULLUPCOL:
                 PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
-                c.addActionListener(super::comboBoxAction);
                 return c;
             case FORGETCOL:
                 return Bundle.getMessage("StateForgetButton");
@@ -329,33 +334,37 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         }
         switch (col) {
             case INVERTCOL:
-                s.setInverted(((Boolean) value));
+                s.setInverted(((boolean) value));
                 break;
             case USEGLOBALDELAY:
-                s.setUseDefaultTimerSettings(((Boolean) value));
+                s.setUseDefaultTimerSettings(((boolean) value));
                 break;
             case ACTIVEDELAY:
                 try {
-                    Long activeDeBounce = Long.parseLong((String) value);
+                    long activeDeBounce = (long) value;
                     if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange")
+                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
-                        s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                        s.setSensorDebounceGoingActiveTimer(activeDeBounce);
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError")
+                        + "\n\"" + value  + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case INACTIVEDELAY:
                 try {
-                    Long inactiveDeBounce = Long.parseLong((String) value);
+                    long inactiveDeBounce = (long) value;
                     if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") 
+                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
-                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                        s.setSensorDebounceGoingInActiveTimer(inactiveDeBounce);
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError")
+                        + "\n\"" + value + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case EDITCOL:
@@ -400,12 +409,15 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        if ((e.getPropertyName().contains("inverted")) || (e.getPropertyName().contains("GlobalTimer"))
-                || (e.getPropertyName().contains("ActiveTimer")) || (e.getPropertyName().contains("InActiveTimer"))) {
-            return true;
-        } else {
-            return super.matchPropertyName(e);
+    protected boolean matchPropertyName(PropertyChangeEvent e) {
+        switch (e.getPropertyName()) {
+            case "inverted":
+            case "GlobalTimer":
+            case "ActiveTimer":
+            case "InActiveTimer":
+                return true;
+            default:
+                return super.matchPropertyName(e);
         }
     }
 
@@ -436,7 +448,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Renderer and Editor are identical, as the cell contents are not actually
      * edited, only used to toggle state using {@link #clickOn}.
      */
-    class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+    static class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
         protected JLabel label;
         protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
@@ -461,7 +473,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 loadIcons();
                 log.debug("icons loaded");
             }
-            return updateLabel((String) value, row);
+            return updateLabel((String) value, row, table);
         }
 
         /**
@@ -476,10 +488,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 loadIcons();
                 log.debug("icons loaded");
             }
-            return updateLabel((String) value, row);
+            return updateLabel((String) value, row, table);
         }
 
-        public JLabel updateLabel(String value, int row) {
+        public JLabel updateLabel(String value, int row, JTable table) {
             if (iconHeight > 0) { // if necessary, increase row height;
                 table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // adjust table row height for Sensor icon
             }
@@ -555,11 +567,11 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      */
     @Override
     public void configureTable(JTable table) {
-        this.table = table;
         super.configureTable(table);
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        columnModel.getColumnByModelIndex(FORGETCOL).setHeaderValue(null);
+        columnModel.getColumnByModelIndex(QUERYCOL).setHeaderValue(null);
     }
-
-    protected JTable table;
 
     void editButton(Sensor s) {
         jmri.jmrit.beantable.beanedit.SensorEditAction beanEdit = new jmri.jmrit.beantable.beanedit.SensorEditAction();
@@ -571,8 +583,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Show or hide the Debounce columns.
      * USEGLOBALDELAY, ACTIVEDELAY, INACTIVEDELAY
      * @param show true to display, false to hide.
+     * @param table the JTable to set column visibility on.
      */
-    public void showDebounce(boolean show) {
+    public void showDebounce(boolean show, JTable table) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
         columnModel.setColumnVisible(column, show);
@@ -586,19 +599,20 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Show or hide the Pullup column.
      * PULLUPCOL
      * @param show true to display, false to hide.
+     * @param table the JTable to set column visibility on.
      */
-    public void showPullUp(boolean show) {
+    public void showPullUp(boolean show, JTable table) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(PULLUPCOL);
         columnModel.setColumnVisible(column, show);
     }
 
     /**
-     * Show or hide the State - Forget and Query columns.
-     * FORGETCOL, QUERYCOL
+     * Show or hide the State - Forget and Query columns.FORGETCOL, QUERYCOL
      * @param show true to display, false to hide.
+     * @param table the JTable to set column visibility on.
      */
-    public void showStateForgetAndQuery(boolean show) {
+    public void showStateForgetAndQuery(boolean show, JTable table) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
         columnModel.setColumnVisible(column, show);
@@ -610,7 +624,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         return jmri.jmrit.beantable.SensorTableAction.class.getName();
     }
 
-//    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
     }

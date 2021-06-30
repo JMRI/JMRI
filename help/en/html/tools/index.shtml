@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -10,14 +9,7 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <!-- Reorganized and expanded by @jerryg2003 2020-01-28 -->
@@ -163,6 +155,10 @@
           control, combine the logical reasoning of a Logix with
           the powerful output controls of a Route.</dd>
 
+          <dd><h3><a href="logixng/LogixNG.shtml">LogixNG</a></h3></dd>
+          <dd>The Next Generation of Logix capabilities with a modular structure for
+          extending and the ability to create more complex logic without scripting.</dd>
+
         </dl>
 
         <h2><a name="othertools" id="othertools">Other Tools</a></h2>
@@ -229,8 +225,7 @@
           application</a>.</dd>
 
           <dd>
-            <h3><a href=
-            "../../package/jmri/jmrit/operations/Operations.shtml">Operations(Pro)</a></h3>
+            <h3><a href="../apps/OperationsPro/index.shtml">Operations(Pro)</a></h3>
           </dd>
 
           <dd>The Operations tool has evolved to an advanced
@@ -238,9 +233,7 @@
           Trains and produce computer generated Manifests and
           Switch Lists for your railroad from a roster of rolling
           stock, schedules and destinations. This set of tools has
-          evolved into a full <a href=
-          "../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro
-          application</a>.</dd>
+          evolved into a full <a href="../apps/OperationsPro/index.shtml">OperationsPro&trade; application</a>.</dd>
         </dl>
 
         <h2><a name="systemSpecificTools" id=
@@ -619,11 +612,13 @@
         power to control your layout anyway you'd like.
 
         <p>Run your own scripts or scripts shared by other JMRI
-        user from the Panels &gt; Run Script... menu.</p>
+        users from the <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>}
+        <strong>&rArr; Run Script...</strong> menu.</p>
 
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

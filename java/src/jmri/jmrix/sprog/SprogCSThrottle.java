@@ -39,6 +39,8 @@ public class SprogCSThrottle extends AbstractThrottle {
         }
         // Functions default to false
         this.isForward = true;
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
+        
 
         //@TODO - this needs a little work. Current implementation looks like it
         //should support other modes, but doesn't in practice.  
@@ -100,6 +102,40 @@ public class SprogCSThrottle extends AbstractThrottle {
                 getF10(), getF10Momentary(),
                 getF11(), getF11Momentary(),
                 getF12(), getF12Momentary());
+    }
+
+    /**
+     * Send the message to set the state of functions F13 - F20
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup4() {
+        commandStation.function13Through20Packet(address,
+                getF13(), getF13Momentary(),
+                getF14(), getF14Momentary(),
+                getF15(), getF15Momentary(),
+                getF16(), getF16Momentary(),
+                getF17(), getF17Momentary(),
+                getF18(), getF18Momentary(),
+                getF19(), getF19Momentary(),
+                getF20(), getF20Momentary());
+    }
+
+    /**
+     * Send the message to set the state of functions F21 - F28
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup5() {
+        commandStation.function21Through28Packet(address,
+                getF21(), getF21Momentary(),
+                getF22(), getF22Momentary(),
+                getF23(), getF23Momentary(),
+                getF24(), getF24Momentary(),
+                getF25(), getF25Momentary(),
+                getF26(), getF26Momentary(),
+                getF27(), getF27Momentary(),
+                getF28(), getF28Momentary());
     }
 
     /**

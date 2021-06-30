@@ -82,7 +82,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int number = 0;
         try {
             number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));

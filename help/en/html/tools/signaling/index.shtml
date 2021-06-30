@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -12,16 +11,7 @@
   <meta name="Author" content="Egbert Broerse">
   <meta name="Author" content="B. Milhaupt">
   <meta name="Date.Modified" content="20200106">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -62,7 +52,7 @@
 
       <h3>Prototype Railroad Signaling terms</h3><a href=
       "https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg"
-      width="132" height="240" align="right"></a> 
+      width="132" height="240" align="right"></a>
       <!-- With some very useful information from the JMRI developers structure site -->
 
       <ul>
@@ -164,12 +154,12 @@
         <li><b>Virtual</b> Virtual signals are JMRI internal
         signals with no actual hardware attached. Virtual Signals
         may represent theoretical Aspects at buffer stops or in
-        staging that are used by prior signals.  They may also be useful with 
+        staging that are used by prior signals.  They may also be useful with
         <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">Signal Mast Repeaters</a>.<br>
         <ul>
-            <li>When using JMRI Signal Heads, the list of signal head types includes 
+            <li>When using JMRI Signal Heads, the list of signal head types includes
         the option "Virtual".</li>
-            <li>When using JMRI Signal Masts, the list of "Mast 
+            <li>When using JMRI Signal Masts, the list of "Mast
         Driver" types includes a "Virtual Mast" driver type.</li>
         </ul>
         </li>
@@ -286,8 +276,7 @@
         Signaling page</a></li>
 
         <li><a href=
-        "http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling
-        simply explained</a> by A.A. Krug</li>
+        "http://www.mikeroque.com/railroad-signals/">Understanding Railroad Signals</a> by A.A. Krug</li>
 
         <li><a href="http://www.lundsten.dk/us_signaling/">North
         American Signaling</a> is a comprehensive website by
@@ -401,7 +390,7 @@
 
       <p>5. The <b><a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
       Signal Mast Repeater</a></b> tool allows one signal mast to
-      follow another signal mast's aspect, or for two signal masts to follow each 
+      follow another signal mast's aspect, or for two signal masts to follow each
       other (i.e. the most-recent aspect change is reflected by the other mast).
       This can be convenient for providing a duplicate of a signal's aspect via
       different hardware, and may also be useful when creating "Signal Mast Logic"
@@ -657,5 +646,6 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

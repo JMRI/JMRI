@@ -155,14 +155,15 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     /**
      * Return bean with name given in parameter. Create if needed and possible.
      *
-     * @param name the name for the bean
-     * @return the bean or null if not made
+     * @param name the System name for the Bean.
+     * @return the Bean or null if not made.
+     * @throws IllegalArgumentException with reason why Bean cannot be created.
      */
     @CheckForNull
-    abstract public E addBean(@Nonnull String name);
+    abstract public E addBean(@Nonnull String name) throws IllegalArgumentException;
 
     @CheckForNull
-    abstract public E addBean(@Nonnull String sysName, String userName);
+    abstract public E addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException;
 
     /**
      * Check if beans can be added by this model.
@@ -519,7 +520,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Turnout addBean(@Nonnull String sysName, String userName) {
+        public Turnout addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newTurnout(sysName, userName);
         }
 
@@ -532,7 +533,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     static class SensorPickModel extends PickListModel<Sensor> {
 
-        SensorManager manager = InstanceManager.sensorManagerInstance();
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
 
         SensorPickModel() {
             _name = rb.getString("TitleSensorTable");
@@ -554,7 +555,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Sensor addBean(@Nonnull String sysName, String userName) {
+        public Sensor addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newSensor(sysName, userName);
         }
 
@@ -693,7 +694,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Memory addBean(@Nonnull String sysName, String userName) {
+        public Memory addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newMemory(sysName, userName);
         }
 
@@ -728,7 +729,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Block addBean(@Nonnull String sysName, String userName) {
+        public Block addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.createNewBlock(sysName, userName);
         }
 
@@ -763,7 +764,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Reporter addBean(@Nonnull String sysName, String userName) {
+        public Reporter addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newReporter(sysName, userName);
         }
 
@@ -798,7 +799,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
         /** {@inheritDoc} */
         @Override
-        public Light addBean(@Nonnull String sysName, String userName) {
+        public Light addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             return manager.newLight(sysName, userName);
         }
 

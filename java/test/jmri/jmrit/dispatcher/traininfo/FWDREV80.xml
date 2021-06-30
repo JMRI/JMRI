@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 4.23.5-master-202101291243+R8ff8652 on Sat May 08 16:36:36 EDT 2021-->
+  <traininfo version="3" transitname="StopFWDandREV" transitid="StopFWDandREV" trainname="AAA" dccaddress="3" trainintransit="yes" startblockname="Block2-1" startblockid="Block2" startblockseq="1" endblockname="Block7" endblockid="Block7" endblockseq="3" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" priority="5" resetwhendone="yes" delayedrestart="sensor" delayedrestartsensor="TrainRestart" resetrestartsensor="yes" reverseatend="yes" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="LOCAL_PASSENGER" autorun="yes" loadatstartup="no" allocatealltheway="no" allocationmethod="-1" speedfactor="1.0" maxspeed="1.0" ramprate="None" resistancewheels="yes" runinreverse="no" sounddecoder="no" maxtrainlength="80.0" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" />
+</traininfofile>

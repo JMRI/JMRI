@@ -8,7 +8,7 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.SpurEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -21,7 +21,7 @@ public class AlternateTrackActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        SpurEditFrame tf = new SpurEditFrame();
         AlternateTrackAction t = new AlternateTrackAction(tf);
         Assert.assertNotNull("exists",t);
     }
@@ -29,7 +29,7 @@ public class AlternateTrackActionTest extends OperationsTestCase {
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        SpurEditFrame tf = new SpurEditFrame();
         AlternateTrackAction a = new AlternateTrackAction(tf);
         Assert.assertNotNull("exists", a);
         

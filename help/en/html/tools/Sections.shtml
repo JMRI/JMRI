@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,8 +6,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Sections Documentation</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Sections">
   <!--#include virtual="/Style.shtml" -->
@@ -204,7 +201,22 @@
       to use SignalMast Logic via the Dispatcher's <a href=
       "../../package/jmri/jmrit/dispatcher/Options.shtml"><strong>Options</strong></a> menu.</p>
 
-
+      <p>With stubs (UK sidings), a special procedure has been adopted. 
+      When working with signal mast logic, transits work best when 
+      the sections are all FORWARDS. If a reverse section is used 
+      the transit sometimes works, but sometimes does not. There is 
+      no signal mast section facing out of a stub, and a block section 
+      at the stub has been found to work well in transits emanating 
+      from the stub.</p>
+      
+      <p>When signal mast logic is automatically called, block sections 
+      for all stubs are also produced. Transits produced with the transit 
+      Create Tool (reached by right clicking signal masts in sequence), 
+      automatically use these block sections. Care must be taken to 
+      use the block sections (as opposed to using a signal mast logic 
+      section in the reverse direction) when using the 'Add Transit' 
+      method accessed by clicking the Transits option in the Tools Menu.</p> 
+      
       <h2>Requirements</h2>
 
       <p>Sections build on JMRI's Blocks and Path structures. So before attempting to
@@ -275,22 +287,16 @@
 
       <h3>Saving Sections to disk</h3>
 
-      <p>Use the <strong>Store</strong> item in the <strong>File</strong> menu of the
-      Section Table (or the <strong>Store Panels...</strong> item in the
-      <strong>Panels</strong> menu of the main JMRI window) to save Section
-      information to disk, allowing to
+      <p>Sections are kept in your <i>layout configuration</i>, along
+      with Turnouts, Sensors, Signal Heads, Lights, control panel
+      setup etc. To store this information on disk, allowing you to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI.
-      This information (and any modified
-      signal logic information) is saved with the configuration and
-      panels in an XML file, along with control panel setup and
-      similar stuff. To store your panels in the same file
-      (recommended), select <strong>File&gt;Store&gt;Store Configuration
-      and Panels To File...</strong> or select <strong>Panels&gt;Store
-      Panels...</strong> in the main JMRI window.</p>
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

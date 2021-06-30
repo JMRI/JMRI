@@ -1,10 +1,13 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import jmri.InstanceManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+
 import org.jdom2.Element;
 
 /**
@@ -54,9 +57,11 @@ public class LocoLabelXml extends PositionableRectangleXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor ed = (Editor) o;
         LocoLabel ll = new LocoLabel(ed);
@@ -77,7 +82,11 @@ public class LocoLabelXml extends PositionableRectangleXml {
             return;     // don't put into editor's content list without
         }
 
-        ed.putItem(ll);
+        try {
+            ed.putItem(ll);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ll, Editor.MARKERS, element);
     }

@@ -35,7 +35,8 @@ public class SprogThrottle extends AbstractThrottle {
         // Functions default to false
         this.address = address;
         this.isForward = true;
-
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
+        
     }
 
     SprogCommandStation station = null;

@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -8,13 +7,7 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Examples of LDT Signaling</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -23,7 +16,7 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: Examples of LDT Signaling</h2>
+      <h1>JMRI: Examples of LDT Signaling</h1>
 
       <p>This file contains a few configuration examples for the
       LDT LS-DEC signal head. There are examples of signals from
@@ -97,8 +90,10 @@
       "http://www.marathonmodel.cz/">http://www.marathonmodel.cz/</a>
 
       <p>DP2N 8 addresses 2 - 8 signal heads</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

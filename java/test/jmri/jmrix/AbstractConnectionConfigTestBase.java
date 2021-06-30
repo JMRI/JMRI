@@ -50,12 +50,12 @@ abstract public class AbstractConnectionConfigTestBase {
         Assume.assumeNotNull("adapter set", cc.getAdapter());
         Assert.assertNotNull("has manufacturer", cc.getManufacturer());
         cc.setManufacturer("foo");
-        Assert.assertEquals("new manufacturer","foo", cc.getManufacturer());
+        Assert.assertEquals("new manufacturer", "foo", cc.getManufacturer());
     }
 
     @Test
     public void testGetAdapter(){
-        // many test classes derived from this class need to triger 
+        // many test classes derived from this class need to trigger
         // creation of the adapter.  Remove the assume to see which
         // ones still fail.  
         Assume.assumeNotNull("adapter set", cc.getAdapter());

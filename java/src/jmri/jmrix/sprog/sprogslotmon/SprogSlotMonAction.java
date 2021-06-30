@@ -1,7 +1,10 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import jmri.InstanceManager;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
@@ -23,14 +26,19 @@ public class SprogSlotMonAction extends AbstractAction {
         this(Bundle.getMessage("SprogSlotMonitorTitle"), memo);
     }
 
+    public SprogSlotMonAction() {
+        super(Bundle.getMessage("SprogSlotMonitorTitle"));
+        _memo = InstanceManager.getNullableDefault(SprogSystemConnectionMemo.class);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if(_memo.getCommandStation() == null) {
-           // create SlotManager if it doesn't exist
-           _memo.configureCommandStation();
+            // create SlotManager if it doesn't exist
+            _memo.configureCommandStation(_memo.getNumSlots());
         }
-
+            
         SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
         f.setVisible(true);
     }

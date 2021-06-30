@@ -28,7 +28,8 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     }
 
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Light t;
         int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         t = new JMRIClientLight(addr, getMemo());

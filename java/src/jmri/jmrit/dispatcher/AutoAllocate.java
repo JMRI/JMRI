@@ -206,8 +206,8 @@ public class AutoAllocate implements Runnable {
                         continue;
                     }
                     // is the train held
-                    if (activeTrain.holdAllocation) {
-                        log.debug("[{}]:Allocation is Holding", trainName);
+                    if (activeTrain.holdAllocation || (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+                        log.debug("[{}]:Allocation is Holding or Delayed", trainName);
                         continue;
                     }
 
@@ -298,6 +298,12 @@ public class AutoAllocate implements Runnable {
                                                 trainName, sS.getUserName(),
                                                 _dispatcher.checkBlocksNotInAllocatedSection(sS, ar));
                                         areForwardsFree = false;
+                                    } else if (checkBlocksNotInReservedSection(activeTrain, ar) != null) {
+                                        log.debug("{}: Forward section [{}] is in conflict with [{}]",
+                                                trainName, sS.getDisplayName(),
+                                                checkBlocksNotInReservedSection(activeTrain, ar).getDisplayName());
+                                        areForwardsFree = false;
+
                                     } else if (reservedSections.get(sS.getSystemName()) != null &&
                                             !reservedSections.get(sS.getSystemName()).equals(trainName)) {
                                         log.debug("{}: Forward section [{}] is reserved for [{}]",
@@ -323,6 +329,8 @@ public class AutoAllocate implements Runnable {
 
                             log.trace("ForwardsFree[{}]", areForwardsFree);
                             if (!areForwardsFree) {
+                                // delete all reserves for this train
+                                removeAllReservesForTrain(trainName);
                                 continue;
                             }
                         }
@@ -498,6 +506,27 @@ public class AutoAllocate implements Runnable {
     }
 
     /*
+     * Check conflicting blocks acros reserved sections.
+     */
+    protected Section checkBlocksNotInReservedSection(ActiveTrain at, AllocationRequest ar) {
+        String trainName = at.getTrainName();
+        List<Block> lb = ar.getSection().getBlockList();
+        Iterator<Entry<String, String>> iterRS = reservedSections.entrySet().iterator();
+        while (iterRS.hasNext()) {
+            Map.Entry<String, String> pair = iterRS.next();
+            if (!pair.getValue().equals(trainName)) {
+                Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(pair.getKey());
+                for (Block rb : s.getBlockList()) {
+                    if (lb.contains(rb)) {
+                        return s;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
      * Check each ActiveTrains sections for a given section. We need to do this
      * as Section is flagged as free before it is fully released, then when it
      * is released it updates , incorrectly, the section status and allocations.
@@ -532,11 +561,24 @@ public class AutoAllocate implements Runnable {
             }
             log.warn("Failure of prepared choice of next Section in AutoAllocate");
         }
+
+        // check to see if AutoAllocate by safesections has reserved a section
+        // already
+        ActiveTrain at = ar.getActiveTrain();
+        for (Section sectionOption : sList) {
+            String reservedTrainName = reservedSections.get(sectionOption.getSystemName());
+            if (reservedTrainName != null) {
+                if (reservedTrainName.equals(at.getTrainName())) {
+                    return sectionOption;
+                }
+            }
+        }
+
         // Jay Janzen
         // If there is an AP check to see if the AP's target is on the list of
         // choices
         // and if so, return that.
-        ActiveTrain at = ar.getActiveTrain();
+        at = ar.getActiveTrain();
         AllocationPlan ap = getPlanThisTrain(at);
         Section as = null;
         if (ap != null) {

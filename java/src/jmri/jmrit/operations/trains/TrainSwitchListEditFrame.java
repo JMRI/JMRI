@@ -449,8 +449,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     log.error("CSV switch list file was not created for location {}", locationName);
                     return;
                 }
-
-                InstanceManager.getDefault(TrainCustomSwitchList.class).addCVSFile(csvFile);
+                InstanceManager.getDefault(TrainCustomSwitchList.class).addCsvFile(csvFile);
             }
         }
         // Processes the CSV Manifest files using an external custom program.

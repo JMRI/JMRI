@@ -43,6 +43,7 @@ public abstract class ImportRollingStock extends Thread {
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null; // canceled
         }
+        log.info("Importing from file: {}", fc.getSelectedFile());
         return fc.getSelectedFile();
     }
 

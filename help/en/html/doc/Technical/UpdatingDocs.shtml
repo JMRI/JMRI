@@ -1,9 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <title>How to Update the JMRI Documentation</title>
   <meta name="author" content=
   "Joseph A. Ellis - TesserAct Studios">
   <meta name="Revised_By" content=
@@ -12,22 +11,12 @@
   <meta name="Revision" content=
   "Updated instructions for GitHub instead of single file edit and ZIP">
 
-  <title>How to Update the JMRI Documentation</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
@@ -178,5 +167,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

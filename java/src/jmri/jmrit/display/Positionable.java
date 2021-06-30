@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
+import jmri.JmriException;
 
 /**
  * Defines display objects.
@@ -38,6 +39,20 @@ import javax.swing.border.Border;
  * @author Pete Cressman Copyright (c) 2010
  */
 public interface Positionable extends Cloneable {
+
+    /**
+     * Sets the Id of this Positionable
+     * @param id the id or null if no id
+     * @throws jmri.jmrit.display.Positionable.DuplicateIdException if another
+     *         Positionable in the editor already has this id
+     */
+    void setId(String id) throws Positionable.DuplicateIdException;
+
+    /**
+     * Gets the Id of this Positionable
+     * @return id the id or null if no id
+     */
+    String getId();
 
     void setPositionable(boolean enabled);
 
@@ -271,4 +286,10 @@ public interface Positionable extends Cloneable {
     void repaint();
 
     boolean requestFocusInWindow();
+
+
+
+    public static class DuplicateIdException extends JmriException {
+    }
+
 }

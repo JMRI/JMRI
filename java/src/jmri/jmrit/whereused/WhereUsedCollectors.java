@@ -13,6 +13,8 @@ import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 /**
  * Find references.  Each collector method calls a corresponding getUsageReport(NamedBean)
@@ -33,6 +35,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * <li>checkWarrants</li>
  * <li>checkEntryExit</li>
  * <li>checkLogixConditionals</li>
+ * <li>checkLogixNGConditionals</li>
  * <li>checkSections</li>
  * <li>checkTransits</li>
  * <li>checkPanels</li>
@@ -349,6 +352,34 @@ public class WhereUsedCollectors {
             }
         }));
         return addHeader(sb, "ReferenceConditionals");  // NOI18N
+    }
+
+    /**
+     * Create the LogixNG/ConditionalNG usage string.
+     * Usage keys:
+     * <ul>
+     * <li>LogixNGAction</li>
+     * <li>LogixNGExpression</li>
+     * </ul>
+     * @param bean The requesting bean:  Many.
+     * @return usage string
+     */
+    static String checkLogixNGConditionals(NamedBean bean) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet().forEach((logixng) -> logixng.getUsageReport(bean).forEach((report) -> {
+            if (report.usageKey.startsWith("LogixNG")) {  // NOI18N
+                String name = logixng.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                String cdlName = report.usageBean != null ? report.usageBean.getDisplayName() : "";
+                sb.append(Bundle.getMessage("ReferenceLineLogixNG", name, cdlName, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
+            }
+        }));
+        InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().forEach((module) -> module.getUsageReport(bean).forEach((report) -> {
+            if (report.usageKey.startsWith("LogixNG")) {  // NOI18N
+                String name = module.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                sb.append(Bundle.getMessage("ReferenceLineModule", name, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
+            }
+        }));
+        return addHeader(sb, "ReferenceLogixNG");  // NOI18N
     }
 
     /**

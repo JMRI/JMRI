@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2018.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- This file contains definitions for LogixNG                             -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:complexType name="LogixNG_MaleSocket_Type">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of a MaleSocket.
+        </xs:documentation>
+<!--
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.engine.configurexml.DefaultLogixNGManagerXml</jmri:usingclass>
+        </xs:appinfo>
+-->
+      </xs:annotation>
+      <xs:sequence>
+        
+        <!-- Permit any of these tags in any order in any number -->
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+
+
+          <xs:element name="AbstractMaleSocket" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+
+
+              <xs:element name="errorHandling" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Default"/>
+                    <xs:enumeration value="ShowDialogBox"/>
+                    <xs:enumeration value="LogError"/>
+                    <xs:enumeration value="LogErrorOnce"/>
+                    <xs:enumeration value="ThrowException"/>
+                    <xs:enumeration value="AbortExecution"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="LocalVariable" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+                    <xs:element name="type" minOccurs="1" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                          <xs:enumeration value="None"/>
+                          <xs:enumeration value="Integer"/>
+                          <xs:enumeration value="FloatingNumber"/>
+                          <xs:enumeration value="String"/>
+                          <xs:enumeration value="LocalVariable"/>
+                          <xs:enumeration value="Memory"/>
+                          <xs:enumeration value="Reference"/>
+                          <xs:enumeration value="Formula"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="data" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+
+                </xs:complexType>
+
+              </xs:element>
+
+              </xs:sequence>
+
+              <xs:attribute name="catchAbortExecution" type="yesNoType" />
+
+
+              <!-- Sub classes to AbstractMaleSocket may add things here - Start -->
+
+			  <xs:attribute name="DefaultMaleDigitalExpressionSocketListen" type="yesNoType" />
+
+              <!-- Sub classes to AbstractMaleSocket may add things here - End -->
+
+
+              <xs:attribute name="enabled" type="yesNoType" />
+              <xs:attribute name="locked" type="yesNoType" />
+              <xs:attribute name="system" type="yesNoType" />
+              <xs:attribute name="class" type="classType" use="required"/>
+            </xs:complexType>
+          </xs:element>
+
+
+
+
+          <xs:element name="AbstractDebuggerMaleSocket" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+
+              </xs:sequence>
+
+              <xs:attribute name="class" type="classType" use="required"/>
+            </xs:complexType>
+          </xs:element>
+
+
+
+        </xs:choice>
+
+
+      </xs:sequence>
+<!--      <xs:attribute name="class" type="classType" use="required"/> -->
+    </xs:complexType>
+
+</xs:schema>

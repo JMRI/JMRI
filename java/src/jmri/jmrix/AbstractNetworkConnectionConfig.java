@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -267,17 +268,21 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             String[] optionsAvailable = adapter.getOptions();
             options.clear();
             for (String i : optionsAvailable) {
-                if (! adapter.isOptionTypeText(i) ) {
+                if (adapter.isOptionTypeText(i) ) {
+                    JTextField opt = new JTextField(15);
+                    opt.setText(adapter.getOptionState(i));
+                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                } else if (adapter.isOptionTypePassword(i) ) {
+                    JTextField opt = new JPasswordField(15);
+                    opt.setText(adapter.getOptionState(i));
+                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                } else {
                     JComboBox<String> opt = new JComboBox<>(adapter.getOptionChoices(i));
                     opt.setSelectedItem(adapter.getOptionState(i));
                 
                     // check that it worked
                     checkOptionValueValidity(i, opt);
                 
-                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
-                } else {
-                    JTextField opt = new JTextField(15);
-                    opt.setText(adapter.getOptionState(i));
                     options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
                 }
             }

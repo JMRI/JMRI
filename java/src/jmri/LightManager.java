@@ -40,7 +40,7 @@ public interface LightManager extends ProvidingManager<Light> {
      * @return Never null under normal circumstances
      */
     @Nonnull
-    public Light provideLight(@Nonnull String name);
+    public Light provideLight(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
@@ -52,24 +52,20 @@ public interface LightManager extends ProvidingManager<Light> {
     public void dispose();
 
     /**
-     * Get an existing Light or return null if it doesn't exist. 
-     * 
-     * Locates via user name, then system name if needed.
-     *
+     * Get an existing Light or return null if it doesn't exist.
+     * <p>
+     * Locates via user name, then system name if needed. 
      * @param name User name, system name, or address which can be promoted to
      *             system name
-     * @return Never null
-     * @throws IllegalArgumentException if Light doesn't already exist and the
-     *                                  manager cannot create the Light due to
-     *                                  an illegal name or name that can't be
-     *                                  parsed.
+     * @return Light, or null if no existing Light.
      */
     @CheckReturnValue
     @CheckForNull
     public Light getLight(@Nonnull String name);
 
     /**
-     * Return a Light with the specified system and user names. 
+     * Return a Light with the specified user or system name.
+     * Lookup Light by UserName, then Provide New Light by SystemName.
      * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Light object representing a given physical Light and therefore
@@ -99,7 +95,7 @@ public interface LightManager extends ProvidingManager<Light> {
      *                                  parsed.
      */
     @Nonnull
-    public Light newLight(@Nonnull String systemName, @CheckForNull String userName);
+    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Locate a Light by its user name.

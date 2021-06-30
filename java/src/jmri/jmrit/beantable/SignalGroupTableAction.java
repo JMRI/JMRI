@@ -266,7 +266,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
              * it.
              */
             @Override
-            void doDelete(SignalGroup bean) {
+            protected void doDelete(SignalGroup bean) {
                 //((SignalGroup)bean).deActivateSignalGroup();
                 super.doDelete(bean);
             }
@@ -468,6 +468,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             mainSignalComboBox.setAllowNull(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
+            addFrame.setEscapeKeyClosesWindow(true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             Container contentPane = addFrame.getContentPane();
@@ -1101,6 +1102,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("EditSignalGroup"));
+        addFrame.setEscapeKeyClosesWindow(true);
         inEditMode = true; // to block opening another edit session
     }
 
@@ -1273,9 +1275,13 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 aspectList = _includedMastAspectsList;
             }
             // some error checking
-            if (_mastAspectsList == null || r >= aspectList.size()) {
+            if (aspectList == null || r >= aspectList.size()) {
                 // prevent NPE when clicking Add... in table to add new group (with 1 group existing using a different mast type)
-                log.debug("SGTA getValueAt #1125: row value {} is greater than aspectList size {}", r, aspectList.size());
+                if (aspectList == null) {
+                    log.debug("SGTA getValueAt #1270: row value {} aspectList is null", r);
+                } else {
+                    log.debug("SGTA getValueAt #1270: row value {} is greater than aspectList size {}", r, aspectList.size());
+                }
                 return null;
             }
             switch (c) {

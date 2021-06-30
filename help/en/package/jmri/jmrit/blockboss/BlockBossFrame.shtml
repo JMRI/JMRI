@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -10,16 +9,7 @@
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20171115">
   <meta name="keywords" content="JMRI help Simple Signal Logic">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -54,14 +44,11 @@
       method of Signal Mast Logic on the <a href=
       "../../../../html/tools/signaling/index.shtml">Signaling main
       help page</a>. Note that SSL ignores any Signal Mast objects
-      and only drives individual Signal Heads.<br>
-      <b>Don't use the SSL Tool when you have already built Signal
+      and only drives individual Signal Heads.</p>
+
+      <p><b>Don't use the SSL Tool when you have already built Signal
       Masts and the more advanced Signal Mast Logic in the same
-      Panel/Configuration file.</b><br>
-      SSL has no option to delete an SSL entry or provide an overview
-      of all SSL rules other than looking at the XML file of your
-      Panel, so make notes as you add SSL items and back up your
-      configuration XML file.</p>
+      Panel/Configuration file.</b></p>
 
       <p>Much of basic ABS signaling can be boiled down to "a
       Signal Head goes red when a train can't safely enter the
@@ -82,7 +69,8 @@
 
       <p>The Simple Signal Logic Tool allows you to configure JMRI
       to use a basic ABS type of logic to set the appearance of
-      Signal Heads. Using the SSL Tool, you enter information for
+      Signal Heads. The fields will vary based on the the selected
+      option.  Using the SSL Tool, you enter information for
       each Signal Head on:</p>
 
       <ul>
@@ -139,8 +127,8 @@
       </ul>
 
       <p>The case of a facing point turnout which leads to two
-      different "Protected Signals" is also covered although the
-      above figure doesn't show it. If a single Signal Head is used
+      different "Protected Signals" is also covered.
+      If a single Signal Head is used
       to control both branches, then choose "On Facing-Point
       Turnout". If a different Signal Head will control each route,
       then simply choose "Main" or "Diverging" leg of turnout, as
@@ -148,6 +136,10 @@
 
       <p>Pause your mouse over any entry or item in the SSL
       creation pane for a brief "tooltip" help reminder.</p>
+
+      <p>Use the <strong>Apply</strong> button to create a new SSL defintion or update
+      an existing defintion.  The <strong>Delete</strong> button will remove the SSL
+      definition.</p>
 
       <p>It's clear that SSL won't cover complicated interlockings
       nor will it cover the speed-signaling seen on some
@@ -267,8 +259,8 @@
 
         <li>Repeat steps 13-14 for each of your Signal Heads.</li>
 
-        <li>Be sure to save your work by selecting "Store Panels..."
-        from the Panels menu.</li>
+        <li>Be sure to save your work. See <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</li>
       </ol>
 
       <a name="more" id="more"></a>
@@ -286,5 +278,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

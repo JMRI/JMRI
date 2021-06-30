@@ -617,7 +617,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     // returns one of two possible departure strings for a train
     protected String getStatus(RouteLocation rl, boolean isManifest) {
-        if (rl == _train.getRoute().getTerminatesRouteLocation()) {
+        if (rl == _train.getTrainTerminatesRouteLocation()) {
             return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
                     .getTrainTerminatesName()});
         }

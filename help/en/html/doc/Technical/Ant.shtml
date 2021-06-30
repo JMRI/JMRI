@@ -1,7 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -14,16 +13,8 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -102,7 +93,7 @@
         <dd><code>mvn test</code><br>Use <code>mvn test -Dtest=PATTERN</code> to
           run specific tests. See
           <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running a Single Test</a>
-        for more details, including running only a single test method.</dd>
+        for more details, including running only a single test method. An example to run all tests in a package is <code>mvn test -Dtest=jmri/jmrix/openlcb/**</code></dd>
         <dt>Check for vulnerabilities in JMRI dependencies</dt>
         <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code></dd>
         <dt>Check for newer versions of JMRI dependencies</dt>
@@ -122,5 +113,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

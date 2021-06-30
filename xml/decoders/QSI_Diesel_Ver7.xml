@@ -623,7 +623,7 @@
         <label xml:lang="it">Volts intermedi (0-255)</label>
         <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -2689,8 +2689,9 @@
       <variable label="Hardware Profile" CV="56.254.3" readOnly="yes" item="Hardware Profile">
         <splitVal highCV="56.254.2"/>
       </variable>
-      <variable label="Sound Set Number" CV="56.254.14" readOnly="yes" include="1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <variable item="Sound Set Number" CV="56.254.14" readOnly="yes" include="1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <splitVal highCV="56.254.15"/>
+        <label>Sound Set Number</label>
       </variable>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/qsi/ResetStandard.xml"/>

@@ -279,7 +279,7 @@ public class OBlockManagerXml // extends XmlFile
             block.setMetricUnits(false);
         }
         if (elem.getAttribute("length") != null) {
-            block.setLength(Float.valueOf(elem.getAttribute("length").getValue()).floatValue());
+            block.setLength(Float.parseFloat(elem.getAttribute("length").getValue()));
         }
         if (elem.getAttribute("curve") != null) {
             block.setCurvature(Integer.parseInt((elem.getAttribute("curve")).getValue()));

@@ -335,6 +335,39 @@ public class CbusMessage {
     }
 
     /**
+     * CBUS programmer commands
+     * 
+     * CBUS VCVS works like a QCVS read but the programmer will first check if
+     * the CV contents are equal to the startVal. This can speed up CV reads by
+     * skipping reading of other values.
+     * 
+     * @param cv CV to read
+     * @param mode Programming Mode
+     * @param startVal Hint of current CV value
+     * @param header CAN ID
+     * @return CanMessage ready to send
+     */
+    static public CanMessage getVerifyCV(int cv, ProgrammingMode mode, int startVal, int header) {
+        CanMessage m = new CanMessage(6, header);
+        m.setElement(0, CbusConstants.CBUS_VCVS);
+        m.setElement(1, CbusConstants.SERVICE_HANDLE);
+        m.setElement(2, (cv / 256) & 0xff);
+        m.setElement(3, cv & 0xff);
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
+            m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
+        } else if (mode.equals(ProgrammingMode.DIRECTBITMODE)) {
+            m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
+        } else if (mode.equals(ProgrammingMode.DIRECTBYTEMODE)) {
+            m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
+        } else {
+            m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
+        }
+        m.setElement(5, startVal & 0xff);
+         setPri(m, 0xb);
+        return m;
+    }
+
+    /**
      * Get a CanMessage to write a CV.
      * @param cv Which CV, 0-65534
      * @param val New CV value, 0-255

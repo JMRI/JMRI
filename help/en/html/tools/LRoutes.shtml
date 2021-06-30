@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -10,13 +9,7 @@
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content=
   "layout java model railroad JMRI panelpro tools LRoute">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -220,7 +213,7 @@
       button.</p>
 
       <h3>To edit an existing LRoute:</h3>
-      
+
       <p><b>NOTE:</b> If you have edited the Logix created for a particular existing LRoute,
       or have edited any of the entities used by an LRoute without closing and reopening
       the LRoute table window, you will get an error message when you go to edit that
@@ -283,10 +276,9 @@
       <p>LRoutes are kept in your <i>layout configuration</i>, along
       with turnouts, sensors, signal heads, lights, control
       panel setup etc. To store
-      this information on disk, use <b>Store Configuration...</b>
-      in the <b>File</b> menu at the top of the LRoute Table (or
-      other tables from the Tools menu), or select <b>Store
-      Panel...</b> in the <b>Panel</b> menu. Note that the
+      this information on disk, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.
+      Note that the
       enabled/disabled state of each LRoute is not saved in the
       configuration file. When LRoutes are loaded from a
       configuration file, they are all enabled.</p>
@@ -516,5 +508,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

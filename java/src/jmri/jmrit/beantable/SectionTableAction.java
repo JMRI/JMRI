@@ -636,6 +636,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             sysName.setVisible(false);
             sysNameFixed.setVisible(true);
             initializeEditInformation();
+            addFrame.getRootPane().setDefaultButton(update);
             addFrame.setTitle(Bundle.getMessage("TitleEditSection"));
         } else {
             // setup for create window
@@ -646,6 +647,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             sysNameFixed.setVisible(false);
             autoSystemName();
             clearForCreate();
+            addFrame.getRootPane().setDefaultButton(create);
             addFrame.setTitle(Bundle.getMessage("TitleAddSection"));
         }
         // initialize layout editor panels
@@ -660,6 +662,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         }
         // initialize block combo - first time
         initializeBlockCombo();
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }

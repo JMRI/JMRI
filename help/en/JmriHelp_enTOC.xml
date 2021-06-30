@@ -223,7 +223,9 @@
    <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
   </tocitem>
-  <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
+  <tocitem text="OperationsPro " target="html.apps.OperationsPro.index">
+   <tocitem text="OperationsPro Information " target="package.jmri.jmrit.operations.Operations"/>
+
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
@@ -268,15 +270,16 @@
 
   </tocitem>
   <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp">
-    <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
+   <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
 
   </tocitem>
   <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps">
-    <tocitem text="YAAT - YetAnotherAutoTrain " target="html.scripthelp.yaat.YAAT"/>
+   <tocitem text="YAAT - YetAnotherAutoTrain " target="html.scripthelp.yaat.YAAT"/>
 
-    <tocitem text="Dispatcher System (Python Extension) " target="html.scripthelp.DispatcherSystem.DispatcherSystem"/>
+   <tocitem text="Dispatcher System (Python Extension) " target="html.scripthelp.DispatcherSystem.DispatcherSystem"/>
+
   </tocitem>
- </tocitem> 
+ </tocitem>
  <tocitem text="Panels " target="html.apps.PanelPro.index">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
 
@@ -317,6 +320,8 @@
   <tocitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+
+  <tocitem text="RailCom Table " target="package.jmri.jmrit.beantable.RailComTable"/>
 
  </tocitem>
  <tocitem text="Tools " target="html.tools.index">
@@ -416,6 +421,28 @@
    <tocitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
 
    <tocitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
+
+  </tocitem>
+  <tocitem text="LogixNG " target="html.tools.logixng.LogixNG">
+   <tocitem text="LogixNG Reference " target="html.tools.logixng.reference.index"/>
+
+   <tocitem text="LogixNG Table " target="package.jmri.jmrit.beantable.LogixNGTable"/>
+
+   <tocitem text="LogixNG Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableEditor"/>
+
+   <tocitem text="ConditionalNG Editor " target="package.jmri.jmrit.logixng.ConditionalNGEditor"/>
+
+   <tocitem text="LogixNG Module Table " target="package.jmri.jmrit.beantable.LogixNGModuleTable"/>
+
+   <tocitem text="LogixNG Module Table Editor " target="package.jmri.jmrit.logixng.ModuleEditor"/>
+
+   <tocitem text="LogixNG Tables Table " target="package.jmri.jmrit.beantable.LogixNGTableTable"/>
+
+   <tocitem text="LogixNG Tables Table Editor " target="package.jmri.jmrit.logixng.LogixNGTableTableEditor"/>
+
+   <tocitem text="LogixNG Initialization Table " target="package.jmri.jmrit.logixng.LogixNGInitializationTable"/>
+
+   <tocitem text="LogixNG Logix Import " target="package.jmri.jmrit.logixng.LogixImport"/>
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">
@@ -520,6 +547,8 @@
    <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 
   </tocitem>
+  <tocitem text="Cab Signaling " target="package.jmri.jmrit.cabsignals.CabSignalPane"/>
+
   <tocitem text="Speedometer " target="html.tools.speedometer.index"/>
 
   <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
@@ -745,9 +774,11 @@
 
    <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
+   <tocitem text="Send OpenLCB Frame " target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame"/>
+
   </tocitem>
   <tocitem text="Powerline " target="html.hardware.powerline.index">
-   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenFrame"/>
+   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane"/>
 
    <tocitem text="Traffic Monitor " target="package.jmri.jmrix.powerline.serialmon.SerialMonFrame"/>
 

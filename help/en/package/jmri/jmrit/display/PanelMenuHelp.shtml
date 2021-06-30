@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,16 +6,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Panels Menu</title>
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -25,6 +15,13 @@
     <div id="mainContent">
 
       <h1>JMRI: Panels Menu</h1>
+        <div class="noted">
+        <span class="since">since 4.23.3</span>
+        <p>Note: The PanelPro main menu is being changed.
+        See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
+        The menu references below are the for the new menu structure.
+        </p>
+        </div>
 
       <p>The JMRI "Panels" menu contains the following items:</p>
 
@@ -35,39 +32,11 @@
         <a href="LayoutEditor.shtml">Layout Editor</a> or
         <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</li>
 
-        <li>Load Panel...: Loads a a file previously stored with
-        the "Store Panels..." choice below. If the file contains
-        Panel information, it will be added to any that already
-        exists in the running program.</li>
-
-        <li>Store Panels...: Store the current setup of the program
-        to a file, including all currently loaded Panels.
-        Use "Show Panel" below to see the complete list.</li>
-
-        <li>Show History: <span class="since">since 2.9.3</span>
-        Shows a history of all files loaded into
-        the currently running program, and how they were stored
-        from previous runs of the program, along with what was
-        loaded into those, and so on.</li>
-
         <li>Show Panel: Shows the list of all Panels
         currently loaded in the program, and allows
         you to bring one to the front by selecting it.</li>
 
-        <li>Run Script...: Select and run a <a href=
-        "../../../../html/tools/scripting/index.shtml">script
-        file</a>.</li>
-
-        <li>Thread Monitor: Open a <a href=
-        "../automat/monitor/AutomatTableFrame.shtml">window
-        displaying currently-running threads</a>, which includes
-        long-running scripts.</li>
-
-        <li>Script Output: Open the script output window. Any
-        messages from scripts will appear here.</li>
-
-        <li>Script Entry: Open an script input window. You can
-        directly type scripting commands here.</li>
+        <li>Delete Panel...: Select a panel to be deleted.</li>
       </ul>
 
       <p>Continue to the help pages for
@@ -78,5 +47,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
