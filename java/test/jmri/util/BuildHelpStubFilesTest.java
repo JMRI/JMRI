@@ -69,7 +69,7 @@ public class BuildHelpStubFilesTest {
                 if ((name != null) && !name.isEmpty()) {
                     String subHelpKey = helpKey+"_"+name;
                     _htmlPagesHelpKeys.add(subHelpKey);
-                    System.out.format("HelpKey: %s%n", subHelpKey);
+//                    System.out.format("HelpKey: %s%n", subHelpKey);
                 }
             }
             parseNode(helpKey, child, pad+"    ");
@@ -87,8 +87,7 @@ public class BuildHelpStubFilesTest {
                 String fileName = file.getAbsolutePath().substring(rootFolder.length());
                 String helpKey = fileName.substring(0, fileName.indexOf(".shtml")).replace('\\', '.').replace('/', '.');
                 _htmlPagesHelpKeys.add(helpKey);
-                System.out.format("HelpKey: %s%n", helpKey);
-//                System.out.format("File: %s, tag: %s%n", fileName, helpKey);
+//                System.out.format("HelpKey: %s%n", helpKey);
                 Document doc = Jsoup.parse(file, "UTF-8");
                 
                 org.jsoup.nodes.Element body = doc.body();
