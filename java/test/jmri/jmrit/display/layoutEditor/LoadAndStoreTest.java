@@ -160,7 +160,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
             log.warn("Fail to compare new: {}", outFile);
             log.warn("Fail to compare ref: {}", compFile);
             log.warn("Test should fail but is temporary disabled");
-            log.warn("");
+            log.warn(" ");
 //            log.error("Fail to compare new: {}", outFile);
 //            log.error("Fail to compare ref: {}", compFile);
 //            Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
