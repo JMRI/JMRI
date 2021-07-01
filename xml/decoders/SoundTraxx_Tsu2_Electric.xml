@@ -85,6 +85,12 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added 21PNEM8 decoder</revremark>
         </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2021-07-01</date>
+            <authorinitials>MJM</authorinitials>
+            <revremark>Added N18 decoder</revremark>
+        </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20160604"/>
     <!-- Decoder Model information follows -->
@@ -99,11 +105,14 @@
             <model model="TSU-21PNEM Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="298" comment="Model 886003">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886003">
+            <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886803">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
             <model model="TSU-4400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="299" comment="Model 886005">
                 <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <model model="TSU-N18 Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="338" comment="Model 886007">
+                <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
