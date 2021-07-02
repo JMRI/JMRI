@@ -115,18 +115,6 @@ public class BuildHelpStubFilesTest {
         }
     }
     
-    private void removeStubFiles() {
-        Set<File> files = Stream.of(new File(_stubFolder).listFiles())
-                  .filter(file -> !file.isDirectory())
-                  .collect(Collectors.toSet());
-        
-        for (File file : files) {
-            if (!file.getName().endsWith(".html")) continue;
-            if (file.delete()) log.debug("Removed file: {}", file.toString());
-            else log.error("Couldn't remove file: {}", file.toString());
-        }
-    }
-    
     private boolean buildIndex(String lang) throws JDOMException, IOException {
         boolean result = true;
         
@@ -138,8 +126,6 @@ public class BuildHelpStubFilesTest {
         
         _helpKeys = new TreeSet<>();
         _htmlPagesHelpKeys = new TreeSet<>();
-        
-        removeStubFiles();
         
         String folder = FileUtil.getProgramPath() + "help/" + _lang + "/";
         searchHelpFolder(folder, folder);
