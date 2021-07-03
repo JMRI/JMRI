@@ -159,7 +159,9 @@ public class BuildHelpStubFilesTest {
         // Generate the stub files
         for (String helpKey : _stubHelpKeys) {
             try {
-                generateStubFile(helpKey);
+                if (!_alternateMap.containsKey(helpKey)) {
+                    generateStubFile(helpKey);
+                }
             } catch (IOException ex) {
                 System.out.format("Failed to create stub file for key \"%s\"%n", helpKey);
                 result = false;
