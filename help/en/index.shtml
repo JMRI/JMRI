@@ -21,6 +21,7 @@
     page</a> shows that a lot of people have been able to
     contribute.</p>
 
+<!--
     <h2>Using The Help System</h2>
 
     <p>If you're viewing this via the program's Help tool, the
@@ -40,6 +41,7 @@
 
     <p>If you're viewing this on the web, the links above will get
     you to the corresponding sections.</p>
+-->
 
     <h2>Further information</h2>
 
@@ -49,15 +51,6 @@
     (Depending on your computer, you might have to copy that link
     to your web browser to be able to see external sites
     properly).</p>
-
-    <p>The <a href=
-    "https://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a>
-    mailing list carries announcements of new versions, major
-    changes, etc. This list is intended to be very low traffic;
-    discussions, etc. should take place elsewhere. You can
-    subscribe by sending the word "subscribe" in the subject or
-    body of an email to <a href=
-    "mailto:jmri-announce-request@lists.sourceforge.net">jmri-announce-request@lists.sourceforge.net</a>.</p>
 
     <p>We have a Groups.io discussion area, JMRI Users.
     This group is the place to discuss any aspect of JMRI.
