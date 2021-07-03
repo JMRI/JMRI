@@ -32,7 +32,7 @@ public class BuildHelpStubFilesTest {
     private PrintWriter _mapJhmWriter;
     private TreeSet<String> _helpKeys;
     private TreeSet<String> _htmlPagesHelpKeys;
-    Properties prop;
+    private Properties _alternateMap;
     
     
     // The main() method is used when this class is run directly from ant
@@ -55,10 +55,14 @@ public class BuildHelpStubFilesTest {
         if (Files.exists(path)) {
             System.out.format("The file for tag %s already exists%n", helpKey);
         }
+        String link = helpKey;
+        if (_alternateMap.containsKey(helpKey)) {
+            link = _alternateMap.getProperty(helpKey);
+        }
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
                 + "help/" + _lang + "/local/stub/"+helpKey+".html");
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            String contents = _template.replaceFirst("<!--HELP_KEY-->", helpKey);
+            String contents = _template.replaceFirst("<!--HELP_KEY-->", link);
             printWriter.print(contents);
         }
     }
@@ -87,13 +91,8 @@ public class BuildHelpStubFilesTest {
         for (File file : files) {
             if (file.getName().endsWith(".shtml")) {
                 String fileName = file.getAbsolutePath().substring(rootFolder.length());
-                String helpKey;
-                if (prop.containsKey(fileName)) {
-                    helpKey = prop.getProperty(fileName);
-                } else {
-                    helpKey = fileName.substring(0, fileName.indexOf(".shtml"))
+                String helpKey = fileName.substring(0, fileName.indexOf(".shtml"))
                             .replace('\\', '.').replace('/', '.');
-                }
                 _htmlPagesHelpKeys.add(helpKey);
 //                System.out.format("HelpKey: %s%n", helpKey);
                 Document doc = Jsoup.parse(file, "UTF-8");
@@ -132,9 +131,9 @@ public class BuildHelpStubFilesTest {
         Path path = Path.of(FileUtil.getProgramPath() + "help/" + _lang + "/local/stub_template.html");
         _template = Files.readString(path);
         
-        prop = new Properties();
+        _alternateMap = new Properties();
         try (InputStream input = new FileInputStream(FileUtil.getProgramPath() + "help/" + _lang + "/local/alternate_map.txt")) {
-            prop.load(input);
+            _alternateMap.load(input);
         }
         
         _helpKeys = new TreeSet<>();
@@ -166,7 +165,7 @@ public class BuildHelpStubFilesTest {
             try {
                 generateStubFile(helpKey);
             } catch (IOException ex) {
-                System.out.format("Failed to create stub file for key \"%s\"", helpKey);
+                System.out.format("Failed to create stub file for key \"%s\"%n", helpKey);
                 result = false;
             }
         }
