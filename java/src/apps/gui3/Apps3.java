@@ -75,7 +75,6 @@ public abstract class Apps3 extends AppsBase {
         super(applicationName, configFileDef, args);
 
         // create GUI
-        initializeHelpSystem();
         if (SystemType.isMacOSX()) {
             initMacOSXMenus();
         }
@@ -112,16 +111,6 @@ public abstract class Apps3 extends AppsBase {
     static JComponent _buttonSpace = null;
 
     protected JmriJFrame mainFrame;
-
-    protected void initializeHelpSystem() {
-        // initialize help system
-        HelpUtil.initOK();
-
-        // tell help to use default browser for external types
-        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-        // help items are set in the various Tree/Menu/Toolbar constructors
-    }
 
     abstract protected void createMainFrame();
 
