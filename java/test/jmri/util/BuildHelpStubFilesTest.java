@@ -52,9 +52,9 @@ public class BuildHelpStubFilesTest {
     
     private void generateStubFile(String helpKey) throws IOException {
         Path path = Path.of(_stubFolder + helpKey + ".html");
-        if (Files.exists(path)) {
-            System.out.format("The file for tag %s already exists%n", helpKey);
-        }
+//        if (Files.exists(path)) {
+//            System.out.format("The file for tag %s already exists%n", helpKey);
+//        }
         String link = helpKey;
         if (_alternateMap.containsKey(helpKey)) {
             link = _alternateMap.getProperty(helpKey);
