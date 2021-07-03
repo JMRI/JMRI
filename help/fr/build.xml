@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?> 
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?>
 
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010, 2015 -->
@@ -17,87 +17,68 @@
 <!-- for more details.                                                      -->
 
 <project name="JMRI" default="all" basedir=".">
-<!-- basedir="." means all paths are relative to the "java/help/fr" subdir -->
+<!-- basedir="." means all paths are relative to the "java/help/en" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
 
   <description>
-  Provides build services for JMRI web pages from help metadata
+  Provides build services for JMRI web pages from help/fr metadata
   </description>
 
   <!-- set global properties for this build -->
-  <property name="target" value="."/>
+  <property name="helptarget" value="."/>
+
 
   <target name="init" description="create needed directories for fr/help">
     <!-- Create the time stamp -->
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
-    <mkdir dir="${target}"/>
+    <mkdir dir="${helptarget}"/>
   </target>
 
-    <path id="class.path">
-        <pathelement location="jhelpdev.jar"/>
-        <pathelement location="jars/xmlenc.jar"/>
-        <pathelement location="jars/jhall.jar"/>
-        <pathelement location="jars/junit.jar"/>
-    </path>
 
-  <target name="jhelpdev" depends="init" 
-  			description="run batch jhelpdev">
-        <java classname="net.sourceforge.jhelpdev.JHelDevCmdLine" fork="yes">
-            <classpath refid="class.path"/>
-        </java>
-  </target>
-    
-  <target name="index" depends="init" 
-  			description="create an fr/index page">
+  <target name="index" depends="init"
+        description="create an fr/index page">
     <xslt  basedir="${basedir}"
-    		destdir="${target}"
-    		extension=".html"
-    		style="format.xsl"
-    		includes="JmriHelp_frIndex.xml"
-    	>
-        <xmlcatalog>
-            <dtd
-                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
-                location="map_2_0.dtd"/>
-            <dtd
-                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
-                location="toc_2_0.dtd"/>
-            <dtd
-                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
-                location="index_2_0.dtd"/>
-        </xmlcatalog>
+        destdir="${helptarget}"
+        extension=".html"
+        style="format.xsl"
+        includes="JmriHelp_frIndex.xml"
+    >
     </xslt>
-    <move file="JmriHelp_frIndex.html" tofile="webindex.shtml"/> 
+    <move file="JmriHelp_frIndex.html" tofile="webindex.shtml"/>
   </target>
 
-  <target name="TOC" depends="init" 
-  			description="create an fr/TOC page">
+
+  <target name="TOC" depends="init"
+        description="create a fr/TOC page">
     <xslt  basedir="${basedir}"
-    		destdir="${target}"
-    		extension=".html"
-    		style="format.xsl"
-    		includes="JmriHelp_frTOC.xml"
-    	>
-        <xmlcatalog>
-            <dtd
-                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
-                location="map_2_0.dtd"/>
-            <dtd
-                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
-                location="toc_2_0.dtd"/>
-            <dtd
-                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
-                location="index_2_0.dtd"/>
-        </xmlcatalog>
-	</xslt>
-    <move file="JmriHelp_frTOC.html" tofile="webtoc.shtml"/> 
+        destdir="${helptarget}"
+        extension=".html"
+        style="format.xsl"
+        includes="JmriHelp_frTOC.xml"
+    >
+    </xslt>
+    <move file="JmriHelp_frTOC.html" tofile="webtoc.shtml"/>
   </target>
 
-  <target name="all" depends="init, jhelpdev, index, TOC" 
-  			description="create all fr/help pages" />
- 
+
+  <target name="Local" depends="init"
+        description="create a fr/local/index.html page">
+    <xslt  basedir="${basedir}"
+        destdir="${helptarget}"
+        extension=".local"
+        style="formatLocalTOC.xsl"
+        includes="JmriHelp_frTOC.xml"
+    >
+    </xslt>
+    <move file="JmriHelp_frTOC.local" tofile="local/index.html"/>
+  </target>
+
+
+  <target name="all" depends="init, index, TOC, Local"
+        description="create all fr/help pages" />
+
 </project>
 
 
