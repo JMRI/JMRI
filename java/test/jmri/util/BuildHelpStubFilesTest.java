@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class BuildHelpStubFilesTest {
     private PrintWriter _mapJhmWriter;
     private TreeSet<String> _helpKeys;
     private TreeSet<String> _htmlPagesHelpKeys;
+    Properties prop;
     
     
     // The main() method is used when this class is run directly from ant
@@ -85,7 +87,13 @@ public class BuildHelpStubFilesTest {
         for (File file : files) {
             if (file.getName().endsWith(".shtml")) {
                 String fileName = file.getAbsolutePath().substring(rootFolder.length());
-                String helpKey = fileName.substring(0, fileName.indexOf(".shtml")).replace('\\', '.').replace('/', '.');
+                String helpKey;
+                if (prop.containsKey(fileName)) {
+                    helpKey = prop.getProperty(fileName);
+                } else {
+                    helpKey = fileName.substring(0, fileName.indexOf(".shtml"))
+                            .replace('\\', '.').replace('/', '.');
+                }
                 _htmlPagesHelpKeys.add(helpKey);
 //                System.out.format("HelpKey: %s%n", helpKey);
                 Document doc = Jsoup.parse(file, "UTF-8");
@@ -123,6 +131,11 @@ public class BuildHelpStubFilesTest {
         
         Path path = Path.of(FileUtil.getProgramPath() + "help/" + _lang + "/local/stub_template.html");
         _template = Files.readString(path);
+        
+        prop = new Properties();
+        try (InputStream input = new FileInputStream(FileUtil.getProgramPath() + "help/" + _lang + "/local/alternate_map.txt")) {
+            prop.load(input);
+        }
         
         _helpKeys = new TreeSet<>();
         _htmlPagesHelpKeys = new TreeSet<>();
