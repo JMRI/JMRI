@@ -52,9 +52,10 @@ public class BuildHelpStubFilesTest {
     
     private void generateStubFile(String helpKey) throws IOException {
         Path path = Path.of(_stubFolder + helpKey + ".html");
-//        if (Files.exists(path)) {
+        if (Files.exists(path)) {
 //            System.out.format("The file for tag %s already exists%n", helpKey);
-//        }
+            return;
+        }
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
                 + "help/" + _lang + "/local/stub/"+helpKey+".html");
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
@@ -181,7 +182,7 @@ public class BuildHelpStubFilesTest {
                 expandedHelpKey = _alternateMap.getProperty(helpKey);
             } else {
                 expandedHelpKey = helpKey.replace(".", "/");
-                int pos = expandedHelpKey.lastIndexOf('_');
+                int pos = expandedHelpKey.indexOf('_');
                 if (pos == -1) {
                     expandedHelpKey = expandedHelpKey + ".shtml";
                 } else {
