@@ -55,14 +55,10 @@ public class BuildHelpStubFilesTest {
 //        if (Files.exists(path)) {
 //            System.out.format("The file for tag %s already exists%n", helpKey);
 //        }
-        String link = helpKey;
-        if (_alternateMap.containsKey(helpKey)) {
-            link = _alternateMap.getProperty(helpKey);
-        }
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
                 + "help/" + _lang + "/local/stub/"+helpKey+".html");
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            String contents = _template.replaceFirst("<!--HELP_KEY-->", link);
+            String contents = _template.replaceFirst("<!--HELP_KEY-->", helpKey);
             printWriter.print(contents);
         }
     }
@@ -178,13 +174,18 @@ public class BuildHelpStubFilesTest {
         _mapJhmWriter.println("<map xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/help-map.xsd\">");
         
         for (String helpKey : _helpKeys) {
-            String expandedHelpKey = helpKey.replace(".", "/");
-            int pos = expandedHelpKey.lastIndexOf('_');
-            if (pos == -1) {
-                expandedHelpKey = expandedHelpKey + ".shtml";
+            String expandedHelpKey;
+            if (_alternateMap.containsKey(helpKey)) {
+                expandedHelpKey = _alternateMap.getProperty(helpKey);
             } else {
-                expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
-                        + "#" + expandedHelpKey.substring(pos+1);
+                expandedHelpKey = helpKey.replace(".", "/");
+                int pos = expandedHelpKey.lastIndexOf('_');
+                if (pos == -1) {
+                    expandedHelpKey = expandedHelpKey + ".shtml";
+                } else {
+                    expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
+                            + "#" + expandedHelpKey.substring(pos+1);
+                }
             }
             _mapJhmWriter.format("<mapID target=\"%s\" url=\"%s\"/>%n", helpKey, expandedHelpKey);
         }
