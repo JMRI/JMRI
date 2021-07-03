@@ -13,19 +13,19 @@ import jmri.swing.PreferencesPanel;
 
 /**
  * Preferences panel for HelpUtil
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel {
-    
+
     private final HelpUtilPreferences _preferences;
-    
+
     JRadioButton _openHelpOnFileRadioButton;
     JRadioButton _openHelpOnlineRadioButton;
     JRadioButton _openHelpOnJMRIWebServerRadioButton;
     ButtonGroup _openHelpButtonGroup;
-    
+
     public HelpUtilPreferencesPanel() {
         _preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
         initGUI();
@@ -49,7 +49,7 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
         _preferences.setOpenHelpOnJMRIWebServer(_openHelpOnJMRIWebServerRadioButton.isSelected());
         return didSet;
     }
-    
+
     private JPanel getHelpPanel() {
         JPanel panel = new JPanel();
 
@@ -68,25 +68,21 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
         _openHelpButtonGroup.add(_openHelpOnJMRIWebServerRadioButton);
 
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
-        
+
         gridPanel.add(_openHelpOnFileRadioButton);
         gridPanel.add(_openHelpOnlineRadioButton);
         gridPanel.add(_openHelpOnJMRIWebServerRadioButton);
-        
+
         _openHelpOnFileRadioButton.setSelected(_preferences.getOpenHelpOnFile());
         _openHelpOnlineRadioButton.setSelected(_preferences.getOpenHelpOnline());
         _openHelpOnJMRIWebServerRadioButton.setSelected(_preferences.getOpenHelpOnJMRIWebServer());
-        
+
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         panel.add(gridPanel);
 
         return panel;
     }
 
-    private JPanel getTimeDiagramColorsPanel() {
-        return new JPanel();
-    }
-    
     @Override
     public String getPreferencesItem() {
         return "HELP"; // NOI18N

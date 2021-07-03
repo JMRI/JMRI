@@ -42,7 +42,7 @@ public class HelpUtil {
      */
     public static JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
         JMenu helpMenu = makeHelpMenu(ref, direct);
-        if (helpMenu != null) {
+        if (menuBar != null) {
             menuBar.add(helpMenu);
         }
         return helpMenu;
@@ -67,7 +67,7 @@ public class HelpUtil {
 
     public static JMenuItem makeHelpMenuItem(String ref) {
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
-        
+
         menuItem.addActionListener((ignore) -> {
             displayHelpRef(ref);
         });
@@ -187,6 +187,6 @@ public class HelpUtil {
          */
         @Nonnull
         List<JMenuItem> getHelpMenuItems();
-    
+
     }
 }
