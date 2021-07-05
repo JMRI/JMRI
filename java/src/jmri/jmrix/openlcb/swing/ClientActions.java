@@ -82,7 +82,7 @@ public class ClientActions {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
-                                    .provideSensor("MS" + mevt1.getText() + ";" + mevt2.getText());
+                                    .provideSensor(memo.getSystemPrefix() + "S" + mevt1.getText() + ";" + mevt2.getText());
                             if (mdesc.getText().length() > 0) {
                                 sensor.setUserName(mdesc.getText());
                             }
