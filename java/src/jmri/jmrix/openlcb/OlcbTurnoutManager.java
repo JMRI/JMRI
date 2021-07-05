@@ -126,8 +126,10 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // don't check for integer; should check for validity here
+        String tmpPrefix = prefix + typeLetter();
+        String tmpSName  = tmpPrefix + curAddress;
         try {
-            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),getSystemNamePrefix());
+            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix);
         } catch (jmri.NamedBean.BadSystemNameException e) {
             throw new JmriException(e.getMessage());
         }
@@ -137,11 +139,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         // always return this (the current) name without change
-        try {
-            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),prefix+"T");
-        } catch (jmri.NamedBean.BadSystemNameException e) {
-            throw new JmriException(e.getMessage());
-        }
+        String tmpSName = createSystemName(curAddress,prefix);
         return curAddress;
     }
     

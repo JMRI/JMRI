@@ -292,7 +292,15 @@ public class OlcbAddress {
      * @throws jmri.NamedBean.BadSystemNameException if provided name is an invalid format.
      */
     @Nonnull
-    public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
+        public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
+        //System.err.printf("*** OlcbAddress.validateSystemNameFormat(%s,[locale],%s)\n",name,prefix);
+        //StackTraceElement traceback[] = Thread.currentThread().getStackTrace();
+        //for (int i=1; i < 6 && i < traceback.length; i++) {
+        //    StackTraceElement tb = traceback[i];
+        //    System.err.printf("*** %s.%s (%s at %d)\n",
+        //              tb.getClassName(),tb.getMethodName(),
+        //              tb.getFileName(),tb.getLineNumber());
+        //}
         String oAddr = name.substring(prefix.length());
         OlcbAddress a = new OlcbAddress(oAddr);
         OlcbAddress[] v = a.split();

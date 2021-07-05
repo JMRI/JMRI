@@ -148,8 +148,10 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        String tmpPrefix = prefix + typeLetter();
+        String tmpSName  = tmpPrefix + curAddress;
         try {
-            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),prefix);
+            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix);
         }
         catch ( jmri.NamedBean.BadSystemNameException ex ){
             throw new JmriException(ex.getMessage());
@@ -159,8 +161,9 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         // always return this (the current) name without change
+        String tmpSName = createSystemName(curAddress,prefix);
         return curAddress;
     }
     
