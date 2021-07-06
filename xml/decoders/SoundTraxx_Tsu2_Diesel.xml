@@ -265,9 +265,6 @@
             <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="336" comment="Model 885029">
                 <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
-            <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="337" comment="Model 885030">
-                <size length="25" width="10.5" height="4.1" units="mm"/>
-            </model>
             <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
