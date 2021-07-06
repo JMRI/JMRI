@@ -564,6 +564,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The JavaHelp system has been replaced by JmriHelp.
+            See the <a href="/help/en/html/doc/Technical/Help.shtml">Help page</a> for details.</li>
         </ul>
 
