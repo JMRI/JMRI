@@ -86,13 +86,11 @@
       Help</strong> from the dropdown box. There's lots of good
       stuff in there.</p>
 
-      <div align="right"></div>
-      <hr>
-
       <p><a href="dp3_Main_Main.shtml">Back</a></p>
-    </div><!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-  <!-- closes #mBody-->
+
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
