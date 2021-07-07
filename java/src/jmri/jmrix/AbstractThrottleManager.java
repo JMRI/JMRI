@@ -208,37 +208,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
     
     /**
-     * @deprecated since 4.15.7; use
-     * #requestThrottle(BasicRosterEntry, ThrottleListener, boolean) instead
-     */
-    @Deprecated
-    @Override
-    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l) {
-        return requestThrottle(re, l, false);
-    }
-    
-    /**
-     * @deprecated since 4.15.7; use
-     * #requestThrottle(BasicRosterEntry, ThrottleListener, boolean) instead
-     */
-    @Deprecated
-    @Override
-    public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l) {
-        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
-        return requestThrottle(la, l, false);
-    }
-    
-    /**
-     * @deprecated since 4.15.7; use
-     * #requestThrottle(LocoAddress, ThrottleListener, boolean) instead
-     */
-    @Deprecated
-    @Override
-    public boolean requestThrottle(LocoAddress la, ThrottleListener l) {
-        return requestThrottle(la, l, false);
-    }
-    
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -263,16 +232,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return requestThrottle(la, null, l, canHandleDecisions);
     }
     
-    /**
-     * @deprecated since 4.15.7; use
-     * #requestThrottle(LocoAddress, ThrottleListener, boolean) instead
-     */
-    @Deprecated
-    @Override
-    public boolean requestThrottle(LocoAddress la, BasicRosterEntry re, ThrottleListener l) {
-        return requestThrottle(re, l, false);
-    }
-
     /**
      * Request a throttle, given a decoder address.
      * <p>
@@ -432,86 +391,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             isLong = false;
         }
         cancelThrottleRequest(address, isLong, l);
-    }
-    
-    /**
-     * Steal a requested throttle.
-     * <p>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     *
-     * @deprecated since 4.15.7; use #responseThrottleDecision
-     */
-    @Deprecated
-    @Override
-    public void stealThrottleRequest(BasicRosterEntry re, ThrottleListener l, boolean steal){
-        if (steal) {
-            responseThrottleDecision(re.getDccLocoAddress(), l, ThrottleListener.DecisionType.STEAL);
-        }
-        else {
-            cancelThrottleRequest(re.getDccLocoAddress(), l);
-        }
-    }
-    
-    /**
-     * Steal a requested throttle.
-     * <p>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     *
-     * @deprecated since 4.15.7; use #responseThrottleDecision
-     */
-    @Deprecated
-    @Override
-    public void stealThrottleRequest(int address, ThrottleListener l, boolean steal){
-        boolean isLong = true;
-        if (canBeShortAddress(address)) {
-            isLong = false;
-        }
-        DccLocoAddress la = new DccLocoAddress(address, isLong);
-        if (steal) {
-            responseThrottleDecision(la, l, ThrottleListener.DecisionType.STEAL);
-        }
-        else {
-            cancelThrottleRequest(la, l);
-        }
-    }
-
-    /**
-     * Steal a requested throttle.
-     *
-     * @deprecated since 4.15.7; use #responseThrottleDecision
-     *
-     * @param address desired decoder address
-     * @param isLong  true if requesting a DCC long (extended) address
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
-     * @since 4.9.2
-     */
-    @Deprecated
-    @Override
-    public void stealThrottleRequest(int address, boolean isLong, ThrottleListener l, boolean steal){
-        DccLocoAddress la = new DccLocoAddress(address, isLong);
-        if (steal) {
-            responseThrottleDecision(la, l, ThrottleListener.DecisionType.STEAL);
-        }
-        else {
-            cancelThrottleRequest(la, l);
-        }
-    }
-    
-    /**
-     * @deprecated since 4.15.7; use #responseThrottleDecision
-     */
-    @Deprecated
-    @Override
-    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
-        if (steal) {
-            responseThrottleDecision(address, l, ThrottleListener.DecisionType.STEAL);
-        }
-        else {
-            cancelThrottleRequest(address, l);
-        }
     }
     
     /**
