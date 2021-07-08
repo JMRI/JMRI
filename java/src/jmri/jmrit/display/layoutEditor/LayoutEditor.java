@@ -1219,13 +1219,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         optionMenu.add(gridMenu);
 
         // show grid
-        java.util.concurrent.atomic.AtomicLong lastTime = new java.util.concurrent.atomic.AtomicLong();
+        java.util.concurrent.atomic.AtomicLong lastTimeShowEditGrid = new java.util.concurrent.atomic.AtomicLong();
         showGridCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditGrid"));
         showGridCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTime)) {
+            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeShowEditGrid)) {
                 showGridCheckBoxMenuItem.setSelected(!showGridCheckBoxMenuItem.isSelected());
                 return;
             }
@@ -1235,24 +1235,34 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         showGridCheckBoxMenuItem.setSelected(getDrawGrid());
 
         // snap to grid on add
+        java.util.concurrent.atomic.AtomicLong lastTimeSnapToGridOnAdd = new java.util.concurrent.atomic.AtomicLong();
         snapToGridOnAddCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnAdd"));
         snapToGridOnAddCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("SnapToGridOnAddAccelerator")),
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeSnapToGridOnAdd)) {
+                snapToGridOnAddCheckBoxMenuItem.setSelected(!snapToGridOnAddCheckBoxMenuItem.isSelected());
+                return;
+            }
             snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
         snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
 
         // snap to grid on move
+        java.util.concurrent.atomic.AtomicLong lastTimeSnapToGridOnMove = new java.util.concurrent.atomic.AtomicLong();
         snapToGridOnMoveCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnMove"));
         snapToGridOnMoveCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("SnapToGridOnMoveAccelerator")),
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeSnapToGridOnMove)) {
+                snapToGridOnMoveCheckBoxMenuItem.setSelected(!snapToGridOnMoveCheckBoxMenuItem.isSelected());
+                return;
+            }
             snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
