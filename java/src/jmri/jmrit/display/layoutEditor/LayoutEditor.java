@@ -1219,11 +1219,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         optionMenu.add(gridMenu);
 
         // show grid
+        java.util.concurrent.atomic.AtomicLong lastTime = new java.util.concurrent.atomic.AtomicLong();
         showGridCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditGrid"));
         showGridCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTime)) {
+                showGridCheckBoxMenuItem.setSelected(!showGridCheckBoxMenuItem.isSelected());
+                return;
+            }
             drawGrid = showGridCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
