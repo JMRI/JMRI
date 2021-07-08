@@ -791,6 +791,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         //  edit mode
         //
+        java.util.concurrent.atomic.AtomicLong lastTimeEditMode = new java.util.concurrent.atomic.AtomicLong();
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
         editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
@@ -798,6 +799,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeEditMode)) {
+                editModeCheckBoxMenuItem.setSelected(!editModeCheckBoxMenuItem.isSelected());
+                return;
+            }
+            
             setAllEditable(editModeCheckBoxMenuItem.isSelected());
 
             // show/hide the help bar
@@ -1022,12 +1028,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         // drawLayoutTracksLabel
         //
+        java.util.concurrent.atomic.AtomicLong lastTimeDrawLayoutTracksLabel = new java.util.concurrent.atomic.AtomicLong();
         drawLayoutTracksLabelCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DrawLayoutTracksLabel"));
         optionMenu.add(drawLayoutTracksLabelCheckBoxMenuItem);
         drawLayoutTracksLabelCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksMnemonic")));
         drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
         drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeDrawLayoutTracksLabel)) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(!drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
+                return;
+            }
             setDrawLayoutTracksLabel(drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
