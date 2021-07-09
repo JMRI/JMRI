@@ -480,6 +480,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
     }
 
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private void setupMenuBar() {
         // initialize menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -772,12 +773,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
+    private boolean fixMacBugOn11(ActionEvent event) {
+        return SystemType.isMacOSX() &&
+                event.getModifiers() != 0 &&
+                (Runtime.version().feature() == 11 || Runtime.version().feature() == 12);
+    }
+
     /**
      * Set up the Option menu.
      *
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         assert menuBar != null;
 
@@ -796,6 +804,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (fixMacBugOn11(event)) {
+                editModeCheckBoxMenuItem.setSelected(!editModeCheckBoxMenuItem.isSelected());
+                return;
+            }
+            
             setAllEditable(editModeCheckBoxMenuItem.isSelected());
 
             // show/hide the help bar
@@ -1026,6 +1039,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
         drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (fixMacBugOn11(event)) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(!drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
+                return;
+            }
             setDrawLayoutTracksLabel(drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
@@ -1222,6 +1239,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (fixMacBugOn11(event)) {
+                showGridCheckBoxMenuItem.setSelected(!showGridCheckBoxMenuItem.isSelected());
+                return;
+            }
             drawGrid = showGridCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1234,6 +1255,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (fixMacBugOn11(event)) {
+                snapToGridOnAddCheckBoxMenuItem.setSelected(!snapToGridOnAddCheckBoxMenuItem.isSelected());
+                return;
+            }
             snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1246,6 +1271,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            if (fixMacBugOn11(event)) {
+                snapToGridOnMoveCheckBoxMenuItem.setSelected(!snapToGridOnMoveCheckBoxMenuItem.isSelected());
+                return;
+            }
             snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1771,6 +1800,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     //
     //
     //
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private void setupZoomMenu(@Nonnull JMenuBar menuBar) {
         zoomMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);

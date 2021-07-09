@@ -351,8 +351,8 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         } else if (svgImage != null) {
             MyTranscoder transcoder = new MyTranscoder();
             TranscodingHints hints = new TranscodingHints();
-            hints.put(ImageTranscoder.KEY_WIDTH, new Float(getSize().getWidth()) );
-            hints.put(ImageTranscoder.KEY_HEIGHT, new Float(getSize().getHeight()) );
+            hints.put(ImageTranscoder.KEY_WIDTH, getSize().getWidth() );
+            hints.put(ImageTranscoder.KEY_HEIGHT, getSize().getHeight() );
             transcoder.setTranscodingHints(hints);
             try {
                 transcoder.transcode(new TranscoderInput(svgImage), null);

@@ -81,6 +81,7 @@ public class FrmMainForm extends JFrame {
      * @param keycode The integer value for the key from KeyEvent
      * @return The key stroke with the platform's accelerator character
      */
+    @SuppressWarnings("deprecation")    // Java 11 migration
     private KeyStroke getAccelerator(int keycode) {
         int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         return KeyStroke.getKeyStroke(keycode, modifier);

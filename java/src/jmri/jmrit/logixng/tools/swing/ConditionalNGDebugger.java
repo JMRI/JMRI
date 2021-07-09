@@ -32,11 +32,11 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private static final int panelHeight = 500;
     
     private final Debugger _debugger = InstanceManager.getDefault(Debugger.class);
-    private final TreePane _treePane;
-    private final JMenuItem _runItem;
-    private final JMenuItem _stepOverItem;
-    private final JMenuItem _stepIntoItem;
-    protected final ConditionalNG _conditionalNG;
+    private final ConditionalNG _conditionalNG;
+    private TreePane _treePane;
+    private JMenuItem _runItem;
+    private JMenuItem _stepOverItem;
+    private JMenuItem _stepIntoItem;
     private AbstractDebuggerMaleSocket _currentMaleSocket;
     private State _currentState = State.None;
     private boolean _run = false;
@@ -46,7 +46,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private final Object _lock = new Object();
     private boolean _continue = false;
     
-    private final DebuggerSymbolTableModel _symbolTableModel;
+    private DebuggerSymbolTableModel _symbolTableModel;
     
     /**
      * Maintain a list of listeners -- normally only one.
@@ -65,10 +65,13 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
      * @param conditionalNG the ConditionalNG to be edited
      */
     public ConditionalNGDebugger(@Nonnull ConditionalNG conditionalNG) {
-        
         _conditionalNG = conditionalNG;
-        
-        _treePane = new TreePane(conditionalNG.getFemaleSocket());
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void initComponents() {
+        _treePane = new TreePane(_conditionalNG.getFemaleSocket());
         _treePane.initComponents((FemaleSocket femaleSocket, JPanel panel) -> {
             
             if (femaleSocket.isConnected()) {
@@ -210,7 +213,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         
         _debugger.addPropertyChangeListener(this);
         _debugger.setBreak(true);
-        _debugger.activateDebugger(conditionalNG);
+        _debugger.activateDebugger(_conditionalNG);
         
         PopupMenu popup = new PopupMenu();
         popup.init();

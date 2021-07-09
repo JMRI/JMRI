@@ -7,7 +7,11 @@ import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ConditionalNGDebugger
@@ -19,21 +23,21 @@ public class ConditionalNGDebuggerTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
                 .createLogixNG("A logixNG with an empty conditionlNG");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
         ConditionalNGDebugger t = new ConditionalNGDebugger(conditionalNG);
         Assert.assertNotNull("not null", t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp() throws InterruptedException {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();

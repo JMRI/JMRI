@@ -689,7 +689,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                 }
                 realIndex++;
                 if (visibleIndex == index) {
-                    return (TreeNode) children.elementAt(realIndex);
+                    return children.elementAt(realIndex);
                 }
             }
 
