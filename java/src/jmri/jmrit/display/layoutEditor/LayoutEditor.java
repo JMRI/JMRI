@@ -833,6 +833,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
             awaitingIconChange = false;
+            
+            // macJava11Bug_JCheckBoxMenuItem
+            lastTimeEditMode.set(System.currentTimeMillis());
         });
         editModeCheckBoxMenuItem.setSelected(isEditable());
 

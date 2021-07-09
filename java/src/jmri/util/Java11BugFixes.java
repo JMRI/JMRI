@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Java11BugFixes {
     
-    public static final long MAC_JAVA11BUG_JCHECKBOXMENUITEM_DELAY = 500;
+    public static final long MAC_JAVA11BUG_JCHECKBOXMENUITEM_DELAY = 100;
     
     /**
      * On Java 11 on Mac, JCheckBoxMenuItem gives duplicate events.
