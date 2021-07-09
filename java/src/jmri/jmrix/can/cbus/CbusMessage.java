@@ -30,10 +30,11 @@ public class CbusMessage {
      * If a response event, set to normal event
      * In future, this may also translate extended messages down to normal messages.
      *
-     * @param msg CanReply to be coverted to normal opc
-     * @return CanReply perhaps converted from response OPC to normal OPC.
+     * @param original CanReply to be coverted to normal opc
+     * @return new CanReply perhaps converted from response OPC to normal OPC.
      */
-    public static CanReply opcRangeToStl(CanReply msg){
+    public static CanReply opcRangeToStl(CanReply original){
+        CanReply msg = new CanReply(original);
         int opc = getOpcode(msg);
         // log.debug(" about to check opc {} ",opc);
         switch (opc) {
