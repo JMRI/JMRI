@@ -337,7 +337,7 @@ PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
       <p>The second string contains an array of defined routes. For
       example:</p>
       <pre class="code">
-PRL]\[IR:AUTO:0001}|{Rico Main}|{
+PRL]\[IR:AUTO:0001}|{Rico Main}|{2
 </pre>
 
       <table class="data">
@@ -348,7 +348,6 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
 
           <th>Description</th>
         </tr>
-
         <tr>
           <td>System Name</td>
 
@@ -357,13 +356,19 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
           <td>The system name defined for this route. The name in
           this example was auto-generated</td>
         </tr>
-
         <tr>
           <td>User Name</td>
 
           <td>Rico Main</td>
 
           <td>The name user entered into JMRI for this route</td>
+        </tr>
+        <tr>
+          <td>State</td>
+
+          <td>2</td>
+
+          <td>1=Unknown, 2=Active, 4=Inactive, 8=Inconsistent</td>
         </tr>
       </table>
 

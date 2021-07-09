@@ -377,7 +377,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == backupButton) {
-            // Backup and Restore dialogs are now modal. so no need to check for an existing instance
+            // Backup and Restore dialogs are now modal. so no need to check for an existing
+            // instance
             BackupDialog bd = new BackupDialog();
             bd.pack();
             bd.setLocationRelativeTo(null);
@@ -401,16 +402,26 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         try {
             maxTrainLength = Integer.parseInt(maxLengthTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxLength"),
-                    Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxLength"), Bundle.getMessage("CanNotAcceptNumber"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        // warn about train length being too short
+        if (maxTrainLength != Setup.getMaxTrainLength()) {
+            if (maxTrainLength < 500 && Setup.getLengthUnit().equals(Setup.FEET) ||
+                    maxTrainLength < 160 && Setup.getLengthUnit().equals(Setup.METER)) {
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
+                                new Object[] { maxTrainLength, Setup.getLengthUnit().toLowerCase() }),
+                        Bundle.getMessage("WarningTooShort"), JOptionPane.WARNING_MESSAGE);
+            }
         }
 
         try {
             Integer.parseInt(maxEngineSizeTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxEngine"),
-                    Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxEngine"), Bundle.getMessage("CanNotAcceptNumber"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -433,8 +444,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         try {
             Integer.parseInt(travelTimeTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"), Bundle
-                    .getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"),
+                    Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -443,8 +454,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
                 Integer.parseInt(yearTextField.getText().trim());
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("BorderLayoutYearModeled"), Bundle
-                    .getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("BorderLayoutYearModeled"),
+                    Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -452,8 +463,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         checkRoutes();
 
         // set car types
-        if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE) || typeAAR.isSelected()
-                && !Setup.getCarTypes().equals(Setup.AAR)) {
+        if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE) ||
+                typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)) {
 
             // backup files before changing car type descriptions
             AutoBackup backup = new AutoBackup();
@@ -512,46 +523,17 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         // set travel time
         Setup.setTravelTime(Integer.parseInt(travelTimeTextField.getText()));
         // set scale
-        if (scaleZ.isSelected()) {
-            Setup.setScale(Setup.Z_SCALE);
-        }
-        if (scaleN.isSelected()) {
-            Setup.setScale(Setup.N_SCALE);
-        }
-        if (scaleTT.isSelected()) {
-            Setup.setScale(Setup.TT_SCALE);
-        }
-        if (scaleOO.isSelected()) {
-            Setup.setScale(Setup.OO_SCALE);
-        }
-        if (scaleHOn3.isSelected()) {
-            Setup.setScale(Setup.HOn3_SCALE);
-        }
-        if (scaleHO.isSelected()) {
-            Setup.setScale(Setup.HO_SCALE);
-        }
-        if (scaleSn3.isSelected()) {
-            Setup.setScale(Setup.Sn3_SCALE);
-        }
-        if (scaleS.isSelected()) {
-            Setup.setScale(Setup.S_SCALE);
-        }
-        if (scaleOn3.isSelected()) {
-            Setup.setScale(Setup.On3_SCALE);
-        }
-        if (scaleO.isSelected()) {
-            Setup.setScale(Setup.O_SCALE);
-        }
-        if (scaleG.isSelected()) {
-            Setup.setScale(Setup.G_SCALE);
-        }
-        if (!railroadNameTextField.getText().equals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName())) {
+        Setup.setScale(getSelectedScale());
+
+        if (!railroadNameTextField.getText()
+                .equals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName())) {
             Setup.setRailroadName(railroadNameTextField.getText());
-            int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                    .getMessage("ChangeRailroadName"), new Object[]{
-                            InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), Setup.getRailroadName()}), Bundle
-                    .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
-            if (results == JOptionPane.OK_OPTION) {
+            int results = JOptionPane.showConfirmDialog(this,
+                    MessageFormat.format(Bundle.getMessage("ChangeRailroadName"),
+                            new Object[] { InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(),
+                                    Setup.getRailroadName() }),
+                    Bundle.getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
+            if (results == JOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(Setup.getRailroadName());
                 InstanceManager.getDefault(WebServerPreferences.class).save();
             }
@@ -564,15 +546,6 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             Setup.setLengthUnit(Setup.METER);
         }
         Setup.setYearModeled(yearTextField.getText().trim());
-        // warn about train length being too short
-        if (maxTrainLength != Setup.getMaxTrainLength()) {
-            if (maxTrainLength < 500 && Setup.getLengthUnit().equals(Setup.FEET) || maxTrainLength < 160
-                    && Setup.getLengthUnit().equals(Setup.METER)) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
-                        new Object[]{maxTrainLength, Setup.getLengthUnit().toLowerCase()}), Bundle
-                        .getMessage("WarningTooShort"), JOptionPane.WARNING_MESSAGE);
-            }
-        }
         // set max train length
         Setup.setMaxTrainLength(Integer.parseInt(maxLengthTextField.getText()));
         Setup.setComment(commentTextArea.getText());
@@ -581,16 +554,16 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof OperationsSettingsFrame) {
             ((OperationsSettingsFrame) this.getTopLevelAncestor()).dispose();
         }
-
     }
 
     // if max train length has changed, check routes
     private void checkRoutes() {
         int maxLength = Integer.parseInt(maxLengthTextField.getText());
         if (maxLength > Setup.getMaxTrainLength()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
-                    Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{maxLength,
-                Setup.getLengthUnit().toLowerCase()}), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"),
+                    MessageFormat.format(Bundle.getMessage("MaxTrainLengthIncreased"),
+                            new Object[] { maxLength, Setup.getLengthUnit().toLowerCase() }),
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         if (maxLength < Setup.getMaxTrainLength()) {
             StringBuilder sb = new StringBuilder();
@@ -599,8 +572,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             for (Route route : routes) {
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
                     if (rl.getMaxTrainLength() > maxLength) {
-                        String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"), new Object[]{
-                            route.getName(), rl.getName(), rl.getMaxTrainLength(), maxLength});
+                        String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"),
+                                new Object[] { route.getName(), rl.getName(), rl.getMaxTrainLength(), maxLength });
                         log.info(s);
                         sb.append(s).append(NEW_LINE);
                         count++;
@@ -616,21 +589,20 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             if (sb.length() > 0) {
                 JOptionPane.showMessageDialog(this, sb.toString(), Bundle.getMessage("YouNeedToAdjustRoutes"),
                         JOptionPane.WARNING_MESSAGE);
-                if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                        .getMessage("ChangeMaximumTrainDepartureLength"), new Object[]{maxLength}), Bundle
-                        .getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    routes.stream().forEach(
-                            (route) -> {
-                                route.getLocationsBySequenceList().stream().filter(
-                                        (rl) -> (rl.getMaxTrainLength() > maxLength)).map(
-                                        (rl) -> {
-                                            log.debug("Setting route ({}) routeLocation ({}) max traim length to {}",
-                                                    route.getName(), rl.getName(), maxLength); // NOI18N
-                                            return rl;
-                                        }).forEach((rl) -> {
+                if (JOptionPane.showConfirmDialog(this,
+                        MessageFormat.format(Bundle.getMessage("ChangeMaximumTrainDepartureLength"),
+                                new Object[] { maxLength }),
+                        Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    routes.stream().forEach((route) -> {
+                        route.getLocationsBySequenceList().stream().filter((rl) -> (rl.getMaxTrainLength() > maxLength))
+                                .map((rl) -> {
+                                    log.debug("Setting route ({}) routeLocation ({}) max traim length to {}",
+                                            route.getName(), rl.getName(), maxLength); // NOI18N
+                                    return rl;
+                                }).forEach((rl) -> {
                                     rl.setMaxTrainLength(maxLength);
                                 });
-                            });
+                    });
                     // save the route changes
                     InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
                 }
@@ -661,8 +633,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     }
 
     private void setScale() {
-        int scale = Setup.getScale();
-        switch (scale) {
+        switch (Setup.getScale()) {
             case Setup.Z_SCALE:
                 scaleZ.setSelected(true);
                 break;
@@ -699,6 +670,44 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             default:
                 log.error("Unknown scale");
         }
+    }
+
+    private int getSelectedScale() {
+        int scale = 0;
+        if (scaleZ.isSelected()) {
+            scale = Setup.Z_SCALE;
+        }
+        if (scaleN.isSelected()) {
+            scale = Setup.N_SCALE;
+        }
+        if (scaleTT.isSelected()) {
+            scale = Setup.TT_SCALE;
+        }
+        if (scaleOO.isSelected()) {
+            scale = Setup.OO_SCALE;
+        }
+        if (scaleHOn3.isSelected()) {
+            scale = Setup.HOn3_SCALE;
+        }
+        if (scaleHO.isSelected()) {
+            scale = Setup.HO_SCALE;
+        }
+        if (scaleSn3.isSelected()) {
+            scale = Setup.Sn3_SCALE;
+        }
+        if (scaleS.isSelected()) {
+            scale = Setup.S_SCALE;
+        }
+        if (scaleOn3.isSelected()) {
+            scale = Setup.On3_SCALE;
+        }
+        if (scaleO.isSelected()) {
+            scale = Setup.O_SCALE;
+        }
+        if (scaleG.isSelected()) {
+            scale = Setup.G_SCALE;
+        }
+        return scale;
     }
 
     private void setCarTypes() {
@@ -753,37 +762,44 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     @Override
     public boolean isDirty() {
         if (// set car types
-                (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE))
-                || (typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR))
+        (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)) ||
+                (typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR))
                 // main menu enabled?
-                || Setup.isMainMenuEnabled() != mainMenuCheckBox.isSelected()
-                || Setup.isCloseWindowOnSaveEnabled() != closeOnSaveCheckBox.isSelected()
-                || Setup.isAutoSaveEnabled() != autoSaveCheckBox.isSelected()
-                || Setup.isAutoBackupEnabled() != autoBackupCheckBox.isSelected()
+                ||
+                Setup.isMainMenuEnabled() != mainMenuCheckBox.isSelected() ||
+                Setup.isCloseWindowOnSaveEnabled() != closeOnSaveCheckBox.isSelected() ||
+                Setup.isAutoSaveEnabled() != autoSaveCheckBox.isSelected() ||
+                Setup.isAutoBackupEnabled() != autoBackupCheckBox.isSelected()
                 // add panel name to setup
-                || !Setup.getPanelName().equals(panelTextField.getText())
+                ||
+                !Setup.getPanelName().equals(panelTextField.getText())
                 // train Icon X&Y
-                || Setup.isTrainIconCordEnabled() != iconCheckBox.isSelected()
-                || Setup.isTrainIconAppendEnabled() != appendCheckBox.isSelected()
+                ||
+                Setup.isTrainIconCordEnabled() != iconCheckBox.isSelected() ||
+                Setup.isTrainIconAppendEnabled() != appendCheckBox.isSelected()
                 // train Icon X&Y
-                || Setup.isTrainIconCordEnabled() != iconCheckBox.isSelected()
-                || Setup.isTrainIconAppendEnabled() != appendCheckBox.isSelected()
+                ||
+                Setup.isTrainIconCordEnabled() != iconCheckBox.isSelected() ||
+                Setup.isTrainIconAppendEnabled() != appendCheckBox.isSelected()
                 // save train icon colors
-                || !Setup.getTrainIconColorNorth().equals(northComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorSouth().equals(southComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorEast().equals(eastComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorWest().equals(westComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorLocal().equals(localComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorTerminate().equals(terminateComboBox.getSelectedItem())
-                || Setup.getMaxNumberEngines() != Integer.parseInt(maxEngineSizeTextField.getText())
-                || Setup.getHorsePowerPerTon() != Integer.parseInt(hptTextField.getText())
+                ||
+                !Setup.getTrainIconColorNorth().equals(northComboBox.getSelectedItem()) ||
+                !Setup.getTrainIconColorSouth().equals(southComboBox.getSelectedItem()) ||
+                !Setup.getTrainIconColorEast().equals(eastComboBox.getSelectedItem()) ||
+                !Setup.getTrainIconColorWest().equals(westComboBox.getSelectedItem()) ||
+                !Setup.getTrainIconColorLocal().equals(localComboBox.getSelectedItem()) ||
+                !Setup.getTrainIconColorTerminate().equals(terminateComboBox.getSelectedItem()) ||
+                Setup.getMaxNumberEngines() != Integer.parseInt(maxEngineSizeTextField.getText()) ||
+                Setup.getHorsePowerPerTon() != Integer.parseInt(hptTextField.getText())
                 // switch time
-                || Setup.getSwitchTime() != Integer.parseInt(switchTimeTextField.getText())
+                ||
+                Setup.getSwitchTime() != Integer.parseInt(switchTimeTextField.getText())
                 // travel time
-                || Setup.getTravelTime() != Integer.parseInt(travelTimeTextField.getText())
-                || !Setup.getYearModeled().equals(yearTextField.getText().trim())
-                || Setup.getMaxTrainLength() != Integer.parseInt(maxLengthTextField.getText())
-                || !Setup.getComment().equals(this.commentTextArea.getText())) {
+                ||
+                Setup.getTravelTime() != Integer.parseInt(travelTimeTextField.getText()) ||
+                !Setup.getYearModeled().equals(yearTextField.getText().trim()) ||
+                Setup.getMaxTrainLength() != Integer.parseInt(maxLengthTextField.getText()) ||
+                !Setup.getComment().equals(this.commentTextArea.getText())) {
             return true;
         }
 
@@ -795,41 +811,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         if (northCheckBox.isSelected()) {
             direction += Setup.NORTH + Setup.SOUTH;
         }
-        // set scale
-        int scale = 0;
-        if (scaleZ.isSelected()) {
-            scale = Setup.Z_SCALE;
-        }
-        if (scaleN.isSelected()) {
-            scale = Setup.N_SCALE;
-        }
-        if (scaleTT.isSelected()) {
-            scale = Setup.TT_SCALE;
-        }
-        if (scaleOO.isSelected()) {
-            scale = Setup.OO_SCALE;
-        }
-        if (scaleHOn3.isSelected()) {
-            scale = Setup.HOn3_SCALE;
-        }
-        if (scaleHO.isSelected()) {
-            scale = Setup.HO_SCALE;
-        }
-        if (scaleSn3.isSelected()) {
-            scale = Setup.Sn3_SCALE;
-        }
-        if (scaleS.isSelected()) {
-            scale = Setup.S_SCALE;
-        }
-        if (scaleOn3.isSelected()) {
-            scale = Setup.On3_SCALE;
-        }
-        if (scaleO.isSelected()) {
-            scale = Setup.O_SCALE;
-        }
-        if (scaleG.isSelected()) {
-            scale = Setup.G_SCALE;
-        }
+        // get scale
+        int scale = getSelectedScale();
         String lengthUnit = "";
         // Set Unit of Length
         if (feetUnit.isSelected()) {
@@ -838,12 +821,9 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         if (meterUnit.isSelected()) {
             lengthUnit = Setup.METER;
         }
-        return ( // train direction
-                Setup.getTrainDirection() != direction
-                // scale
-                || Setup.getScale() != scale
-                || !Setup.getRailroadName().equals(this.railroadNameTextField.getText())
-                // unit of length
-                || !Setup.getLengthUnit().equals(lengthUnit));
+        return (Setup.getTrainDirection() != direction ||
+                Setup.getScale() != scale ||
+                !Setup.getRailroadName().equals(this.railroadNameTextField.getText()) ||
+                !Setup.getLengthUnit().equals(lengthUnit));
     }
 }

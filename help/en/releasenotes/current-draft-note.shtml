@@ -86,7 +86,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>Fixed - Response Events are sometimes shown as normal Events in MERG CBUS Console ( from 4.13.4 ).</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -176,7 +176,7 @@
 
         <h4>BLI</h4>
             <ul>
-                <li></li>
+                <li>Paragon 4</li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -458,7 +458,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>For some hardware types, sensors.requestAll() can request a status update for any Sensors known to JMRI.
+            <br>This is not possible for many hardware types, eg. Internal Connections.
+            <br>For multiple hardware connections, this will query all connections.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -564,6 +566,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The JavaHelp system has been replaced by JmriHelp.
+            See the <a href="/help/en/html/doc/Technical/Help.shtml">Help page</a> for details.</li>
         </ul>
 

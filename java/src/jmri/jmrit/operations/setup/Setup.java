@@ -205,6 +205,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
+    private boolean printHeader = true;
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
     private Color localColor = Color.black;
@@ -1049,6 +1050,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void setManifestFontSize(int size) {
         getDefault().manifestFontSize = size;
+    }
+    
+    public static boolean isPrintPageHeaderEnabled() {
+        return getDefault().printHeader;
+    }
+    
+    public static void setPrintPageHeaderEnabled(boolean enable) {
+        getDefault().printHeader = enable;
     }
 
     public static int getBuildReportFontSize() {
@@ -1927,6 +1936,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_PAGE_HEADER, isPrintPageHeaderEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isPrintTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2511,6 +2521,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("manifest sortByTrack: {}", enable);
                 setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_PAGE_HEADER)) != null) {
+                String enable = a.getValue();
+                log.debug("manifest printPageHeader: {}", enable);
+                setPrintPageHeaderEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();

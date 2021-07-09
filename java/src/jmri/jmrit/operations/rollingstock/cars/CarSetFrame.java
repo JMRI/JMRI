@@ -621,6 +621,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (!ignoreKernelCheckBox.isSelected()) {
                 car.setKernel(_car.getKernel());
             }
+            // update division
+            if (!ignoreDivisionCheckBox.isSelected()) {
+                car.setDivision(_car.getDivision());
+            }
         }
         return super.updateGroup(list);
     }
