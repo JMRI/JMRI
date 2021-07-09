@@ -64,7 +64,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // "*" is not a legal character for road number
         f.roadNumberTextField.setText("6*6");
 
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("roadNumNG"), Bundle.getMessage("ButtonOK"));
 
         // test number too long
@@ -75,7 +75,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         f.roadNumberTextField.setText(sb.toString());
 
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
 
         // confirm that delete and save buttons are disabled
@@ -99,8 +99,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.initOperationsData();
         
-        EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = cManager.getByRoadAndNumber("PC", "5016");
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
+        Engine e1 = eManager.getByRoadAndNumber("PC", "5016");
         
         EngineLengths el = InstanceManager.getDefault(EngineLengths.class);
         el.addName("59");
@@ -117,7 +117,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // "*" is not a legal character for road number
         f.roadNumberTextField.setText("6*6");
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("roadNumNG"), Bundle.getMessage("ButtonOK"));
 
         // test number too long
@@ -128,7 +128,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         f.roadNumberTextField.setText(sb.toString());
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
 
         // enter a good road number
@@ -136,8 +136,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.saveButton);
         
-        Assert.assertNull(cManager.getByRoadAndNumber("PC", "5016"));
-        Assert.assertNotNull(cManager.getByRoadAndNumber("PC", "123"));
+        Assert.assertNull(eManager.getByRoadAndNumber("PC", "5016"));
+        Assert.assertNotNull(eManager.getByRoadAndNumber("PC", "123"));
 
         JUnitUtil.dispose(f);
     }
@@ -191,8 +191,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.initOperationsData();
         
-        EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = cManager.getByRoadAndNumber("PC", "5016");
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
+        Engine e1 = eManager.getByRoadAndNumber("PC", "5016");
         
         EngineLengths el = InstanceManager.getDefault(EngineLengths.class);
         el.addName("59");
@@ -203,12 +203,12 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.isShowing());
         
         // confirm that 5019 already exists
-        Assert.assertNotNull(cManager.getByRoadAndNumber("PC", "5019"));
+        Assert.assertNotNull(eManager.getByRoadAndNumber("PC", "5019"));
 
         // enter an existing road number
         f.roadNumberTextField.setText("5019");
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotUpdate"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
@@ -231,7 +231,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
   
         f.weightTonsTextField.setText("Bogus Weight");
         // new dialog warning engine weight
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("WeightTonError"), Bundle.getMessage("ButtonOK"));
 
         f.weightTonsTextField.setText("100");
@@ -254,7 +254,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
   
         f.hpTextField.setText("Bogus HP");
         // new dialog warning engine HP
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotHp"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
@@ -379,7 +379,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // test no track selected error
         f.locationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
 
         engine = cm.getByRoadAndNumber("SP", "10345");
@@ -388,7 +388,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("engine location", null, engine.getLocation());
 
         f.trackLocationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
         // engine already exists
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotUpdate"), Bundle.getMessage("ButtonOK"));
@@ -417,7 +417,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // try to set engine to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
 
@@ -431,7 +431,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertNotEquals("track", testSpur, engine.getTrack());
 
         // do it again, but say yes
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat
@@ -497,8 +497,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.initOperationsData();
         
-        EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = cManager.getByRoadAndNumber("PC", "5016");
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
+        Engine e1 = eManager.getByRoadAndNumber("PC", "5016");
         e1.setComment("Test engine Comment for E1");
         
         EngineLengths el = InstanceManager.getDefault(EngineLengths.class);
@@ -528,7 +528,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // test delete button
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("number of Engines", 3, cManager.getNumEntries());
+        Assert.assertEquals("number of Engines", 3, eManager.getNumEntries());
         JUnitUtil.dispose(f);
     }
     

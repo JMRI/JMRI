@@ -4392,14 +4392,15 @@
    </p>
 
    <p>
-    "Auto HPT" is useful when you want to assign a single locomotive to a train based on the train's
-    tonnage, route grades, and locomotive horsepower. You can if you wish use this option along with
-    the <a href="#BuildlocoConsist">Build loco consist from single locos</a> option. The program
-    will first assign a single locomotive at the start of the train build process, and at the end of
-    the build, determine if the assigned locomotive has the appropriate HP for the train's tonnage
-    and grades. If a single locomotive can't be found that meets the requirements, the build will
-    fail unless you've also selected the option to <a href="#BuildlocoConsist">Build loco
-     consist from single locos</a>. "Auto HPT" isn't available for a train departing staging.
+    "Auto HPT" is useful when you want to assign a locomotive or consist to a train based on the
+    train's tonnage, route grades, and locomotive/consist horsepower. You can if you wish use this
+    option along with the <a href="#BuildlocoConsist">Build loco consist from single locos</a>
+    option. The program will first assign a locomotive or consist at the start of the train build
+    process, and at the end of the build, determine if the assigned locomotive or consist has the
+    appropriate HP for the train's tonnage and grades. If a locomotive or consist can't be found
+    that meets the HP requirements, the build will fail. You can if you wish also select the option to
+    <a href="#BuildlocoConsist">Build loco consist from single locos</a> which could allow the train
+    to build correctly. The feature "Auto HPT" isn't available for a train departing staging.
    </p>
 
    <p>

@@ -75,7 +75,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      */
     public Consist newConsist(String name) {
         Consist consist = getConsistByName(name);
-        if (consist == null) {
+        if (consist == null && !name.equals(NONE)) {
             consist = new Consist(name);
             Integer oldSize = Integer.valueOf(_consistHashTable.size());
             _consistHashTable.put(name, consist);

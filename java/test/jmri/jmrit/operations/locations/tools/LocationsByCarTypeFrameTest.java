@@ -96,7 +96,7 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(lctf.copyCheckBox);
         lctf.typeComboBox.setSelectedItem("Boxcar");
         
-        JemmyUtil.enterClickAndLeave(lctf.saveButton); 
+        JemmyUtil.enterClickAndLeaveThreadSafe(lctf.saveButton); 
         
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(lctf, Bundle.getMessage("CopyCarTypeTitle"), Bundle.getMessage("ButtonYes"));

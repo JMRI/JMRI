@@ -3,8 +3,8 @@ package jmri.jmrit.operations.routes.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 import jmri.InstanceManager;
@@ -53,7 +53,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
         Assert.assertNotNull("exists",t);
         
-        JemmyUtil.enterClickAndLeave(t.placeButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(t.placeButton);
 
         // error dialog should appear
         JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
@@ -65,7 +65,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         // modify spinner and update
         JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconX);
         so.setValue(345);
-        JemmyUtil.enterClickAndLeave(t.applyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(t.applyButton);
         
         // confirmation dialog should appear      
         JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantThisRoute"), Bundle.getMessage("ButtonYes"));

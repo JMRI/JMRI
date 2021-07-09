@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -36,7 +36,7 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", scf);
 
         // no new schedule name
-        JemmyUtil.enterClickAndLeave(scf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(scf.copyButton);
         Assert.assertEquals("schedules 1", 1, sManager.getSchedulesByNameList().size());
         JemmyUtil.pressDialogButton(scf, MessageFormat.format(Bundle
                 .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}),
@@ -44,7 +44,7 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
 
         // name too long
         scf.scheduleNameTextField.setText("abcdefghijklmnopqrstuvwxwyz");
-        JemmyUtil.enterClickAndLeave(scf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(scf.copyButton);
         Assert.assertEquals("schedules 1a", 1, sManager.getSchedulesByNameList().size());
         JemmyUtil.pressDialogButton(scf, MessageFormat.format(Bundle
                 .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}),

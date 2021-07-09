@@ -46,7 +46,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("A" + CarLoad.SPLIT_CHAR + "B");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
@@ -73,7 +73,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         }
         
         f.addTextBox.setText(sb.toString());
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
@@ -100,7 +100,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.initComponents("Boxcar", "Test Load");
         f.addTextBox.setText("Replace Load");
         
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
@@ -129,7 +129,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.initComponents("Boxcar", "E");
         f.addTextBox.setText("Replace E");
         
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
@@ -197,7 +197,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "L");
-        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteButton);
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle

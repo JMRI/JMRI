@@ -45,6 +45,13 @@ public class JemmyUtil {
         JButtonOperator jbo = new JButtonOperator(comp);
         jbo.push();
     }
+    
+    static public void enterClickAndLeaveThreadSafe(JButton comp) {
+        new Thread(() -> {
+            JButtonOperator jbo = new JButtonOperator(comp);
+            jbo.push();
+        }).start();
+    }
 
     static public void enterClickAndLeave(JCheckBox comp) {
         JCheckBoxOperator jbo = new JCheckBoxOperator(comp);
@@ -64,6 +71,12 @@ public class JemmyUtil {
     static public void pressButton(WindowOperator frame, String text) {
         JButtonOperator jbo = new JButtonOperator(frame, text);
         jbo.push();
+    }
+    
+    static public void clickOnCellThreadSafe(JTableOperator tbl, int row, String columnName) {
+        new Thread(() -> {
+            tbl.clickOnCell(row, tbl.findColumn(columnName));
+        }).start();
     }
 
     static public void confirmJOptionPane(WindowOperator wo, String title, String message, String buttonLabel) {
