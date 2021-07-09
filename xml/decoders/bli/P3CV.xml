@@ -13,12 +13,6 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
 		<label>L5 Logic</label>
   </variable>
-  <variable CV="176" default="114" item="Fatal OverCurrent Config" readOnly="yes" tooltip="This value determines the internal references, multiplies and comparator selection. DO NOT CHANGE.">
-	<decVal/>
-  </variable>
-  <variable CV="177" default="120" item="Fatal OverCurrent Sensitivity" tooltip="This value determines how sensitive or not the over current circuit is. Increasing this value decreases the sensitivity.">
-	<decVal/>
-  </variable>
   <variable CV="212" default="1" item="Sound Group 1 Option 1">
     <decVal max="29"/>
     <label>Rolling Thunder Channel</label>

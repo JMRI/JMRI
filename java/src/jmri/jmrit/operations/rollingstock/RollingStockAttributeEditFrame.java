@@ -55,7 +55,7 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
     // property change
     public static final String DISPOSE = "dispose"; // NOI18N
 
-    public RollingStockAttributeEditFrame(){
+    public RollingStockAttributeEditFrame() {
     }
 
     public String _attribute; // used to determine which attribute is being edited
@@ -144,6 +144,15 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
         String itemName = addTextBox.getText().trim();
         if (itemName.isEmpty()) {
             return false;
+        }
+        // hyphen feature needs at least one character to work properly
+        if (itemName.contains(TrainCommon.HYPHEN)) {
+            String[] s = itemName.split(TrainCommon.HYPHEN);
+            if (s.length == 0) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
+                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         }
         if (_attribute.equals(LENGTH)) {
             if (convertLength(itemName).equals(FAILED)) {

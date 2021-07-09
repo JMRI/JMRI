@@ -53,7 +53,8 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Reporter t;
         int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         t = new LnReporter(addr, tc, getSystemPrefix());

@@ -115,8 +115,10 @@
           "Ops_EditLocation_track.shtml">Back<br></a></p>
 
           <p><a href="index.shtml#Main">Back to Index</a></p>
-        </div><!--#include virtual="/Footer.shtml" -->
+        </div>
       </div>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
