@@ -31,7 +31,8 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
     private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
 
     public PrintSavedTrainManifestAction(boolean isPreview, Train train) {
-        super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedManifest") : Bundle.getMessage("MenuItemPrintSavedManifest"));
+        super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedManifest")
+                : Bundle.getMessage("MenuItemPrintSavedManifest"));
         _isPreview = isPreview;
         _train = train;
         setEnabled(Setup.isSaveTrainManifestsEnabled());
@@ -47,8 +48,8 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(Setup.SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE)) {
             setEnabled(Setup.isSaveTrainManifestsEnabled());
@@ -74,13 +75,14 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
         }
         String printerName = Location.NONE;
         if (_train != null) {
-            Location departs = InstanceManager.getDefault(LocationManager.class).getLocationByName(_train.getTrainDepartsName());
+            Location departs = InstanceManager.getDefault(LocationManager.class)
+                    .getLocationByName(_train.getTrainDepartsName());
             if (departs != null) {
                 printerName = departs.getDefaultPrinterName();
             }
         }
         TrainPrintUtilities.printReport(file, file.getName(), _isPreview, Setup.getFontName(), false, logoURL,
-                printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
+                printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
         return;
     }
 
@@ -88,7 +90,8 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
     protected File getFile() {
         String pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName();
         if (_train != null) {
-            pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName(_train.getName());
+            pathName = InstanceManager.getDefault(TrainManagerXml.class)
+                    .getBackupManifestDirectoryName(_train.getName());
         }
         JFileChooser fc = new JFileChooser(pathName);
         fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("TextFiles"), "txt"));
