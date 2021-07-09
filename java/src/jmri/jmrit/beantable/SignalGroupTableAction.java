@@ -1278,9 +1278,9 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             if (aspectList == null || r >= aspectList.size()) {
                 // prevent NPE when clicking Add... in table to add new group (with 1 group existing using a different mast type)
                 if (aspectList == null) {
-                    log.debug("SGTA getValueAt #1270: row value {} aspectList is null", r);
+                    log.debug("SGTA getValueAt: row value {} aspectList is null", r);
                 } else {
-                    log.debug("SGTA getValueAt #1270: row value {} is greater than aspectList size {}", r, aspectList.size());
+                    log.debug("SGTA getValueAt: row value {} is greater than aspectList size {}", r, aspectList.size());
                 }
                 return null;
             }
