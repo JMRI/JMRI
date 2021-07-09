@@ -50,48 +50,54 @@ public class ImportRosterEngines extends Thread {
         textId.setVisible(true);
         fstatus.setVisible(true);
 
-        // Now get engines from the JMRI roster 
+        // Now get engines from the JMRI roster
         int enginesAdded = 0;
 
         List<RosterEntry> engines = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
 
         for (RosterEntry re : engines) {
             // add engines that have a road name and number
-            if (!re.getRoadName().isEmpty() && !re.getRoadNumber().isEmpty()) {
-                String road = re.getRoadName();
-                if (road.length() > Control.max_len_string_attibute) {
-                    road = road.substring(0, Control.max_len_string_attibute);
+            if (re.getRoadName().isEmpty() || re.getRoadNumber().isEmpty()) {
+                log.error("Roster Id: {} doesn't have a road name and road number", re.getId());
+                continue;
+            }
+            String road = re.getRoadName();
+            if (road.length() > Control.max_len_string_attibute) {
+                road = road.substring(0, Control.max_len_string_attibute);
+            }
+            textId.setText(road + " " + re.getRoadNumber());
+            Engine engine = manager.getByRoadAndNumber(road, re.getRoadNumber());
+            if (engine == null) {
+                engine = manager.newRS(road, re.getRoadNumber());
+                String model = re.getModel();
+                if (model.length() > Control.max_len_string_attibute) {
+                    model = model.substring(0, Control.max_len_string_attibute);
                 }
-                textId.setText(road + " " + re.getRoadNumber());
-                Engine engine = manager.getByRoadAndNumber(road, re.getRoadNumber());
-                if (engine == null) {
-                    engine = manager.newRS(road, re.getRoadNumber());
-                    String model = re.getModel();
-                    if (model.length() > Control.max_len_string_attibute) {
-                        model = model.substring(0, Control.max_len_string_attibute);
-                    }
-                    engine.setModel(model);
-                    // does this model already have a length?
-                    if (engine.getLength().equals(Engine.NONE)) {
-                        engine.setLength(defaultEngineLength);
-                    }
-                    // does this model already have a type?
-                    if (engine.getTypeName().equals(Engine.NONE)) {
-                        engine.setTypeName(defaultEngineType);
-                    }
-                    // does this model already have a hp?
-                    if (engine.getHp().equals(Engine.NONE)) {
-                        engine.setHp(defaultEngineHp);
-                    }
-                    String owner = re.getOwner();
-                    if (owner.length() > Control.max_len_string_attibute) {
-                        owner = owner.substring(0, Control.max_len_string_attibute);
-                    }
-                    engine.setOwner(owner);
-                    enginesAdded++;
-                } else {
-                    log.info("Can not add, engine number ({}) road ({}) already exists", re.getRoadNumber(), re.getRoadName());
+                if (model.isEmpty()) {
+                    log.warn("Roster Id: {} hasn't been assigned a model name", re.getId());
                 }
+                engine.setModel(model);
+                // does this model already have a length?
+                if (engine.getLength().equals(Engine.NONE)) {
+                    engine.setLength(defaultEngineLength);
+                }
+                // does this model already have a type?
+                if (engine.getTypeName().equals(Engine.NONE)) {
+                    engine.setTypeName(defaultEngineType);
+                }
+                // does this model already have a hp?
+                if (engine.getHp().equals(Engine.NONE)) {
+                    engine.setHp(defaultEngineHp);
+                }
+                String owner = re.getOwner();
+                if (owner.length() > Control.max_len_string_attibute) {
+                    owner = owner.substring(0, Control.max_len_string_attibute);
+                }
+                engine.setOwner(owner);
+                enginesAdded++;
+            } else {
+                log.info("Can not add roster Id: {}, engine road name ({}) road number ({}) already exists", re.getId(),
+                        re.getRoadName(), re.getRoadNumber());
             }
         }
 
@@ -100,15 +106,14 @@ public class ImportRosterEngines extends Thread {
 
         if (enginesAdded > 0) {
             JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[]{enginesAdded}),
+                    MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[] { enginesAdded }),
                     Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[]{enginesAdded}),
+                    MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[] { enginesAdded }),
                     Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(ImportRosterEngines.class);
+    private final static Logger log = LoggerFactory.getLogger(ImportRosterEngines.class);
 }

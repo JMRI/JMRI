@@ -267,6 +267,8 @@ public class TrainCommon {
                                     .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
                                 printSetoutHeader = false;
                             }
+//                            log.debug("pickup header: {}", getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK));
+//                            log.debug("l move header: {}", getLocalMoveHeader(isManifest));
                             if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
                                     .equals(getLocalMoveHeader(isManifest))) {
                                 printLocalMoveHeader = false;
@@ -1802,7 +1804,7 @@ public class TrainCommon {
                 buf.append(attribute + SPACE);
             }
         }
-        return buf.toString();
+        return buf.toString().trim();
     }
 
     protected void printTrackNameHeader(PrintWriter file, String trackName, boolean isManifest) {

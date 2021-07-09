@@ -20,8 +20,9 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
      *
      * @return an internal Reporter of class TrackReporter object with the given name
      */
+    @Nonnull
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new TrackReporter(systemName, userName);
     }
 

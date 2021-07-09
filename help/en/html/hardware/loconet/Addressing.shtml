@@ -916,18 +916,18 @@
         you treat mobile decoders in your locomotives - you may program them
         using the JMRI "Symbolic" programmers (i.e. the Roster).</p>
         <p>Within the JMRI "Symbolic" programmer, the "decoder address" is ignored,
-            since there can only no more than one command station on a given LocoNet
-            at a given time.  The individual "Op Switches" are
-            referenced using a designator which specifies a "command station OpSw"
-            access type and an Op Switch number, with the two parts of the designator
-            separated by a ".".  For example, a CV numbered as "csOpSw.007" is a
-            reference to a "command station OpSw" numbered "7".</p>
-    <hr>
+        since there can only no more than one command station on a given LocoNet
+        at a given time.  The individual "Op Switches" are
+        referenced using a designator which specifies a "command station OpSw"
+        access type and an Op Switch number, with the two parts of the designator
+        separated by a ".".  For example, a CV numbered as "csOpSw.007" is a
+        reference to a "command station OpSw" numbered "7".</p>
 
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div><!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-  <!-- closes #mBody-->
+        <p>LocoNet&reg; is a registered trademark of <a href=
+        "http://www.digitrax.com">Digitrax, Inc.</a></p>
+
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

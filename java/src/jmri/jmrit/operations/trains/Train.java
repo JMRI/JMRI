@@ -662,9 +662,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return getRoute().getTerminatesRouteLocation();
     }
-    
+
     /**
      * Returns the order the train should be blocked.
+     * 
      * @return routeLocations for this train.
      */
     public List<RouteLocation> getTrainBlockingOrder() {
@@ -2910,7 +2911,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         } else {
             TrainPrintUtilities.printReport(buildFile,
                     MessageFormat.format(Bundle.getMessage("buildReport"), new Object[] { getDescription() }),
-                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize());
+                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
         }
         return true;
     }
@@ -3003,7 +3004,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             name = name.substring(0, TrainCommon.getManifestHeaderLineLength() / 2);
         }
         TrainPrintUtilities.printReport(file, name, isPreview, Setup.getFontName(), false, logoURL, printerName,
-                Setup.getManifestOrientation(), Setup.getManifestFontSize());
+                Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
         if (!isPreview) {
             setPrinted(true);
         }
