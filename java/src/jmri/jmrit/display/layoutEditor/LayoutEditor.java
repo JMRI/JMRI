@@ -773,6 +773,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
+    private boolean fixMacBugOn11(ActionEvent event) {
+        return SystemType.isMacOSX() &&
+                event.getModifiers() != 0 &&
+                (Runtime.version().feature() == 11 || Runtime.version().feature() == 12);
+    }
+
     /**
      * Set up the Option menu.
      *
@@ -791,7 +797,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         //  edit mode
         //
-        java.util.concurrent.atomic.AtomicLong lastTimeEditMode = new java.util.concurrent.atomic.AtomicLong();
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
         editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
@@ -799,7 +804,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeEditMode)) {
+            if (fixMacBugOn11(event)) {
                 editModeCheckBoxMenuItem.setSelected(!editModeCheckBoxMenuItem.isSelected());
                 return;
             }
@@ -833,9 +838,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
             awaitingIconChange = false;
-            
-            // macJava11Bug_JCheckBoxMenuItem
-            lastTimeEditMode.set(System.currentTimeMillis());
         });
         editModeCheckBoxMenuItem.setSelected(isEditable());
 
@@ -1031,14 +1033,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         // drawLayoutTracksLabel
         //
-        java.util.concurrent.atomic.AtomicLong lastTimeDrawLayoutTracksLabel = new java.util.concurrent.atomic.AtomicLong();
         drawLayoutTracksLabelCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DrawLayoutTracksLabel"));
         optionMenu.add(drawLayoutTracksLabelCheckBoxMenuItem);
         drawLayoutTracksLabelCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksMnemonic")));
         drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
         drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeDrawLayoutTracksLabel)) {
+            if (fixMacBugOn11(event)) {
                 drawLayoutTracksLabelCheckBoxMenuItem.setSelected(!drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
                 return;
             }
@@ -1233,13 +1234,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         optionMenu.add(gridMenu);
 
         // show grid
-        java.util.concurrent.atomic.AtomicLong lastTimeShowEditGrid = new java.util.concurrent.atomic.AtomicLong();
         showGridCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditGrid"));
         showGridCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeShowEditGrid)) {
+            if (fixMacBugOn11(event)) {
                 showGridCheckBoxMenuItem.setSelected(!showGridCheckBoxMenuItem.isSelected());
                 return;
             }
@@ -1249,14 +1249,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         showGridCheckBoxMenuItem.setSelected(getDrawGrid());
 
         // snap to grid on add
-        java.util.concurrent.atomic.AtomicLong lastTimeSnapToGridOnAdd = new java.util.concurrent.atomic.AtomicLong();
         snapToGridOnAddCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnAdd"));
         snapToGridOnAddCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("SnapToGridOnAddAccelerator")),
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeSnapToGridOnAdd)) {
+            if (fixMacBugOn11(event)) {
                 snapToGridOnAddCheckBoxMenuItem.setSelected(!snapToGridOnAddCheckBoxMenuItem.isSelected());
                 return;
             }
@@ -1266,14 +1265,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
 
         // snap to grid on move
-        java.util.concurrent.atomic.AtomicLong lastTimeSnapToGridOnMove = new java.util.concurrent.atomic.AtomicLong();
         snapToGridOnMoveCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnMove"));
         snapToGridOnMoveCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 Bundle.getMessage("SnapToGridOnMoveAccelerator")),
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            if (jmri.util.Java11BugFixes.macJava11Bug_JCheckBoxMenuItem(lastTimeSnapToGridOnMove)) {
+            if (fixMacBugOn11(event)) {
                 snapToGridOnMoveCheckBoxMenuItem.setSelected(!snapToGridOnMoveCheckBoxMenuItem.isSelected());
                 return;
             }
