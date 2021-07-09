@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="Go-Pack Time-Out Value" CV="12" default="2">
+    <decVal/>
+  </variable>
+  <variable item="DC Alpha Filter" CV="119" default="22">
+    <decVal min="1"/>
+    <tooltip>Controls a Value that Controls a Low Pass Filter for DC</tooltip>
+  </variable>
+  <variable item="DC Sounds Startup Volume" CV="123" default="0">
+    <decVal/>
+  </variable>
+  <variable item="DC Sounds Maximum Volume" CV="124" default="0">
+    <decVal/>
+  </variable>
+  <variable item="DC Smoke Unit On Voltage" CV="125" default="0">
+    <decVal/>
+  </variable>
+  <variable item="DC Smoke Unit Heater Power Startup" CV="126" default="0">
+    <decVal/>
+  </variable>
   <variable item="Function 1 option 2" CV="159" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 		<label>L4/L5 Power Up State</label>
@@ -12,6 +31,12 @@
   <variable item="Function 2 option 2" CV="159" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
 		<label>L5 Logic</label>
+  </variable>
+  <variable CV="176" default="114" item="Fatal OverCurrent Config" readOnly="yes" tooltip="This value determines the internal references, multiplies and comparator selection. DO NOT CHANGE.">
+	<decVal/>
+  </variable>
+  <variable CV="177" default="120" item="Fatal OverCurrent Sensitivity" tooltip="This value determines how sensitive or not the over current circuit is. Increasing this value decreases the sensitivity.">
+	<decVal/>
   </variable>
   <variable CV="212" default="1" item="Sound Group 1 Option 1">
     <decVal max="29"/>
