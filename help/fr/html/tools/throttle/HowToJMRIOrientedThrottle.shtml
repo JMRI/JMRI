@@ -148,7 +148,8 @@
       possible d'enregistrer les personnalisations des
       &eacute;tapes 5) et 6) pour le moment.</span>
 
-    </div><!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
   </div>
 </body>
 </html>
