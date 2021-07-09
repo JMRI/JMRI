@@ -44,8 +44,9 @@ public class RfidSystemConnectionMemoTest extends SystemConnectionMemoTestBase<R
         scm.setRfidTrafficController(tc);
         RfidSensorManager s = new RfidSensorManager(scm) {
             @Override
-            protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
-                return null;
+            @Nonnull
+            protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+                return new RfidSensor(systemName, userName);
             }
 
             @Override
@@ -59,8 +60,9 @@ public class RfidSystemConnectionMemoTest extends SystemConnectionMemoTestBase<R
         };
         RfidReporterManager r = new RfidReporterManager(scm) {
             @Override
-            protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
-                return null;
+            @Nonnull
+            protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+                return new RfidReporter(systemName, userName);
             }
 
             @Override
