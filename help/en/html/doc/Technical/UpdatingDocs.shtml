@@ -149,7 +149,7 @@
       <h3>Prepare the Files</h3>The proper filetype to use for JMRI
       has the .shtml extension. If you have made a (new) .html or
       .htm file, you should change the extension to .shtml. Don't
-      use spaces or capital letters in your filenames. If you are
+      use spaces, underscores or capital letters in your filenames. If you are
       not changing or adding images, just save the file with its
       original name, i.e. <span style=
       "font-family: monospace">"index.shtml"</span>, in a location
