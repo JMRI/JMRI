@@ -34,7 +34,7 @@ jobs:
     - name: Test with Ant
       run: |
         # run all tests using ant
-        sudo ant -noinput -buildfile build.xml ci-test
+        ant -noinput -buildfile build.xml ci-test
 #    - name: Upload generated screenshots artifact
 #      uses: actions/upload-artifact@v2
 #      if: ${{ always() }}
