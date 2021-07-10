@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -39,7 +39,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
         t.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(t.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
@@ -48,7 +48,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         // enter a name for the new track
         t.loctionNameTextField.setText("Test location name");
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(t.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle

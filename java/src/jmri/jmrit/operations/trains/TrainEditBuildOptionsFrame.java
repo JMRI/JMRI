@@ -404,7 +404,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         // get notified if return to staging option changes
         Setup.getDefault().addPropertyChangeListener(this);
 
-        initMinimumSize();
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight600));
     }
 
     // Save

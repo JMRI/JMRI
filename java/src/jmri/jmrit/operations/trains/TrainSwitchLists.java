@@ -279,13 +279,12 @@ public class TrainSwitchLists extends TrainCommon {
                             continue; // the current location name is the "same" as the next
                         }
                         // print departure text if not a switcher
-                        if (!train.isLocalSwitcher()) {
+                        if (!train.isLocalSwitcher() && !trainDone) {
                             String trainDeparts = "";
                             if (Setup.isPrintLoadsAndEmptiesEnabled()) {
                                 int emptyCars = train.getNumberEmptyCarsInTrain(rl);
                                 // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450
-                                // feet,
-                                // 3000 tons
+                                // feet, 3000 tons
                                 trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsLoads(),
                                         new Object[] { TrainCommon.splitString(rl.getName()),
                                                 rl.getTrainDirectionString(),

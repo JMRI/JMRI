@@ -337,10 +337,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        JOptionPane.showMessageDialog(this,
+                        int response = JOptionPane.showConfirmDialog(this,
                                 MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeOpenFile"),
                                         new Object[] { train.getName() }),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.OK_CANCEL_OPTION);
+                        if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                            break;
+                        }
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -363,10 +366,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        JOptionPane.showMessageDialog(this,
+                        int response = JOptionPane.showConfirmDialog(this,
                                 MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
                                         new Object[] { train.getName() }),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.OK_CANCEL_OPTION);
+                        if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                            break;
+                        }
                     } else if (train.isBuilt()) {
                         // Add csv manifest file to our collection to be processed.
                         tcm.addCsvFile(train.createCsvManifestFile());
@@ -374,7 +380,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     }
                 }
             }
-
             // Now run the user specified custom Manifest processor program
             tcm.process();
         }
