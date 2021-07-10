@@ -29,6 +29,8 @@ jobs:
 #        path: ~/.m2
 #        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
 #        restore-keys: ${{ runner.os }}-m2
+    - name: Install ant-optional
+      run: apt-get install ant-optional
     - name: Test with Ant
       run: |
         # run all tests using ant
