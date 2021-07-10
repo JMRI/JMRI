@@ -1,22 +1,14 @@
 package jmri.util.swing;
 
 import java.awt.Component;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
-import jmri.util.JmriJFrame;
+
+import javax.swing.*;
+
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
+import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
+
+import jmri.util.JmriJFrame;
 
 /**
  * Utility Methods for Jemmy Tests.
@@ -101,7 +93,8 @@ public class JemmyUtil {
 
         // find label within that
         JLabel jl = JLabelOperator.findJLabel(frame,new ComponentChooser(){
-               public boolean checkComponent(Component comp){
+               @Override
+            public boolean checkComponent(Component comp){
                    if(comp == null){
                       return false;
                    } else if (comp instanceof JLabel ) {
@@ -110,7 +103,8 @@ public class JemmyUtil {
                       return false;
                    }
                }
-               public String getDescription(){
+               @Override
+            public String getDescription(){
                   return "find JLabel with text: " + text;
                }
         });

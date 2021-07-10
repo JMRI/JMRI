@@ -32,7 +32,7 @@
         <p>We distinguish between three types of information on the main web site:</p>
         <ol>
             <li>User information which is useful at run time.
-            This is made available both via our <a href="Help.shtml">JavaHelp</a>,
+            This is made available both via program invoked <a href="Help.shtml">JmriHelp</a>,
             and also directly by placing those files on the web.
             <li>User information which is either not useful at run time, such as
             instructions for installing the software, or is too large for inclusion
@@ -60,15 +60,11 @@
         that you do in HTML directly.</p>
 
         <p>
-        Because we use our web pages in JavaHelp, there are some restrictions
-        on use of tags.  See our <a href="Help.shtml">JavaHelp web page</a> for more on this.</p>
-
-        <p>
         We are using
         <a href="http://httpd.apache.org/docs/2.2/howto/ssi.html">server-side includes</a>
         to provide consistent headers, sidebars and footers.
         This allows us to share HTML
-        content between the web and the JavaHelp system
+        content between the web and the JmriHelp system
         used by the program itself. Each page will contain just content,
         plus includes for files named "Header", "Sidebar" and "Footer"
         which contain the navigation information.
@@ -92,9 +88,9 @@
         directories of the same name in the
         <a href="https://github.com/JMRI/website"><tt>JMRI/JMRI</tt> repository</a>
         They are only occasionally referenced directly.
-        <li>help - also used for the JavaHelp system, this has the internal
+        <li>help - also used for the JmriHelp system, this has the internal
         structure described below and on our
-        <a href="Help.shtml">JavaHelp</a>
+        <a href="Help.shtml">JmriHelp</a>
         page.
         </ul>
         <p>Another group are from the

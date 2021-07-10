@@ -3,9 +3,13 @@ package jmri.jmrit.display;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
+
+import jmri.JmriException;
 import jmri.jmrit.catalog.NamedIcon;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,9 +92,9 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
                     log.error("Frame '{}' not found, cannot link to it.", frame);
                 }
             } else if (url.length() > 0) {
-                jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(url));
+                jmri.util.HelpUtil.openWebPage(url);
             }
-        } catch (IOException | URISyntaxException t) {
+        } catch (JmriException t) {
             log.error("Error handling link", t);
         }
         super.doMouseClicked(event);

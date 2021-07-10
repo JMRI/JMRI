@@ -46,7 +46,7 @@ public class YardmasterFrame extends OperationsFrame {
             setTitle(Bundle.getMessage("Yardmaster") + " (" + location.getName() + ")");
         }
 
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Yardmaster", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }

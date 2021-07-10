@@ -163,7 +163,6 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
         setTitle(Bundle.getMessage("MenuItemShowCarTypes") + " " + _train.getName());
         _train.addPropertyChangeListener(this);
-        setTitle(Bundle.getMessage("MenuItemShowCarTypes") + " " + _train.getName());
         log.debug("update locations served by train ({})", _train.getName());
 
         int y = 0;
@@ -178,6 +177,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
         Route route = _train.getRoute();
         if (route == null) {
+            repaint();
             return;
         }
         List<RouteLocation> routeList = route.getLocationsBySequenceList();

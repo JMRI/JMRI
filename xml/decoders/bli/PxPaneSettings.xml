@@ -26,6 +26,14 @@
       </label>
       <display item="Smoke Unit"/>
       <display item="Smoke Unit Logic"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Promode"/>
+      <display item="Keep Alive"/>
+      <display item="Go-Pack Time-Out Value"/>
+      <display item="Electric"/>
+      <display item="No Electric in DC"/>
     </column>
     <column>
       <row>
