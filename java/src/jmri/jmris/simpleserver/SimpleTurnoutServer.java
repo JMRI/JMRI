@@ -57,7 +57,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         int index;
         index = statusString.indexOf(' ') + 1;
-        String turnoutName = statusString.substring(index, statusString.indexOf(' ', index + 1));
+        int endIndex = statusString.indexOf(' ', index + 1);
+        if(endIndex == -1)
+        {
+            endIndex = statusString.length() - 1;
+        }
+        String turnoutName = statusString.substring(index, endIndex);
         log.debug(statusString);
         if (statusString.contains("THROWN")) {
             if (log.isDebugEnabled()) {
