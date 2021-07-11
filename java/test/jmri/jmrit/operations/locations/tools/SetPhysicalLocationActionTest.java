@@ -61,7 +61,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         SetPhysicalLocationFrame splf = (SetPhysicalLocationFrame)plf;
         
         // test save button
-        JemmyUtil.enterClickAndLeave(splf.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(splf.saveButton);
         
         // should cause a popup window to appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));

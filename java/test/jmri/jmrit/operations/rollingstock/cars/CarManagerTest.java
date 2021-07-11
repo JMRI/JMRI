@@ -1121,10 +1121,15 @@ public class CarManagerTest extends OperationsTestCase {
         // GUI does a replace followed by a delete
         k = manager.getKernelByName("A");
         Assert.assertNotNull(k);
+        
+        // test delete kernel
+        Car c = manager.newRS("SP", "1");
+        c.setKernel(kt);
 
         manager.deleteKernel("B");
         kt = manager.getKernelByName("B");
         Assert.assertNull(kt);
+        Assert.assertNull(c.getKernel());
     }
 
     @Test

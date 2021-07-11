@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -56,7 +56,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         tdef.initComponents(track);       
         Assert.assertNotNull("exists",tdef);
         
-        JemmyUtil.enterClickAndLeave(tdef.checkDestinationsButton);       
+        JemmyUtil.enterClickAndLeaveThreadSafe(tdef.checkDestinationsButton);       
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(tdef, Bundle.getMessage("WarningCarMayNotMove"), "Cancel");
         

@@ -560,7 +560,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         checkTrain(car);
         // is this car part of a kernel?
         if (askKernelChange && car.getKernel() != null) {
-            List<Car> list = car.getKernel().getGroup();
+            List<Car> list = car.getKernel().getCars();
             if (list.size() > 1) {
                 if (JOptionPane.showConfirmDialog(this,
                         MessageFormat.format(Bundle.getMessage("carInKernel"), car.toString()),

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,8 +52,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JButton printChangesButton = new JButton(Bundle.getMessage("PrintChanges"));
     JButton runButton = new JButton(Bundle.getMessage("RunFile"));
     JButton runChangeButton = new JButton(Bundle.getMessage("RunFileChanges"));
-//    JButton csvGenerateButton = new JButton(Bundle.getMessage("CsvGenerate"));
-//    JButton csvChangeButton = new JButton(Bundle.getMessage("CsvChanges"));
+    JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
     JButton updateButton = new JButton(Bundle.getMessage("Update"));
     JButton resetButton = new JButton(Bundle.getMessage("ResetSwitchLists"));
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
@@ -133,6 +133,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
         addItem(customPanel, runButton, 1, 5);
         addItem(customPanel, runChangeButton, 2, 5);
+        addItem(customPanel, openFileButton, 3, 5);
 
         getContentPane().add(switchPane);
         getContentPane().add(pButtons);
@@ -158,6 +159,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         addButtonAction(printChangesButton);
         addButtonAction(runButton);
         addButtonAction(runChangeButton);
+        addButtonAction(openFileButton);
         addButtonAction(updateButton);
         addButtonAction(resetButton);
         addButtonAction(saveButton);
@@ -212,6 +214,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
         if (ae.getSource() == runChangeButton) {
             runCustomSwitchLists(IS_CHANGED);
+        }
+        if (ae.getSource() == openFileButton) {
+            buildSwitchList(IS_CHANGED, !IS_PRINT, IS_PREVIEW);
+            openCsvSwitchList();
         }
         if (ae.getSource() == resetButton) {
             reset();
@@ -305,8 +311,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
-            if (location.isSwitchListEnabled() &&
-                    (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
+            if (location.isSwitchListEnabled() && (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
                 // update switch lists
                 trainCsvSwitchLists.buildSwitchList(location);
                 trainSwitchLists.buildSwitchList(location);
@@ -440,8 +445,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
-            if (location.isSwitchListEnabled() &&
-                    (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
+            if (location.isSwitchListEnabled() && (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
                 File csvFile = trainCsvSwitchLists.buildSwitchList(location);
                 // also build the regular switch lists so they can be used
                 trainSwitchLists.buildSwitchList(location);
@@ -470,6 +474,36 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
     }
 
+    private void openCsvSwitchList() {
+        File file = selectFile();
+        if (file != null) {
+            TrainUtilities.openDesktop(file);
+        }
+    }
+
+    /**
+     * We always use the same file chooser in this class, so that the user's
+     * last-accessed directory remains available.
+     */
+    JFileChooser fc;
+
+    private File selectFile() {
+        if (fc == null) {
+            fc = new JFileChooser(
+                    InstanceManager.getDefault(TrainManagerXml.class).getDefaultCsvSwitchListDirectoryName());
+            fc.setFileFilter(new FileNameExtensionFilter("Comma Separated Values", "csv")); // NOI18N
+            fc.setDialogTitle(Bundle.getMessage("TitleSwitchLists"));
+        }
+        // when reusing the chooser, make sure new files are included
+        fc.rescanCurrentDirectory();
+        int retVal = fc.showOpenDialog(this);
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            return fc.getSelectedFile();
+        }
+        return null;
+    }
+
     private void enableSaveButton(boolean enable) {
         saveButton.setEnabled(enable);
         // these get the inverse
@@ -478,6 +512,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                 .setEnabled(!enable && (!Control.disablePrintingIfCustom || !Setup.isGenerateCsvSwitchListEnabled()));
         resetButton.setEnabled(!enable);
         runButton.setEnabled(!enable);
+        openFileButton.setEnabled(!enable);
         // disable the following, and turn then back on if needed
         printChangesButton.setEnabled(false);
         runChangeButton.setEnabled(false);

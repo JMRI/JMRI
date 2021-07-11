@@ -71,9 +71,9 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
 
         // test the two check box options
         JemmyUtil.enterClickAndLeave(f.switchListRealTimeCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         
-        // clear dialogue box
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ResetSwitchLists"), Bundle.getMessage("ButtonNo"));
 
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());

@@ -539,7 +539,7 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
 
 - Update the web site front page and downloads page:
 ```
-        ${EDITOR}  index.shtml download/Sidebar.shtml download/index.shtml releaselist
+        ${EDITOR}  index.shtml download/Sidebar.shtml download/index.shtml
 ```
 
 - Update the release note with date, name, remove warning about draft, download links, one last check of release numbers throughout

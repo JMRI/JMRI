@@ -346,7 +346,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         return getDefaultCsvSwitchListDirectoryName() + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String getDefaultCsvSwitchListDirectoryName() {
+    public String getDefaultCsvSwitchListDirectoryName() {
         return OperationsXml.getFileLocation()
                 + OperationsXml.getOperationsDirectoryName()
                 + File.separator

@@ -224,14 +224,14 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Assert.assertTrue("train build status", train0.isBuilt());
 
         // build train 1, error no route!
-        clickOnCellThreadSafe(tbl, 1, Bundle.getMessage("Function"));
+        JemmyUtil.clickOnCellThreadSafe(tbl, 1, Bundle.getMessage("Function"));
 
         // a popup warning that the train doesn't have a route should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[] { train1.getName(), train1.getDescription() }), Bundle.getMessage("ButtonOK"));
 
         // try to move train 2, error not built
-        clickOnCellThreadSafe(tbl, 2, Bundle.getMessage("Action"));
+        JemmyUtil.clickOnCellThreadSafe(tbl, 2, Bundle.getMessage("Action"));
 
         // a popup warning that the train isn't built should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("CanNotPerformAction"), Bundle.getMessage("ButtonOK"));
@@ -244,7 +244,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JRadioButtonOperator jbo = new JRadioButtonOperator(jfo, Bundle.getMessage("Terminate"));
         jbo.doClick();
         // test action button "Terminate"
-        clickOnCellThreadSafe(tbl, 0, Bundle.getMessage("Action"));
+        JemmyUtil.clickOnCellThreadSafe(tbl, 0, Bundle.getMessage("Action"));
 
         // a popup warning that Manifest hasn't been printed should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"), new Object[] { train0.getName() }), Bundle.getMessage("ButtonYes"));
@@ -364,7 +364,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         train.move(); // can't reset a train once it departs
 
-        clickOnCellThreadSafe(tbl, 0 , Bundle.getMessage("Action"));
+        JemmyUtil.clickOnCellThreadSafe(tbl, 0 , Bundle.getMessage("Action"));
 
         // a popup warning can't reset train should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("CanNotResetTrain"), Bundle.getMessage("ButtonOK"));
@@ -441,6 +441,9 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         JUnitOperationsUtil.loadTrains();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        
+        // increase test coverage
+        tmanager.setRowColorsManual(false);
 
         TrainsTableFrame f = new TrainsTableFrame();
         f.setLocation(10, 20);
@@ -484,6 +487,9 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         JUnitOperationsUtil.loadTrains();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        
+        // increase test coverage
+        tmanager.setRowColorsManual(false);
 
         TrainsTableFrame ttf = new TrainsTableFrame();
         ttf.setLocation(10, 20);
@@ -524,7 +530,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
         // dialog window asks if user wants to terminate train, answer no
-        JemmyUtil.enterClickAndLeave(ttf.terminateButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(ttf.terminateButton);
 
         for (Train train : tmanager.getTrainsByNameList()) {
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
@@ -539,7 +545,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
         // dialog window asks if user wants to terminate train, answer yes
-        JemmyUtil.enterClickAndLeave(ttf.terminateButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(ttf.terminateButton);
 
         for (Train train : tmanager.getTrainsByNameList()) {
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
@@ -578,12 +584,6 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-    }
-    
-    private void clickOnCellThreadSafe(JTableOperator tbl, int row, String columnName) {
-        new Thread(() -> {
-            tbl.clickOnCell(row, tbl.findColumn(columnName));
-        }).start();
     }
 
     // private final static Logger log =
