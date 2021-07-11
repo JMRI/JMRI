@@ -54,15 +54,9 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     }
 
     @Override
-    public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
-        int index;
-        index = statusString.indexOf(' ') + 1;
-        int endIndex = statusString.indexOf(' ', index + 1);
-        if(endIndex == -1)
-        {
-            endIndex = statusString.length() - 1;
-        }
-        String turnoutName = statusString.substring(index, endIndex);
+    public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {        
+        
+        String turnoutName = statusString.split(" ")[1];
         log.debug(statusString);
         if (statusString.contains("THROWN")) {
             if (log.isDebugEnabled()) {
@@ -81,10 +75,10 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         } else {
             // default case, return status for this turnout
             try {
-                sendStatus(statusString.substring(index),
-                    InstanceManager.turnoutManagerInstance().provideTurnout(statusString.substring(index)).getKnownState());
+                sendStatus(turnoutName,
+                    InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState());
             } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide Turnout \"{}\" in parseStatus", statusString.substring(index));
+                log.warn("Failed to provide Turnout \"{}\" in parseStatus", turnoutName);
             }
         }
     }
