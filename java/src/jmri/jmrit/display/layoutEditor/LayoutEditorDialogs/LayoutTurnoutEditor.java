@@ -425,9 +425,11 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
                     if (layoutTurnout2 != null) {   // if 2nd LayoutTurnout is defined (to get here it should be)
                         // then flip its 2nd turnout's inverted condition
                         layoutTurnout2.setSecondTurnoutInverted(!layoutTurnout2.isSecondTurnoutInverted());
+                        log.warn("layoutTurnout2.setSecondTurnoutInverted() infinite loop prevented.");
                     } else {    // (but just in case)
                         // otherwise flip our 2nd turnout's inverted condition
                         layoutTurnout.setSecondTurnoutInverted(!layoutTurnout.isSecondTurnoutInverted());
+                        log.warn("layoutTurnout.setSecondTurnoutInverted() infinite loop prevented.");
                     }
                 }
             }
