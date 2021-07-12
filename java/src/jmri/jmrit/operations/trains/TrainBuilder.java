@@ -580,7 +580,6 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
-
     /**
      * Show how many engines are required for this train, and if a certain road name
      * for the engine is requested. Show if there are any engine changes in the
@@ -1067,9 +1066,9 @@ public class TrainBuilder extends TrainCommon {
         return null; // no tracks available
     }
 
-    private boolean getEngines(String numberOfEngines, String model, String road, RouteLocation rl, RouteLocation rld)
+    private boolean getEngines(String requestedEngines, String model, String road, RouteLocation rl, RouteLocation rld)
             throws BuildFailedException {
-        return getEngines(numberOfEngines, model, road, rl, rld, !USE_BUNIT);
+        return getEngines(requestedEngines, model, road, rl, rld, !USE_BUNIT);
     }
 
     /**
@@ -1079,17 +1078,18 @@ public class TrainBuilder extends TrainCommon {
      * the user. When true, engines successfully added to train for the leg
      * requested.
      * 
-     * @param numberOfEngines Number of engines to assign to the train for this leg
-     * @param model           Optional model name for the engines
-     * @param road            Optional road name for the engines
-     * @param rl              Departure route location for the engines
-     * @param rld             Destination route location for the engines
-     * @param useBunit        true if B unit engine is allowed
+     * @param requestedEngines Requested number of Engines, can be number, AUTO or
+     *                         AUTO HPT
+     * @param model            Optional model name for the engines
+     * @param road             Optional road name for the engines
+     * @param rl               Departure route location for the engines
+     * @param rld              Destination route location for the engines
+     * @param useBunit         true if B unit engine is allowed
      * @return true if correct number of engines found.
      * @throws BuildFailedException
      */
-    private boolean getEngines(String requestedEngines, String model, String road, RouteLocation rl,
-            RouteLocation rld, boolean useBunit) throws BuildFailedException {
+    private boolean getEngines(String requestedEngines, String model, String road, RouteLocation rl, RouteLocation rld,
+            boolean useBunit) throws BuildFailedException {
         // load departure track if staging
         Track departStageTrack = null;
         if (rl == _train.getTrainDepartsRouteLocation()) {
@@ -1287,9 +1287,10 @@ public class TrainBuilder extends TrainCommon {
         // not able to assign engines to train
         return false;
     }
-    
+
     /**
      * Used to determine the number of engines requested by the user.
+     * 
      * @param requestEngines Can be a number, AUTO or AUTO HPT.
      * @return the number of engines requested by user.
      */
