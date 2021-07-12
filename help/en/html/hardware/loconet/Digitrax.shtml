@@ -874,6 +874,18 @@
                   to the DCC track signal when the command station "Bushby" feature
                   is enabled.
                   </li>
+                  <li><span class="since">Since
+                  <a href="https://jmri.org/releasenotes/jmri4.24.9.shtml" target="_blank">
+                  JMRI 4.24.9</a></span>, JMRI includes a simple script to provide
+                  forwarding of "normal" LocoNet turnout control messages, for
+                  certain user-defined addresses, as equivalent "special" LocoNet
+                  turnout control messages.  This can be useful when the command
+                  station's Bushby feature is enabled, and certain devices get their
+                  control messages from the DCC track signal or from the "RailSync"
+                  signals.  See the <a href="../../../html/scripts/LnBushbyForwarder.py">
+                  LnBushbyForwarder.py</a> script help page for details and
+                  information on how to configure it for your layout.</li>
+ 
               </ul>
               </li>
           <li>The best turnout command rejection avoidance strategy is one in
