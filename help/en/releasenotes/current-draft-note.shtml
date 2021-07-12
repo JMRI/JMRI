@@ -460,7 +460,7 @@
         <ul>
             <li>For some hardware types, sensors.requestAll() can request a status update for any Sensors known to JMRI.
             <br>This is not possible for many hardware types, eg. Internal Connections.
-            <br>For multiple hardware connections, this will query all connections.</li>
+            <br>For multiple hardware connections, sensors.updateAll() will query all connections.</li>
         </ul>
 
     <h3>Signals</h3>
