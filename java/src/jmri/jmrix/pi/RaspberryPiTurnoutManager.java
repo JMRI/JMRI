@@ -3,6 +3,10 @@ package jmri.jmrix.pi;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import jmri.JmriException;
+
+import jmri.jmrix.pi.extendgpio.ExtensionService;
+
 /**
  * Implement Pi turnout manager.
  * <p>
@@ -33,19 +37,48 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     @Nonnull
     @Override
     protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
-        Turnout t = new RaspberryPiTurnout(systemName, userName);
-        return t;
+        return new RaspberryPiTurnout(systemName, userName);
     }
     
     /**
-     * Validates to Integer Format 0-999 with valid prefix.
-     * eg. PT0 to PT999
+     * Require address portion of SystemName to either start with ":" or be numberic.
+     * {@inheritDoc} 
+     */
+    @Nonnull
+    @Override
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        if (curAddress.substring(0,1).equals (":")) {
+            return prefix + typeLetter() + curAddress;
+        } else {
+            return prefix + typeLetter() + checkNumeric(curAddress);
+        }
+    }
+    
+    /**
+     * Validates to either ":xxx..." or Integer Format 0-999 with valid prefix.
+     * eg. PT0 to PT999, PT:MCP23017:1:32:0
      * {@inheritDoc}
      */
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
-        return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
+        int prefixLen = getSystemNamePrefix().length();
+        if (name.length() <= prefixLen) {
+            throw new jmri.NamedBean.BadSystemNameException();
+        }
+        if (name.substring (prefixLen, prefixLen+1).equals (":")) {
+            return ExtensionService.validateSystemNameFormat (name);
+        } else {
+            return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
+        }
     }
 
+    /**
+     * Use an updated tool tip to account for extended pins.
+     *  {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddOutputEntryToolTip");
+    }
 }

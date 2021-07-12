@@ -7,7 +7,11 @@ import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+
 import jmri.implementation.AbstractTurnout;
+import jmri.jmrix.pi.extendgpio.ExtensionService;
+import jmri.jmrix.pi.extendgpio.spi.GpioExtension;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +25,9 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
     // in theory gpio can be static (as in PiSensor) because there will only ever
     // be one, but the library handles the details that make it a 
     // singleton.
-   private GpioController gpio = null;
-   private GpioPinDigitalOutput pin = null;
+    private GpioController gpio = null;
+    private GpioPinDigitalOutput pin = null;
+    private static GpioExtension gpioExtender;
 
    public RaspberryPiTurnout(String systemName) {
         this(systemName, GpioFactory.getInstance());
@@ -54,25 +59,43 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
        if (gpio == null) {
            gpio = _gpio;
        }
-       int address = Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T") + 1));
-       String pinName = "GPIO " + address;
-       Pin p = RaspiPin.getPinByName(pinName);
-       if (p != null) {
-           try {
-            pin = gpio.provisionDigitalOutputPin(p, getSystemName());
-           } catch (java.lang.RuntimeException re) {
-               log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
-               throw new IllegalArgumentException(re.getMessage());
-           }
-           if (pin != null) {
-               pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+       String pinName;
+       int colonIndex = systemName.indexOf (":");
+       if (colonIndex == -1) {
+           int address = Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T") + 1));
+           pinName = "GPIO " + address;
+           Pin p = RaspiPin.getPinByName(pinName);
+           if (p != null) {
+               try {
+                   pin = gpio.provisionDigitalOutputPin(p, getSystemName());
+               } catch (java.lang.RuntimeException re) {
+                   log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+                   throw new IllegalArgumentException(re.getMessage());
+               }
            } else {
-               String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
+               String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
                log.error(msg);
                throw new IllegalArgumentException(msg);
            }
        } else {
-           String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
+            gpioExtender = ExtensionService.getExtensionFromSystemName (getSystemName());
+            if (gpioExtender == null) {
+                String msg = Bundle.getMessage("PinNameNotValid", "", systemName);
+                log.error(msg);
+                throw new IllegalArgumentException(msg);
+            }
+            try {
+                pin = gpioExtender.provisionDigitalOutputPin (gpio, getSystemName());
+                pinName = pin.getName();
+            } catch (java.lang.RuntimeException re) {
+                log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+                throw new IllegalArgumentException(re.getMessage());
+            }
+       }
+       if (pin != null) {
+           pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+       } else {
+           String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
            log.error(msg);
            throw new IllegalArgumentException(msg);
        }
