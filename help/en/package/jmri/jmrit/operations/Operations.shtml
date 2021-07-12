@@ -336,7 +336,11 @@
     <li><a href="#Trains">Trains</a>
 
      <ul>
-      <li><a href="#TrainEdit">Add or Edit Train</a></li>
+      <li><a href="#TrainEdit">Add or Edit Train</a>
+       <ul>
+        <li><a href="#TrainRequires">Optional Train Requirements (Add Locomotives, Caboose
+          or FRED)</a></li>
+       </ul></li>
 
       <li><a href="#TrainReset">Reset Train</a></li>
 
@@ -344,9 +348,9 @@
 
        <ul>
         <li><a href="#TrainBuildOptions">Train Build Options</a>
-        <ul>
-        <li><a href="#OptionalTrainRequirements">Locomotive or Caboose Changes en Route</a></li>
-        </ul></li>
+         <ul>
+          <li><a href="#OptionalTrainRequirements">Locomotive or Caboose Changes en Route</a></li>
+         </ul></li>
 
         <li><a href="#TrainLoadOptions">Train Load Options</a></li>
 
@@ -355,22 +359,20 @@
         <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
         <li><a href="#EditTrainScripts">Scripts</a></li>
-        
+
         <li><a href="#CopyTrain">Copy Train</a></li>
-        
+
         <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced (Diagnostic Tool)</a></li>
 
         <li><a href="#TrainConductor">Train Conductor</a></li>
-        
+
         <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
        </ul>
       <li><a href="#TrainsTools">Trains Tools</a>
 
        <ul>
         <li><a href="#SettingsOptions">Options</a>
-        
         <li><a href="#PrintOptions">Manifest Print Options</a>
-        
         <li><a href="#BuildReportDetails">Build Report Options</a></li>
 
         <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
@@ -384,19 +386,19 @@
         <li><a href="#TrainSchedules">Train Schedules</a></li>
 
         <li><a href="#Automation">Automation</a></li>
-        
+
         <li><a href="#TrainsCopyTrain">Copy Train</a></li>
-        
+
         <li><a href="#TrainScripts">Train Scripts</a></li>
-        
+
         <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
 
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
-        
+
         <li><a href="#ExportTrains">Export to File</a></li>
 
         <li><a href="#ExportTimetable">Export Timetable Data</a></li>
-        
+
         <li><a href="#ExportTrainLineups">Export Train Lineups</a></li>
        </ul></li>
 
@@ -4369,7 +4371,7 @@
     means the train will service this type of rolling stock.</p>
 
    <a name="TrainRequires" id="TrainRequires"></a>
-   <h4>Optional Train Requirements</h4>
+   <h4>Optional Train Requirements (Add Locomotives, Caboose or FRED)</h4>
    You can control the number of locomotives that will be assigned to this train, and optionally,
    the locomotive's model and road. If you don't want the program assigning locomotives to your
    train, select 0 as the number of locos required. If you want two or more locomotives assigned to
@@ -4410,7 +4412,8 @@
     find a caboose with the same road as the locomotive. Normally the caboose or car with FRED stays
     with the train until the last location in the train's route. You can add or remove a caboose
     anywhere in the train's route, see <a href="#OptionalTrainRequirements">Optional Train
-     Requirements</a> under <a href="#TrainBuildOptions">Train Build Options</a> for more info.
+     Requirements (Locomotive or Caboose Changes en Route)</a> under <a href="#TrainBuildOptions">Train
+     Build Options</a> for more info.
    </p>
 
    <a name="TrainReset" id="TrainReset"></a>

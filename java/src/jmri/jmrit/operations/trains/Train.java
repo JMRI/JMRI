@@ -1674,6 +1674,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                         new Object[] { getName(), car.toString(),
                                                 getTerminationTrack().getLocation().getName(),
                                                 getTerminationTrack().getName(), status }));
+                        setServiceStatus(status);
                         continue;
                     }
                 } else {
