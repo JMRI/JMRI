@@ -33,15 +33,53 @@
                 <size length="30.5" width="15.5" height="5.5" units="mm"/>
             </model>
             <model model="LokPilot 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
+                <output name="1,37" label="|"/> <!-- suppress unused item -->
+                <output name="1,38" label="|"/> <!-- suppress unused item -->
+                <output name="1,39" label="|"/> <!-- suppress unused item -->
+                <output name="1,40" label="|"/> <!-- suppress unused item -->
+                <output name="2,7" label="|"/> <!-- suppress unused item -->
+                <output name="2,8" label="|"/> <!-- suppress unused item -->
+                <output name="2,9" label="|"/> <!-- suppress unused item -->
+                <output name="2,10" label="|"/> <!-- suppress unused item -->
+                <output name="2,11" label="|"/> <!-- suppress unused item -->
+                <output name="2,12" label="|"/> <!-- suppress unused item -->
+                <output name="2,13" label="|"/> <!-- suppress unused item -->
+                <output name="2,14" label="|"/> <!-- suppress unused item -->
+                <output name="2,15" label="|"/> <!-- suppress unused item -->
+                <output name="2,16" label="|"/> <!-- suppress unused item -->
+                <output name="2,17" label="|"/> <!-- suppress unused item -->
+                <output name="2,18" label="|"/> <!-- suppress unused item -->
+                <output name="2,19" label="|"/> <!-- suppress unused item -->
+                <output name="2,20" label="|"/> <!-- suppress unused item -->
                 <size length="25.5" width="10.6" height="4.5" units="mm"/>
             </model>
             <model model="LokPilot 5 micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
+                <output name="1,37" label="|"/> <!-- suppress unused item -->
+                <output name="1,38" label="|"/> <!-- suppress unused item -->
+                <output name="1,39" label="|"/> <!-- suppress unused item -->
+                <output name="1,40" label="|"/> <!-- suppress unused item -->
+                <output name="2,7" label="|"/> <!-- suppress unused item -->
+                <output name="2,8" label="|"/> <!-- suppress unused item -->
+                <output name="2,9" label="|"/> <!-- suppress unused item -->
+                <output name="2,10" label="|"/> <!-- suppress unused item -->
+                <output name="2,11" label="|"/> <!-- suppress unused item -->
+                <output name="2,12" label="|"/> <!-- suppress unused item -->
+                <output name="2,13" label="|"/> <!-- suppress unused item -->
+                <output name="2,14" label="|"/> <!-- suppress unused item -->
+                <output name="2,15" label="|"/> <!-- suppress unused item -->
+                <output name="2,16" label="|"/> <!-- suppress unused item -->
+                <output name="2,17" label="|"/> <!-- suppress unused item -->
+                <output name="2,18" label="|"/> <!-- suppress unused item -->
+                <output name="2,19" label="|"/> <!-- suppress unused item -->
+                <output name="2,20" label="|"/> <!-- suppress unused item -->
                 <size length="25.5" width="10.6" height="4.5" units="mm"/>
             </model>
             <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
             <model model="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
             <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
@@ -49,6 +87,32 @@
             </model>
             <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
+            </model>
+            <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406">
+                <output name="1,37" label="|"/> <!-- suppress unused item -->
+                <output name="1,38" label="|"/> <!-- suppress unused item -->
+                <output name="1,39" label="|"/> <!-- suppress unused item -->
+                <output name="1,40" label="|"/> <!-- suppress unused item -->
+                <output name="2,15" label="|"/> <!-- suppress unused item -->
+                <output name="2,16" label="|"/> <!-- suppress unused item -->
+                <output name="2,17" label="|"/> <!-- suppress unused item -->
+                <output name="2,18" label="|"/> <!-- suppress unused item -->
+                <output name="2,19" label="|"/> <!-- suppress unused item -->
+                <output name="2,20" label="|"/> <!-- suppress unused item -->
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <model model="LokPilot 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777407">
+                <output name="1,37" label="|"/> <!-- suppress unused item -->
+                <output name="1,38" label="|"/> <!-- suppress unused item -->
+                <output name="1,39" label="|"/> <!-- suppress unused item -->
+                <output name="1,40" label="|"/> <!-- suppress unused item -->
+                <output name="2,15" label="|"/> <!-- suppress unused item -->
+                <output name="2,16" label="|"/> <!-- suppress unused item -->
+                <output name="2,17" label="|"/> <!-- suppress unused item -->
+                <output name="2,18" label="|"/> <!-- suppress unused item -->
+                <output name="2,19" label="|"/> <!-- suppress unused item -->
+                <output name="2,20" label="|"/> <!-- suppress unused item -->
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 Fx micro" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
                 <output name="1,37" label="|"/> <!-- suppress unused item -->
@@ -67,7 +131,6 @@
                 <output name="2,18" label="|"/> <!-- suppress unused item -->
                 <output name="2,19" label="|"/> <!-- suppress unused item -->
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
-                <output name="4,1" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 Fx micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
@@ -87,23 +150,14 @@
                 <output name="2,18" label="|"/> <!-- suppress unused item -->
                 <output name="2,19" label="|"/> <!-- suppress unused item -->
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
-                <output name="4,1" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 Fx micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554616">
-                <output name="1,37" label="|"/> <!-- suppress unused item -->
-                <output name="1,38" label="|"/> <!-- suppress unused item -->
-                <output name="1,39" label="|"/> <!-- suppress unused item -->
-                <output name="1,40" label="|"/> <!-- suppress unused item -->
-                <output name="4,1" label="|"/> <!-- suppress unused item -->
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 Fx micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554617">
-                <output name="1,37" label="|"/> <!-- suppress unused item -->
-                <output name="1,38" label="|"/> <!-- suppress unused item -->
-                <output name="1,39" label="|"/> <!-- suppress unused item -->
-                <output name="1,40" label="|"/> <!-- suppress unused item -->
-                <output name="4,1" label="|"/> <!-- suppress unused item -->
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
