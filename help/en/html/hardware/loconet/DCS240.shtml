@@ -82,11 +82,11 @@
 
     <p>The table below summarizes these possibilities.</p>
       <table border="3">
-          <tr><td align="center" rowspan="2"><strong>Connection Type</strong></td>
-              <td align="center" rowspan="2"><strong>Usage</strong></td>
-              <td colspan="2" align="center"><strong>Settings in JMRI Connection Profile</strong></td>
-              <td align="center" rowspan="2"><strong>Instructions</strong></td>
-              <td align="center" rowspan="2"><strong>Available JMRI Capabilities</strong></td></tr>
+          <tr><th rowspan="2">Connection Type</th>
+              <th rowspan="2">Usage</th>
+              <th colspan="2">Settings in JMRI Connection Profile<</th>
+              <th rowspan="2">Instructions</th>
+              <th rowspan="2">Available JMRI Capabilities</th></tr>
           <tr><td align="center"><strong>System Connection</strong></td>
               <td align="center"><strong>JMRI Command Station Type</strong></td></tr>
           <tr><td rowspan="9" align="center">USB cable from computer to DCS240 USB connector</td>
