@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.8ish+jake+20210619T0807Z+R029a0ffff6 on Sat Jun 19 04:07:23 EDT 2021-->
-  <decoderIndex version="1060">
+  <!--Written by JMRI version 4.23.9ish+jake+20210713T0434Z+Ra7ecd274b4 on Tue Jul 13 00:37:41 EDT 2021-->
+  <decoderIndex version="1062">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -711,6 +711,82 @@
           <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
           <functionlabel num="11" lockable="true">Water Injector</functionlabel>
           <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+          <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+          <functionlabel num="25" lockable="true">Long Whistle</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Paragon 4" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon4_Diesel.xml">
+        <model model="Diesel" numOuts="3" numFns="30" connector="9pin">
+          <versionCV lowVersionID="0" highVersionID="31" />
+          <output name="1" label="headlight" />
+          <output name="2" label="rearlight" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Compressor</functionlabel>
+          <functionlabel num="5" lockable="true">RPM Up</functionlabel>
+          <functionlabel num="6" lockable="true">RPM Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Cooling Fan</functionlabel>
+          <functionlabel num="11" lockable="true">Air Release</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Station Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Yard Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+          <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+          <functionlabel num="25" lockable="true">Long Horn</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Paragon 4" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon4_Steam.xml">
+        <model model="Steam" numOuts="3" numFns="30" connector="other">
+          <versionCV lowVersionID="32" highVersionID="63" />
+          <output name="1" label="headlight" />
+          <output name="2" label="rearlight" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
+          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
+          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release</functionlabel>
           <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
           <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
           <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
@@ -20988,8 +21064,32 @@
         <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="295" comment="Model 885020">
           <size length="69" width="30.5" height="14" units="mm" />
         </model>
-        <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" maxMotorCurrent="5mA" connector="DropIn" productID="373" comment="Model 885032">
+        <model model="TSU-BH1 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="343" comment="Model 885840">
+          <size length="97" width="16" height="7.7" units="mm" />
+        </model>
+        <model model="TSU-BH1 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="344" comment="Model 885841">
+          <size length="97" width="16" height="7.7" units="mm" />
+        </model>
+        <model model="TSU-BH1 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="345" comment="Model 885842">
+          <size length="97" width="16" height="7.7" units="mm" />
+        </model>
+        <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" maxMotorCurrent="500mA" connector="DropIn" productID="331" comment="Model 885032">
           <size length="55" width="13.8" height="3.2" units="mm" />
+        </model>
+        <model model="TSU-N18 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="333" comment="Model 885026">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="337" comment="Model 885030">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="334" comment="Model 885027">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="335" comment="Model 885028">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="336" comment="Model 885029">
+          <size length="25" width="10.5" height="4.1" units="mm" />
         </model>
         <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
           <size length="74" width="17" height="5" units="mm" />
@@ -21223,11 +21323,14 @@
         <model model="TSU-21PNEM Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="298" comment="Model 886003">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
-        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886003">
+        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886803">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-4400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="299" comment="Model 886005">
           <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <model model="TSU-N18 Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="338" comment="Model 886007">
+          <size length="25" width="10.5" height="4.1" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
@@ -21296,10 +21399,16 @@
         <model model="TSU-1100 Steam-2" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="315" comment="Model 884006">
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
+        <model model="TSU-1100 Big Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="339" comment="Model 884011">
+          <size length="27" width="10.5" height="5" units="mm" />
+        </model>
         <model model="TSU-2200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="273" comment="Model 884002">
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="316" comment="Model 884007">
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-2200 Big Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="340" comment="Model 884012">
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-21PNEM Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="274" comment="Model 884003">
@@ -21311,11 +21420,20 @@
         <model model="TSU-21PNEM8 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="324" comment="Model 884808">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
+        <model model="TSU-21PNEM8 Big Steam" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="341" comment="Model 884813">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
         <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
           <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="318" comment="Model 884009">
           <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <model model="TSU-BH2 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="342" comment="Model 884814">
+          <size length="45" width="28" height="7.5" units="mm" />
+        </model>
+        <model model="TSU-N18 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="332" comment="Model 884010">
+          <size length="25" width="10.5" height="4.1" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
