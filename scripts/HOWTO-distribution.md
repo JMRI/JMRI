@@ -197,7 +197,7 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
 - Check if any section headings were added to the release-note fragment
 
 ```
-        diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.21-master.shtml | grep '^>'
+        diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.25-master.shtml | grep '^>'
 ```
 
    <ul> <li style="list-style-type: none;">
