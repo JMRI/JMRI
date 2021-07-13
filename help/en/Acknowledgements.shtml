@@ -30,6 +30,9 @@
       <a href="https://jmri.org/donations.shtml">our donations
       page</a>.</p>
 
+<!-- NOTE: The alphabetic navigation will currently scroll off the screen as the window is scrolled.
+           This could be improved and/or some other navigation added. -->
+
       <p><a href="#A">A</a>|<a href="#B">B</a>|<a href=
       "#C">C</a>|<a href="#D">D</a>|<a href="#E">E</a>|<a href=
       "#F">F</a>|<a href="#G">G</a>|<a href="#H">H</a>|<a href=
