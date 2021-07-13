@@ -18,8 +18,8 @@
 
       <h1>LocoNet "Bushby" Forwarder</h1>
       <p><span class="since">Since
-          <a href="https://jmri.org/releasenotes/jmri4.24.9.shtml" target="_blank">
-      JMRI 4.24.9</a></span></p>
+          <a href="https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">
+      JMRI 4.25.2</a></span></p>
       <p>The <code>LnBushbyForwarder.py</code> script provides a mechanism to
           selectively convert the "normal" LocoNet turnout control messages, for 
           selected turnout addresses, into "special" LocoNet turnout control

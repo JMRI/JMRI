@@ -748,7 +748,7 @@
               <p>The image below shows one possible configuration which takes
               advantage of this JMRI feature for a LocoNet turnout.
               <p><a href="images/LnTurnoutFeedbackAutomationSettings.png">
-              <img width="50%" src="images/LnTurnoutFeedbackAutomationSettings.png"
+              <img width="558" src="images/LnTurnoutFeedbackAutomationSettings.png"
               alt="Image showing JMRI turnout entry with feecback and
               automation settings visible"></a>
               <p>(Click the image for a larger version of the image.)
@@ -790,7 +790,7 @@
               JMRI will only send "ON" messages when JMRI controls these turnouts.
               <p><a href="images/LnTurnoutBushbySettings.png">
               <img src="images/LnTurnoutBushbySettings.png" alt="sample display
-              of LocoNet turnouts configured for various JMRI Bushby modes" width="50%"></a>.
+              of LocoNet turnouts configured for various JMRI Bushby modes" width="499"></a>.
               <p>(Click the image for a larger version of the image.)
               <p>If the "Send ON and OFF" column is not visible, you may check the
               "Show System-specific columns" checkbox at the bottom of the window, or
@@ -875,8 +875,8 @@
                   is enabled.
                   </li>
                   <li><span class="since">Since
-                  <a href="https://jmri.org/releasenotes/jmri4.24.9.shtml" target="_blank">
-                  JMRI 4.24.9</a></span>, JMRI includes a simple script to provide
+                  <a href="https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">
+                  JMRI 4.25.2</a></span>, JMRI includes a simple script to provide
                   forwarding of "normal" LocoNet turnout control messages, for
                   certain user-defined addresses, as equivalent "special" LocoNet
                   turnout control messages.  This can be useful when the command
@@ -1169,11 +1169,11 @@
           Similar instructions may be used to configure other the Board Address 
           (Board ID) on other Digitrax devices.</p>
       <table border="3">
-          <tr><td style="width: 6%" align="center"><strong>Step</strong></td>
-              <td style="width: 47%" align="center"><strong>Digitrax Instructions 
-                      for changing BDL168 Board Address</strong></td>
-              <td style="width: 47%" align="center"><strong>Instructions for 
-                      changing Board Address (Board ID) when using JMRI</strong></td></tr>
+          <tr><th style="width: 6%">Step/th>
+              <th style="width: 47%">Digitrax Instructions 
+                      for changing BDL168 Board Address</th>
+              <th style="width: 47%">Instructions for 
+                      changing Board Address (Board ID) when using JMRI</th></tr>
           <tr><td align="center">0</td><td colspan="2"><strong>(A step <em>not</em> 
                   included in Digitrax documentation, but one that is necessary 
                   regardless of what method you use!)</strong><br><br>0. Ensure 
