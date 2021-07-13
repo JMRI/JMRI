@@ -12794,7 +12794,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setThirdLegStartRouteLocation(rlChelmsford);
         train1.setThirdLegEngineRoad("SP");
         train1.setThirdLegEngineModel("GP40");
-
+        
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train should build", true, train1.isBuilt());
 
@@ -13417,7 +13417,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40-1600");
         e4.setTypeName("Diesel");
-        e4.setHp("1600");
+        e4.setHp("900");
         e4.setLength("50");
         e4.setWeightTons("130");
         e4.setMoves(5);
@@ -13447,6 +13447,37 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e2 assigned to train, train only needs 400 HP", essex, e2.getDestination());
         Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
         Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+        
+        // eliminate e2 from consideration
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(null, null));
+        
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", essex, e4.getDestination());
+        
+        // eliminate e4 from consideration, only consist is left for use
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(null, null));
+        
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+        
+        // restore
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+        e4.setHp("1600");
 
         // now increase the train's weight
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", carTypes[1], "40", actonYard1, 0);
@@ -13595,18 +13626,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train train1 = tmanager.newTrain("TestAutoHpt");
         train1.setRoute(route);
 
-        // use auto HPT
+        // use auto HPT and build from individual engines
         train1.setBuildConsistEnabled(true);
         train1.setNumberEngines(Train.AUTO_HPT);
 
         train1.setSecondLegOptions(Train.CHANGE_ENGINES);
-        train1.setSecondLegNumberEngines("1");
+        train1.setSecondLegNumberEngines(Train.AUTO_HPT);
         train1.setSecondLegStartRouteLocation(rlBoston);
 
         // 3rd engine change at Danvers
         RouteLocation rlDanvers = route.getRouteLocationBySequenceNumber(4);
         train1.setThirdLegOptions(Train.CHANGE_ENGINES);
-        train1.setThirdLegNumberEngines("1");
+        train1.setThirdLegNumberEngines(Train.AUTO_HPT);
         train1.setThirdLegStartRouteLocation(rlDanvers);
 
         // increase the train's departure weight
