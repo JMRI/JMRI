@@ -12,7 +12,7 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="/Sidebar.shtml" --> <!-- might be improved to show an Alphabet sidebar + some nav? -->
+    <!--#include virtual="html/Sidebar.shtml" -->
     <div id="mainContent">
 
       <h2>Acknowledgements: People who've contributed to JMRI</h2>
