@@ -7,7 +7,7 @@
       xmlns:docbook="http://docbook.org/ns/docbook"
       xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
       include="ESU LokSound V4.0,LokSound Select direct / micro,ESU LokSound 5,ESU LokPilot 5"
-      exclude="LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC">
+      exclude="Essential Sound Unit,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro,LokPilot 5 micro DCC,LokSound 5 micro DCC Direct">
     <name>SUSI Map</name>
     <column>
         <label>
