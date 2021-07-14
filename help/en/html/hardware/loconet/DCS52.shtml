@@ -86,37 +86,37 @@
 
     <p>The table below summarizes these possibilities.</p>
       <table border="3">
-          <tr><td align="center" rowspan="2"><strong>Connection Type</strong></td>
-              <td align="center" rowspan="2"><strong>Usage</strong></td>
-              <td colspan="2" align="center"><strong>Settings in JMRI Connection Profile</strong></td>
-              <td align="center" rowspan="2"><strong>Instructions</strong></td>
-              <td align="center" rowspan="2"><strong>Available JMRI Capabilities</strong></td></tr>
-          <tr><td align="center"><strong>System Connection</strong></td>
-              <td align="center"><strong>JMRI Command Station Type</strong></td></tr>
-          <tr><td rowspan="9" align="center">USB cable from computer to DCS52 USB connector</td>
-              <td rowspan="2" align="center">Decoder Programming</td>
-              <td rowspan="2" align="center">"<em>DCS52 USB Interface</em>"</td>
-              <td rowspan="2" align="center">"<em>DCS52 Standalone Programmer</em>"</td>
-              <td rowspan="2" align="center"><a href="#Dcs52Standalone">Configuration help</a></td>
-              <td>Program decoder CVs on the dedicated programming track</td></tr>
+          <tr><th rowspan="2">Connection Type</th>
+              <th rowspan="2">Usage</th>
+              <th colspan="2">Settings in JMRI Connection Profile</th>
+              <th rowspan="2">Instructions</th>
+              <th rowspan="2">Available JMRI Capabilities</th></tr>
+          <tr><th>System Connection</th>
+              <th align="center">JMRI Command Station Type</th></tr>
+          <tr align="center"><td rowspan="9">USB cable from computer to DCS52 USB connector</td>
+              <td rowspan="2">Decoder Programming</td>
+              <td rowspan="2">"<em>DCS52 USB Interface</em>"</td>
+              <td rowspan="2">"<em>DCS52 Standalone Programmer</em>"</td>
+              <td rowspan="2"><a href="#Dcs52Standalone">Configuration help</a></td>
+              <td align="left">Program decoder CVs on the dedicated programming track</td></tr>
         <tr><td>Operate one loco on the dedicated programming track</td>
-        <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
-            <td rowspan="7" align="center">"<em>DCS52 USB Interface</em>"</td>
-            <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
-            <td rowspan="7" align="center"><a href="#Dcs52GeneralCmdStn">Configuration help</a></td>
-            <td>Program decoder CVs on the dedicated programming track and/or the main track</td></tr>
+        <tr align="center"><td rowspan="7">LocoNet Interface, Decoder Programming</td>
+            <td rowspan="7">"<em>DCS52 USB Interface</em>"</td>
+            <td rowspan="7">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
+            <td rowspan="7"><a href="#Dcs52GeneralCmdStn">Configuration help</a></td>
+            <td align="left">Program decoder CVs on the dedicated programming track and/or the main track</td></tr>
         <tr><td>Control one or more locos on the main track</td></tr>
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
         <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
-        <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
-            <td rowspan="7" align="center">Computer Connection to something other than the DCS52 USB connector</td>
-            <td rowspan="7" align="center">Something other than "DCS52 USB Interface"</td>
-            <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
-            <td rowspan="7" align="center"><a href="#Dcs52ViaAdapter">Configuration help</a></td>
-            <td>Program decoder CVs on the dedicated programming track</td></tr>
+        <tr align="center"><td rowspan="7">LocoNet Interface, Decoder Programming</td>
+            <td rowspan="7">Computer Connection to something other than the DCS52 USB connector</td>
+            <td rowspan="7">Something other than "DCS52 USB Interface"</td>
+            <td rowspan="7">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
+            <td rowspan="7"><a href="#Dcs52ViaAdapter">Configuration help</a></td>
+            <td align="left">Program decoder CVs on the dedicated programming track</td></tr>
         <tr><td>Control one or more locos on the main track</td></tr>
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>

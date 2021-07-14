@@ -129,12 +129,37 @@ public class HelpUtil {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            if (SystemType.isWindows()) {
+                try {
+                    openWindowsFile(f);
+                } catch (JmriException e) {
+                    log.error("unable to show help page {} in Windows due to:", ref, e);
+                }
+                return;
+            }
+
             url = "file://" + fileName;
         }
+
         try {
             jmri.util.HelpUtil.openWebPage(url);
         } catch (JmriException e) {
             log.error("unable to show help page {} due to:", ref, e);
+        }
+    }
+
+    public static void openWindowsFile(File file) throws JmriException {
+        try {
+            if (Desktop.getDesktop().isSupported( Desktop.Action.OPEN) ) {
+                Desktop.getDesktop().open(file);
+            } else {
+                throw new JmriException(String.format(
+                        "Failed to connect to browser. java.awt.Desktop in Windows doesn't suppport Action.OPEN"));
+            }
+        } catch (IOException ex) {
+            throw new JmriException(String.format(
+                    "Failed to connect to browser. Error loading help file %s", file.getName()), ex);
         }
     }
 

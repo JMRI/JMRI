@@ -216,20 +216,19 @@
 
       <table border="3">
         <tr>
-          <td colspan="5"><strong>Command Stations and
-          Boosters</strong></td>
+          <th colspan="5">Command Stations and Boosters</th>
         </tr>
 
-        <tr align="center">
-          <td><strong>Device</strong></td>
+        <tr>
+          <th>Device</th>
 
-          <td><strong>Slot Management</strong></td>
+          <th>Slot Management</th>
 
-          <td><strong>RailSync</strong></td>
+          <th>RailSync</th>
 
-          <td><strong>LocoNet Data signal termination</strong></td>
+          <th>LocoNet Data signal termination</th>
 
-          <td><strong>Fast Clock Master</strong></td>
+          <th>Fast Clock Master</th>
         </tr>
 
         <tr align="center">
@@ -330,20 +329,19 @@
         </tr>
 
         <tr>
-          <td colspan="5"><strong>Computer Interface
-          Devices</strong></td>
+          <th colspan="5">Computer Interface Devices</th>
         </tr>
 
-        <tr align="center">
-          <td><strong>Device</strong></td>
+        <tr>
+          <th>Device</th>
 
-          <td><strong>Slot Management</strong></td>
+          <th>Slot Management</th>
 
-          <td><strong>RailSync</strong></td>
+          <th>RailSync</th>
 
-          <td><strong>LocoNet Data signal termination</strong></td>
+          <th>LocoNet Data signal termination</th>
 
-          <td><strong>Fast Clock Master</strong></td>
+          <th>Fast Clock Master</th>
         </tr>
 
         <tr align="center">
@@ -363,9 +361,9 @@
 
           <td>Optional</td>
 
-          <td><strong>Requires DCC signal or simple power supply *****</strong></td>
+          <td><em>Requires DCC signal or simple power supply *****</em></td>
 
-          <td>Required, <strong>cannot provide</strong></td>
+          <td>Required, <em>cannot provide</em></td>
 
           <td></td>
         </tr>
@@ -377,7 +375,7 @@
 
           <td>Required for power **</td>
 
-          <td>Required, <strong>cannot provide</strong></td>
+          <td>Required, <em>cannot provide</em></td>
 
           <td></td>
         </tr>
@@ -407,19 +405,19 @@
         </tr>
 
         <tr>
-          <td colspan="5"><strong>LocoNet Throttles</strong></td>
+          <th colspan="5">LocoNet Throttles</th>
         </tr>
 
-        <tr align="center">
-          <td><strong>Device</strong></td>
+        <tr>
+          <th>Device</th>
 
-          <td><strong>Slot Management</strong></td>
+          <th>Slot Management</th>
 
-          <td><strong>RailSync</strong></td>
+          <th>RailSync</th>
 
-          <td><strong>LocoNet Data signal termination</strong></td>
+          <th>LocoNet Data signal termination</th>
 
-          <td><strong>Fast Clock Master</strong></td>
+          <th>Fast Clock Master</th>
         </tr>
 
         <tr align="center">
@@ -436,20 +434,19 @@
         </tr>
 
         <tr>
-          <td colspan="5"><strong>Some Other LocoNet
-          Devices</strong></td>
+          <th colspan="5">Some Other LocoNet Devices</th>
         </tr>
 
-        <tr align="center">
-          <td><strong>Device</strong></td>
+        <tr>
+          <th>Device</th>
 
-          <td><strong>Slot Management</strong></td>
+          <th>Slot Management</th>
 
-          <td><strong>RailSync</strong></td>
+          <th>RailSync</th>
 
-          <td><strong>LocoNet Data signal termination</strong></td>
+          <th>LocoNet Data signal termination</th>
 
-          <td><strong>Fast Clock Master</strong></td>
+          <th>Fast Clock Master</th>
         </tr>
 
         <tr align="center">
