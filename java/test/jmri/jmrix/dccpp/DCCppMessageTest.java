@@ -334,18 +334,8 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Forget Cab: CAB: 1234, (No Reply Expected)", msg.toMonitorString());
         msg = new DCCppMessage("-");
         Assert.assertEquals("Monitor string", "Forget Cab: CAB: [ALL], (No Reply Expected)", msg.toMonitorString());
-        msg = new DCCppMessage("- 12345");
-        Assert.assertNull("null on invalid address", msg);
-        msg = new DCCppMessage("- xyz");
-        Assert.assertNull("null on invalid address", msg);
         msg = DCCppMessage.makeForgetCabMessage(12345);
         Assert.assertNull("null on invalid address", msg);
-        msg = new DCCppMessage("F 123 222 1");
-        Assert.assertNull("null on invalid fn", msg);
-        msg = new DCCppMessage("F 123 22 3");
-        Assert.assertNull("null on invalid fn state", msg);
-        msg = new DCCppMessage("F 123 22 OFF");
-        Assert.assertNull("null on invalid fn state", msg);
     }
 
     @Test
