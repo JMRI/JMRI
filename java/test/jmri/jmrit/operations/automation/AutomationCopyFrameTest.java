@@ -1,14 +1,16 @@
 package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 public class AutomationCopyFrameTest extends OperationsTestCase {
 
@@ -23,13 +25,13 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         f.setVisible(true);
 
-        JemmyUtil.enterClickAndLeave(f.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // enter a name for the automation
         f.automationNameTextField.setText("Name of new automation");
-        JemmyUtil.enterClickAndLeave(f.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         // dialog window requesting automation to copy should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
@@ -54,13 +56,13 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         copyFrame.setVisible(true);
 
-        JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(copyFrame.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // enter a name for the automation
         copyFrame.automationNameTextField.setText("Name of new automation 2");
-        JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(copyFrame.copyButton);
 
         // dialog window requesting automation to copy should appear
         JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));

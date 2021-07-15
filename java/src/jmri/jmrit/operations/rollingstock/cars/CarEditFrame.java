@@ -6,12 +6,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -281,12 +276,9 @@ public class CarEditFrame extends RollingStockEditFrame {
         if (lengthComboBox.getSelectedItem() != null) {
             String length = (String) lengthComboBox.getSelectedItem();
             try {
-                double carLength = Double.parseDouble(length) * 12 / Setup.getScaleRatio();
-                double carWeight = (Setup.getInitalWeight() + carLength * Setup.getAddWeight()) / 1000;
-                NumberFormat nf = NumberFormat.getNumberInstance();
-                nf.setMaximumFractionDigits(1);
-                weightTextField.setText((nf.format(carWeight))); // car weight in ounces.
-                int tons = (int) (carWeight * Setup.getScaleTonRatio());
+                String carWeight = CarManager.calculateCarWeight(length);
+                weightTextField.setText(carWeight); // car weight in ounces.
+                int tons = (int) (Double.parseDouble(carWeight) * Setup.getScaleTonRatio());
                 // adjust weight for caboose
                 if (cabooseCheckBox.isSelected() || passengerCheckBox.isSelected()) {
                     tons = (int) (Double.parseDouble(length) * .9); // .9 tons/foot

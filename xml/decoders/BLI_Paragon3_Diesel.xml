@@ -14,6 +14,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20151016"/>
   <!-- Version 1 New file from 0.14 manual -->
+  <version author="Michael Mosher" version="2" lastUpdated="20210630"/>
+  <!-- few minor updates  -->
   <decoder>
     <family name="Paragon 3" mfg="Broadway Limited Imports, LLC">
       <model model="Diesel" numOuts="3" numFns="30" connector="9pin">
@@ -147,6 +149,10 @@
       </variable>
       <variable CV="61" default="18" minFn="28" item="F28 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+      </variable>
+      <variable CV="154" default="100" item="Sound Setting 25">
+        <decVal/>
+        <label>Track/Pantograph Volume</label>
       </variable>
       <variable item="Global lighting option 2" CV="159" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>

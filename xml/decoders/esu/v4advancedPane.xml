@@ -30,6 +30,7 @@
         <display item="ESU V4 Compatibility Marklin Delta" format="checkbox"/>
         <display item="ESU V4 Compatibility ZIMO MF" format="checkbox"/>
         <display item="ESU V4 Compatibility SUSI" format="checkbox"/>
+        <display item="ESU V4 Compatibility SUSI Slave" format="checkbox"/>
         <display item="Analog Control check 1" format="checkbox"/>
         <separator/>
         <label>

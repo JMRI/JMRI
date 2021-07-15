@@ -1,22 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro Manual: Getting Started</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI OperationsPro Manual: Getting Started</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar.shtml" -->
-<div id="mainContent">
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
 <a name="Top"></a>
 <h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" border=10 class="BOXIT"></h1>
@@ -44,8 +38,9 @@ interface may be required.</p>
 <p><a href="index.shtml#GettingStarted">Back to Index</a>
 </div>
 
-<!--#include virtual="/Footer.shtml" -->
-</div>
-</div>
+    <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

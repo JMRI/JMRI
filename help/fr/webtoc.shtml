@@ -55,7 +55,7 @@
 
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">CBUS&trade; </a>
+<a href="html/hardware/can/cbus/index.shtml">CBUS&amp;reg; </a>
 <ul></ul>
 </li>
 
@@ -315,7 +315,7 @@
 <ul>
    
 <li>
-<a href="">Ajouter/&Eacute;diter des Lumi&egrave;res </a>
+<a href="package/jmri/jmrit/beantable/LightAddEdit.shtml">Ajouter/&Eacute;diter des Lumi&egrave;res </a>
 <ul></ul>
 </li>
 
@@ -941,7 +941,7 @@
 
    
 <li>
-<a href="">Utilisation de Transits et Sections </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#transits">Utilisation de Transits et Sections </a>
 <ul></ul>
 </li>
 
@@ -959,7 +959,7 @@
 
    
 <li>
-<a href="">Table des Affectations Requises </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Table des Affectations Requises </a>
 <ul></ul>
 </li>
 

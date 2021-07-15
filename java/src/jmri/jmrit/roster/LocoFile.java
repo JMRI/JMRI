@@ -45,7 +45,8 @@ public class LocoFile extends XmlFile {
      * @param cvModel An existing CvTableModel object which will have the CVs
      *                from the loco Element appended. It is intended, but not
      *                required, that this be empty.
-     * @param family  unused.
+     * @param family  Decoder family. Used to check if there's need for special
+     *                treatment.
      */
     public static void loadCvModel(Element loco, CvTableModel cvModel, String family) {
         CvValue cvObject;
@@ -87,6 +88,14 @@ public class LocoFile extends XmlFile {
                 String name = element.getAttribute("name").getValue();
                 String value = element.getAttribute("value").getValue();
                 log.debug("CV named {} has value: {}", name, value);
+
+                // Fairly ugly hack to migrate Indexed CVs of existing Tsunami2 & Econami
+                // roster entries to full NMRA S9.2.2 format (include CV 31 value).
+                if (family != null && (family.startsWith("Tsunami2") || family.startsWith("Econami")) && name.matches("\\d+\\.\\d+")) {
+                    String oldName = name;
+                    name = "16." + oldName;
+                    log.info("CV{} renamed to {} has value: {}", oldName, name, value);
+                }
 
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {

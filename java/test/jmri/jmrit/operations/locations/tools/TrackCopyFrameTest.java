@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -41,7 +41,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -50,7 +50,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter a name for the new track
         tcf.trackNameTextField.setText("Test track name");
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, Bundle.getMessage("SelectTrackToCopy"), Bundle.getMessage("ButtonOK"));
@@ -89,7 +89,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // confirm that copy button is enabled
         Assert.assertTrue(tcf.copyButton.isEnabled());
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -98,7 +98,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter a name for the new track
         tcf.trackNameTextField.setText("Test track name");
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, Bundle.getMessage("SelectTrackToCopy"), Bundle.getMessage("ButtonOK"));
@@ -125,7 +125,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -134,7 +134,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter a name for the new track to fail longer than 25 characters
         tcf.trackNameTextField.setText("Very Long Test Track Name X");
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -155,7 +155,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -164,7 +164,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter the same name
         tcf.trackNameTextField.setText(acton.getTracksList().get(2).getName());
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle

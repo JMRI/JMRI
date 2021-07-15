@@ -5,8 +5,8 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -14,6 +14,7 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
 
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -87,6 +88,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.maxEngineSizeTextField.setText("6");
         p.switchTimeTextField.setText("3");
         p.travelTimeTextField.setText("4");
+        p.yearTextField.setText(" 1956 ");
 
         (new JRadioButtonOperator(jfo,"HO",1)).push(); // Match 0 is HOn3.
         (new JRadioButtonOperator(jfo,Bundle.getMessage("Descriptive"))).push();
@@ -106,13 +108,11 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,java.text.MessageFormat.format(
                     Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), Bundle.getMessage("ButtonOK"));
         // dialog window should appear regarding railroad name
-        /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
-                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,Bundle.getMessage("ButtonNo"));
-        // done*/
-        JUnitUtil.dispose(f);
-        jfo.dispose();
+        JemmyUtil.pressDialogButton(f,Bundle.getMessage("ChangeJMRIRailroadName"), Bundle.getMessage("ButtonNo"));
 
-        // it may be possible to make this a headless test by only initializing the panel, not the frame
+        jfo.dispose();
+        
+        // reload
         OperationsSettingsFrame frameRead = new OperationsSettingsFrame();
         frameRead.setLocation(0, 0); // entire panel must be visible for tests to work properly
         frameRead.initComponents();
@@ -125,8 +125,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         Assert.assertEquals("max engines", "6", panelRead.maxEngineSizeTextField.getText());
         Assert.assertEquals("switch time", "3", panelRead.switchTimeTextField.getText());
         Assert.assertEquals("travel time", "4", panelRead.travelTimeTextField.getText());
-        // Assert.assertEquals("owner", "Bob J", f.ownerTextField.getText());
-
+        Assert.assertEquals("year", "1956", panelRead.yearTextField.getText());
 
         Assert.assertTrue("HO scale", (new JRadioButtonOperator(jfo2,"HO",1)).isSelected());
         Assert.assertFalse("N scale", (new JRadioButtonOperator(jfo2,"N")).isSelected());
@@ -154,7 +153,135 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         // done
         JUnitUtil.dispose(frameRead);
     }
-
+    
+    @Test
+    public void testSaveButtonErrorTrainLength() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.maxLengthTextField.setText("Not a Number");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testSaveButtonErrorEngineSize() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.maxEngineSizeTextField.setText("Not a Number");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testSaveButtonErrorHPT() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.hptTextField.setText("Not a Number");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testSaveButtonErrorSwitchTime() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.switchTimeTextField.setText("Not a Number");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testSaveButtonErrorTravelTime() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.travelTimeTextField.setText("Not a Number");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testSaveButtonErrorYear() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.yearTextField.setText("Not a Number");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testSaveButtonTrainLength() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load routes
+        JUnitOperationsUtil.createThreeLocationRoute();
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.maxLengthTextField.setText("200");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
+        // 3 dialog windows will now appear
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("YouNeedToAdjustRoutes"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ModifyAllRoutes"), Bundle.getMessage("ButtonYes"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testBackupButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load routes
+        JUnitOperationsUtil.createThreeLocationRoute();
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.maxLengthTextField.setText("200");
+        new JButtonOperator(jfo,Bundle.getMessage("Backup")).push();
+        // dialog window will now appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("BackupDialog.this.title"), Bundle.getMessage("ButtonCancel"));
+        jfo.dispose();
+    }
+    
+    @Test
+    public void testRestoreButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load routes
+        JUnitOperationsUtil.createThreeLocationRoute();
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
+        f.initComponents();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
+        p.maxLengthTextField.setText("200");
+        new JButtonOperator(jfo,Bundle.getMessage("Restore")).push();
+        // dialog window will now appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("RestoreDialog.this.title"), Bundle.getMessage("ButtonCancel"));
+        jfo.dispose();
+    }
+    
     // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);
 
 }

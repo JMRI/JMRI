@@ -130,6 +130,8 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
+        <pathelement location="${libdir}/jsoup-1.13.1.jar"/>
+        <pathelement location="${libdir}/jsoup-1.13.1-javadoc.jar"/>
         <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
@@ -419,7 +421,7 @@
     </target>
 
     <target name="check-java-version-requirement"> <!-- check build system requirements, not for user use -->
-        <fail message="Unsupported Java version: ${ant.java.version}. 
+        <fail message="Unsupported Java version: ${ant.java.version}.
           Make sure that the Java version is 9 or greater.">
           <condition>
             <not>
@@ -792,6 +794,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
@@ -805,7 +808,7 @@
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
-        </java>    
+        </java>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -828,6 +831,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
@@ -842,7 +846,7 @@
             <jvmarg value="-ea"/>
             <jvmarg value="${jacocoagent}"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
-        </java>    
+        </java>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -1372,7 +1376,38 @@
     <!-- Test execution targets                                                        -->
     <!-- ============================================================================= -->
 
-   <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
+    <target name="buildhelpfiles" depends="tests, runtime-library-selection" description="build help files">
+        <java classname="jmri.util.BuildHelpFilesTest"
+            dir="."
+            failonerror="yes"
+            fork="yes" >
+
+              <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+              <sysproperty key="log4j.ignoreTCL" path="true/"/>
+              <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+              <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+              <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+              <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+
+              <sysproperty key="java.awt.headless" value="true"/>
+
+              <sysproperty key="user.language" value="en"/>
+              <sysproperty key="user.country" value="US"/>
+
+              <classpath refid="test.class.path"/>
+
+              <jvmarg line="${jvm.args}"/>
+              <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <target name="buildhelp" depends="buildhelpfiles" description="build help files">
+        <ant dir="help/en/" />
+        <ant dir="help/fr/" />
+    </target>
+
+    <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
@@ -1440,6 +1475,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1530,6 +1566,7 @@
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
+                    <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
                     <jvmarg value="-Xmx1536m"/>
@@ -1555,6 +1592,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
@@ -1583,6 +1621,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
@@ -1817,11 +1856,11 @@
             <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            
+
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
             <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
-            
+
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -1891,7 +1930,7 @@
     <!-- Requires Graphviz from http://www.graphviz.org            -->
     <!-- Does not work with Java 10 or later,                      -->
     <!-- see https://github.com/gboersma/uml-java-doclet           -->
-    <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml" 
+    <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml"
                     description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="1536m"
@@ -1903,7 +1942,7 @@
                  package="yes"
                  use="true"
                  failonerror="true"
-                 failonwarning="false" 
+                 failonwarning="false"
                  source="8"
                  windowtitle="JMRI API"
             > <!-- failonwarning="false"  because always warns on cyclic redundancy with JDK11 -->
@@ -1918,11 +1957,11 @@
             <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            
+
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
             <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
-            
+
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -1940,7 +1979,7 @@
                 <param name="--uml-image-format" value="svg" />
                 <param name="--uml-excluded-package-dependencies" value="java,javax,com,org,edu,net,io" />
             </doclet>
-            
+
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
             <group title="Applications" packages="apps:apps.*"/>
@@ -1984,9 +2023,9 @@
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
-        
+
         </javadoc>
-        
+
         <!-- sparsify and reprocess some too-busy diagrams -->
         <exec executable="./scripts/tighten-puml"
               osFamily="unix"
@@ -1998,14 +2037,14 @@
               failonerror="true">
             <arg value="${doctarget}/jmri/package-dependencies.puml"/>
         </exec>
-        
+
         <plantuml output="${doctarget}" >
         <fileset dir="${source}">
                 <include name="${doctarget}/package-dependencies.puml"/>
                 <include name="${doctarget}/jmri/package-dependencies.puml"/>
         </fileset>
         </plantuml>
-        
+
     </target>
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />

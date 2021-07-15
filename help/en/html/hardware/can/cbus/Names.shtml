@@ -19,6 +19,7 @@
 
         <ul class="snav">
         <li><a href="#events">Event Name and Numbering</a></li>
+        <li><a href="#turnout">Turnouts</a></li>
         <li><a href="#reporters">Reporters</a></li>
         <li><a href="#sysname">System Names</a></li>
         <li><a href="#summary">Summary of CBUS Events</a></li>
@@ -135,9 +136,12 @@
       <p>Turnouts have 2 states, the commanded state, and the Feedback state 
       which is used on panel displays and elsewhere.</p>
       
+      <p>Turnouts are always in Monitoring mode hence reflect the commanded state from the Layout.
+      <br>In addition, feedback can be enhanced with
+      
       <ul>
       <li>Direct - When the commanded state is changed, 
-      the feedback state will reflect the commanded state.</li>
+      the feedback state will reflect the commanded state. ( default )</li>
       <li>Delayed - When the commanded state is changed, 
       the feedback state will reflect the commanded state following a brief delay.</li>
       <li>1 Sensor - When the commanded state is changed, the feedback state will not change.
@@ -146,11 +150,19 @@
       <br>Feedback state will change when the 2 sensors agree on state ( eg. servo end travel events )</li>
       </ul>
       
-      <p>You can request the status of a turnout by clicking Query in the turnout table. </p>
-      <p>If a turnout uses 1 or 2 sensor feedback, these sensor statuses will also be requested.</p>
+      <p>You can request the status of a turnout by clicking Query in the turnout table.
+      <br>If a turnout uses 1 or 2 sensor feedback, these sensor statuses will also be requested.</p>
       
       <p>See <a href="../../../doc/Technical/TurnoutFeedback.shtml">JMRI : Turnout Feedback</a> for more info.</p>
       
+      <hr>
+      <p>As Turnouts are JMRI outputs, the Event can be queried as per other 
+      MERG CBUS query events.
+      <br>If a Turnout has address "MT+4" and is closed, when JMRI hears an 
+      appropriate Event Status Request ( eg. an ARSQ for Event 4 ), it will 
+      respond with an ARSOF 4 Can Frame.
+      <br>This is used in modules such as MERG CANCAB to enhance the Toggle 
+      Turnout button, ie, if the query returns OFF, CANCAB sends ON and vice-versa.</p>
       
       <h4><a name="reporters" id="reporters">Reporter ( incl. RFID ) data from CBUS</a></h4>
       <p><a href="../../../tools/Reporters.shtml">JMRI Reporters</a> do not have Off or On events,

@@ -3,8 +3,8 @@ package jmri.jmrit.operations.routes.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -55,14 +55,14 @@ public class RouteCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", rcf);
         
         // no new route name
-        JemmyUtil.enterClickAndLeave(rcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(rcf.copyButton);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Assert.assertEquals("routes 1", 1, rmanager.getRoutesByNameList().size());       
         JemmyUtil.pressDialogButton(rcf, Bundle.getMessage("EnterRouteName"), Bundle.getMessage("ButtonOK"));
         
         // name too long
         rcf.routeNameTextField.setText("abcdefghijklmnopqrstuvwxwyz");
-        JemmyUtil.enterClickAndLeave(rcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(rcf.copyButton);
         Assert.assertEquals("routes 1", 1, rmanager.getRoutesByNameList().size());       
         JemmyUtil.pressDialogButton(rcf, Bundle.getMessage("CanNotAddRoute"), Bundle.getMessage("ButtonOK"));
         
@@ -78,7 +78,7 @@ public class RouteCopyFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(editRouteFrame);
         
         // same route name, error
-        JemmyUtil.enterClickAndLeave(rcf.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(rcf.copyButton);
         Assert.assertEquals("routes 2", 2, rmanager.getRoutesByNameList().size());
         JemmyUtil.pressDialogButton(rcf, Bundle.getMessage("CanNotAddRoute"), Bundle.getMessage("ButtonOK"));
         

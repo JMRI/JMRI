@@ -30,9 +30,8 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     private JButton _addTimer;
     private JButton _removeTimer;
     private JTextField[] _timerSocketNames;
-    private JFormattedTextField[] _timerDelays;
+    private JTextField[] _timerDelays;
     private int numActions = 1;
-    private ActionTimer _tempAction;    // We need an action in validate() to check female socket names.
     
     private String getNewSocketName(ActionTimer action) {
         int size = ActionTimer.NUM_STATIC_EXPRESSIONS + MAX_NUM_TIMERS;
@@ -53,7 +52,6 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         
         // Create a temporary action in case we don't have one.
         ActionTimer action = object != null ? (ActionTimer)object : new ActionTimer("IQDA1", null);
-        _tempAction = action;
         
         numActions = action.getNumActions();
         
@@ -69,7 +67,10 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         
         panel.add(_startImmediately);
         panel.add(_runContinuously);
-        panel.add(_unitComboBox);
+        
+        JPanel unitPanel = new JPanel();
+        unitPanel.add(_unitComboBox);
+        panel.add(unitPanel);
         
         JPanel numActionsPanel = new JPanel();
         _numTimers = new JTextField(Integer.toString(numActions));
@@ -118,18 +119,18 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         timerDelaysPanel.add(new JLabel(Bundle.getMessage("ActionTimerSwing_TimerDelays")));
         JPanel timerDelaysSubPanel = new JPanel();
         _timerSocketNames = new JTextField[MAX_NUM_TIMERS];
-        _timerDelays = new JFormattedTextField[MAX_NUM_TIMERS];
+        _timerDelays = new JTextField[MAX_NUM_TIMERS];
         
         for (int i=0; i < MAX_NUM_TIMERS; i++) {
             JPanel delayPanel = new JPanel();
             delayPanel.setLayout(new BoxLayout(delayPanel, BoxLayout.Y_AXIS));
-            _timerSocketNames[i] = new JTextField();
-            _timerSocketNames[i].setEnabled(false);
-            delayPanel.add(_timerSocketNames[i]);
-            _timerDelays[i] = new JFormattedTextField("0");
+            _timerDelays[i] = new JTextField("0");
             _timerDelays[i].setColumns(7);
             _timerDelays[i].setEnabled(false);
             delayPanel.add(_timerDelays[i]);
+            _timerSocketNames[i] = new JTextField();
+            _timerSocketNames[i].setEnabled(false);
+            delayPanel.add(_timerSocketNames[i]);
             timerDelaysSubPanel.add(delayPanel);
             if (i < action.getNumActions()) {
                 String socketName = action.getActionSocket(i).getName();
@@ -150,9 +151,11 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        ActionTimer tempAction = new ActionTimer("IQDA1", null);
+        
         boolean hasErrors = false;
         for (int i=0; i < numActions; i++) {
-            if (! _tempAction.getActionSocket(0).validateName(_timerSocketNames[i].getText())) {
+            if (! tempAction.getActionSocket(0).validateName(_timerSocketNames[i].getText())) {
                 errorMessages.add(Bundle.getMessage("InvalidSocketName", _timerSocketNames[i].getText()));
                 hasErrors = true;
             }
