@@ -628,11 +628,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         }
         // TODO: Still need to strip leading and trailing whitespace.
         log.debug("Complete message = {}", s);
-        //return (DCCppMessage.parseDCCppMessage(s.toString()));
-        // BUG FIX: Incoming DCCpp messages are already formatted for DCC++ and don't
-        // need to be parsed. Indeed, trying to parse them will screw them up.
-        // So instead, we de-@Deprecated the string constructor so that we can
-        // directly create a DCCppReply from the incoming string without translation/parsing.
         return (new DCCppMessage(s.toString()));
     }
 
