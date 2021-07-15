@@ -226,7 +226,7 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
 
 - Create the new draft note section
 ```
-        cp help/en/releasenotes/jmri4.23-master.shtml help/en/releasenotes/current-draft-note.shtml
+        cp help/en/releasenotes/jmri4.25-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
         git commit -m"start for 4.25.2 release note" help/en/releasenotes/*.shtml
         git push github
@@ -465,9 +465,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.25.1+R203912efd.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.1/JMRI.4.25.1+R203912efd.dmg) | 8669ddb9761f4d515d913005b2d7c2b0a7c292f2b714e2c887cc1578958f93b3
-[JMRI.4.25.1+R203912efd.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.1/JMRI.4.25.1+R203912efd.exe) | bda1d8e23dcd2a7082d5249f6b63bc590c3fe528c8ceca5ee95d0c7a24830258
-[JMRI.4.25.1+R203912efd.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.1/JMRI.4.25.1+R203912efd.tgz) | 283e831035acb708efc17c25c09d9039d39d2bcb63db205b5c91ef73c2277973
+[JMRI.4.25.1+R1547b1639f.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.1/JMRI.4.25.1+R1547b1639f.dmg) | 8a9a77c19f38f1ee6248feb9735d9681a18499927db021a61c995b65722c5f74
+[JMRI.4.25.1+R1547b1639f.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.1/JMRI.4.25.1+R1547b1639f.exe) | c676b9eb39df623a9da4fc5c3dab2242b2b8f989e6a1e399c8c327a7ed886237
+[JMRI.4.25.1+R1547b1639f.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.1/JMRI.4.25.1+R1547b1639f.tgz) | 025415a532cb6a1020235876cd256fa2f065d17b5893044b96c06ca02b70ec0b
 
 ```
 
@@ -524,7 +524,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 4.25.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.24 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 4.26 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 - Add the 4.25.2 milestone to the issue.
 
