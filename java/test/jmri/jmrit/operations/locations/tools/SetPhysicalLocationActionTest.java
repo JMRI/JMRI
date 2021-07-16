@@ -64,7 +64,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(splf.saveButton);
         
         // should cause a dialog window to appear
-        JemmyUtil.pressDialogButton(Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.pressDialogButton(splf, Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));
         
         // wait for dialog window to disappear
         jmri.util.JUnitUtil.waitFor(() -> {
