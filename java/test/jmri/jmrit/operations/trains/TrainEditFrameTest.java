@@ -71,6 +71,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // clear no route dialog box
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), Bundle.getMessage("ButtonOK"));
+        
+        // wait for dialog window to disappear
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return trainEditFrame.isActive();
+        }, "wait for dialog window to clear");
 
         Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
 

@@ -283,6 +283,11 @@ public class SpurEditFrameTest extends OperationsTestCase {
 
         // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+        
+        // wait for dialog window to disappear
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return f.isActive();
+        }, "wait for dialog window to clear");
 
         // restore move count
         rloc.setMaxCarMoves(5);
