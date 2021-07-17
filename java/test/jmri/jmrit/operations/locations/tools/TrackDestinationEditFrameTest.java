@@ -59,6 +59,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(tdef.checkDestinationsButton);       
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(tdef, Bundle.getMessage("WarningCarMayNotMove"), "Cancel");
+        JemmyUtil.waitFor(tdef);
         
         // Confirm default
         Assert.assertFalse("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());

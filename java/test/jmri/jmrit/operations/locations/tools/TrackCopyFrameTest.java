@@ -46,6 +46,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
         
         // enter a name for the new track
         tcf.trackNameTextField.setText("Test track name");
@@ -54,6 +55,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, Bundle.getMessage("SelectTrackToCopy"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
         
         // select a track to copy
         tcf.locationBox.setSelectedIndex(1);
@@ -94,6 +96,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
         
         // enter a name for the new track
         tcf.trackNameTextField.setText("Test track name");
@@ -102,6 +105,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, Bundle.getMessage("SelectTrackToCopy"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
         
         // select a track to copy
         tcf.locationBox.setSelectedIndex(1);
@@ -126,21 +130,21 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         tcf.setVisible(true);
         
         JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
-        
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
         
         // enter a name for the new track to fail longer than 25 characters
         tcf.trackNameTextField.setText("Very Long Test Track Name X");
         
         JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
-        
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
+        
         Assert.assertNull(acton.getTrackByName("Very Long Test Track Name X", null));
-
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);
     }
@@ -156,20 +160,19 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         tcf.setVisible(true);
         
         JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
-        
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tcf);
         
         // enter the same name
         tcf.trackNameTextField.setText(acton.getTracksList().get(2).getName());
         
         JemmyUtil.enterClickAndLeaveThreadSafe(tcf.copyButton);
-        
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(tcf);
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);
     }

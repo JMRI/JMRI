@@ -60,10 +60,10 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(tlef.roadNameInclude);
         JemmyUtil.enterClickAndLeaveThreadSafe(tlef.saveTrackButton);
-
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoRoads"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(tlef);
+        
         // only road "AA" is to be accepted
         JemmyUtil.enterClickAndLeave(tlef.addRoadButton);
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);

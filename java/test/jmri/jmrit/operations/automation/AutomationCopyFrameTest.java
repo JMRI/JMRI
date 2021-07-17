@@ -28,7 +28,8 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // enter a name for the automation
         f.automationNameTextField.setText("Name of new automation");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
@@ -59,14 +60,15 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(copyFrame.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(copyFrame);
+        
         // enter a name for the automation
         copyFrame.automationNameTextField.setText("Name of new automation 2");
         JemmyUtil.enterClickAndLeaveThreadSafe(copyFrame.copyButton);
-
         // dialog window requesting automation to copy should appear
         JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(copyFrame);
+        
         // still only one automation
         Assert.assertEquals("Number of automations", 1, manager.getSize());
 

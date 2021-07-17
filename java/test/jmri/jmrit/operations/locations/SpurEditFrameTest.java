@@ -223,15 +223,14 @@ public class SpurEditFrameTest extends OperationsTestCase {
         // specify train pickups using the exclude option
         JemmyUtil.enterClickAndLeave(f.excludeTrainPickup);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
-
         // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         trainA.addTypeName("Boxcar");
 
         // save button
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
         // confirm no error dialog
         Assert.assertTrue(f.isActive());
 
@@ -242,10 +241,10 @@ public class SpurEditFrameTest extends OperationsTestCase {
 
         // save button
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
-
         // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // restore pick ups
         rloc.setPickUpAllowed(true);
 
@@ -266,29 +265,23 @@ public class SpurEditFrameTest extends OperationsTestCase {
 
         // save button
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
-
         // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // train direction default when creating a route is north 
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
         // confirm no error dialog
         Assert.assertTrue(f.isActive());
 
         // try 0 moves
         rloc.setMaxCarMoves(0);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
-
         // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
-        // wait for dialog window to disappear
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return f.isActive();
-        }, "wait for dialog window to clear");
-
         // restore move count
         rloc.setMaxCarMoves(5);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
@@ -298,10 +291,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
         trainA.addTrainSkipsLocation(rloc.getId());
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
-
         // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         // kill all frames
         JUnitUtil.dispose(f);
     }
