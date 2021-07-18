@@ -130,6 +130,11 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
+        
+        // wait for dialog window to disappear
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return f.isActive();
+        }, "wait for dialog window to clear");
 
         // enter a good road number
         f.roadNumberTextField.setText("123");
