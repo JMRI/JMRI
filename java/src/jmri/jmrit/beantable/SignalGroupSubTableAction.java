@@ -546,25 +546,6 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Configure column widths for the Turnout and Sensor Conditional tables.
-     *
-     * @param table JTable to put button in
-     * @param column index of column in table
-     * @param sample sample button to use as spacer
-     */
-    private void setColumnToHoldButton(JTable table, int column, JButton sample) {
-        // install a button renderer & editor
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        table.setDefaultRenderer(JButton.class, buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-        table.setDefaultEditor(JButton.class, buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        table.setRowHeight(sample.getPreferredSize().height);
-        table.getColumnModel().getColumn(column)
-                .setPreferredWidth((sample.getPreferredSize().width) + 4);
-    }
-
-    /**
      * Initialize the list of included turnouts and sensors for a
      * Signal Head item on the sub pane.
      */
