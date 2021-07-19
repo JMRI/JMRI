@@ -75,7 +75,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     /**
      * {@inheritDoc}
      *
-     * Keep autostring in line with {@link #newSignalGroup(String)},
+     * Keep autostring in line with {@link #newSignalGroupWithUserName(String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
