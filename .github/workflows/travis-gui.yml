@@ -30,27 +30,21 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
 
     - name: Test with Maven
-      - env:
+      # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
+      env:
         PRINT_SUMMARY: true
         MAVEN_OPTS: -Xmx1536m
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
         SKIPINTERMITTENT: true
-      - run: start-pulseaudio-x11
-      # Silence errors from firefox about dbus
-      - run: dbus-launch
-      # Install Code Climate test coverage reporter
-      - run: |
+      run: |
+        start-pulseaudio-x11
+        run: dbus-launch
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      - run: chmod +x ./cc-test-reporter
-      - run: ./cc-test-reporter before-build
-      - run: |
-        # run all tests using maven
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
-      - run: |
         travis_wait 50 ./scripts/travis.sh
-        #  - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
-        
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
