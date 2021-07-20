@@ -30,7 +30,6 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
 
     - name: Test with Maven
-      # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
       - env:
         PRINT_SUMMARY: true
         MAVEN_OPTS: -Xmx1536m
