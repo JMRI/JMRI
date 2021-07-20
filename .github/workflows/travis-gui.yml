@@ -48,6 +48,9 @@ jobs:
         ./cc-test-reporter before-build
         xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
         travis_wait 50 ./scripts/travis.sh
+        mvn jacoco:report coveralls:report -U -P travis-coverage
+        JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage
+        bash <(curl -s https://codecov.io/bash)
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
