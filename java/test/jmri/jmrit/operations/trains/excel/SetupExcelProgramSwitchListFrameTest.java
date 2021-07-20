@@ -36,11 +36,10 @@ public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
         f.initComponents();
         Assert.assertTrue(f.isShowing());
         
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);       
         // abort find file
         JemmyUtil.pressDialogButton(Bundle.getMessage("FindDesiredExcelFile"), "Cancel");
-        
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -55,10 +54,9 @@ public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.isShowing());
         
         JemmyUtil.enterClickAndLeaveThreadSafe(f.testButton);
-        
         // kill dialog
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ManifestCreatorNotFound"), Bundle.getMessage("ButtonOK"));
-        
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

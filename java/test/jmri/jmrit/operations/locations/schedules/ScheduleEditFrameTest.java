@@ -86,6 +86,7 @@ public class ScheduleEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteScheduleButton);
         // Yes to pop up
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 

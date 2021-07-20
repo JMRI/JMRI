@@ -178,6 +178,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteAutomationButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         Assert.assertEquals(0, InstanceManager.getDefault(AutomationManager.class).getSize());
 
         JUnitUtil.dispose(f);
@@ -210,6 +211,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteAutomationButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
 
         JUnitUtil.dispose(f);

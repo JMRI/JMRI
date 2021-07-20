@@ -536,6 +536,8 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                     new Object[] { train.getName(), train.getDescription() }), Bundle.getMessage("ButtonNo"));
         }
+        
+        JemmyUtil.waitFor(ttf);
 
         // confirm no change in status
         for (Train train : tmanager.getTrainsByNameList()) {
@@ -551,6 +553,8 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                     new Object[] { train.getName(), train.getDescription() }), Bundle.getMessage("ButtonYes"));
         }
+        
+        JemmyUtil.waitFor(ttf);
 
         // confirm all trains terminated
         for (Train train : tmanager.getTrainsByNameList()) {

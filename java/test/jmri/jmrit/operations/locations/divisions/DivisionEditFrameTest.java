@@ -63,6 +63,7 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         // new dialog window stating division name too long
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(def);
         Assert.assertEquals("Name", "testName", division.getName());
         Assert.assertEquals("Comment", "", division.getComment());
         // now test saving a division that already exists
@@ -73,6 +74,7 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         // new dialog window stating division already exists
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(def);
         JUnitUtil.dispose(def);
     }
     
@@ -127,13 +129,19 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(dm.getDivisionByName("testDivisionName"));
         DivisionEditFrame def = new DivisionEditFrame(division);
         Assert.assertNotNull("exists", def);
+        
+        // test no
         JemmyUtil.enterClickAndLeaveThreadSafe(def.deleteDivisionButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(def, Bundle.getMessage("DeleteDivision"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(def);        
         Assert.assertNotNull(dm.getDivisionByName("testDivisionName"));
+        
+        // test yes
         JemmyUtil.enterClickAndLeaveThreadSafe(def.deleteDivisionButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(def, Bundle.getMessage("DeleteDivision"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(def);
         Assert.assertNull(dm.getDivisionByName("testDivisionName"));
         JUnitUtil.dispose(def);
     }
