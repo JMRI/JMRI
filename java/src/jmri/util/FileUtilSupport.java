@@ -573,6 +573,8 @@ public class FileUtilSupport extends Bean {
 
         log.warn("Daniel: getPortableFilename: AAA: {}", filename);
 
+        System.out.format("DanielDaniel: getPortableFilename: %s, User files path: %s%n", filename, getUserFilesPath(profile));
+
         // compare full path name to see if same as preferences
         if (!ignoreUserFilesPath) {
             if (filename.startsWith(getUserFilesPath(profile))) {
