@@ -47,7 +47,6 @@ jobs:
         ./cc-test-reporter before-build
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true" "-Djava.awt.headless=true"
         ./scripts/travis.sh
-#        travis_wait 50 ./scripts/travis.sh
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
