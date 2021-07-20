@@ -107,7 +107,7 @@
       <routeSensor systemName="IS7" mode="onChange" />
       <routeSensor systemName="IS8" mode="vetoActive" />
       <routeSoundFile name="program:resources/sounds/Bell.wav" />
-      <routeScriptFile name="scripts:PowerOff.py" />
+      <routeScriptFile name="preference:PowerOff.py" />
       <turnoutsAlignedSensor name="IS10" />
     </route>
     <route userName="Extrra" controlLockTurnout="IT5" controlLockTurnoutState="CHANGE" addedDelay="5">
