@@ -37,11 +37,11 @@ jobs:
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
         SKIPINTERMITTENT: true
-      run: start-pulseaudio-x11
-      # Silence errors from firefox about dbus
-      run: dbus-launch
-      # Install Code Climate test coverage reporter
-      run: |
+      run:
+        start-pulseaudio-x11
+        # Silence errors from firefox about dbus
+        dbus-launch
+        # Install Code Climate test coverage reporter
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       run: chmod +x ./cc-test-reporter
       run: ./cc-test-reporter before-build
