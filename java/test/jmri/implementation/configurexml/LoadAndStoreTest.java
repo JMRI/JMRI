@@ -43,6 +43,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @BeforeEach
     public void localSetUp() {
+        System.out.format("Daniel: User files path: %s%n", jmri.util.FileUtilSupport.getDefault().getUserFilesPath(jmri.profile.ProfileManager.getDefault().getActiveProfile()));
         // for DCC Signals
         InstanceManager.store(new MockCommandStation("N"), CommandStation.class);
     }
