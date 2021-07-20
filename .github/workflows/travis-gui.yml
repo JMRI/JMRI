@@ -31,7 +31,7 @@ jobs:
 
     - name: Test with Maven
       # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
-      env:
+      - env:
         PRINT_SUMMARY: true
         MAVEN_OPTS: -Xmx1536m
         RUN_ORDER: alphabetical
