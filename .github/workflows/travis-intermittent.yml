@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Travis GUI test
+name: Travis Intermittent test
 
 on: [ push, pull_request ]
 #  push:
@@ -37,8 +37,8 @@ jobs:
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
         HEADLESS: false
-        SKIPINTERMITTENT: true
-        STATIC: false
+        SKIPINTERMITTENT: false
+        STATIC: true
       run: |
         sudo apt-get install graphviz libalut0 pulseaudio tidy
         sudo apt-get install xvfb
@@ -46,7 +46,7 @@ jobs:
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
-        xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
+        xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=false"
         travis_wait 50 ./scripts/travis.sh
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
