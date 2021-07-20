@@ -38,6 +38,7 @@ jobs:
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
         SKIPINTERMITTENT: true
       run: |
+        sudo apt-get install graphviz libalut0 pulseaudio tidy
         start-pulseaudio-x11
         run: dbus-launch
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
