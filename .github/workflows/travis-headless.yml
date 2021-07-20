@@ -44,9 +44,13 @@ jobs:
         start-pulseaudio-x11
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
+        echo "DanielAAA"
         ./cc-test-reporter before-build
+        echo "DanielBBB"
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true" "-Djava.awt.headless=true"
+        echo "DanielCCC"
         ./scripts/travis.sh
+        echo "DanielDDD"
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
