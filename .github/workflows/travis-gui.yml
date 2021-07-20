@@ -39,11 +39,12 @@ jobs:
         SKIPINTERMITTENT: true
       run: |
         sudo apt-get install graphviz libalut0 pulseaudio tidy
+        sudo apt-get install xvfb
         start-pulseaudio-x11
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
-        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
+        xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
         travis_wait 50 ./scripts/travis.sh
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
@@ -51,3 +52,6 @@ jobs:
       with:
         name: screenshots
         path: temp/temp/*.png
+#   https://github.com/marketplace/actions/cleanup-xvfb
+    - name: Cleanup xvfb pidx
+      uses: bcomnes/cleanup-xvfb@v1
