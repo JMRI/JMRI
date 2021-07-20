@@ -47,7 +47,8 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
         xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=false"
-        travis_wait 50 ./scripts/travis.sh
+        ./scripts/travis.sh
+#        travis_wait 50 ./scripts/travis.sh
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
       if: ${{ always() }}

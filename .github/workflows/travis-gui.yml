@@ -47,7 +47,8 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
         xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
-        travis_wait 50 ./scripts/travis.sh
+        ./scripts/travis.sh
+#        travis_wait 50 ./scripts/travis.sh
         mvn jacoco:report coveralls:report -U -P travis-coverage
         JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage
         bash <(curl -s https://codecov.io/bash)
