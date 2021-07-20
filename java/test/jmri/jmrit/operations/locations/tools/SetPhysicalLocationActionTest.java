@@ -67,9 +67,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(splf, Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));
         
         // wait for dialog window to disappear
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return splf.isActive();
-        }, "wait for dialog window to clear");
+        JemmyUtil.waitFor(splf);
         
         // test close button
         JemmyUtil.enterClickAndLeave(splf.closeButton);

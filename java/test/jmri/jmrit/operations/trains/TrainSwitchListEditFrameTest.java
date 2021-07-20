@@ -26,10 +26,10 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainSwitchListEditFrame t = new TrainSwitchListEditFrame();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
-    
+
     @Test
     public void testTrainSwitchListEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -72,9 +72,9 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         // test the two check box options
         JemmyUtil.enterClickAndLeave(f.switchListRealTimeCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        
         // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ResetSwitchLists"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
@@ -88,16 +88,15 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
         // TODO add test for combo box
-        //      JemmyUtil.enterClickAndLeave(f.switchListPageComboBox);
-        //      JemmyUtil.enterClickAndLeave(f.saveButton);
-        //      Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
-        //      Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
-        //      Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
-        ThreadingUtil.runOnGUI(() -> {
-            JUnitUtil.dispose(f);
-        });
+        // JemmyUtil.enterClickAndLeave(f.switchListPageComboBox);
+        // JemmyUtil.enterClickAndLeave(f.saveButton);
+        // Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        // Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
+        // Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+        JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrameTest.class);
+    // private final static Logger log =
+    // LoggerFactory.getLogger(TrainSwitchListEditFrameTest.class);
 
 }

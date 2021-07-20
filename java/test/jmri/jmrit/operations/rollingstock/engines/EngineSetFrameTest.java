@@ -103,6 +103,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Assert.assertNotNull("engine has destination track", e1.getDestinationTrack());
         
         JemmyUtil.pressDialogButton(Bundle.getMessage("enginePartConsist"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonYes"));
@@ -111,7 +112,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Assert.assertNull("engine has destination track removed", e1.getDestinationTrack());
         
         JemmyUtil.pressDialogButton(Bundle.getMessage("enginePartConsist"), Bundle.getMessage("ButtonYes"));
-        
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 }
