@@ -45,7 +45,7 @@ jobs:
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
-        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
+        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true" "-Djava.awt.headless=true"
         travis_wait 50 ./scripts/travis.sh
     - name: Upload generated screenshots artifact
       uses: actions/upload-artifact@v2
