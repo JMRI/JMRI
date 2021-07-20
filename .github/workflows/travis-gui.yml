@@ -40,7 +40,6 @@ jobs:
       run: |
         sudo apt-get install graphviz libalut0 pulseaudio tidy
         start-pulseaudio-x11
-        dbus-launch
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
