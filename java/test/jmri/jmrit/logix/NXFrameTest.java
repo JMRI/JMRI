@@ -71,9 +71,8 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testNXWarrantSetup() throws Exception {
-        Assert.fail();    // Test Intermittent failure. / Daniel Bergqvist
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
