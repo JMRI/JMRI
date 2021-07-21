@@ -176,8 +176,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     elem.addContent(rsElem);
                 }
                 if (r.getOutputScriptName() != null && !r.getOutputScriptName().equals("")) {
-                    log.warn("Daniel AAA: routeScriptFile: {}, {}", r.getOutputScriptName(), jmri.util.FileUtil.getPortableFilename(new java.io.File(r.getOutputScriptName())));
-                    System.out.format("Daniel AAA: routeScriptFile: %s, %s%n", r.getOutputScriptName(), jmri.util.FileUtil.getPortableFilename(new java.io.File(r.getOutputScriptName())));
                     Element rsElem = new Element("routeScriptFile")
                             .setAttribute("name",
                                     jmri.util.FileUtil.getPortableFilename(
@@ -443,8 +441,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
             fileElement = el.getChild("routeScriptFile");
             if (fileElement != null) {
-                log.warn("Daniel BBB: routeScriptFile: {}, {}", fileElement.getAttribute("name").getValue(), jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue()));
-                System.out.format("Daniel BBB: routeScriptFile: %s, %s%n", fileElement.getAttribute("name").getValue(), jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue()));
                 r.setOutputScriptName(
                         jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue())
                 );
