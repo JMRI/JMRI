@@ -571,14 +571,9 @@ public class FileUtilSupport extends Bean {
             throw new IllegalArgumentException("File \"" + file + "\" has a null absolute path which is not allowed");
         }
 
-//        log.warn("Daniel: getPortableFilename: AAA: {}", filename);
-
-//        System.out.format("DanielDaniel: getPortableFilename: %s, User files path: %s%n", filename, getUserFilesPath(profile));
-
         // compare full path name to see if same as preferences
         if (!ignoreUserFilesPath) {
             if (filename.startsWith(getUserFilesPath(profile))) {
-//                log.warn("Daniel: getPortableFilename: BBB: {}, User files path: {}", filename, getUserFilesPath(profile));
                 return PREFERENCES
                         + filename.substring(getUserFilesPath(profile).length(), filename.length()).replace(File.separatorChar,
                                 SEPARATOR);
@@ -588,7 +583,6 @@ public class FileUtilSupport extends Bean {
         if (!ignoreProfilePath) {
             // compare full path name to see if same as profile
             if (filename.startsWith(getProfilePath(profile))) {
-//                log.warn("Daniel: getPortableFilename: CCC: {}, Profile path: {}", filename, getProfilePath(profile));
                 return PROFILE
                         + filename.substring(getProfilePath(profile).length(), filename.length()).replace(File.separatorChar,
                                 SEPARATOR);
@@ -597,7 +591,6 @@ public class FileUtilSupport extends Bean {
 
         // compare full path name to see if same as settings
         if (filename.startsWith(getPreferencesPath())) {
-//            log.warn("Daniel: getPortableFilename: DDD: {}, Settings path: {}", filename, getPreferencesPath());
             return SETTINGS
                     + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar,
                             SEPARATOR);
@@ -615,7 +608,6 @@ public class FileUtilSupport extends Bean {
              */
             // check for relative to scripts dir
             if (filename.startsWith(getScriptsPath(profile)) && !filename.equals(getScriptsPath(profile))) {
-//                log.warn("Daniel: getPortableFilename: EEE: {}, Script path: {}", filename, getScriptsPath(profile));
                 return SCRIPTS
                         + filename.substring(getScriptsPath(profile).length(), filename.length()).replace(File.separatorChar,
                                 SEPARATOR);
