@@ -17,6 +17,7 @@ public class DccSignalMastXmlTest {
     @Test
     public void testCtor(){
       Assert.assertNotNull("DccSignalMastXml constructor",new DccSignalMastXml());
+      Assert.assertFalse(java.awt.GraphicsEnvironment.isHeadless());    // Test Travis Headless by force failure when headless
     }
 
     @BeforeEach
