@@ -10,7 +10,24 @@
 <!--Do not edit it directly-->
 <!--=====================================================================-->
 <script>
+
+        var use_internet = false;
+
         function openLink(link) {
+
+            if (link.includes("/manual/")) {
+                if (!use_internet) {
+                    if (window.confirm("Manual help pages are not installed.\nIf internet is available, use jmri.org?")) {
+                        use_internet = true;
+                    }
+                }
+                if (use_internet) {
+                    link = "https://jmri.org/help/en/manual/" + link;
+                } else {
+                    return;
+                }
+            }
+
             document.getElementById("page").src = link;
         }
 

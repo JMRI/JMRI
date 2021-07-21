@@ -2,12 +2,12 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -16,8 +16,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
 import jmri.util.PhysicalLocationPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for setting train physical location coordinates for a location.
@@ -123,7 +121,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected
         if (locationBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectLocationToEdit"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"),
                     Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -132,7 +130,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
             return;
         }
         if (ae.getSource() == saveButton) {
-            int value = JOptionPane.showConfirmDialog(null, MessageFormat.format(
+            int value = JOptionPane.showConfirmDialog(this, MessageFormat.format(
                     Bundle.getMessage("UpdatePhysicalLocation"), new Object[]{l.getName()}),
                     Bundle.getMessage("UpdateDefaults"), JOptionPane.YES_NO_OPTION);
             if (value == JOptionPane.YES_OPTION) {

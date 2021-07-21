@@ -41,6 +41,7 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(scf, MessageFormat.format(Bundle
                 .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}),
                 Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(scf);
 
         // name too long
         scf.scheduleNameTextField.setText("abcdefghijklmnopqrstuvwxwyz");
@@ -49,7 +50,8 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(scf, MessageFormat.format(Bundle
                 .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(scf);
+        
         // good schedule name
         scf.scheduleNameTextField.setText("TestCopyScheduleName");
         JemmyUtil.enterClickAndLeave(scf.copyButton);
