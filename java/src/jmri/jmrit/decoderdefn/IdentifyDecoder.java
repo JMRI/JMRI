@@ -309,7 +309,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return false;
         } else if (mfgID == 153) {  // DIY
             productIDlowest = value;
-            productID = 
+            productID = (productIDhighest*256*256*256) + (productIDhigh*256*256) + (productIDlow*256) + productIDlowest
             return true;
         }
         log.error("unexpected step 8 reached with value: {}", value);
