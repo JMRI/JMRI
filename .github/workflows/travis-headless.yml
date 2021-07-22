@@ -41,6 +41,7 @@ jobs:
         STATIC: false
       run: |
         sudo apt-get install graphviz libalut0 pulseaudio tidy
+        sudo apt-get install xvfb
         start-pulseaudio-x11
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
