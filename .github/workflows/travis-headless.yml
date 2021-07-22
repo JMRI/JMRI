@@ -36,7 +36,7 @@ jobs:
         MAVEN_OPTS: -Xmx1536m
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
-        HEADLESS: true
+        HEADLESS: false
         SKIPINTERMITTENT: false
         STATIC: false
       run: |
