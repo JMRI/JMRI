@@ -47,7 +47,7 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
         echo "DanielAAA"
-        xvfb-run --auto-servernum mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
+        xvfb-run --auto-servernum mvn test "-Dtest=apps.SplashWindowTest"
         echo "DanielBBB"
         ./scripts/travis.sh
         echo "DanielCCC"
