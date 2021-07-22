@@ -37,7 +37,7 @@ jobs:
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
         HEADLESS: false
-        SKIPINTERMITTENT: false
+        SKIPINTERMITTENT: true
         STATIC: false
       run: |
         sudo apt-get install graphviz libalut0 pulseaudio tidy
