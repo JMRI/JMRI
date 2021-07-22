@@ -36,12 +36,11 @@ jobs:
         MAVEN_OPTS: -Xmx1536m
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
-        HEADLESS: false
-        SKIPINTERMITTENT: true
+        HEADLESS: true
+        SKIPINTERMITTENT: false
         STATIC: false
       run: |
         sudo apt-get install graphviz libalut0 pulseaudio tidy
-        sudo apt-get install xvfb
         start-pulseaudio-x11
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
