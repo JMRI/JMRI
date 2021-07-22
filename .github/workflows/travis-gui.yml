@@ -46,8 +46,11 @@ jobs:
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
-        mvn test "-Dtest=jmri.AnalogIOTest"
+        echo "DanielAAA"
+        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
+        echo "DanielBBB"
         ./scripts/travis.sh
+        echo "DanielCCC"
         mvn jacoco:report coveralls:report -U -P travis-coverage
         JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage
         bash <(curl -s https://codecov.io/bash)
