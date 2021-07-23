@@ -48,7 +48,8 @@ else
     if [[ "${SKIPINTERMITTENT}" == "true" ]] ; then
         # run full GUI test suite and fail on coverage issues
         #       skipping XML Schema validation in long-running task, still done in headless
-        mvn verify -U -P travis-coverage --batch-mode \
+#        mvn verify -U -P travis-coverage --batch-mode \
+        mvn test -U -P travis-coverage --batch-mode \
             -Dsurefire.printSummary=${PRINT_SUMMARY} \
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
