@@ -14,7 +14,6 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.*;
-import jmri.util.javaworld.GridLayout2;
 
 import org.jdom2.Element;
 
@@ -88,7 +87,7 @@ public class AddSignalMastPanel extends JPanel {
 
         JPanel p;
         p = new JPanel();
-        p.setLayout(new GridLayout2(5, 2));
+        p.setLayout(new jmri.util.javaworld.GridLayout2(5, 2));
 
         JLabel l = new JLabel(Bundle.getMessage("LabelUserName"));  // NOI18N
         p.add(l);
