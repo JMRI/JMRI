@@ -476,21 +476,21 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 6 ", true, i.isRunning());
         
         // simulate CV read complete on CV254, start 255
-        i.programmingOpReply(1, 0);
+        i.programmingOpReply(2, 0);
         Assert.assertEquals("step 7 reads CV ", 255, cvRead);
         Assert.assertEquals("running after 7 ", true, i.isRunning());
         
         // simulate CV read complete on CV255, start 256
-        i.programmingOpReply(1, 0);
+        i.programmingOpReply(3, 0);
         Assert.assertEquals("step 8 reads CV ", 256, cvRead);
         Assert.assertEquals("running after 8 ", true, i.isRunning());
         
         // simulate CV read complete on CV256, end
-        i.programmingOpReply(1, 0);
+        i.programmingOpReply(4, 0);
 
         Assert.assertEquals("found mfg ID ", 153, i.mfgID);
         Assert.assertEquals("found model ID ", 5, i.modelID);
-        Assert.assertEquals("found product ID ", 16843009, i.productID);
+        Assert.assertEquals("found product ID ", 67305985, i.productID);
     }
 
     /**
