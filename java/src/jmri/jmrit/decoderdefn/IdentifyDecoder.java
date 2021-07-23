@@ -290,7 +290,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return true;
         } else if (mfgID == 153) {  // TCS
             productIDhigh = value;
-            statusUpdate("Read decoder product hash #2 CV 256");
+            statusUpdate("Read decoder product hash #4 CV 256");
             readCV("256");
             return false;
         }
