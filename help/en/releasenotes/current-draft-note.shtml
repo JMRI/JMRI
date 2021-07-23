@@ -352,7 +352,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Updated TCS Decoder identification processes to allow for 4-byte decoder
+            with ids stored in CV's 253, 254, 255, and 256. Process only effects TCS decoders
+            CV249 > 175. 
+            </li>
         </ul>
 
     <h3>CTC Tool</h3>
