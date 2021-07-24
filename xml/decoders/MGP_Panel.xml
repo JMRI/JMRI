@@ -274,7 +274,7 @@ in xsl
       <label>
         <text> </text>
       </label>
-      <display item="Manufacturer Id" />
+      <display item="Manufacturer" />
       <label>
         <text> </text>
       </label>
