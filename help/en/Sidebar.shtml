@@ -1,0 +1,59 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for help/en/html/ pages -->
+	<hr class="hide">
+
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+
+          <dt><a href="Acknowledgements.shtml">Acknowledgements</a></dt>
+          <dd>
+            <a href="#A">A</a>
+            <a href="#B">B</a>
+            <a href="#C">C</a>
+            <a href="#D">D</a>
+            <a href="#E">E</a>
+            <a href="#F">F</a>
+            <a href="#G">G</a>
+            <a href="#H">H</a>
+            <a href="#I">I</a>
+            <br>
+            <a href="#J">J</a>
+            <a href="#K">K</a>
+            <a href="#L">L</a>
+            <a href="#M">M</a>
+            <a href="#N">N</a>
+            <a href="#O">O</a>
+            <a href="#P">P</a>
+            <a href="#Q">Q</a>
+            <a href="#R">R</a>
+            <br>
+            <a href="#S">S</a>
+            <a href="#T">T</a>
+            <a href="#U">U</a>
+            <a href="#V">V</a>
+            <a href="#W">W</a>
+            <a href="#X">X</a>
+            <a href="#Y">Y</a>
+            <a href="#Z">Z</a>
+          <dd>
+
+            <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
+
+	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
+
+         </dl>
+
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
+
+    </div> <!-- closes #side -->
+
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
+<!-- /Sidebar.shtml -->
