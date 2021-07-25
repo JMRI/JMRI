@@ -1,5 +1,5 @@
-<!-- Sidebar.shtml -->
-<!-- This is the common sidebar definition for help/en/html/ pages -->
+<!-- SidebarA.shtml -->
+<!-- This special sidebar is to be used only by Acknowledgements.shtml -->
 	<hr class="hide">
 
     <div id="side"> <!-- Block of text on left side of page -->
@@ -56,4 +56,4 @@
 
 <!-- button is in /Header -->
 <script src="/js/side.js"></script>
-<!-- /Sidebar.shtml -->
+<!-- /SidebarA.shtml -->

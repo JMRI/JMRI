@@ -75,7 +75,7 @@
               for details.</dd>
 
               <dt>Window</dt>
-              <dd>The Window menu lists all of the JMRI windows.  This can be used to
+              <dd>The Window menu lists all of the open JMRI windows.  This can be used to
               show a hidden or minimized window, or make it the top window on the display.</dd>
 
               <dt>Help</dt>
