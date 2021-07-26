@@ -68,11 +68,19 @@
     <xslt  basedir="${basedir}"
         destdir="${helptarget}"
         extension=".local"
-        style="formatLocalTOC.xsl"
-        includes="JmriHelp_frTOC.xml"
+        style="formatLocal.xsl"
+        includes="JmriHelp_frTOC.xml, JmriHelp_frIndex.xml"
     >
     </xslt>
-    <move file="JmriHelp_frTOC.local" tofile="local/index.html"/>
+    <concat destfile="local/index.html">
+      <fileset file="JmriHelp_frHeader.local" />
+      <fileset file="JmriHelp_frTOC.local" />
+      <fileset file="JmriHelp_frMiddle.local" />
+      <fileset file="JmriHelp_frIndex.local" />
+      <fileset file="JmriHelp_frFooter.local" />
+    </concat>
+    <delete file="JmriHelp_frTOC.local" />
+    <delete file="JmriHelp_frIndex.local" />
   </target>
 
 
