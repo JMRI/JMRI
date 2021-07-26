@@ -1,0 +1,63 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Linux GUI test running Ant alltest
+
+on: [ push, pull_request ]
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+#    - name: Change screen resolution
+#      run: Set-DisplayResolution -Width 1600 -Height 1200 -Force
+#      shell: pwsh
+    - name: Cache Maven packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Test with Maven
+      # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
+      env:
+        PRINT_SUMMARY: true
+        MAVEN_OPTS: -Xmx1536m
+        RUN_ORDER: alphabetical
+        CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
+        HEADLESS: false
+        SKIPINTERMITTENT: true
+        STATIC: false
+      run: |
+        sudo apt-get install graphviz libalut0 pulseaudio tidy
+        sudo apt-get install xvfb
+        start-pulseaudio-x11
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+        echo "DanielAAA"
+        xvfb-run --auto-servernum ant alltest
+        echo "DanielBBB"
+        mvn jacoco:report coveralls:report -U -P travis-coverage
+        JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage
+        bash <(curl -s https://codecov.io/bash)
+    - name: Upload generated screenshots artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: screenshots
+        path: temp/temp/*.png
+#   https://github.com/marketplace/actions/cleanup-xvfb
+    - name: Cleanup xvfb pidx
+      uses: bcomnes/cleanup-xvfb@v1
