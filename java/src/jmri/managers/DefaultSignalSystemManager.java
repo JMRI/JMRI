@@ -84,7 +84,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     }
 
     @Nonnull
-    private List<String> getListOfNames() {
+    protected List<String> getListOfNames() {
         List<String> retval = new ArrayList<>();
         // first locate the signal system directory
         // and get names of systems
