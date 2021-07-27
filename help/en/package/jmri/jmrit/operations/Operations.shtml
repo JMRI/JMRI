@@ -1786,7 +1786,7 @@
    size using the pull down menus. You can also select which printer to use when printing out a
    Manifest or switch list. See <a href="#SwitchList">Switch Lists</a> for more details.
 
-   <h3>Message Format</h3>
+   <h3>Format</h3>
    If you would like your Manifest and switch lists printed in a tabular (columns) format select the
    "Tabular" checkbox. The program determines the maximum character length for each of the attribute's names (Road,
    Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
@@ -1819,6 +1819,13 @@
     lists using the described options.
    </p>
 
+   <h3>Orientation</h3>
+   There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size is determined by
+   the locale in use. To access the JMRI locale, from the main menu bar under "Edit" select
+   "Preferences..." then "Display" and then select the "Locale" tab. Some printers require the
+   English (United States) locale in order to print out a Manifest or switch list with the correct
+   number of lines.
+
    <h3>Set Out Text Color</h3>
    You can select the text color of your Manifest when the operation is to set out a car or
    locomotive. Select the desired color from the drop down box.
@@ -1830,8 +1837,9 @@
    <h3>Local Move Text Color</h3>
    You can select the text color of your Manifest when the operation is to move a car from one track
    to another at the same location. The car in this case is not added to the train. Select the
-   desired color from the drop down box. <a name="MessageFormats" id="MessageFormats"></a>
-
+   desired color from the drop down box. 
+   
+   <a name="MessageFormats" id="MessageFormats"></a>
    <h3>Message Formats</h3>
    You can customize the pick up, set out, and local move messages for your Manifests and switch
    lists by selecting the appropriate drop down menus. To remove a loco or car attribute (Road,
@@ -1934,12 +1942,16 @@
    </p>
 
    <p>
-    The last option is "Print Headers". When this option is selected, the train Manifests and switch
+    The next option is "Print Headers". When this option is selected, the train Manifests and switch
     list will include a header showing all of the car attributes that you've selected in the above <a
      href="#MessageFormats">message formats</a>. You can customize all of the header text by
     selecting "Edit Manifest Header Text" under the <a href="#ManifestPrintOptionsTools">Tools</a>
     menu.
    </p>
+
+   <p>The last option is "Print Page Header". When this option is selected, the train Manifests
+    and switch list will have on the top of each page the train description, page number, and date
+    the page was printed.</p>
 
    <h3>Manifest and Switch List Preview</h3>
    If you want to use a text editor to preview your Manifests and switch lists, select this option.
@@ -2245,15 +2257,15 @@
 
    <a name="TrackBlockingOrder" id="TrackBlockingOrder"></a>
    <h4>Track Blocking Order</h4>
-   The program when creating <a href="#PrintingManifests">Manifest</a> and switch lists
-   will block the cars in the train by destination (<a
+   The program when creating <a href="#PrintingManifests">Manifest</a> and switch lists will block
+   the cars in the train by destination (<a
     href="#RouteBlockingOrder">route blocking order</a>) and then alphabetically by the track names
-   at the destination. If you want to change the order tracks are serviced at a location, use the
-   location tool "Track Blocking Order" to adjust the order tracks are presented on Manifests and
-   switch lists. The "Order" number controls how tracks are presented, lower numbered tracks are
-   printed first for Westbound and Northbound trains, and higher numbered tracks are printed first
-   for Eastbound and Southbound trains. Use any blocking order number greater than zero when using
-   this feature.
+   at the destination. If you want to change the order tracks are serviced at a location for car set
+   outs, use the location tool "Track Blocking Order" to adjust the order tracks are presented on
+   Manifests and switch lists. The "Order" number controls how tracks are presented, lower numbered
+   tracks are printed first for Westbound and Northbound trains, and higher numbered tracks are
+   printed first for Eastbound and Southbound trains. Use any blocking order number greater than
+   zero when using this feature.
 
    <p>Note that this feature controls the set outs for a location. Car pick ups at a location
     are blocked by their next destination and then alphabetically by track name or by the track blocking
