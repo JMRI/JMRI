@@ -2700,7 +2700,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         // If speed change is due to a signal, this signal should be the next signal ahead
         // However (see lines 2552-4) it is possible for it not to be the current _protectSignal.
-        if (!_waitForBlock && !_waitForWarrant) {   // must be a signal change
+        if (_protectSignal !=null && !_waitForBlock && !_waitForWarrant) {   // must be a signal change
             for (int idx = _idxCurrentOrder + 1; idx < _orders.size(); idx++) {
                 blkOrder = getBlockOrderAt(idx);
                 String sType = getPermissibleSpeedAt(blkOrder);

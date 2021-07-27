@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: SoundPro Main Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Matthew Harris">
@@ -18,28 +15,20 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI: SoundPro Main Window</h1><img src=
-      "../../../../../resources/SoundPro.gif" align="right" height=
-      "100" width="100"> The SoundPro main window gives access to
-      all the capabilities of JMRI.
+      <h1>JMRI: SoundPro Main Window</h1>
 
-      <p>Help on specific menus:</p>
+      <img src="../../../../../resources/SoundPro.gif" class="floatRight"
+      height="100" width="100" alt="">
 
-      <ul>
-        <li>Edit - (<a href=
-        "../../../package/apps/TabbedPreferences.shtml">Preferences</a>)</li>
+      <p>The SoundPro app provides an alternate PanelPro splash screen that includes a
+      button that provides a shortcut to the <strong>Audio</strong> table.
+      The normal path is <strong>Tools &rArr; Tables &rArr; Audio</strong>.</p>
 
-        <li><a href="../../tools/index.shtml">Tools</a></li>
+      <p>The main help page is at <a href="../../tools/Audio.shtml">Audio</a>
 
-        <li><a href=
-        "../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a></li>
-
-        <li><a href=
-        "../../../html/tools/Audio.shtml">Audio</a></li>
-      </ul>More information about the <a href=
-      "../../setup/Files.shtml">JMRI Configuration Files</a> 
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

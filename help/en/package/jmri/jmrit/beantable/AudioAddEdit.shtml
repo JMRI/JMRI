@@ -1,23 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding/Editing Audio objects</title>
   <meta name="author" content="Matt Harris">
   <meta name="keywords" content="JMRI help Audio Add Edit">
-  <meta http-equiv="Content-Type" content=
-          "text/html; charset=us-ascii">
   <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Adding/Editing Audio objects</h1>To create an audio
       object, click either the "Add Source..." or the "Add
@@ -35,11 +29,11 @@
       types:</p>
 
       <p><a href="AddEditAudioListener.jpg"><img src=
-      "AddEditAudioListener.jpg" height="202" width="164"></a>  
+      "AddEditAudioListener.jpg" height="202" width="164" alt="Audio Listener"></a>
       <a href="AddEditAudioBuffer.jpg"><img src=
-      "AddEditAudioBuffer.jpg" height="94" width="272"></a>  
+      "AddEditAudioBuffer.jpg" height="94" width="272" alt="Audio Buffer"></a>
       <a href="AddEditAudioSource.jpg"><img src=
-      "AddEditAudioSource.jpg" height="263" width="164"></a></p>
+      "AddEditAudioSource.jpg" height="263" width="164" alt="Audio Source"></a></p>
 
       <p>The User Name is optional, but if given has to be
       unique.</p>
@@ -52,5 +46,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

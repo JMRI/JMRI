@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -112,10 +112,10 @@ public class OperationsRoutesGuiTest extends OperationsTestCase {
 
         // test delete button
         //f.deleteRouteButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.deleteRouteButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteRouteButton);
         // click "Yes" in the confirm popup
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 
         JUnitUtil.dispose(f);

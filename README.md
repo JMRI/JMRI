@@ -14,7 +14,7 @@ Test:
 [![Test release](https://img.shields.io/github/release/JMRI/JMRI.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 [![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/latest/total.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 Production:
-[![Production release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.22/total.svg)](https://www.jmri.org/download/index.shtml#prod-rel)
+[![Production release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.24/total.svg)](https://www.jmri.org/download/index.shtml#prod-rel)
 Total (since 9/2017):
 [![Totals since 9/2017](https://img.shields.io/github/downloads/JMRI/JMRI/total.svg)](https://www.jmri.org/download/index.shtml)
 

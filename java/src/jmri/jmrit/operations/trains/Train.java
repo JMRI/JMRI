@@ -662,9 +662,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return getRoute().getTerminatesRouteLocation();
     }
-    
+
     /**
      * Returns the order the train should be blocked.
+     * 
      * @return routeLocations for this train.
      */
     public List<RouteLocation> getTrainBlockingOrder() {
@@ -1673,6 +1674,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                         new Object[] { getName(), car.toString(),
                                                 getTerminationTrack().getLocation().getName(),
                                                 getTerminationTrack().getName(), status }));
+                        setServiceStatus(status);
                         continue;
                     }
                 } else {
@@ -2910,7 +2912,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         } else {
             TrainPrintUtilities.printReport(buildFile,
                     MessageFormat.format(Bundle.getMessage("buildReport"), new Object[] { getDescription() }),
-                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize());
+                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
         }
         return true;
     }
@@ -3003,7 +3005,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             name = name.substring(0, TrainCommon.getManifestHeaderLineLength() / 2);
         }
         TrainPrintUtilities.printReport(file, name, isPreview, Setup.getFontName(), false, logoURL, printerName,
-                Setup.getManifestOrientation(), Setup.getManifestFontSize());
+                Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
         if (!isPreview) {
             setPrinted(true);
         }
@@ -3227,8 +3229,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     @SuppressWarnings("null")
     protected void moveTrainIcon(RouteLocation rl) {
-        // create train icon if at departure or if program has been restarted
-        if (rl == getTrainDepartsRouteLocation() || _trainIcon == null) {
+        // create train icon if at departure, if program has been restarted, or removed
+        if (rl == getTrainDepartsRouteLocation() || _trainIcon == null || !_trainIcon.isActive()) {
             createTrainIcon(rl);
         }
         // is the lead engine still in train

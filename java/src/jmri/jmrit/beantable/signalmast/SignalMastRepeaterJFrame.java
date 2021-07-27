@@ -14,12 +14,16 @@ public class SignalMastRepeaterJFrame extends JmriJFrame {
         super(Bundle.getMessage("TitleSignalMastRepeater"), false, true);
 
         addHelpMenu("package.jmri.jmrit.beantable.SignalMastRepeater", true);
+        sigMastPanel = new SignalMastRepeaterPanel();
+        init();
+    }
+    
+    final void init(){
         getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-
-        add(sigMastPanel = new SignalMastRepeaterPanel());
+        add(sigMastPanel);
         pack();
     }
 
-    SignalMastRepeaterPanel sigMastPanel = null;
+    final SignalMastRepeaterPanel sigMastPanel;
 
 }

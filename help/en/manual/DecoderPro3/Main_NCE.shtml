@@ -235,15 +235,15 @@
       <p align="center"><img src="images/Main_NCE_05.png" alt=
       "NCE clock monitor" width="690" height="481" border="4"></p>
 
-      <div>
-        <div align="right">
-          <a href="#Clock">Back</a>
+      <div align="right">
+        <a href="#Clock">Back</a>
 
-          <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-          "Main_Menu.shtml#System"></a></p>
-        </div><!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </div>
+        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        "Main_Menu.shtml#System"></a></p>
+      </div>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

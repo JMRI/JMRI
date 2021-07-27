@@ -798,8 +798,8 @@ public class PositionablePointView extends LayoutTrackView {
                 if (blockEnd != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")) + blockEnd.getDisplayName());
                     jmi.setEnabled(false);
+                    addSensorsAndSignalMasksMenuItemsFlag = true;
                 }
-                addSensorsAndSignalMasksMenuItemsFlag = true;
                 break;
             case EDGE_CONNECTOR:
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
