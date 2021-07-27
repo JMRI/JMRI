@@ -17,20 +17,19 @@
     <div id="mainContent">
 
     <h1>JMRI: CTC Tools</h1>
-    
-    <p>
-      This help placeholder is for the "new" implementation of CTC that provides capabilities beyond <a href="./uss/index.shtml">
-      USS CTC</a>.  
-      See <a href="../../package/jmri/jmrit/ctc/CTC.shtml">here </a> for information on this new CTC implementation.  It provides
-      a GUI editor to configure the CTC rules and a run-time to implement CTC logic. It also builds a skeleton
-      Panel Editor CTC panel with the turnout levers/indicators, signal levers/indicators, code button, etc.,
-      and a minimal track plan.
 
-      </p>
-      
-      <p class="noted">
-      The original implementation of USS CTC tools (requires scripting) is discussed <a href="./uss/index.shtml"> here.</a>
-      </p>
+      <p>JMRI has two CTC tools.</p>
+
+      <dl style="margin-left: 2em">
+        <dt>The original scripting based <a href="uss/index.shtml">USS CTC</a>.</dt>
+        <dd>This uses scripting along with a couple of helper classes.</dd>
+
+        <dt>The new GUI based <a href="../../package/jmri/jmrit/ctc/CTC.shtml">CTC</a>.</dt>
+        <dd>A GUI editor is used to configure the CTC rules and a run-time is used to
+        implement the CTC logic. It can also build a skeleton Panel Editor CTC panel with the
+        turnout levers/indicators, signal levers/indicators, code button, etc., with a
+        minimal track plan.</dd>
+      </dl>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

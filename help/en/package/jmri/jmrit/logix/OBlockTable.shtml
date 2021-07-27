@@ -159,7 +159,7 @@
       Editing OBlocks, Portals and OPaths</a> for more details
       on using the tables.</p>
 
-      <h2>Tables to edit Occupancy Block, Portals and Path</h2>
+      <h2 id="oblock_gui_options">Tables to edit Occupancy Block, Portals and Path</h2>
       <p>In JMRi Preferences &gt; Display you can choose your preferred interface
       to edit these items in tables (restart required):</p>
       <ul>

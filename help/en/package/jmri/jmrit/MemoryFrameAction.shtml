@@ -12,8 +12,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Memory Monitor Tool</h1><a href=
       "MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg"
@@ -50,7 +50,7 @@
         <li>The right column is the total memory available to
         JMRI.</li>
       </ul>At the top of the left column, the maximum memory that
-      can be available to JMRI is displayed. 
+      can be available to JMRI is displayed.
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div><!-- close #mBody -->

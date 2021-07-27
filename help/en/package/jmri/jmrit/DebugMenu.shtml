@@ -2,69 +2,82 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Debug Menu</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Debug Menu</h1>The JMRI "Debug" menu contains the
-      following items:
+      <h1>JMRI: Debug Menu</h1>
 
-      <ul>
-        <li>Memory Usage Monitor</li>
-      </ul>
+      <p>The JMRI "Debug" menu contains the following items:</p>
+
+      <dl style="margin-left: 2em">
+        <dt><a href="MemoryFrameAction.shtml">Memory Usage Monitor</a></dt>
+        <dd></dd><!-- Prevent validation warnings -->
+      </dl>
       <hr>
 
-      <ul>
-        <li>Import Decoder File</li>
+      <dl style="margin-left: 2em">
+        <dt>Import Decoder File</dt >
 
-        <li>Import Decoder URL</li>
+        <dt>Import Decoder URL</dt>
 
-        <li>Recreate Decoder Index</li>
+        <dt>Recreate Decoder Index</dt>
 
-        <li>Rebuild Roster</li>
-      </ul>
+        <dt>Rebuild Roster</dt>
+        <dd></dd><!-- Prevent validation warnings -->
+      </dl>
       <hr>
 
-      <ul>
-        <li>Validate XML file</li>
+      <dl style="margin-left: 2em">
+        <dt>Validate XML file</dt>
 
-        <li>Check Decoder Names</li>
+        <dt>Check Decoder Names</dt>
 
-        <li>Check Programmer Names</li>
-      </ul>
+        <dt>Check Programmer Names</dt>
+        <dd></dd><!-- Prevent validation warnings -->
+      </dl>
       <hr>
 
-      <ul>
-        <li>Load Logixs Disabled</li>
+      <dl style="margin-left: 2em">
+        <dt>Load Logixs Disabled</dt>
 
-        <li>Log Message</li>
+        <dt>Log Message</dt>
 
-        <li>Display Message Log</li>
+        <dt>Display Message Log</dt>
+        <dd></dd><!-- Prevent validation warnings -->
 
-        <li><a href="vsdecoder/swing/VSDManagerFrame.shtml">Virtual Sound
-        Decoder</a></li>
+      </dl>
+      <hr>
+      <dl style="margin-left: 2em">
 
-        <li>PRICOM</li>
+        <dt><a href="vsdecoder/swing/VSDManagerFrame.shtml">Virtual Sound
+        Decoder</a></dt>
 
-        <li>USB Input Control</li>
+        <dt>PRICOM</dt>
 
-        <li>USB Device Viewer</li>
+        <dt>USB Input Control</dt>
 
-        <li>RailDriver Throttle</li>
+        <dt>USB Device Viewer</dt>
 
-        <li><a href="../../../html/web/index.shtml">Start JMRI Web
-        Server</a></li>
+        <dt>RailDriver Throttle</dt>
 
-        <li>Start WiThrottle</li>
-      </ul>
+        <dt><a href="../../../html/web/index.shtml">Start JMRI Web
+        Server</a></dt>
+
+        <dt>Start WiThrottle</dt>
+
+        <dt>Install TrainCrew Application</dt>
+        <dd></dd><!-- Prevent validation warnings -->
+
+      </dl>
+
+
+
 
       <p>This is the jmri.jmrit.DebugMenu help page.</p>
       <!--#include virtual="/Footer.shtml" -->
