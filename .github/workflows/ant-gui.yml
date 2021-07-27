@@ -33,7 +33,7 @@ jobs:
       # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
       env:
         PRINT_SUMMARY: true
-        MAVEN_OPTS: -Xmx1536m
+        ANT_OPTS: -Xmx1536m
         RUN_ORDER: alphabetical
         CC_TEST_REPORTER_ID: 1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
         HEADLESS: false
