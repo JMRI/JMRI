@@ -34,7 +34,6 @@ public class NceConnectionStatus implements NceListener {
     private static final int CHECK_STATE = 2; // Confirm connection
     private static final int CHECK_OK = 3; // Valid response
     private static final int NORMAL_STATE = 4; // Normal state
-    
 
     private static final int WARN1_STATE = 8; // Serial interface is not functioning properly
     private static final int WARN2_STATE = 9; // Detected 2007 March EPROM
@@ -125,9 +124,13 @@ public class NceConnectionStatus implements NceListener {
             }
         }
 
-        // determine if really connected to command station by issuing dummy locomotive command
+        // determine if really connected to command station by issuing dummy locomotive
+        // command
         if (epromState == CHECK_STATE) {
-            return NceMessage.sendLocoCmd(tc, 0000, NceBinaryCommand.LOCO_CMD_REV_28SPEED, (byte) 00);
+            if (tc.getCommandOptions() > NceTrafficController.OPTION_2004) {
+                return NceMessage.sendLocoCmd(tc, 0000, NceBinaryCommand.LOCO_CMD_REV_28SPEED, (byte) 00);
+            }
+            epromState = CHECK_OK;
         }
 
         if (epromState == CHECK_OK) {
@@ -320,9 +323,10 @@ public class NceConnectionStatus implements NceListener {
             log.warn("wrong number of read bytes for revision check");
         }
     }
-    
+
     /**
      * EPROM version check is only done once at startup
+     * 
      * @param VV Major version number
      * @param MM Middle version number
      * @param mm Minor version number

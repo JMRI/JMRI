@@ -1,11 +1,12 @@
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
@@ -84,9 +85,7 @@ public class NceThrottle extends AbstractThrottle {
                     NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
-
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
+            
         } else {
             byte[] result = jmri.NmraPacket.function0Through4Packet(address
                     .getNumber(), address.isLongAddress(), getF0(), getF1(),
@@ -123,8 +122,6 @@ public class NceThrottle extends AbstractThrottle {
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
         } else {
             byte[] result = jmri.NmraPacket.function5Through8Packet(address
                     .getNumber(), address.isLongAddress(), getF5(), getF6(),
@@ -161,8 +158,6 @@ public class NceThrottle extends AbstractThrottle {
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
         } else {
             byte[] result = jmri.NmraPacket.function9Through12Packet(address
                     .getNumber(), address.isLongAddress(), getF9(), getF10(),
@@ -306,7 +301,6 @@ public class NceThrottle extends AbstractThrottle {
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2 commands work properly
         } else {
             byte[] bl;
             int value;
