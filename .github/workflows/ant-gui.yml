@@ -47,7 +47,7 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
         echo "DanielAAA"
-        ant alltest
+        xvfb-run --auto-servernum ant alltest
         echo "DanielBBB"
         mvn jacoco:report coveralls:report -U -P travis-coverage
         JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage
