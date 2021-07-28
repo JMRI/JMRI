@@ -65,13 +65,14 @@
 
             <li>The file you want to view must have been stored
             from JMRI 2.9.4 or later. If it's older than that, just
-            load it into JMIR 2.9.4 or later and store it
+            load it into JMRI 2.9.4 or later and store it
             again.</li>
           </ul>
         </li>
 
-        <li>Start the JMRI Web Server: from the Tools menu, select
-        "Start JMRI Web Server".</li>
+        <li>Start the JMRI Web Server at PanelPro <strong>Tools &rArr; Servers &rArr;
+        Start JMRI Web Server</strong> or DecoderPro <strong>Actions &rArr; Start Web
+        Server</strong>.</li>
 
         <li>Open your web browser and enter the URL "<a href=
         "http://localhost:12080" target="_blank">http://localhost:12080</a>"</li>

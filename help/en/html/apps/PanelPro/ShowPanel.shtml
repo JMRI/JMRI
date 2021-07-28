@@ -50,7 +50,8 @@
       view it via JMRI's web server which knows how to find all
       the needed formating files automatically.  The steps are: </p>
       <ol>
-      <li>Start the JMRI web server from the Debug menu
+      <li>Start the JMRI web server using <strong>Tools &rArr; Servers &rArr; Start JMRI
+      Web Server</strong>
       <li>In your favorite browser, go to
         <a href="http://localhost:12080">http://localhost:12080</a>
         (the 12080 is the default setting; if you've changed
