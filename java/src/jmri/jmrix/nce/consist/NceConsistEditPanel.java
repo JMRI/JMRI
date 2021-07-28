@@ -7,27 +7,18 @@ import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.nce.*;
 
 /**
  * Pane for user edit of NCE Consists
@@ -1346,7 +1337,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // Looking for proper response
             int recChar = nceReply.getElement(0);
             log.debug("command reply: {}", recChar);
-            if (recChar == '!') {
+            if (recChar == NceMessage.NCE_OKAY) {
                 if (locoSearch && waiting == 0) {
                     readConsistMemory(consistNumVerify, LEAD);
                     consistStatus.setText(Bundle.getMessage("EditStateVERIFY"));

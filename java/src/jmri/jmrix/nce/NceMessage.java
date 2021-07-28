@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import java.util.Arrays;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -101,9 +102,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     protected static final int SHORT_TIMEOUT = 10000; // worst case is when loading the first panel
 
     public static final int REPLY_1 = 1; // reply length of 1 byte
-    public static final int REPLY_2 = 2; // reply length of 2 byte
-    public static final int REPLY_4 = 4; // reply length of 4 byte
+    public static final int REPLY_2 = 2; // reply length of 2 bytes
+    public static final int REPLY_3 = 3; // reply length of 3 bytes
+    public static final int REPLY_4 = 4; // reply length of 4 bytes
     public static final int REPLY_16 = 16; // reply length of 16 bytes 
+    
+    public static char NCE_OKAY = '!';
 
     public NceMessage() {
         super();
@@ -452,6 +456,18 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(3, val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(NCE_DIRECT_CV_TIMEOUT);
+        return m;
+    }
+    
+    public static NceMessage getEpromVersion(NceTrafficController tc) {
+        byte[] bl = NceBinaryCommand.getNceEpromRev();
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_3);
+        return m;
+    }
+    
+    public static NceMessage sendLocoCmd(NceTrafficController tc, int locoAddr, byte locoSubCmd, byte locoData) {
+        byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr, locoSubCmd, locoData);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         return m;
     }
 

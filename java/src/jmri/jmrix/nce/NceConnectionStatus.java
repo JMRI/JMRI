@@ -17,8 +17,10 @@ import jmri.jmrix.ConnectionStatus;
  * message NCE EPROM found & preferences are not correct for revision selected.
  * <p>
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
+ * 
+ * Confirms connection to PowerCab by issuing dummy loco command.
  *
- * @author Daniel Boudreau (C) 2007, 2010, 2012
+ * @author Daniel Boudreau (C) 2007, 2010, 2012, 2021
  *
  */
 public class NceConnectionStatus implements NceListener {
@@ -26,13 +28,13 @@ public class NceConnectionStatus implements NceListener {
     private static final boolean JOptPane_ERROR_MESSAGES_ENABLED = true;
     private static final boolean JOptPane_WARNING_MESSAGES_ENABLED = false; // Disabled for headless operations!
 
-    private static final int REPLY_LEN = 3; // number of bytes read
-
     // EPROM Checker states
     private static final int INIT_STATE = 0; // Initial state
     private static final int WAIT_STATE = 1; // Waiting for reply
-    private static final int CHECK_OK = 2; // Valid response
+    private static final int CHECK_STATE = 2; // Confirm connection
+    private static final int CHECK_OK = 3; // Valid response
     private static final int NORMAL_STATE = 4; // Normal state
+    
 
     private static final int WARN1_STATE = 8; // Serial interface is not functioning properly
     private static final int WARN2_STATE = 9; // Detected 2007 March EPROM
@@ -46,7 +48,7 @@ public class NceConnectionStatus implements NceListener {
     private static final int ERROR7_STATE = 22; // Wrong NCE System, detected Power Pro
     private static final int ERROR8_STATE = 23; // Wrong NCE System, detected SB5
 
-    private int epromState = INIT_STATE; // Eprom state
+    private int epromState = INIT_STATE; // EPROM state
     private boolean epromChecked = false;
 
     // Our current knowledge of NCE Command Station EPROMs
@@ -123,6 +125,11 @@ public class NceConnectionStatus implements NceListener {
             }
         }
 
+        // determine if really connected to command station by issuing dummy locomotive command
+        if (epromState == CHECK_STATE) {
+            return NceMessage.sendLocoCmd(tc, 0000, NceBinaryCommand.LOCO_CMD_REV_28SPEED, (byte) 00);
+        }
+
         if (epromState == CHECK_OK) {
             ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(),
                     ConnectionStatus.CONNECTION_UP);
@@ -138,7 +145,6 @@ public class NceConnectionStatus implements NceListener {
         // no response from command station?
         if (epromState == WAIT_STATE) {
             log.warn("Incorrect or no response from NCE command station");
-
             if (JOptPane_WARNING_MESSAGES_ENABLED) {
                 JOptionPane.showMessageDialog(null,
                         "JMRI could not establish communication with NCE command station. \n" +
@@ -146,10 +152,9 @@ public class NceConnectionStatus implements NceListener {
                                 "Confirm cabling and that the NCE system is powered up.",
                         "Warning", JOptionPane.WARNING_MESSAGE);
             }
-
             epromState = WARN1_STATE;
         }
-        
+
         // still no response from command station?
         else if (epromState == WARN1_STATE) {
             log.warn("No response from NCE command station");
@@ -260,15 +265,12 @@ public class NceConnectionStatus implements NceListener {
             return null;
         }
 
-        // go ahead and read the EPROM revision
-        // stay in error state until reply
+        // stay in warn state until reply
         if (epromState != WARN1_STATE) {
             epromState = WAIT_STATE;
         }
-
-        byte[] bl = NceBinaryCommand.getNceEpromRev();
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
-        return m;
+        // go ahead and read the EPROM revision
+        return NceMessage.getEpromVersion(tc);
     }
 
     @Override
@@ -280,7 +282,15 @@ public class NceConnectionStatus implements NceListener {
 
     @Override
     public void reply(NceReply r) {
-        if (r.getNumDataElements() == REPLY_LEN) {
+        if (r.getNumDataElements() == NceMessage.REPLY_1 && epromState == CHECK_STATE) {
+            if (r.getElement(0) == NceMessage.NCE_OKAY) {
+                log.info("Connected to NCE command station");
+                epromState = CHECK_OK;
+            } else {
+                log.warn("Not connected to NCE command station");
+                epromState = INIT_STATE;
+            }
+        } else if (r.getNumDataElements() == NceMessage.REPLY_3) {
 
             byte VV = (byte) r.getElement(0);
             byte MM = (byte) r.getElement(1);
@@ -297,101 +307,110 @@ public class NceConnectionStatus implements NceListener {
                 return;
             }
 
-            // We got a valid reply so we're done!
-            epromState = CHECK_OK;
+            // We got a valid reply, now check to see if connected to command station
+            // or PowerCab
+            epromState = CHECK_STATE;
 
             // Have we already done the error checking?
-            if (epromChecked) {
-                return;
-            }
-            epromChecked = true;
-
-            // Send to log file the NCE EPROM revision
-            log.info("NCE EPROM revision = {}", tc.getPwrProVersHexText());
-
-            // Warn about the March 2007 CS EPROM
-            if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
-                tc.setNceEpromMarch2007(true);
-                epromState = WARN2_STATE;
-            }
-
-            // check for Power Pro 2021 or later
-            if (VV == VV_2007 && MM == MM_2007 && mm >= mm_2021) {
-                tc.setPwrProVer060203orLater(true);
-            }
-
-            // Confirm that user selected correct revision of EPROM, check for old EPROM
-            // installed, new EPROM
-            // preferences
-            if ((VV <= VV_2007 && MM < MM_2007) && (tc.getCommandOptions() >= NceTrafficController.OPTION_2006)) {
-                log.error("Wrong revision ({}) of the NCE Command Station EPROM selected in Preferences",
-                        tc.getPwrProVersHexText());
-                epromState = ERROR1_STATE;
-            }
-
-            // Confirm that user selected correct revision of EPROM, check for new EPROM
-            // installed, old EPROM
-            // preferences
-            boolean eprom2007orNewer = ((VV == VV_2007) && (MM >= MM_2007));
-            if (((VV > VV_2007) || eprom2007orNewer) && (tc.getCommandOptions() < NceTrafficController.OPTION_2006)) {
-                log.error("Wrong revision ({}) of the NCE Command Station EPROM selected in Preferences",
-                        tc.getPwrProVersHexText());
-                epromState = ERROR2_STATE;
-            }
-
-            // Check that layout connection is correct
-            // PowerPro? 4 cases for PH, 1999, 2004, 2007, & 2012
-            if (VV == VV_1999 ||
-                    (VV == VV_2004 && MM == MM_2004) ||
-                    (VV == VV_2007 && MM == MM_2007) ||
-                    (VV == VV_2012 && MM == MM_2012)) {
-                // make sure system connection is not NCE USB
-                if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-                    log.error("System Connection is incorrect, detected Power Pro");
-                    epromState = ERROR4_STATE;
-                }
-            }
-
-            // Check for USB 6.3.x
-            if (VV == VV_USB_V6 && MM == MM_USB) {
-                // USB detected, check to see if user preferences are correct
-                if (mm == mm_USB_V6_PwrCab && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
-                    log.error("System Connection is incorrect, detected USB connected to a PowerCab");
-                    epromState = ERROR5_STATE;
-                }
-                if (mm == mm_USB_V6_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
-                    log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
-                    epromState = ERROR6_STATE;
-                }
-                if (mm == mm_USB_V6_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERPRO) {
-                    log.error("System Connection is incorrect, detected USB connected to a Power Pro");
-                    epromState = ERROR7_STATE;
-                }
-            }
-            // Check for USB 7.3.x
-            if (VV == VV_USB_V7 && MM == MM_USB) {
-                // USB V7 detected, check to see if user preferences are correct
-                if (((mm == mm_USB_V7_PC_128_A) || (mm == mm_USB_V7_PC_128_B)) &&
-                        tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
-                    log.error("System Connection is incorrect, detected USB connected to a PowerCab");
-                    epromState = ERROR5_STATE;
-                }
-                if (mm == mm_USB_V7_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
-                    log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
-                    epromState = ERROR6_STATE;
-                }
-                if (mm == mm_USB_V7_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERPRO) {
-                    log.error("System Connection is incorrect, detected USB connected to a Power Pro");
-                    epromState = ERROR7_STATE;
-                }
-                if (((mm == mm_USB_V7_SB5_165_A) || (mm == mm_USB_V7_SB5_165_B)) &&
-                        tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB5) {
-                    log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB5");
-                    epromState = ERROR8_STATE;
-                }
+            if (!epromChecked) {
+                checkEPROM(VV, MM, mm);
+                epromChecked = true;
             }
         } else {
             log.warn("wrong number of read bytes for revision check");
+        }
+    }
+    
+    /**
+     * EPROM version check is only done once at startup
+     * @param VV Major version number
+     * @param MM Middle version number
+     * @param mm Minor version number
+     */
+    private void checkEPROM(byte VV, byte MM, byte mm) {
+        // Send to log file the NCE EPROM revision
+        log.info("NCE EPROM revision = {}", tc.getPwrProVersHexText());
+
+        // Warn about the March 2007 CS EPROM
+        if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
+            tc.setNceEpromMarch2007(true);
+            epromState = WARN2_STATE;
+        }
+
+        // check for Power Pro 2021 or later
+        if (VV == VV_2007 && MM == MM_2007 && mm >= mm_2021) {
+            tc.setPwrProVer060203orLater(true);
+        }
+
+        // Confirm that user selected correct revision of EPROM, check for old EPROM
+        // installed, new EPROM
+        // preferences
+        if ((VV <= VV_2007 && MM < MM_2007) && (tc.getCommandOptions() >= NceTrafficController.OPTION_2006)) {
+            log.error("Wrong revision ({}) of the NCE Command Station EPROM selected in Preferences",
+                    tc.getPwrProVersHexText());
+            epromState = ERROR1_STATE;
+        }
+
+        // Confirm that user selected correct revision of EPROM, check for new EPROM
+        // installed, old EPROM
+        // preferences
+        boolean eprom2007orNewer = ((VV == VV_2007) && (MM >= MM_2007));
+        if (((VV > VV_2007) || eprom2007orNewer) && (tc.getCommandOptions() < NceTrafficController.OPTION_2006)) {
+            log.error("Wrong revision ({}) of the NCE Command Station EPROM selected in Preferences",
+                    tc.getPwrProVersHexText());
+            epromState = ERROR2_STATE;
+        }
+
+        // Check that layout connection is correct
+        // PowerPro? 4 cases for PH, 1999, 2004, 2007, & 2012
+        if (VV == VV_1999 ||
+                (VV == VV_2004 && MM == MM_2004) ||
+                (VV == VV_2007 && MM == MM_2007) ||
+                (VV == VV_2012 && MM == MM_2012)) {
+            // make sure system connection is not NCE USB
+            if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+                log.error("System Connection is incorrect, detected Power Pro");
+                epromState = ERROR4_STATE;
+            }
+        }
+
+        // Check for USB 6.3.x
+        if (VV == VV_USB_V6 && MM == MM_USB) {
+            // USB detected, check to see if user preferences are correct
+            if (mm == mm_USB_V6_PwrCab && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
+                log.error("System Connection is incorrect, detected USB connected to a PowerCab");
+                epromState = ERROR5_STATE;
+            }
+            if (mm == mm_USB_V6_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
+                log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
+                epromState = ERROR6_STATE;
+            }
+            if (mm == mm_USB_V6_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERPRO) {
+                log.error("System Connection is incorrect, detected USB connected to a Power Pro");
+                epromState = ERROR7_STATE;
+            }
+        }
+        // Check for USB 7.3.x
+        if (VV == VV_USB_V7 && MM == MM_USB) {
+            // USB V7 detected, check to see if user preferences are correct
+            if (((mm == mm_USB_V7_PC_128_A) || (mm == mm_USB_V7_PC_128_B)) &&
+                    tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
+                log.error("System Connection is incorrect, detected USB connected to a PowerCab");
+                epromState = ERROR5_STATE;
+            }
+            if (mm == mm_USB_V7_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
+                log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
+                epromState = ERROR6_STATE;
+            }
+            if (mm == mm_USB_V7_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERPRO) {
+                log.error("System Connection is incorrect, detected USB connected to a Power Pro");
+                epromState = ERROR7_STATE;
+            }
+            if (((mm == mm_USB_V7_SB5_165_A) || (mm == mm_USB_V7_SB5_165_B)) &&
+                    tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB5) {
+                log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB5");
+                epromState = ERROR8_STATE;
+            }
         }
     }
 

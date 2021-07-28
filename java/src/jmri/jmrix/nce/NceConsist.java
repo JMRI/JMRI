@@ -1,13 +1,15 @@
 package jmri.jmrix.nce;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.implementation.DccConsist;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The Consist definition for a consist on an NCE system. It uses the NCE
@@ -303,7 +305,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             log.error("reply length error, expecting: {} got: {}", _replyLen, r.getNumDataElements());
             return;
         }
-        if (_replyLen == 1 && r.getElement(0) == '!') {
+        if (_replyLen == 1 && r.getElement(0) == NceMessage.NCE_OKAY) {
             log.debug("Command complete okay for consist {}", getConsistAddress());
         } else {
             log.error("Error, command failed for consist {}", getConsistAddress());

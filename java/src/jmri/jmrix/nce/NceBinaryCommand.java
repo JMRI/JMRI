@@ -1,8 +1,9 @@
 package jmri.jmrix.nce;
 
-import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.NmraPacket;
 
 /*
  
@@ -432,7 +433,7 @@ public class NceBinaryCommand {
         byte[] retVal = new byte[1];
         retVal[0] = (byte) (NceMessage.SW_REV_CMD);
         return retVal;
-    }
+    }  
 
     /**
      * Create a NCE USB compatible ops mode loco message.
