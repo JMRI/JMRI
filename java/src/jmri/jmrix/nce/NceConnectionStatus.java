@@ -125,10 +125,10 @@ public class NceConnectionStatus implements NceListener {
         }
 
         // determine if really connected to command station by issuing dummy locomotive
-        // command
+        // command, to long address 0.
         if (epromState == CHECK_STATE) {
             if (tc.getCommandOptions() > NceTrafficController.OPTION_2004) {
-                return NceMessage.sendLocoCmd(tc, 0000, NceBinaryCommand.LOCO_CMD_REV_28SPEED, (byte) 00);
+                return NceMessage.sendLocoCmd(tc, 0xC000, NceBinaryCommand.LOCO_CMD_NOP, (byte) 00);
             }
             epromState = CHECK_OK;
         }

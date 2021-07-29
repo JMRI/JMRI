@@ -135,6 +135,7 @@ public class NceBinaryCommand {
 
     // NCE Command 0xA2 sends speed or function packets to a locomotive
     // 0xA2 sub commands speed and functions
+    public static final byte LOCO_CMD_NOP = 0x00;          // No Operation (Not documented by NCE)
     public static final byte LOCO_CMD_REV_28SPEED = 0x01;  // set loco speed 28 steps reverse
     public static final byte LOCO_CMD_FWD_28SPEED = 0x02;  // set loco speed 28 steps forward
     public static final byte LOCO_CMD_REV_128SPEED = 0x03; // set loco speed 128 steps reverse
