@@ -406,7 +406,7 @@ public class NceBinaryCommand {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
         justification = "Long-standing API, risky to update")
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
-        if (locoSubCmd < 1 || locoSubCmd > 0x17) {
+        if (locoSubCmd > 0x17) {
             log.error("invalid NCE loco command {}", locoSubCmd);
             return null;
         }
