@@ -40,7 +40,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
     }
 
     @Nonnull
-    protected RailComManager tagManager = InstanceManager.getDefault(jmri.RailComManager.class);
+    protected RailComManager tagManager = InstanceManager.getDefault(RailComManager.class);
 
     public RailComTableAction() {
         this("Rail Com Table");
@@ -300,7 +300,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
     }
 
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<IdTag> f) {
         log.debug("Added CheckBox in addToFrame method");
     }
 
