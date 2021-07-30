@@ -196,7 +196,9 @@ public class CheckPropertyFilesTest {
             boolean result = true;
             
             // Check base language first
-            result = result && checkProperties("", false);
+            if (_properties.containsKey("")) {
+                result = result && checkProperties("", false);
+            }
             
             for (String lang : _properties.keySet()) {
                 if (lang.isEmpty()) continue;
