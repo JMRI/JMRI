@@ -88,8 +88,10 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionAnalogIO.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionMemory.class);
+        classes.add(jmri.jmrit.logixng.expressions.TimeSinceMidnight.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();

@@ -337,7 +337,7 @@
         standards.  For those, Java 8 is going to increasing become a liability.
 
       <P>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit).
-          <a href="https://adoptopnjdk.net">AdoptOpenJDK</a> continues to make 32
+          <a href="https://adoptopenjdk.net/">AdoptOpenJDK</a> continues to make 32
           and 64-bit JREs and JDKs available.
 
       <table border="1">

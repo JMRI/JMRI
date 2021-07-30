@@ -230,9 +230,6 @@ public class AppsMainMenu {
         // create menu and standard items
         JMenu helpMenu = HelpUtil.makeHelpMenu(windowHelpID, true);
 
-        // tell help to use default browser for external types
-        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");  // NOI18N
-
         // use as main help menu
         menuBar.add(helpMenu);
     }

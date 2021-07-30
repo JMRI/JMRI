@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <!-- Copyright Bob Jacobsen 2008 -->
 
 <html lang="en">
@@ -10,13 +9,7 @@
   <title>JMRI: Configure LocoNet ID</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet ID">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -102,7 +95,10 @@
       <p>See also page 98 of the Digitrax <a href=
       "http://www.digitrax.com/ftp/superchief.pdf">Super Chief
       manual</a>(PDF).</p>
+
+    <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

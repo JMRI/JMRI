@@ -5,7 +5,7 @@
   <title>LogixNG Reference - Chapter 4</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG reference sockets">
+  <meta name="keywords" content="jmri LogixNG reference basic actions expressions">
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -19,197 +19,132 @@
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 4</h1>
 
-      <h2>Working with sockets</h2>
+      <h2>Actions and Expressions</h2>
 
-        <p>The ConditionalNG tree structure is constructed using sockets.  These are used
-        to build the branch and leaf nodes of the tree.  Chapter 1 showed how the nodes
-        were created and linked together.</p>
+      <p>LogixNG has four basic building blocks: Actions, Expressions, Male sockets and
+      Female sockets.</p>
 
-        <p>The sockets for a particular node depend on the node definition.  The
-        <strong>If Then Else</strong> node has 3 sockets.  The <strong>And</strong> and
-        <strong>More</strong> nodes have an unlimited number of sockets.</p>
+      <p>Actions do something, for example throw a turnout or sets a signal mast.
+      Expressions ask something, for example if a sensor is active or if a signal head
+      has a particular appearance. The actions and expressions form a tree and  complex
+      logic can be built with them.</p>
 
-        <p>The right click context menu, introduced in chapter 1, is used to manage
-        sockets.</p>
+      <p>Each action/expression is embedded in one or several male sockets. Male sockets
+      allow actions/expressions to be connected to a female socket of the correct type.</p>
+
+      <p>A ConditionalNG has a female socket that is the root of the ConditionalNG tree.
+      And some actions/expressions have one or several female sockets as children.  There
+      are several different types of female sockets and the female socket type decides
+      which types of actions or expressions can be connected.</p>
+
+
+        <h3>Categories</h3>
+
+        <p>Since there is a large number of actions and expressions, they are assigned a
+        category.  The main categories are <strong>Item</strong> and <strong>Common</strong>.</p>
+
+        <ul>
+          <li>Item - Actions and expressions related to items on the layout, for example
+          turnouts and signal masts</li>
+          <li>Common - The most important actions and expressions that are not in the
+          Item category</li>
+          <li>Display - Actions and expressions related to Panels</li>
+          <li>LocoNet - Actions and expressions related to LocoNet</li>
+          <li>Other - Other actions and expressions</li>
+        </ul>
+
+        <h3>Action and Expression types</h3>
+
+        <p>Each action and expression is built for a specific socket type.
+
+        <a id="socket_types"></a>
+        <div style="margin-left: 2em">
+          <table>
+            <tr><th>Symbol</th><th>Type</th><th>Description</th><th>Categories</th></tr>
+            <tr>
+              <td style="text-align:center">!</td>
+              <td>Digital action</td>
+              <td>Execute, no parameter</td>
+              <td>Item, Common, Other, Display, LocoNet</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">!b</td>
+              <td>Digital boolean action</td>
+              <td>Execute using a boolean parameter</td>
+              <td>Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">!~</td>
+              <td>Analog action</td>
+              <td>Execute using a double parameter</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">!s</td>
+              <td>String action</td>
+              <td>Execute using a string parameter</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+            <tr>
+              <td style="text-align:center">?</td>
+              <td>Digital expression</td>
+              <td>Return boolean</td>
+              <td>Item, Common, Other, LocoNet</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">?~</td>
+              <td>Analog expression</td>
+              <td>Return a double</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">?s</td>
+              <td>String expression</td>
+              <td>Return a string</td>
+              <td>Item, Common</td>
+            </tr>
+            <tr>
+              <td style="text-align:center">?*</td>
+              <td>Generic expression</td>
+              <td>Return an Object</td>
+              <td>(Digital, Analog, and String merged)</td>
+            </tr>
+          </table>
+        </div>
+
+        <p>Notes:</p>
+        <ul>
+          <li><strong>string</strong> is text, such as "hello world"</li>
+          <li><strong>boolean</strong> is true or false</li>
+          <li><strong>double</strong> is a number, such as 42 or 3.14</li>
+          <li><strong>Generic expression</strong> can handle any expression type</li>
+        </ul>
+
+        <h3>Adding an action or expression</h3>
+
+        <p>When <strong>Add</strong> is selected from the context menu for an empty socket,
+        the selection dialog is displayed.</p>
 
         <div style="margin-left: 2em">
-        <a href="images/chapter4/editor_context_menu.png">
-        <img src="images/chapter4/editor_context_menu.png"
-        alt="Chapter 4 editor context menu" width="215" height="434">
+        <a href="images/chapter4/selection_dialog.png">
+        <img src="images/chapter4/selection_dialog.png"
+        alt="Chapter 4 selection dialog" width="250" height="121">
         </a>
         </div>
 
-        <h3>Rename socket</h3>
+        <p>The <strong>Category</strong> selection automatically adjusts the <strong>Type</strong>
+        list based on the socket type.  For example, Digital Action socket using the
+        Item category is quite long while Analog Action socket using the Common category is
+        short.  The Type list always displays the valid selections for the socket type
+        and category.</p>
 
-          <p>Each row in the tree starts with the socket type and the socket name. See
-          the list at <a href="chapter1#chapter1_socket_types">socket types</a>.</p>
-
-          <p>The names usually reflect their purpose, such as <strong>If</strong> for the
-          beginning of an <strong>If Then Else</strong> group, or <strong>A</strong> for
-          action or <strong>E</strong> for expression.  Some sockets can  occur several times,
-          such a A1, A2 for a series of actions within the <strong>Many</strong> socket.</p>
-
-          <p>When <strong>Rename socket</strong> is selected, the rename dialog will open.
-          Enter the new name and click <strong>OK</strong>.
-
-          <div style="margin-left: 2em">
-          <a href="images/chapter4/rename_socket.png">
-          <img src="images/chapter4/rename_socket.png"
-          alt="Chapter 4 rename socket" width="334" height="93">
-          </a>
-          </div>
-
-        <h3>Add / Edit / Remove</h3>
-
-          <p>When an empty socket is selected, the <strong>Add</strong> menu item will be
-          active.  If the socket is not empty, <strong>Edit</strong> and <strong>Remove</strong>
-          will be active.</p>
-
-          <p><strong>Add</strong> is covered in <a href="chapter1.shtml">chapter 1</a>.
-          <strong>Edit</strong> brings up the dialog that was used to create the row.</p>
-
-          <p><strong>Remove</strong> deletes the row and all of its children after the
-          delete is confirmed.  This is different than the <strong>Cut</strong> menu item
-          which uses the LogixNG <a href="chapter2.shtml">clipboard</a>.<p>
-
-          <div style="margin-left: 2em">
-          <a href="images/chapter4/remove_confirmation.png">
-          <img src="images/chapter4/remove_confirmation.png"
-          alt="Chapter 4 remove confirmation" width="335" height="126">
-          </a>
-          </div>
-
-        <h3>Cut / Copy / Paste</h3>
-
-          <p>These are covered in <a href="chapter2.shtml">chapter 2 - The clipboard</a>.</p>
-
-        <h3>Remove socket / Insert socket / Move socket</h3>
-
-          <p>When using a multiple socket list like <strong>And</strong> or <strong>Many</strong>,
-          the next socket is added each time an expression or action has been added.  When
-          the list is complete, the empty socket at the end can be left or removed
-          using <strong>Remove socket</strong>.</p>
-
-          <p><strong>Insert</strong> is used to add a new socket at the selected point in
-          the list.</p>
-
-          <p><strong>Move</strong> is used to move a socket up or down.</p>
-
-          <h4>Why?</h4>
-
-            <p>The primary purpose is to re-order the items in a sequence that makes sense.</p>
-
-            <p>An example is to simplify compound logic.  Instead of A and (B or C) and D,
-            change the order to be A and D and (B or C).</p>
-
-            <div style="margin-left: 2em; float: left;">
-            <a href="images/chapter4/move_before.png">
-            <img src="images/chapter4/move_before.png"
-            alt="Chapter 4 move before" width="251" height="171">
-            </a>
-            </div>
-
-            <div style="margin-left: 2em; float: left;">
-            <a href="images/chapter4/move_after.png">
-            <img src="images/chapter4/move_after.png"
-            alt="Chapter 4 move after" width="241" height="168">
-            </a>
-            </div>
-
-            <div style="clear: both"></div>
-
-          <p>An alternative to compound structures is the formula feature which is
-          covered in <a href="chapter9.shtml">Chapter 9 - Formula</a>.</p>
-
-        <h3>Enable / Disable</h3>
-
-          <p>When an expression is disabled, it will not participate in the true/false
-          evaluation.  For actions, the action will not be executed.  When a branch is
-          disabled, the children are effectively disabled.  The text for the row is
-          displayed using a strikethrough format.</p>
-
-          <div style="margin-left: 2em;">
-          <a href="images/chapter4/disabled_item.png">
-          <img src="images/chapter4/disabled_item.png"
-          alt="Chapter 4 disabled item" width="207" height="55">
-          </a>
-          </div>
-
-        <h3>Lock / Unlock</h3>
-
-          <p>Locking a row in the ConditionalNG tree is used to prevent accidental changes
-          to the selected portion of the tree.  When a row is locked, the row and all of
-          its descendants are locked.  The unlock menu item unlocks the row and its
-          descendants</p>
-
-          <p>If an item is locked, a lock icon is shown before that node.</p>
-
-          <p>An item can be edited, enabled and disabled if it's not locked.</p>
-
-          <p>An item can be added if the parent is not locked. An item can be cut or
-          removed if it's not locked and its parent is not locked.</p>
-
-        <h3>Local variables</h3>
-
-          <p>Local variables are discussed in <a href="chapter8.shtml">Chapter 8 - Local Variables</a>.</p>
-
-        <h3>Change user name  </h3>
-
-          <p>When <strong>Change user name</strong> is enabled, a name can be assigned to
-          the row. The user name is used by <a href="chapter3.shtml#LastResult">
-          Chapter 3 - Last result of digital expression</a>.</p>
-
-          <div style="margin-left: 2em;">
-          <a href="images/chapter4/user_name.png">
-          <img src="images/chapter4/user_name.png"
-          alt="Chapter 4 user name" width="626" height="174">
-          </a>
-          </div>
-
-        <h3>Evaluate</h3>
-
-        <p>Depending on the row type, it is possible to manually evaluate an expression.
-        This is useful debugging tool.<p>
-
-        <div style="margin-left: 2em;">
-        <a href="images/chapter4/evaluate_item.png">
-        <img src="images/chapter4/evaluate_item.png"
-        alt="Chapter 4 evaluate item" width="234" height="76">
-        </a>
-        </div>
-
-        <p>A dialog will show the results.</p>
-
-        <div style="margin-left: 2em;">
-        <a href="images/chapter4/evaluate_result.png">
-        <img src="images/chapter4/evaluate_result.png"
-        alt="Chapter 4 evaluate result" width="267" height="118">
-        </a>
-        </div>
-
-        <h3>Execute</h3>
-
-        <p>Depending on the row type, it is possible to manually perform an action.
-        This is useful debugging tool.<p>
-
-        <div style="margin-left: 2em;">
-        <a href="images/chapter4/execute_item.png">
-        <img src="images/chapter4/execute_item.png"
-        alt="Chapter 4 execute item" width="231" height="71">
-        </a>
-        </div>
-
-        <p>A dialog will show the results.</p>
-
-        <div style="margin-left: 2em;">
-        <a href="images/chapter4/execute_result.png">
-        <img src="images/chapter4/execute_result.png"
-        alt="Chapter 4 execute result" width="262" height="118">
-        </a>
-        </div>
+        <p>There are 20 combinations of socket types and categories.  These are
+        described in <a href="chaper5.shtml">Chapter 5 - Actions</a> and
+        <a href="chapter6.shtml">Chapter 6 - Expressions</a>.</p>
 
       <hr>
-      <p><a href="chapter5.shtml">Chapter 5 - Action Items</a></p>
+      <p><a href="chapter5.shtml">Chapter 5 - Action Descriptions</a></p>
       <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
       <!--#include virtual="/Footer.shtml" -->

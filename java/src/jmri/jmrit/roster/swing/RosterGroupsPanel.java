@@ -195,14 +195,14 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         if (action != null) {
             if (newWindowMenuItemAction == null) {
                 MenuActionListener ml = new MenuActionListener();
-                JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuOpenInNewWindow"));
+                JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.Bundle").getString("MenuOpenInNewWindow"));
                 mi.addActionListener(ml);
                 mi.setActionCommand("newWindow");
                 groupsMenu.insert(mi, 0);
                 groupsMenu.insert(new JSeparator(), 1);
                 // create the menu item twice because a menu item can only
                 // be attached to a single menu
-                mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuOpenInNewWindow"));
+                mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.Bundle").getString("MenuOpenInNewWindow"));
                 mi.addActionListener(ml);
                 mi.setActionCommand("newWindow");
                 allEntriesMenu.insert(mi, 0);

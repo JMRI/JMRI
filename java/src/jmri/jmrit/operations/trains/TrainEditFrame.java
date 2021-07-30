@@ -234,7 +234,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             numEnginesBox.addItem(Integer.toString(i));
         }
         numEnginesBox.addItem(Train.AUTO);
-        numEnginesBox.setMinimumSize(new Dimension(65, 20));
+        numEnginesBox.setMinimumSize(new Dimension(100, 20));
         numEnginesBox.setToolTipText(Bundle.getMessage("TipNumberOfLocos"));
         addItem(trainReq, textEngine, 1, 1);
         addItem(trainReq, numEnginesBox, 2, 1);

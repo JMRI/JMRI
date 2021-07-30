@@ -3,16 +3,20 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+import jmri.jmrit.logixng.util.parser.Variable;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -270,7 +274,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     }
 
 
-    public void setLightValue(@Nonnull int value) {
+    public void setLightValue(int value) {
         _lightValue = value;
     }
 
@@ -285,7 +289,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             if (evt.getOldValue() instanceof Light) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Light_LightInUseLightExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("Light_LightInUseLightActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N

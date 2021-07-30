@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -8,15 +7,7 @@
   <!-- Copyright ($Author$) 2009 -->
 
   <title>JMRI: WiThrottle Protocol</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+  <!--#include virtual="/Style.shtml" -->
   <style type="text/css">
   	table.data, pre.code {
         margin: initial;
@@ -54,7 +45,6 @@
  		font-size: 90%;
 	}	
   </style>
-    <!-- /Style -->
 </head>
 
 <body>
@@ -347,7 +337,7 @@ PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
       <p>The second string contains an array of defined routes. For
       example:</p>
       <pre class="code">
-PRL]\[IR:AUTO:0001}|{Rico Main}|{
+PRL]\[IR:AUTO:0001}|{Rico Main}|{2
 </pre>
 
       <table class="data">
@@ -358,7 +348,6 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
 
           <th>Description</th>
         </tr>
-
         <tr>
           <td>System Name</td>
 
@@ -367,13 +356,19 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
           <td>The system name defined for this route. The name in
           this example was auto-generated</td>
         </tr>
-
         <tr>
           <td>User Name</td>
 
           <td>Rico Main</td>
 
           <td>The name user entered into JMRI for this route</td>
+        </tr>
+        <tr>
+          <td>State</td>
+
+          <td>2</td>
+
+          <td>1=Unknown, 2=Active, 4=Inactive, 8=Inconsistent</td>
         </tr>
       </table>
 
@@ -1331,6 +1326,7 @@ PRA2IO_RESET_LAYOUT
     <p>This is the package/jmri/jmrit/withrottle/Protocol help
       page</p><!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

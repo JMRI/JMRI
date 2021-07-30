@@ -88,6 +88,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
 
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.actions.AnalogActionLightIntensity.class);
         classes.add(jmri.jmrit.logixng.actions.AnalogActionMemory.class);
         map.put(Category.ITEM, classes);
 

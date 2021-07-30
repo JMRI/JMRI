@@ -41,6 +41,10 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getNamedBean(digitalExpressionName);
         if (digitalExpression != null) {
+            // We need the male socket, not the expression itself
+            if (!(digitalExpression instanceof MaleSocket)) {
+                digitalExpression = (DigitalExpressionBean)digitalExpression.getParent();
+            }
             setDigitalExpression(digitalExpression);
         } else {
             removeDigitalExpression();

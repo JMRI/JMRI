@@ -6,25 +6,11 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SortOrder;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -73,7 +59,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         super(s);
         // disable ourself if there is no primary SignalGroup manager available
         if (InstanceManager.getNullableDefault(SignalGroupManager.class) == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 
@@ -117,139 +103,108 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
             @Override
             public String getColumnName(int col) {
-                if (col == EDITCOL) {
-                    return "";    // no heading on "Edit" column
-                }
-                if (col == ENABLECOL) {
-                    return Bundle.getMessage("ColumnHeadEnabled");
-                }
-                if (col == COMMENTCOL) {
-                    return Bundle.getMessage("ColumnComment");
-                }
-                if (col == DELETECOL) {
-                    return "";
-                } else {
-                    return super.getColumnName(col);
+                switch (col) {
+                    case EDITCOL:
+                        return "";    // no heading on "Edit" column
+                    case ENABLECOL:
+                        return Bundle.getMessage("ColumnHeadEnabled");
+                    case COMMENTCOL:
+                        return Bundle.getMessage("ColumnComment");
+                    case DELETECOL:
+                        return "";
+                    default:
+                        return super.getColumnName(col);
                 }
             }
 
             @Override
             public Class<?> getColumnClass(int col) {
-                if (col == EDITCOL) {
-                    return JButton.class;
-                }
-                if (col == ENABLECOL) {
-                    return Boolean.class;
-                }
-                if (col == DELETECOL) {
-                    return JButton.class;
-                }
-                if (col == COMMENTCOL) {
-                    return String.class;
-                } else {
-                    return super.getColumnClass(col);
+                switch (col) {
+                    case EDITCOL:
+                    case DELETECOL:
+                        return JButton.class;
+                    case ENABLECOL:
+                        return Boolean.class;
+                    case COMMENTCOL:
+                        return String.class;
+                    default:
+                        return super.getColumnClass(col);
                 }
             }
 
             @Override
             public int getPreferredWidth(int col) {
-                if (col == EDITCOL) {
-                    return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
-                }
-                if (col == ENABLECOL) {
-                    return new JTextField(6).getPreferredSize().width;
-                }
-                if (col == COMMENTCOL) {
-                    return new JTextField(30).getPreferredSize().width;
-                }
-                if (col == DELETECOL) {
-                    return new JTextField(Bundle.getMessage("ButtonDelete")).getPreferredSize().width;
-                } else {
-                    return super.getPreferredWidth(col);
+                switch (col) {
+                    case EDITCOL:
+                        return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
+                    case ENABLECOL:
+                        return new JTextField(6).getPreferredSize().width;
+                    case COMMENTCOL:
+                        return new JTextField(30).getPreferredSize().width;
+                    case DELETECOL:
+                        return new JTextField(Bundle.getMessage("ButtonDelete")).getPreferredSize().width;
+                    default:
+                        return super.getPreferredWidth(col);
                 }
             }
 
             @Override
             public boolean isCellEditable(int row, int col) {
-                if (col == COMMENTCOL) {
-                    return true;
-                }
-                if (col == EDITCOL) {
-                    return true;
-                }
-                if (col == ENABLECOL) {
-                    return true;
-                }
-                if (col == DELETECOL) {
-                    return true;
-                } else {
-                    return super.isCellEditable(row, col);
+                switch (col) {
+                    case COMMENTCOL:
+                    case EDITCOL:
+                    case ENABLECOL:
+                    case DELETECOL:
+                        return true;
+                    default:
+                        return super.isCellEditable(row, col);
                 }
             }
 
             @Override
             public Object getValueAt(int row, int col) {
                 SignalGroup b;
-                if (col == EDITCOL) {
-                    return Bundle.getMessage("ButtonEdit");
-                } else if (col == ENABLECOL) {
-                    return Boolean.valueOf(((SignalGroup) getValueAt(row, SYSNAMECOL)).getEnabled());
-                    //return true;
-                } else if (col == COMMENTCOL) {
-                    b = (SignalGroup) getValueAt(row, SYSNAMECOL);
-                    return (b != null) ? b.getComment() : null;
-                } else if (col == DELETECOL) //
-                {
-                    return Bundle.getMessage("ButtonDelete");
-                } else {
-                    return super.getValueAt(row, col);
+                switch (col) {
+                    case EDITCOL:
+                        return Bundle.getMessage("ButtonEdit");
+                    case ENABLECOL:
+                        return ((SignalGroup) getValueAt(row, SYSNAMECOL)).getEnabled();
+                    case COMMENTCOL:
+                        b = (SignalGroup) getValueAt(row, SYSNAMECOL);
+                        return (b != null) ? b.getComment() : null;
+                    case DELETECOL:
+                        return Bundle.getMessage("ButtonDelete");
+                    default:
+                        return super.getValueAt(row, col);
                 }
             }
 
             @Override
             public void setValueAt(Object value, int row, int col) {
-                if (col == EDITCOL) {
-                    // set up to Edit. Use separate Runnable so window is created on top
-                    class WindowMaker implements Runnable {
-
-                        int row;
-
-                        WindowMaker(int r) {
-                            row = r;
-                        }
-
-                        @Override
-                        public void run() {
+                switch (col) {
+                    case EDITCOL:
+                        SwingUtilities.invokeLater(() -> {
                             addPressed(null); // set up add/edit panel addFrame (starts as Add pane)
                             _systemName.setText(((SignalGroup) getValueAt(row, SYSNAMECOL)).toString());
                             editPressed(null); // adjust addFrame for Edit
-                        }
-                    }
-                    WindowMaker t = new WindowMaker(row);
-                    javax.swing.SwingUtilities.invokeLater(t);
-                } else if (col == ENABLECOL) {
-                    // alternate
-                    SignalGroup r = (SignalGroup) getValueAt(row, SYSNAMECOL);
-                    boolean v = r.getEnabled();
-                    r.setEnabled(!v);
-                } else if (col == COMMENTCOL) {
-                    getBySystemName(sysNameList.get(row)).setComment(
-                            (String) value);
-                    fireTableRowsUpdated(row, row);
-                } else if (col == DELETECOL) {
-                    // button fired, delete Bean
-                    deleteBean(row, col);
-                } else {
-                    super.setValueAt(value, row, col);
+                        });
+                        break;
+                    case ENABLECOL:
+                        SignalGroup r = (SignalGroup) getValueAt(row, SYSNAMECOL);
+                        r.setEnabled(!(r.getEnabled()));
+                        break;
+                    case COMMENTCOL:
+                        getBySystemName(sysNameList.get(row)).setComment(
+                                (String) value);
+                        fireTableRowsUpdated(row, row);
+                        break;
+                    case DELETECOL:
+                        deleteBean(row, col);
+                        break;
+                    default:
+                        super.setValueAt(value, row, col);
+                        break;
                 }
-            }
-
-            @Override
-            public void configureTable(JTable table) {
-                table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-                super.configureTable(table);
             }
 
             @Override
@@ -448,7 +403,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         _mastAspectsList = null;
 
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
-        _signalHeadsList = new ArrayList<SignalGroupSignalHead>();
+        _signalHeadsList = new ArrayList<>();
         // create list of all available Single Output Signal Heads to choose from
         for (SignalHead sh : shm.getNamedBeanSet()) {
             String systemName = sh.getSystemName();
@@ -510,30 +465,24 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             allButton = new JRadioButton(Bundle.getMessage("All"), true);
             selGroup.add(allButton);
             py.add(allButton);
-            allButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Setup for display of all Signal Masts & SingleTO Heads, if needed
-                    if (!showAll) {
-                        showAll = true;
-                        _SignalGroupHeadModel.fireTableDataChanged();
-                        _AspectModel.fireTableDataChanged();
-                    }
+            allButton.addActionListener((ActionEvent e1) -> {
+                // Setup for display of all Signal Masts & SingleTO Heads, if needed
+                if (!showAll) {
+                    showAll = true;
+                    _SignalGroupHeadModel.fireTableDataChanged();
+                    _AspectModel.fireTableDataChanged();
                 }
             });
             includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
             selGroup.add(includedButton);
             py.add(includedButton);
-            includedButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Setup for display of included Turnouts only, if needed
-                    if (showAll) {
-                        showAll = false;
-                        initializeIncludedList();
-                        _SignalGroupHeadModel.fireTableDataChanged();
-                        _AspectModel.fireTableDataChanged();
-                    }
+            includedButton.addActionListener((ActionEvent e1) -> {
+                // Setup for display of included Turnouts only, if needed
+                if (showAll) {
+                    showAll = false;
+                    initializeIncludedList();
+                    _SignalGroupHeadModel.fireTableDataChanged();
+                    _AspectModel.fireTableDataChanged();
                 }
             });
             py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("LabelAspects"),
@@ -588,27 +537,21 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             p3.add(p3xsi);
             p3xsi.setVisible(true);
 
-            mainSignalComboBox.addActionListener(// respond to comboBox selection
-                    new ActionListener() {
-                //public void focusGained(FocusEvent e) {
-                //}
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    if (mainSignalComboBox.getSelectedItem() == null) { // ie. empty first row was selected or set
-                        log.debug("Empty line in mainSignal comboBox");
-                        //setValidSignalMastAspects(); // clears the Aspect table
+            mainSignalComboBox.addActionListener( // respond to comboBox selection
+            (ActionEvent event) -> {
+                if (mainSignalComboBox.getSelectedItem() == null) { // ie. empty first row was selected or set
+                    log.debug("Empty line in mainSignal comboBox");
+                    //setValidSignalMastAspects(); // clears the Aspect table
+                } else {
+                    if (curSignalGroup == null
+                            || mainSignalComboBox.getSelectedItem() != curSignalGroup.getSignalMast()) {
+                        log.debug("comboBox closed, choice: {}", mainSignalComboBox.getSelectedItem());
+                        setValidSignalMastAspects(); // refresh table with signal mast aspects
                     } else {
-                        if (curSignalGroup == null
-                                || mainSignalComboBox.getSelectedItem() != curSignalGroup.getSignalMast()) {
-                            log.debug("comboBox closed, choice: {}", mainSignalComboBox.getSelectedItem());
-                            setValidSignalMastAspects(); // refresh table with signal mast aspects
-                        } else {
-                            log.debug("Mast {} picked in mainSignal comboBox", mainSignalComboBox.getSelectedItem());
-                        }
+                        log.debug("Mast {} picked in mainSignal comboBox", mainSignalComboBox.getSelectedItem());
                     }
                 }
-            }
-            );
+            });
 
             // complete this panel
             Border p3Border = BorderFactory.createEtchedBorder();
@@ -706,20 +649,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
             pb.add(cancelButton);
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            });
+            cancelButton.addActionListener(this::cancelPressed);
             cancelButton.setVisible(true);
             pb.add(deleteButton);
-            deleteButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    deletePressed(e);
-                }
-            });
+            deleteButton.addActionListener(this::deletePressed);
             deleteButton.setToolTipText(Bundle.getMessage("DeleteSignalGroupInSystem"));
             // Add Create Group button
             pb.add(createButton);
@@ -727,11 +660,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             createButton.setToolTipText(Bundle.getMessage("TooltipCreateGroup"));
             // [Update] Signal Group button in Add/Edit SignalGroup pane
             pb.add(updateButton);
-            updateButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    updatePressed(e, false, false);
-                }
+            updateButton.addActionListener((ActionEvent e1) -> {
+                updatePressed(e1, false, false);
             });
             updateButton.setToolTipText(Bundle.getMessage("TooltipUpdateGroup"));
 
@@ -802,13 +732,13 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
      * is selected.
      */
     void initializeIncludedList() {
-        _includedMastAspectsList = new ArrayList<SignalMastAspect>();
+        _includedMastAspectsList = new ArrayList<>();
         for (int i = 0; i < _mastAspectsList.size(); i++) {
             if (_mastAspectsList.get(i).isIncluded()) {
                 _includedMastAspectsList.add(_mastAspectsList.get(i));
             }
         }
-        _includedSignalHeadsList = new ArrayList<SignalGroupSignalHead>();
+        _includedSignalHeadsList = new ArrayList<>();
         for (int i = 0; i < _signalHeadsList.size(); i++) {
             if (_signalHeadsList.get(i).isIncluded()) {
                 _includedSignalHeadsList.add(_signalHeadsList.get(i));
@@ -848,9 +778,9 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             status1.setForeground(Color.red);
             return false;
         }
-        SignalGroup g = null;
+        SignalGroup g;
         // check if a SignalGroup with the same user name exists
-        if (!uName.equals("")) {
+        if (!uName.isEmpty()) {
             g = InstanceManager.getDefault(SignalGroupManager.class).getByUserName(uName);
             if (g != null) {
                 // SignalGroup already exists
@@ -902,7 +832,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (_autoSystemName.isSelected() && !inEditMode) {
             // create new Signal Group with auto system name
             log.debug("SignalGroupTableAction checkNamesOK new autogroup");
-            g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignaGroupWithUserName(uName);
+            g = InstanceManager.getDefault(SignalGroupManager.class).newSignalGroupWithUserName(uName);
         } else {
             if (sName.length() == 0) { // show warning in status bar
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
@@ -985,7 +915,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         log.debug("Mast {} picked in mainSignal comboBox", mainSignalComboBox.getSelectedItem());
         java.util.Vector<String> aspects = sm.getValidAspects();
 
-        _mastAspectsList = new ArrayList<SignalMastAspect>(aspects.size());
+        _mastAspectsList = new ArrayList<>(aspects.size());
         for (int i = 0; i < aspects.size(); i++) {
             _mastAspectsList.add(new SignalMastAspect(aspects.get(i)));
         }
@@ -1045,7 +975,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(g.getSignalMastName());
         if (sm != null) {
             java.util.Vector<String> aspects = sm.getValidAspects();
-            _mastAspectsList = new ArrayList<SignalMastAspect>(aspects.size());
+            _mastAspectsList = new ArrayList<>(aspects.size());
 
             for (int i = 0; i < aspects.size(); i++) {
                 _mastAspectsList.add(new SignalMastAspect(aspects.get(i)));
@@ -1259,7 +1189,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             if (_mastAspectsList == null) {
                 return 0;
             }
-            if (showAll) {
+            else if (showAll) {
                 return _mastAspectsList.size();
             } else {
                 return _includedMastAspectsList.size();
@@ -1268,21 +1198,20 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
         @Override
         public Object getValueAt(int r, int c) {
-            ArrayList<SignalMastAspect> aspectList = null;
-            if (showAll) {
-                aspectList = _mastAspectsList;
-            } else {
-                aspectList = _includedMastAspectsList;
-            }
+            ArrayList<SignalMastAspect> aspectList = ( showAll ? _mastAspectsList : _includedMastAspectsList);
             // some error checking
-            if (_mastAspectsList == null || r >= aspectList.size()) {
+            if (aspectList == null || r >= aspectList.size()) {
                 // prevent NPE when clicking Add... in table to add new group (with 1 group existing using a different mast type)
-                log.debug("SGTA getValueAt #1125: row value {} is greater than aspectList size {}", r, aspectList.size());
+                if (aspectList == null) {
+                    log.debug("SGTA getValueAt: row value {} aspectList is null", r);
+                } else {
+                    log.debug("SGTA getValueAt: row value {} is greater than aspectList size {}", r, aspectList.size());
+                }
                 return null;
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(aspectList.get(r).isIncluded());
+                    return aspectList.get(r).isIncluded();
                 case ASPECT_COLUMN:
                     return aspectList.get(r).getAspect();
                 default:
@@ -1293,12 +1222,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         @Override
         public void setValueAt(Object type, int r, int c) {
             log.debug("SigGroupEditSet A; row = {}", r);
-            ArrayList<SignalMastAspect> aspectList = null;
-            if (showAll) {
-                aspectList = _mastAspectsList;
-            } else {
-                aspectList = _includedMastAspectsList;
-            }
+            ArrayList<SignalMastAspect> aspectList = ( showAll ? _mastAspectsList : _includedMastAspectsList);
             if (_mastAspectsList == null || r >= aspectList.size()) {
                 // prevent NPE when closing window after NPE in getValueAdd() happened
                 log.debug("row value {} is greater than aspectList size {}", r, aspectList);
@@ -1307,7 +1231,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             log.debug("SigGroupEditSet B; row = {}; aspectList.size() = {}.", r, aspectList.size());
             switch (c) {
                 case INCLUDE_COLUMN:
-                    aspectList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    aspectList.get(r).setIncluded(((Boolean) type));
                     break;
                 case ASPECT_COLUMN:
                     aspectList.get(r).setAspect((String) type);
@@ -1371,6 +1295,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     class SignalGroupSignalHeadModel extends SignalGroupOutputModel {
 
         SignalGroupSignalHeadModel() {
+            addPcl();
+        }
+        
+        final void addPcl(){
             InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(this);
         }
 
@@ -1390,12 +1318,13 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == INCLUDE_COLUMN) {
-                return Boolean.class;
-            } else if (c == EDIT_COLUMN) {
-                return JButton.class;
-            } else {
-                return String.class;
+            switch (c) {
+                case INCLUDE_COLUMN:
+                    return Boolean.class;
+                case EDIT_COLUMN:
+                    return JButton.class;
+                default:
+                    return String.class;
             }
         }
 
@@ -1414,11 +1343,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          */
         @Override
         public int getRowCount() {
-            if (showAll) {
-                return _signalHeadsList.size();
-            } else {
-                return _includedSignalHeadsList.size();
-            }
+            return ( showAll ? _signalHeadsList.size() : _includedSignalHeadsList.size() );
         }
 
         /**
@@ -1430,12 +1355,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          */
         @Override
         public Object getValueAt(int r, int c) {
-            ArrayList<SignalGroupSignalHead> headsList = null;
-            if (showAll) {
-                headsList = _signalHeadsList;
-            } else {
-                headsList = _includedSignalHeadsList;
-            }
+            ArrayList<SignalGroupSignalHead> headsList = ( showAll ? _signalHeadsList : _includedSignalHeadsList);
             // some error checking
             if (r >= headsList.size()) {
                 log.debug("Row num {} is greater than headsList size {}", r, headsList.size());
@@ -1443,7 +1363,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(headsList.get(r).isIncluded());
+                    return headsList.get(r).isIncluded();
                 case SNAME_COLUMN:
                     return headsList.get(r).getSysName();
                 case UNAME_COLUMN:
@@ -1467,7 +1387,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          * @return name of signal head
          */
         public String getDisplayName(int r) {
-            if (((String) getValueAt(r, UNAME_COLUMN) != null) && (!((String) getValueAt(r, UNAME_COLUMN)).equals(""))) {
+            if (((String) getValueAt(r, UNAME_COLUMN) != null) && (!((String) getValueAt(r, UNAME_COLUMN)).isEmpty())) {
                 return (String) getValueAt(r, UNAME_COLUMN);
             } else {
                 return (String) getValueAt(r, SNAME_COLUMN);
@@ -1494,15 +1414,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          */
         @Override
         public void setValueAt(Object type, int r, int c) {
-            ArrayList<SignalGroupSignalHead> headsList = null;
-            if (showAll) {
-                headsList = _signalHeadsList;
-            } else {
-                headsList = _includedSignalHeadsList;
-            }
+            ArrayList<SignalGroupSignalHead> headsList = (showAll ? _signalHeadsList : _includedSignalHeadsList);
             switch (c) {
                 case INCLUDE_COLUMN:
-                    headsList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    headsList.get(r).setIncluded(((Boolean) type));
                     break;
                 case STATE_ON_COLUMN:
                     headsList.get(r).setSetOnState((String) type);
@@ -1511,22 +1426,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                     headsList.get(r).setSetOffState((String) type);
                     break;
                 case EDIT_COLUMN:
-                    headsList.get(r).setIncluded(((Boolean) true).booleanValue());
-                    class WindowMaker implements Runnable {
-
-                        final int row;
-
-                        WindowMaker(int r) {
-                            row = r;
-                        }
-
-                        @Override
-                        public void run() {
-                            signalHeadEditPressed(row);
-                        }
-                    }
-                    WindowMaker t = new WindowMaker(r);
-                    javax.swing.SwingUtilities.invokeLater(t);
+                    headsList.get(r).setIncluded(true);
+                    SwingUtilities.invokeLater(() -> {
+                        signalHeadEditPressed(r);
+                    });
                     break;
                 default:
                     break;
@@ -1619,8 +1522,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
         /**
          * Create an object to hold name and configuration of a Signal Head as
-         * part of a Signal Group Filters only existing Single Turnout Signal
-         * Heads from the loaded configuration Used while editing Signal Groups
+         * part of a Signal Group.
+         * Filters only existing Single Turnout Signal
+         * Heads from the loaded configuration.
+         * Used while editing Signal Groups.
          * Contains whether it is included in a group, the On state and Off
          * state
          *

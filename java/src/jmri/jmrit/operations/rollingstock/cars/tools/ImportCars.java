@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.text.NumberFormat;
 
 import javax.swing.JOptionPane;
 
@@ -28,17 +27,13 @@ import jmri.jmrit.operations.setup.Setup;
  * Owner Built Location - Track. If a CSV file, the import will accept these
  * additional fields: Load Kernel Moves Value Comment Miscellaneous Extensions
  *
- * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016
+ * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021
  */
 public class ImportCars extends ImportRollingStock {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
-    private int weightResults = JOptionPane.NO_OPTION; // Automatically
-                                                       // calculate weight for
-                                                       // car if weight entry is
-                                                       // not
-    // found
+    private int weightResults = JOptionPane.NO_OPTION; 
     private boolean autoCalculate = true;
     private boolean askAutoCreateTypes = true;
     private boolean askAutoCreateLocations = true;
@@ -59,6 +54,7 @@ public class ImportCars extends ImportRollingStock {
     private final boolean autoCreateColors = true;
     private final boolean autoCreateOwners = true;
 
+    // see ExportCars for column numbers
     private static final int CAR_NUMBER = 0;
     private static final int CAR_ROAD = 1;
     private static final int CAR_TYPE = 2;
@@ -77,9 +73,9 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_MOVES = 13;
     private static final int CAR_VALUE = 14;
     private static final int CAR_COMMENT = 15;
-    // private static final int CAR_MISCELLANEOUS = 16;
+    private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
-    private static final int CAR_RFID_TAG = 32;
+    private static final int CAR_RFID_TAG = 37;
 
     // we use a thread so the status frame will work!
     @Override
@@ -321,13 +317,7 @@ public class ImportCars extends ImportRollingStock {
                 // calculate car weight if "0"
                 if (carWeight.equals("0")) {
                     try {
-                        double doubleCarLength = Double.parseDouble(carLength) * 12 / Setup.getScaleRatio();
-                        double doubleCarWeight =
-                                (Setup.getInitalWeight() + doubleCarLength * Setup.getAddWeight()) / 1000;
-                        NumberFormat nf = NumberFormat.getNumberInstance();
-                        nf.setMaximumFractionDigits(1);
-                        carWeight = nf.format(doubleCarWeight); // car weight in
-                                                                // ounces.
+                        carWeight = CarManager.calculateCarWeight(carLength);                                                          // ounces.
                     } catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
                                 .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
@@ -546,14 +536,18 @@ public class ImportCars extends ImportRollingStock {
                     car.setValue(carValue);
                     car.setComment(carComment);
                     carsAdded++;
-
+                    // Out of Service?
+                    if (comma && inputLine.length > base + CAR_MISCELLANEOUS) {
+                        car.setOutOfService(inputLine[CAR_MISCELLANEOUS].equals(Bundle.getMessage("OutOfService")));
+                    }
+                    // TODO import RWE and RWL fields
                     // if the car's type name is "Caboose" then make it a
                     // caboose
                     car.setCaboose(carType.equals("Caboose"));
                     // determine if there are any car extensions
                     if (comma && inputLine.length > base + CAR_EXTENSIONS) {
                         String extensions = inputLine[CAR_EXTENSIONS];
-                        log.debug("Car ({} {}) has extension ({})", carRoad, carNumber, extensions);
+                        log.debug("Car ({}) has extension ({})", car.toString(), extensions);
                         String[] ext = extensions.split(Car.EXTENSION_REGEX);
                         for (int i = 0; i < ext.length; i++) {
                             if (ext[i].equals(Car.CABOOSE_EXTENSION)) {
@@ -615,10 +609,10 @@ public class ImportCars extends ImportRollingStock {
                     }
 
                     if (car.getWeight().isEmpty()) {
-                        log.debug("Car ({} {}) weight not specified", carRoad, carNumber);
+                        log.debug("Car ({}) weight not specified", car.toString());
                         if (weightResults != JOptionPane.CANCEL_OPTION) {
                             weightResults = JOptionPane.showOptionDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("CarWeightNotFound"), new Object[]{(carRoad + " " + carNumber)}),
+                                    .getMessage("CarWeightNotFound"), new Object[]{car.toString()}),
                                     Bundle.getMessage("CarWeightMissing"), JOptionPane.YES_NO_CANCEL_OPTION,
                                     JOptionPane.INFORMATION_MESSAGE, null, new Object[]{
                                             Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
@@ -633,17 +627,12 @@ public class ImportCars extends ImportRollingStock {
                                 autoCalculate == true && weightResults == JOptionPane.CANCEL_OPTION) {
                             autoCalculate = true;
                             try {
-                                double carLen = Double.parseDouble(car.getLength()) * 12 / Setup.getScaleRatio();
-                                double carWght = (Setup.getInitalWeight() + carLen * Setup.getAddWeight()) / 1000;
-                                NumberFormat nf = NumberFormat.getNumberInstance();
-                                nf.setMaximumFractionDigits(1);
-                                car.setWeight(nf.format(carWght)); // car weight
-                                                                   // in ounces.
-                                int tons = (int) (carWght * Setup.getScaleTonRatio());
+                                carWeight = CarManager.calculateCarWeight(carLength);
+                                car.setWeight(carWeight);
+                                int tons = (int) (Double.parseDouble(carWeight) * Setup.getScaleTonRatio());
                                 // adjust weight for caboose
-                                if (car.isCaboose()) {
-                                    tons = (int) (Double.parseDouble(car.getLength()) * .9); // .9
-                                                                                             // tons/foot
+                                if (car.isCaboose() || car.isPassenger()) {
+                                    tons = (int) (Double.parseDouble(car.getLength()) * .9);
                                 }
                                 car.setWeightTons(Integer.toString(tons));
                             } catch (NumberFormatException e) {
@@ -665,15 +654,14 @@ public class ImportCars extends ImportRollingStock {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
                                             new Object[]{
-                                                    (carRoad + " " + carNumber), carType, carLocationName, carTrackName,
+                                                    car.toString(), carType, carLocationName, carTrackName,
                                                     status}),
                                             Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                                     int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                             .getMessage("DoYouWantToAllowService"),
                                             new Object[]{carLocationName,
-                                                    carTrackName, (carRoad + " " + carNumber), carType}),
-                                            Bundle
-                                                    .getMessage("ServiceCarType"),
+                                                    carTrackName, car.toString(), carType}),
+                                            Bundle.getMessage("ServiceCarType"),
                                             JOptionPane.YES_NO_OPTION);
                                     if (results == JOptionPane.YES_OPTION) {
                                         location.addTypeName(carType);
@@ -705,7 +693,7 @@ public class ImportCars extends ImportRollingStock {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
                                             new Object[]{
-                                                    (carRoad + " " + carNumber), carType, carLocationName, carTrackName,
+                                                    car.toString(), carType, carLocationName, carTrackName,
                                                     status}),
                                             Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                                     int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
@@ -740,13 +728,13 @@ public class ImportCars extends ImportRollingStock {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
                                             new Object[]{
-                                                    (carRoad + " " + carNumber), carType, carLocationName, carTrackName,
+                                                    car.toString(), carType, carLocationName, carTrackName,
                                                     status}),
                                             Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                                     int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                             .getMessage("DoYouWantToForceCar"),
                                             new Object[]{
-                                                    (carRoad + " " + carNumber), carLocationName, carTrackName}),
+                                                    car.toString(), carLocationName, carTrackName}),
                                             Bundle
                                                     .getMessage("OverRide"),
                                             JOptionPane.YES_NO_OPTION);

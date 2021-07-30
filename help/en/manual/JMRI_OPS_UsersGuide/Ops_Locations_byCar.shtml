@@ -97,15 +97,15 @@
         <li><strong>Window</strong></li>
 
         <li><strong>Help</strong></li>
-
-        <li style="list-style: none">
-          <hr>
-
-          <div align="right">
-            <p><a href="Ops_Locations_Menu.shtml">Back</a></p>
-          </div><!--#include virtual="/Footer.shtml" -->
-        </li>
       </ul>
+
+      <hr>
+
+      <div align="right">
+            <p><a href="Ops_Locations_Menu.shtml">Back</a></p>
+      </div>
+
+    <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

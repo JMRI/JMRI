@@ -643,13 +643,22 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
      * @return true if name is less than 26 characters
      */
     private boolean checkName(String s) {
-        if (trackNameTextField.getText().trim().isEmpty()) {
+        String trackName = trackNameTextField.getText().trim();
+        if (trackName.isEmpty()) {
             log.debug("Must enter a track name");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotTrack"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (TrainCommon.splitString(trackNameTextField.getText()).length() > MAX_NAME_LENGTH) {
+        String[] check = trackName.split(TrainCommon.HYPHEN);
+        if (check.length == 0) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
+                    MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return false;
+        }
+        if (TrainCommon.splitString(trackName).length() > MAX_NAME_LENGTH) {
             log.error("Track name must be less than {} charaters", Integer.toString(MAX_NAME_LENGTH + 1)); // NOI18N
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),

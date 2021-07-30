@@ -11,7 +11,9 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
     <a name="Top" id="Top"></a>
 
     <h1>DecoderPro&reg; Comprehensive Programmer</h1>
@@ -76,9 +78,11 @@
 
       <p><a href="index.shtml#Advanced%20Programmer">Back to
       Index</a></p>
-    </div><!--#include virtual="/Footer.shtml" -->
+    </div>
+
+    <!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
-  <!-- closes #mBody-->
+  </div><!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

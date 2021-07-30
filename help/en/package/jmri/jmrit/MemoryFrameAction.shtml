@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -8,19 +7,13 @@
   <!-- Copyright ($Author$) 2008 -->
 
   <title>JMRI: Memory Monitor Tool</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Memory Monitor Tool</h1><a href=
       "MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg"
@@ -57,9 +50,10 @@
         <li>The right column is the total memory available to
         JMRI.</li>
       </ul>At the top of the left column, the maximum memory that
-      can be available to JMRI is displayed. 
+      can be available to JMRI is displayed.
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+  </div><!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>
