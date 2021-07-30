@@ -84,10 +84,12 @@ public class CheckPropertyFilesTest {
     private static class FolderProperties {
         
         private final FolderProperties _parent;
+        private final String _fileName;
         private final Map<String, Properties> _properties;
         
-        public FolderProperties(FolderProperties parent) {
+        public FolderProperties(FolderProperties parent, String fileName) {
             this._parent = parent;
+            this._fileName = fileName;
             this._properties = new HashMap<>();
         }
         
@@ -214,7 +216,12 @@ public class CheckPropertyFilesTest {
     
     
 
-    private boolean searchFolders(String rootFolder, String folder, FolderProperties parentFolderProperties) throws IOException {
+    private boolean searchFolders(
+            String rootFolder,
+            String folder,
+            FolderProperties parentFolderProperties)
+            throws IOException {
+        
         boolean result = true;
         
         Path path = FileSystems.getDefault().getPath(folder);
@@ -224,7 +231,7 @@ public class CheckPropertyFilesTest {
 
         System.out.format("%n%n%nFolder: %s%n", folder);
         
-        FolderProperties folderProperties = new FolderProperties(parentFolderProperties);
+        Map<String, FolderProperties> folderPropertiesMap = new HashMap<>();
         
         boolean propertiesFound = false;
         
@@ -257,52 +264,39 @@ public class CheckPropertyFilesTest {
                     matcher = pattern.matcher(fileName);
                     if (matcher.matches()) {
                         lang = matcher.group(1) + lang;
-//                        fileName = fileName.substring(0, fileName.length() - lang.length());
+                        fileName = fileName.substring(0, fileName.length() - lang.length());
                     }
                     lang = lang.substring(1);
                 }
                 
                 System.out.format("%nFileName: %s, lang: %s%n", fileName, lang);
                 
-                result = result && folderProperties.addPropertyFile(file, lang);
-/*                
-                if (matcher.matches()) {
-//                    System.out.format("Correct file: %s, begin: %s, lang: %s%n", file.getName(), matcher.group(1), matcher.group(2));
-                    
-                    String langGroup = matcher.group(2);
-                    String lang = langGroup != null ? langGroup.substring(1) : "";
-                    
-                    folderProperties.addPropertyFile(file, lang);
-                    
+                FolderProperties folderProperties;
+                if (folderPropertiesMap.containsKey(fileName)) {
+                    folderProperties = folderPropertiesMap.get(fileName);
                 } else {
-                    System.out.format("File does not matches: %s%n", file.getName());
+                    folderProperties = new FolderProperties(parentFolderProperties, fileName);
+                    folderPropertiesMap.put(fileName, folderProperties);
                 }
-*/
-//                String fileName = file.getAbsolutePath().substring(rootFolder.length());
-//                String helpKey = fileName.substring(0, fileName.indexOf(".shtml"))
-//                            .replace('\\', '.').replace('/', '.');
-//                _htmlPagesHelpKeys.add(helpKey);
-//                System.out.format("HelpKey: %s%n", helpKey);
-//                Document doc = Jsoup.parse(file, "UTF-8");
-
-//                org.jsoup.nodes.Element body = doc.body();
-//                parseNode(helpKey, body, "");
+                result = result && folderProperties.addPropertyFile(file, lang);
             }
         }
         
-        if (propertiesFound) {
-            result = result && folderProperties.checkProperties();
+        for (FolderProperties folderProperties : folderPropertiesMap.values()) {
+            if (propertiesFound) {
+                result = result && folderProperties.checkProperties();
+            }
+            
+            Set<String> folders = Stream.of(path.toFile().listFiles())
+                      .filter(file -> file.isDirectory())
+                      .map(File::getName)
+                      .collect(Collectors.toSet());
+            
+            for (String aFolder : folders) {
+                result = result
+                        && searchFolders(rootFolder, folder + aFolder + "/", folderProperties);
+            }
         }
-        
-        Set<String> folders = Stream.of(path.toFile().listFiles())
-                  .filter(file -> file.isDirectory())
-                  .map(File::getName)
-                  .collect(Collectors.toSet());
-
-        for (String aFolder : folders) {
-            result = result
-                    && searchFolders(rootFolder, folder + aFolder + "/", folderProperties);
-      }
         
         return result;
     }
