@@ -62,6 +62,10 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
         silenceableProperties.add("beans");
+        setRegisterSelf();
+    }
+    
+    final void setRegisterSelf(){
         registerSelf();
     }
 

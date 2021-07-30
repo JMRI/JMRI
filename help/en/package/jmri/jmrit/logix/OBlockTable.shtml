@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -9,16 +8,7 @@
   <title>JMRI: Occupancy Block Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Occupancy OBlock Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -169,7 +159,7 @@
       Editing OBlocks, Portals and OPaths</a> for more details
       on using the tables.</p>
 
-      <h2>Tables to edit Occupancy Block, Portals and Path</h2>
+      <h2 id="oblock_gui_options">Tables to edit Occupancy Block, Portals and Path</h2>
       <p>In JMRi Preferences &gt; Display you can choose your preferred interface
       to edit these items in tables (restart required):</p>
       <ul>
@@ -481,5 +471,6 @@
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

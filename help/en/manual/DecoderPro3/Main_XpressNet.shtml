@@ -157,15 +157,15 @@
       <p><img src="images/Main_XpressNet_07.png" alt=
       "configuration" width="561" height="270"></p>
 
-      <div>
         <div align="right">
           <a href="#LV102">Back</a>
 
           <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
           "Main_Menu.shtml#System"></a></p>
-        </div><!--#include virtual="/Footer.shtml" -->
+        </div>
+
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
-  </div>
 </body>
 </html>

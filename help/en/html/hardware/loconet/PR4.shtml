@@ -32,11 +32,11 @@
       table below summarizes these methods.</p>
 
       <table border="3">
-          <tr><td align="center" rowspan="2"><strong>Usage</strong></td>
-              <td colspan="2" align="center"><strong>Settings in JMRI Connection Profile</strong></td>
-              <td align="center" rowspan="2"><strong>Available JMRI Capabilities</strong></td></tr>
-          <tr><td align="center"><strong>System Connection</strong></td>
-              <td align="center"><strong>JMRI Command Station Type</strong></td></tr>
+          <tr><th rowspan="2">Usage</td>
+              <th colspan="2">Settings in JMRI Connection Profile</th>
+              <th rowspan="2">Available JMRI Capabilities</th></tr>
+          <tr><th>System Connection</th>
+              <th>JMRI Command Station Type</th></tr>
           <tr><td rowspan="2" align="center">Decoder Programming on PR4 Programming Track</td>
               <td rowspan="2" align="center">"<em>PR4</em>"</td>
               <td rowspan="2" align="center">"<em>PR4 Standalone Programmer</em>"</td>

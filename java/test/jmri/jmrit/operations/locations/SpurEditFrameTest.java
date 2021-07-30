@@ -5,8 +5,9 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -74,9 +75,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
         // test error, try to create track with same name
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addTrackButton);
 
-        // error dialogue should have appeared
+        // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"),
                 new Object[]{Bundle
@@ -216,22 +217,21 @@ public class SpurEditFrameTest extends OperationsTestCase {
         // save button
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
         
-        // confirm no error dialogue
+        // confirm no error dialog
         Assert.assertTrue(f.isActive());
         
         // specify train pickups using the exclude option
         JemmyUtil.enterClickAndLeave(f.excludeTrainPickup);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // error dialogue should have appeared
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         trainA.addTypeName("Boxcar");
 
         // save button
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // confirm no error dialogue
+        // confirm no error dialog
         Assert.assertTrue(f.isActive());
 
         // disable pick ups by train
@@ -240,11 +240,11 @@ public class SpurEditFrameTest extends OperationsTestCase {
         rloc.setPickUpAllowed(false);
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // error dialogue should have appeared
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // restore pick ups
         rloc.setPickUpAllowed(true);
 
@@ -257,32 +257,31 @@ public class SpurEditFrameTest extends OperationsTestCase {
         // save button
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
 
-        // confirm no error dialogue
+        // confirm no error dialog
         Assert.assertTrue(f.isActive());
 
         // Train had only one location in its route, a switcher, now make it a train with two locations
         route.addLocation(lManager.getLocationByName("Test Loc A"));
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // error dialogue should have appeared
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // train direction default when creating a route is north 
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // confirm no error dialogue
+        // confirm no error dialog
         Assert.assertTrue(f.isActive());
 
         // try 0 moves
         rloc.setMaxCarMoves(0);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // error dialogue should have appeared
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // restore move count
         rloc.setMaxCarMoves(5);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
@@ -291,11 +290,10 @@ public class SpurEditFrameTest extends OperationsTestCase {
         // try having the train skip the location
         trainA.addTrainSkipsLocation(rloc.getId());
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-
-        // error dialogue should have appeared
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        // error dialog should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         // kill all frames
         JUnitUtil.dispose(f);
     }

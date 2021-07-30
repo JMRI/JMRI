@@ -81,9 +81,12 @@
             secondAttribute="bar"<br>
             thirdAttribute="biff"<br>
             fourthAttribute="bing" /&gt;</p>
+
+        </div><!-- closes list -->
+
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- close #mainContent -->
     </div><!-- close #mBody -->
-  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: DispatcherPro Main Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
@@ -18,29 +15,23 @@
     <div id="mainContent">
 
       <h1>JMRI: DispatcherPro Main Window</h1>
-      <img src=
-      "../../../../../resources/logo.gif" align="right" height=
-      "100" width="100">
-      <p><b>Dispatcher</b> provides functions and organizes
-      information relating to dispatching trains on a model
-      railroad layout, allowing for automated running.</p>
-      <p>You access the DispatcherPro main window by starting
-      PanelPro or SoundPro and selecting
-      <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher...</a>
-      from the <a href="../../tools/index.shtml">Tools</a> menu.</p>
 
-      <p>Help on specific menus:</p>
+      <img src="../../../../../resources/logo.gif" class="floatRight"
+      height="100" width="100" alt="">
 
-      <ul>
-        <li>Edit - (<a href=
-        "../../../package/apps/TabbedPreferences.shtml">Preferences</a>)</li>
+      <p><strong>Dispatcher</strong> is a primary tool within <a href="../PanelPro">PanelPro</a>
+      that provides functions and organizes information relating to dispatching trains on
+      a model railroad layout, allowing for automated running.</p>
 
-        <li><a href="../../tools/index.shtml">Tools</a></li>
+      <p>Dispatcher is dependent on PanelPro blocks, turnouts, sensors and signaling.  It
+      normally uses a Layout Editor panel.  The <a href="../PanelPro/GettingStarted.shtml">
+      Getting Started with PanelPro</a> tutorial describes the process to create these
+      prerequisites.</p>
 
-        <li><a href=
-        "../DecoderPro/Roster.shtml#menu">Roster</a></li>
-      </ul>More information about the <a href=
-      "../../setup/Files.shtml">JMRI Configuration Files</a> 
+      <p>You access the DispatcherPro main window by starting PanelPro and selecting
+      <strong>Tools &rArr; Dispatcher</strong>.  The main help page is at
+      <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- closes #mBody -->

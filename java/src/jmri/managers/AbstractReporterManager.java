@@ -42,13 +42,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Reporter provideReporter(@Nonnull String sName) {
+    public Reporter provideReporter(@Nonnull String sName) throws IllegalArgumentException {
         Reporter r = getReporter(sName);
         return r == null ? newReporter(makeSystemName(sName, true), null) : r;
     }
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public Reporter getReporter(@Nonnull String name) {
         Reporter r = getByUserName(name);
         return r == null ? getBySystemName(name) : r;
@@ -71,6 +72,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public Reporter getByDisplayName(@Nonnull String key) {
         return getReporter(key);        
     }
@@ -94,14 +96,18 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
         // return existing if there is one
         Reporter r;
-        if ((userName != null) && ((r = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != r) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, r.getSystemName());
+        if (userName != null) {
+            r = getByUserName(userName);
+            if (r!=null) {
+                if (getBySystemName(systemName) != r) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                            userName, systemName, r.getSystemName());
+                }
+                return r;
             }
-            return r;
         }
-        if ((r = getBySystemName(systemName)) != null) {
+        r = getBySystemName(systemName);
+        if (r != null) {
             if ((r.getUserName() == null) && (userName != null)) {
                 r.setUserName(userName);
             } else if (userName != null) {
@@ -131,7 +137,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      * @param userName username.
      * @return never null
      */
-    abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName);
+    @Nonnull
+    abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override

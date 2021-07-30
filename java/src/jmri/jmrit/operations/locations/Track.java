@@ -2199,6 +2199,66 @@ public class Track extends PropertyChangeSupport {
         // set all cars in kernel to the next load
         car.updateKernel();
     }
+    
+    public static final String TRAIN_SCHEDULE = "trainSchedule"; // NOI18N
+    public static final String ALL = "all"; // NOI18N
+    
+    public boolean checkScheduleAttribute(String attribute, String carType, Car car) {
+        Schedule schedule = getSchedule();
+        if (schedule == null) {
+            return true;
+        }
+        // if car is already placed at track, don't check car type and load
+        if (car != null && car.getTrack() == this) {
+            return true;
+        }
+        List<ScheduleItem> scheduleItems = schedule.getItemsBySequenceList();
+        for (ScheduleItem si : scheduleItems) {
+            // check to see if schedule services car type
+            if (attribute.equals(TYPE) && si.getTypeName().equals(carType)) {
+                return true;
+            }
+            // check to see if schedule services car type and load
+            if (attribute.equals(LOAD) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getReceiveLoadName().equals(car.getLoadName()))) {
+                return true;
+            }
+            // check to see if schedule services car type and road
+            if (attribute.equals(ROAD) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getRoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getRoadName().equals(car.getRoadName()))) {
+                return true;
+            }
+            // check to see if train schedule allows delivery
+            if (attribute.equals(TRAIN_SCHEDULE) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getSetoutTrainScheduleId().isEmpty() ||
+                            InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                                    .equals(si.getSetoutTrainScheduleId()))) {
+                return true;
+            }
+            // check to see if at least one schedule item can service car
+            if (attribute.equals(ALL) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getReceiveLoadName().equals(car.getLoadName())) &&
+                    (si.getRoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getRoadName().equals(car.getRoadName())) &&
+                    (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
+                            InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                                    .equals(si.getSetoutTrainScheduleId()))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Enable changing the car generic load state when car arrives at this track.

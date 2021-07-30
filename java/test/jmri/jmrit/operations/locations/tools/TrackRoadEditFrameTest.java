@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -59,11 +59,11 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(tlef.isVisible());
 
         JemmyUtil.enterClickAndLeave(tlef.roadNameInclude);
-        JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(tlef.saveTrackButton);
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoRoads"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(tlef);
+        
         // only road "AA" is to be accepted
         JemmyUtil.enterClickAndLeave(tlef.addRoadButton);
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);

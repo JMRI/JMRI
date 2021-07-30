@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -9,649 +8,774 @@
   <title>JMRI: Preferences Pane</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Preferences Pane</h1>
-      The Preferences pane is where
-      you configure the basic operation of your JMRI application.
 
-      <p>The screen is split into two sections: on the left hand
-      side is a list of the Preference groups that can be set.
-      Clicking on each item will then populate the right hand side
-      with the various options that can be configured for that Tab.
+      <p>The Preferences pane is where you configure the basic operation of your JMRI
+      application.</p>
 
-      <p><a href="#Connection">Connections</a><br>
-      <a href="#Defaults">Defaults</a><br>
-      <a href="#FileLocations">File Locations</a><br>
-      <a href="#Startup">Start Up</a><br>
-      <a href="#Display">Display</a><br>
-      <a href="#Messages">Messages</a><br>
-      <a href="#Roster">Roster</a><br>
-      <a href="#Throttle">Throttle</a><br>
-      <a href="images/JMRIPrefsChanges.png"><img src=
-      "images/JMRIPrefsChanges.png" height="112" width="250" align=
-      "right" alt="Save? dialog"></a><a href=
-      "#WiThrottle">WiThrottle</a><br>
-      <a href="#Profiles">Config Profiles</a><br>
-      <a href="#RailroadName">Railroad Name</a><br>
-      <a href="#JSONServer">JSON Server</a><br>
-      <a href="#WebServer">Web Server</a><br>
-      <a href="#SRCP_Server">SRCP Server</a><br>
-      <a href="#Simple_Server">Simple Server</a><br>
-      <a href="#Warrants">Warrants</a><br></p>
+      <p>The screen is split into two sections: on the left hand side is a list of the
+      Preference groups that can be set.  Clicking on each item will then populate the
+      right hand side with the various options that can be configured for that Tab.</p>
 
-      <p>Perhaps the most important control is at the bottom of
-      this section: The <strong>Save</strong> button!</p>
+      <ul>
+        <li><a href="#Connection">Connections</a></li>
+        <li><a href="#Defaults">Defaults</a></li>
+        <li><a href="#FileLocations">File Locations</a></li>
+        <li><a href="#Startup">Start Up</a></li>
+        <li><a href="#Display">Display</a></li>
+        <li><a href="#Messages">Messages</a></li>
+        <li><a href="#Roster">Roster</a></li>
+        <li><a href="#Throttle">Throttle</a></li>
+        <li><a href="#WiThrottle">WiThrottle</a></li>
+        <li><a href="#Profiles">Config Profiles</a></li>
+        <li><a href="#WebServer">Web Server</a></li>
+        <li><a href="#consist_control">Consist Control</a></li>
+        <li><a href="#help">Help</a></li>
+        <li><a href="#loconet_tcp">LocoNet over TCP</a></li>
+        <li><a href="#logixng">LogixNG</a></li>
+        <li><a href="#JSONServer">JSON Server</a></li>
+        <li><a href="#RailroadName">Railroad Name</a></li>
+        <li><a href="#SRCP_Server">SRCP Server</a></li>
+        <li><a href="#Simple_Server">Simple Server</a></li>
+        <li><a href="#Warrants">Warrants</a></li>
+      </ul>
+      <p>Perhaps the most important control is at the bottom of this section: The
+      <strong>Save</strong> button!</p>
 
-      <p><img src="images/PrefsRestart.png" height="112" width=
-      "390" align="right" alt="Restart">Be sure to click "Save" when leaving
-      this window. Your changes to the Preferences don't take
-      effect until the program is stopped and restarted, so the
-      program will prompt you to do that after saving the
-      Preferences.</p>
+      <p>Be sure to click <strong>Save</strong> before leaving this window. Your changes
+      to the Preferences don't take effect until the program is stopped and restarted, so
+      the program will prompt you to do that after saving the Preferences.</p>
 
-      <a name="Connection" id="Connection"></a>
-      <h2>Connections</h2>You can select any of the various JMRI
-      layout Connections here.
-
-      <p><a href="../../html/setup/images/PrefsConnections_en.png"><img src=
-      "../../html/setup/images/PrefsConnections_en.png" height="195" width="425"
-      align="right" alt="JMRI v2.14 Connection Prefs tab"></a>
-      Each
-      connection has its own unique tab. To get started, first
-      select your DCC System Manufacturer, followed by the type of
-      Connection that you are using. You will then be presented
-      with a series of most commonly required settings that need to
-      be set. If you need to change some of the more advanced
-      settings for this connection, check the "Additional
-      Connection Settings" box (where available).
-      </p>
-
-      <p>To add an new layout Connection, in the Connections
-      pane click on the tab with a "+", this will then present you
-      with a fresh connection tab. To remove a Connection, in the
-      System Manufacturer drop down list, select <strong>(none
-      selected)</strong> to just clear your present choices and
-      enter new ones, or click on the small "x" in the Tab name to
-      delete the Connection.</p>
-
-      <p>For more information on how to configure this for your
-      particular hardware, see the <a href=
-      "../../html/hardware/index.shtml">Hardware Help
-      pages</a>.</p>
-
-      <p>Remember to press <strong>Save</strong>!</p>
-
-      <a name="Defaults" id="Defaults"></a>
-      <h2 style="float:clear">Defaults</h2>
-      <a href="images/JMRI_PrefsDefaults.png">
-          <img src="images/JMRI_PrefsDefaults.png" height="236" width="468"
-               align="right" alt="JMRI v4.15 Defaults Prefs tab">
+      <div style="margin-left: 2em">
+      <a href="images/PrefsRestart.png">
+      <img src="images/PrefsRestart.png"
+      alt="Restart" width="390" height="112">
       </a>
-      <p>If you are using multiple connections, e.g. a LocoNet Connection and a
-          MERG Connection, the Defaults pane lets you select which connection
-          you want to use for a particular purpose. For example, you
-          can select one connection (LocoNet in the figure) for train throttles
-          and consists, while using a different one (SPROG in the figure) for the
-          service mode programming track.</p>
-      <p>For most Layout objects there is no default connection.
-          Every time you create a Turnout, Signal or Sensor,
-          you can choose which system ( eg. LocoNet or MERG ) it belongs to.</p>
-      <p>The Internal connection can be selected as a default.
-          To avoid a common mis-configuration, JMRI applications will notify you if the
-          Internal connection is selected across all the columns.
-          If you choose to use an all-Internal set of defaults and want to silence this
-          notification, edit the profile properties, setting the property
-          <code>jmri-managers.allInternalDefaults</code> to <em>true</em>.</p>
+      </div>
 
+      <p>Some preferences take effect when changed but will later display a reminder
+      prompt to save the changes before quitting.</p>
 
-      <a name="FileLocations" id="FileLocations"></a>
-      <h2>File Locations</h2>These allow you to set the default
-      location for where scripts and user files are loaded and
-      saved to.
+      <div style="margin-left: 2em">
+      <a href="images/JMRIPrefsChanges.png">
+      <img src="images/JMRIPrefsChanges.png"
+      alt="Save? dialog" width="250" height="112">
+      </a>
+      </div>
 
-      <p>Note that when changing the "User Files Location" this
-      will also change the default location for where the following
-      are stored:</p>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <dl>
-        <dd>Panels<br>
-        Rosters<br>
-        Operations<br>
-        Throttle<br>
-        Resources<br>
-        Dispatcher options<br>
-        Rps</dd>
-      </dl>
+      <h2 id="Connection">Connections</h2>
 
-      <p>There's a <a href=
-      "../../html/setup/Dropbox.shtml">separate Help page</a> with
-      information on sharing files between computers using Dropbox.</p>
+      <div>
 
-      <a name="Startup" id="Startup"></a>
-      <h2>Start Up</h2>
+        <p>You can select any of the various JMRI layout Connections here.</p>
 
-      <p><em>Start Up</em> preferences allow windows and files to
-      be opened, scripts to be run, and additional buttons to be
-      placed on the main window when the application starts.<br>
-      A very common use is an Open File action (see below) to
-      automatically load your last stored <a href=
-      "../jmri/jmrit/display/PanelMenuHelp.shtml">layout
-      configuration file</a> at startup, so all your turnouts,
-      sensors, panels etc. are available again.</p>
+        <p><a href="../../html/setup/images/PrefsConnections_en.png"><img src=
+        "../../html/setup/images/PrefsConnections_en.png" height="195" width="425"
+        class="floatRight" alt="JMRI v2.14 Connection Prefs tab"></a>
+        Each connection has its own unique tab. To get started, first select your DCC
+        System Manufacturer, followed by the type of Connection that you are using. You
+        will then be presented with a series of most commonly required settings that need
+        to be set. If you need to change some of the more advanced settings for this
+        connection, check the "Additional Connection Settings" box (where available).</p>
 
-      <p>Click the <strong>Add &#9662;</strong> button and select
-      the type of start up action to add. The new action will be
-      added last.</p>
+        <p>To add an new layout Connection, in the Connections pane click on the tab with
+        a "+", this will then present you with a fresh connection tab. To remove a
+        Connection, in the System Manufacturer drop down list, select <strong>(none
+        selected)</strong> to just clear your present choices and enter new ones, or click
+        on the small "x" in the Tab name to delete the Connection.</p>
 
-      <p>Start up action order is important. In most cases, scripts
-      should be the last items in the start up order. Start up
-      order can be changed by selecting a start up item and moving
-      it <em>up</em> or <em>down</em> in the list.</p>
-      <a href="images/PrefsStartup4_15.png"><img src=
-      "images/PrefsStartup4_15.png" height="232" width="466" align=
-      "right" alt="JMRI v4.2 Roster Prefs tab"></a>
-      <p>There are five types of start up actions:</p>
+        <p>For more information on how to configure this for your particular hardware, see
+        the <a href="../../html/hardware/index.shtml">Hardware Help pages</a>.</p>
 
-      <dl>
-        <dt>Perform action</dt>
+        <p>Remember to press <strong>Save</strong>!</p>
 
-        <dd>Have the program automatically execute various menu
-        selections at startup. For example, you can have the
-        Turnout Table automatically open, or automatically open a
-        window for programming on the main.</dd>
+      </div>
 
-        <dt>Add button to main window</dt>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-        <dd>Add extra buttons to the main JMRI window that are
-        connected to specific actions in menus for easy and quick
-        access to that action.</dd>
+      <h2  id="Defaults" style="clear:both">Defaults</h2>
 
-        <dt>Open file</dt>
+      <div>
+        <a href="images/JMRI_PrefsDefaults.png">
+            <img src="images/JMRI_PrefsDefaults.png" height="236" width="468"
+                 class="floatRight" alt="JMRI v4.15 Defaults Prefs tab"></a>
 
-        <dd>Automatically load a PanelPro xml data file or Configuration file
-        when the program starts up. You can load as many files
-        as you'd like; each will be completely loaded before
-        the next is started.</dd>
+        <p>If you are using multiple connections, e.g. a LocoNet Connection and a SPROG
+        Connection, the Defaults pane lets you select which connection you want to use for
+        a particular purpose. For example, you can select one connection (LocoNet in the
+        figure) for train throttles and consists, while using a different one (SPROG in
+        the figure) for the service mode programming track.</p>
 
-        <dt>Run script</dt>
+        <p>For most Layout objects there is no default connection.  Every time you create
+        a Turnout, Signal or Sensor, you can choose which system ( eg. LocoNet or MERG )
+        it belongs to.</p>
 
-        <dd>Automatically run a scripts when the program starts up.
-        You can run as many scripts as you'd like; each will be run
-        to completion before the next is started. Note that any
-        files the script depends upon need to be opened before
-        running the script.</dd>
+        <p>The Internal connection can be selected as a default.  To avoid a common
+        mis-configuration, JMRI applications will notify you if the Internal connection is
+        selected across all the columns.  If you choose to use an all-Internal set of
+        defaults and want to silence this notification, edit the profile properties,
+        setting the property <code>jmri-managers.allInternalDefaults</code> to <em>true</em>.</p>
 
-        <dt>Set route</dt>
+      </div>
 
-        <dd>Set a route when the program starts. You can set as
-        many routes as you like; each will be set in order. Note
-        that any files the route depends upon need to be opened
-        before setting the route.</dd>
-      </dl>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <a name="Display" id="Display"></a>
-      <h2>Display</h2>
+      <h2 id="FileLocations">File Locations</h2>
 
-      <a href="images/PrefsGui4_23.png"><img src=
-      "images/PrefsGui4_23.png" height="217" width="432" align=
-      "right" alt="JMRI v4.23 GUI Prefs tab"></a>
+      <div>
 
-      <dl>
-        <dt>GUI<a name="Gui" id="Gui"></a></dt>
+        <p>These allow you to set the default location for where scripts and user files
+        are loaded and stored.</p>
 
-        <dd>
-          A row of radio boxes allow you to select how the program
-          looks. The available choices depend on what kind of
-          computer you have, and not all of the following may be
-          available:
+        <p>Note that when changing the <strong>User Files Location</strong>, this will also
+        change the default location for where the following are stored:</p>
 
-          <ul>
-            <li>Metal - the default Java style, usable on all
-            computers</li>
+        <ul>
+          <li>Tables and panels</li>
+          <li>Rosters &mdash; also see <a href="#rostertab">Roster Preferences, Roster tab</a></li>
+          <li>Operations</li>
+          <li>Throttle</li>
+          <li>Resources</li>
+          <li>Dispatcher options</li>
+        </ul>
 
-            <li>CDE/Motif - A Linux/Unix form that works well with
-            X Windows screen managers. It's also available on
-            (almost) all computer types.</li>
+        <p>There's a <a href=
+        "../../html/setup/Dropbox.shtml">separate Help page</a> with
+        information on sharing files between computers using Dropbox.</p>
 
-            <li>Windows - only available on Microsoft Windows
-            systems, this makes the program look as much as
-            possible like a regular Windows application.</li>
+      </div>
 
-            <li>Mac OS X - only available on MacOS, this makes the
-            program look like a Macintosh application.</li>
-          </ul>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-          <br>
+      <h2 id="Startup">Start Up</h2>
 
-          In addition, this tab lets you set:
-          <ul>
-          <li>The font size of the GUI.</li>
-          <li>Whether you want to use graphics to show the state of turnouts,
-          lights, sensors and blocks in the state column of their tables.
-          <span class="since">since 4.7.4</span></li>
-          <li>Whether you want to use the values saved in a panel xml file
-          instead of the standard location and size process for JMRI windows.
-          <span class="since">since 4.15.6</span></li>
-          <li>Limit the size of combo box lists.  This can be useful for large screens.
-          <span class="since">since 4.23.1</span></li>
-          <li>How long tooltips (where available) should be shown.</li>
-          </ul>
-        </dd>
+      <div>
 
-        <dt>Locale<a name="locale" id="locale"></a></dt>
+        <p><em>Start Up</em> preferences allow windows and files to be opened, scripts to
+        be run, and additional buttons to be placed on the main window when the application
+        starts.<br>
+        A very common use is an Open File action (see below) to automatically load your
+        last stored <a href="../jmri/jmrit/display/PanelMenuHelp.shtml">layout
+        configuration file</a> at startup, so all your turnouts, sensors, panels etc. are
+        available again.</p>
 
-        <dd><a href="../../Acknowledgements.shtml">Many people</a>
-        have contributed "internationalizations" of JMRI. This
-        converts (much) of the text on the screen to a language
-        other thank English. If you select your country or region
-        and language here, then save and restart the preferences,
-        JMRI will use an internationalization for that country and
-        language if it's available. Items that have not been
-        translated will continue to appear in English, so you won't
-        miss anything. For more information on how to set this up,
-        and particularly how to contribute new and improved
-        translations, please see our <a href=
-        "../../html/doc/Technical/I8N.shtml">internationalization
-        page</a>.</dd>
+        <p>Click the <strong>Add &#9662;</strong> button and select the type of start up
+        action to add. The new action will be added last.</p>
 
-        <dt>Console</dt>
+        <p>Start up action order is important. In most cases, scripts should be the last
+        items in the start up order. Start up order can be changed by selecting a start up
+        item and moving it <em>up</em> or <em>down</em> in the list.</p>
 
-        <dd>This allows you to customize the way that the JMRI
-        System Console looks. It is possible to select from a
-        number of pre-defined color schemes and to choose the font
-        size and style. Also, you can choose to save both the size
-        and location of the System Console window so that it always
-        appears in the same place and at the same size.</dd>
+        <a href="images/PrefsStartup4_15.png"><img src=
+        "images/PrefsStartup4_15.png" height="232" width="466" class=
+        "floatRight" alt="JMRI v4.2 Roster Prefs tab"></a>
+
+        <p>There are seven types of start up actions:</p>
+
+        <dl>
+          <dt>Add button to main window...</dt>
+          <dd>Add extra buttons to the main PanelPro window that are connected to specific
+          actions in menus for easy and quick access to that action.</dd>
+
+          <dt>Add script to button...</dt>
+          <dd>Add extra buttons to the main PanelPro window to start scripts.</dd>
+
+          <dt>Open file...</dt>
+          <dd>Automatically load a PanelPro xml data file or Configuration file when the
+          program starts up. You can load as many files as you'd like; each will
+          be completely loaded before the next is started.</dd>
+
+          <dt>Pause...</dt>
+          <dd>Wait a number of seconds before running the following start up actions.  An
+          example is waiting for script to finish running.</dd>
+
+          <dt>Perform action...</dt>
+          <dd>Have the program automatically execute various menu selections at startup.
+          For example, you can have the Turnout Table automatically open, or automatically
+          open a window for programming on the main.</dd>
+
+          <dt>Run script...</dt>
+          <dd>Automatically run a scripts when the program starts up.  You can run as many
+          scripts as you'd like; each will be run to completion before the next is started.
+          Note that any files the script depends upon need to be loaded before running the
+          script.</dd>
+
+          <dt>Set route...</dt>
+          <dd>Set a route when the program starts. You can set as many routes as you like;
+          each will be set in order. Note that any files the route depends upon need to be
+          loaded before setting the route.</dd>
         </dl>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Display">Display</h2>
+
+      <div>
+
+        <a href="images/PrefsGui4_23.png"><img src=
+        "images/PrefsGui4_23.png" height="217" width="432" class=
+        "floatRight" alt="JMRI v4.23 GUI Prefs tab"></a>
+
+        <dl>
+          <dt>GUI<a id="Gui"></a></dt>
+
+          <dd>
+            A row of radio boxes allow you to select how the program looks. The available
+            choices depend on what kind of computer you have, and not all of the following
+            may be available:
+
+            <ul>
+              <li>Nimbus &mdash; An alternate style</li>
+
+              <li>Metal &mdash; the default Java style, usable on all computers</li>
+
+              <li>CDE/Motif &mdash; A Linux/Unix form that works well with X Windows screen
+              managers. It's also available on (almost) all computer types.</li>
+
+              <li>Windows &mdash; only available on Microsoft Windows systems, this makes the
+              program look as much as possible like a regular Windows application.</li>
+
+              <li>Mac OS X &mdash; only available on MacOS, this makes the program look like a
+              Macintosh application.</li>
+            </ul>
+
+            In addition, this tab lets you set:
+            <ul>
+              <li>Font size &mdash; The font size of the GUI.</li>
+
+              <li>Use non-standard release event for mouse click? &mdash; Provide alternate
+              mouse behavior for specific hardware.</li>
+
+              <li>Use icons to show state in tables &mdash; Whether you want to use
+              graphics to show the state of turnouts, lights, sensors and blocks in the
+              state column of their tables.</li>
+
+              <li>Use tabbed OBlock editing &mdash; See
+              <a href="../jmri/jmrit/logix/OBlockTable.shtml#oblock_gui_options">
+              OBlock GUI Options</a>.</li>
+
+              <li>Use old location and size logic for editor panels &mdash; Whether you
+              want to use the values saved in a panel xml file instead of the standard
+              location and size process for JMRI windows.<span class="since">since 4.15.6</span></li>
+
+              <li>Maximum Combo Box List Rows &mdash;Limit the size of combo box lists.
+              This can be useful for large screens.<span class="since">since 4.23.1</span></li>
+
+              <li>Tool tip display time &mdash; How long tooltips (where available) should
+              be shown.</li>
+
+            </ul>
+          </dd>
+
+          <dt>Locale<a id="locale"></a></dt>
+
+          <dd><a href="../../Acknowledgements.shtml">Many people</a> have contributed
+          "internationalizations" of JMRI. This converts (much) of the text on the screen
+          to a language other than English. If you select your country or region and
+          language here, then save and restart the preferences, JMRI will use an
+          internationalization for that country and language if it's available. Items that
+          have not been translated will continue to appear in English, so you won't miss
+          anything. For more information on how to set this up, and particularly how to
+          contribute new and improved translations, please see our <a href=
+          "../../html/doc/Technical/I8N.shtml">internationalization page</a>.</dd>
+
+          <dt>Console</dt>
+
+          <dd>This allows you to customize the way that the JMRI System Console looks. It
+          is possible to select from a number of pre-defined color schemes and to choose
+          the font size and style. Also, you can choose to save both the size and location
+          of the System Console window so that it always appears in the same place and at
+          the same size.</dd>
+          </dl>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Messages">Messages</h2>
+
+      <div>
+
         <a href="images/PrefsMessages.png"><img src=
-        "images/PrefsMessages.png" height="194" width="479" align=
-        "right" alt="JMRI v4.17 Messages Prefs tab"></a>
+        "images/PrefsMessages.png" height="194" width="479" class=
+        "floatRight" alt="JMRI v4.17 Messages Prefs tab"></a>
 
-      <a name="Messages" id="Messages"></a>
-      <h2>Messages</h2>This allows you to change the way that
-      information and warning messages are displayed in JMRI.<br>
-      It will also allow you to configure a default responses and
-      the question being displayed.
+        <p>This allows you to change the way that information and warning messages are
+        displayed in JMRI.</p>
 
-      <a name="Roster" id="Roster"></a>
-      <h2>Roster</h2>
 
-      <a href="images/PrefsRoster47.png"><img src=
-      "images/PrefsRoster47.png" height="184" width="416"
-      alt="JMRI v4.7 Roster Prefs tab"></a>
+        <p>It will also allow you to configure a default responses and the question being
+        displayed.</p>
 
-      <a id="programmer" name="programmer"></a>
-      <dl>
-        <dt>Programmer tab</dt>
+      </div>
 
-        <dd>
-          The DecoderPro programmer allows you to select how much
-          or how little to display of the decoder content using
-          configurable "Programmers". You can choose the Basic or
-          Comprehensive interface when <a href=
-          "../../html/apps/DecoderPro/Roster.shtml">choosing your
-          Locomotive decoder</a>, but this provides a convenient
-          place to set a default so you don't have to select it
-          each time you open a decoder.
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Roster">Roster</h2>
+
+      <div>
+        <a href="images/PrefsRoster47.png"><img src=
+        "images/PrefsRoster47.png" height="184" width="416"
+        alt="JMRI v4.7 Roster Prefs tab"></a>
+
+        <dl>
+          <dt>Programmer tab</dt>
+
+          <dd>The DecoderPro programmer allows you to select how much or how little to
+          display of the decoder content using configurable "Programmers". You can
+          choose the Basic or Comprehensive interface when <a href=
+          "../../html/apps/DecoderPro/Roster.shtml">choosing your Locomotive decoder</a>,
+          but this provides a convenient place to set a default so you don't have to
+          select it each time you open a decoder.
 
           <p>This section also has checkboxes for options:</p>
           <ul>
-          <li>"Show empty Programmer tabs": This lets you decide
-              whether the DecoderPro programmer will display empty
-              panes (tabs). Some people like to see them, even though
-              they're empty; some people would prefer not to see them,
-              so they don't keep trying to open and look at them. We provide
-              this preference so you can choose.
+            <li>"Show empty Programmer tabs": This lets you decide whether the DecoderPro
+            programmer will display empty panes (tabs). Some people like to see them,
+            even though they're empty; some people would prefer not to see them, so they
+            don't keep trying to open and look at them. We provide this preference so you
+            can choose.
 
-          <li>"Show CV numbers in tool tips": If you allow the mouse
-                cursor to "hover" over a value in DecoderPro, a tool tip
-                pops up with more information.  Checking this box
-                includes the CV number in that tool tip.  Some people
-                want to know the CV number, other people want DecoderPro
-                to handle CVs entirely invisibly,
-                so we provide an option to let you choose.
+            <li>"Show CV numbers in tool tips": If you allow the mouse cursor to "hover"
+            over a value in DecoderPro, a tool tip pops up with more information.
+            Checking this box includes the CV number in that tool tip.  Some people want
+            to know the CV number, other people want DecoderPro to handle CVs entirely
+            invisibly, so we provide an option to let you choose.
 
-          <li>"Allow caching when writing index CVs for read or write
-                operations": Some decoders require that specific values
-                be written to "index" CVs before certain other locations can be
-                read or written. QSI and ESU decoders use this extensively.
-                When doing a lot of reads or writes, for example an entire
-                decoder, the index CVs can end up being written with the
-                same value many times in a row.  When selected, this
-                option allows DecoderPro to skip (save time on) writes
-                of the same index value that are otherwise redundant.
-                Don't use this (or use it only in combination with the
-                following operation) if you have reliability problems
-                writing decoders, as proper operation of this option depends on reliable writes.
-                <p>
-                More detail:  A single bad write with this option off trashes
-                one CV; writing a bad index with this option off trashes the CV that was supposed
-                to be written and the wrong one addressed by the bad write,
-                but the write to the next CV in the sequence is OK due to the
-                redundant next write of the index; writing a bad
-                index with this option on leaves that badly-written index value in place, so writes a sequence
-                of bad CV values. Bottom line:  If working with a complicated
-                decoder with lots of CVs, you need a reliable programming connection, see next option.
+            <li>"Allow caching when writing index CVs for read or write operations": Some
+            decoders require that specific values be written to "index" CVs before
+            certain other locations can be read or written. QSI and ESU decoders use this
+            extensively. When doing a lot of reads or writes, for example an entire
+            decoder, the index CVs can end up being written with the same value many
+            times in a row.  When selected, this option allows DecoderPro to skip (save
+            time on) writes of the same index value that are otherwise redundant. Don't
+            use this (or use it only in combination with the following operation) if you
+            have reliability problems writing decoders, as proper operation of this
+            option depends on reliable writes.
 
-          <li>"When possible, confirm CV writes by following this with a read":
-               When selected, DecoderPro will read each CV after writing it.
-               If the value doesn't match, it marks the write as failed.
-               <p>If you're having intermittent trouble writing to a decoder, this
-               may improve reliability. If DecoderPro is never able to properly write,
-               this won't help; it only helps if the problem is occasional,
-               and retrying will get it right more often than not.
-               <p>Some DCC systems will check for a "write acknowledge pulse"
-               from the decoder before declaring the write a success.
-               Those are almost as reliable as this, and much faster.
-               So if you're using one of those DCC systems, this might
-               not be needed.
-               On the other hand, if you're using a DCC system that
-               "writes blind", with no check, this might be really useful.
-               To tell if you have one of those, try writing CVs with
-               the locomotive off the track.  If DecoderPro thinks the write
-               succeeded, then the DCC system is writing blindly, without checking.
-               <p>This doesn't help (but doesn't hurt) if you can't read back
-               the decoder. Most DCC systems can't read during ops mode
-               programming, for example. Some command stations (Digitrax DB150)
-               can't read from the decoder. In those cases, this option
-               just asks the command station to write without reading back.
+            <p>More detail:  A single bad write with this option off trashes one CV;
+            writing a bad index with this option off trashes the CV that was supposed
+            to be written and the wrong one addressed by the bad write, but the write to
+            the next CV in the sequence is OK due to the redundant next write of the
+            index; writing a bad index with this option on leaves that badly-written
+            index value in place, so writes a sequence of bad CV values. Bottom line:
+            If working with a complicated decoder with lots of CVs, you need a reliable
+            programming connection, see next option.</p>
+
+            <li>"When possible, confirm CV writes by following this with a read": When
+            selected, DecoderPro will read each CV after writing it. If the value doesn't
+            match, it marks the write as failed.
+
+            <p>If you're having intermittent trouble writing to a decoder, this may
+            improve reliability. If DecoderPro is never able to properly write, this won't
+            help; it only helps if the problem is occasional, and retrying will get it
+            right more often than not.</p>
+
+            <p>Some DCC systems will check for a "write acknowledge pulse" from the
+            decoder before declaring the write a success. Those are almost as reliable as
+            this, and much faster. So if you're using one of those DCC systems, this
+            might not be needed. On the other hand, if you're using a DCC system that
+            "writes blind", with no check, this might be really useful. To tell if you
+            have one of those, try writing CVs with the locomotive off the track.  If
+            DecoderPro thinks the write succeeded, then the DCC system is writing
+            blindly, without checking.</p>
+
+            <p>This doesn't help (but doesn't hurt) if you can't read back the decoder.
+            Most DCC systems can't read during ops mode programming, for example. Some
+            command stations (Digitrax DB150) can't read from the decoder. In those
+            cases, this option just asks the command station to write without reading back.</p>
           </ul>
-          These options are stored with the preferences for future use.  A new DecoderPro Roster window
-          will pick up new values of the options, without having to close and restart the program.
-        </dd>
 
-        <dt>Roster tab</dt>
+          These options are stored with the preferences for future use.  A new DecoderPro
+          Roster window will pick up new values of the options, without having to close
+          and restart the program.
+          </dd>
 
-        <dd>
-          Normally, the Roster is stored in a standard location as
-          part of the <a href=
-          "../../html/apps/DecoderPro/Files.shtml">Preferences
-          directory</a>. This option lets you move that somewhere
-          else.
+          <dt id="rostertab">Roster tab</dt>
 
-          <p>To configure it, click the "Set..." button and follow
-          the directions.</p>
+          <dd>
+          Normally, the Roster is stored in a standard location as part of the <a href=
+          "#FileLocations">User Files Location</a>. This option lets you move that
+          somewhere else.
 
-          <p>The "Reset" button restores it to the default
-          location. Note that this just changes where the program
-          looks. If you've stored roster information elsewhere and
-          want it back in the default location, you have to move
-          the files there yourself.</p>
+          <p>To configure it, click the "Set..." button and follow the directions.</p>
 
-          <p>You can also enter a default value for the "Owner"
-          field in DecoderPro roster entries here. This fills in
-          the value for new entries, which can save you a little
-          bit of typing. It has no effect on existing entries, even
-          if changed.</p>
-        </dd>
-      </dl><a name="Throttle" id="Throttle"></a>
+          <p>The "Reset" button restores it to the default location. Note that this just
+          changes where the program looks. If you've stored roster information somewhere
+          else and want it back in the default location, you have to move the files there
+          yourself.</p>
 
-      <h2>Throttle</h2>
-      <p>This Preference pane tab lets you select
-      whether the extended Throttle features are available, and
-      which ones can be used.</p>
+          <p>You can also enter a default value for the "Owner" field in DecoderPro
+          roster entries here. This fills in the value for new entries, which can save
+          you a little bit of typing. It has no effect on existing entries, even if changed.</p>
+          </dd>
 
-      <a name="WiThrottle" id="WiThrottle"></a>
-      <h2>WiThrottle</h2>
+        </dl>
 
-      <dl>
-        <dt>eStop</dt>
+      </div>
 
-        <dd>
-          If selected, listens for a packet to be sent from the
-          connected mobile device. If WiThrottle Server does not
-          receive any communication in the chosen time, the
-          affected JMRI throttle will idle its train.
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-          <p>The chosen time is approximate; the response may be a
-          few seconds earlier or later.</p>
-        </dd>
+      <h2 id="Throttle">Throttle</h2>
 
-        <dt>Network</dt>
+      <div>
 
-        <dd>Change the port number to use. Ensure your firewall
-        software allows this port to be used.<br>
-        Only change the Port Number after stopping WiThrottle
-        Server if there is a chance mobile devices are still
-        connected.</dd>
+        <p>This Preference pane tab lets you select whether the extended Throttle features
+        are available, and which ones can be used.</p>
 
-        <dt>Allowed Controls</dt>
+      </div>
 
-        <dd>
-          Check these boxes to allow specific features to be
-          controlled by mobile devices. This will let you to limit
-          what users have the ability to control.
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="WiThrottle">WiThrottle</h2>
+
+      <div>
+
+        <dl>
+          <dt>eStop</dt>
+          <dd>If selected, listens for a packet to be sent from the connected mobile
+          device. If WiThrottle Server does not receive any communication in the chosen
+          time, the affected JMRI throttle will idle its train.
+
+          <p>The chosen time is approximate; the response may be a few seconds earlier or
+          later.</p>
+
+          </dd>
+
+          <dt>Network</dt>
+          <dd>Change the port number to use. Ensure your firewall software allows this port
+          to be used.<br>
+          Only change the Port Number after stopping WiThrottle Server if there is a
+          chance mobile devices are still connected.</dd>
+
+          <dt>Allowed Controls</dt>
+          <dd>
+            Check these boxes to allow specific features to be controlled by mobile devices.
+            This will let you to limit what users have the ability to control.
+
+            <ul>
+              <li>Track Power - Select whether mobile devices connected through this WiFi
+              interface can control track power.</li>
+
+              <li>Turnouts - Select whether mobile devices can control turnouts.</li>
+
+              <li>Routes - Select whether mobile devices can control routes.</li>
+
+              <li>Display Fast Clock - Select whether mobile devices can display the fast clock time.</li>
+
+              <li>Turnout Creation - Select whether mobile devices can create turnouts.</li>
+
+              <li>Consists - If selected, mobile devices can build &amp; break "Advanced Consists".
+                <ul>
+                  <li>NMRA Format - These consists may perform better for building and
+                  controlling with WiFi devices.</li>
+
+                  <li>DCC Brand-Specific - These consists should perform better when built
+                  with a WiFi device, but controlled by a throttle from the DCC manufacturer
+                  of your system.</li>
+                </ul>
+              </li>
+            </ul>
+          </dd>
+        </dl>
+
+        <p>The "Save" button at lower left puts any changed settings into effect. For a
+        connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">throttle</a>
+        to use the new settings, you'll have to restart JMRI (and then restart WiThrottle)
+        as instructed by the dialog.</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Profiles">Config Profiles</h2>
+
+      <div>
+
+        <p>JMRI Configuration Profiles make it easy to set up your JMRI applications to work
+        with different setups. Each profile specifies one set of Preferences. You can then
+        select which one to use.</p>
+
+        <p>For more information, see the <a href="../../html/setup/profiles.shtml">Configuration
+        Profiles</a> help page.</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="WebServer">Web Server</h2>
+
+      <div>
+
+        <p>The JMRI Web Server lets you connect to JMRI from a web browser on your computer,
+        tablet or phone and work with your railroad.</p>
+
+        <p>This tab lets you control what the web server provides. For more information,
+        see the <a href="../../html/web/index.shtml#Configure">Web Server Preferences
+        pane</a> page.</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <h2 id="consist_control">Consist Control</h2>
+
+      <div>
+
+        <p>When checked, attempt to update CV19 in the roster entry when changing the consist.</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <h2 id="help">Help</h2>
+
+      <div>
+
+        <p>When <strong>Help &rArr; Window Help</strong> or <strong>Help &rArr; General Help
+        </strong> is selected, <strong>JmriHelp</strong> will display the help page in the
+        default browser.</p>
+
+        <p>There are three options that can be selected.</p>
+
+        <dl>
+          <dt>Open help pages locally</dt>
+          <dd>The help page installed with JMRI will be displayed.  With this option, the
+          help pages will be based on the JMRI version that is installed.  This is the
+          default option.</dd>
+
+          <dt>Open help pages online</dt>
+          <dd>The help page will be displayed from the <strong>jmri.org</strong> website.
+          These pages might be newer than the installed JMRI version.  This option requires
+          an internet connection.  If the connection fails, the first option will be used.</dd>
+
+          <dt>Open help pages using the Web Server in JMRI</dt>
+          <dd>If the <a href="../../html/web/index.shtml">JMRI Web Server</a> is active,
+          the help will be displayed using the local content like the first option.  The
+          difference is that the formatting will be processed by the JMRI web server.  If
+          the JMRI web server is not running or there is an error, the first option will
+          be used.</dd>
+
+        </dl>
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <h2 id="loconet_tcp">LocoNet over TCP</h2>
+
+      <div>
+
+        <p>See <a href="../../html/hardware/loconet/LbServer.shtml">LocoNet over TCP</a></p>
+
+        <dl>
+          <dt>Port Number</dt>
+          <dd>Specify the port for the connection (usually left at default).</dd>
+
+          <dt>Start automatically with application</dt>
+          <dd>Start the connection when JMRI is started.</dd>
+        </dl>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <h2 id="logixng">LogixNG</h2>
+
+      <div>
+
+        <p>See <a href="../../html/tools/logixng/LogixNG.shtml#preferences">LogixNG Preferences</a></p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="JSONServer">JSON Server</h2>
+
+      <div>
+
+        <p>The JMRI <a href="../../html/web/JsonServlet.shtml">JSON server</a> is used by
+        applications on other computers, including tablets and phones, to connect to JMRI
+        to operate your railroad.</p>
+
+        <p>On this pane you can specify the port for the connection (usually left at default)
+        and how often the server checks for whether the connection has failed via a
+        heartbeat message.</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="RailroadName">Railroad Name</h2>
+
+      <div>
+
+        <p>The Railroad Name tab lets you specify the name of your model railroad (module),
+        as it is used by several server protocols.</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+
+      <h2 id="SRCP_Server">SRCP Server</h2>
+
+      <div>
+
+        <p>The JMRI <a href="../../html/hardware/SRCP/index.shtml">SRCP server</a> is a
+        standard way of connecting "client" user programs to a "server".</p>
+
+        <p>On this pane you can specify the port for the connection (usually left at default).</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Simple_Server">Simple Server</h2>
+
+      <div>
+
+        <p>JMRI Simple Server is a part of <a href="../../html/hardware/jmriclient/index.shtml">
+        JMRIClient</a>, a method to remotely connecting one JMRI program to another.</p>
+
+        <p>On this pane you can specify the port for the connection (usually left at default).</p>
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Warrants">Warrants</h2>
+
+      <div>
+
+        <p>This tab sets parameters used in computing routes and speed changes for
+        <a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a> and for
+        controlling the events that warranted trains may encounter.</p>
+
+        <h3>Speed Name Tables</h3>
+
+          <p>When an automatically running train encounters a Signal aspect that calls for
+          a speed change, the speed map table provides the information of what the speed
+          change should be. Other parameters control the way the speed change is made.</p>
+
+          <h4>Aspect Speed Name Table</h4>
+
+            <p>The Aspect Speed Name Table maps the speed names found in the aspects
+            definition of a signal system to a value. It is important that all the speed
+            names used in your signal system be listed in the Speed Map Table.  Rows can
+            be added or deleted to conform to the Signal System aspects.</p>
+
+            <p>The value associated with a speed name can be interpreted in four different
+            ways and there are four radio buttons for you to choose the meaning of the value.</p>
+
+            <ul>
+              <li><b>Percent Normal</b> - the value is a percentage of the current throttle
+              setting as recorded or set by an NXWarrant.  That is a percentage of the
+              "Normal" speed.</li>
+
+              <li><b>Percent Throttle</b> - the value is a percentage of the full throttle
+              setting.</li>
+
+              <li><b>Miles per hour</b> - the value is an absolute scale speed in miles
+              per hour.</li>
+
+              <li><b>Kilometers per hour</b> - the value is an absolute scale speed in
+              kilometers per hour.</li>
+            </ul>
+
+            <p>Choosing the interpretation is a matter of what you want to happen when a
+            warranted train reaches a signal or block aspect.  Percent Normal will always
+            make the train change speed and Percent Throttle most likely will also.  The
+            last two choices are the most prototypical, but if the train is already within
+            the speed limit called for, no speed change will occur.</p>
+
+          <h4>Head Appearance Name Table</h4>
+
+            <p>The <b>Head Appearance Table</b> is used when Signal Heads are used as
+            signals. It maps signal head appearance names to aspect speed name which in
+            turn are mapped by the Aspect Speed Name table to values that interpret speed
+            limits.</p>
+
+        <h3>Layout Scale and Search Depth</h3>
+
+          <p>It is important that the correct <b>Layout Scale</b> is chosen since it is
+          needed to convert throttle settings and track speeds to and from scale speeds.</p>
+
+          <p>The <b>Max Number of Blocks in Route</b> is the depth to which JMRI will
+          search for a route when defining a warrant. This is a global value that can be
+          overridden when creating a warrant.</p>
+
+        <h3>Ramping Speed changes</h3>
+
+          <p>The smoothness for slow down and speed up are done by stepping up and down
+          with two "ramp" parameters; the throttle increment per step and the time interval
+          of each step.  These two parameters are paired to make a "stair step" pattern for
+          changing speed. Generally, they are paired in that a small throttle increment
+          should be done in a short time interval and a large increment in a longer time.
+          When setting them, the time interval should be long enough for the speed
+          increment to complete given the momentum you have programmed into your decoders.</p>
 
           <ul>
-            <li>Track Power - Select whether mobile devices
-            connected through this WiFi interface can control track
-            power.</li>
+            <li><b>Ramp Step throttle Increment</b>  This value is a ratio of full throttle.
+            Seven or eight speed steps of a 128 step throttle is an appropriate increment
+            for a locomotive with modest momentum. A value of 0.008 to 0.04 is recommended.
+            (0.0079 would be 1 step of a 128 step throttle)</li>
 
-            <li>Turnouts - Select whether mobile devices can
-            control turnouts.</li>
-
-            <li>Routes - Select whether mobile devices can control
-            routes.</li>
-
-            <li>Consists - If selected, mobile devices can build
-            &amp; break "Advanced Consists".
-
-              <ul>
-                <li>NMRA Format - These consists may perform better
-                for building and controlling with WiFi
-                devices.</li>
-
-                <li>DCC Brand-Specific - These consists should
-                perform better when built with a WiFi device, but
-                controlled by a throttle from the DCC manufacturer
-                of your system.</li>
-              </ul>
-            </li>
+            <li><b>Ramp Step time</b> Depending how you have configured momentum on your
+            locomotives, adjust this value so the speed change is completed within this
+            period of time. Typically corresponding to the above, 300 to 1000 milliseconds
+            would be appropriate.</li>
           </ul>
-        </dd>
-      </dl>The "Save" button at lower left puts any changed
-      settings into effect. For a connected <a href=
-      "../jmri/jmrit/withrottle/UserInterface.shtml">throttle</a>
-      to use the new settings, you'll have to restart JMRI (and
-      then restart WiThrottle) as instructed by the dialog.
-      <a name="Profiles" id="Profiles"></a>
 
-      <h2>Config Profiles</h2>
-      <p>JMRI Configuration Profiles make it
-      easy to set up your JMRI applications to work with different
-      setups. Each profile specifies one set of Preferences. You
-      can then select which one to use.</p>
+          <p>You should experiment by watching how NX Warrants start and end or by issuing
+          "Stop" and "Resume" commands to a recorded warrant.</p>
 
-      <p>For more information, see the <a href=
-      "../../html/setup/profiles.shtml">Configuration Profiles</a>
-      help page. <a name="RailroadName" id="RailroadName"></a></p>
+        <h3>Throttle Factor</h3>
 
-      <h2>JSON Server</h2>
+          <p>The value of <b>Throttle Setting/Speed Factor</b> along with <b>Layout Scale</b>
+          adjusts a throttle setting to be a layout track speed. The Throttle Factor set
+          here is a global default.</p>
 
-      <p>The JMRI <a href="../../html/web/JsonServlet.shtml">JSON
-      server</a> is used by applications on other computers,
-      including tablets and phones, to connect to JMRI to operate
-      your railroad.</p>
+          <p>For more information on Warrant speed parameters, see
+          <a href="../jmri/jmrit/logix/SpeedChanges.shtml">Modifying Warrant Speeds</a>
+          and follow its links.</p>
 
-      <p>On this pane you can specify the port for the connection
-      (usually left at default) and how often the server checks for
-      whether the connection has failed via a heartbeat
-      message.</p><a name="WebServer" id="WebServer"></a>
+        <h3>Merging Speed Profiles</h3>
 
-      <h2>Railroad Name</h2>
+          <p>In Release 4.9.2 Warrants compute a track speed when traversing a path with
+          known length and known throttle setting.  These measurements are made for each
+          address that is run under a warrant and are kept for the entire layout session.
+          When JMRI is quit, at shutdown, these Session Speed Profiles can be merged into
+          their Roster Speed Profiles.  The following choices are available at shutdown.</p>
 
-      <p>The Railroad Name tab lets you specify the name of your
-      model railroad (module), as it is used by several server
-      protocols.</p><a name="JSONServer" id="JSONServer"></a>
+          <ul>
+            <li><b>Don't Merge</b> - Do not prompt and discard the Session Profiles and
+            leave the Roster Speed Profiles unchanged. </li>
 
-      <h2>Web Server</h2>
-      <p>The JMRI Web Server lets you connect to
-      JMRI from a web browser on your computer, tablet or phone and
-      work with your railroad.</p>
+            <li><b>Prompt Merges</b> - At shutdown at dialog is presented where you may
+            choose which speed profiles shoud be merged and which discarded.  The dialog
+            allows you to view the profiles for each address.  Displayed are: the current
+            <b>Roster Speed Profile</b>, the potential <b>Merged Speed Profile</b> and the
+            <b>Session Speed Profile</b>. (default)</li>
 
-      <p>This tab lets you control what the web server provides.
-      For more information, see the <a href=
-      "../../html/web/index.shtml#Configure">Web Server Preferences
-      pane</a> page. <a name="SRCP_Server"></a></p>
+            <li><b>Merge All</b> - Do not prompt and always merge all Session Speed
+            Profiles into the Roster Speed Profiles.</li>
+          </ul>
 
-      <h2>SRCP Server</h2>
+      </div>
 
-      <p>The JMRI <a href=
-      "../../html/hardware/SRCP/index.shtml">SRCP server</a> is a
-      standard way of connecting "client" user programs to a
-      "server".</p>
-
-      <p>On this pane you can specify the port for the connection
-      (usually left at default).</p><a name="Simple_Server"></a>
-
-      <h2>Simple Server</h2>
-
-      <p>JMRI Simple Server is part of <a href=
-      "../../html/hardware/jmriclient/index.shtml">JMRIClient</a>,
-      a method to remotely connecting one JMRI program to
-      another.</p>
-
-      <p>On this pane you can specify the port for the connection
-      (usually left at default).</p><a name="Warrants" id=
-      "Warrants"></a>
-
-      <h2>Warrants</h2>
-      <p>This tab sets parameters used in computing
-      routes and speed changes for <a href=
-      "../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
-      and for controlling the events that warranted trains may
-      encounter.</p>
-
-      <h3>Speed Name Tables</h3>
-      <p>When an automatically running train encounters a Signal
-      aspect that calls for a speed change, the speed map table
-      provides the information of what the speed change should
-      be. Other parameters control the way the
-      speed change is made.</p>
-
-      <h2>Aspect Speed Name Table</h2>
-      <p>The Aspect Speed Name Table maps the speed names found in the aspects
-      definition of a signal system to a value. It is important
-      that all the speed names used in your signal system be listed
-      in the Speed Map Table.  Rows can be added or deleted to conform
-      to the Signal System aspects.</p>
-
-      <p>The value associated with a speed
-      name can be interpreted in four different ways and there are
-      four radio buttons for you to choose the meaning
-      of the value.</p>
-      <ul>
-        <li><b>Percent Normal</b> - the value is a
-      percentage of the current throttle setting as recorded or set
-      by an NXWarrant.  That is a percentage of the "Normal" speed.</li>
-        <li><b>Percent Throttle</b> - the value is a percentage of the
-        full throttle setting.</li>
-        <li><b>Miles per hour</b> - the value is an absolute
-        scale speed in miles per hour.</li>
-        <li><b>Kilometers per hour</b> - the value is an absolute
-        scale speed in kilometers per hour.</li>
-      </ul>
-      <p>Choosing the interpretation is a matter of what you want to
-      happen when a warranted train reaches a signal or block aspect.
-      Percent Normal will always make the train change speed and
-      Percent Throttle most likely will also.  The last two choices
-      are the most prototypical, but if the train is already within
-      the speed limit called for, no speed change will occur.</p>
-
-      <h2>Head Appearance Name Table</h2>
-      <p>The <b>Head Appearance Table</b> is used when Signal Heads
-      are used as signals. It maps signal head appearance names
-      to aspect speed name which in turn are mapped by the Aspect
-      Speed Name table to values that interpret speed limits.</p>
-
-      <h3>Layout Scale and Search Depth</h3>
-      <p>It is important that the correct <b>Layout Scale</b> is
-      chosen since it is needed to convert throttle settings
-      and track speeds to and from scale speeds.<br>
-      The <b>Max Number of Blocks in Route</b> is the depth to which
-      JMRI will search for a route when defining a warrant. This is
-      a global value that can be overridden when creating a
-      warrant.</p>
-
-      <h3>Ramping Speed changes</h3>
-      The smoothness for slow down and
-      speed up are done by stepping up and down with two "ramp"
-      parameters; the throttle increment per step and the time
-        interval of each step.  These two parameters are paired to
-        make a "stair step" pattern for changing speed.
-        Generally, they are paired in that a small throttle increment
-        should be done in a short time interval and a large increment
-        in a longer time. When setting them, the time interval should
-        be long enough for the speed increment to complete given the
-        momentum you have programmed into your decoders.
-	  <ul>
-        <li><b>Ramp Step throttle Increment</b>  This value is
-        a ratio of full throttle. Seven or eight speed steps of a
-        128 step throttle is an appropriate increment for a
-        locomotive with modest momentum. A value of 0.008 to 0.04 is
-        recommended. (0.0079 would be 1 step of a 128 step throttle)</li>
-
-        <li><b>Ramp Step time</b> Depending how you have
-        configured momentum on your
-        locomotives, adjust this value so the speed change is
-        completed within this period of time. Typically
-        corresponding to the above,
-        300 to 1000 milliseconds would be appropriate.</li>
-      </ul>
-      <p>You should experiment by watching how NX Warrants start and end
-       or by issuing "Stop" and "Resume" commands to a recorded
-      warrant.</p>
-
-      <h3>Throttle Factor</h3>
-      <p>The value of <b>Throttle Setting/Speed Factor</b>
-      along with <b>Layout Scale</b>
-      adjusts a throttle setting to be a layout track speed.
-      The Throttle Factor set here is a global default.</p>
-
-      <p>For more information on Warrant speed parameters, see
-      <a href="../jmri/jmrit/logix/SpeedChanges.shtml">Modifying
-      Warrant Speeds</a> and follow its links.</p>
-
-      <h2>Merging Speed Profiles</h2>
-      <p>In Release 4.9.2 Warrant compute a track speed when traversing
-      a path with known length and known throttle setting.  These
-      measurements are made for each address that is rub under a
-      warrant and are kept for the entire layout session.  When
-      JMRI is quit, at shutdown. These Session Speed Profiles can
-      be merged into their Roster Speed Profiles.  The following
-      choices are available at shutdown.</p>
-      <ul>
-        <li><b>Don't Merge</b> - Do not prompt and
-        discard the Session Profiles and
-        leave the Roster Speed Profiles unchanged. </li>
-        <li><b>Prompt Merges</b> - At shutdown at dialog is presented
-        where you may choose which speed profiles shoud be merged and
-        which discarded.  The dialog allows you to view the profiles
-        for each address.  Displayed are: the current <b>Roster Speed
-        Profile</b>, the potential <b>Merged Speed Profile</b> and the
-        <b>Session Speed Profile</b>. (default)</li>
-        <li><b>Merge All</b> - Do not prompt and always merge all
-        Session Speed Profiles into the Roster Speed Profiles.</li>
-      </ul>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

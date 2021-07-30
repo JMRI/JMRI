@@ -125,9 +125,10 @@
       "Adv_RosterMedia.shtml">Next</a></p>
 
       <p><a href="index.shtml">Back to Index</a></p>
-    </div><!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-  <!-- closes #mBody-->
+
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

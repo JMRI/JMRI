@@ -339,7 +339,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @return list of RollingStock ordered by RollingStock location
      */
     public List<T> getByLocationList() {
-        return getByList(getList(), BY_LOCATION);
+        return getByList(getByNumberList(), BY_LOCATION);
     }
 
     /**

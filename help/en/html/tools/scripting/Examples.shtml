@@ -211,6 +211,16 @@
       <p>Example of an event listener for a JMRI class, in this
       case a Turnout.</p>
 
+      <p><a href="../../../../../jython/LnBushbyForwarder.py">LnBushbyForwarder.py</a></p>
+      <p><span class="since">Since
+        <a href="https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">
+        JMRI 4.25.2</a></span>Provides a mechanism to forward "normal" LocoNet switch (Turnout) control
+      messages to the DCC track signal when a Digitrax command station's Bushby
+      feature is enabled.  (Note that this script can be <em>cause</em> congestion
+      on LocoNet when the Digitrax Bushby feature is in its default (disabled)
+      condition.)  See <a href="../../scripthelp/LnBushbyForwarder/LnBushbyForwarder.shtml">
+      this page</a> for additional information about this script.</p>
+
       <p><a href=
       "../../../../../jython/LnPowerButton.py">LnPowerButton.py</a></p>
 

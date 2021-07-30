@@ -8,6 +8,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JmriJFrame;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
@@ -25,13 +26,15 @@ import org.slf4j.LoggerFactory;
 public class ClientActions {
     private final static Logger log = LoggerFactory.getLogger(ClientActions.class);
     private final OlcbInterface iface;
+    private final CanSystemConnectionMemo memo;
 
-    public ClientActions(OlcbInterface iface) {
+    public ClientActions(OlcbInterface iface, CanSystemConnectionMemo memo) {
         this.iface = iface;
+        this.memo = memo;
     }
 
     public void openCdiWindow(NodeID destNode, String description) {
-        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<>();
+//        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<>();
 
@@ -48,7 +51,7 @@ public class ClientActions {
             private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
-                readList.add(button);
+//                readList.add(button);
                 return button;
             }
 
@@ -79,7 +82,7 @@ public class ClientActions {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
-                                    .provideSensor("MS" + mevt1.getText() + ";" + mevt2.getText());
+                                    .provideSensor(memo.getSystemPrefix() + "S" + mevt1.getText() + ";" + mevt2.getText());
                             if (mdesc.getText().length() > 0) {
                                 sensor.setUserName(mdesc.getText());
                             }
@@ -97,7 +100,7 @@ public class ClientActions {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
-                                    .provideTurnout("MT" + mevt1.getText() + ";" + mevt2.getText());
+                                    .provideTurnout(memo.getSystemPrefix() + "T" + mevt1.getText() + ";" + mevt2.getText());
                             if (mdesc.getText().length() > 0) {
                                 turnout.setUserName(mdesc.getText());
                             }

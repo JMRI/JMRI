@@ -79,7 +79,7 @@
       <h4>Via USB</h4>
       
       First, make sure your computer has the 
-      <a href="ttps://www.ftdichip.com/Drivers/VCP.htm">correct USB drivers installed</a>.
+      <a href="https://www.ftdichip.com/Drivers/VCP.htm">correct USB drivers installed</a>.
       <p>
       Then, set the JMRI connection preferences to:
       <ul>
@@ -127,8 +127,8 @@
 
       <ul>
         <li><a href=
-        "http://support.digikeijs.com/display/DS/DR5000-ADJ/">
-        Digirails DR5000 documentation</a></li>
+        "https://support.digikeijs.com/hc/en-us/articles/360001203338-DR5000-ADJ-Manuals-Downloads">
+        Digikeijs DR5000 documentation</a></li>
       </ul>
 
       <!--#include virtual="/Footer.shtml" -->

@@ -317,13 +317,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_warrantMenu == null) {
             _warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
             JMenuItem aboutItem = new JMenuItem(Bundle.getMessage("AboutWarrant"));
-            HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.Warrant", null);
+            HelpUtil.enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.Warrant");
             _warrantMenu.add(aboutItem);
             aboutItem = new JMenuItem(Bundle.getMessage("AboutOBlock"));
-            HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
+            HelpUtil.enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable");
             _warrantMenu.add(aboutItem);
             aboutItem = new JMenuItem(Bundle.getMessage("AboutCircuitMenu"));
-            HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+            HelpUtil.enableHelpOnButton(aboutItem, "package.jmri.jmrit.display.CircuitBuilder");
             _warrantMenu.add(aboutItem);
             aboutItem.addActionListener((ActionEvent event) -> {
                 makeCircuitMenu(true);

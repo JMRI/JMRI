@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.23.7-SNAPSHOT</version>
+    <version>4.25.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -803,7 +803,7 @@
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
-                        </goals>      
+                        </goals>
                         <configuration>
                             <skip>${skipTests}</skip>
                         </configuration>
@@ -1404,6 +1404,12 @@
             <version>1.2.1</version>
         </dependency>
         <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2</version>
@@ -1648,7 +1654,7 @@
                     <groupId>fop</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>   
+        </dependency>
     </dependencies>
 
     <repositories>
