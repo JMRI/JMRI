@@ -74,9 +74,24 @@
           <div style="margin-left: 2em;">
           <a href="images/chapter5/action_list.png">
           <img src="images/chapter5/action_list.png"
-          alt="Chapter 5 action item list" width="259" height="399">
+          alt="Chapter 5 action item list" width="263" height="454">
           </a>
           </div>
+
+          <h5>Audio</h5>
+          <p>Control the selected Audio item.
+          <ul>
+            <li>Play</li>
+            <li>Play toggle</li>
+            <li>Pause</li>
+            <li>Pause toggle</li>
+            <li>Resume</li>
+            <li>Stop</li>
+            <li>Fade in</li>
+            <li>Fade out</li>
+            <li>Rewind</li>
+            <li>Reset position</li>
+          </ul>
 
           <h5>Block</h5>
             <ul>
@@ -125,13 +140,44 @@
             </ul>
 
           <h5>Light</h5>
-            <p><strong><em>Light intensity</em></strong> and <strong><em>transition time</em></strong>
-            have not been implemented in LogixNG.</p>
             <ul>
               <li><strong>Off:</strong> Set the selected light off.</li>
               <li><strong>On:</strong> Set the selected light on.</li>
               <li><strong>Toggle:</strong> Toggle the selected light.</li>
+              <li><strong>Set Intensity:</strong> Sets the intensity of a specified variable
+              intensity light to the entered intensity value. Specify the light to set by
+              selecting its name. Specify the intensity by entering the percent intensity as
+              an integer in the range 0 to 100. If the specified light is not a variable
+              light, or if the intensity value entered is not an integer in the required
+              range, an error message is displayed.</li>
+              <li><strong>Set Transition Time:</strong> Sets the transition time of a
+              specified variable intensity light to the entered time. Specify the light to
+              set by selecting its name. Specify the transition time by entering the number
+              of fast clock minutes needed to move from 0% intensity to 100% intensity. If
+              the specified light is not a variable light, or if a positive integer is not
+              entered for the number of fast clock minutes, an error message results.</li>
             </ul>
+
+          <h5>Light intensity</h5>
+            <p>The Light intensity action is an alternate method to set the Variable Light
+            Intensity value.  The standard method sets the value directly from the action
+            using any of the standard input methods.</p>
+
+            <p>This action creates a child analog expression called <strong>Intensity</strong>.
+            Analog expressions are normally used to create a dynamic values, such as random
+            numbers.  Using the <code>sin()</code> function along with the
+            <a href="chapter6.shtml#MidnightMinutes">Minutes since midnight</a> analog
+            expression, it is possible to change light intensity based on the time of the
+            day using the fast clock or the system clock.</p>
+
+            <p>Here is an example using the sin() function.</p>
+
+            <div style="margin-left: 2em;">
+            <a href="images/chapter5/intensity_example.png">
+            <img src="images/chapter5/intensity_example.png"
+            alt="Chapter 5 intensity example" width="432" height="87">
+            </a>
+            </div>
 
           <h5>Local variable</h5>
             <p>Local variables are described in <a href="chapter8.shtml">Chapter 8 - Local Variables</a>.</p>
@@ -231,6 +277,13 @@
               <li><strong>permissive sml not disabled:</strong> Enable permissive SML for
               the selected signal mast.</li>
             </ul>
+
+          <h5>Sound</h5>
+          <p>Plays the specified sound file. Specify the sound file to play by entering
+          its name in the field provided. Click the file selection button to bring up a
+          file selection dialog to aid in finding the file. Navigate to your sound file,
+          then click your sound file's name in the dialog and the name will be  copied to
+          the field.</p>
 
           <h5>Throttle</h5>
           <p>The Throttle action controls a throttle. It has child expressions

@@ -77,7 +77,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="2:21 PM">
+    <memory value="1:03 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -147,7 +147,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jun 14 14:21:16 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Jun 15 13:03:16 CDT 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -8721,6 +8721,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference />
       <stateLocalVariable />
       <stateFormula />
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -8779,6 +8783,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference />
       <stateLocalVariable />
       <stateFormula />
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -8839,6 +8847,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -8899,6 +8911,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -8959,6 +8975,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -9019,6 +9039,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -9077,6 +9101,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateReference />
       <stateLocalVariable />
       <stateFormula />
+      <dataAddressing>Direct</dataAddressing>
+      <dataReference />
+      <dataLocalVariable />
+      <dataFormula />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18959,9 +18987,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Jun 14 14:21:19 CEST 2021</date>
+      <date>Tue Jun 15 13:03:18 CDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.23.7ish+daniel+2021-06-14T12:20:56Z+R5ddcc03 on Mon Jun 14 14:21:19 CEST 2021-->
+  <!--Written by JMRI version 4.23.7ish+das+20210615T1759Z+Ra73af960e3 on Tue Jun 15 13:03:18 CDT 2021-->
 </layout-config>
