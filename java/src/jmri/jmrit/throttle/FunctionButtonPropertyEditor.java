@@ -202,7 +202,6 @@ public final class FunctionButtonPropertyEditor extends JDialog {
                     button.getFont().getStyle(),
                     Integer.parseInt(fontField.getText())));
             button.setButtonImageSize( Integer.parseInt(imageSize.getText()) );
-            button.setVisible(visibleCheckBox.isSelected());
             button.setDisplay(visibleCheckBox.isSelected());
             button.setIconPath(_imageFilePath.getImagePath());
             button.setSelectedIconPath(_imagePressedFilePath.getImagePath());

@@ -27,6 +27,7 @@
       <text>Piko configuration</text>
       <text xml:lang="de">Piko Konfiguration</text>
       <text xml:lang="nl">Piko Configuratie</text>
+      <text xml:lang="cs">Konfigurace Piko</text>
     </label>
     <label>
       <text> </text>
@@ -50,6 +51,7 @@
       <text>Braking</text>
       <text xml:lang="de">Bremsen</text>
       <text xml:lang="nl">Remmen</text>
+      <text xml:lang="cs">Brždění</text>
     </label>
     <label>
       <text> </text>
@@ -70,6 +72,7 @@
             <text>Constant Distance</text>
             <text xml:lang="de">Konstanter Bremsweg</text>
             <text xml:lang="nl">Vaste Remweg</text>
+            <text xml:lang="cs">Konstantní vzdálenost</text>
         </label>
       </group>
           <display item="Constant Brakedist Threshold"/>
@@ -84,6 +87,7 @@
         <text>Coupling</text>
         <text xml:lang="de">Kupplungen</text>
         <text xml:lang="nl">Elektr. koppeling</text>
+        <text xml:lang="cs">Spřahování</text>
       </label>
       <label>
         <text> </text>
@@ -99,6 +103,7 @@
         <text>Smoke Generator</text>
         <text xml:lang="de">Rauchgenerator</text>
         <text xml:lang="nl">Rookgenerator</text>
+        <text xml:lang="cs">Kouřový generátor</text>
       </label>
       <label>
         <text> </text>
@@ -132,6 +137,7 @@
         <text xml:lang="de">Fehler oder Information (Read-Only)</text>
         <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
         <text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
+        <text xml:lang="cs">Chyby nebo Informace (Pouze pro čtení)</text>
       </label>
     <label>
       <text> </text>
@@ -190,6 +196,7 @@
                       <label>Flip PWM Phase:</label>
                       <label xml:lang="de">PWM Phase 180:</label>
                       <label xml:lang="nl">PWM Fase omkeren:</label>
+                      <label xml:lang="cs">Otočit fázi PWM:</label>
                   </display>
               </griditem>
               <griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">

@@ -66,6 +66,7 @@
 			<choice>Deactivated</choice>
 			<choice xml:lang="de">deaktiviert</choice>
 			<choice xml:lang="it">Disattivato</choice>
+			<choice xml:lang="cs">Deaktivováno</choice>
 		</enumChoice>
 		<enumChoiceGroup exclude="73115">
 			<enumChoice choice="A1">
@@ -99,9 +100,11 @@
 	  <label xml:lang="de">Licht vorne Aus - Ausgang</label>
     <label xml:lang="it">Luci frontali off - uscita</label>
 	  <label xml:lang="nl">Frontlicht Uit - Uitgang</label>
+	  <label xml:lang="cs">Přední světla vypnuto - Výstup</label>
 	<tooltip>Deactivated - will deactivate BOTH Front and Rear light switch off option</tooltip>
 	  <tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
     <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
+	  <tooltip xml:lang="cs">Deaktivováno - deaktivuje OBOJE Přední i Zadní světla volba přepínač vypnuto</tooltip>
   </variable>
   <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,PIKO40501">
 	<enumVal>
@@ -109,6 +112,7 @@
             <choice>None</choice>
             <choice xml:lang="de">keine</choice>
             <choice xml:lang="it">nessuno</choice>
+            <choice xml:lang="cs">Nic</choice>
 	  </enumChoice>
 	  <enumChoice choice="F1">
             <choice>F1</choice>
@@ -151,9 +155,11 @@
 	<label xml:lang="de">Licht vorne Aus - Funktion</label>
     <label xml:lang="it">Luci anteriori off - Funzione</label>
 	<label xml:lang="nl">Frontlicht Uit - Functieknop</label>
+	<label xml:lang="cs">Přední světla vypnuto - Funkce</label>
 	<tooltip>Selected function must not be used for other purpose with the function mapping</tooltip>
 	<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
     <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
+	<tooltip xml:lang="cs">Vybraná funkce nesmí být použita poro jiný účel pomocí mapování funkcí</tooltip>
   </variable>
   <variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400,PIKO40501">
 	<enumVal>
@@ -161,6 +167,7 @@
             <choice>Deactivated</choice>
             <choice xml:lang="de">deaktiviert</choice>
             <choice xml:lang="it">Disattivato</choice>
+            <choice xml:lang="cs">Deaktivováno</choice>
 	    </enumChoice>
 		<enumChoiceGroup exclude="73115">
 			<enumChoice choice="A1">
@@ -194,9 +201,11 @@
 	<label xml:lang="de">Licht hinten Aus - Ausgang</label>
     <label xml:lang="it">Luci posteriori off - Uscita</label>
 	<label xml:lang="nl">Sluitlichten Uit - Uitgang</label>
+	<label xml:lang="cs">Zadní světla vypnuto - Výstup</label>
 	<tooltip>Deactivated - will deactivate BOTH Front and Rear light switch off option</tooltip>
 	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
     <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
+        <tooltip xml:lang="cs">Deaktivováno - deaktivuje OBOJE Přední i Zadní světla volba přepínač vypnuto</tooltip>
   </variable>
   <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400,PIKO40501">
 	<enumVal>
@@ -204,6 +213,7 @@
             <choice>None</choice>
             <choice xml:lang="de">keine</choice>
             <choice xml:lang="it">nessuno</choice>
+            <choice xml:lang="cs">Nic</choice>
 	  </enumChoice>
 	  <enumChoice choice="F1">
             <choice>F1</choice>
@@ -246,8 +256,10 @@
 	<label xml:lang="de">Licht hinten Aus - Funktion</label>
     <label xml:lang="it">Luci posteriori off - Funzione</label>
 	<label xml:lang="nl">Sluitlichten Uit - Functieknop</label>
+	<label xml:lang="cs">Zadní světla vypnuto - Funkce</label>
 	<tooltip>Selected function must not be used for other purpose with the function mapping</tooltip>
 	<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
     <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
+	<tooltip xml:lang="cs">Vybraná funkce nesmí být použita poro jiný účel pomocí mapování funkcí</tooltip>
   </variable>
 </variables>

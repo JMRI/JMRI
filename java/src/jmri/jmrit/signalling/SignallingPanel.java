@@ -1482,12 +1482,13 @@ public class SignallingPanel extends JmriPanel {
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == INCLUDE_COLUMN) {
-                return Boolean.class;
-            } else if (c == STATE_COLUMN) {
-                return RowComboBoxPanel.class; // Use a JPanel containing a custom State ComboBox
-            } else {
-                return String.class;
+            switch (c) {
+                case INCLUDE_COLUMN:
+                    return Boolean.class;
+                case STATE_COLUMN:
+                    return RowComboBoxPanel.class; // Use a JPanel containing a custom State ComboBox
+                default:
+                    return String.class;
             }
         }
 
@@ -2117,7 +2118,7 @@ public class SignallingPanel extends JmriPanel {
             smlValid();
         }
 
-        void smlValid() {
+        final void smlValid() {
             if (sml != null) {
                 sml.addPropertyChangeListener(this);
             }

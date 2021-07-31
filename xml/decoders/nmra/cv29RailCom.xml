@@ -50,7 +50,7 @@
     <label xml:lang="fr">RailCom</label>
     <label xml:lang="de">RailCom</label>
     <label xml:lang="it">Abilita RailCom</label>
-    <label xml:lang="cs">Zpřístupnit RailCom</label>
+    <label xml:lang="cs">Povolit RailCom</label>
     <label xml:lang="nl">RailCom</label>
   </variable>
 </variables>
