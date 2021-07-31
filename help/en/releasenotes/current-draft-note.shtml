@@ -533,7 +533,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Several bug fix on function panel (related to xml store/load)</li>
         </ul>
 
     <h3>Timetable</h3>
