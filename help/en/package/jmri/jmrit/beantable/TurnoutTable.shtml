@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Turnout Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Turnout Table">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>The Turnout Table</h1>
 
@@ -33,7 +30,7 @@
       You can change the order of the columns by dragging their titles, change the width of columns by dragging the vertical line
       between columns, and sort the rows by clicking the column title (a triangle will appear indicating the direction of the sort).
       </p>
-            
+
       <dl>
         <dt><strong>System Name</strong></dt>
 
@@ -65,7 +62,7 @@
        <img src="images/TurnoutTableGraphic.png" height="96" width="399"
         alt="Graphic Turnout state column">
         </dd>
- 
+
         <dt><strong>Delete</strong></dt>
 
         <dd>
@@ -216,7 +213,7 @@
           "BlockTable.shtml#BlockSpeed">Blocks</a>.</p>
         </dd>
       </dl>
-      
+
       <a name="controls" id="controls"></a>
 
       <h2>Turnout Table Controls</h2>
@@ -360,7 +357,7 @@
         turnout is known to be in the "Thrown" position. When it's
         "Inactive", the turnout is known to be in the "Closed"
         position.
-        
+
         <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
         <thead>
         <tr>
@@ -368,28 +365,28 @@
         <th>Feedback (known) State</th>
         </tr>
         </thead>
-        
+
         <tbody>
         <tr>
         <td>Active</td>
         <td>Thrown</td>
         </tr>
-        
+
         <tr>
         <td>Inactive</td>
         <td>Closed</td>
         </tr>
-        
+
         <tr>
         <td>Unknown</td>
         <td>Inconsistent <span class="since">since 4.21.5</span></td>
         </tr>
-        
+
         <tr>
         <td>Inconsistent</td>
         <td>Inconsistent <span class="since">since 4.21.5</span></td>
         </tr>
-        
+
         </tbody>
         </table>
         </dd>
@@ -400,11 +397,11 @@
         1" and "Sensor 2" columns, which could be inputs from
         microswitches at either end of the turnout's throw bar
         or from servo travel events.<br>
-        
+
         The Turnout feedback state is determined by both Sensors:
-        
+
         <-- Table in same order as 2 Sensor Feedback Unit Tests within AbstractTurnoutTestBase -->
-        
+
         <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
         <thead>
         <tr>
@@ -413,121 +410,121 @@
         <th>Feedback (known) State</th>
         </tr>
         </thead>
-        
+
         <tbody>
-        
+
         <tr>
         <td>Active</td>
         <td>Inactive</td>
         <td>Thrown</td>
         </tr>
-        
+
         <tr>
         <td>Inactive</td>
         <td>Active</td>
         <td>Closed</td>
         </tr>
-        
+
         <tr>
         <td>Inactive</td>
         <td>Inactive</td>
         <td>Inconsistent</td>
         <td>Typical condition for a Turnout mid-throw</td>
         </tr>
-        
+
         <tr>
         <td>Unknown</td>
         <td>Unknown</td>
         <td>Unknown</td>
         <td>Typical startup condition</td>
         </tr>
-        
+
         <tr>
         <td>Active</td>
         <td>Active</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Active</td>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
         <td>Changed from Unknown > Inconsistent 4.21.5</td>
         </tr>
-        
+
         <tr>
         <td>Inactive</td>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Inconsistent</td>
         <td>Active</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Inconsistent</td>
         <td>Inactive</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Unknown</td>
         <td>Active</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Unknown</td>
         <td>Inactive</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Unknown</td>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Inconsistent</td>
         <td>Unknown</td>
         <td>Inconsistent</td>
         <td>Changed from Unknown > Inconsistent 4.21.5</td>
         </tr>
-        
-        
-        
+
+
+
         <tr>
         <td>Active</td>
         <td>Unknown</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Inactive</td>
         <td>Unknown</td>
         <td>Inconsistent</td>
         </tr>
-        
+
         <tr>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
         <td>Changed from Unknown > Inconsistent 4.21.5</td>
         </tr>
-        
-        
+
+
         </tbody>
         </table>
-        
+
         </dd>
 
         <dt>DELAYED</dt>
 
-        <dd>When something tells the Turnout to change, 
+        <dd>When something tells the Turnout to change,
         it immediately starts the operation and goes to
         the INCONSISTENT state to reflect that the points
         are moving.  After a few seconds delay, the

@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Sensor Groups</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Sensor Groups">
@@ -13,15 +10,15 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Sensor Groups</h1>
       <p>The Sensor Group Tool window allows you
       to define Sensor Groups, a group of sensors of which at most
       one can be active. When a member of the group becomes active,
       all others are set to inactive.</p>
-      
+
       <p>The Sensor Group Tool can be accessed via PanelPro > Tools > Sensor Groups.</p>
 
       <p>Generally, you would use something like this to simulate a
@@ -29,14 +26,14 @@
       activate only one input as it was turned from position to
       position; the previous input would become inactive as the
       switch turned to the next position.</p>
-      
+
       <p>On a PanelPro control
       panel, each position might be shown by a separate sensor icon
       which you click to activate. Putting that set of sensors in a
       Sensor Group would then cause the sensor at the previous
       position to go inactive when you clicked to change the
       simulated rotary switch.</p>
-      
+
       <img src="sensor-group-frame-626x500.png" alt="JMRI Sensor Groups"
       width="626" height="500">
 
@@ -62,12 +59,12 @@
 
       <p>Remember to save your changes to a new configuration or
       panel file before quitting the program!</p>
-      
+
       <h2>JMRI Help</h2>
-      
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
+
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the
         Sensor Group Tool.</p>
-      
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div><!-- close #mBody -->

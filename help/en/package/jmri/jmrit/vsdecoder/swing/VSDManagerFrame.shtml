@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Virtual Sound Decoder Manager Window</title>
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
@@ -12,8 +9,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI Virtual Sound Decoder Manager Window</h1>
       This is the quick reference page for the Manager window
@@ -61,7 +58,7 @@
       listen to.
 
       <h4>Roster Select and Save</h4>
-      You can select an existing 
+      You can select an existing
       Roster Entry, if you have any. Press the "Save" button to
       store the currently loaded VSD File and Profile to the
       selected Roster Entry. The next time you select that Roster
@@ -194,7 +191,7 @@
         DecoderPro Manual Pages</a> for more details.</dd>
 
         <dt>Default VSD File Path</dt>
-		
+
 		<dd>This path is the default path for the "Load VSD File"
         chooser box.</dd>
 
@@ -244,7 +241,7 @@
 
       <hr>
       <a id="prefs" name="prefs">(This is the
-      jmri.jmrit.vsdecoder.swing.VSDManagerFrame help page) 
+      jmri.jmrit.vsdecoder.swing.VSDManagerFrame help page)
       <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div><!-- close #mBody -->

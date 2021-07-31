@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: ID Tag Table Help</title>
   <meta name="author" content="Matthew Harris">
   <meta name="keywords" content="JMRI help ID Tag Table">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>The ID Tag Table</h1>You can use the ID Tag Table to look
       at the contents of JMRI IdTag objects.
