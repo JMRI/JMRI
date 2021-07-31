@@ -6,10 +6,12 @@
     <choice>Input</choice>
     <choice xml:lang="de">Eingang</choice>
     <choice xml:lang="nl">Ingang</choice>
+    <choice xml:lang="cs">Vstup</choice>
   </enumChoice>
   <enumChoice choice="Output" value="1">
     <choice>Output</choice>
     <choice xml:lang="de">Ausgang</choice>
     <choice xml:lang="nl">Uitgang</choice>
+    <choice xml:lang="cs">Výstup</choice>
   </enumChoice>
 </enumVal>
