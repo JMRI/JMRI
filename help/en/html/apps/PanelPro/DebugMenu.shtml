@@ -16,7 +16,7 @@
       <p>The JMRI "Debug" menu contains the following items:</p>
 
       <dl style="margin-left: 2em">
-        <dt><a href="MemoryFrameAction.shtml">Memory Usage Monitor</a></dt>
+        <dt><a href="../../../package/jmri/jmrit/MemoryFrameAction.shtml">Memory Usage Monitor</a></dt>
         <dd></dd><!-- Prevent validation warnings -->
       </dl>
       <hr>
@@ -54,13 +54,15 @@
 
       <dl style="margin-left: 2em">
         <dt>PRICOM</dt>
+          <dt style="margin-left: 2em">PRICOM Pocket Tester &rArr; Connect</dt>
+          <dt style="margin-left: 2em">PRICOM Flash Updater</dt>
         <dd></dd><!-- Prevent validation warnings -->
       </dl>
       <hr>
 
       <dl style="margin-left: 2em">
         <dt>USB Input Control</dt>
-        <dt>USB Device Viewer</dt>
+        <dt>USB Devices</dt>
         <dd></dd><!-- Prevent validation warnings -->
       </dl>
       <hr>
@@ -77,7 +79,6 @@
       </dl>
       <hr>
 
-      <p>This is the jmri.jmrit.DebugMenu help page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div><!-- close #mBody -->

@@ -26,25 +26,59 @@
         <dd>Display the license for JMRI.</dd>
 
         <dt>Locations...</dt>
-        <dd>Display the JMRI file location information.</dd>
+        <dd>
+          <p>Display the JMRI file location information.</p>
+
+          <a href="images/help_locations.png">
+          <img src="images/help_locations.png"
+          alt="Help Locations" width="1101" height="322">
+          </a>
+
+          <p>Click on a button to open the operating system file manager at the selected
+          location.</p>
+        </dd>
 
         <dt>Check for Updates</dt>
-        <dd>Show the current test, production and installed versions.</dd>
+        <dd>
+          <p>Show the current test, production and installed versions.</p>
+
+          <a href="images/help_check_for_updates.png">
+          <img src="images/help_check_for_updates.png"
+          alt="Help Check for Updates" width="302" height="131">
+          </a>
+        </dd>
 
         <dt>Context...</dt>
-        <dd>Display the run time information about JMRI. This can be useful for problem
-        determination.  The <strong>Copy to clipboard</strong> button can used to copy and
-        paste the content in another program, such as email.</dd>
+        <dd>
+          <p>Display the run time information about JMRI. This can be useful for problem
+          determination.</p>
+
+          <a href="images/help_context.png">
+          <img src="images/help_context.png"
+          alt="Help Context" width="656" height="296">
+          </a>
+
+          <p>The <strong>Copy to clipboard</strong> button can used to copy and
+          paste the content in another program, such as email.
+          </p>
+        </dd>
 
         <dt>System Console...</dt>
         <dd>Display the current contents of the session log file.  See
-        <a href="../../apps/SystemConsole.shtml">System Console</a> for details.</dd>
+        <a href="../../../package/apps/SystemConsole.shtml">System Console</a> for details.</dd>
 
         <dt>Report Issue...</dt>
-        <dd>Create an issue on GitHub.</dd>
+        <dd>
+          <p>Create an issue on GitHub.</p>
+
+          <a href="images/help_report_issue.png">
+          <img src="images/help_report_issue.png"
+          alt="Help Report Issue" width="400" height="423">
+          </a>
+
+        </dd>
       </dl>
 
-      <p>This is the jmri.jmrit.HelpMenu help page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div><!-- close #mBody -->
