@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.managers.AbstractManager;
@@ -39,6 +41,10 @@ public class SectionManager extends AbstractManager<Section> implements Instance
 
     public SectionManager() {
         super();
+        addListeners();
+    }
+    
+    final void addListeners() {
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
     }
@@ -63,16 +69,18 @@ public class SectionManager extends AbstractManager<Section> implements Instance
      *
      * @param systemName the desired system name
      * @param userName   the desired user name
-     * @return a new Section or null if a Section with the same systemName or
+     * @return a new Section or
+     * @throws IllegalArgumentException if a Section with the same systemName or
      *         userName already exists, or if there is trouble creating a new
      *         Section.
      */
-    public Section createNewSection(@Nonnull String systemName, String userName) {
+    @Nonnull
+    public Section createNewSection(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
         // check system name
-        if (systemName.length() < 1) {
+        if (systemName.isEmpty()) {
+            throw new IllegalArgumentException("Section System Name Empty");
             // no valid system name entered, return without creating
-            return null;
         }
         String sysName = systemName;
         if (!sysName.startsWith(getSystemNamePrefix())) {
@@ -80,15 +88,15 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         }
         // Check that Section does not already exist
         Section y;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             y = getByUserName(userName);
             if (y != null) {
-                return null;
+                throw new IllegalArgumentException("Section Already Exists with UserName " + userName);
             }
         }
         y = getBySystemName(sysName);
         if (y != null) {
-            return null;
+            throw new IllegalArgumentException("Section Already Exists with SystemName " + sysName);
         }
         // Section does not exist, create a new Section
         y = new Section(sysName, userName);
@@ -100,8 +108,58 @@ public class SectionManager extends AbstractManager<Section> implements Instance
 
         return y;
     }
+    
+    /**
+     * Return an existing Section or
+     * Create a new Section if the Section does not exist.
+     *
+     * @param systemName the desired system name
+     * @param userName   the desired user name
+     * @return existing section, by UserName search then SystemName, or creates new Section.
+     * @throws IllegalArgumentException if there is trouble creating a new Section.
+     */
+    @Nonnull
+    public Section provideSection(@CheckForNull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
+        // Check that Section does not already exist
+        Section y;
+        if (userName != null && !userName.isEmpty()) {
+            y = getByUserName(userName);
+            if (y != null) {
+                return y;
+            }
+        }
+        if ( systemName==null || systemName.isEmpty()) {
+            throw new IllegalArgumentException("Section System Name Empty, username " + userName + " not found");
+        }
+        
+        String sysName = systemName;
+        if (!sysName.startsWith(getSystemNamePrefix())) {
+            sysName = makeSystemName(sysName);
+        }
+        
+        y = getBySystemName(sysName);
+        if (y != null) {
+            return y;
+        }
+        // Section does not exist, create a new Section
+        y = new Section(sysName, userName);
+        // save in the maps
+        register(y);
+        
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+        return y;
+    }
 
-    public Section createNewSection(String userName) {
+    /**
+     * Create a New Section with Auto System Name.
+     * @param userName UserName for new Section
+     * @return new Section with Auto System Name.
+     * @throws IllegalArgumentException if existing Section, or
+     *          unable to create a new Section.
+     */
+    @Nonnull
+    public Section createNewSection(String userName) throws IllegalArgumentException {
         return createNewSection(getAutoSystemName(), userName);
     }
 
@@ -149,7 +207,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         }
         for (Section section : set) {
             String s = section.validate(lePanel);
-            if (!s.equals("")) {
+            if (!s.isEmpty()) {
                 log.error(s);
                 numErrors++;
             }
@@ -205,15 +263,15 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         List<String> sensorList = new ArrayList<>();
         for (Section s : set) {
             String name = s.getReverseBlockingSensorName();
-            if ((name != null) && (!name.equals(""))) {
+            if ((name != null) && (!name.isEmpty())) {
                 sensorList.add(name);
             }
             name = s.getForwardBlockingSensorName();
-            if ((name != null) && (!name.equals(""))) {
+            if ((name != null) && (!name.isEmpty())) {
                 sensorList.add(name);
             }
         }
-        jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        SignalHeadManager shManager = InstanceManager.getDefault(SignalHeadManager.class);
         for (SignalHead sh : shManager.getNamedBeanSet()) {
             if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList, sh)) {
                 numErrors++;
@@ -234,7 +292,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
                 if (s.getReverseBlockingSensor() != null) {
                     s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
                 }
-            } catch (jmri.JmriException reason) {
+            } catch (JmriException reason) {
                 log.error("Exception when initializing blocking Sensors for Section {}", s.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
             }
         }
@@ -247,7 +305,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     
     public void generateBlockSections() {
         //find blocks with no paths through i.e. stub (siding)
-        LayoutBlockManager LayoutBlockManager = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlockManager LayoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
         //print "Layout Block"
         for (LayoutBlock layoutBlock : LayoutBlockManager.getNamedBeanSet()){
             if (layoutBlock.getNumberOfThroughPaths() == 0){
@@ -277,9 +335,16 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     } 
       
     private void createBlockSection(LayoutBlock layoutBlock){
-        Section section = createNewSection(layoutBlock.getUserName()); 
+        Section section;
+        try {
+            section = createNewSection(layoutBlock.getUserName());
+        }
+        catch (IllegalArgumentException ex){
+            log.error("Could not create Section from LayoutBlock {}",layoutBlock.getDisplayName());
+            return;
+        }
         section.addBlock(layoutBlock.getBlock());
-        ArrayList<jmri.EntryPoint> entryPointList = new ArrayList<>();
+        ArrayList<EntryPoint> entryPointList = new ArrayList<>();
         Block sb = layoutBlock.getBlock();
         List <Path> paths = sb.getPaths();
         for (int j=0; j<paths.size(); j++){
@@ -287,14 +352,14 @@ public class SectionManager extends AbstractManager<Section> implements Instance
             if (p.getBlock() != sb){
                 //this is path to an outside block, so need an Entry Point
                 String pbDir = Path.decodeDirection(p.getFromBlockDirection());
-                jmri.EntryPoint ep = new jmri.EntryPoint(sb, p.getBlock(), pbDir);
+                EntryPoint ep = new EntryPoint(sb, p.getBlock(), pbDir);
                 entryPointList.add(ep);
             }
         }
                 
         Block beginBlock = sb;
         // Set directions where possible
-        List <jmri.EntryPoint> epList = getBlockEntryPointsList(beginBlock,entryPointList);
+        List <EntryPoint> epList = getBlockEntryPointsList(beginBlock,entryPointList);
         if (epList.size() == 1) {
             (epList.get(0)).setTypeForward();
         }  
@@ -305,7 +370,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         }
             
         for (int j=0; j<entryPointList.size(); j++){
-            jmri.EntryPoint ep = entryPointList.get(j);
+            EntryPoint ep = entryPointList.get(j);
             if (ep.isForwardType()){
                 section.addToForwardList(ep);
             }else if (ep.isReverseType()){
@@ -314,10 +379,10 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         }
     }
             
-    private List <jmri.EntryPoint> getBlockEntryPointsList(Block b, List <jmri.EntryPoint> entryPointList) {
-        List <jmri.EntryPoint> list = new ArrayList<>();
+    private List <EntryPoint> getBlockEntryPointsList(Block b, List <EntryPoint> entryPointList) {
+        List <EntryPoint> list = new ArrayList<>();
         for (int i=0; i<entryPointList.size(); i++) {
-            jmri.EntryPoint ep = entryPointList.get(i);
+            EntryPoint ep = entryPointList.get(i);
             if (ep.getBlock().equals(b)) {
                 list.add(ep);
             }
@@ -329,6 +394,13 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSections" : "BeanNameSection");
+    }
+    
+    @Override
+    public void dispose(){
+        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManager.class);
