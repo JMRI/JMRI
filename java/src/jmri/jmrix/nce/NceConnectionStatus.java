@@ -128,7 +128,7 @@ public class NceConnectionStatus implements NceListener {
         // command, to short address 0.
         if (epromState == CHECK_STATE) {
             if (tc.getCommandOptions() > NceTrafficController.OPTION_2004) {
-                return NceMessage.sendLocoCmd(tc, 0x0000, NceBinaryCommand.LOCO_CMD_NOP, (byte) 00);
+                return NceMessage.sendLocoCmd(tc, 0x0000, NceMessage.LOCO_CMD_SELECT_LOCO, (byte) 00);
             }
             epromState = CHECK_OK;
         }
