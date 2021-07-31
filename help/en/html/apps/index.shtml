@@ -46,8 +46,8 @@
           <a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a>
         </dt>
 
-        <dd>A system for Dispatching, grouping your Roster and
-        Throttles.</dd>
+        <dd>A system for Dispatching a model railroad.  The ability to
+        automatically run trains is a popular feature.</dd>
 
         <dt>
           <a href="./OperationsPro/index.shtml">OperationsPro&trade;</a>
@@ -62,28 +62,26 @@
           <a href="./SoundPro/SoundPro.shtml">SoundPro</a>
         </dt>
 
-        <dd>A set of tools for using Audio with JMRI.<br>
-        Open SoundPro by double clicking its icon in the JMRI
-        installation folder.</dd>
+        <dd>A set of tools for using Audio with JMRI.</dd>
       </dl>
 
-      <h2><a name="addapp" id="addapp">Additional Applications with JMRI Connections...</a></h2>
+      <h2 id="addapp">Additional Applications with JMRI Connections...</h2>
        <p>
        Hobbyists have created applications that work with JMRI
        to provide extra capabilities. In addition, some commercial vendors have
        created applications that work with, add data to, or take data from JMRI</p>
        <p>See the <a href="../../../../community/connections/CommunityConnectionsIndex.shtml">
-       community/connections directory</a> for a list and links.  
+       community/connections directory</a> for a list and links.
        New applications can be added at any time!
        </p>
 
-      <h2><a name="jythonapp" id="jythonapp">Jython Applications for JMRI...</a></h2>
+      <h2 id="jythonapp">Jython Applications for JMRI...</h2>
        <p>
-       Some JMRI users have implemented sophiticated capabilities using the <a href="../tools/scripting/index.shtml">JMRI jython scripting facilities.</a>  These are listed 
+       Some JMRI users have implemented sophiticated capabilities using the <a href="../tools/scripting/index.shtml">JMRI jython scripting facilities.</a>  These are listed
        <a href="../tools/scripting/JythonApps.shtml">here</a>.
       </p>
-       
-     
+
+
       <h2>JMRI Features and Tools</h2>
 
         <p>JMRI software consists of a large library of functions divided into</p>
@@ -93,8 +91,8 @@
           supported hardware system, like C/MRI, in a system specific way, and</li>
           <li>a system-independent part where most of the features of JMRI are implemented.</li>
          </ul>
-         
-         
+
+
          <p>So, for example, if the user does something (perhaps setting a route) to
           cause JMRI to throw a Turnout (track switch), that user action will occur in
           the system-independent part of the software, and then JMRI will send out the
@@ -107,19 +105,19 @@
 
           <ul>
             <li>You can
-            find additional information about each of the JMRI "common" tools by clicking through the links in the sidebar or the 
+            find additional information about each of the JMRI "common" tools by clicking through the links in the sidebar or the
             <a href="../tools/index.shtml">tools index page.</a></li>
 
             <li>There are many <a href=
             "../tools/index.shtml#systemSpecificTools">system-specific
             tools</a> that are available within the JMRI applications. You can find additional information
             about each by clicking through the links in the <a href="../tools/index.shtml#systemSpecificTools"> system-specific
-            tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within 
+            tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within
             the JMRI applications when  you have JMRI configured for each specific System Connection.</li>
-            
+
           </ul>
- 
- 
+
+
           <!--#include virtual="/Footer.shtml" -->
 
     </div><!-- close #mainContent -->

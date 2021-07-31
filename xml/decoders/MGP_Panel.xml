@@ -31,7 +31,7 @@
     <variables>
       <variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
-        <label>Manufacturer Version No.</label>
+        <label>Software Version</label>
         <label xml:lang="cs">Verze SW</label>
 	  </variable>
       <variable CV="3" item="Serial Number" readOnly="yes" >
@@ -274,7 +274,7 @@ in xsl
       <label>
         <text> </text>
       </label>
-      <display item="Manufacturer Id" />
+      <display item="Manufacturer" />
       <label>
         <text> </text>
       </label>
