@@ -1262,7 +1262,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
         String uName = _userName.getText();
         // check if a Route with the same user name exists
-        if (!uName.equals("")) {
+        if (!uName.isEmpty()) {
             if (_logixManager.getByUserName(uName) != null) {
                 // Route with this user name already exists
                 showMessage("DuplicateUser");
@@ -1872,7 +1872,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList,
             Logix logix, String sName, String uName) {
-        if (triggerList.size() == 0) {
+        if (triggerList.isEmpty()) {
             return numConds;
         }
         String cSystemName = sName + numConds + "A";

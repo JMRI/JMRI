@@ -40,7 +40,7 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
     }
 
     @Override
-    public void initComponents() {
+    public final void initComponents() {
         super.initComponents();
         _systemName.setText(systemName);
         // identify the Route with this name if it already exists

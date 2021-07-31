@@ -19,109 +19,136 @@
     <enumChoice choice="None">
         <choice>No Sound</choice>
         <choice xml:lang="de">kein Sound</choice>
+        <choice xml:lang="cs">Bez zvuku</choice>
     </enumChoice>
     <enumChoice>
         <choice>1. Directional lighting</choice>
     <choice xml:lang="de">1. Licht vorn ein/aus</choice>
+        <choice xml:lang="cs">1. Směrová světla</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>2. Engine Sound on/off</choice>
         <choice xml:lang="de">2. Motorsound</choice>
+        <choice xml:lang="cs">2. Zvuk motoru</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>3. Horn deep</choice>
         <choice xml:lang="de">3. Horn tief</choice>
+        <choice xml:lang="cs">3. Houkačka hluboká</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>4. Horn high</choice>
         <choice xml:lang="de">4. Horn tief</choice>
+        <choice xml:lang="cs">4. Houkačka vysoká</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>5. Double horn (high-deep)</choice>
         <choice xml:lang="de">5. Doppelhorn (hoch-tief)</choice>
+        <choice xml:lang="cs">5. Dvojitá houkačka (vysoká-hluboká)</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>6. Conductors signal</choice>
         <choice xml:lang="de">6. Schaffnerpfiff</choice>
+        <choice xml:lang="cs">6. Píšťalka průvodčího</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>7. Hand pump - Oil</choice>
         <choice xml:lang="de">7. Handpumpe - Öl</choice>
+        <choice xml:lang="cs">7. Ruční pumpa - olej</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>8. Shunting mode</choice>
         <choice xml:lang="de">8. Rangiergang</choice>
+        <choice xml:lang="cs">8. Režim posun</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>9. Hand brake release/set brake</choice>
         <choice xml:lang="de">9. Handbremse anlegen/lösen</choice>
+        <choice xml:lang="cs">9. Ruční bzda zabrždění/odbrždění</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>10. Air Compressor</choice>
         <choice xml:lang="de">10. Kompressor</choice>
+        <choice xml:lang="cs">10. Kompresor</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>11. Driver cab door open/close</choice>
         <choice xml:lang="de">11. Führerstandstüre auf/zu</choice>
+        <choice xml:lang="cs">11. Dveře budky strojvedoucího otevřeno/zavřeno</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>12. Driver cab window open/close</choice>
         <choice xml:lang="de">12. Führerstandsfenster auf/zu</choice>
+        <choice xml:lang="cs">12. Okno budky strojvedoucího otevřeno/zavřeno</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>13. Talk #1</choice>
         <choice xml:lang="de">13. Funk #1</choice>
+	<choice xml:lang="cs">13. Rádio #1</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>14. Talk #2</choice>
         <choice xml:lang="de">14. Funk #2</choice>
+	<choice xml:lang="cs">14. Rádio #2</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>15. Shunting Brake</choice>
         <choice xml:lang="de">15. Rangierbremse</choice>
+	<choice xml:lang="cs">15. Posun brždění</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>16. Coupling/Uncoupling</choice>
         <choice xml:lang="de">16. Kuppeln ab-/ankuppeln</choice>
+	<choice xml:lang="cs">16. Svěšení/rozvěšení</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>17. Loco brake apply/release</choice>
         <choice xml:lang="de">17. Zugbremse anlegen/lösen</choice>
+	<choice xml:lang="cs">17. Lokomotivní brzda zatažena/uvolněna</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>18. Dead Man's Switch</choice>
         <choice xml:lang="de">18. Totmannschalter (Sifa)</choice>
+	<choice xml:lang="cs">18. Tlačítko bdělosti</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>19. Direction Control Switch</choice>
         <choice xml:lang="de">19. Fahrtrichtungswender</choice>
+	<choice xml:lang="cs">19. Přepínač změny směru</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>20. Sanding</choice>
         <choice xml:lang="de">20. Sanden</choice>
+	<choice xml:lang="cs">20. Pískování</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>21. Curve squeal sound on/off</choice>
         <choice xml:lang="de">21. Kurvenquitschen ein/aus</choice>
+	<choice xml:lang="cs">21. Okolky v oblouku Zap/Vyp</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>22. Rail clank sound on/off</choice>
         <choice xml:lang="de">22. Schienenstösse ein/aus</choice>
+	<choice xml:lang="cs">22. Kolejnicové spoje Zap/Vyp</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>23. Train lights: Loco pushes</choice>
         <choice xml:lang="de">23. Zugbeleuchtung: Lok schiebt</choice>
+	<choice xml:lang="cs">23. Světla vlaku: lokomotiva sune</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>24. Train lights: Loco pulls</choice>
         <choice xml:lang="de">24. Zugbeleuchtung: Lok zieht</choice>
+	<choice xml:lang="cs">24. Světla vlaku: lokomotiva táhne</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>25. Volume Control</choice>
         <choice xml:lang="de">25. Lautstärkeregelung</choice>
+	<choice xml:lang="cs">25. Regulace hlasitosti</choice>
     </enumChoice>
     <enumChoice choice="Operating sounds of the loco">
         <choice>26. Sound Fader</choice>
         <choice xml:lang="de">26. Soundfader (Tunnelmodus)</choice>
+	<choice xml:lang="cs">26. Ztišení zvuku (režim tunel)</choice>
     </enumChoice>
 </enumVal>
