@@ -199,4 +199,5 @@ public class AppsMainMenu {
         return AppsBase.handleQuit();
     }
 
-     static private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);}
+//     static private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);
+}
