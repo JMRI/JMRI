@@ -287,7 +287,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
-        if (user.equals("")) {
+        if (user.isEmpty()) {
             user = null;
         }
         String sName = sysName.getText();
