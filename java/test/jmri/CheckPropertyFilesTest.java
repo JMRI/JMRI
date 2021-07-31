@@ -159,14 +159,15 @@ public class CheckPropertyFilesTest {
          * @param lang the language
          * @return true if success, false if an error
          */
-        public boolean checkProperties(String lang, boolean searchingParent) {
+        public boolean checkProperties(String lang, FolderProperties folderProperties) {
+            boolean result = true;
             Map<String, String> foundKeys = new HashMap<>();
 //            System.out.format("Aaaaa lang: '%s'%n", lang);
             if (!_properties.containsKey(lang)) {
                 System.out.format("ERROR: The lang '%s' is missing%n", lang);
                 return false;
             }
-            for (Map.Entry<Object, Object> entry : _properties.get(lang).entrySet()) {
+            for (Map.Entry<Object, Object> entry : folderProperties._properties.get(lang).entrySet()) {
                 System.out.format("Lang: '%s', key: %s, value: %s%n", lang, entry.getKey(), entry.getValue());
                 String key = entry.getKey().toString();
                 String value = entry.getValue().toString();
@@ -178,16 +179,16 @@ public class CheckPropertyFilesTest {
                         System.out.format("Key %s already exists with a different value %s than the value %s%n", key, foundKeys.get(key), value);
                         if (1==1) throw new RuntimeException("DanielBBB");
                     }
-                    return false;
+                    result = false;
                 }
                 
-                //
-                // Search parent too.
-                //
+                if (folderProperties._parent != null) {
+                    result = result && checkProperties(lang, folderProperties._parent);
+                }
                 
                 foundKeys.put(key, value);
             }
-            return true;
+            return result;
         }
         
         /**
@@ -199,12 +200,12 @@ public class CheckPropertyFilesTest {
             
             // Check base language first
             if (_properties.containsKey("")) {
-                result = result && checkProperties("", false);
+                result = result && checkProperties("", this);
             }
             
             for (String lang : _properties.keySet()) {
                 if (lang.isEmpty()) continue;
-                result = result && checkProperties(lang, false);
+                result = result && checkProperties(lang, this);
             }
             return result;
         }
