@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Item Palette Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Item Palette">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>The Item Palette</h1>
       <b>The Item Palette</b> is used to
@@ -22,7 +19,7 @@
       The palette is a tabbed window with tabs for each item type.
       The common method all items use to add an item to a panel is
       "Drag and Drop". Each tab has a bordered <b>Preview</b> panel
-      containing a labeled <b>Drag to Panel</b> panel. Drag the 
+      containing a labeled <b>Drag to Panel</b> panel. Drag the
       item inside this border over
       to your Panel. In the cases where the icon represents a layout
       device (e.g. a turnout, a sensor, etc.), tab may also contain
@@ -30,19 +27,19 @@
       row from a table to associate that particular device with the
       icon - and then drag the icon to the Panel.
       <p>
-      The window shown when the <b>Edit XYZ</b> menu item of a panel 
+      The window shown when the <b>Edit XYZ</b> menu item of a panel
       item is invoked shows the corresponding Item Palette tab pane
       without the labeled <b>Drag to Panel</b> panel.</p>
 
       <h2>Iconic Items</h2>
       Some device types need a set of icons to depict each of their
       states The Item Palette provides multiple sets of icons to
-      choose from to associate with a device. There is a radio button 
+      choose from to associate with a device. There is a radio button
       for each icon set defined for the tab item. For
       example, under the sensor tab you may have sets of large
       jewels, small jewels, each size with several sets with
       different colors for active and inactive - e.g. red-green,
-      yellow-dark, etc. 
+      yellow-dark, etc.
       <p>
       The individual icons are displayed in the preview on the
       background of the last editor to open the Item Palette.
@@ -54,7 +51,7 @@
       <h3>Editing and Creating New Icon Sets</h3>
 	  <ul>
 	  		<li>The <b>Show Icons</b> button displays all the icons in the
-      		selected set. 
+      		selected set.
       		</li><li>
             The <b>Edit Icons</b> button opens a dialog where the icons
              may be changed by dragging new icons from the Icon Catalog.
@@ -153,8 +150,8 @@
 
         <li><b>Icon</b> The bordered icons displayed (labeled with
         their names) can be dragged directly to a panel. Icons can
-        also be dragged directly from the Icon Catalog. to add icons 
-        to this tab, just drop them into the preview panel from 
+        also be dragged directly from the Icon Catalog. to add icons
+        to this tab, just drop them into the preview panel from
         the Icon Catalog.</li>
 
         <li><b>Background</b> Background icons are placed in a
@@ -269,7 +266,7 @@
       </p><p>
       When an <b>Edit Icons</b> window is displayed all icons are shown,
       Icons from the Icon Catalog may be dragged and dropped to any
-      icon shown. 
+      icon shown.
       </p>
 
       <!--#include virtual="/Footer.shtml" -->

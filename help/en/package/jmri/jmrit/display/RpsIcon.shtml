@@ -2,8 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: RPS Icon</title>
@@ -12,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: RPS Icon</h1>RPS is a system for measuring the
       positions of rolling stock on your layout. More information
@@ -234,12 +232,12 @@
         probably be all on one line):
           <pre style="font-family: monospace;">
 
-    &lt;sensoricon x="95" y="150" level="10" 
-            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" 
-            error="resources/icons/smallschematics/tracksegments/circuit-error.gif" 
-            rotate="0" forcecontroloff="false" momentary="false" 
-            sxscale="11.849106591612951" syscale="-11.889381744148094" 
-            sxorigin="41" syorigin="768" 
+    &lt;sensoricon x="95" y="150" level="10"
+            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif"
+            error="resources/icons/smallschematics/tracksegments/circuit-error.gif"
+            rotate="0" forcecontroloff="false" momentary="false"
+            sxscale="11.849106591612951" syscale="-11.889381744148094"
+            sxorigin="41" syorigin="768"
             class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre>
         </li>
@@ -249,12 +247,12 @@
         to have it track transmitter 5510, change the line to:
           <pre style="font-family: monospace;">
 
-    &lt;sensoricon filter="5510" x="95" y="150" level="10" 
-            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" 
-            error="resources/icons/smallschematics/tracksegments/circuit-error.gif" 
+    &lt;sensoricon filter="5510" x="95" y="150" level="10"
+            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif"
+            error="resources/icons/smallschematics/tracksegments/circuit-error.gif"
             rotate="0" forcecontroloff="false" momentary="false" s
-            xscale="11.849106591612951" syscale="-11.889381744148094" 
-            sxorigin="41" syorigin="768" 
+            xscale="11.849106591612951" syscale="-11.889381744148094"
+            sxorigin="41" syorigin="768"
             class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre>
         </li>

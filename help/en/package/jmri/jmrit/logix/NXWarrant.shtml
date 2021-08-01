@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: NX Warrant Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI NX Warrant Help">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Warrants: NX Warrants</h1>
       <p>An NX Warrant is a computer generated Warrant. Rather
@@ -30,7 +27,7 @@
       A speed profile for the selected engine/consist
       to provide track speeds is desirable.  Lacking a speed profile,
       the <i>Throttle Factor</i> and <i>Layout Scale</i> are used
-      for a rough estimate of track speed. If block lengths are not  
+      for a rough estimate of track speed. If block lengths are not
       specified, you will be prompted to provide a length.
       <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
       profides more details about how Warrants modify recorded speeds.</p>
@@ -65,7 +62,7 @@
       </ul>
 
       <p>Blocks are chosen either by typing in the block name or
-      dragging it from a displayed OBlock table 
+      dragging it from a displayed OBlock table
       (use the <b>OBlock Pick List</b> button). The origin and
       destination blocks can also be chosen by clicking on track
       icons that represent these OBlocks. To use this feature your
@@ -83,7 +80,7 @@
       have this feature. <a href="CreateEditWarrant.shtml">Creating
       and Editing Warrants</a> also discusses choosing routes.</p>
 
-      <p>The <b>Max Number of Blocks in Route</b> field puts an 
+      <p>The <b>Max Number of Blocks in Route</b> field puts an
       upper limit on the length of the route the algorithm computes.
       If your layout contains loops, then an infinite number of
       routes can theoretically be counted.
@@ -91,18 +88,18 @@
       is much larger than the number of blocks in the longest
       route. <i>However, using too small a number can terminate the
       search prematurely before the route is found.</i></p>
-      
-      <p>Pressing the <b>Calculate</b> button runs a computer 
+
+      <p>Pressing the <b>Calculate</b> button runs a computer
       algorithm to determine all the intermediate
       blocks and paths to make the route. If more than one route
       meets the criterion, you are presented with a list to review
       and select the route you want. Note, the Via and Avoid
       location fields may be used to restrict the list. Possibly
-      you will be presented with a dialog stating that no route 
+      you will be presented with a dialog stating that no route
       could be found. You can view a tree of all the possible
       searches the algorithm used to find the route. Typical
       errors are the Portals of the selected paths are mismatched
-      for exit and entry. Also check that the paths have the 
+      for exit and entry. Also check that the paths have the
       needed portals for exit and entry.</p>
 
       <p>Once the route has been chosen, the window changes to
@@ -128,7 +125,7 @@
         train id will be displayed.</li>
 
         <li><b>Address</b> - The decoder address of the locomotive
-        of the train. This is a required field, but it will be 
+        of the train. This is a required field, but it will be
         displayed automatically if a train is selected from the roster.
         You may enter the DCC address of a non-Roster locomotive.</li>
       </ul>
@@ -141,7 +138,7 @@
       </div>
 
       <p>The <b>View Speed Profile</b> button displays a table of the
-      track speeds that will be used in the calculations for the 
+      track speeds that will be used in the calculations for the
       Warrant.  The table is comprised of the Roster Speed Profile
       merged with any speed measurements that have been made during
       the current session.  If the table is empty, the values for
@@ -160,24 +157,24 @@
         The "<i><b>units"</b></i> button cycles through the choices:
         Miles per hour, Kilometers per hour, millimeters per
         second, inches per second.
-        If a speed profile exists. it is used to make the 
+        If a speed profile exists. it is used to make the
         conversion to throttle setting percent. Otherwise the
         throttle factor settings of Warrant Preferences are
         used.</li>
-        
+
         <li><b>Start Distance</b> is the position of the train in
         the Origin block. Set the distance of the train's position
-        to the exit portal of the origin block. You may choose 
+        to the exit portal of the origin block. You may choose
         either inches or centimeters for units.</li>
-        
+
         <li><b>End Distance</b> is the position where the train
-        should stop in the Destination block. Set the distance 
+        should stop in the Destination block. Set the distance
         from the entry portal of the destination block to the
-        desired stop point. You may choose either inches or 
+        desired stop point. You may choose either inches or
         centimeters for units.</li>
       </ul>
 
-      <p>NXWarrants ramp up and ramp down the train speed in increments 
+      <p>NXWarrants ramp up and ramp down the train speed in increments
       to provide a prototypical appearance when leaving the Origin
       block and ending in the Destination block. The parameters for
       the increments to use are set by the <b>Ramp Step Time</b>
@@ -192,14 +189,14 @@
         direction of the locomotive.</li>
       </ul>
 
-      <p>On the right is a list of some options to consider for 
+      <p>On the right is a list of some options to consider for
       running the warrant.</p>
       <ul>
         <li>The checkbox <b>Don't Ramp Speed changes</b> Sets an
         option on how to change the speed when a signal or rogue
-        occupation is detected ahead. The default is to incrementally 
-        slow the train before reaching the end of the approach block. 
-        Selecting the option will make an immediate speed change upon 
+        occupation is detected ahead. The default is to incrementally
+        slow the train before reaching the end of the approach block.
+        Selecting the option will make an immediate speed change upon
         entering the approach block.</li>
 
         <li>The checkbox <b>Skip Sound Commands</b> Sounding the
@@ -210,11 +207,11 @@
         train make an emergency stop upon entering the last block.
         <i>Rarely Needed.</i></li>
 
-        <li>The checkbox <b>Halt Start at Origin Block</b> will 
+        <li>The checkbox <b>Halt Start at Origin Block</b> will
         allocate and set the Warrant, but won't start the train
         until you issue a <b>Resume</b> command to the Warrant from the
         Warrant List Table or via a Logix Warrant Control action.</li>
-        
+
         <li>The checkbox <b>Clearance to Share Route</b> will allow
         another Warrant to acquire clearance to run ahead of
         the Warrant.  The additional Warrant will cause this Warrant
@@ -231,9 +228,9 @@
       operator must acquire the throttle and drive the train.</p>
 
       <ul>
-        <li>Radio button <b>Run Auto</b> launches the Automated 
+        <li>Radio button <b>Run Auto</b> launches the Automated
         Warrant</li>
-        <li> <b>Run Manual</b> allocates and sets the route for 
+        <li> <b>Run Manual</b> allocates and sets the route for
         a manual operator. This is similar to setting a Tracker
         where the route is prescribed and highlighted on the
         layout.</li>
@@ -251,8 +248,8 @@
       The NX Warrant script sets the direction, turns the light on,
       blows two horn/whistle blasts and starts to ramp up speed.
       There should be a
-      reasonable estimate for block length know for each OBlock. 
-      If the length of the route is not known, you will be prompted 
+      reasonable estimate for block length know for each OBlock.
+      If the length of the route is not known, you will be prompted
       to enter a length for the path through the block.
       The algorithm will ramp up to the maximum speed and
       ramp down to a stop in the last block.
@@ -262,37 +259,37 @@
       <p>For a series of short blocks the length needed to
       ramp up or ramp down is distributed over as many blocks as
       are needed. For short routes, the algorithm may decide the
-      maximum speed cannot be achieved without over-running the 
+      maximum speed cannot be achieved without over-running the
       last block. In this case, the max throttle setting is
       modified so ramp up and ramp down can finish without
       over-running the last block.</p>
 
       <p>The elapsed times to traverse each block is computed
       from what is known about the engine's speed profile and
-      the length of the path in each block. 
+      the length of the path in each block.
       <b>Note!</b> if the route includes a
-      <i>Dark</i> block, i.e. no occupancy detection, it is 
+      <i>Dark</i> block, i.e. no occupancy detection, it is
       important it's block length is known since in this case,
       synchronization cannot be done.</p>
 
       <h3>Saving NX Warrants to make them Permanent</h3>
       When the <b>Run NX Warrant</b> button is pressed and the
-      NXWarrant starts its run, the warrant is listed in the 
-      Warrant List table with the name 
-      <b>NX(</b><i>address</i><b>)</b>. If the table is 
+      NXWarrant starts its run, the warrant is listed in the
+      Warrant List table with the name
+      <b>NX(</b><i>address</i><b>)</b>. If the table is
       not visible, it will be displayed.
-      Notice that the <b>Edit</b> button label for the 
+      Notice that the <b>Edit</b> button label for the
       warrant is <b>Save</b>.
       <p>If you press this button before the warrant completes,
       a Create/Edit Warrant Window for the NX Warrant will open.
-      This window has a copy of the NXWarrant. After providing 
+      This window has a copy of the NXWarrant. After providing
       a name and any other information you want changed,
       press the <b>Save</b> button to make a permanent warrant.
 
       <h3>Some Tips for Smooth Start Up and Slow Down</h3>
       <p>It is
-      necessary to have a length specified for each path in a 
-      block. A rough estimate within 5% of the actual length 
+      necessary to have a length specified for each path in a
+      block. A rough estimate within 5% of the actual length
       is adequate. Each path inherits the length specified
       for the block, so it is only important to input a separate
       length for a path when its length is significantly less
@@ -301,9 +298,9 @@
       Edit Path menu or in the OBlock tables.</p>
 
       <p>The algorithm calculates the speed changes using the
-      the step intervals for time and throttle setting 
+      the step intervals for time and throttle setting
       specified in Warrant Preferences. These are the values
-      that give a prototypical look when changing speeds for 
+      that give a prototypical look when changing speeds for
       signal aspects and starting and stopping. The Warrants pane
       at <i>Edit-&gt;Preferences-&gt;Warrants</i> is where this and
       other Warrant parameters can be set.</p>

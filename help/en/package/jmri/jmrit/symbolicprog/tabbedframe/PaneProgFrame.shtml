@@ -2,8 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
 
@@ -13,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: DecoderPro Service Mode Programmer</h1><a name=
       "contents" id="contents"></a>
@@ -46,10 +44,10 @@
       <ul>
       <li>
       The top field is labelled "ID".
-      Each roster entry has an identifier (also called Roster ID) by 
+      Each roster entry has an identifier (also called Roster ID) by
       which it's known. This is your name for it.
       When the program wants you to select a Roster
-      entry, it will ask you to pick from a selection box or menu containing 
+      entry, it will ask you to pick from a selection box or menu containing
       Roster IDs. You can use anything you want for this:
       Road number, type, even "That crummy old model I need to
       repaint" or "My beautiful Shay".
@@ -62,27 +60,27 @@
       You can change this at any time later,
       just remember to save the entry to make the new ID permanent.</p>
 
-      <li>Road Name, Road Number, Manufacturer, Owner, Model, 
+      <li>Road Name, Road Number, Manufacturer, Owner, Model,
       Comment and Decoder Comment are for you to use as you see fit.
       Some people put information in all of these, some in none of them.
-      See the 
+      See the
       <a href="../../../../apps/gui3/dp3/DecoderPro3.shtml">help on the main DecoderPro window</a>
       for what appears there when you fill them out.
-      
+
       <li>The Throttle Speed Limit sets the Maximum throttle
       percentage allowed when using various JMRI throttle tools.
-      
+
       <li>The DCC Address field is the active DCC address for this
       loco. It comes from the locomotive settings, and you can't change it
       here. See the <a href="#Basic">Basic Pane</a>.
 
       <li>The Decoder Family and Decoder Model values were defined
       when you created this entry earlier.  They can't be changed.
-      The Date Modified value is updated automatically when you 
-      save the entry to the roster.  After the first time you 
+      The Date Modified value is updated automatically when you
+      save the entry to the roster.  After the first time you
       do that, the filename entry will appear.
       </ul>
-        
+
       <p>The Save button stores the current decoder information to
       your Roster folder. The default storage is in the same
       directory the Preferences are stored in.</p>

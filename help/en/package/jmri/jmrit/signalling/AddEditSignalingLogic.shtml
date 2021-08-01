@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding/Editing Signal Mast Logic</title>
   <!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
@@ -15,8 +12,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <a name="Adding_Editing_Routes"
       id="Adding_Editing_Routes"></a>
