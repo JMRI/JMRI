@@ -154,7 +154,7 @@
 
  <indexitem text="DCC++ Hardware, Connection, Tools " target="html.hardware.dccpp.index"/>
 
- <indexitem text="Debug Menu " target="package.jmri.jmrit.DebugMenu"/>
+ <indexitem text="Debug Menu " target="html.apps.PanelPro.DebugMenu"/>
 
  <indexitem text="DecoderPro " target="html.apps.DecoderPro.index">
   <indexitem text="Introduction " target="html.apps.DecoderPro.index"/>
@@ -281,6 +281,8 @@
  <indexitem text="Hardware, Connecting to " target="html.hardware.index"/>
 
  <indexitem text="Hornby Elite " target="html.hardware.XPressNet.index"/>
+
+ <indexitem text="Help Menu " target="html.apps.PanelPro.HelpMenu"/>
 
  <indexitem text="ID Tag " target="html.tools.IdTags"/>
 
@@ -762,7 +764,7 @@
 
  <indexitem text="TMCC (Lionel) " target="html.hardware.tmcc.index"/>
 
- <indexitem text="Tools Menu " target="package.jmri.jmrit.ToolsMenu"/>
+ <indexitem text="Tools Menu " target="html.apps.PanelPro.ToolsMenu"/>
 
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 

@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding/Editing Logix</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Add Edit">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Adding/Editing Logix</h1>
 
@@ -43,12 +40,12 @@
       changed. Its user name may be changed in either the Logix Table or the
       Edit Logix window. The user name is usually used to identify the
       particular Logix, for example, "Signal 5 Control".</p>
-      
+
       <p>After clicking <strong>Create new</strong>, the Logix will be
       created and the <strong>Edit Logix</strong> window will appear.
 
       <h2>Edit an existing Logix</h2>
-      <p>Click on the <strong>Select</strong> menu on the right side 
+      <p>Click on the <strong>Select</strong> menu on the right side
       of the desired Logix.  The resulting menu has a number of options.</p>
       <div style="margin-left: 2em">
       <a href="images/LogixSelectMenu.png">
@@ -106,9 +103,9 @@
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix
       documentation</a>.</p>
-      
+
       <h2>Logix Documentation Pages Logically Listed</h2>
-      
+
       <p>
         Logix documentation is divided into eight different help pages.  While these are referenced via links in various places,
         not all are easy to find (perhaps three links down).  They are additionally listed here for convenience.
@@ -132,8 +129,8 @@
         <li><a href="../conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a></li>
 
       </ul>
-    
-      
+
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -588,6 +588,17 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+          <li>PanelPro main menu updates
+            <ul>
+              <li>Moved the <strong>Virtual Sound Decoder</strong> menu from the
+              <strong>Debug</strong> menu to the <strong>Tools</strong> menu.</li>
+              <li>Moved <strong>Start WiThrottle Server</strong> and <strong>Start JMRI Web Server</strong>
+              from <strong>Debug</strong> to <strong>Tools &rArr; Servers</strong>.</li>
+              <li>Updated website help pages including adding a section about the
+              PanelPro menus to the main PanelPro help page.</li>
+            </ul>
+          </li>
+
+          <li></li>
         </ul>
 

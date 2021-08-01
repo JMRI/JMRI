@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: OS Indicator Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help OS Indicator">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>OS Indicator</h1><img src="images/OsIndicatorFrame.jpg"
       alt="Screen shot" align="right"><br>

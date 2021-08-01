@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: DecoderPro 3</title>
   <meta name="author" content="Nigel Cliffe">
   <meta name="keywords" content="JMRI help DecoderPro 3">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Introduction to DecoderPro 3</h1>
 
@@ -29,7 +26,7 @@
 
       <p>The DecoderPro 3 Window is divided into five main
       sections from top to bottom.</p>
-      <img src="../../images/Dp3Roster.png" width="509" height="265">
+      <img src="../../images/Dp3Roster.png" width="509" height="265" alt="Roster Window">
 
       <ol>
         <li><a href="#menubar">The Menu Bar</a>.</li>
@@ -135,10 +132,9 @@
       the Roster Group in the drop-menu, and then place a tick
       alongside all locomotives requires in that group. Repeat for
       any other groups, and when finished close the window with the
-      close-box in the upper right-hand corner.</p><a name=
-      "menubar" id="menubar"></a>
+      close-box in the upper right-hand corner.</p>
 
-      <h2>Menu Bar</h2>
+      <h2 id="menubar">Menu Bar</h2>
 
       <h3>File menu</h3>
 
@@ -256,8 +252,7 @@
 
       <p>Window Help opens this page.</p>
 
-      <a name="toolbar" id="toolbar"></a>
-      <h2>Tool Bar</h2>
+      <h2 id="toolbar">Tool Bar</h2>
 
       <h3>Help button</h3>
 
