@@ -81,9 +81,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(3) ? 0x04 : 0)
                     | (getFunction(4) ? 0x08 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceMessage.LOCO_CMD_FG1, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG1, (byte) data);
             tc.sendNceMessage(m, null);
             
         } else {
@@ -117,9 +115,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(6) ? 0x02 : 0)
                     | (getFunction(5) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceMessage.LOCO_CMD_FG2, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG2, (byte) data);
             tc.sendNceMessage(m, null);
 
         } else {
@@ -153,9 +149,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(10) ? 0x02 : 0)
                     | (getFunction(9) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceMessage.LOCO_CMD_FG3, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG3, (byte) data);
             tc.sendNceMessage(m, null);
 
         } else {
@@ -194,9 +188,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(14) ? 0x02 : 0)
                     | (getFunction(13) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceMessage.LOCO_CMD_FG4, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG4, (byte) data);
             tc.sendNceMessage(m, null);
 
         } else {
@@ -236,9 +228,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(22) ? 0x02 : 0)
                     | (getFunction(21) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceMessage.LOCO_CMD_FG5, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG5, (byte) data);
             tc.sendNceMessage(m, null);
 
         } else {
